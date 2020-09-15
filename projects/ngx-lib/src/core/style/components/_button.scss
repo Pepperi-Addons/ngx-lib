@@ -1,0 +1,377 @@
+// -----------------------------------------------------
+//  Pepperi - Button
+// -----------------------------------------------------
+
+@mixin pepperi-button-size($size) {
+
+    $button-horizontal-spacing: var(--pep-button-md-horizontal-spacing); 
+    $button-min-width: var(--pep-button-md-min-width); 
+    $button-height: var(--pep-button-md-height); 
+    $button-font-size: var(--pep-button-sm-font-size); 
+    // $button-icon-horizontal-spacing: var(--pep-button-md-icon-horizontal-spacing); 
+    $button-icon-height: 1.5rem; // var(--pep-button-md-icon-horizontal-spacing); 
+    
+    @if $size == 'xl' {
+        $button-horizontal-spacing: var(--pep-button-xl-horizontal-spacing); 
+        $button-min-width: var(--pep-button-xl-min-width); 
+        $button-height: var(--pep-button-xl-height); 
+        $button-font-size: var(--pep-button-xl-font-size); 
+        // $button-icon-horizontal-spacing: var(--pep-button-xl-icon-horizontal-spacing); 
+    }
+    @else if $size == 'lg' {
+        $button-horizontal-spacing: var(--pep-button-lg-horizontal-spacing); 
+        $button-min-width: var(--pep-button-lg-min-width); 
+        $button-height: var(--pep-button-lg-height); 
+        $button-font-size: var(--pep-button-md-font-size); 
+        // $button-icon-horizontal-spacing: var(--pep-button-lg-icon-horizontal-spacing); 
+    }
+    @else if $size == 'sm' {
+        $button-horizontal-spacing: var(--pep-button-sm-horizontal-spacing); 
+        $button-min-width: var(--pep-button-sm-min-width); 
+        $button-height: var(--pep-button-sm-height); 
+        $button-font-size: var(--pep-button-xs-font-size); 
+        // $button-icon-horizontal-spacing: var(--pep-button-sm-icon-horizontal-spacing); 
+        $button-icon-height: 1.25rem;
+    }
+    @else if $size == 'xs' {
+        $button-horizontal-spacing: var(--pep-button-xs-horizontal-spacing); 
+        $button-min-width: var(--pep-button-xs-min-width); 
+        $button-height: var(--pep-button-xs-height); 
+        $button-font-size: var(--pep-button-xs-font-size); 
+        // $button-icon-horizontal-spacing: var(--pep-button-xs-icon-horizontal-spacing); 
+        $button-icon-height: 1rem;
+    }
+    @else if $size == '2xs' {
+        $button-horizontal-spacing: var(--pep-button-xxs-horizontal-spacing); 
+        $button-min-width: var(--pep-button-xxs-min-width); 
+        $button-height: var(--pep-button-xxs-height); 
+        $button-font-size: var(--pep-button-xxs-font-size); 
+        border-radius: $border-radius-sm;
+        // $button-icon-horizontal-spacing: var(--pep-button-xxs-icon-horizontal-spacing); 
+    }
+    
+    padding-left: $button-horizontal-spacing;
+    padding-right: $button-horizontal-spacing;
+    min-width: $button-min-width;
+    height: $button-height;
+    font-size: $button-font-size;
+    //line-height: inherit;
+    line-height: $button-height;
+
+    &.icon-button {
+        padding-left: 0;
+        padding-right: 0;
+
+        .mat-icon {
+            width: inherit;
+            height: inherit;
+            @include align-center();
+
+            .svg-icon {
+                height: $button-icon-height !important;
+                width: $button-icon-height !important;
+            }
+        }
+    }
+}
+
+@mixin pepperi-button-state-weak($pepperi-theme, $color: null) {
+    @include state-weak-default($pepperi-theme, $color);
+    &:hover {
+        @include state-weak-hover($pepperi-theme, $color);
+    }
+    &:focus {
+        @include state-weak-focus($pepperi-theme, $color);
+    }
+    &:active {
+        @include state-weak-active($pepperi-theme, $color);
+    }
+    &:disabled {
+        @include state-weak-disable($pepperi-theme, $color);
+    }
+}
+
+@mixin pepperi-button-state-regular($pepperi-theme, $color: null) {
+    @include state-regular-default($pepperi-theme, true, $color);
+    &:hover {
+        @include state-regular-hover($pepperi-theme, true, $color);
+    }
+    &:focus {
+        @include state-regular-focus($pepperi-theme, true, $color);
+    }
+    &:active {
+        @include state-regular-active($pepperi-theme, true, $color);
+    }
+    &:disabled {
+        @include state-regular-disable($pepperi-theme, true, $color);
+    }
+}
+
+@mixin pepperi-button-state-strong($pepperi-theme, $color: null) {
+    @include state-strong-default($pepperi-theme, $color);
+    &:hover {
+        @include state-strong-hover($pepperi-theme, $color);
+    }
+    &:focus {
+        @include state-strong-focus($pepperi-theme, $color);
+    }
+    &:active {
+        @include state-strong-active($pepperi-theme, $color);
+    }
+    &:disabled {
+        @include state-strong-disable($pepperi-theme, $color);
+    }
+}
+
+@mixin pepperi-button-state-none($pepperi-theme) {
+    @include state-none-default($pepperi-theme);
+    &:hover {
+        @include state-none-hover($pepperi-theme);
+    }
+    &:focus {
+        @include state-none-focus($pepperi-theme);
+    }
+    &:active {
+        @include state-none-active($pepperi-theme);
+    }
+    &:disabled {
+        @include state-none-disable($pepperi-theme);
+    }
+}
+
+.pepperi-button {
+    @include fix-inline-z-index();
+    transition: all 0.25s;
+    border-radius: $border-radius-md;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    /*width: max-content;*/
+    max-width: 100%;
+    padding-top: 0;
+
+    // Default size
+    // @include pepperi-button-size('md');
+
+    &.chip {
+        border-radius: 2rem !important;
+    }
+
+    &.pepperi-button-limited-width {
+        max-width: 11.25rem;
+    }
+
+    @media (max-width: $screen-max-size-sm) {
+        &.pepperi-button-limited-width {
+            max-width: 8.25rem;
+        }
+    }
+
+    &.xl {
+        @include pepperi-button-size('xl');
+    }
+    &.lg {
+        @include pepperi-button-size('lg');
+    }
+    &.md {
+        @include pepperi-button-size('md');
+    }
+    &.sm {
+        @include pepperi-button-size('sm');
+    }
+    &.xs {
+        @include pepperi-button-size('xs');
+    }
+    // &.2xs {
+    //     @include pepperi-button-size('2xs');
+    // }
+
+    &:hover {
+        cursor: pointer;
+
+        &.disable,
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+    &.disable,
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    // -----------------------------------------------------
+    //  Override material style
+    // -----------------------------------------------------
+    &.mat-button {
+        border-radius: $border-radius-md; // override material.
+        
+        .mat-button-wrapper {
+            line-height: inherit;
+            height: inherit;
+            // width: inherit;
+            width: 100%;
+            // display: inline;
+
+            @include align-center();
+            // display: inline-flex;
+            // justify-content: center;
+            
+            .pepperi-btn-text {
+                display: block;
+                @include ellipsis();
+                max-width: inherit;
+            }
+            .mat-icon {
+                @include align-center();
+                // display: inline-flex !important;
+                // align-items: center;
+                // justify-content: center;
+                vertical-align: unset; // Init material middle style
+
+                line-height: inherit;
+                height: inherit;
+                // width: inherit;
+
+                .svg-icon {
+                    height: 1rem;
+                    width: 1rem;
+                }
+            }
+        }
+
+        .mat-badge-content {
+            @include mat-badge-content();
+        }
+
+        &.right-alignment {
+            .mat-badge-content {
+                left: calc(#{$spacing-xs} * -1) !important;
+            }
+        }
+
+        &.left-alignment {
+            .mat-badge-content {
+                right: calc(#{$spacing-xs} * -1) !important;
+            }
+        }
+
+        &.mat-badge-small {
+            .mat-badge-content {
+                font-size: 70%;
+                @include calc(max-width, '100% + .5rem');
+            }
+        }
+    }
+
+    .button-title {
+        @include ellipsis();
+        @include calc(max-width, '100%'); // For none icon
+    }
+
+    .button-title-with-icon {
+        @include ellipsis();
+        @include calc(max-width, '100% - 1rem'); // For icon if exist
+    }
+}
+
+@mixin pepperi-button-theme($pepperi-theme) {
+    .pepperi-button {
+        outline: unset;
+
+        &.weak {
+            @include pepperi-button-state-weak($pepperi-theme);
+            
+            &.system-primary {
+                @include pepperi-button-state-weak($pepperi-theme, color-system-primary);
+            }
+            &.user-primary {
+                @include pepperi-button-state-weak($pepperi-theme, color-user-primary);
+            }
+            &.user-secondary {
+                @include pepperi-button-state-weak($pepperi-theme, color-user-secondary);
+            }
+            &.caution {
+                @include pepperi-button-state-weak($pepperi-theme, color-system-caution);
+            }
+            &.success {
+                @include pepperi-button-state-weak($pepperi-theme, color-system-success);
+            }
+            &.invert {
+                @include state-weak-invert-default($pepperi-theme);
+                
+                &:hover {
+                    @include state-weak-invert-hover($pepperi-theme);
+                }
+                &:focus {
+                    @include state-weak-invert-focus($pepperi-theme);
+                }
+                &:active {
+                    @include state-weak-invert-active($pepperi-theme);
+                }
+                &:disabled {
+                    @include state-weak-invert-disable($pepperi-theme);
+                }
+            }
+        }
+        
+        &.regular {
+            @include pepperi-button-state-regular($pepperi-theme);
+
+            &.system-primary {
+                @include pepperi-button-state-regular($pepperi-theme, color-system-primary);
+            }
+            &.user-primary {
+                @include pepperi-button-state-regular($pepperi-theme, color-user-primary);
+            }
+            &.user-secondary {
+                @include pepperi-button-state-regular($pepperi-theme, color-user-secondary);
+            }
+            &.caution {
+                @include pepperi-button-state-regular($pepperi-theme, color-system-caution);
+            }
+            &.success {
+                @include pepperi-button-state-regular($pepperi-theme, color-system-success);
+            }
+        }
+
+        &.strong {
+            @include pepperi-button-state-strong($pepperi-theme);
+
+            &.system-primary {
+                @include pepperi-button-state-strong($pepperi-theme, color-system-primary);
+            }
+            &.user-primary {
+                @include pepperi-button-state-strong($pepperi-theme, color-user-primary);
+            }
+            &.user-secondary {
+                @include pepperi-button-state-strong($pepperi-theme, color-user-secondary);
+            }
+            &.caution {
+                @include pepperi-button-state-strong($pepperi-theme, color-system-caution);
+            }
+            &.success {
+                @include pepperi-button-state-strong($pepperi-theme, color-system-success);
+            }
+        }
+        
+        &.none {
+            @include pepperi-button-state-none($pepperi-theme);
+        }
+
+        &.focused {
+            @include focus($pepperi-theme, true);
+        }
+
+        &.mat-button {
+            @include pepperi-badge($pepperi-theme);
+
+            &:hover {
+                .mat-button-focus-overlay {
+                    opacity: 0; // Override material default.
+                }
+            }
+        }
+    }
+}
+

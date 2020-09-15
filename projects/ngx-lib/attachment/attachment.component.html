@@ -1,0 +1,55 @@
+<!-- New code -->
+<ng-template #pepperiTemplate>
+    <files-uploader [key]="key" [src]="src" [label]="label" [required]="required" [disabled]="disabled"
+        [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
+        [layoutType]="layoutType" [standAlone]="standAlone" (fileChanged)="onFileChanged($event)"
+        (elementClicked)="onFileClicked($event)" [acceptedExtensions]="acceptAttachmentType">
+    </files-uploader>
+</ng-template>
+
+<ng-template #pepperiReadonlyTemplate>
+    <ng-container *ngIf="src?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
+    <ng-template #notEmptyBlock>
+        <div class="pepperi-file-container">
+            <a [id]="key" class="color-link body-sm pepperi-card-input " *ngIf="src != null" title="{{ src }}"
+                target="_blank" href="{{ src }}">{{ src }}</a>
+        </div>
+    </ng-template>
+    <ng-template #emptyBlock>
+        <span>&nbsp;</span>
+    </ng-template>
+</ng-template>
+
+<ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm">
+    <div class="pepperi-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone }">
+        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+            [showTitle]="showTitle">
+        </pep-field-title>
+        <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiCard">
+    <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock"></ng-container>
+    <ng-template #selectedBlock>
+        <div class="pepperi-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone}">
+            <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+        </div>
+    </ng-template>
+    <ng-template #notSelectedBlock>
+        <ng-container *ngTemplateOutlet="pepperiReadonlyTemplate"></ng-container>
+    </ng-template>
+</ng-container>
+
+
+<ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable">
+    <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock"></ng-container>
+    <ng-template #selectedBlock>
+        <div class="pepperi-file-container one-row">
+            <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+        </div>
+    </ng-template>
+    <ng-template #notSelectedBlock>
+        <ng-container *ngTemplateOutlet="pepperiReadonlyTemplate"></ng-container>
+    </ng-template>
+</ng-container>

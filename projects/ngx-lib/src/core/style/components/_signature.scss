@@ -1,0 +1,12 @@
+// -----------------------------------------------------
+//  Pepperi - Signature
+// -----------------------------------------------------
+@mixin pepperi-signature-theme($pepperi-theme) {
+    .pepperi-file-container {
+        .modal-dialog {
+            .modal-content {
+                color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+            }
+        }
+    }
+}

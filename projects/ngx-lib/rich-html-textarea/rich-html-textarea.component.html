@@ -1,0 +1,162 @@
+<ng-container [formGroup]="form">
+    <!-- New code -->
+    <ng-template #pepperiTemplate let-isFormView="isFormView">
+        <div class="pepperi-textarea-container" [ngClass]="{ 'right-alignment': xAlignment == '2', 'one-row': !isFormView && rowSpan === 1, 'stand-alone': standAlone,
+            'pepperi-textarea-card-container': layoutType === LAYOUT_TYPE.PepperiCard  }">
+            <pep-field-title *ngIf="isFormView" [label]="label" [required]="required" [disabled]="disabled"
+                [maxFieldCharacters]="maxFieldCharacters" [xAlignment]="xAlignment" [showTitle]="showTitle">
+            </pep-field-title>
+            <mat-form-field appearance="outline" dir="{{ xAlignment == '2' ? 'rtl' : 'ltr' }}"
+                [ngClass]="{ 'pepperi-table-textarea': layoutType === LAYOUT_TYPE.PepperiTable }">
+                <textarea [hidden]="true" matInput [formControlName]="key"></textarea>
+                <div class="body-sm rich-text-cont {{readonly ? 'disable-scroll' : ''}} ql-editor "
+                    [ngStyle]="{ 'text-align': xAlignment == '2' ? 'right' : 'left' }" [innerHtml]="value | safeHtml"
+                    [style.height]="fieldHeight">
+                </div>
+                <!-- <pep-textbox-icon *ngIf="xAlignment == '2'" matPrefix [value]="value" [label]="label"
+                    [type]="controlType" [disabled]="disabled"
+                    [ngClass]="{ 'card-one-row-icon': layoutType === LAYOUT_TYPE.PepperiCard && rowSpan === 1 }"
+                    (iconClicked)="openDialog()">
+                </pep-textbox-icon> -->
+                <pep-textbox-icon matSuffix [value]="value" [label]="label" [type]="controlType" [disabled]="disabled"
+                    [ngClass]="{ 'card-one-row-icon': layoutType === LAYOUT_TYPE.PepperiCard && rowSpan === 1 }"
+                    (iconClicked)="openDialog()">
+                </pep-textbox-icon>
+                <mat-error>
+                    <span class="body-xs"
+                        [title]="required && value.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
+                        [innerText]="required && value.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </ng-template>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm">
+        <ng-container *ngTemplateOutlet="pepperiTemplate; context: { isFormView: true }"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiCard">
+        <div class="pepperi-textarea-card-container card-flex-container"
+            [ngClass]="{'one-row': rowSpan === 1, 'pepperi-button weak': isActive && !disabled }"
+            [ngStyle]="{ '-webkit-line-clamp': rowSpan }" [class]="'text-align-' + xAlignment"
+            (click)="!disabled ? cardTemplateClicked($event) : ''" [style.height]="fieldHeight">
+            <span *ngIf="showTitle && label != ''" class="body-xs title no-shrink"
+                title="{{ label }}">{{ label }}:&nbsp;</span>
+            <span [id]="key" class="body-sm value wrap" [innerHtml]="value | safeHtml"></span>
+            <button *ngIf="isActive && !disabled" class="pepperi-button weak card-edit-button self-start"
+                [ngClass]="{'self-end' : value && value !== ''}" mat-button>
+                <mat-icon>
+                    <pep-icon name="system_edit">
+                    </pep-icon>
+                </mat-icon>
+            </button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable">
+        <ng-container *ngIf="isActive && !disabled; then selectedBlock; else notSelectedBlock"></ng-container>
+        <ng-template #selectedBlock>
+            <ng-container *ngTemplateOutlet="pepperiTemplate; context: { isFormView: false }"></ng-container>
+        </ng-template>
+        <ng-template #notSelectedBlock>
+            <ng-container *ngIf="value?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
+            <ng-template #notEmptyBlock>
+                <div class="pepperi-textarea-card-container card-flex-container one-row">
+                    <span [id]="key" class="wrap" [innerHtml]="value | safeHtml"></span>
+                </div>
+            </ng-template>
+            <ng-template #emptyBlock>
+                <span>&nbsp;</span>
+            </ng-template>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.Editmodal">
+        <ng-container *ngTemplateOutlet="pepperiTemplate; context: { isFormView: true }"></ng-container>
+    </ng-container>
+</ng-container>
+
+
+<ng-template #richTextEditorDialogTemplate>
+    <div class="rich-text-editor-container">
+        <button mat-button [mat-dialog-close]="null" class="pepperi-button icon-button md weak pull-right flip">
+            <mat-icon>
+                <pep-icon name="system_close">
+                </pep-icon>
+            </mat-icon>
+        </button>
+        <ng-container *ngTemplateOutlet="quilTemplate"></ng-container>
+        <div mat-dialog-actions class="pepperi-border-top">
+            <div class="spacing-element-negative">
+                <button mat-button [mat-dialog-close]="quillContent || ''" [disabled]="disabled"
+                    class="spacing-element pepperi-button md strong pull-right flip">
+                    {{'ACTIONS.SAVE' | translate}}
+                </button>
+                <button mat-button [mat-dialog-close]="null"
+                    class="spacing-element pepperi-button md weak pull-right flip">
+                    {{'ACTIONS.CANCEL' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #quilTemplate>
+    <quill-editor id="quill-editor" placeholder="{{'RICH_TEXTAREA.HINT' | translate}}" [(ngModel)]="quillContent"
+        [sanitize]="true" [readOnly]="disabled" [maxLength]="maxFieldCharacters" [required]="required" theme="">
+        <div *ngIf="!disabled" quill-editor-toolbar class="spacing-element-negative pepperi-border-bottom">
+            <!-- <span class="ql-formats">
+                <select class="spacing-element pepperi-button icon-button md weak ql-font">
+                    <option selected></option>
+                    <option value="serif"></option>
+                    <option value="monospace"></option>
+                </select>
+                <select class="spacing-element pepperi-button icon-button md weak ql-size">
+                    <option value="small"></option>
+                    <option selected></option>
+                    <option value="large"></option>
+                    <option value="huge"></option>
+                </select>
+            </span> -->
+            <!-- <span class="ql-formats">
+                <select class="spacing-element pepperi-button icon-button md weak ql-header">
+                    <option value="1"></option>
+                    <option value="2"></option>
+                    <option value="3"></option>
+                    <option value="4"></option>
+                    <option value="5"></option>
+                    <option value="6"></option>
+                    <option value="false" selected></option>
+                </select>
+            </span> -->
+            <span class="ql-formats">
+                <button mat-button class="spacing-element pepperi-button icon-button md weak ql-bold"></button>
+                <button mat-button class="spacing-element pepperi-button icon-button md weak ql-italic"></button>
+                <button mat-button class="spacing-element pepperi-button icon-button md weak ql-underline"></button>
+                <!-- <button mat-button class="spacing-element pepperi-button icon-button md weak ql-strike"></button> -->
+            </span>
+            <span class="ql-formats">
+                <button mat-button class="spacing-element pepperi-button icon-button md weak ql-link"></button>
+                <button mat-button class="spacing-element pepperi-button icon-button md weak ql-image"></button>
+            </span>
+            <span class="ql-formats">
+                <button mat-button class="spacing-element pepperi-button icon-button md weak ql-list"
+                    value="ordered"></button>
+                <button mat-button class="spacing-element pepperi-button icon-button md weak ql-list"
+                    value="bullet"></button>
+            </span>
+            <span class="ql-formats">
+                <select class="spacing-element pepperi-button icon-button md weak ql-color"></select>
+                <!-- <select class="spacing-element pepperi-button icon-button md weak ql-background"></select> -->
+            </span>
+            <span class="ql-formats">
+                <select class="spacing-element pepperi-button icon-button md weak ql-align">
+                    <option selected></option>
+                    <option value="center"></option>
+                    <option value="right"></option>
+                    <option value="justify"></option>
+                </select>
+            </span>
+        </div>
+    </quill-editor>
+</ng-template>

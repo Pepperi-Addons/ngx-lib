@@ -1,0 +1,43 @@
+<ng-container *ngIf="inDialog; then galleryDialogTemplate; else regularTemplate"></ng-container>
+<ng-template #regularTemplate>
+    <ng-container [formGroup]="form">
+        <div class="images-filmstrip-container">
+            <pep-field-title [label]="label" [xAlignment]="xAlignment" [showTitle]="showTitle">
+            </pep-field-title>
+            <div #galleryCont class="img-wrapper" [ngClass]="isVertical ? 'vertical-gallery' : 'horizontal-gallery'"
+                [style.height]="fieldHeight">
+                <gallery id="{{key}}-{{objectId}}-gallery" (itemClick)="enlargeImage($event);"
+                    (indexChange)="indexChange($event)" (error)="onError($event)">
+                </gallery>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #galleryDialogTemplate>
+    <h2 mat-dialog-title class="pepperi-border-bottom">
+        <span class="pull-left flip">{{ label }}</span>
+        <button mat-button [mat-dialog-close]="null" class="pepperi-button icon-button md weak pull-right flip">
+            <mat-icon>
+                <pep-icon name="system_close">
+                </pep-icon>
+            </mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content #galleryDialogCont>
+        <gallery id="{{key}}-{{objectId}}-dlgGallery" [itemTemplate]="itemTemplate" (indexChange)="indexChange($event)"
+            [style.height.px]="'auto'" (error)="onError($event)">
+        </gallery>
+    </div>
+</ng-template>
+
+<!-- Add custom template to image items -->
+<ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
+    <!-- <span *ngIf="type === 'image' && index === currIndex" [@slideAnimation] class="item-text">
+        {{data?.title}}
+    </span> -->
+    <ngx-imageviewer id="ngxViewerImage" #ngxViewerImage [src]="data.src"></ngx-imageviewer>
+    <!-- <ngx-image-viewer #ngxViewerImage [config]="{ btnShow:{zoomIn: false, zoomOut: false }}" [src]="[data.src]"
+        (wheel)="scrollFunction($event)">
+    </ngx-image-viewer> -->
+</ng-template>

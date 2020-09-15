@@ -1,0 +1,25 @@
+<h2 mat-dialog-title *ngIf="data?.showHeader" class="pepperi-border-bottom">
+    <span class="pull-left flip" *ngIf="data?.title?.length">{{ data?.title }}</span>
+    <button mat-button [mat-dialog-close]="null" class="pepperi-button icon-button md weak pull-right flip">
+        <mat-icon>
+            <pep-icon name="system_close">
+            </pep-icon>
+        </mat-icon>
+    </button>
+</h2>
+<div mat-dialog-content>
+    <span *ngIf="data?.contentType === DialogDataType.Text || data?.contentType === DialogDataType.Html"
+        [innerHtml]="data?.content | safeHtml"></span>
+    <textarea *ngIf="data?.contentType === DialogDataType.TextArea" [readonly]="data?.contentData?.disabled"
+        [name]="data?.contentData?.key" (blur)="updateContent($event);">{{ data?.content }}</textarea>
+</div>
+<div mat-dialog-actions *ngIf="data?.showFooter" class="pepperi-border-top">
+    <div class="spacing-element-negative">
+        <button mat-button class="spacing-element pepperi-button md strong pull-right flip" (click)="save()">
+            {{ 'ACTIONS.SAVE' | translate }}
+        </button>
+        <button mat-button [mat-dialog-close]="null" class="spacing-element pepperi-button md weak pull-right flip">
+            {{ 'ACTIONS.CANCEL' | translate }}
+        </button>
+    </div>
+</div>

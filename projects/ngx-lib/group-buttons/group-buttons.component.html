@@ -1,0 +1,44 @@
+<div class="group-buttons-container" pepRtlDirection>
+    <ng-container *ngIf="viewType == GROUP_BUTTONS_VIEW_TYPE.Regular">
+        <button *ngFor="let button of buttons"
+            class="pepperi-button spacing-element pull-left flip first-button mat-button {{ buttonsClass }}"
+            [disabled]="buttonsDisabled" mat-button (click)="button?.Callback($event)">
+            <span>{{ button?.Value }}</span>
+        </button>
+    </ng-container>
+
+    <div *ngIf="viewType == GROUP_BUTTONS_VIEW_TYPE.Dropdown" class="dropdown-buttons spacing-element"
+        [ngClass]="{dropup: screenSize >= 2}">
+        <button class="pepperi-button pull-left flip first-button mat-button {{ buttonsClass }}"
+            (click)="buttons[0]?.Callback($event)" [disabled]="buttonsDisabled" mat-button>
+            <span class="pepperi-btn-text">{{ buttons[0]?.Value }}</span>
+        </button>
+        <button class="pepperi-button icon-button pull-right flip last-button mat-button {{ buttonsClass }}"
+            [matMenuTriggerFor]="actionsMenu" [disabled]="buttonsDisabled" pepMenuBlur mat-button>
+            <mat-icon>
+                <pep-icon name="{{ screenSize < 2 ? 'arrow_down' : 'arrow_up' }}">
+                </pep-icon>
+            </mat-icon>
+        </button>
+
+        <mat-menu #actionsMenu="matMenu" xPosition="before">
+            <ng-container *ngFor="let button of buttons; let i = index; first as isFirst">
+                <button *ngIf="!isFirst" mat-menu-item (click)="button?.Callback($event)">
+                    <span>{{ button?.Value }}</span>
+                </button>
+            </ng-container>
+        </mat-menu>
+    </div>
+    <div *ngIf="viewType == GROUP_BUTTONS_VIEW_TYPE.Split" class="split-buttons">
+        <button *ngFor="let button of buttons; let index; let isFirst = first; let isLast = last"
+            class="pepperi-button  split-button mat-button {{ buttonsClass }} {{ button?.Class }} pull-left flip"
+            [ngClass]="{'first-button': isFirst, 'middle-button': !isFirst && !isLast, 'last-button': isLast, 'icon-button': button?.Icon}"
+            [disabled]="buttonsDisabled" mat-button (click)="button?.Callback($event)">
+            <mat-icon *ngIf="button?.Icon">
+                <pep-icon name="{{button?.Icon}}" (click)="button?.Callback($event)">
+                </pep-icon>
+            </mat-icon>
+            <span *ngIf="button?.Value">{{ button?.Value }}</span>
+        </button>
+    </div>
+</div>

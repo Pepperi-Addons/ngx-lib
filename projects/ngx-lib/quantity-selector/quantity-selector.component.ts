@@ -1,0 +1,421 @@
+import {
+    Component,
+    OnInit,
+    OnChanges,
+    OnDestroy,
+    Input,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    Renderer2,
+    AfterViewChecked,
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { LAYOUT_TYPE, STYLE_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
+
+import * as $ from 'jquery';
+
+@Component({
+    selector: 'pep-quantity-selector',
+    templateUrl: './quantity-selector.component.html',
+    styleUrls: ['./quantity-selector.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        trigger('showHide', [
+            state(
+                'show',
+                style({
+                    opacity: 1,
+                    transform: 'scale(1)',
+                })
+            ),
+            state(
+                'hide',
+                style({
+                    opacity: 0,
+                    transform: 'scale(0)',
+                })
+            ),
+            transition('show => hide', animate('250ms ease-out')),
+            transition('hide => show', animate('250ms ease-in')),
+        ]),
+    ],
+})
+export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
+    public static ENTER_CHILDREN = '[EnterChildren]';
+    public static ENTER_PACKAGE = '[EnterPackage]';
+
+    @Input() key = '';
+    @Input() value = '';
+    @Input() formattedValue = '';
+    @Input() label = '';
+    @Input() type = 'qs';
+    @Input() required = false;
+    @Input() disabled = false;
+    @Input() readonly = false;
+    @Input() textColor = '';
+    @Input() xAlignment = '0';
+    @Input() rowSpan = 1;
+    @Input() lastFocusField: any;
+    @Input() alowDecimal = false;
+    @Input() additionalValue = '';
+    @Input() notificationInfo: any;
+
+    controlType = 'qs';
+
+    @Input() form: FormGroup = null;
+    @Input() showTitle = true;
+    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() isActive = false;
+
+    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() elementClicked: EventEmitter<any> = new EventEmitter<any>();
+
+    @ViewChild('QSCont') QSCont: ElementRef;
+    @ViewChild('QSInput') QSInput: ElementRef;
+
+    LAYOUT_TYPE = LAYOUT_TYPE;
+    standAlone = false;
+    isFocus = false;
+    isMatrixFocus = false;
+
+    isCaution = false;
+    messages: Array<any> = null;
+    showQsBtn = false;
+    resize: any;
+
+    sameElementInTheWantedRow = null;
+    STYLE_TYPE = STYLE_TYPE;
+    styleClass = STYLE_TYPE.Strong;
+    isEmptyKey = false;
+
+    constructor(
+        private cd: ChangeDetectorRef,
+        private customizationService: CustomizationService,
+        private renderer: Renderer2,
+        private element: ElementRef
+    ) { }
+
+    ngOnInit(): void {
+        if (this.form === null) {
+            if (this.key === '') {
+                this.isEmptyKey = true;
+            }
+
+            this.standAlone = true;
+            this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            this.formattedValue = this.formattedValue || this.value;
+
+            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+        }
+
+        this.setQsView();
+        // TODO:
+        // const self = this;
+        // this.resize = Observable.fromEvent(window, 'resize')
+        //     .debounceTime(100)
+        //     .subscribe((event) => {
+        //         self.setQsView();
+        //     });
+    }
+
+    // TODO:
+    ngAfterViewChecked(): void {
+        setTimeout(() => {
+            this.setQsView();
+        }, 125);
+    }
+
+    ngOnChanges(changes: any): void {
+        // Bug fix for addons when the key is '' in the ngOnInit for some reson
+        if (this.isEmptyKey && this.key !== '') {
+            this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+        }
+
+        this.isCaution = this.textColor === '#FF0000';
+
+        const messages = this.notificationInfo && this.notificationInfo.length > 0 ? JSON.parse(this.notificationInfo).Messages : '';
+        if (messages && messages.length > 0) {
+            // Replace the msg keys.
+            for (const msg of messages) {
+                if (msg.Key === 'Inventory_Limit_Msg') {
+                    msg.Key = 'MESSAGES.ERROR_INVENTORY_LIMIT';
+                } else if (msg.Key === 'Case_Quantity_Limit_Msg') {
+                    msg.Key = 'MESSAGES.ERROR_CASE_QUANTITY_LIMIT';
+                } else if (msg.Key === 'Min_Quantity_Limit_Msg') {
+                    msg.Key = 'MESSAGES.ERROR_MIN_QUANTITY_LIMIT';
+                } else if (msg.Key === 'Max_Quantity_Limit_Msg') {
+                    msg.Key = 'MESSAGES.ERROR_MAX_QUANTITY_LIMIT';
+                }
+            }
+
+            this.messages = messages;
+
+            const fieldControl = this.form.controls[this.key];
+            fieldControl.setErrors({
+                serverError: 'Error',
+            });
+            setTimeout(() => {
+                if (this.QSInput && this.QSInput.nativeElement) {
+                    this.QSInput.nativeElement.focus();
+                }
+            }, 150);
+        } else {
+            const self = this;
+            setTimeout(() => {
+                if (self.lastFocusField) {
+                    self.lastFocusField.focus();
+                    self.lastFocusField = null;
+                } else {
+                    self.focusToTheSameElementInTheWantedRow();
+                }
+            }, 100);
+        }
+    }
+
+    ngOnDestroy(): void {
+        if (this.resize) {
+            this.resize.unsubscribe();
+        }
+
+        if (this.valueChanged) {
+            this.valueChanged.unsubscribe();
+        }
+
+        if (this.elementClicked) {
+            this.elementClicked.unsubscribe();
+        }
+    }
+
+    get getAdditionalValue(): string {
+        return this.additionalValue.length > 0 ? 'show' : 'hide';
+    }
+
+    getSameElementInTheWantedRowByClassName(event: any, isNext = true): any {
+        const eventTarget = event.target || event.srcElement;
+        let sameElementInTheWantedRowByClassName;
+
+        let parentSelector;
+        if (this.layoutType === LAYOUT_TYPE.PepperiTable) {
+            parentSelector = sameElementInTheWantedRowByClassName = $(eventTarget).parents('.table-row');
+        } else if (this.layoutType === LAYOUT_TYPE.PepperiCard) {
+            parentSelector = sameElementInTheWantedRowByClassName = $(eventTarget).parents('.card-view');
+
+            if (parentSelector.length === 0) {
+                parentSelector = sameElementInTheWantedRowByClassName = $(eventTarget).parents('.line-view');
+            }
+        }
+
+        if (isNext) {
+            if (parentSelector.is(':last-child')) {
+                sameElementInTheWantedRowByClassName = parentSelector
+                    .parent()
+                    .children()
+                    .first()
+                    .find('[name=' + this.key + ']');
+            } else {
+                sameElementInTheWantedRowByClassName = parentSelector.next().find('[name=' + this.key + ']');
+            }
+        } else {
+            if (parentSelector.is(':first-child')) {
+                sameElementInTheWantedRowByClassName = parentSelector
+                    .parent()
+                    .children()
+                    .last()
+                    .find('[name=' + this.key + ']');
+            } else {
+                sameElementInTheWantedRowByClassName = parentSelector.prev().find('[name=' + this.key + ']');
+            }
+        }
+
+        return sameElementInTheWantedRowByClassName;
+    }
+
+    setSameElementInTheWantedRow(event: any, isNext = true): void {
+        // Navigate to the QS in the next row.
+        // const target = event.target || event.srcElement;
+        this.sameElementInTheWantedRow = this.getSameElementInTheWantedRowByClassName(event, isNext);
+        this.QSInput.nativeElement.blur();
+    }
+
+    focusToTheSameElementInTheWantedRow(): void {
+        if (this.sameElementInTheWantedRow) {
+            // If this is regular item (qs and not button) .
+            if (this.sameElementInTheWantedRow.is('input')) {
+                this.sameElementInTheWantedRow.click().select();
+            } else {
+                this.sameElementInTheWantedRow.parent().click();
+                this.sameElementInTheWantedRow.focus();
+            }
+            this.sameElementInTheWantedRow = null;
+        }
+    }
+
+    cleanError(): void {
+        const fieldControl = this.form.controls[this.key];
+
+        // Clean the error message
+        if (this.messages && this.messages.length > 0) {
+            this.messages = this.notificationInfo = null;
+            fieldControl.setErrors(null);
+        }
+    }
+
+    onMatrixMouseEnter(event: any): void {
+        this.isMatrixFocus = true;
+    }
+
+    onMatrixMouseleave(event: any): void {
+        this.isMatrixFocus = false;
+    }
+
+    onMatrixClick(event: any): void {
+        this.isFocus = true;
+
+        if (this.QSInput && this.QSInput.nativeElement) {
+            this.QSInput.nativeElement.focus();
+        }
+    }
+
+    onMatrixBlur(event: any): void {
+        if (!event.relatedTarget || event.relatedTarget.className.indexOf('qs') < 0) {
+            this.isMatrixFocus = false;
+        }
+
+        this.onBlur(event);
+    }
+
+    onFocus(event: any): void {
+        this.isFocus = true;
+    }
+
+    onBlur(event: any): void {
+        this.isFocus = false;
+        this.cleanError();
+
+        const value = event.target ? event.target.value : event;
+
+        if (parseFloat(this.value) !== parseFloat(value)) {
+            this.value = value;
+            this.formattedValue = value;
+            this.customizationService.updateFormFieldValue(this.form, this.key, value);
+
+            // this.propagateChange(this.value, event.relatedTarget);
+            this.changeValue(this.value, event.relatedTarget);
+        } else {
+            this.focusToTheSameElementInTheWantedRow();
+        }
+    }
+
+    changeValue(value: any, lastFocusedField: any = null): void {
+        this.valueChanged.emit({ apiName: this.key, value, controlType: this.controlType, lastFocusedField });
+    }
+
+    increment(event): void {
+        if (this.standAlone) {
+            let tmp = parseFloat(this.value);
+
+            this.value = this.formattedValue = (++tmp).toString();
+            this.customizationService.updateFormFieldValue(this.form, this.key, this.value);
+        }
+
+        // this.propagateChange('+');
+        this.changeValue('+', null);
+        event.stopPropagation();
+    }
+
+    decrement(event): void {
+        if (this.standAlone) {
+            let tmp = parseFloat(this.value);
+
+            this.value = this.formattedValue = (--tmp).toString();
+            this.customizationService.updateFormFieldValue(this.form, this.key, this.value);
+        }
+
+        // this.propagateChange('-');
+        this.changeValue('-', null);
+        event.stopPropagation();
+    }
+
+    enterChildren(event): void {
+        this.elementClicked.emit({ apiName: PepperiQuantitySelectorComponent.ENTER_CHILDREN, eventWhich: event.which });
+    }
+
+    enterPackage(event): void {
+        this.elementClicked.emit({
+            apiName: PepperiQuantitySelectorComponent.ENTER_PACKAGE,
+            eventWhich: event.which, otherData: this.notificationInfo
+        });
+    }
+
+    setQsView(): void {
+        if (this.layoutType === LAYOUT_TYPE.Editmodal ||
+            this.layoutType === LAYOUT_TYPE.PepperiCard && this.rowSpan <= 1) {
+            this.showQsBtn = false;
+        } else {
+            if (this.QSCont && this.QSCont.nativeElement) {
+                this.showQsBtn = this.QSCont.nativeElement.clientWidth > 140;
+            }
+        }
+
+        // Get state class from theme.
+        // this.styleClass = this.customizationService.getThemeVariable(CustomizationService.STYLE_QS_KEY);
+        this.styleClass = document.documentElement.style.getPropertyValue(CustomizationService.STYLE_QS_KEY) as STYLE_TYPE;
+
+        if (!this.cd['destroyed']) {
+            this.cd.detectChanges();
+        }
+    }
+
+    onKeyPress(event): any {
+        let inputChar = String.fromCharCode(event.charCode);
+        const keyboardEvent = event as KeyboardEvent;
+
+        if (keyboardEvent.keyCode === 13) {
+            this.setSameElementInTheWantedRow(keyboardEvent, !keyboardEvent.shiftKey);
+            return true;
+        }
+
+        // TODO: Make it one function like in PepperiTextboxComponent
+        if (
+            /*[8, 9, 27, 13, 190].indexOf(keyboardEvent.keyCode) !== -1 ||*/
+            // Allow: Ctrl+A
+            (keyboardEvent.keyCode === 65 && keyboardEvent.ctrlKey === true) ||
+            // Allow: Ctrl+C
+            (keyboardEvent.keyCode === 67 && keyboardEvent.ctrlKey === true) ||
+            // Allow: Ctrl+V
+            (keyboardEvent.keyCode === 86 && keyboardEvent.ctrlKey === true) ||
+            // Allow: Ctrl+X
+            (keyboardEvent.keyCode === 88 &&
+                keyboardEvent.ctrlKey === true) /*||
+            // Allow: home, end, left, right
+            (keyboardEvent.keyCode >= 35 && keyboardEvent.keyCode <= 39)*/
+        ) {
+            // let it happen, don't do anything
+            return true;
+        }
+
+        if (this.alowDecimal) {
+            const decPoint = '.';
+            const thousandSeparator = ',';
+            const pattern = /^\d[\d,]*(\.\d+)?$/;
+            if (keyboardEvent.keyCode === 46) {
+                inputChar = inputChar + '0';
+            } else if (keyboardEvent.keyCode === 44) {
+                inputChar = inputChar + '000';
+            }
+            if (!pattern.test(event.target.value + inputChar)) {
+                keyboardEvent.preventDefault();
+            }
+        } else {
+            const pattern = /[0-9\+\-\ ]/;
+            if (!pattern.test(inputChar)) {
+                keyboardEvent.preventDefault();
+            }
+        }
+    }
+}

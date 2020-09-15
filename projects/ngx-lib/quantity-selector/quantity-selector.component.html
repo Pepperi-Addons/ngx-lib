@@ -1,0 +1,161 @@
+<ng-container [formGroup]="form">
+    <!-- New code -->
+    <ng-template #pepperiTemplate>
+        <div #QSCont class="pepperi-quantity-selector-container {{ styleClass }}" [ngClass]="{
+                'pepperi-table-quantity-selector': layoutType === LAYOUT_TYPE.PepperiTable,
+                'one-row': rowSpan === 1,
+                caution: isCaution,
+                'matrix-qs': type === 'qsForMatrix',
+                'zero-quantity': formattedValue === '0'
+            }">
+            <pep-field-title *ngIf="layoutType !== LAYOUT_TYPE.PepperiTable && layoutType !== LAYOUT_TYPE.PepperiCard"
+                [label]="label" [required]="required" [disabled]="disabled" [showTitle]="showTitle"
+                [xAlignment]="xAlignment">
+            </pep-field-title>
+
+            <ng-container *ngIf="type == 'qs'">
+                <ng-container *ngIf="readonly; then readonlyBlock; else editableQSBlock"></ng-container>
+                <ng-template #readonlyBlock>
+                    <button [id]="key" mat-button class="pepperi-button {{ styleClass }} ellipsis"
+                        [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                        title="{{ formattedValue }}" disabled="true">
+                        {{ formattedValue }}
+                    </button>
+                </ng-template>
+                <ng-template #editableQSBlock>
+                    <mat-form-field appearance="outline">
+                        <input type="decimalNumber" inputmode="decimal" matInput #QSInput name="{{ key }}"
+                            class="body-lg ellipsis" title="{{ formattedValue }}" autocomplete="off" [id]="key"
+                            [formControlName]="key"
+                            [value]="isFocus ? (value | quantitySelectorNumber: alowDecimal) : formattedValue"
+                            [disabled]="disabled" (keypress)="onKeyPress($event)"
+                            (click)="$event.target.setSelectionRange(0, 999)" (blur)="onBlur($event)"
+                            (focus)="onFocus($event)" />
+                        <button *ngIf="showQsBtn" mat-button matPrefix (click)="decrement($event)"
+                            class="pepperi-button icon-button sm weak qs-action"
+                            [ngClass]="{caution: isCaution && styleClass !== STYLE_TYPE.Strong, 'keep-background-on-focus': styleClass === STYLE_TYPE.Strong}">
+                            <mat-icon>
+                                <pep-icon name="number_minus">
+                                </pep-icon>
+                                <!-- <svg [pepSvgIcon]="'number-minus'"></svg> -->
+                            </mat-icon>
+                        </button>
+                        <button *ngIf="showQsBtn" mat-button matSuffix (click)="increment($event)"
+                            class="pepperi-button icon-button sm weak qs-action"
+                            [ngClass]="{caution: isCaution && styleClass !== STYLE_TYPE.Strong, 'keep-background-on-focus': styleClass === STYLE_TYPE.Strong}">
+                            <mat-icon>
+                                <pep-icon name="number_plus">
+                                </pep-icon>
+                                <!-- <svg [pepSvgIcon]="'number-plus'"></svg> -->
+                            </mat-icon>
+                        </button>
+                        <mat-error *ngIf="messages?.length > 0">
+                            <span class="qs-error body-xs" *ngFor="let msg of messages"> {{ msg.Key | translate }} :
+                                {{ msg.Value }} </span>
+                        </mat-error>
+                    </mat-form-field>
+                </ng-template>
+            </ng-container>
+
+            <ng-container *ngIf="type == 'qsForMatrix'">
+                <ng-container *ngIf="readonly; then readonlyBlock; else editableQSBlock"></ng-container>
+                <ng-template #readonlyBlock>
+                    <button [id]="key" mat-button class="pepperi-button {{ styleClass }} disabled" disabled="true"
+                        [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}">
+                        X
+                    </button>
+                </ng-template>
+                <ng-template #editableQSBlock>
+                    <!-- <span class="body-sm additional-value pull-left flip" [ngClass]="xAlignment == '2' ? 'prefix' : 'suffix'" matBadge="{{ additionalValue }}" matBadgePosition="before"
+                        matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span> -->
+
+                    <span *ngIf="xAlignment == '2'" class="body-sm additional-value prefix"
+                        matBadge="{{ additionalValue }}" matBadgePosition="before"
+                        matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
+
+                    <mat-form-field appearance="outline" (mouseleave)="!isFocus ? onMatrixMouseleave($event) : null">
+                        <input type="decimalNumber" inputmode="decimal" matInput #QSInput name="{{ key }}"
+                            title="{{ formattedValue }}" class="body-sm ellipsis" autocomplete="off" [id]="key"
+                            [formControlName]="key"
+                            [value]="isFocus ? (value | quantitySelectorNumber: alowDecimal) : formattedValue"
+                            [disabled]="disabled" (keypress)="onKeyPress($event)"
+                            (click)="onMatrixClick($event); $event.target.setSelectionRange(0, 999)"
+                            (blur)="onMatrixBlur($event)" (focus)="onMatrixMouseEnter($event); onFocus($event)"
+                            (mouseenter)="onMatrixMouseEnter($event)" />
+
+                        <!-- <span matPrefix *ngIf="xAlignment == '2'" class="body-sm additional-value prefix" matBadge="{{ additionalValue }}" matBadgePosition="before"
+                            matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
+                        <span matSuffix *ngIf="xAlignment != '2'" class="body-sm additional-value suffix" matBadge="{{ additionalValue }}" matBadgePosition="before"
+                            matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span> -->
+
+                        <mat-error *ngIf="messages?.length > 0">
+                            <span class="qs-error body-xs" *ngFor="let msg of messages"> {{ msg.Key | translate }} :
+                                {{ msg.Value }} </span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <span *ngIf="xAlignment != '2'" class="body-sm additional-value suffix"
+                        matBadge="{{ additionalValue }}" matBadgePosition="before"
+                        matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
+                </ng-template>
+            </ng-container>
+
+            <ng-container *ngIf="type == 'button'">
+                <ng-container *ngIf="value == '0'; then regularBlock; else withBadgeBlock"></ng-container>
+                <ng-template #regularBlock>
+                    <button mat-button name="{{ key }}" class="pepperi-button {{ styleClass }} ellipsis" [id]="key"
+                        [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                        [title]="'QS.ORDER' | translate" (click)="enterChildren($event)">
+                        {{ 'QS.ORDER' | translate }}
+                    </button>
+                </ng-template>
+                <ng-template #withBadgeBlock>
+                    <ng-container *ngIf="xAlignment == '2'; then leftBadgeBlock; else rightBadgeBlock">
+                    </ng-container>
+                    <ng-template #leftBadgeBlock>
+                        <button mat-button matBadge="{{ formattedValue }}" matBadgePosition="before"
+                            [matBadgeSize]="layoutType === LAYOUT_TYPE.PepperiCard && rowSpan === 1 ? 'small' : 'medium'"
+                            name="{{ key }}" class="pepperi-button {{ styleClass }} ellipsis right-alignment" [id]="key"
+                            [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                            [title]="'QS.ORDER' | translate" (click)="enterChildren($event)">
+                            {{ 'QS.ORDER' | translate }}
+                        </button>
+                    </ng-template>
+                    <ng-template #rightBadgeBlock>
+                        <button mat-button matBadge="{{ formattedValue }}" matBadgePosition="after"
+                            [matBadgeSize]="layoutType === LAYOUT_TYPE.PepperiCard && rowSpan === 1 ? 'small' : 'medium'"
+                            name="{{ key }}" class="pepperi-button {{ styleClass }} ellipsis left-alignment" [id]="key"
+                            [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                            [title]="'QS.ORDER' | translate" (click)="enterChildren($event)">
+                            {{ 'QS.ORDER' | translate }}
+                        </button>
+                    </ng-template>
+                </ng-template>
+            </ng-container>
+            <ng-container *ngIf="type == 'packageButton'">
+                <button mat-button name="{{ key }}" title="{{ 'QS.ORDER' | translate }}"
+                    class="pepperi-button {{ styleClass }} ellipsis" [id]="key"
+                    [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                    (click)="enterPackage($event)">
+                    {{ 'QS.ORDER' | translate }} &#40;{{ formattedValue }}&#41;
+                </button>
+            </ng-container>
+        </div>
+    </ng-template>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm">
+        <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiCard">
+        <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable">
+        <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.Editmodal">
+        <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+    </ng-container>
+</ng-container>

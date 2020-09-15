@@ -1,0 +1,20 @@
+{
+    "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "../../dist/ngx-lib",
+    "whitelistedNonPeerDependencies": [],
+    "assets": [
+        "**/*_theming.scss",
+        "**/*.theme.scss",
+        "**/assets/*",
+        "**/core/style/*"
+    ],
+    "lib": {
+        "entryFile": "src/public-api.ts",
+        "umdModuleIds": {
+            "@ngx-translate/core": "translate"
+        },
+        "styleIncludePaths": [
+            "../shared"
+        ]
+    }
+}

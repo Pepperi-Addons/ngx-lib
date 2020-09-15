@@ -1,0 +1,24 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+:host {
+    height: inherit;
+    /* get the height from the parent div minus header size */
+    virtual-scroll {
+        @include calc(min-height, '100% - 34px');
+    }
+}
+
+.no-data {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.table-header {
+    top:0;
+
+    &.below-header-and-top-bar {
+        top: calc(#{$header-height} + #{$top-bar-height});
+    }
+}

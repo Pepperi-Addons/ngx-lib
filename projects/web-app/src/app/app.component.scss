@@ -1,0 +1,22 @@
+.plugin-page-container {
+    // margin: 1rem;
+    padding: 1rem;
+
+    .header-content {
+        .title {
+            height: 3rem;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .main-content {
+        margin-top: 1rem;
+
+        .list-container {
+            overflow: auto;
+            height: 500px;
+        }
+    }
+}
+

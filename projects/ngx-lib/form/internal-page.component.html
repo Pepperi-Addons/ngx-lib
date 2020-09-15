@@ -1,0 +1,75 @@
+<ng-template #matrixTemplate>
+    <div class="matrix-title-container pepperi-border-bottom align-{{ field.xAlignment }}" title="{{ field.label }}">
+        <span class="block-with-text body-md">{{ field.label }}</span>
+
+        <div class="buttons-container spacing-element-negative pull-right flip">
+            <ng-container
+                *ngIf="currentViewType?.Key == 'OrderCenterMatrix' && additionalApiNames && additionalApiNames.length > 0">
+                <button class="spacing-element pepperi-button icon-button sm weak" mat-button [matMenuTriggerFor]="menu"
+                    menu-blur>
+                    <span class="pull-left flip"
+                        *ngIf="currentAdditionalApiName">&nbsp;{{ currentAdditionalApiName?.Value }}&nbsp;</span>
+
+                    <mat-icon [ngClass]="{ 'pull-left flip': currentAdditionalApiName}">
+                        <pep-icon name="system_info"></pep-icon>
+                    </mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item [ngClass]="{ selected: currentAdditionalApiName === null }"
+                        (click)="changeAdditionalApiName(null)">
+                        <span>{{ 'LIST.NONE' | translate }}</span>
+                    </button>
+                    <button mat-menu-item
+                        [ngClass]="{ selected: currentAdditionalApiName?.Key == additionalApiName?.Key }"
+                        *ngFor="let additionalApiName of additionalApiNames"
+                        (click)="changeAdditionalApiName(additionalApiName)">
+                        <span>{{ additionalApiName.Value }}</span>
+                    </button>
+                </mat-menu>
+            </ng-container>
+            <ng-container *ngIf="childViewTypes && childViewTypes.length > 1">
+                <button class="spacing-element pepperi-button icon-button sm weak" mat-button
+                    [matMenuTriggerFor]="viewsMenu" menu-blur>
+                    <mat-icon>
+                        <pep-icon name="view_card_md"></pep-icon>
+                    </mat-icon>
+                </button>
+
+                <mat-menu #viewsMenu="matMenu" xPosition="before">
+                    <button mat-menu-item [ngClass]="{ selected: currentViewType?.Key == viewType?.Key }"
+                        *ngFor="let viewType of childViewTypes" (click)="changeChildrenViewType(viewType?.Key)">
+                        <mat-icon [ngSwitch]="viewType?.Key">
+                            <pep-icon *ngSwitchCase="'OrderCenterMatrix'" name="view_matrix"></pep-icon>
+                            <pep-icon *ngSwitchCase="'OrderCenterFlatMatrixGrid'" name="view_table"></pep-icon>
+                            <pep-icon *ngSwitchCase="'OrderCenterFlatMatrixLine'" name="view_line"></pep-icon>
+                        </mat-icon>
+                        <span>{{ viewType?.Value }}</span>
+                    </button>
+                </mat-menu>
+            </ng-container>
+        </div>
+    </div>
+
+    <pep-internal-list (notifyValueChanged)="onCustomizeObjectChanged($event)"
+        (notifyFieldClicked)="onCustomizeFieldClick($event)" [totalsRow]="totalsRow"></pep-internal-list>
+</ng-template>
+
+<div id="mainViewCont" [ngStyle]="{ 'max-width': viewWidth, 'max-height': viewHeight }">
+    <div id="my1_mm" style="height:1mm;width:1mm;display:none;"></div>
+    <div *ngIf="coverChildTable && uiControl != null" class="table-cover"></div>
+    <button *ngIf="coverChildTable && uiControl != null" (click)="showMatrixDialog()"
+        class="pepperi-button strong sm table-cover-button">{{ 'INTERNAL_PAGE.CLICK_TO_ORDER' | translate }}</button>
+
+    <ng-container #orgCont></ng-container>
+</div>
+
+<!-- <div id="childGridModal" bsModal (onShown)="onShown()" (onHidden)="onHidden()" #childModal="bs-modal" class="modal"
+    tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body matrix-dialog-body">
+                <ng-container #modalCont></ng-container>
+            </div>
+        </div>
+    </div>
+</div> -->

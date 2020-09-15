@@ -1,0 +1,41 @@
+{
+    "name": "@pepperi-addons/ngx-lib",
+    "version": "0.0.3",
+    "peerDependencies": {
+        "@angular/animations": ">= 10.0.0",
+        "@angular/cdk": ">= 10.0.0",
+        "@angular/common": ">= 10.0.0",
+        "@angular/compiler": ">= 10.0.0",
+        "@angular/core": ">= 10.0.0",
+        "@angular/forms": ">= 10.0.0",
+        "@angular/material": "^10.0.0",
+        "@angular/platform-browser": ">= 10.0.0",
+        "@angular/platform-browser-dynamic": ">= 10.0.0",
+        "@ngx-translate/core": "^13.0.0",
+        "@ngx-translate/http-loader": "^6.0.0",
+        "rxjs": ">= 6.5.5"
+    },
+    "dependencies": {
+        "tslib": "^2.0.0"
+    },
+    "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.",
+    "main": "karma.conf.js",
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alonpepperi/-ngx-lib.git"
+    },
+    "keywords": [
+        "Pepperi",
+        "Components"
+    ],
+    "author": "Pepperi",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/alonpepperi/-ngx-lib/issues"
+    },
+    "homepage": "https://github.com/alonpepperi/-ngx-lib#readme"
+}

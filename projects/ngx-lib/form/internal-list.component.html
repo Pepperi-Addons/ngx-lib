@@ -1,0 +1,107 @@
+<ng-container *ngIf="totalRows == 0">
+    <div class="no-data">{{ noDataFoundMsg }}</div>
+</ng-container>
+<ng-container *ngIf="totalRows > 0">
+    <div *ngIf="isTable" #tableHeader class="table-header"
+        [ngClass]="{ 'below-header-and-top-bar' : parentScroll == null }" (mouseup)="onListResizeEnd($event)"
+        (mouseenter)="onListHeaderMouseEnter($event)" (mouseleave)="onListHeaderMouseLeave($event)"
+        (mousemove)="onListResize($event)">
+        <fieldset class="table-header-fieldset">
+            <fieldset>
+                <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="header-column pull-left flip"
+                    [ngStyle]="{ width: field.calcTitleColumnWidthString }" [ngClass]="{
+                            'is-resizing': field.ApiName === pressedColumn,
+                            'is-first': j === 0,
+                            'is-last': j === uiControl?.ControlFields?.length - 1
+                        }">
+                    <label *ngIf="field.Title != ''" id="{{ field.ApiName }}"
+                        class="header-label body-sm pull-left flip text-align-{{ field.Layout.XAlignment }}"
+                        title="{{ field.Title }}">
+                        {{ field.Title }}
+                    </label>
+                    <label *ngIf="field.Title == ''" id="{{ field.ApiName }}"
+                        class="header-label body-sm pull-left flip">&nbsp;</label>
+
+                    <div *ngIf="supportResizing" class="resizeBox pull-right flip"
+                        (mousedown)="onListResizeStart($event, field.ApiName)">
+                        <mat-icon>
+                            <pep-icon name="arrow-up" class="asc"></pep-icon>
+                        </mat-icon>
+                    </div>
+                </div>
+            </fieldset>
+        </fieldset>
+    </div>
+
+    <div #noVirtualScrollCont [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
+        <ng-container *ngTemplateOutlet="listData"></ng-container>
+    </div>
+    <ng-container *ngTemplateOutlet="listTotals"></ng-container>
+</ng-container>
+
+<ng-template #listData>
+    <ng-container *ngFor="let pepperiObjectInput of scrollItems; let index; let isFirst = first; trackBy: trackByFunc">
+        <ng-container *ngIf="isTable">
+            <div class="table-row"
+                (mouseenter)="onTableRowMouseEnter($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type)"
+                (mouseleave)="onTableRowMouseLeave($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type)"
+                [ngClass]="{
+                        highlighted: pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === selectedItemId
+                    }"
+                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || pepperiObjectInput ? 'visible' : 'hidden' }">
+                <fieldset class="table-row-fieldset"
+                    [ngStyle]="{ 'background-color': pepperiObjectInput?.Data?.BackgroundColor }">
+                    <pep-form [checkForChanges]="checkForChanges" [uiControlHeader]="uiControl"
+                        [firstFieldAsLink]="firstFieldAsLink" [pepperiObjectInput]="pepperiObjectInput"
+                        [canEditObject]="!disabled && pepperiObjectInput?.IsEditable" [objectId]="objectId"
+                        [parentId]="parentId" [searchCode]="searchCode" [lockEvents]="disableSelectionItems"
+                        [layoutType]="LAYOUT_TYPE.PepperiTable" [listType]="listType" [isActive]="
+                                (pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === selectedItemId ||
+                                pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === hoveredItemId) && !isTouchDevice
+                            " (notifyValueChanged)="onValueChanged($event)"
+                        (notifyFieldClicked)="onCustomizeFieldClick($event)"
+                        (notifyMenuItemClicked)="onCustomizeFieldMenuClicked($event)"
+                        (click)="itemClicked($event, pepperiObjectInput)" [pageType]="pageType">
+                    </pep-form>
+                </fieldset>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!isTable">
+            <div [class]="itemClass"
+                (mouseenter)="onCardMouseEnter($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type)"
+                (mouseleave)="onCardMouseLeave($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type)"
+                [ngClass]="{
+                        highlighted: pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === selectedItemId,
+                        cardView: isCardView
+                    }" class="pull-left flip"
+                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || pepperiObjectInput ? 'visible' : 'hidden' }">
+                <pep-form [firstFieldAsLink]="isCardView ? firstFieldAsLink : false" [checkForChanges]="checkForChanges"
+                    [uiControlHeader]="uiControl" [pepperiObjectInput]="pepperiObjectInput" [isCardView]="isCardView"
+                    [canEditObject]="!disabled && pepperiObjectInput?.IsEditable" [objectId]="objectId"
+                    [parentId]="parentId" [searchCode]="searchCode" [lockEvents]="disableSelectionItems"
+                    [layoutType]="getThumbnailsLayout()" [listType]="listType" [isActive]="
+                            (pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === selectedItemId ||
+                                pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === hoveredItemId) && !isTouchDevice
+                        " (notifyValueChanged)="onValueChanged($event)"
+                    (notifyFieldClicked)="onCustomizeFieldClick($event)"
+                    (notifyMenuItemClicked)="onCustomizeFieldMenuClicked($event)"
+                    (click)="itemClicked($event, pepperiObjectInput)" [pageType]="pageType">
+                </pep-form>
+            </div>
+        </ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #listTotals>
+    <div *ngIf="totalsRow?.length > 0 && totalsRow.length <= uiControl?.ControlFields.length" class="table-total">
+        <fieldset class="table-header-fieldset">
+            <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="total-column pull-left flip"
+                [ngStyle]="{ width: field.calcTitleColumnWidthString }">
+                <label class="total-label body-sm text-align-{{ field.Layout.XAlignment }}">
+                    {{ totalsRow[j] }}
+                </label>
+            </div>
+        </fieldset>
+    </div>
+</ng-template>

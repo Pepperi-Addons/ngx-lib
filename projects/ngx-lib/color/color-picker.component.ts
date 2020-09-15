@@ -1,0 +1,175 @@
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { hex2hsl, hslString2hsl, rgbString2hsl, HslColor, findClosestAccessibleColor, hsl2hex, convertHslToStringHsl } from './color-utils';
+import { PepColorType } from './color.model';
+
+export enum ContrastRatioType {
+    AA = 4.5,
+    AAA = 7
+}
+
+export interface ColorPickerDialogData {
+    value: string;
+    type: PepColorType;
+    showAAComplient: boolean;
+    textColor: string;
+    contrastRatio: ContrastRatioType;
+}
+
+@Component({
+    templateUrl: './color-picker.component.html',
+    styleUrls: ['./color-picker.component.scss']
+})
+export class PepperiColorPickerComponent implements OnInit {
+
+    static CURRENT_HUE = '--pep-color-picker-current-hue';
+
+    PepColorType = PepColorType;
+    checkAAComplient = true;
+
+    constructor(
+        private dialogRef: MatDialogRef<PepperiColorPickerComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: ColorPickerDialogData
+    ) {
+        this.data.type = data ? data.type : PepColorType.AnyColor;
+        this.data.showAAComplient = data && data.showAAComplient === undefined ? true : (data ? data.showAAComplient : false);
+        this.data.textColor = data && data.textColor ? data.textColor : '#fff';
+        this.data.contrastRatio = data && data.contrastRatio ? data.contrastRatio : ContrastRatioType.AA;
+    }
+
+    currentHue = 100;
+    currentHueMin = 0;
+    currentHueMax = 360;
+
+    currentSaturation = 50;
+    currentSaturationMin = 0;
+    currentSaturationMax = 100;
+
+    currentLightness = 50;
+    currentLightnessMin = 0;
+    currentLightnessMax = 100;
+
+    complientColor: string;
+    isUserChooseAAComplientColor: boolean;
+
+    ngOnInit(): void {
+        this.initVars();
+        this.checkAAComplient = this.data.showAAComplient;
+        this.convertValueStringToColor(this.data.value);
+    }
+
+    initVars(): void {
+        if (this.data.type === PepColorType.MainColor) {
+            this.currentLightnessMax = 10;
+            this.currentLightness = 5;
+        } else if (this.data.type === PepColorType.SuccessColor) {
+            this.currentHueMin = 70;
+            this.currentHueMax = 150;
+            this.currentHue = 100;
+
+            this.currentSaturationMin = 50;
+            this.currentSaturationMax = 100;
+            this.currentSaturation = 50;
+
+            this.currentLightnessMin = 10;
+            this.currentLightnessMax = 65;
+            this.currentLightness = 50;
+        } else if (this.data.type === PepColorType.CautionColor) {
+            this.currentHueMin = -20;
+            this.currentHueMax = 20;
+            this.currentHue = 10;
+
+            this.currentSaturationMin = 75;
+            this.currentSaturationMax = 100;
+            this.currentSaturation = 75;
+
+            this.currentLightnessMin = 25;
+            this.currentLightnessMax = 75;
+            this.currentLightness = 50;
+        }
+    }
+
+    setCurrentHueInCss(): void {
+        document.documentElement.style.setProperty(PepperiColorPickerComponent.CURRENT_HUE, this.currentHue.toString());
+    }
+
+    convertValueStringToColor(color): void {
+        if (color.indexOf('hsl') === 0) {
+            const hsl = hslString2hsl(color);
+            this.convertColorToValueString(hsl);
+        } else if (color.indexOf('rgb') === 0) {
+            const hsl = rgbString2hsl(color);
+            this.convertColorToValueString(hsl);
+        } else if (color.indexOf('#') === 0) {
+            const hsl = hex2hsl(color);
+            this.convertColorToValueString(hsl);
+        } else {
+            // Handle other colors.
+        }
+
+        this.setCurrentHueInCss();
+    }
+
+    convertColorToValueString(hslColor: HslColor): void {
+        // Regular hue
+        if (hslColor.h >= this.currentHueMin && hslColor.h <= this.currentHueMax) {
+            this.currentHue = hslColor.h;
+        } else if (this.currentHueMin < 0 && hslColor.h >= 0 && hslColor.h <= 360) {
+            // For min with - (change to the other side of the circle)
+            hslColor.h = hslColor.h - 360;
+
+            if (hslColor.h >= this.currentHueMin && hslColor.h <= this.currentHueMax) {
+                this.currentHue = hslColor.h;
+            }
+        }
+
+        this.currentSaturation =
+            (hslColor.s >= this.currentSaturationMin &&
+             hslColor.s <= this.currentSaturationMax) ?
+                hslColor.s : this.currentSaturation;
+
+        this.currentLightness =
+            (hslColor.l >= this.currentLightnessMin &&
+             hslColor.l <= this.currentLightnessMax) ?
+                hslColor.l : this.currentLightness;
+
+        // Write the value (if hue is changed to the other side of the circle return it back).
+        const hsl = { h: this.currentHue, s: this.currentSaturation, l: this.currentLightness };
+        this.data.value = convertHslToStringHsl(hsl);
+
+        // Check the contrast ratio - set the closest accessible color to complientColor
+        // and update isUserChooseAAComplientColor.
+        const adjustableColor = hsl2hex(hsl);
+        const closestHex = findClosestAccessibleColor(adjustableColor, this.data.textColor, this.data.contrastRatio);
+
+        this.isUserChooseAAComplientColor = adjustableColor === closestHex;
+        this.complientColor = convertHslToStringHsl(hex2hsl(closestHex));
+    }
+
+    onHueChange(event): void {
+        this.convertColorToValueString({ h: event.value });
+        this.setCurrentHueInCss();
+    }
+
+    onSaturationChange(event): void {
+        // this.currentSaturation = event.value;
+        this.convertColorToValueString({ s: event.value });
+    }
+
+    onLightnessChange(event): void {
+        // this.currentLightness = event.value;
+        this.convertColorToValueString({ l: this.currentLightnessMax - event.value + this.currentLightnessMin });
+    }
+
+    onColorValueChange(event): void {
+        this.convertValueStringToColor(event.value);
+    }
+
+    onSave(event): void {
+        const color = this.checkAAComplient ? this.complientColor : this.data.value;
+
+        // this.notify.emit({ key: this.key, value: color });
+        this.dialogRef.close(color);
+    }
+
+}

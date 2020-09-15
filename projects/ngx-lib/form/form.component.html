@@ -1,0 +1,139 @@
+<fieldset *ngIf="form" [formGroup]="form" [disabled]="isLocked" class="pepperi-form"
+    [ngStyle]="{ 'background-color': layoutType == LAYOUT_TYPE.PepperiCard && pepperiObjectInput?.Data?.BackgroundColor }"
+    [ngClass]="{
+        'material-form': layoutType == LAYOUT_TYPE.PepperiForm,
+        cardView: isCardView == true
+    }">
+    <!-- New Form -->
+    <mat-grid-list *ngIf="layoutType == LAYOUT_TYPE.PepperiForm" [cols]="columns" [rowHeight]="rowHeight + 'rem'"
+        [gutterSize]="formGutterSize">
+        <mat-grid-tile *ngFor="let field of fields" [rowspan]="field.rowSpan" [colspan]="field.colSpan">
+            <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
+                [checkForChanges]="checkForChanges" [objectId]="pepperiObjectInput.Data.UID"
+                [hasHeightLimit]="!matrixIsLast" [field]="field" [showTitle]="showTitle"
+                (valueChanged)="onValueChanged($event)" (notifyChildClicked)="onChildClicked($event)"
+                (childChanged)="onChildChanged($event)" (elementClicked)="onClick($event)"
+                (notifyMenuItemClicked)="onMenuItemClicked($event)"
+                (formValidationChanged)="onFormValidationChanged($event)">
+            </pep-field-generator>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <!-- Thumbnails -->
+    <mat-grid-list *ngIf="layoutType == LAYOUT_TYPE.PepperiCard" [cols]="columns" [rowHeight]="rowHeight + 'rem'"
+        [gutterSize]="cardGutterSize" class="card-spacing" [ngClass]="{ 'lock-events': lockEvents }">
+        <mat-grid-tile *ngFor="let field of fields" [rowspan]="field.rowSpan" [colspan]="field.colSpan"
+            [ngStyle]="{ overflow: field.type == 'qs' ? 'unset' : 'hidden' }">
+            <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
+                [isActive]="isActive" [checkForChanges]="checkForChanges" [objectId]="pepperiObjectInput.Data.UID"
+                [hasHeightLimit]="!matrixIsLast" [field]="field" [showTitle]="showTitle"
+                (valueChanged)="onValueChanged($event)" (notifyChildClicked)="onChildClicked($event)"
+                (childChanged)="onChildChanged($event)" (elementClicked)="onClick($event)"
+                (notifyMenuItemClicked)="onMenuItemClicked($event)">
+            </pep-field-generator>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <ng-container *ngIf="layoutType == LAYOUT_TYPE.PepperiTable">
+        <ng-container *ngIf="isReport; then reportBlock; else notReportBlock"></ng-container>
+        <ng-template #reportBlock>
+            <ng-container *ngTemplateOutlet="report"></ng-container>
+        </ng-template>
+        <ng-template #notReportBlock>
+            <div *ngFor="let field of fields; let j = index" class="pull-left flip table-cell "
+                [ngClass]="['text-align-' + field.xAlignment]" style="height: 100%"
+                [ngStyle]="{ width: (uiControlHeader?.ControlFields)[j]?.calcColumnWidthString}">
+                <pep-field-generator *ngIf="field.controlType != 'placeholder'" [checkForChanges]="checkForChanges"
+                    [objectId]="pepperiObjectInput.Data.UID" [field]="field" (valueChanged)="onValueChanged($event)"
+                    (elementClicked)="onClick($event)" (notifyMenuItemClicked)="onMenuItemClicked($event)" [form]="form"
+                    [layoutType]="layoutType" [showTitle]="false" [isActive]="isActive">
+                </pep-field-generator>
+            </div>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType == LAYOUT_TYPE.Editmodal">
+        <div *ngFor="let field of fields; let j = index" class="pull-left flip" style="width:100%;">
+            <pep-field-generator *ngIf="field.controlType != 'placeholder'" [checkForChanges]="checkForChanges"
+                [objectId]="pepperiObjectInput.Data.UID" [field]="field" (valueChanged)="onValueChanged($event)"
+                (elementClicked)="onClick($event)" [form]="form" [layoutType]="layoutType" [showTitle]="false"
+                [isActive]="isActive">
+            </pep-field-generator>
+        </div>
+    </ng-container>
+
+    <!------- For testing ------------
+    {{ form.value | json }}
+    {{ form.valid }}
+    ---------------------------------->
+</fieldset>
+
+<ng-template #report>
+    <div *ngFor="let field of fields; let j = index" class="pull-left flip pepperi-report-fields"
+        [ngStyle]="{ width: (uiControlHeader?.ControlFields)[j]?.calcColumnWidthString }"
+        [ngClass]="['text-align-' + field.xAlignment]">
+        <ng-container [ngSwitch]="field.controlType">
+            <pep-image *ngSwitchCase="'image'" [objectId]="objectId" [form]="form" [key]="field.key"
+                [src]="field.formattedValue" [srcLarge]="field.value" [options]="field.options" [label]="field.label"
+                [type]="field.type" [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
+                [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [layoutType]="layoutType"
+                (elementClicked)="onClick($event)">
+            </pep-image>
+
+            <pep-signature *ngSwitchCase="'signature'" [form]="form" [key]="field.key" [src]="field.value"
+                [label]="field.label" [required]="field.required" [disabled]="field.disabled"
+                [readonly]="field.readonly" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
+                [layoutType]="layoutType">
+            </pep-signature>
+
+            <pep-checkbox *ngSwitchCase="'checkbox'" [form]="form" [key]="field.key" [value]="field.value"
+                [label]="field.label" [type]="field.type" [required]="field.required" [disabled]="field.disabled"
+                [readonly]="field.readonly" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
+                [additionalValue]="field.additionalValue" [layoutType]="layoutType">
+            </pep-checkbox>
+
+            <pep-internal-button *ngSwitchCase="'button'" [form]="form" [key]="field.key" [value]="field.value"
+                [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type"
+                [disabled]="field.disabled" [readonly]="field.readonly" [xAlignment]="field.xAlignment"
+                [layoutType]="layoutType" (elementClicked)="onClick($event)">
+            </pep-internal-button>
+
+            <pep-textarea *ngSwitchCase="'textarea'" [form]="form" [key]="field.key" [value]="field.value"
+                [label]="field.label" [required]="field.required" [disabled]="field.disabled"
+                [readonly]="field.readonly" [maxFieldCharacters]="field.maxFieldCharacters"
+                [textColor]="field.textColor" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
+                [layoutType]="layoutType">
+            </pep-textarea>
+
+            <pep-quantity-selector *ngSwitchCase="'qs'" [id]="field.key" [form]="form" [key]="field.key"
+                [value]="field.value" [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type"
+                [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
+                [textColor]="field.textColor" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
+                [layoutType]="layoutType" (valueChanged)="onValueChanged($event)" (elementClicked)="onClick($event)">
+            </pep-quantity-selector>
+
+            <ng-container *ngSwitchDefault>
+                <ng-container *ngIf="field.formattedValue?.length > 0; then notEmptyBlock; else emptyBlock">
+                </ng-container>
+                <ng-template #notEmptyBlock>
+                    <ng-container
+                        *ngIf="field.type === 'attachment' || field.type === 'link'; then linkBlock; else notLinkBlock">
+                    </ng-container>
+                    <ng-template #linkBlock>
+                        <a [id]="field.key" class="color-link body-sm pepperi-report-input readonly"
+                            *ngIf="field.formattedValue != null" title="{{ field.formattedValue }}" target="_blank"
+                            href="{{ field.value }}">{{ field.formattedValue }}</a>
+                    </ng-template>
+                    <ng-template #notLinkBlock>
+                        <span [id]="field.key" class="body-sm pepperi-report-input readonly"
+                            title="{{ field.formattedValue }}"
+                            [ngStyle]="{ color: field.textColor }">{{ field.formattedValue }}</span>
+                    </ng-template>
+                </ng-template>
+                <ng-template #emptyBlock>
+                    <span>&nbsp;</span>
+                </ng-template>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-template>

@@ -1,0 +1,28 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+:host {
+    display: block;
+    // height: inherit;
+}
+
+signature-pad {
+    display: grid;
+    width: inherit;
+    height: inherit;
+}
+
+// .mat-dialog-title {
+//     display:inline-block;
+//     width: 100%;
+//     padding-bottom: $spacing-sm;
+//     margin: 0;
+
+//     span{
+//         @include calc(max-width, '100% - ' + calc(#{$double-content-margin} * 2));
+//     }
+// }
+
+// .modal-footer{
+//     padding: $spacing-lg 0 0;
+// }

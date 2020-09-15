@@ -1,0 +1,15 @@
+{
+    "ngPackage": {
+        "lib": {
+            "entryFile": "public-api.ts",
+            "umdModuleIds": {
+                "@ngx-translate/core": "translate",
+                "angular2-signaturepad": "signaturepad"
+            }
+        }
+    },
+    "peerDependencies": {
+        "@ngx-translate/core": "^13.0.0",
+        "angular2-signaturepad": ">= 2.11.0"
+    }
+}

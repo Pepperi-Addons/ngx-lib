@@ -1,0 +1,73 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.matrix-title-container {
+    //width: 100%;
+    padding: 0;
+    height: $form-field-height;
+    display: flex;
+    align-items: flex-end;
+
+    .block-with-text {
+        width: 100%;
+        max-height: inherit;
+        font-weight: $font-weight-bold;
+        display: block;
+        @include ellipsis();
+    }
+
+    .buttons-container {
+        display: flex;
+        align-self: center;
+    }
+}
+
+#mainViewCont {
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 1.5rem;
+
+    .table-cover {
+        background-color: #fff;
+        z-index: $z-index-medium + 1;
+        position: absolute;
+        top: 0;
+        /* left: 0; */
+        width: 99%;
+        height: 100%;
+        opacity: 0.5;
+        //cursor: pointer;
+    }
+
+    .table-cover-button {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        z-index: $z-index-medium + 2;
+    }
+
+    .underCover {
+        max-height: inherit;
+        overflow: hidden;
+    }
+
+    ::ng-deep.table-header {
+        top: unset !important;
+    }
+}
+
+.modal-dialog {
+    position: relative;
+    margin: 0.5rem 0;
+
+    .matrix-dialog-body {
+        height: 100%;
+        padding: 0.5rem;
+        overflow: auto;
+
+        ::ng-deep.table-header {
+            top: unset !important;
+        }
+    }
+}

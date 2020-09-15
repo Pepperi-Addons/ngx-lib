@@ -1,0 +1,144 @@
+<ng-container [ngSwitch]="type">
+    <ng-container *ngSwitchCase="'reference'">
+        <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm; then formBlock; else notFormBlock"></ng-container>
+        <ng-template #formBlock>
+            <div class="pepperi-button-container reference-button">
+                <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+                    [showTitle]="showTitle">
+                </pep-field-title>
+                <ng-container *ngIf="createNewReference; then newBlock; else existingBlock"></ng-container>
+                <ng-template #newBlock>
+                    <button [id]="key" title="{{ formattedValue }}" mat-button class="pepperi-button md regular"
+                        (click)="onButtonClicked($event)" [ngClass]="{
+                            disabled: disabled,
+                            'pull-left': xAlignment == '1' || xAlignment == '0',
+                            'pull-right': xAlignment == '2',
+                            'center-alignment': xAlignment == '3'
+                        }">
+                        <span class="pull-left flip">{{ 'ACTIONS.CREATE_NEW' | translate }}</span>
+                        <mat-icon class="pull-right flip" pepRtlClass>
+                            <pep-icon name="number_plus" (click)="onButtonClicked($event)">
+                            </pep-icon>
+                        </mat-icon>
+                    </button>
+                </ng-template>
+                <ng-template #existingBlock>
+                    <pep-group-buttons [buttons]="referenceButtons" [buttonsClass]="'md regular'"
+                        [buttonsDisabled]="false" [viewType]="GROUP_BUTTONS_VIEW_TYPE.Split">
+                    </pep-group-buttons>
+                </ng-template>
+            </div>
+        </ng-template>
+        <ng-template #notFormBlock>
+            <ng-container *ngTemplateOutlet="linkTemplate"></ng-container>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'listofobjects'">
+        <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm; then formBlock; else notFormBlock"></ng-container>
+        <ng-template #formBlock>
+            <ng-container *ngTemplateOutlet="buttonTemplate; context: {internal: true}"></ng-container>
+        </ng-template>
+        <ng-template #notFormBlock>
+            <ng-container *ngTemplateOutlet="linkTemplate"></ng-container>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'button'">
+        <ng-container [ngSwitch]="key">
+            <ng-container *ngSwitchCase="'ObjectMenu'">
+                <span (click)="onButtonClicked($event)" title="{{ key }}">
+                    <mat-icon>
+                        <pep-icon *ngIf="key == 'ObjectMenu'" name="system_menu">
+                        </pep-icon>
+                    </mat-icon>
+                </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Agents' || 'ContactPersons' || 'Buyers'">
+                <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable; then tableBlock; else nonTableBlock">
+                </ng-container>
+                <ng-template #nonTableBlock>
+                    <ng-container *ngTemplateOutlet="buttonTemplate; context: {internal: true}"></ng-container>
+                </ng-template>
+                <ng-template #tableBlock>
+                    <span [id]="key" title="{{ formattedValue }}"
+                        class="pepperi-report-input readonly body-sm">{{ formattedValue }}</span>
+                </ng-template>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+                <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm; then buttonBlock; else linkBlock">
+                </ng-container>
+
+                <ng-template #buttonBlock>
+                    <ng-container *ngTemplateOutlet="buttonTemplate; context: {internal: false}"></ng-container>
+                </ng-template>
+                <ng-template #linkBlock>
+                    <ng-container *ngTemplateOutlet="linkTemplate"></ng-container>
+                </ng-template>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</ng-container>
+
+<ng-template #buttonTemplate let-internal="internal">
+    <div class="pepperi-button-container">
+        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+            [showTitle]="showTitle">
+        </pep-field-title>
+
+        <ng-container *ngIf="internal; then internalButtonTemplate; else regularButtonTemplate"></ng-container>
+        <ng-template #regularButtonTemplate>
+            <button [id]="key" title="{{ formattedValue }}" mat-button class="pepperi-button md regular"
+                dir="{{ xAlignment == '2' ? 'rtl' : 'ltr' }}" (click)="onButtonClicked($event)" [disabled]="disabled"
+                [ngClass]="{disabled: disabled, 'pull-left': xAlignment == '1' || xAlignment == '0', 'pull-right': xAlignment == '2', 'center-alignment': xAlignment == '3'}">
+                {{ formattedValue }}
+            </button>
+        </ng-template>
+
+        <ng-template #internalButtonTemplate>
+            <button [id]="key" title="{{ formattedValue }}" mat-button class="pepperi-button md regular"
+                dir="{{ xAlignment == '2' ? 'rtl' : 'ltr' }}" (click)="openReferenceObjectInternal($event)"
+                [disabled]="disabled"
+                [ngClass]="{disabled: disabled, 'pull-left': xAlignment == '1' || xAlignment == '0', 'pull-right': xAlignment == '2', 'center-alignment': xAlignment == '3'}">
+                <ng-container *ngIf="formattedValue == '0' || formattedValue == ''; then newBlock; else existingBlock">
+                </ng-container>
+                <ng-template #newBlock>
+                    <span class="pull-left flip">{{ 'LIST.SELECT' | translate }}&nbsp;</span>
+                    <mat-icon>
+                        <pep-icon name="number_plus">
+                        </pep-icon>
+                    </mat-icon>
+                </ng-template>
+                <ng-template #existingBlock>
+                    <span
+                        class="pull-left flip">{{ formattedValue }}&nbsp;{{ 'LIST.SELECTED' | translate }}&nbsp;</span>
+                    <mat-icon>
+                        <pep-icon name="system_edit">
+                        </pep-icon>
+                    </mat-icon>
+                </ng-template>
+            </button>
+        </ng-template>
+    </div>
+</ng-template>
+
+<ng-template #linkTemplate>
+    <ng-container *ngIf="formattedValue?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
+    <ng-template #notEmptyBlock>
+        <a href="{{ value }}" (mousedown)="hrefFunction($event)" class="color-link">
+            <span *ngIf="layoutType === LAYOUT_TYPE.PepperiTable" [id]="key" title="{{ formattedValue }}"
+                class="body-sm pepperi-report-input readonly">
+                {{ formattedValue }}
+            </span>
+            <span *ngIf="layoutType !== LAYOUT_TYPE.PepperiTable" [id]="key" title="{{ formattedValue }}"
+                class="body-sm pepperi-card-input" style="display: block;">
+                {{ formattedValue }}
+            </span>
+        </a>
+    </ng-template>
+    <ng-template #emptyBlock>
+        <span>&nbsp;</span>
+    </ng-template>
+</ng-template>

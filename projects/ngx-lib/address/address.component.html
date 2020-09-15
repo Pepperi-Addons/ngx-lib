@@ -1,0 +1,48 @@
+<ng-container [formGroup]="form">
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm">
+        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" class="header">
+        </pep-field-title>
+        <div [formGroupName]="key" [id]="key" class="pepperi-address-container"
+            dir="{{ xAlignment === '2' ? 'rtl' : 'ltr' }}">
+            <div [ngSwitch]="groupField.controlType" *ngFor="let groupField of groupFields; let i = index"
+                class="pepperi-address-field columns-{{ groupField.colSpan }}">
+                <pep-textbox *ngSwitchCase="'textbox'" [layoutType]="layoutType" title="{{ groupField.formattedValue }}"
+                    [form]="form" [key]="groupField.key" [value]="groupField.value"
+                    [formattedValue]="groupField.formattedValue" [label]="groupField.label"
+                    [placeholder]="groupField.placeholder" [type]="groupField.type" [required]="groupField.required"
+                    [disabled]="groupField.disabled" [readonly]="groupField.readonly"
+                    [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan" [parentFieldKey]="key"
+                    (valueChanged)="onValueChange($event, groupField.key)">
+                </pep-textbox>
+
+                <pep-select *ngSwitchCase="'select'" [layoutType]="layoutType" title="{{ groupField.formattedValue }}"
+                    [form]="form" [key]="groupField.key" [value]="groupField.value"
+                    [formattedValue]="groupField.formattedValue" [label]="groupField.label" [type]="groupField.type"
+                    [required]="groupField.required" [disabled]="groupField.disabled" [readonly]="groupField.readonly"
+                    [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan" [options]="groupField.options"
+                    [parentFieldKey]="key" (valueChanged)="onValueChange($event, groupField.key)">
+                </pep-select>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiCard">
+        <div class="pepperi-card-input " title="{{ label }}&nbsp;{{ formattedValue }}"
+            [ngClass]="['text-align-' + xAlignment]">
+            <span *ngIf="label != ''" class="body-xs title">{{ label }}&nbsp;</span>
+            <ng-container *ngFor="let groupField of groupFields; let i = index">
+                <span *ngIf="groupField?.formattedValue != ''"
+                    class="body-sm">{{ groupField.formattedValue }},&nbsp;</span>
+            </ng-container>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable">
+        <div class="pepperi-card-input " title="{{ formattedValue }}" [ngClass]="['text-align-' + xAlignment]">
+            <ng-container *ngFor="let groupField of groupFields; let i = index">
+                <span *ngIf="groupField?.formattedValue != ''"
+                    class="body-sm">{{ groupField.formattedValue }},&nbsp;</span>
+            </ng-container>
+        </div>
+    </ng-container>
+</ng-container>

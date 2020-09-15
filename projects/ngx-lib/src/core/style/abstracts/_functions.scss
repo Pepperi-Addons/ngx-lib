@@ -1,0 +1,422 @@
+// *****************************************************************************************
+//                      Private function (for use only in this file)
+// *****************************************************************************************
+
+/// Gets color-system-primary-invert
+@function get-pepperi-color-system-primary-invert() {
+    @return (
+        // Transparent colors.
+        color-base: $color-system-primary-invert-base,
+        color-tran-90: $color-system-primary-invert-tran-90,
+        color-tran-80: $color-system-primary-invert-tran-80,
+        color-tran-70: $color-system-primary-invert-tran-70,
+        color-tran-60: $color-system-primary-invert-tran-60,
+        color-tran-50: $color-system-primary-invert-tran-50,
+        color-tran-40: $color-system-primary-invert-tran-40,
+        color-tran-30: $color-system-primary-invert-tran-30,
+        color-tran-20: $color-system-primary-invert-tran-20,
+        color-tran-10: $color-system-primary-invert-tran-10,
+        color-tran-0: $color-system-primary-invert-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-system-primary-invert-flat-l-20,
+        color-flat-l-10: $color-system-primary-invert-flat-l-10,
+        color-flat-r-10: $color-system-primary-invert-flat-r-10,
+        color-flat-r-20: $color-system-primary-invert-flat-r-20,
+        color-flat-r-30: $color-system-primary-invert-flat-r-30,
+        color-flat-r-40: $color-system-primary-invert-flat-r-40,
+    );
+}
+
+/// Gets color-system-primary
+@function get-pepperi-color-system-primary() {
+    @return (
+        // Transparent colors.
+        color-base: $color-system-primary-base,
+        color-tran-90: $color-system-primary-tran-90,
+        color-tran-80: $color-system-primary-tran-80,
+        color-tran-70: $color-system-primary-tran-70,
+        color-tran-60: $color-system-primary-tran-60,
+        color-tran-50: $color-system-primary-tran-50,
+        color-tran-40: $color-system-primary-tran-40,
+        color-tran-30: $color-system-primary-tran-30,
+        color-tran-20: $color-system-primary-tran-20,
+        color-tran-10: $color-system-primary-tran-10,
+        color-tran-0: $color-system-primary-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-system-primary-flat-l-20,
+        color-flat-l-10: $color-system-primary-flat-l-10,
+        color-flat-r-10: $color-system-primary-flat-r-10,
+        color-flat-r-20: $color-system-primary-flat-r-20,
+        color-flat-r-30: $color-system-primary-flat-r-30,
+        color-flat-r-40: $color-system-primary-flat-r-40,
+    );
+}
+
+/// Gets color-system-success
+@function get-pepperi-color-system-success() {
+    @return (
+        // Transparent colors.
+        color-base: $color-system-success-base,
+        color-tran-90: $color-system-success-tran-90,
+        color-tran-80: $color-system-success-tran-80,
+        color-tran-70: $color-system-success-tran-70,
+        color-tran-60: $color-system-success-tran-60,
+        color-tran-50: $color-system-success-tran-50,
+        color-tran-40: $color-system-success-tran-40,
+        color-tran-30: $color-system-success-tran-30,
+        color-tran-20: $color-system-success-tran-20,
+        color-tran-10: $color-system-success-tran-10,
+        color-tran-0: $color-system-success-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-system-success-flat-l-20,
+        color-flat-l-10: $color-system-success-flat-l-10,
+        color-flat-r-10: $color-system-success-flat-r-10,
+        color-flat-r-20: $color-system-success-flat-r-20,
+        color-flat-r-30: $color-system-success-flat-r-30,
+        color-flat-r-40: $color-system-success-flat-r-40,
+    );
+}
+
+/// Gets color-system-caution
+@function get-pepperi-color-system-caution() {
+    @return (
+        // Transparent colors.
+        color-base: $color-system-caution-base,
+        color-tran-90: $color-system-caution-tran-90,
+        color-tran-80: $color-system-caution-tran-80,
+        color-tran-70: $color-system-caution-tran-70,
+        color-tran-60: $color-system-caution-tran-60,
+        color-tran-50: $color-system-caution-tran-50,
+        color-tran-40: $color-system-caution-tran-40,
+        color-tran-30: $color-system-caution-tran-30,
+        color-tran-20: $color-system-caution-tran-20,
+        color-tran-10: $color-system-caution-tran-10,
+        color-tran-0: $color-system-caution-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-system-caution-flat-l-20,
+        color-flat-l-10: $color-system-caution-flat-l-10,
+        color-flat-r-10: $color-system-caution-flat-r-10,
+        color-flat-r-20: $color-system-caution-flat-r-20,
+        color-flat-r-30: $color-system-caution-flat-r-30,
+        color-flat-r-40: $color-system-caution-flat-r-40,
+    );
+}
+
+/// Gets color-user-primary
+@function get-pepperi-color-user-primary() {
+    @return (
+        // Transparent colors.
+        color-base: $color-user-primary-base,
+        color-tran-90: $color-user-primary-tran-90,
+        color-tran-80: $color-user-primary-tran-80,
+        color-tran-70: $color-user-primary-tran-70,
+        color-tran-60: $color-user-primary-tran-60,
+        color-tran-50: $color-user-primary-tran-50,
+        color-tran-40: $color-user-primary-tran-40,
+        color-tran-30: $color-user-primary-tran-30,
+        color-tran-20: $color-user-primary-tran-20,
+        color-tran-10: $color-user-primary-tran-10,
+        color-tran-0: $color-user-primary-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-user-primary-flat-l-20,
+        color-flat-l-10: $color-user-primary-flat-l-10,
+        color-flat-r-10: $color-user-primary-flat-r-10,
+        color-flat-r-20: $color-user-primary-flat-r-20,
+        color-flat-r-30: $color-user-primary-flat-r-30,
+        color-flat-r-40: $color-user-primary-flat-r-40,
+    );
+}
+
+/// Gets color-user-secondary
+@function get-pepperi-color-user-secondary() {
+    @return (
+        // Transparent colors.
+        color-base: $color-user-secondary-base,
+        color-tran-90: $color-user-secondary-tran-90,
+        color-tran-80: $color-user-secondary-tran-80,
+        color-tran-70: $color-user-secondary-tran-70,
+        color-tran-60: $color-user-secondary-tran-60,
+        color-tran-50: $color-user-secondary-tran-50,
+        color-tran-40: $color-user-secondary-tran-40,
+        color-tran-30: $color-user-secondary-tran-30,
+        color-tran-20: $color-user-secondary-tran-20,
+        color-tran-10: $color-user-secondary-tran-10,
+        color-tran-0: $color-user-secondary-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-user-secondary-flat-l-20,
+        color-flat-l-10: $color-user-secondary-flat-l-10,
+        color-flat-r-10: $color-user-secondary-flat-r-10,
+        color-flat-r-20: $color-user-secondary-flat-r-20,
+        color-flat-r-30: $color-user-secondary-flat-r-30,
+        color-flat-r-40: $color-user-secondary-flat-r-40,
+    );
+}
+
+/// Gets color-weak
+@function get-pepperi-color-weak() {
+    @return (
+        // Transparent colors.
+        color-base: $color-weak-base,
+        color-tran-90: $color-weak-tran-90,
+        color-tran-80: $color-weak-tran-80,
+        color-tran-70: $color-weak-tran-70,
+        color-tran-60: $color-weak-tran-60,
+        color-tran-50: $color-weak-tran-50,
+        color-tran-40: $color-weak-tran-40,
+        color-tran-30: $color-weak-tran-30,
+        color-tran-20: $color-weak-tran-20,
+        color-tran-10: $color-weak-tran-10,
+        color-tran-0: $color-weak-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-weak-flat-l-20,
+        color-flat-l-10: $color-weak-flat-l-10,
+        color-flat-r-10: $color-weak-flat-r-10,
+        color-flat-r-20: $color-weak-flat-r-20,
+        color-flat-r-30: $color-weak-flat-r-30,
+        color-flat-r-40: $color-weak-flat-r-40,
+    );
+}
+
+/// Gets color-regular
+@function get-pepperi-color-regular() {
+    @return (
+        // Transparent colors.
+        color-base: $color-regular-base,
+        color-tran-90: $color-regular-tran-90,
+        color-tran-80: $color-regular-tran-80,
+        color-tran-70: $color-regular-tran-70,
+        color-tran-60: $color-regular-tran-60,
+        color-tran-50: $color-regular-tran-50,
+        color-tran-40: $color-regular-tran-40,
+        color-tran-30: $color-regular-tran-30,
+        color-tran-20: $color-regular-tran-20,
+        color-tran-10: $color-regular-tran-10,
+        color-tran-0: $color-regular-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-regular-flat-l-20,
+        color-flat-l-10: $color-regular-flat-l-10,
+        color-flat-r-10: $color-regular-flat-r-10,
+        color-flat-r-20: $color-regular-flat-r-20,
+        color-flat-r-30: $color-regular-flat-r-30,
+        color-flat-r-40: $color-regular-flat-r-40,
+    );
+}
+
+/// Gets color-strong
+@function get-pepperi-color-strong() {
+    @return (
+        // Transparent colors.
+        color-base: $color-strong-base,
+        color-tran-90: $color-strong-tran-90,
+        color-tran-80: $color-strong-tran-80,
+        color-tran-70: $color-strong-tran-70,
+        color-tran-60: $color-strong-tran-60,
+        color-tran-50: $color-strong-tran-50,
+        color-tran-40: $color-strong-tran-40,
+        color-tran-30: $color-strong-tran-30,
+        color-tran-20: $color-strong-tran-20,
+        color-tran-10: $color-strong-tran-10,
+        color-tran-0: $color-strong-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-strong-flat-l-20,
+        color-flat-l-10: $color-strong-flat-l-10,
+        color-flat-r-10: $color-strong-flat-r-10,
+        color-flat-r-20: $color-strong-flat-r-20,
+        color-flat-r-30: $color-strong-flat-r-30,
+        color-flat-r-40: $color-strong-flat-r-40,
+    );
+}
+
+/// Gets color-top-header
+@function get-pepperi-color-top-header() {
+    @return (
+        // Transparent colors.
+        color-base: $color-top-header-base,
+        color-tran-90: $color-top-header-tran-90,
+        color-tran-80: $color-top-header-tran-80,
+        color-tran-70: $color-top-header-tran-70,
+        color-tran-60: $color-top-header-tran-60,
+        color-tran-50: $color-top-header-tran-50,
+        color-tran-40: $color-top-header-tran-40,
+        color-tran-30: $color-top-header-tran-30,
+        color-tran-20: $color-top-header-tran-20,
+        color-tran-10: $color-top-header-tran-10,
+        color-tran-0: $color-top-header-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-top-header-flat-l-20,
+        color-flat-l-10: $color-top-header-flat-l-10,
+        color-flat-r-10: $color-top-header-flat-r-10,
+        color-flat-r-20: $color-top-header-flat-r-20,
+        color-flat-r-30: $color-top-header-flat-r-30,
+        color-flat-r-40: $color-top-header-flat-r-40,
+    );
+}
+/// Gets color-qs
+@function get-pepperi-color-qs() {
+    @return (
+        // Transparent colors.
+        color-base: $color-qs-base,
+        color-tran-90: $color-qs-tran-90,
+        color-tran-80: $color-qs-tran-80,
+        color-tran-70: $color-qs-tran-70,
+        color-tran-60: $color-qs-tran-60,
+        color-tran-50: $color-qs-tran-50,
+        color-tran-40: $color-qs-tran-40,
+        color-tran-30: $color-qs-tran-30,
+        color-tran-20: $color-qs-tran-20,
+        color-tran-10: $color-qs-tran-10,
+        color-tran-0: $color-qs-tran-0,
+        // Flat colors.
+        color-flat-l-20: $color-qs-flat-l-20,
+        color-flat-l-10: $color-qs-flat-l-10,
+        color-flat-r-10: $color-qs-flat-r-10,
+        color-flat-r-20: $color-qs-flat-r-20,
+        color-flat-r-30: $color-qs-flat-r-30,
+        color-flat-r-40: $color-qs-flat-r-40,
+    );
+}
+
+/// Gets color-text
+@function get-pepperi-color-text() {
+    @return (
+        color-main: $color-text-main,
+        color-dimmed: $color-text-dimmed,
+        color-disabled: $color-text-disabled,
+        color-invert: $color-text-invert,
+        color-link: $color-text-link,
+        color-link-highlight: $color-text-link-highlight,
+        color-link-focus: $color-text-link-focus,
+        color-success: $color-text-success,
+        color-caution: $color-text-caution,
+    );
+}
+
+/// Gets all pepperi colors
+@function get-pepperi-colors-for-theme() {
+    @return (
+        color-system-primary-invert: get-pepperi-color-system-primary-invert(),
+        color-system-primary: get-pepperi-color-system-primary(),
+        color-system-success: get-pepperi-color-system-success(),
+        color-system-caution: get-pepperi-color-system-caution(),
+        color-user-primary: get-pepperi-color-user-primary(),
+        color-user-secondary: get-pepperi-color-user-secondary(),
+        color-weak: get-pepperi-color-weak(),
+        color-regular: get-pepperi-color-regular(),
+        color-strong: get-pepperi-color-strong(),
+        color-top-header: get-pepperi-color-top-header(),
+        color-qs: get-pepperi-color-qs(),
+        color-text: get-pepperi-color-text(),
+    );
+}
+
+/// Gets all pepperi shadows
+@function get-pepperi-shadows-for-theme() {
+    @return (
+        //*********************************************************************************
+        //                            Shadows
+        //*********************************************************************************
+        // none
+        shadow-none: (xsoft: $shadow-none-xsoft, soft: $shadow-none-soft, regular: $shadow-none-regular, hard: $shadow-none-hard),
+        // x-small
+        shadow-xs: (xsoft: $shadow-xs-xsoft, soft: $shadow-xs-soft, regular: $shadow-xs-regular, hard: $shadow-xs-hard),
+        // small
+        shadow-sm: (xsoft: $shadow-sm-xsoft, soft: $shadow-sm-soft, regular: $shadow-sm-regular, hard: $shadow-sm-hard),
+        // medium
+        shadow-md: (xsoft: $shadow-md-xsoft, soft: $shadow-md-soft, regular: $shadow-md-regular, hard: $shadow-md-hard),
+        // large
+        shadow-lg: (xsoft: $shadow-lg-xsoft, soft: $shadow-lg-soft, regular: $shadow-lg-regular, hard: $shadow-lg-hard),
+        // x-large
+        shadow-xl: (xsoft: $shadow-xl-xsoft, soft: $shadow-xl-soft, regular: $shadow-xl-regular, hard: $shadow-xl-hard),
+
+        // Card
+        shadow-card: (xsoft: $shadow-card-xsoft, soft: $shadow-card-soft, regular: $shadow-card-regular, hard: $shadow-card-hard),
+    );
+}
+
+/// Gets pepperi theme
+@function get-pepperi-theme() {
+    @return (
+        colors: get-pepperi-colors-for-theme(),
+        shadows: get-pepperi-shadows-for-theme(),
+    );
+}
+
+
+// *****************************************************************************************
+//                      Public function (for use all application-wide)
+// *****************************************************************************************
+
+/// Gets color from pepperi theme
+/// @param {Map} $pepperi-theme - the pepperi theme map 
+/// @param {String} $color-map - the colors map 
+/// @param {String} $color-name - the color name
+/// @return {color} - wanted color
+@function get-pepperi-color($pepperi-theme, $color-map, $color-name) {
+    $colors: map-get($pepperi-theme, colors);
+    @return map-get(map-get($colors, $color-map), $color-name);
+}
+
+/// Gets shadow from pepperi theme
+/// @param {Map} $pepperi-theme - the pepperi theme map 
+/// @param {String} $shadow-map - the shadow map 
+/// @param {String} $shadow-name - the shadow name
+/// @return {shadow} - wanted shadow
+@function get-pepperi-shadow($pepperi-theme, $shadow-map, $shadow-name) {
+    $shadows: map-get($pepperi-theme, shadows);
+    @return map-get(map-get($shadows, $shadow-map), $shadow-name);
+}
+
+/// Replace `$search` with `$replace` in `$string`
+/// @param {String} $string - Initial string
+/// @param {String} $search - Substring to replace
+/// @param {String} $replace ('') - New value
+/// @return {String} - Updated string
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  
+  @return $string;
+}
+
+// /// Native `url(..)` function wrapper
+// /// @param {String} $base - base URL for the asset
+// /// @param {String} $type - asset type folder (e.g. `fonts/`)
+// /// @param {String} $path - asset path
+// /// @return {Url}
+// @function asset($base, $type, $path) {
+//     @return url($base+$type+$path);
+// }
+
+/// Returns URL to an image based on its path
+/// @param {String} $path - image path
+/// @param {String} $base [$base-url] - base URL
+/// @return {Url}
+/// @require $base-url
+@function image($path, $base: $base-url) {
+    @return asset($base, 'images/', $path);
+}
+
+/// Returns URL to a font based on its path
+/// @param {String} $path - font path
+/// @param {String} $base [$base-url] - base URL
+/// @return {Url}
+/// @require $base-url
+@function font($path, $base: $base-url) {
+    @return asset($base, 'fonts/', $path);
+}
+
+// Function for converting a px based font-size to rem.
+@function calculateRem($size) {
+    $remSize: calc($size / 16px);
+    //Default font size on html element is 100%, equivalent to 16px;
+    @return #{$remSize}rem;
+}
+
+@function calculateNum($lineHeight) {
+    $numSize: $lineHeight;
+    //Default font size on html element is 100%, equivalent to 16px;
+    @return #{$numSize};
+}

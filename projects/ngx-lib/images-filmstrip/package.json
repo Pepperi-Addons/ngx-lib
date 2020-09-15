@@ -1,0 +1,16 @@
+{
+    "ngPackage": {
+        "lib": {
+            "entryFile": "public-api.ts",
+            "umdModuleIds": {
+                "@ngx-gallery/core": "gallery",
+                "@hallysonh/ngx-imageviewer": "image-viewer"
+            }
+        }
+    },
+    "peerDependencies": {
+        "@ngx-gallery/core": "^5.0.0-beta.0",
+        "@hallysonh/ngx-imageviewer": "^2.0.4",
+        "hammerjs": "^2.0.8"
+    }
+}

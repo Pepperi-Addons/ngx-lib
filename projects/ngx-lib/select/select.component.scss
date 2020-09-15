@@ -1,0 +1,13 @@
+:host {
+    height: inherit;
+    display: grid;
+    // align-items: center;
+}
+:host > * { 
+    align-self: center; // instead of  align-items: center; in the :host
+}
+
+.material-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}

@@ -1,0 +1,25 @@
+@import '../src/core/style/abstracts/mixins';
+@import '../src/core/style/abstracts/variables';
+
+.mat-dialog-content {
+    padding: 0 !important;
+
+    span {
+        padding: $spacing-md 0;
+        width: 100%;
+    }
+    
+    textarea {
+        border: none;
+        resize: none;
+        width: 25rem;
+        height: 13rem;
+        // margin: 0;
+        // padding:0;
+        padding: $content-padding $spacing-sm;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

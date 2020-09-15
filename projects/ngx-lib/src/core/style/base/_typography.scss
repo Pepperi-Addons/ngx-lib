@@ -1,0 +1,212 @@
+// -----------------------------------------------------------------------------
+// Typography style - This file contains all @font-face declarations, if any.
+// -----------------------------------------------------------------------------
+
+@import url('https://fonts.googleapis.com/css2?family=Assistant&family=Crimson+Pro&family=David+Libre&family=EB+Garamond&family=Heebo&family=Inter&family=Open+Sans&family=Rubik&family=Work+Sans&display=swap');
+
+//    Calculation
+@media screen and (max-width: $screen-max-size-2xs) {
+    //    Smaller then XXS
+    .body-2xs {
+        @include font-body($fs-2xs, $lh-2xs);
+    }
+    .body-xs {
+        @include font-body($fs-xs, $lh-xs);
+    }
+    .body-sm {
+        @include font-body($fs-sm, $lh-sm);
+    }
+    .body-md {
+        @include font-body($fs-md, $lh-md);
+    }
+    .body-lg {
+        @include font-body($fs-lg, $lh-lg);
+    }
+    .body-xl {
+        @include font-body($fs-xl, $lh-xl);
+    }
+    .body-2xl {
+        @include font-body($fs-2xl, $lh-2xl);
+    }
+    
+    .title-xs {
+        @include font-title($fs-xs, $lh-xs);
+    }
+    .title-sm {
+        @include font-title($fs-sm, $lh-sm);
+    }
+    .title-md {
+        @include font-title($fs-md, $lh-md);
+    }
+    .title-lg {
+        @include font-title($fs-lg, $lh-lg);
+    }
+    .title-xl {
+        @include font-title($fs-xl, $lh-xl);
+    }
+    .title-2xl {
+        @include font-title($fs-2xl, $lh-2xl);
+    }
+}
+
+@media screen and (min-width: $screen-max-size-2xs) {
+    //    Bigger then XXS
+    .body-2xs {
+        @include font-body($fs-2xs, $lh-2xs);
+    }
+    .body-xs {
+        @include font-body($fs-xs, $lh-xs);
+    }
+    .body-sm {
+        @include font-body($fs-sm, $lh-sm);
+    }
+    .body-md {
+        @include font-body($fs-md, $lh-md);
+    }
+    .body-lg {
+        @include font-body($fs-lg, $lh-lg);
+    }
+    .body-xl {
+        @include font-body($fs-xl, $lh-xl);
+    }
+    .body-2xl {
+        @include font-body($fs-2xl, $lh-2xl);
+    }
+
+    .title-xs {
+        @include font-title($fs-xs, $lh-xs);
+    }
+    .title-sm {
+        @include font-title($fs-sm, $lh-sm);
+    }
+    .title-md {
+        @include font-title($fs-md, $lh-md);
+    }
+    .title-lg {
+        @include font-title($fs-lg, $lh-lg);
+    }
+    .title-xl {
+        @include font-title($fs-xl, $lh-xl);
+    }
+    .title-2xl {
+        @include font-title($fs-2xl, $lh-2xl);
+    }
+}
+
+@supports (font-variation-settings: normal) {
+    html,
+    body {
+        font-family: 'Inter var', sans-serif;
+    }
+}
+
+html,
+body {
+    font-family: $font-family-body;
+    font-weight: $font-weight-normal;
+    font-size: 16px;
+
+    // line-height: $lh-md;
+
+    /*.lang-he {
+        font-family: 'Open Sans Hebrew' !important;
+    }*/
+}
+
+//  Font weight
+// ------------------------
+.bold {
+    font-weight: $font-weight-bold !important;    
+}
+.bolder {
+    font-weight: $font-weight-bolder !important;    
+}
+
+h6,
+h5,
+h4,
+h3,
+h2,
+h1 {
+    font-family: $font-family-title;
+}
+
+/**
+ * Basic styles for links
+ */
+a {
+    text-decoration: none;
+
+    &.color-link {
+        display: block;
+        text-anchor: end;
+        text-decoration: underline;
+        @include box-sizing(border-box);
+        @include ellipsis();
+    }
+        
+    &.disable,
+    &:disabled {
+        pointer-events: none;
+    }
+
+    @include on-event {
+        text-decoration: underline;
+    }
+}
+
+@mixin declare-system-typography-theme($pepperi-theme) {
+    body {
+        color: get-pepperi-color($pepperi-theme, color-text, color-main);
+    }
+
+    .color-user-primary {
+        color: get-pepperi-color($pepperi-theme, color-user-primary, color-base);
+    }
+
+    .color-user-secondary {
+        color: get-pepperi-color($pepperi-theme, color-user-secondary, color-base);
+    }
+
+    .color-system-primary,
+    .color-main {
+        color: get-pepperi-color($pepperi-theme, color-text, color-main);
+    }
+
+    .color-link {
+        color: get-pepperi-color($pepperi-theme, color-text, color-link);
+    }
+
+    .color-caution {
+        color: get-pepperi-color($pepperi-theme, color-text, color-caution);
+    }
+
+    .color-success {
+        color: get-pepperi-color($pepperi-theme, color-text, color-success);
+    }
+
+    .color-dimmed {
+        color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+    }
+
+    a {
+        // &.color-link {
+        //     color: get-pepperi-color($pepperi-theme, color-text, color-link);
+        // }
+        
+        &.disable,
+        &:disabled {
+            @include state-weak-disable($pepperi-theme);
+            background: transparent !important;
+        }
+    }
+
+    ::selection {
+        background: get-pepperi-color($pepperi-theme, color-text, color-link-focus);
+    }
+    
+    .mat-drawer-container {
+        background-color: transparent !important;
+        color: get-pepperi-color($pepperi-theme, color-text, color-main);
+    }
+}

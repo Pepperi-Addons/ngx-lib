@@ -1,0 +1,20 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+:host {
+    height: inherit;
+}
+
+.no-data {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.table-header {
+    top:0;
+
+    &.below-header-and-top-bar {
+        top: calc(#{$header-height} + #{$top-bar-height});
+    }
+}

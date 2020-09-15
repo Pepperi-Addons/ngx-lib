@@ -1,0 +1,153 @@
+<ng-container [formGroup]="form">
+    <!-- New code -->
+    <ng-container>
+        <ng-template #pepperiTemplate>
+            <mat-form-field [formGroup]="form" appearance="outline">
+                <div class="pepperi-file-wrapper">
+                    <div class="pepperi-file body-sm" [ngClass]="{ disable: disabled }" [style.height]="fieldHeight">
+                        <ng-container *ngIf="src != ''; then withImg; else noImg"></ng-container>
+                        <ng-template #withImg>
+                            <button *ngIf="!disabled" mat-button (click)="deleteSignature($event)"
+                                class="pepperi-button icon-button weak md delete" tabindex="-1"
+                                [ngClass]="{ 'right-alignment': xAlignment == '2' }">
+                                <mat-icon>
+                                    <pep-icon name="system_bin">
+                                    </pep-icon>
+                                </mat-icon>
+                            </button>
+                            <div class="pepperi-file-preview" (click)="openSignModal()">
+                                <img [src]="src" [style.max-height]="fieldHeight" class="pepperi-file-preview-img"
+                                    (error)="errorHandler($event)" [alt]="label"
+                                    [ngClass]="['text-align-' + xAlignment]" />
+                            </div>
+                        </ng-template>
+                        <ng-template #noImg>
+                            <div class="ellipsis pepperi-file-message">
+                                <pep-icon name="system_signature">
+                                </pep-icon>
+                                <span class="body-sm ellipsis">
+                                    {{ (disabled ? 'MESSAGES.INFO_MISSING_SIGNATURE' : 'SIGNATURE.HINT') | translate }}
+                                </span>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <input [id]="key" matInput [formControlName]="key" class="hidden-input signature" type="text"
+                        [value]="src" [disabled]="disabled" (click)="openSignModal()"
+                        (keypress)="onKeyPress_OpenSignModal($event)" autocomplete="off" readonly />
+                </div>
+
+                <mat-error><span class="body-xs"
+                        [title]="required && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
+                        [innerText]="required && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
+                </mat-error>
+            </mat-form-field>
+        </ng-template>
+
+        <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm">
+            <div class="pepperi-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone}">
+                <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+                    [showTitle]="showTitle">
+                </pep-field-title>
+                <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiCard">
+            <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock">
+            </ng-container>
+            <ng-template #selectedBlock>
+                <div class="pepperi-file-container" [ngClass]="{ 'one-row': rowSpan == 1}">
+                    <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+                </div>
+            </ng-template>
+            <ng-template #notSelectedBlock>
+                <div class="pepperi-file-container" [ngClass]="{ 'one-row': rowSpan == 1 }">
+                    <ng-container *ngTemplateOutlet="pepperiReadonlyTemplate; context: { isTableView: false}">
+                    </ng-container>
+                </div>
+            </ng-template>
+        </ng-container>
+
+        <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable">
+            <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock">
+            </ng-container>
+            <ng-template #selectedBlock>
+                <div class="pepperi-file-container one-row">
+                    <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+                </div>
+            </ng-template>
+            <ng-template #notSelectedBlock>
+                <div class="pepperi-file-container one-row">
+                    <ng-container *ngTemplateOutlet="pepperiReadonlyTemplate; context: { isTableView: true}">
+                    </ng-container>
+                </div>
+            </ng-template>
+        </ng-container>
+    </ng-container>
+
+    <!-- <ng-container *ngIf="inDialog === true">
+        <ng-container *ngTemplateOutlet="signaturePopupPad"></ng-container>
+    </ng-container> -->
+
+    <!-- <div *ngIf="inDialog === false" class="signature-backdrop modal" [ngClass]="{ fade: !isVisibleModal }" tabindex="-1"
+        role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true"
+        [ngStyle]="{ display: isVisibleModal ? 'block' : 'none' }">
+        <div class="signature-modal modal-dialog" role="document">
+            <div class="modal-content">
+                <ng-container *ngTemplateOutlet="signaturePopupPad"></ng-container>
+            </div>
+        </div>
+    </div> -->
+
+    <ng-template #pepperiReadonlyTemplate let-isTableView="isTableView">
+        <div class="pepperi-file-container">
+            <div class="pepperi-file-wrapper">
+                <div class="pepperi-file body-sm disable">
+                    <ng-container *ngIf="src != ''; then withImg; else noImg"></ng-container>
+                    <ng-template #withImg>
+                        <div class="pepperi-file-preview" (click)="openSignModal()">
+                            <img *ngIf="!isTableView" [src]="src" [style.max-height]="fieldHeight"
+                                class="pepperi-file-preview-img" (error)="errorHandler($event)" [alt]="label"
+                                [ngClass]="['text-align-' + xAlignment]" />
+                            <img *ngIf="isTableView" [src]="src" [style.max-height]="fieldHeight"
+                                class="pepperi-report-file pepperi-file-preview-img" (error)="errorHandler($event)"
+                                [alt]="label" [ngClass]="['text-align-' + xAlignment]" />
+                        </div>
+                    </ng-template>
+                    <ng-template #noImg></ng-template>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #signaturePopupPad>
+        <h2 mat-dialog-title class="pepperi-border-bottom">
+            <span class="pull-left flip ellipsis">{{ 'SIGNATURE.DIALOG_TITLE' | translate }}</span>
+            <button mat-button [mat-dialog-close]="null" class="pepperi-button icon-button md weak pull-right flip">
+                <mat-icon>
+                    <pep-icon name="system_close">
+                    </pep-icon>
+                </mat-icon>
+            </button>
+        </h2>
+        <div mat-dialog-content>
+            <signature-pad #signaturePad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
+                (onEndEvent)="drawComplete()">
+            </signature-pad>
+        </div>
+        <div mat-dialog-actions *ngIf="showActionBtn" class=" pepperi-border-top">
+            <div class="spacing-element-negative">
+                <button mat-button class="spacing-element pepperi-button md strong pull-right flip"
+                    [disabled]="!showActionBtn || readonly || disabled" (click)="saveSignModal($event)"
+                    [mat-dialog-close]="signatureURL">
+                    {{ 'ACTIONS.DONE' | translate }}
+                </button>
+                <button mat-button class="spacing-element pepperi-button md weak pull-right flip"
+                    [disabled]="!showActionBtn || readonly || disabled" (click)="clearSignModal()">
+                    {{ 'ACTIONS.CLEAR' | translate }}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+
+</ng-container>

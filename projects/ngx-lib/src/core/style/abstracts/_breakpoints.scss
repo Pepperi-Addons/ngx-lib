@@ -1,0 +1,36 @@
+/// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+/// Use `map-get` to select a breackpoint
+/// Like so:
+/// max-width: map-get($breakpoints, SM)
+
+// Not in use there are variables in variables.scss file
+// $breakpoints: (
+//   'XXS': 460px,
+//   'XS': 720px,
+//   'SM': 960px,
+//   'MD': 1184px,
+//   'LR': 1366px, 
+//   'XL': 1920px,
+// ) !default;
+
+/// Extra large desktop screen
+/// XL → 1920 → `fluid 💧`
+
+/// Large desktop screen
+/// LR → 1366 → `fixed 🔨`
+
+/// Common desktop screen
+/// MD → 1184 → `fixed 🔨`
+
+/// Small desktop screen
+/// SM → 960 → `fluid 💧`
+
+/// Tablet-landscape & small desktops
+/// XS → 720 → `fluid 💧`
+
+/// Tablet-portrait, Phone-landscape & extra small desktops
+/// XXS → 460 → `fluid 💧`
+
+/// [Tables](https://www.notion.so/6773514b-2316-4049-b47a-c956215ba5c8) stop being fluid

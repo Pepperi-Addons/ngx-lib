@@ -1,0 +1,7 @@
+@import '../src/core/style/abstracts/mixins';
+@import '../src/core/style/abstracts/variables';
+
+:host {
+    height: inherit;
+    display: block;
+}

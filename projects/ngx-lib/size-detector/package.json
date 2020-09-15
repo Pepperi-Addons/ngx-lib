@@ -1,0 +1,10 @@
+{
+    "ngPackage": {
+        "lib": {
+            "entryFile": "public-api.ts"
+        }
+    },
+    "peerDependencies": {
+        "@angular/flex-layout": ">= 10.0.0-beta.32"
+    }
+}

@@ -1,0 +1,21 @@
+<ng-container *ngIf="layoutType === LAYOUT_TYPE.Editmodal; then emptyBlock; else separatorBlock"></ng-container>
+<ng-template #emptyBlock> </ng-template>
+
+<ng-template #separatorBlock>
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm">
+        <div class="pepperi-separator-field wrap pepperi-border-bottom align-{{ xAlignment }}" title="{{ label }}">
+            <span class="block-with-text body-md">{{ label }}</span>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiCard">
+        <div class="pepperi-separator-field pepperi-small-separator-field pepperi-border-bottom text-align-{{ xAlignment }}" dir="{{ xAlignment == '2' ? 'rtl' : 'ltr' }}"
+            title="{{ label }}">
+            <span class="small-block-with-text body-sm">{{ label }}</span>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable">
+        <label class="cl" title="{{ label }}">{{ label }}</label>
+    </ng-container>
+</ng-template>

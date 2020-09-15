@@ -1,0 +1,61 @@
+// -----------------------------------------------------
+//  Pepperi - Splitter
+// -----------------------------------------------------
+.pepperi-separator-field {
+    //width: 100%;
+    padding: 0;
+    height: 3.5rem;
+    max-height: 3.5rem;
+    margin-top: 0.5rem;
+    // margin-bottom: 1rem;
+
+    &.pepperi-small-separator-field {
+        height: 1.15rem;
+        margin-top: 0.25rem !important;
+        margin-bottom: 0 !important;
+
+        .small-block-with-text {
+            display: block;
+            font-weight: $font-weight-bold;
+            @include ellipsis();
+        }
+    }
+
+    &.wrap {
+        display: flex;
+
+        .block-with-text {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            font-weight: $font-weight-bold;
+            align-self: flex-end;
+            max-height: inherit;
+        }
+
+        // align left
+        &.align-0,
+        &.align-1 {
+            .block-with-text {
+                @include multi-line-ellipsis(1);
+            }
+        }
+
+        // align right
+        &.align-2 {
+            .block-with-text {
+                @include multi-line-ellipsis(2);
+            }
+        }
+
+        // align center
+        &.align-3 {
+            .block-with-text {
+                @include multi-line-ellipsis(3);
+            }
+        }
+    }
+}
+
+@mixin pepperi-splitter-theme($pepperi-theme) {
+    
+}
