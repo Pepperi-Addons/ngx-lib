@@ -1,0 +1,10 @@
+{
+  "main": "../bundles/pepperi-addons-ngx-lib-separator.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-separator.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-separator.js",
+  "esm2015": "../esm2015/separator/pepperi-addons-ngx-lib-separator.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-separator.js",
+  "typings": "pepperi-addons-ngx-lib-separator.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/separator"
+}

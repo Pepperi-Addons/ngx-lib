@@ -1,0 +1,30 @@
+import { OnInit, Renderer2, ElementRef, EventEmitter, OnDestroy } from '@angular/core';
+import { LAYOUT_TYPE } from '@pepperi-addons/ngx-lib';
+import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { PepColorType } from './color.model';
+import * as i0 from "@angular/core";
+export declare class PepperiColorComponent implements OnInit, OnDestroy {
+    private dialogService;
+    private renderer;
+    private element;
+    key: string;
+    value: string;
+    label: string;
+    disabled: boolean;
+    readonly: boolean;
+    xAlignment: string;
+    rowSpan: number;
+    type: PepColorType;
+    showTitle: boolean;
+    showAAComplient: boolean;
+    layoutType: LAYOUT_TYPE;
+    valueChanged: EventEmitter<any>;
+    LAYOUT_TYPE: typeof LAYOUT_TYPE;
+    constructor(dialogService: DialogService, renderer: Renderer2, element: ElementRef);
+    ngOnInit(): void;
+    ngOnDestroy(): void;
+    changeColor(value: any): void;
+    chooseColor(): void;
+    static ɵfac: i0.ɵɵFactoryDef<PepperiColorComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDefWithMeta<PepperiColorComponent, "pep-color", never, { "key": "key"; "value": "value"; "label": "label"; "disabled": "disabled"; "readonly": "readonly"; "xAlignment": "xAlignment"; "rowSpan": "rowSpan"; "type": "type"; "showTitle": "showTitle"; "showAAComplient": "showAAComplient"; "layoutType": "layoutType"; }, { "valueChanged": "valueChanged"; }, never, never>;
+}

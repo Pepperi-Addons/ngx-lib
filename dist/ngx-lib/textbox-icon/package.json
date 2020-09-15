@@ -1,0 +1,10 @@
+{
+  "main": "../bundles/pepperi-addons-ngx-lib-textbox-icon.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-textbox-icon.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-textbox-icon.js",
+  "esm2015": "../esm2015/textbox-icon/pepperi-addons-ngx-lib-textbox-icon.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-textbox-icon.js",
+  "typings": "pepperi-addons-ngx-lib-textbox-icon.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/textbox-icon"
+}

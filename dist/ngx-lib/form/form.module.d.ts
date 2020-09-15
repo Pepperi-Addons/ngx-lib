@@ -1,0 +1,38 @@
+import { PepperiIconRegistry } from '@pepperi-addons/ngx-lib/icon';
+import * as i0 from "@angular/core";
+import * as i1 from "./form.component";
+import * as i2 from "./field-generator.component";
+import * as i3 from "./indicators.component";
+import * as i4 from "./internal-page.component";
+import * as i5 from "./internal-list.component";
+import * as i6 from "@angular/common";
+import * as i7 from "@angular/forms";
+import * as i8 from "@angular/material/core";
+import * as i9 from "@angular/material/grid-list";
+import * as i10 from "@angular/material/icon";
+import * as i11 from "@angular/material/menu";
+import * as i12 from "angular2-signaturepad";
+import * as i13 from "@pepperi-addons/ngx-lib";
+import * as i14 from "@pepperi-addons/ngx-lib/dialog";
+import * as i15 from "@pepperi-addons/ngx-lib/icon";
+import * as i16 from "@pepperi-addons/ngx-lib/address";
+import * as i17 from "@pepperi-addons/ngx-lib/attachment";
+import * as i18 from "@pepperi-addons/ngx-lib/checkbox";
+import * as i19 from "@pepperi-addons/ngx-lib/date";
+import * as i20 from "@pepperi-addons/ngx-lib/image";
+import * as i21 from "@pepperi-addons/ngx-lib/images-filmstrip";
+import * as i22 from "@pepperi-addons/ngx-lib/internal-button";
+import * as i23 from "@pepperi-addons/ngx-lib/menu";
+import * as i24 from "@pepperi-addons/ngx-lib/quantity-selector";
+import * as i25 from "@pepperi-addons/ngx-lib/rich-html-textarea";
+import * as i26 from "@pepperi-addons/ngx-lib/select";
+import * as i27 from "@pepperi-addons/ngx-lib/separator";
+import * as i28 from "@pepperi-addons/ngx-lib/signature";
+import * as i29 from "@pepperi-addons/ngx-lib/textarea";
+import * as i30 from "@pepperi-addons/ngx-lib/textbox";
+export declare class PepperiFormModule {
+    private pepperiIconRegistry;
+    constructor(pepperiIconRegistry: PepperiIconRegistry);
+    static ɵmod: i0.ɵɵNgModuleDefWithMeta<PepperiFormModule, [typeof i1.PepperiFormComponent, typeof i2.PepperiFieldGeneratorComponent, typeof i3.PepperiIndicatorsComponent, typeof i4.PepperiInternalPageComponent, typeof i5.PepperiInternalListComponent], [typeof i6.CommonModule, typeof i7.ReactiveFormsModule, typeof i7.FormsModule, typeof i8.MatCommonModule, typeof i9.MatGridListModule, typeof i10.MatIconModule, typeof i11.MatMenuModule, typeof i12.SignaturePadModule, typeof i13.PepperiModule, typeof i14.PepperiDialogModule, typeof i15.PepperiIconModule, typeof i16.PepperiAddressModule, typeof i17.PepperiAttachmentModule, typeof i18.PepperiCheckboxModule, typeof i19.PepperiDateModule, typeof i20.PepperiImageModule, typeof i21.PepperiImagesFilmstripModule, typeof i22.PepperiInternalButtonModule, typeof i23.PepperiMenuModule, typeof i24.PepperiQuantitySelectorModule, typeof i25.PepperiRichHtmlTextareaModule, typeof i26.PepperiSelectModule, typeof i27.PepperiSeparatorModule, typeof i28.PepperiSignatureModule, typeof i29.PepperiTextareaModule, typeof i30.PepperiTextboxModule], [typeof i1.PepperiFormComponent]>;
+    static ɵinj: i0.ɵɵInjectorDef<PepperiFormModule>;
+}

@@ -1,0 +1,15 @@
+{
+  "peerDependencies": {
+    "@ngx-gallery/core": "^5.0.0-beta.0",
+    "@hallysonh/ngx-imageviewer": "^2.0.4",
+    "hammerjs": "^2.0.8"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-images-filmstrip.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-images-filmstrip.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-images-filmstrip.js",
+  "esm2015": "../esm2015/images-filmstrip/pepperi-addons-ngx-lib-images-filmstrip.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-images-filmstrip.js",
+  "typings": "pepperi-addons-ngx-lib-images-filmstrip.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/images-filmstrip"
+}

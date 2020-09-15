@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of ngx-lib/textbox
+ */
+export * from './textbox.module';
+export * from './textbox.component';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvdGV4dGJveC9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBQ0gsY0FBYyxrQkFBa0IsQ0FBQztBQUNqQyxjQUFjLHFCQUFxQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIG5neC1saWIvdGV4dGJveFxyXG4gKi9cclxuZXhwb3J0ICogZnJvbSAnLi90ZXh0Ym94Lm1vZHVsZSc7XHJcbmV4cG9ydCAqIGZyb20gJy4vdGV4dGJveC5jb21wb25lbnQnO1xyXG4iXX0=

@@ -1,0 +1,34 @@
+import { OnChanges, EventEmitter, OnDestroy } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { LAYOUT_TYPE } from '@pepperi-addons/ngx-lib';
+import * as i0 from "@angular/core";
+export declare class PepperiFieldGeneratorComponent implements OnChanges, OnDestroy {
+    field: any;
+    hasHeightLimit: boolean;
+    isActive: boolean;
+    objectId: any;
+    form: FormGroup;
+    layoutType: LAYOUT_TYPE;
+    showTitle: boolean;
+    checkForChanges: any;
+    valueChanged: EventEmitter<any>;
+    childChanged: EventEmitter<any>;
+    formValidationChanged: EventEmitter<boolean>;
+    elementClicked: EventEmitter<any>;
+    notifyMenuItemClicked: EventEmitter<any>;
+    notifyChildClicked: EventEmitter<any>;
+    get isValid(): boolean;
+    get isTouched(): boolean;
+    get isDirty(): boolean;
+    constructor();
+    ngOnDestroy(): void;
+    onValueChanged(valueChanged: any): void;
+    onChildChanged(childChanged: any): void;
+    onFormValidationChanged(formValidationChanged: any): void;
+    onClick(fieldClicked: any): void;
+    onMenuItemClicked(fieldToEdit: any): void;
+    onChildClick(childClicked: any): void;
+    ngOnChanges(changes: any): void;
+    static ɵfac: i0.ɵɵFactoryDef<PepperiFieldGeneratorComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDefWithMeta<PepperiFieldGeneratorComponent, "pep-field-generator", never, { "field": "field"; "hasHeightLimit": "hasHeightLimit"; "isActive": "isActive"; "objectId": "objectId"; "form": "form"; "layoutType": "layoutType"; "showTitle": "showTitle"; "checkForChanges": "checkForChanges"; }, { "valueChanged": "valueChanged"; "childChanged": "childChanged"; "formValidationChanged": "formValidationChanged"; "elementClicked": "elementClicked"; "notifyMenuItemClicked": "notifyMenuItemClicked"; "notifyChildClicked": "notifyChildClicked"; }, never, never>;
+}

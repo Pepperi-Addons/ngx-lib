@@ -1,0 +1,6 @@
+$material-black-primary: mat-palette($mat-grey, 700, 300, 900);
+$material-black-accent: mat-palette($mat-blue-grey, 400);
+$material-black-warn: mat-palette($mat-red, 500);
+
+$material-black-theme: mat-dark-theme($material-black-primary, $material-black-accent, $material-black-warn);
+$user-black-theme-color: #39413e;

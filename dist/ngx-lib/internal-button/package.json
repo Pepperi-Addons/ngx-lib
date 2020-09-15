@@ -1,0 +1,13 @@
+{
+  "peerDependencies": {
+    "@ngx-translate/core": "^13.0.0"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-internal-button.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-internal-button.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-internal-button.js",
+  "esm2015": "../esm2015/internal-button/pepperi-addons-ngx-lib-internal-button.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-internal-button.js",
+  "typings": "pepperi-addons-ngx-lib-internal-button.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/internal-button"
+}

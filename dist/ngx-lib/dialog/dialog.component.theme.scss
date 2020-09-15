@@ -1,0 +1,5 @@
+@mixin pepperi-dialog-component-theme($pepperi-theme) {
+    .pepperi-dialog {
+        box-shadow: get-pepperi-shadow($pepperi-theme, shadow-sm, hard) !important;
+    }
+}

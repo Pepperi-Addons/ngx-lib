@@ -1,0 +1,10 @@
+{
+  "main": "../bundles/pepperi-addons-ngx-lib-group-buttons.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-group-buttons.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-group-buttons.js",
+  "esm2015": "../esm2015/group-buttons/pepperi-addons-ngx-lib-group-buttons.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-group-buttons.js",
+  "typings": "pepperi-addons-ngx-lib-group-buttons.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/group-buttons"
+}

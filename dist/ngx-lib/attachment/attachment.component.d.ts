@@ -1,0 +1,38 @@
+import { OnInit, OnChanges, EventEmitter, ElementRef, Renderer2, OnDestroy } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FileService, CustomizationService, LAYOUT_TYPE } from '@pepperi-addons/ngx-lib';
+import * as i0 from "@angular/core";
+export declare class PepperiAttachmentComponent implements OnInit, OnChanges, OnDestroy {
+    private customizationService;
+    private renderer;
+    element: ElementRef;
+    private fileService;
+    key: string;
+    src: string;
+    label: string;
+    required: boolean;
+    disabled: boolean;
+    readonly: boolean;
+    xAlignment: string;
+    rowSpan: number;
+    controlType: string;
+    form: FormGroup;
+    showTitle: boolean;
+    layoutType: LAYOUT_TYPE;
+    isActive: boolean;
+    valueChanged: EventEmitter<any>;
+    elementClicked: EventEmitter<any>;
+    LAYOUT_TYPE: typeof LAYOUT_TYPE;
+    fieldHeight: string;
+    standAlone: boolean;
+    dataURI: any;
+    acceptAttachmentType: string;
+    constructor(customizationService: CustomizationService, renderer: Renderer2, element: ElementRef, fileService: FileService);
+    ngOnDestroy(): void;
+    ngOnInit(): void;
+    ngOnChanges(changes: any): void;
+    onFileChanged(value: any): void;
+    onFileClicked(event: any): void;
+    static ɵfac: i0.ɵɵFactoryDef<PepperiAttachmentComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDefWithMeta<PepperiAttachmentComponent, "pep-attachment", never, { "key": "key"; "src": "src"; "label": "label"; "required": "required"; "disabled": "disabled"; "readonly": "readonly"; "xAlignment": "xAlignment"; "rowSpan": "rowSpan"; "form": "form"; "showTitle": "showTitle"; "layoutType": "layoutType"; "isActive": "isActive"; }, { "valueChanged": "valueChanged"; "elementClicked": "elementClicked"; }, never, never>;
+}

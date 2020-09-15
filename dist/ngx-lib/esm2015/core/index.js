@@ -1,0 +1,5 @@
+/*
+ * export from ngx-lib/core
+ */
+export * from './public-api';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9wcm9qZWN0cy9uZ3gtbGliL3NyYy9jb3JlL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBQ0gsY0FBYyxjQUFjLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxyXG4gKiBleHBvcnQgZnJvbSBuZ3gtbGliL2NvcmVcclxuICovXHJcbmV4cG9ydCAqIGZyb20gJy4vcHVibGljLWFwaSc7XHJcbiJdfQ==

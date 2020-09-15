@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of ngx-lib/core/common/model
+ */
+export * from './api.model';
+export * from './utilities.model';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvc3JjL2NvcmUvY29tbW9uL21vZGVsL3B1YmxpYy1hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFDSCxjQUFjLGFBQWEsQ0FBQztBQUM1QixjQUFjLG1CQUFtQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIG5neC1saWIvY29yZS9jb21tb24vbW9kZWxcclxuICovXHJcbmV4cG9ydCAqIGZyb20gJy4vYXBpLm1vZGVsJztcclxuZXhwb3J0ICogZnJvbSAnLi91dGlsaXRpZXMubW9kZWwnO1xyXG4iXX0=

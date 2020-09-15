@@ -1,0 +1,545 @@
+// -----------------------------------------------------------------------------
+// General
+// -----------------------------------------------------------------------------
+$max-scr-width: 100%;
+
+/// Container's maximum width
+/// @type Length
+$max-width: 1180px !default;
+
+/// Relative or absolute URL where all assets are served from
+/// @type String
+///   $base-url: 'http://cdn.example.com/assets/';
+$base-url: '/assets/' !default;
+
+//  Z-index - General
+// -----------------------------------------------------------------------------
+$z-index-high: 999; // 999 because material modals & overlays.
+$z-index-medium: 100;
+$z-index-low: 50;
+$z-index-lowest: 1;
+
+//  Screen size - General
+// -----------------------------------------------------------------------------
+$screen-max-size-2xs: 460px;
+$screen-max-size-xs: 767px;
+$screen-max-size-sm: 991px;
+$screen-max-size-md: 1199px; 
+$screen-max-size-lg: 1366px; 
+$screen-max-size-xl: 1920px;
+// $screen-max-size-2xs: var(--pep-screen-max-size-2xs); // 460px;
+// $screen-max-size-xs: var(--pep-screen-max-size-xs); // 767px;
+// $screen-max-size-sm: var(--pep-screen-max-size-sm); // 991px;
+// $screen-max-size-md: var(--pep-screen-max-size-md); // 1199px; 
+// $screen-max-size-lg: var(--pep-screen-max-size-lg); // 1366px; 
+// $screen-max-size-xl: var(--pep-screen-max-size-xl); // 1920px;
+
+// Fonts - General
+// -----------------------------------------------------------------------------
+// Title font family
+$font-family-title: var(--pep-font-family-title, Nexa), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !default;
+
+// Body font family
+$font-family-body: var(--pep-font-family-body, Inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !default;
+
+// Font sizes
+$fs-2xs: var(--pep-font-size-2xs, 0.625rem);
+$fs-xs: var(--pep-font-size-xs, 0.75rem);
+$fs-sm: var(--pep-font-size-sm, 0.875rem);
+$fs-md: var(--pep-font-size-md, 1rem);
+$fs-lg: var(--pep-font-size-lg, 1.125rem);
+$fs-xl: var(--pep-font-size-xl, 1.25rem);
+$fs-2xl: var(--pep-font-size-2xl, 1.5rem);
+
+// Line Height
+$lh-2xs: var(--pep-line-height-2xs, 0.75rem);
+$lh-xs: var(--pep-line-height-xs, 1rem);
+$lh-sm: var(--pep-line-height-sm, 1.25rem);
+$lh-md: var(--pep-line-height-md, 1.5rem);
+$lh-lg: var(--pep-line-height-lg, 1.75rem);
+$lh-xl: var(--pep-line-height-xl, 2rem);
+$lh-2xl: var(--pep-line-height-2xl, 2.25rem);
+
+//  Fonts weight - General
+$font-weight-normal: var(--pep-font-weight-normal, 400);
+$font-weight-bold: var(--pep-font-weight-bold, 600);
+$font-weight-bolder: var(--pep-font-weight-bolder, 800);
+
+
+// Round corners
+// -----------------------------------------------------------------------------
+$border-radius-sm: var(--pep-border-radius-sm, 0.125rem);
+$border-radius-md: var(--pep-border-radius-md, 0.25rem);
+$border-radius-lg: var(--pep-border-radius-lg, 0.5rem);
+
+//  Spacing size - General
+// -----------------------------------------------------------------------------
+$spacing-2xs: var(--pep-spacing-2xs, 0.125rem);
+$spacing-xs: var(--pep-spacing-xs, 0.25rem);
+$spacing-sm: var(--pep-spacing-sm, 0.5rem);
+$spacing-md: var(--pep-spacing-md, 0.75rem);
+$spacing-lg: var(--pep-spacing-lg, 1rem);
+$spacing-xl: var(--pep-spacing-xl, 1.5rem);
+$spacing-2xl: var(--pep-spacing-2xl, 2rem);
+
+$spacing-3xl: 2.5rem;   // 40px
+$spacing-4xl: 3rem;     // 48px
+$spacing-5xl: 3.5rem;     // 56px
+$spacing-6xl: 5rem;     // 80px
+$spacing-7xl: 6rem;     // 96px
+$spacing-8xl: 8rem;     // 128px
+$spacing-9xl: 16rem;    // 256px
+// *****************************************************************************************
+//                        Layout - General
+// *****************************************************************************************
+$content-margin: $spacing-lg;
+$double-content-margin: calc(#{$spacing-lg} * 2); // $content-margin * 2;
+$content-padding: $spacing-lg;
+$double-content-padding: calc(#{$spacing-lg} * 2);// $content-padding * 2;
+
+//  Header
+// -----------------------------------------------------------------------------
+$header-height: var(--pep-header-height, 4rem); // (default - 4rem)
+
+//  Main
+// -----------------------------------------------------------------------------
+$main-height: var(--pep-main-height); // window.innerHeight - header
+
+//  Side bar
+// -----------------------------------------------------------------------------
+$side-layout-width: var(--pep-side-bar-width, 16rem);
+
+//  Top bar & Footer
+// -----------------------------------------------------------------------------
+$top-bar-spacing-top: var(--pep-top-bar-spacing-top, 1.5rem);
+$top-bar-spacing-bottom: var(--pep-top-bar-spacing-bottom, 0.5rem);
+$top-bar-field-height: var(--pep-top-bar-field-height, 2.5rem);
+$top-bar-height: calc(#{$top-bar-spacing-top} + #{$top-bar-spacing-bottom} + #{$top-bar-field-height});
+$top-bar-height-with-no-top: calc(#{$top-bar-spacing-bottom} + #{$top-bar-field-height});
+
+$footer-bar-spacing-top: var(--pep-footer-bar-spacing-top, 0.75rem);
+$footer-bar-spacing-bottom: var(--pep-footer-bar-spacing-bottom, 1.25rem);
+$footer-bar-field-height: $top-bar-field-height;
+$footer-bar-height: var(--pep-footer-bar-height, 4.5rem);
+
+//  Form - Layout
+// -----------------------------------------------------------------------------
+$form-field-height: var(--pep-form-field-height, 2.5rem);
+$form-field-title-height: var(--pep-form-field-title-height, 1.5rem);
+$form-spacing: var(--pep-form-spacing, 1rem);
+$form-row-height: calc(#{$form-field-height} + #{$form-field-title-height});
+$form-field-button-size: calc(#{$form-field-height} - #{$spacing-lg});
+$form-field-button-icon-size: calc(#{$form-field-height} - #{$spacing-xl});
+
+//  Card - Layout
+// -----------------------------------------------------------------------------
+$card-field-height: var(--pep-card-field-height, 1.5rem);
+// $card-spacing: var(--pep-card-spacing);
+$card-field-button-size: calc(#{$card-field-height} - #{$spacing-sm});
+$card-field-button-icon-size: calc(#{$card-field-height} - #{$spacing-md});
+
+$card-border-radius: var(--pep-card-border-radius, 0.25rem);
+
+//  Table - Layout
+// -----------------------------------------------------------------------------
+$table-field-height: var(--pep-table-field-height, 2rem);
+$table-spacing: var(--pep-table-spacing, 0.5rem);
+$table-row-fieldset-height: calc(#{$table-field-height} + #{$table-spacing}); // 2.5rem
+$table-row-height: calc(#{$table-field-height} + (#{$table-spacing} * 2)); // 3rem;
+$table-half-spacing: calc(#{$table-spacing} / 2); // 0.25rem
+
+$table-border-radius: var(--pep-table-border-radius, 0.25rem);
+
+//  Tabs - Layout
+// -----------------------------------------------------------------------------
+$tabs-labels-height: 3.5rem;
+
+// *****************************************************************************************
+//                        General color variables
+// *****************************************************************************************
+$flat-l-20-lp: 15%;  // 5%
+$flat-l-10-lp: 8%;  // 8%
+$flat-r-10-lp: 20%; // 50%;
+$flat-r-20-lp: 30%; // 66%;
+$flat-r-30-lp: 88%;
+$flat-r-40-lp: 98%;
+
+// *****************************************************************************************
+//                        System primary invert - color
+// *****************************************************************************************
+// Base color
+$color-system-primary-invert-h: var(--pep-color-system-primary-invert-h, 255);
+$color-system-primary-invert-s: var(--pep-color-system-primary-invert-s, 100%);
+$color-system-primary-invert-l: var(--pep-color-system-primary-invert-l, 100%);
+$color-system-primary-invert-base: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}); // base
+
+// Transparent colors.
+$color-system-primary-invert-tran-90: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.97);
+$color-system-primary-invert-tran-80: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.80);
+$color-system-primary-invert-tran-70: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.50);
+$color-system-primary-invert-tran-60: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.32);
+$color-system-primary-invert-tran-50: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.24);
+$color-system-primary-invert-tran-40: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.16);
+$color-system-primary-invert-tran-30: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.12);
+$color-system-primary-invert-tran-20: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.08);
+$color-system-primary-invert-tran-10: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.04);
+$color-system-primary-invert-tran-0: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0);
+// Flat colors.
+$color-system-primary-invert-flat-l-20: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, calc(#{$color-system-primary-invert-l} - #{$flat-l-20-lp}));
+$color-system-primary-invert-flat-l-10: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, calc(#{$color-system-primary-invert-l} - #{$flat-l-10-lp}));
+$color-system-primary-invert-flat-r-10: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, calc(#{$color-system-primary-invert-l} + #{$flat-r-10-lp}));
+$color-system-primary-invert-flat-r-20: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, calc(#{$color-system-primary-invert-l} + #{$flat-r-20-lp}));
+$color-system-primary-invert-flat-r-30: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, $flat-r-30-lp);
+$color-system-primary-invert-flat-r-40: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, $flat-r-40-lp);
+
+// *****************************************************************************************
+//                        System primary - color
+// *****************************************************************************************
+// Base color
+$color-system-primary-h: var(--pep-color-system-primary-h, 0);
+$color-system-primary-s: var(--pep-color-system-primary-s, 0%);
+$color-system-primary-l: var(--pep-color-system-primary-l, 10%);
+$color-system-primary-base: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}); // base
+
+// Transparent colors.
+$color-system-primary-tran-90: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.97);
+$color-system-primary-tran-80: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.80);
+$color-system-primary-tran-70: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.50);
+$color-system-primary-tran-60: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.32);
+$color-system-primary-tran-50: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.24);
+$color-system-primary-tran-40: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.16);
+$color-system-primary-tran-30: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.12);
+$color-system-primary-tran-20: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.08);
+$color-system-primary-tran-10: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.04);
+$color-system-primary-tran-0: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0);
+// Flat colors.
+$color-system-primary-flat-l-20: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, calc(#{$color-system-primary-l} - #{$flat-l-20-lp}));
+$color-system-primary-flat-l-10: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, calc(#{$color-system-primary-l} - #{$flat-l-10-lp}));
+$color-system-primary-flat-r-10: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, calc(#{$color-system-primary-l} + #{$flat-r-10-lp}));
+$color-system-primary-flat-r-20: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, calc(#{$color-system-primary-l} + #{$flat-r-20-lp}));
+$color-system-primary-flat-r-30: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, $flat-r-30-lp);
+$color-system-primary-flat-r-40: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, $flat-r-40-lp);
+
+// *****************************************************************************************
+//                        System success - color
+// *****************************************************************************************
+// Base color
+$color-system-success-h: var(--pep-color-system-success-h, 100);
+$color-system-success-s: var(--pep-color-system-success-s, 100%);
+$color-system-success-l: var(--pep-color-system-success-l, 25%);
+$color-system-success-base: hsl(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}); // base
+
+// Transparent colors.
+$color-system-success-tran-90: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.97);
+$color-system-success-tran-80: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.80);
+$color-system-success-tran-70: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.50);
+$color-system-success-tran-60: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.32);
+$color-system-success-tran-50: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.24);
+$color-system-success-tran-40: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.16);
+$color-system-success-tran-30: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.12);
+$color-system-success-tran-20: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.08);
+$color-system-success-tran-10: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.04);
+$color-system-success-tran-0: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0);
+// Flat colors.
+$color-system-success-flat-l-20: hsl(#{$color-system-success-h}, #{$color-system-success-s}, calc(#{$color-system-success-l} - #{$flat-l-20-lp}));
+$color-system-success-flat-l-10: hsl(#{$color-system-success-h}, #{$color-system-success-s}, calc(#{$color-system-success-l} - #{$flat-l-10-lp}));
+$color-system-success-flat-r-10: hsl(#{$color-system-success-h}, #{$color-system-success-s}, calc(#{$color-system-success-l} + #{$flat-r-10-lp}));
+$color-system-success-flat-r-20: hsl(#{$color-system-success-h}, #{$color-system-success-s}, calc(#{$color-system-success-l} + #{$flat-r-20-lp}));
+$color-system-success-flat-r-30: hsl(#{$color-system-success-h}, #{$color-system-success-s}, $flat-r-30-lp);
+$color-system-success-flat-r-40: hsl(#{$color-system-success-h}, #{$color-system-success-s}, $flat-r-40-lp);
+
+// *****************************************************************************************
+//                        System caution - color
+// *****************************************************************************************
+// Base color
+$color-system-caution-h: var(--pep-color-system-caution-h, 360);
+$color-system-caution-s: var(--pep-color-system-caution-s, 100%);
+$color-system-caution-l: var(--pep-color-system-caution-l, 45%);
+$color-system-caution-base: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}); // base
+
+// Transparent colors.
+$color-system-caution-tran-90: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.97);
+$color-system-caution-tran-80: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.80);
+$color-system-caution-tran-70: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.50);
+$color-system-caution-tran-60: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.32);
+$color-system-caution-tran-50: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.24);
+$color-system-caution-tran-40: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.16);
+$color-system-caution-tran-30: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.12);
+$color-system-caution-tran-20: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.08);
+$color-system-caution-tran-10: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.04);
+$color-system-caution-tran-0: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0);
+// Flat colors.
+$color-system-caution-flat-l-20: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, calc(#{$color-system-caution-l} - #{$flat-l-20-lp}));
+$color-system-caution-flat-l-10: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, calc(#{$color-system-caution-l} - #{$flat-l-10-lp}));
+$color-system-caution-flat-r-10: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, calc(#{$color-system-caution-l} + #{$flat-r-10-lp}));
+$color-system-caution-flat-r-20: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, calc(#{$color-system-caution-l} + #{$flat-r-20-lp}));
+$color-system-caution-flat-r-30: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, $flat-r-30-lp);
+$color-system-caution-flat-r-40: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, $flat-r-40-lp);
+
+// *****************************************************************************************
+//                        User primary - color
+// *****************************************************************************************
+// Base color
+$color-user-primary-h: var(--pep-color-user-primary-h, 78);
+$color-user-primary-s: var(--pep-color-user-primary-s, 87%);
+$color-user-primary-l: var(--pep-color-user-primary-l, 27%);
+$color-user-primary-base: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}); // base
+
+// Transparent colors.
+$color-user-primary-tran-90: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.97);
+$color-user-primary-tran-80: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.80);
+$color-user-primary-tran-70: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.50);
+$color-user-primary-tran-60: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.32);
+$color-user-primary-tran-50: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.24);
+$color-user-primary-tran-40: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.16);
+$color-user-primary-tran-30: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.12);
+$color-user-primary-tran-20: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.08);
+$color-user-primary-tran-10: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.04);
+$color-user-primary-tran-0: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0);
+// Flat colors.
+$color-user-primary-flat-l-20: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, calc(#{$color-user-primary-l} - #{$flat-l-20-lp}));
+$color-user-primary-flat-l-10: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, calc(#{$color-user-primary-l} - #{$flat-l-10-lp}));
+$color-user-primary-flat-r-10: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, calc(#{$color-user-primary-l} + #{$flat-r-10-lp}));
+$color-user-primary-flat-r-20: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, calc(#{$color-user-primary-l} + #{$flat-r-20-lp}));
+$color-user-primary-flat-r-30: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, $flat-r-30-lp);
+$color-user-primary-flat-r-40: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, $flat-r-40-lp);
+
+// *****************************************************************************************
+//                        User secondary - color
+// *****************************************************************************************
+// Base color
+$color-user-secondary-h: var(--pep-color-user-secondary-h, 77);
+$color-user-secondary-s: var(--pep-color-user-secondary-s, 87%);
+$color-user-secondary-l: var(--pep-color-user-secondary-l, 42%);
+$color-user-secondary-base: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}); // base
+
+// Transparent colors.
+$color-user-secondary-tran-90: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.97);
+$color-user-secondary-tran-80: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.80);
+$color-user-secondary-tran-70: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.50);
+$color-user-secondary-tran-60: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.32);
+$color-user-secondary-tran-50: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.24);
+$color-user-secondary-tran-40: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.16);
+$color-user-secondary-tran-30: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.12);
+$color-user-secondary-tran-20: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.08);
+$color-user-secondary-tran-10: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.04);
+$color-user-secondary-tran-0: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0);
+// Flat colors.
+$color-user-secondary-flat-l-20: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, calc(#{$color-user-secondary-l} - #{$flat-l-20-lp}));
+$color-user-secondary-flat-l-10: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, calc(#{$color-user-secondary-l} - #{$flat-l-10-lp}));
+$color-user-secondary-flat-r-10: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, calc(#{$color-user-secondary-l} + #{$flat-r-10-lp}));
+$color-user-secondary-flat-r-20: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, calc(#{$color-user-secondary-l} + #{$flat-r-20-lp}));
+$color-user-secondary-flat-r-30: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, $flat-r-30-lp);
+$color-user-secondary-flat-r-40: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, $flat-r-40-lp);
+
+// *****************************************************************************************
+//                        Weak - color
+// *****************************************************************************************
+// Base color
+$color-weak-h: var(--pep-color-weak-h, 0);
+$color-weak-s: var(--pep-color-weak-s, 0%);
+$color-weak-l: var(--pep-color-weak-l, 10%);
+$color-weak-base: hsl(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}); // base
+
+// Transparent colors. --pep-color-system-primary
+$color-weak-tran-90: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.97);
+$color-weak-tran-80: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.80);
+$color-weak-tran-70: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.50);
+$color-weak-tran-60: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.32);
+$color-weak-tran-50: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.24);
+$color-weak-tran-40: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.16);
+$color-weak-tran-30: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.12);
+$color-weak-tran-20: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.08);
+$color-weak-tran-10: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.04);
+$color-weak-tran-0: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0);
+// Flat colors.
+$color-weak-flat-l-20: hsl(#{$color-weak-h}, #{$color-weak-s}, calc(#{$color-weak-l} - #{$flat-l-20-lp}));
+$color-weak-flat-l-10: hsl(#{$color-weak-h}, #{$color-weak-s}, calc(#{$color-weak-l} - #{$flat-l-10-lp}));
+$color-weak-flat-r-10: hsl(#{$color-weak-h}, #{$color-weak-s}, calc(#{$color-weak-l} + #{$flat-r-10-lp}));
+$color-weak-flat-r-20: hsl(#{$color-weak-h}, #{$color-weak-s}, calc(#{$color-weak-l} + #{$flat-r-20-lp}));
+$color-weak-flat-r-30: hsl(#{$color-weak-h}, #{$color-weak-s}, $flat-r-30-lp);
+$color-weak-flat-r-40: hsl(#{$color-weak-h}, #{$color-weak-s}, $flat-r-40-lp);
+
+// *****************************************************************************************
+//                        Regular - color
+// *****************************************************************************************
+// Base color
+$color-regular-h: var(--pep-color-regular-h, 0);
+$color-regular-s: var(--pep-color-regular-s, 0%);
+$color-regular-l: var(--pep-color-regular-l, 10%);
+$color-regular-base: hsl(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}); // base
+
+// Transparent colors. --pep-color-system-primary
+$color-regular-tran-90: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.97);
+$color-regular-tran-80: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.80);
+$color-regular-tran-70: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.50);
+$color-regular-tran-60: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.32);
+$color-regular-tran-50: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.24);
+$color-regular-tran-40: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.16);
+$color-regular-tran-30: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.12);
+$color-regular-tran-20: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.08);
+$color-regular-tran-10: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.04);
+$color-regular-tran-0: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0);
+// Flat colors.
+$color-regular-flat-l-20: hsl(#{$color-regular-h}, #{$color-regular-s}, calc(#{$color-regular-l} - #{$flat-l-20-lp}));
+$color-regular-flat-l-10: hsl(#{$color-regular-h}, #{$color-regular-s}, calc(#{$color-regular-l} - #{$flat-l-10-lp}));
+$color-regular-flat-r-10: hsl(#{$color-regular-h}, #{$color-regular-s}, calc(#{$color-regular-l} + #{$flat-r-10-lp}));
+$color-regular-flat-r-20: hsl(#{$color-regular-h}, #{$color-regular-s}, calc(#{$color-regular-l} + #{$flat-r-20-lp}));
+$color-regular-flat-r-30: hsl(#{$color-regular-h}, #{$color-regular-s}, $flat-r-30-lp);
+$color-regular-flat-r-40: hsl(#{$color-regular-h}, #{$color-regular-s}, $flat-r-40-lp);
+
+// *****************************************************************************************
+//                        Strong - color
+// *****************************************************************************************
+// Base color
+$color-strong-h: var(--pep-color-strong-h, 78);
+$color-strong-s: var(--pep-color-strong-s, 87%);
+$color-strong-l: var(--pep-color-strong-l, 27%);
+$color-strong-base: hsl(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}); // base
+
+// Transparent colors.
+$color-strong-tran-90: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.97);
+$color-strong-tran-80: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.80);
+$color-strong-tran-70: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.50);
+$color-strong-tran-60: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.32);
+$color-strong-tran-50: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.24);
+$color-strong-tran-40: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.16);
+$color-strong-tran-30: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.12);
+$color-strong-tran-20: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.08);
+$color-strong-tran-10: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.04);
+$color-strong-tran-0: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0);
+// Flat colors.
+$color-strong-flat-l-20: hsl(#{$color-strong-h}, #{$color-strong-s}, calc(#{$color-strong-l} - #{$flat-l-20-lp}));
+$color-strong-flat-l-10: hsl(#{$color-strong-h}, #{$color-strong-s}, calc(#{$color-strong-l} - #{$flat-l-10-lp}));
+$color-strong-flat-r-10: hsl(#{$color-strong-h}, #{$color-strong-s}, calc(#{$color-strong-l} + #{$flat-r-10-lp}));
+$color-strong-flat-r-20: hsl(#{$color-strong-h}, #{$color-strong-s}, calc(#{$color-strong-l} + #{$flat-r-20-lp}));
+$color-strong-flat-r-30: hsl(#{$color-strong-h}, #{$color-strong-s}, $flat-r-30-lp);
+$color-strong-flat-r-40: hsl(#{$color-strong-h}, #{$color-strong-s}, $flat-r-40-lp);
+
+//*********************************************************************************
+//                            Text - colors
+//*********************************************************************************
+$color-text-main: $color-system-primary-base;
+$color-text-dimmed: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.7);
+$color-text-disabled: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.35);
+$color-text-invert: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l});
+
+$color-text-success: $color-system-success-base;
+$color-text-caution: $color-system-caution-base;
+
+// Link color
+$color-text-link-h: var(--pep-color-text-link-h, 207);
+$color-text-link-s: var(--pep-color-text-link-s, 76%);
+$color-text-link-l: var(--pep-color-text-link-l, 37%);
+
+$color-text-link: hsl(#{$color-text-link-h}, #{$color-text-link-s}, #{$color-text-link-l});
+$color-text-link-highlight: hsla(#{$color-text-link-h}, #{$color-text-link-s}, #{$color-text-link-l}, 0.24);
+$color-text-link-focus: hsla(#{$color-text-link-h}, #{$color-text-link-s}, #{$color-text-link-l}, 0.5);
+
+//*********************************************************************************
+//                       Top header - color
+//*********************************************************************************
+// Base color
+$color-top-header-h: var(--pep-color-top-header-h, 0);
+$color-top-header-s: var(--pep-color-top-header-s, 0%);
+$color-top-header-l: var(--pep-color-top-header-l, 10%);
+$color-top-header-base: hsl(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}); // base
+
+// Transparent colors. --pep-color-system-primary
+$color-top-header-tran-90: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.97);
+$color-top-header-tran-80: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.80);
+$color-top-header-tran-70: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.50);
+$color-top-header-tran-60: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.32);
+$color-top-header-tran-50: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.24);
+$color-top-header-tran-40: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.16);
+$color-top-header-tran-30: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.12);
+$color-top-header-tran-20: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.08);
+$color-top-header-tran-10: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.04);
+$color-top-header-tran-0: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0);
+// Flat colors.
+$color-top-header-flat-l-20: hsl(#{$color-top-header-h}, #{$color-top-header-s}, calc(#{$color-top-header-l} - #{$flat-l-20-lp}));
+$color-top-header-flat-l-10: hsl(#{$color-top-header-h}, #{$color-top-header-s}, calc(#{$color-top-header-l} - #{$flat-l-10-lp}));
+$color-top-header-flat-r-10: hsl(#{$color-top-header-h}, #{$color-top-header-s}, calc(#{$color-top-header-l} + #{$flat-r-10-lp}));
+$color-top-header-flat-r-20: hsl(#{$color-top-header-h}, #{$color-top-header-s}, calc(#{$color-top-header-l} + #{$flat-r-20-lp}));
+$color-top-header-flat-r-30: hsl(#{$color-top-header-h}, #{$color-top-header-s}, $flat-r-30-lp);
+$color-top-header-flat-r-40: hsl(#{$color-top-header-h}, #{$color-top-header-s}, $flat-r-40-lp);
+
+//*********************************************************************************
+//                       Quantity selector - color
+//*********************************************************************************
+// Base color
+$color-qs-h: var(--pep-color-qs-h, 0);
+$color-qs-s: var(--pep-color-qs-s, 0%);
+$color-qs-l: var(--pep-color-qs-l, 10%);
+$color-qs-base: hsl(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}); // base
+
+// Transparent colors. --pep-color-system-primary
+$color-qs-tran-90: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.97);
+$color-qs-tran-80: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.80);
+$color-qs-tran-70: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.50);
+$color-qs-tran-60: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.32);
+$color-qs-tran-50: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.24);
+$color-qs-tran-40: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.16);
+$color-qs-tran-30: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.12);
+$color-qs-tran-20: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.08);
+$color-qs-tran-10: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.04);
+$color-qs-tran-0: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0);
+// Flat colors.
+$color-qs-flat-l-20: hsl(#{$color-qs-h}, #{$color-qs-s}, calc(#{$color-qs-l} - #{$flat-l-20-lp}));
+$color-qs-flat-l-10: hsl(#{$color-qs-h}, #{$color-qs-s}, calc(#{$color-qs-l} - #{$flat-l-10-lp}));
+$color-qs-flat-r-10: hsl(#{$color-qs-h}, #{$color-qs-s}, calc(#{$color-qs-l} + #{$flat-r-10-lp}));
+$color-qs-flat-r-20: hsl(#{$color-qs-h}, #{$color-qs-s}, calc(#{$color-qs-l} + #{$flat-r-20-lp}));
+$color-qs-flat-r-30: hsl(#{$color-qs-h}, #{$color-qs-s}, $flat-r-30-lp);
+$color-qs-flat-r-40: hsl(#{$color-qs-h}, #{$color-qs-s}, $flat-r-40-lp);
+
+//*********************************************************************************
+//                            Shadows
+//*********************************************************************************
+// none
+$shadow-none-offset: var(--pep-shadow-xs-offset, 0);
+$shadow-none-xsoft: $shadow-none-offset;
+$shadow-none-soft: $shadow-none-offset;
+$shadow-none-regular: $shadow-none-offset;
+$shadow-none-hard: $shadow-none-offset;
+
+// xs
+$shadow-xs-offset: var(--pep-shadow-xs-offset, 0 0.125rem 0.25rem 0);
+$shadow-xs-xsoft: $shadow-xs-offset $color-system-primary-tran-10;
+$shadow-xs-soft: $shadow-xs-offset $color-system-primary-tran-20;
+$shadow-xs-regular: $shadow-xs-offset $color-system-primary-tran-40;
+$shadow-xs-hard: $shadow-xs-offset $color-system-primary-tran-60;
+
+// small
+$shadow-sm-offset: var(--pep-shadow-sm-offset, 0 0.25rem 0.5rem 0);
+$shadow-sm-xsoft: $shadow-sm-offset $color-system-primary-tran-10;
+$shadow-sm-soft: $shadow-sm-offset $color-system-primary-tran-20;
+$shadow-sm-regular: $shadow-sm-offset $color-system-primary-tran-40;
+$shadow-sm-hard: $shadow-sm-offset $color-system-primary-tran-60;
+
+// medium
+$shadow-md-offset: var(--pep-shadow-md-offset, 0 0.5rem 1rem 0);
+$shadow-md-xsoft: $shadow-md-offset $color-system-primary-tran-10;
+$shadow-md-soft: $shadow-md-offset $color-system-primary-tran-20;
+$shadow-md-regular: $shadow-md-offset $color-system-primary-tran-40;
+$shadow-md-hard: $shadow-md-offset $color-system-primary-tran-60;
+
+// large
+$shadow-lg-offset: var(--pep-shadow-lg-offset, 0 1rem 2rem 0);
+$shadow-lg-xsoft: $shadow-lg-offset $color-system-primary-tran-10;
+$shadow-lg-soft: $shadow-lg-offset $color-system-primary-tran-20;
+$shadow-lg-regular: $shadow-lg-offset $color-system-primary-tran-40;
+$shadow-lg-hard: $shadow-lg-offset $color-system-primary-tran-60;
+
+// x-large
+$shadow-xl-offset: var(--pep-shadow-xl-offset, 0 2rem 4rem 0);
+$shadow-xl-xsoft: $shadow-xl-offset $color-system-primary-tran-10;
+$shadow-xl-soft: $shadow-xl-offset $color-system-primary-tran-20;
+$shadow-xl-regular: $shadow-xl-offset $color-system-primary-tran-40;
+$shadow-xl-hard: $shadow-xl-offset $color-system-primary-tran-60;
+
+// Card
+$shadow-card-offset: var(--pep-shadow-card-offset, 0 0.25rem 0.5rem 0);
+$shadow-card-xsoft: $shadow-card-offset $color-system-primary-tran-10;
+$shadow-card-soft: $shadow-card-offset $color-system-primary-tran-20;
+$shadow-card-regular: $shadow-card-offset $color-system-primary-tran-40;
+$shadow-card-hard: $shadow-card-offset $color-system-primary-tran-60;

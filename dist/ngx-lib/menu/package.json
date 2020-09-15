@@ -1,0 +1,13 @@
+{
+  "peerDependencies": {
+    "@ngx-translate/core": "^13.0.0"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-menu.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-menu.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-menu.js",
+  "esm2015": "../esm2015/menu/pepperi-addons-ngx-lib-menu.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-menu.js",
+  "typings": "pepperi-addons-ngx-lib-menu.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/menu"
+}

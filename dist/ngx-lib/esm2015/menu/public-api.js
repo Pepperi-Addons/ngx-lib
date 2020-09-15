@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of ngx-lib/menu
+ */
+export * from './menu.module';
+export * from './menu.component';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvbWVudS9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBQ0gsY0FBYyxlQUFlLENBQUM7QUFDOUIsY0FBYyxrQkFBa0IsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXHJcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBuZ3gtbGliL21lbnVcclxuICovXHJcbmV4cG9ydCAqIGZyb20gJy4vbWVudS5tb2R1bGUnO1xyXG5leHBvcnQgKiBmcm9tICcuL21lbnUuY29tcG9uZW50JztcclxuIl19

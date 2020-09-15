@@ -1,0 +1,15 @@
+{
+  "peerDependencies": {
+    "@angular/animations": ">= 10.0.0",
+    "@ngx-translate/core": "^13.0.0",
+    "jquery": "^3.5.1"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-quantity-selector.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-quantity-selector.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-quantity-selector.js",
+  "esm2015": "../esm2015/quantity-selector/pepperi-addons-ngx-lib-quantity-selector.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-quantity-selector.js",
+  "typings": "pepperi-addons-ngx-lib-quantity-selector.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/quantity-selector"
+}

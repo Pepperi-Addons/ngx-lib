@@ -1,0 +1,36 @@
+// -----------------------------------------------------
+//  Pepperi - Date time
+// -----------------------------------------------------
+
+// -----------------------------------------------------
+//  Override material style
+// -----------------------------------------------------
+.mat-form-field {
+    .mat-form-field-wrapper {
+        .mat-form-field-prefix,
+        .mat-form-field-suffix {
+            .mat-datetimepicker-toggle {
+                &.mat-button {
+                    padding: 0;
+                }
+
+                .mat-icon-button {
+                    top: 0.55rem;
+                    min-width: unset;
+                    padding: unset;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border-radius: $border-radius-md;
+
+                    .svg-icon {
+                        padding: 0 0.15rem 0.15rem 0.15rem;
+                        margin-top: -0.5rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin pepperi-datetime-theme($pepperi-theme) {
+}

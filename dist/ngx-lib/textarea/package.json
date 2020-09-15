@@ -1,0 +1,13 @@
+{
+  "peerDependencies": {
+    "@ngx-translate/core": "^13.0.0"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-textarea.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-textarea.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-textarea.js",
+  "esm2015": "../esm2015/textarea/pepperi-addons-ngx-lib-textarea.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-textarea.js",
+  "typings": "pepperi-addons-ngx-lib-textarea.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/textarea"
+}

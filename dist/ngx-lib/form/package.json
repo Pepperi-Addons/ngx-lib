@@ -1,0 +1,15 @@
+{
+  "peerDependencies": {
+    "@ngx-translate/core": "^13.0.0",
+    "angular2-signaturepad": ">= 2.11.0",
+    "jquery": "^3.5.1"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-form.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-form.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-form.js",
+  "esm2015": "../esm2015/form/pepperi-addons-ngx-lib-form.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-form.js",
+  "typings": "pepperi-addons-ngx-lib-form.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/form"
+}

@@ -1,0 +1,14 @@
+{
+  "peerDependencies": {
+    "@ngx-translate/core": "^13.0.0",
+    "angular2-signaturepad": ">= 2.11.0"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-signature.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-signature.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-signature.js",
+  "esm2015": "../esm2015/signature/pepperi-addons-ngx-lib-signature.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-signature.js",
+  "typings": "pepperi-addons-ngx-lib-signature.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/signature"
+}

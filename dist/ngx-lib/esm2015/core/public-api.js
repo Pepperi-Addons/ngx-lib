@@ -1,0 +1,9 @@
+/*
+ * Public API Surface of ngx-lib/core
+ */
+export * from './common/index';
+export * from './customization/index';
+export * from './http/index';
+export * from './layout/index';
+export * from './portal/index';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvc3JjL2NvcmUvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUNILGNBQWMsZ0JBQWdCLENBQUM7QUFDL0IsY0FBYyx1QkFBdUIsQ0FBQztBQUN0QyxjQUFjLGNBQWMsQ0FBQztBQUM3QixjQUFjLGdCQUFnQixDQUFDO0FBQy9CLGNBQWMsZ0JBQWdCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxyXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygbmd4LWxpYi9jb3JlXHJcbiAqL1xyXG5leHBvcnQgKiBmcm9tICcuL2NvbW1vbi9pbmRleCc7XHJcbmV4cG9ydCAqIGZyb20gJy4vY3VzdG9taXphdGlvbi9pbmRleCc7XHJcbmV4cG9ydCAqIGZyb20gJy4vaHR0cC9pbmRleCc7XHJcbmV4cG9ydCAqIGZyb20gJy4vbGF5b3V0L2luZGV4JztcclxuZXhwb3J0ICogZnJvbSAnLi9wb3J0YWwvaW5kZXgnO1xyXG4iXX0=

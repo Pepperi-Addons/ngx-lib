@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of ngx-lib/dialog
+ */
+export * from './dialog.module';
+export * from './dialog.component';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvZGlhbG9nL3B1YmxpYy1hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFDSCxjQUFjLGlCQUFpQixDQUFDO0FBQ2hDLGNBQWMsb0JBQW9CLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxyXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygbmd4LWxpYi9kaWFsb2dcclxuICovXHJcbmV4cG9ydCAqIGZyb20gJy4vZGlhbG9nLm1vZHVsZSc7XHJcbmV4cG9ydCAqIGZyb20gJy4vZGlhbG9nLmNvbXBvbmVudCc7XHJcbiJdfQ==

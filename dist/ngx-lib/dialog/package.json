@@ -1,0 +1,14 @@
+{
+  "peerDependencies": {
+    "@ngx-translate/core": "^13.0.0",
+    "@angular/cdk": ">= 10.0.0"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-dialog.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-dialog.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-dialog.js",
+  "esm2015": "../esm2015/dialog/pepperi-addons-ngx-lib-dialog.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-dialog.js",
+  "typings": "pepperi-addons-ngx-lib-dialog.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/dialog"
+}

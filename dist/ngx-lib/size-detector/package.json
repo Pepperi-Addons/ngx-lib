@@ -1,0 +1,13 @@
+{
+  "peerDependencies": {
+    "@angular/flex-layout": ">= 10.0.0-beta.32"
+  },
+  "main": "../bundles/pepperi-addons-ngx-lib-size-detector.umd.js",
+  "module": "../fesm2015/pepperi-addons-ngx-lib-size-detector.js",
+  "es2015": "../fesm2015/pepperi-addons-ngx-lib-size-detector.js",
+  "esm2015": "../esm2015/size-detector/pepperi-addons-ngx-lib-size-detector.js",
+  "fesm2015": "../fesm2015/pepperi-addons-ngx-lib-size-detector.js",
+  "typings": "pepperi-addons-ngx-lib-size-detector.d.ts",
+  "sideEffects": false,
+  "name": "@pepperi-addons/ngx-lib/size-detector"
+}
