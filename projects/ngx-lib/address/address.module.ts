@@ -5,12 +5,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
-import { PepperiSelectModule } from '@pepperi-addons/ngx-lib/select';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
+import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
-import { PepperiAddressComponent } from './address.component';
+import { PepAddressComponent } from './address.component';
 
 @NgModule({
     imports: [
@@ -20,13 +20,13 @@ import { PepperiAddressComponent } from './address.component';
         // Material modules
         MatCommonModule,
         MatFormFieldModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiTextboxModule,
-        PepperiSelectModule,
-        PepperiFieldTitleModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepTextboxModule,
+        PepSelectModule,
+        PepFieldTitleModule
     ],
-    exports: [ PepperiAddressComponent ],
-    declarations: [ PepperiAddressComponent ],
+    exports: [ PepAddressComponent ],
+    declarations: [ PepAddressComponent ],
 })
-export class PepperiAddressModule {}
+export class PepAddressModule {}

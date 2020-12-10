@@ -1,6 +1,12 @@
 @import '../src/core/style/abstracts/variables';
 @import '../src/core/style/abstracts/mixins';
 
+:host {
+    display: grid;
+    width: inherit;
+    height: inherit;
+}
+
 .matrix-title-container {
     //width: 100%;
     padding: 0;
@@ -19,22 +25,28 @@
     .buttons-container {
         display: flex;
         align-self: center;
+
+        .pepperi-button, .pep-button {
+            width: max-content;
+        }
     }
 }
 
 #mainViewCont {
     width: 100%;
-    height: fit-content;
-    margin-bottom: 1.5rem;
+    height: inherit;
+    overflow: hidden;
+    padding: 0 $spacing-xs;
+    // margin-bottom: 1.5rem;
 
     .table-cover {
         background-color: #fff;
-        z-index: $z-index-medium + 1;
+        z-index: $z-index-medium - 2;
         position: absolute;
         top: 0;
-        /* left: 0; */
-        width: 99%;
-        height: 100%;
+        width: 100%;
+        // height: calc(100% + #{$form-field-height});
+        height: inherit;
         opacity: 0.5;
         //cursor: pointer;
     }
@@ -43,8 +55,13 @@
         position: absolute;
         left: 50%;
         transform: translate(-50%, -50%);
-        top: 50%;
-        z-index: $z-index-medium + 2;
+        top: calc(50% + #{$form-field-height});
+        z-index: $z-index-medium - 1;
+
+        &.lineview-btn{
+            top: calc(2 * #{$form-field-height});
+            transform: translate(-50%, 0);
+        }
     }
 
     .underCover {
@@ -57,17 +74,18 @@
     }
 }
 
-.modal-dialog {
-    position: relative;
-    margin: 0.5rem 0;
+// .modal-dialog {
+//     position: relative;
+//     margin: 0.5rem 0;
 
-    .matrix-dialog-body {
-        height: 100%;
-        padding: 0.5rem;
-        overflow: auto;
+//     .matrix-dialog-body {
+//         height: 100%;
+//         padding: 0.5rem;
+//         overflow: auto;
 
-        ::ng-deep.table-header {
-            top: unset !important;
-        }
-    }
-}
+//         ::ng-deep.table-header {
+//             top: unset !important;
+//         }
+//     }
+// }
+

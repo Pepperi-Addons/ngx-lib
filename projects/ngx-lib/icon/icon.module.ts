@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { PepperiIconComponent } from './icon.component';
+import { PepIconComponent } from './icon.component';
 
 @NgModule({
-  declarations: [PepperiIconComponent],
-  imports: [
-  ],
-  exports: [PepperiIconComponent]
+    declarations: [PepIconComponent],
+    imports: [
+    ],
+    exports: [PepIconComponent]
 })
-export class PepperiIconModule { }
+export class PepIconModule { }

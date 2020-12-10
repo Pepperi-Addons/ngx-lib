@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "ngx-library-assets:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/web-app",
             "index": "projects/web-app/src/index.html",
@@ -26,12 +26,18 @@
             "stylePreprocessorOptions": {
               "includePaths": [
                 "dist",
-                "node_modules"
+                "node_modules",
+                "node_modules/@pepperi-addons"
               ]
             },
             "assets": [
               "projects/web-app/src/favicon.ico",
-              "projects/web-app/src/assets"
+              "projects/web-app/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./dist/ngx-lib/src/assets",
+                "output": "./assets/ngx-lib"
+              }
             ],
             "styles": [
               "node_modules/quill/dist/quill.snow.css",
@@ -73,7 +79,7 @@
           }
         },
         "serve": {
-          "builder": "ngx-library-assets:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "web-app:build",
             "port": 2626
@@ -139,7 +145,7 @@
       "projectType": "library",
       "root": "projects/ngx-lib",
       "sourceRoot": "projects/ngx-lib/src",
-      "prefix": "pepperi",
+      "prefix": "pep",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -178,6 +184,6 @@
   },
   "defaultProject": "web-app",
   "cli": {
-    "analytics": "a2a8a30c-39e6-47d6-b6c8-dd91c0c03d65"
+    "analytics": "24759c03-7ae3-43c1-b439-27b39a1d252a"
   }
 }

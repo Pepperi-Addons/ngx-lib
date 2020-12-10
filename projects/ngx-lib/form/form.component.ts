@@ -4,37 +4,44 @@ import {
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { DialogService, DialogData, DialogDataType } from '@pepperi-addons/ngx-lib/dialog';
+import { DialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
 import { Subscription } from 'rxjs';
 import {
-    PepperiFieldClickedData,
-    PepperiObjectChangedData,
-    LAYOUT_TYPE,
+    PepFieldValueChangedData,
+    PepFormFieldClickedData,
+    PepFormFieldChangedData,
+    PepLayoutType,
     FIELD_TYPE,
     CustomizationService,
     UIControl,
     UIControlField,
     ObjectSingleData,
     ObjectsDataRowCell,
-    PepperiFieldBase,
-    PepperiTextboxField,
-    PepperiSelectField,
-    PepperiMenuField,
-    PepperiQuantitySelectorField,
-    PepperiAddressField,
-    PepperiIndicatorsField,
-    PepperiInternalPageField,
-    PepperiButtonField,
-    PepperiAttachmentField,
-    PepperiSignatureField,
-    PepperiImageField,
-    PepperiImagesField,
-    PepperiTextareaField,
-    PepperiRichHtmlTextareaField,
-    PepperiDateField,
-    PepperiCheckboxField,
-    PepperiSeparatorField,
-    PepperiPlaceholderField,
+    PepFieldBase,
+    PepTextboxField,
+    PepSelectField,
+    PepInternalMenuField,
+    PepQuantitySelectorField,
+    PepAddressField,
+    PepIndicatorsField,
+    PepInternalPageField,
+    PepInternalButtonField,
+    PepAttachmentField,
+    PepSignatureField,
+    PepImageField,
+    PepImagesField,
+    PepTextareaField,
+    PepRichHtmlTextareaField,
+    PepDateField,
+    PepCheckboxField,
+    PepSeparatorField,
+    PepPlaceholderField,
+    PepHorizontalAlignment,
+    PepVerticalAlignment,
+    X_ALIGNMENT_TYPE,
+    Y_ALIGNMENT_TYPE,
+    DEFAULT_VERTICAL_ALIGNMENT,
+    DEFAULT_HORIZONTAL_ALIGNMENT
 } from '@pepperi-addons/ngx-lib';
 
 // tslint:disable-next-line: no-conflicting-lifecycle
@@ -44,32 +51,30 @@ import {
     styleUrls: ['./form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
+export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() isReport = false;
     @Input() uiControlHeader: UIControl;
     @Input() lockEvents = false;
     @Input() canEditObject = true;
-    @Input() pepperiObjectInput: ObjectSingleData;
+    @Input() singleData: ObjectSingleData;
     @Input() isActive = false;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
     @Input() listType = '';
     @Input() objectId = '0';
     @Input() parentId = '0';
     @Input() searchCode = '0';
     @Input() showTitle = true;
     @Input() firstFieldAsLink = false;
-    @Input() isCardView = false;
     @Input() checkForChanges: any = null;
     @Input() pageType = '';
 
-    @Output() notifyValueChanged: EventEmitter<PepperiObjectChangedData> = new EventEmitter<PepperiObjectChangedData>();
-    @Output() formValidationChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() childClicked: EventEmitter<void> = new EventEmitter<void>();
-    @Output() childChanged: EventEmitter<void> = new EventEmitter<void>();
-    @Output() notifyFieldClicked: EventEmitter<any> = new EventEmitter<any>();
-    @Output() notifyMenuItemClicked: EventEmitter<any> = new EventEmitter<any>();
+    @Output() valueChange: EventEmitter<PepFormFieldChangedData> = new EventEmitter<PepFormFieldChangedData>();
+    @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() fieldClick: EventEmitter<PepFormFieldClickedData> = new EventEmitter<PepFormFieldClickedData>();
+    @Output() menuItemClick: EventEmitter<PepFormFieldClickedData> = new EventEmitter<PepFormFieldClickedData>();
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     isLocked = false;
     formGutterSize;
     cardGutterSize;
@@ -81,8 +86,8 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
     differ: any;
 
     // payLoad = '';
-    rows: Array<PepperiFieldBase[]> = [];
-    fields: PepperiFieldBase[] = [];
+    rows: Array<PepFieldBase[]> = [];
+    fields: PepFieldBase[] = [];
     columns = 1;
 
     hasMenuFloatingOnOtherField = false;
@@ -98,15 +103,47 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
 
     public jsonLib = JSON;
 
-    static convertAddressFields(controlField: any, addressFields: Array<ObjectsDataRowCell>, canEditObject: boolean): PepperiFieldBase[] {
-        const fields: PepperiFieldBase[] = [];
+    convertXAlignToHorizontalAlign(xAlign: X_ALIGNMENT_TYPE): PepHorizontalAlignment {
+        let res = DEFAULT_HORIZONTAL_ALIGNMENT;
+
+        if (xAlign === X_ALIGNMENT_TYPE.None || xAlign === X_ALIGNMENT_TYPE.Left) {
+            res = 'left';
+        } else if (xAlign === X_ALIGNMENT_TYPE.Right) {
+            res = 'right';
+        } else {
+            res = 'center';
+        }
+
+        return res;
+    }
+
+    convertYAlignToVerticalAlign(yAlign: Y_ALIGNMENT_TYPE): PepVerticalAlignment {
+        let res = DEFAULT_VERTICAL_ALIGNMENT;
+
+        if (yAlign === Y_ALIGNMENT_TYPE.None || yAlign === Y_ALIGNMENT_TYPE.Top) {
+            res = 'top';
+        } else if (yAlign === Y_ALIGNMENT_TYPE.Bottom) {
+            res = 'bottom';
+        } else {
+            res = 'middle';
+        }
+
+        return res;
+    }
+
+    convertAddressFields(
+        controlField: UIControlField,
+        addressFields: Array<ObjectsDataRowCell>,
+        canEditObject: boolean): PepFieldBase[] {
+
+        const fields: PepFieldBase[] = [];
 
         addressFields.forEach(field => {
-            let customField: PepperiFieldBase;
+            let customField: PepFieldBase;
             const placeholder = field.ApiName;
 
             if (field.ApiName.toLowerCase().indexOf('street') >= 0) {
-                customField = new PepperiTextboxField({
+                customField = new PepTextboxField({
                     key: field.ApiName,
                     label: field.ApiName,
                     type: 'text',
@@ -121,12 +158,12 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                     rowSpan: 1,
                     col: 0,
                     colSpan: 2,
-                    xAlignment: controlField.Layout.XAlignment,
-                    yAlignment: controlField.Layout.YAlignment,
+                    xAlignment: this.convertXAlignToHorizontalAlign(controlField.Layout.XAlignment),
+                    yAlignment: this.convertYAlignToVerticalAlign(controlField.Layout.YAlignment),
                     order: 0
                 });
             } else if (field.ApiName.toLowerCase().indexOf('city') >= 0) {
-                customField = new PepperiTextboxField({
+                customField = new PepTextboxField({
                     key: field.ApiName,
                     label: field.ApiName,
                     type: 'text',
@@ -141,12 +178,12 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                     rowSpan: 1,
                     col: 2,
                     colSpan: 1,
-                    xAlignment: controlField.Layout.XAlignment,
-                    yAlignment: controlField.Layout.YAlignment,
+                    xAlignment: this.convertXAlignToHorizontalAlign(controlField.Layout.XAlignment),
+                    yAlignment: this.convertYAlignToVerticalAlign(controlField.Layout.YAlignment),
                     order: 1
                 });
             } else if (field.ApiName.toLowerCase().indexOf('state') >= 0) {
-                customField = new PepperiSelectField({
+                customField = new PepSelectField({
                     key: field.ApiName,
                     label: field.ApiName,
                     placeholder,
@@ -161,12 +198,12 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                     rowSpan: 1,
                     col: 0,
                     colSpan: 1,
-                    xAlignment: controlField.Layout.XAlignment,
-                    yAlignment: controlField.Layout.YAlignment,
+                    xAlignment: this.convertXAlignToHorizontalAlign(controlField.Layout.XAlignment),
+                    yAlignment: this.convertYAlignToVerticalAlign(controlField.Layout.YAlignment),
                     order: 2
                 });
             } else if (field.ApiName.toLowerCase().indexOf('zipcode') >= 0) {
-                customField = new PepperiTextboxField({
+                customField = new PepTextboxField({
                     key: field.ApiName,
                     label: field.ApiName,
                     type: 'text',
@@ -181,12 +218,12 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                     rowSpan: 1,
                     col: 1,
                     colSpan: 1,
-                    xAlignment: controlField.Layout.XAlignment,
-                    yAlignment: controlField.Layout.YAlignment,
+                    xAlignment: this.convertXAlignToHorizontalAlign(controlField.Layout.XAlignment),
+                    yAlignment: this.convertYAlignToVerticalAlign(controlField.Layout.YAlignment),
                     order: 3
                 });
             } else if (field.ApiName.toLowerCase().indexOf('country') >= 0) {
-                customField = new PepperiSelectField({
+                customField = new PepSelectField({
                     key: field.ApiName,
                     label: field.ApiName,
                     placeholder,
@@ -201,8 +238,8 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                     rowSpan: 1,
                     col: 2,
                     colSpan: 1,
-                    xAlignment: controlField.Layout.XAlignment,
-                    yAlignment: controlField.Layout.YAlignment,
+                    xAlignment: this.convertXAlignToHorizontalAlign(controlField.Layout.XAlignment),
+                    yAlignment: this.convertYAlignToVerticalAlign(controlField.Layout.YAlignment),
                     order: 4
                 });
             }
@@ -213,11 +250,11 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         return fields.sort((n1, n2) => (n1.order > n2.order ? 1 : n1.order < n2.order ? -1 : 0));
     }
 
-    static isMatrixField(apiNameToCheck: string): boolean {
+    isMatrixField(apiNameToCheck: string): boolean {
         return apiNameToCheck.indexOf('Matrix') >= 0;
     }
 
-    public static doesFieldHavaFloatingField(controlField: any, floatingField: any): boolean {
+    doesFieldHavaFloatingField(controlField: UIControlField, floatingField: any): boolean {
         let hasFloatingField = false;
         if (
             floatingField.Layout.Y >= controlField.Layout.Y &&
@@ -231,7 +268,7 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         return hasFloatingField;
     }
 
-    public static getOptionsForCustomField(controlField: any, dataField: any, canEditObject: boolean): any {
+    getOptionsForCustomField(controlField: UIControlField, dataField: any, canEditObject: boolean): any {
         if (!controlField || !dataField) { return; }
 
         const placeholder = controlField.ReadOnly || !canEditObject ? '' : controlField.Title;
@@ -239,7 +276,6 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         return {
             key: controlField.ApiName,
             label: controlField.Title,
-            type: 'text',
             accessory: dataField.Accessory,
             placeholder,
             readonly: controlField.ReadOnly || !canEditObject,
@@ -253,8 +289,8 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
             rowSpan: controlField.Layout.Height,
             col: controlField.Layout.X,
             colSpan: controlField.Layout.Width,
-            xAlignment: controlField.Layout.XAlignment,
-            yAlignment: controlField.Layout.YAlignment,
+            xAlignment: this.convertXAlignToHorizontalAlign(controlField.Layout.XAlignment),
+            yAlignment: this.convertYAlignToVerticalAlign(controlField.Layout.YAlignment),
             options: dataField.OptionalValues,
             groupFields: undefined,
             maxFieldCharacters: controlField.MaxFieldCharacters,
@@ -263,29 +299,19 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
             // hasMenu: hasMenu,
             // hasCampaign: hasCampaign,
             // hasIndicators: hasIndicators,
-            textColor: dataField.TextColor,
-            notificationInfo: dataField.NotificationInfo
+            textColor: dataField.TextColor
         };
     }
 
-    public static convertToCustomField(controlField: any, dataField: any, canEditObject: boolean,
+    convertToCustomField(controlField: UIControlField, dataField: any, canEditObject: boolean,
         menuField: any, hasCampaignField: any, indicatorsField: any,
-        objectId: any, parentId: any, searchCode: any): PepperiFieldBase {
-        let customField: PepperiFieldBase;
-        const options = PepperiFormComponent.getOptionsForCustomField(controlField, dataField, canEditObject);
+        objectId: any, parentId: any, searchCode: any): PepFieldBase {
+        let customField: PepFieldBase;
+        const options = this.getOptionsForCustomField(controlField, dataField, canEditObject);
 
         if (controlField.ApiName === 'ObjectMenu') {
             options.type = 'menu';
-
-            if (dataField.TransactionItemType === 1 && dataField.OptionalValues.length > 0) {
-                const subMenuOptions = [{ Key: 'EditPackage', Value: 'Edit' }, { Key: 'DeletePackage', Value: 'Delete' }];
-                options.options = subMenuOptions.filter(option => option && dataField.OptionalValues.includes(option.Key));
-            }
-            else {
-                options.options = null;
-            }
-
-            customField = new PepperiMenuField(options);
+            customField = new PepInternalMenuField(options);
         } else if (controlField.ApiName === 'QuantitySelector' ||
             controlField.ApiName === 'UnitsQuantity' ||
             controlField.ApiName.indexOf('size_') === 0) {
@@ -309,34 +335,36 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 options.alowDecimal = true;
             }
 
-            customField = new PepperiQuantitySelectorField(options);
+            options.notificationInfo = dataField.NotificationInfo;
+
+            customField = new PepQuantitySelectorField(options);
         } else {
             // Hack need to remove this..
-            if (dataField.FieldType === FIELD_TYPE.Indicators && PepperiFormComponent.isMatrixField(dataField.ApiName)) {
+            if (dataField.FieldType === FIELD_TYPE.Indicators && this.isMatrixField(dataField.ApiName)) {
                 dataField.FieldType = FIELD_TYPE.InternalPage;
             }
 
             switch (dataField.FieldType) {
                 case FIELD_TYPE.Address: {
                     const canEditGroupObject = controlField.ReadOnly ? false : canEditObject;
-                    options.groupFields = PepperiFormComponent.convertAddressFields(controlField,
+                    options.groupFields = this.convertAddressFields(controlField,
                         dataField.GroupFields, canEditGroupObject);
-                    customField = new PepperiAddressField(options);
+                    customField = new PepAddressField(options);
                     break;
                 }
                 case FIELD_TYPE.Indicators: {
-                    // options['type'] = 'indicators'; // Not needed this is PepperiIndicatorsField.
-                    customField = new PepperiIndicatorsField(options);
+                    // options['type'] = 'indicators'; // Not needed this is PepIndicatorsField.
+                    customField = new PepIndicatorsField(options);
                     break;
                 }
                 case FIELD_TYPE.InternalPage: {
-                    if (PepperiFormComponent.isMatrixField(controlField.ApiName)) {
+                    if (this.isMatrixField(controlField.ApiName)) {
                         options.rowSpan = controlField.Layout.Height;
                         options.objectId = objectId;
                         options.parentId = parentId;
                         options.searchCode = searchCode;
 
-                        customField = new PepperiInternalPageField(options);
+                        customField = new PepInternalPageField(options);
                     } else {
                         // Not supported
                     }
@@ -344,60 +372,55 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 }
                 case FIELD_TYPE.Link: {
                     options.type = 'link';
-                    customField = new PepperiTextboxField(options);
-
-                    // DI-11292 - add changes for link field for the "Read Only display value" prop
-                    customField.formattedValue = customField.disabled && customField.formattedValue !== '' &&
-                        customField.value !== '' ? customField.formattedValue : customField.value;
-
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.InternalLink:
                 case FIELD_TYPE.Button: {
                     options.type = 'button';
-                    customField = new PepperiButtonField(options);
+                    customField = new PepInternalButtonField(options);
                     break;
                 }
                 case FIELD_TYPE.Attachment: {
-                    options.type = 'attachment';
-                    customField = new PepperiAttachmentField(options);
+                    // options.type = 'attachment';
+                    customField = new PepAttachmentField(options);
                     break;
                 }
                 case FIELD_TYPE.Signature: {
-                    options.type = 'signature';
-                    customField = new PepperiSignatureField(options);
+                    // options.type = 'signature';
+                    customField = new PepSignatureField(options);
                     break;
                 }
                 case FIELD_TYPE.Image:
                 case FIELD_TYPE.ImageURL: {
-                    options.type = 'image';
+                    // options.type = 'image';
                     options.menuField = menuField && this.doesFieldHavaFloatingField(controlField, menuField) ? menuField : null;
                     options.hasCampaignField = hasCampaignField &&
                         this.doesFieldHavaFloatingField(controlField, hasCampaignField) ? hasCampaignField : null;
                     options.indicatorsField = indicatorsField &&
                         this.doesFieldHavaFloatingField(controlField, indicatorsField) ? indicatorsField : null;
 
-                    customField = new PepperiImageField(options);
+                    customField = new PepImageField(options);
                     break;
                 }
                 case FIELD_TYPE.Images: {
-                    options.type = 'images';
-                    customField = new PepperiImagesField(options);
+                    // options.type = 'images';
+                    customField = new PepImagesField(options);
                     break;
                 }
                 case FIELD_TYPE.Email: {
                     options.type = 'email';
-                    customField = new PepperiTextboxField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.Phone: {
                     options.type = 'phone';
-                    customField = new PepperiTextboxField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.Duration: {
                     options.type = 'duration';
-                    customField = new PepperiTextboxField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.Default:
@@ -406,16 +429,16 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 case FIELD_TYPE.TextHeader:
                 case FIELD_TYPE.CalculatedString:
                 case FIELD_TYPE.MapDataString: {
-                    customField = new PepperiTextboxField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.TextArea: {
-                    customField = new PepperiTextareaField(options);
+                    customField = new PepTextareaField(options);
                     break;
                 }
 
                 case FIELD_TYPE.RichTextHTML: {
-                    customField = new PepperiRichHtmlTextareaField(options);
+                    customField = new PepRichHtmlTextareaField(options);
                     break;
                 }
                 case FIELD_TYPE.Date:
@@ -423,24 +446,24 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 case FIELD_TYPE.CalculatedDate:
                 case FIELD_TYPE.DateAndTime: {
                     options.type = dataField.FieldType === FIELD_TYPE.DateAndTime ? 'datetime' : 'date';
-                    customField = new PepperiDateField(options);
+                    customField = new PepDateField(options);
                     break;
                 }
                 case FIELD_TYPE.NumberInteger:
                 case FIELD_TYPE.CalculatedInt:
                 case FIELD_TYPE.MapDataInt: {
                     options.type = 'int';
-                    customField = new PepperiTextboxField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.Percentage: {
                     options.type = 'percentage';
-                    customField = new PepperiTextboxField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.Currency: {
                     options.type = 'currency';
-                    customField = new PepperiTextboxField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.NumberReal:
@@ -449,31 +472,31 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 case FIELD_TYPE.Sum:
                 case FIELD_TYPE.Totals: {
                     options.type = 'real';
-                    customField = new PepperiTextboxField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.Boolean:
                 case FIELD_TYPE.CalculatedBool: {
-                    customField = new PepperiCheckboxField(options);
+                    customField = new PepCheckboxField(options);
                     break;
                 }
                 case FIELD_TYPE.BooleanText: {
                     options.type = 'booleanText';
-                    customField = new PepperiCheckboxField(options);
+                    customField = new PepCheckboxField(options);
                     break;
                 }
                 case FIELD_TYPE.ComboBox:
                 case FIELD_TYPE.EmptyComboBox:
                 case FIELD_TYPE.MapDataDropDown: {
                     // options.type = 'select';
-                    customField = new PepperiSelectField(options);
+                    customField = new PepSelectField(options);
                     break;
                 }
                 case FIELD_TYPE.MultiTickBox:
                 case FIELD_TYPE.MultiTickBoxToComboBox:
                 case FIELD_TYPE.EmptyMultiTickBox: {
                     options.type = 'multi';
-                    customField = new PepperiSelectField(options);
+                    customField = new PepSelectField(options);
                     break;
                 }
                 case FIELD_TYPE.GuidReferenceType: {
@@ -481,16 +504,16 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                     options.referenceObjectType = dataField.ReferenceObjectType;
                     options.referenceObjectSubType = dataField.ReferenceObjectSubType;
                     options.referenceObjectInternalType = dataField.ReferenceObjectInternalType;
-                    customField = new PepperiButtonField(options);
+                    customField = new PepInternalButtonField(options);
                     break;
                 }
                 case FIELD_TYPE.ListOfObjects: {
                     options.type = 'listofobjects';
-                    customField = new PepperiButtonField(options);
+                    customField = new PepInternalButtonField(options);
                     break;
                 }
                 case FIELD_TYPE.Separator: {
-                    customField = new PepperiSeparatorField(options);
+                    customField = new PepSeparatorField(options);
                     break;
                 }
                 /*
@@ -500,14 +523,16 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 case FIELD_TYPE.NumberIntegerQuantitySelector: {
                     options.type = 'qs';
                     options.alowDecimal = dataField.FieldType === FIELD_TYPE.NumberRealQuantitySelector;
+                    options.notificationInfo = dataField.NotificationInfo;
 
-                    customField = new PepperiQuantitySelectorField(options);
+                    customField = new PepQuantitySelectorField(options);
                     break;
                 }
                 case FIELD_TYPE.Package: {
                     options.type = 'packageButton';
+                    options.notificationInfo = dataField.NotificationInfo;
 
-                    customField = new PepperiQuantitySelectorField(options);
+                    customField = new PepQuantitySelectorField(options);
                     break;
                 }
             }
@@ -515,13 +540,13 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
 
         if (!customField) {
             options.label = controlField.ApiName + ' is not supported!!!';
-            customField = new PepperiSeparatorField(options);
+            customField = new PepSeparatorField(options);
         }
 
         return customField;
     }
 
-    public static getFieldFormattedValue(field: PepperiFieldBase): string {
+    getFieldFormattedValue(field: PepFieldBase): string {
         let fieldFormattedValue = field.formattedValue;
 
         // Fix for the custom check box component.
@@ -537,8 +562,7 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         return fieldFormattedValue;
     }
 
-    private static toControlGroup(fields: PepperiFieldBase[], fb: FormBuilder,
-        customizationService: CustomizationService): FormGroup {
+    private toControlGroup(fields: PepFieldBase[], fb: FormBuilder, customizationService: CustomizationService): FormGroup {
         const group = {};
         if (fields && fields.length > 0) {
             fields.forEach(field => {
@@ -561,9 +585,9 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
 
                     group[field.key] = fb.group(subGroup);
                 } else {
-                    const validators = customizationService.getValidatorsForField(field.required, field.readonly,
-                        field.disabled, field.maxFieldCharacters, field.type, field.controlType === 'checkbox');
-                    const fieldFormattedValue = PepperiFormComponent.getFieldFormattedValue(field);
+                    const validators = field.getValidators();
+                    const fieldFormattedValue = this.getFieldFormattedValue(field);
+
                     group[field.key] = [{ value: fieldFormattedValue || '', disabled: field.disabled }, validators];
                 }
             });
@@ -584,7 +608,7 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
     }
 
     public showFormValidationMessage(): void {
-        const fields: PepperiFieldBase[] = this.fields;
+        const fields: PepFieldBase[] = this.fields;
         let emptyMandatoryFieldsMsg = '';
         let notValidFieldsMsg = '';
 
@@ -616,10 +640,9 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         }
 
         const title = this.translate.instant('MESSAGES.TITLE_NOTICE');
-        const data = new DialogData({
+        const data = new PepDialogData({
             title,
-            content: emptyMandatoryFieldsMsg + notValidFieldsMsg,
-            contentType: DialogDataType.Html
+            content: emptyMandatoryFieldsMsg + notValidFieldsMsg
         });
         this.dialogService.openDefaultDialog(data);
     }
@@ -635,7 +658,7 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
     }
 
     ngDoCheck(): void {
-        const changes = this.differ.diff(this.pepperiObjectInput); // check for changes
+        const changes = this.differ.diff(this.singleData); // check for changes
 
         if (changes) {
             this.updateForm(true);
@@ -643,10 +666,10 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
     }
 
     ngOnChanges(changes): void {
-        if (changes.pepperiObjectInput && changes.pepperiObjectInput.currentValue) {
+        if (changes.singleData && changes.singleData.currentValue) {
             // Load changes
-            if (!this.shouldReloadForm && changes.pepperiObjectInput.previousValue) {
-                this.pepperiObjectInput = changes.pepperiObjectInput.currentValue;
+            if (!this.shouldReloadForm && changes.singleData.previousValue) {
+                this.singleData = changes.singleData.currentValue;
                 this.updateForm();
             } else {
                 this.shouldReloadForm = false;
@@ -658,30 +681,30 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
     }
 
     ngOnDestroy(): void {
-        if (this.notifyValueChanged) { this.notifyValueChanged.unsubscribe(); }
+        if (this.valueChange) { this.valueChange.unsubscribe(); }
 
-        if (this.formValidationChanged) { this.formValidationChanged.unsubscribe(); }
+        if (this.formValidationChange) { this.formValidationChange.unsubscribe(); }
 
-        if (this.childClicked) { this.childClicked.unsubscribe(); }
+        if (this.childClick) { this.childClick.unsubscribe(); }
 
-        if (this.childChanged) { this.childChanged.unsubscribe(); }
+        if (this.childChange) { this.childChange.unsubscribe(); }
 
-        if (this.notifyFieldClicked) { this.notifyFieldClicked.unsubscribe(); }
+        if (this.fieldClick) { this.fieldClick.unsubscribe(); }
 
-        if (this.notifyMenuItemClicked) { this.notifyMenuItemClicked.unsubscribe(); }
+        if (this.menuItemClick) { this.menuItemClick.unsubscribe(); }
     }
 
     getUiControlFields(): Array<UIControlField> {
         return this.uiControlHeader ?
             this.uiControlHeader.ControlFields :
-            this.pepperiObjectInput.UIControl.ControlFields;
+            this.singleData.UIControl.ControlFields;
     }
 
-    initFieldsStructure(fields: PepperiFieldBase[], maxRow: number): void {
+    initFieldsStructure(fields: PepFieldBase[], maxRow: number): void {
         const themeVars = this.customizationService.getThemeVariables();
 
         // Set form row height.
-        if (this.layoutType === LAYOUT_TYPE.PepperiCard) {
+        if (this.layoutType === 'card') {
             const cardFieldHeight = this.customizationService.getNumberThemeVariable(themeVars,
                 CustomizationService.CARD_FIELD_HEIGHT_KEY);
             this.rowHeight = cardFieldHeight;
@@ -697,9 +720,8 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         if (fields.length > 0) {
             // Init the layout.
             if (
-                // this.layoutType === LAYOUT_TYPE.PepperiForm ||
-                this.layoutType === LAYOUT_TYPE.PepperiTable ||
-                this.layoutType === LAYOUT_TYPE.Editmodal
+                // this.layoutType === 'form' ||
+                this.layoutType === 'table'
             ) {
                 this.fields = fields;
                 this.rows = [];
@@ -761,10 +783,9 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                         if (!doesfieldExistIn[i][j]) {
                             // Create empty field and add it to the fields list.
                             fields.push(
-                                new PepperiPlaceholderField({
+                                new PepPlaceholderField({
                                     key: i + '_' + j,
                                     label: '',
-                                    type: 'text',
                                     placeholder: '',
                                     readonly: false,
                                     disabled: false,
@@ -810,7 +831,7 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 }
             }
 
-            this.form = PepperiFormComponent.toControlGroup(fields, this.fb, this.customizationService);
+            this.form = this.toControlGroup(fields, this.fb, this.customizationService);
         }
         else {
             // Update form values if changed by calculated fields.
@@ -823,13 +844,13 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                         // for (let j = 0; j < currentField.groupFields.length; j++) {
                         //     let currentGroupField = currentField.groupFields[j];
                         for (const currentGroupField of currentField.groupFields) {
-                            const fieldFormattedValue = PepperiFormComponent.getFieldFormattedValue(currentGroupField);
+                            const fieldFormattedValue = this.getFieldFormattedValue(currentGroupField);
                             this.customizationService.updateFormField(this.form, currentGroupField,
                                 fieldFormattedValue, currentField);
 
                         }
                     } else {
-                        const fieldFormattedValue = PepperiFormComponent.getFieldFormattedValue(currentField);
+                        const fieldFormattedValue = this.getFieldFormattedValue(currentField);
                         // this.form.controls[currentField.key].setValue(fieldFormattedValue);
                         this.customizationService.updateFormField(this.form, currentField, fieldFormattedValue);
                     }
@@ -855,9 +876,9 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
     }
 
     initForm(changes): void {
-        if (this.pepperiObjectInput.Data && this.pepperiObjectInput.Data.Fields) {
-            const fields: PepperiFieldBase[] = this.convertCustomFields(
-                this.getUiControlFields(), this.pepperiObjectInput.Data.Fields);
+        if (this.singleData.Data && this.singleData.Data.Fields) {
+            const fields: PepFieldBase[] = this.convertCustomFields(
+                this.getUiControlFields(), this.singleData.Data.Fields);
 
             const maxRow = Math.max.apply(
                 Math,
@@ -877,16 +898,39 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         }
     }
 
+    private updateField(customField: PepFieldBase, updatedField: ObjectsDataRowCell): void {
+        const hasFocus = this.lastFocusedField && this.lastFocusedField.id === customField.key;
+        const options: any = {
+            disabled: !updatedField.Enabled || !this.canEditObject,
+            readonly: !updatedField.Enabled || !this.canEditObject,
+            value: updatedField.Value,
+            additionalValue: updatedField.AdditionalValue,
+            formattedValue: updatedField.FormattedValue,
+            textColor: updatedField.TextColor,
+            lastFocusField: hasFocus ? this.lastFocusedField : null,
+        };
+
+        if (customField instanceof PepQuantitySelectorField) {
+            const notificationInfo = updatedField.NotificationInfo;
+            options.notificationInfo = notificationInfo;
+        } else if (customField instanceof PepSelectField) {
+            options.options = updatedField.OptionalValues;
+        }
+
+        customField.update(options);
+    }
+
     updateForm(cleanLastFocusedField: boolean = false): void {
-        if (this.pepperiObjectInput.Data && this.pepperiObjectInput.Data.Fields) {
-            // for (let i = 0; i < this.pepperiObjectInput.Data.Fields.length; i++) {
-            // let currentField = this.pepperiObjectInput.Data.Fields[i];
-            for (const currentField of this.pepperiObjectInput.Data.Fields) {
+        if (this.singleData.Data && this.singleData.Data.Fields) {
+            // for (let i = 0; i < this.singleData.Data.Fields.length; i++) {
+            // let currentField = this.singleData.Data.Fields[i];
+            for (const currentField of this.singleData.Data.Fields) {
                 const customField = this.fields.filter(f => f.key === currentField.ApiName)[0];
                 // Update all fields except 'internalPage' type (for children).
                 if (customField && customField.controlType !== 'internalPage') {
-                    const hasFocus = this.lastFocusedField && this.lastFocusedField.id === customField.key;
-                    customField.updateField(currentField, this.canEditObject, hasFocus ? this.lastFocusedField : null);
+                    // const hasFocus = this.lastFocusedField && this.lastFocusedField.id === customField.key;
+                    // customField.updateField(currentField, this.canEditObject, hasFocus ? this.lastFocusedField : null);
+                    this.updateField(customField, currentField);
 
                     // Update the group fields.
                     if (customField.controlType === 'address' && currentField.GroupFields) {
@@ -896,10 +940,9 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                             currentGroupField.Enabled = !currentField.Enabled ? false : currentGroupField.Enabled;
 
                             const customGroupField = customField.groupFields.filter(f => f.key === currentGroupField.ApiName)[0];
-                            const hasGroupFocus = this.lastFocusedField && this.lastFocusedField.id === customGroupField.key;
-
-                            customGroupField.updateField(currentGroupField, this.canEditObject,
-                                hasGroupFocus ? this.lastFocusedField : null);
+                            // const hasGroupFocus = this.lastFocusedField && this.lastFocusedField.id === customGroupField.key;
+                            // customGroupField.updateField(currentGroupField, this.canEditObject, hasGroupFocus ? this.lastFocusedField : null);
+                            this.updateField(customGroupField, currentGroupField);
                         }
                     }
                 }
@@ -926,17 +969,16 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
     // }
 
     private getFormControlById(key: string): AbstractControl | null {
-        const self = this;
         let formControl = null;
 
         this.fields.forEach((field) => {
             if (field.key === key) {
-                formControl = self.form.get(field.key);
+                formControl = this.form.get(field.key);
                 return;
             } else if (field.groupFields && field.groupFields.length > 0) {
                 field.groupFields.forEach((groupField) => {
                     if (groupField.key === key) {
-                        formControl = self.form.get(field.key + '.' + groupField.key);
+                        formControl = this.form.get(field.key + '.' + groupField.key);
                         return;
                     }
                 });
@@ -990,7 +1032,7 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         //     cf = controlFields[index];
         for (const cf of controlFields) {
             if (this.menuField && cf.ApiName !== 'ObjectMenu') {
-                this.hasMenuFloatingOnOtherField = PepperiFormComponent.doesFieldHavaFloatingField(cf, this.menuField);
+                this.hasMenuFloatingOnOtherField = this.doesFieldHavaFloatingField(cf, this.menuField);
 
                 if (this.hasMenuFloatingOnOtherField) {
                     break;
@@ -999,10 +1041,8 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
         }
     }
 
-    convertCustomFields(controlFields: Array<any>, dataFields: Array<any>): PepperiFieldBase[] {
-        const self = this;
-
-        if (this.layoutType !== LAYOUT_TYPE.PepperiTable) {
+    convertCustomFields(controlFields: Array<any>, dataFields: Array<any>): PepFieldBase[] {
+        if (this.layoutType !== 'table') {
             this.setSpecialFields(controlFields, dataFields);
         } else {
             // Hack: convert to center alignment if table view & special fields)
@@ -1023,14 +1063,14 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                     field.FieldType === FIELD_TYPE.NumberIntegerForMatrix ||
                     field.FieldType === FIELD_TYPE.NumberRealForMatrix
                 ) {
-                    field.Layout.XAlignment = 3;
+                    field.Layout.XAlignment = X_ALIGNMENT_TYPE.Center;
                 }
             });
         }
 
-        const fields: PepperiFieldBase[] = [];
+        const fields: PepFieldBase[] = [];
 
-        const matrixFields = controlFields.filter(cf => PepperiFormComponent.isMatrixField(cf.ApiName)).length;
+        const matrixFields = controlFields.filter(cf => this.isMatrixField(cf.ApiName)).length;
         let matrixAlreadyPlaced = false;
 
         controlFields.forEach((field, index) => {
@@ -1039,17 +1079,15 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
             if (!dataField) { return; }
 
             // If current view is not table view and those fields are special.
-            if (
-                this.layoutType !== LAYOUT_TYPE.PepperiTable &&
+            if (this.layoutType !== 'table' &&
                 ((this.hasMenuFloatingOnOtherField && this.menuField && this.menuField.ApiName === field.ApiName) ||
                     (this.indicatorsField && this.indicatorsField.ApiName === field.ApiName) ||
-                    (this.hasCampaignField && this.hasCampaignField.ApiName === field.ApiName))
-            ) {
+                    (this.hasCampaignField && this.hasCampaignField.ApiName === field.ApiName))) {
                 return;
             }
 
             // Remove this. (fix two matrix into one)
-            if (matrixFields > 0 && PepperiFormComponent.isMatrixField(field.ApiName)) {
+            if (matrixFields > 0 && this.isMatrixField(field.ApiName)) {
                 if (matrixFields > 1 && matrixAlreadyPlaced) {
                     return;
                 }
@@ -1057,10 +1095,10 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 matrixAlreadyPlaced = true;
 
                 if (matrixFields > 1) {
-                    self.matrixIsLast = controlFields.length >= 2 ?
+                    this.matrixIsLast = controlFields.length >= 2 ?
                         controlFields[controlFields.length - 2].ApiName === field.ApiName : false;
                 } else {
-                    self.matrixIsLast = controlFields[controlFields.length - 1].ApiName === field.ApiName;
+                    this.matrixIsLast = controlFields[controlFields.length - 1].ApiName === field.ApiName;
                 }
             }
 
@@ -1070,19 +1108,17 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                 dataField.Value = this.getInternalLinkHref();
             } else if (dataField.Value.length > 0 &&
                 (field.FieldType === FIELD_TYPE.ReferenceType || field.FieldType === FIELD_TYPE.GuidReferenceType)) {
-                const transactionUrl = this.pepperiObjectInput.Data.MainAction === '2' ? 'transactions/scope_items/' : 'transactions/cart/';
+                const transactionUrl = this.singleData.Data.MainAction === '2' ? 'transactions/scope_items/' : 'transactions/cart/';
                 dataField.Value = transactionUrl + dataField.Value;
             }
 
             if (field.ApiName === 'ObjectMenu') {
-                const data: any = this.pepperiObjectInput.Data;
-                // HACK : Until "Enabled" returns from the server, we set PepperiMenu to be
+                const data: any = this.singleData.Data;
+                dataField.Enabled = true;
+                // HACK : Until "Enabled" returns from the server, we set PepMenu to be
                 //        Disabled in cart on regular items and not campign items.
-                dataField.Enabled = this.pageType !== 'cart';
-                dataField.OptionalValues = data.TransactionItemCustomMenu;
-                dataField.TransactionItemType = data.TransactionItemType;
             }
-            const customField: PepperiFieldBase = PepperiFormComponent.convertToCustomField(
+            const customField: PepFieldBase = this.convertToCustomField(
                 field,
                 dataField,
                 this.canEditObject,
@@ -1103,120 +1139,130 @@ export class PepperiFormComponent implements OnInit, DoCheck, OnChanges, OnDestr
                     1 : f1.col < f2.col ? -1 : 0));
     }
 
-    onValueChanged(valueChanged: any, isEditModal: boolean = false): void {
-        // This was comment by Tomer cause the address has stop working because this change.
-        // let clickedUiControlField = this.pepperiObjectInput.Data.Fields.filter(f => f.ApiName === valueChanged.apiName)[0];
-        // if (clickedUiControlField) {
+    onValueChanged(valueChange: PepFieldValueChangedData, isEditModal: boolean = false): void {
         this.onFormValidationChanged(this.form.valid);
 
-        const formControl = this.getFormControlById(valueChanged.apiName);
+        const formControl = this.getFormControlById(valueChange.key);
 
         const isValid = formControl ? formControl.valid : true;
         // const isValid = true;
 
         if (isValid) {
             // Set it to false to disable all fields.
-            if (this.layoutType === LAYOUT_TYPE.PepperiForm) {
+            if (this.layoutType === 'form') {
                 this.isLocked = true;
             }
 
-            this.lastFocusedField = valueChanged.lastFocusedField;
-            const customizeObjectChangedData = new PepperiObjectChangedData(this.pepperiObjectInput.Data.UID.toString(),
-                valueChanged.apiName, valueChanged.value, valueChanged.controlType);
-            this.notifyValueChanged.emit(customizeObjectChangedData);
+            // Update the current field value.
+            const currentField = this.fields.find(f => f.key === valueChange.key);
+            if (currentField) {
+                currentField.formattedValue = currentField.value = valueChange.value;
+            }
+
+            this.lastFocusedField = valueChange.lastFocusedField;
+            const customizeObjectChangedData = new PepFormFieldChangedData(
+                this.singleData.Data.UID.toString(),
+                valueChange.key,
+                valueChange.value,
+                valueChange.controlType
+            );
+            this.valueChange.emit(customizeObjectChangedData);
         }
+    }
+
+    onChildClicked(childClick: any): void {
+        this.childClick.emit(childClick);
+    }
+
+    onChildChanged(childChange: any): void {
+        this.childChange.emit(childChange);
+    }
+
+    onFormValidationChanged(formValidationChange: any): void {
+        // if (this.layoutType === 'form' || this.layoutType === 'card') {
+            this.formValidationChange.emit(formValidationChange);
         // }
-
-    }
-
-    onChildClicked(childClicked: any): void {
-        this.childClicked.emit(childClicked);
-    }
-
-    onChildChanged(childChanged: any): void {
-        this.childChanged.emit(childChanged);
-    }
-
-    onFormValidationChanged(formValidationChanged: any): void {
-        if (this.layoutType === LAYOUT_TYPE.PepperiForm || this.layoutType === LAYOUT_TYPE.PepperiCard) {
-            this.formValidationChanged.emit(formValidationChanged);
-        }
     }
 
     onClick(fieldClickEvent: any): void {
-        const clickedUiControlField = this.pepperiObjectInput.Data.Fields.filter(f => f.ApiName === fieldClickEvent.apiName)[0];
-        // let clickedField = this.fields.filter(f => f.key === fieldClickEvent.apiName)[0];
+        const clickedUiControlField = this.singleData.Data.Fields.filter(f => f.ApiName === fieldClickEvent.key)[0];
 
         if (clickedUiControlField) {
             if (clickedUiControlField.FieldType === FIELD_TYPE.GuidReferenceType) {
-                const customizeFieldClickedData = new PepperiFieldClickedData(
-                    this.pepperiObjectInput.Data.UID.toString(),
-                    fieldClickEvent.apiName,
-                    this.pepperiObjectInput.Data.Type,
+                const customizeFieldClickedData = new PepFormFieldClickedData(
+                    this.singleData.Data.UID.toString(),
+                    fieldClickEvent.key,
+                    this.singleData.Data.Type,
                     fieldClickEvent.eventWhich,
                     fieldClickEvent.value,
                     clickedUiControlField.FieldType,
-                    fieldClickEvent.referenceObjectInternalType
+                    fieldClickEvent.otherData
                 );
-                this.notifyFieldClicked.emit(customizeFieldClickedData);
+                this.fieldClick.emit(customizeFieldClickedData);
             } else if (clickedUiControlField.FieldType === FIELD_TYPE.ListOfObjects) {
-                const customizeFieldClickedData = new PepperiFieldClickedData(
-                    this.pepperiObjectInput.Data.UID.toString(),
-                    fieldClickEvent.apiName,
-                    this.pepperiObjectInput.Data.Type,
+                const customizeFieldClickedData = new PepFormFieldClickedData(
+                    this.singleData.Data.UID.toString(),
+                    fieldClickEvent.key,
+                    this.singleData.Data.Type,
                     fieldClickEvent.eventWhich,
                     fieldClickEvent.value,
                     clickedUiControlField.FieldType,
                     fieldClickEvent.otherData
                 );
-                this.notifyFieldClicked.emit(customizeFieldClickedData);
+                this.fieldClick.emit(customizeFieldClickedData);
             } else {
-                const customizeFieldClickedData = new PepperiFieldClickedData(
-                    this.pepperiObjectInput.Data.UID.toString(),
-                    fieldClickEvent.apiName,
-                    this.pepperiObjectInput.Data.Type,
+                const customizeFieldClickedData = new PepFormFieldClickedData(
+                    this.singleData.Data.UID.toString(),
+                    fieldClickEvent.key,
+                    this.singleData.Data.Type,
                     fieldClickEvent.eventWhich,
                     fieldClickEvent.value,
                     clickedUiControlField.FieldType,
                     fieldClickEvent.otherData
                 );
-                this.notifyFieldClicked.emit(customizeFieldClickedData);
+                this.fieldClick.emit(customizeFieldClickedData);
             }
         } else {
             // For other api names (like enter children etc).
-            const customizeFieldClickedData = new PepperiFieldClickedData(
-                this.pepperiObjectInput.Data.UID.toString(),
-                fieldClickEvent.apiName,
-                this.pepperiObjectInput.Data.Type,
+            const customizeFieldClickedData = new PepFormFieldClickedData(
+                this.singleData.Data.UID.toString(),
+                fieldClickEvent.key,
+                this.singleData.Data.Type,
                 fieldClickEvent.eventWhich,
                 fieldClickEvent.value,
                 null,
                 fieldClickEvent.otherData
             );
-            this.notifyFieldClicked.emit(customizeFieldClickedData);
+            this.fieldClick.emit(customizeFieldClickedData);
         }
     }
 
     onMenuItemClicked(fieldClickEvent: any): void {
-        const clickedUiControlField = this.pepperiObjectInput.Data.Fields.filter(f => f.ApiName === fieldClickEvent.apiName)[0];
-        const dataField: any = this.pepperiObjectInput.Data;
+        const clickedUiControlField = this.singleData.Data.Fields.filter(f => f.ApiName === fieldClickEvent.key)[0];
+        const dataField: any = this.singleData.Data;
         const fieldType = typeof clickedUiControlField !== 'undefined' ? clickedUiControlField.FieldType : FIELD_TYPE.Package;
-        const customizeFieldClickedData = new PepperiFieldClickedData(dataField.UID.toString(), fieldClickEvent.apiName,
-            dataField.Type, fieldClickEvent.eventWhich, fieldClickEvent.value, fieldType, {
-            ExtraInfo: dataField.ExtraInfo,
-            ItemType: dataField.TransactionItemType
-        });
-        this.notifyMenuItemClicked.emit(customizeFieldClickedData);
+        const customizeFieldClickedData = new PepFormFieldClickedData(
+            dataField.UID.toString(),
+            fieldClickEvent.key,
+            dataField.Type,
+            fieldClickEvent.eventWhich,
+            fieldClickEvent.value,
+            fieldType,
+            {
+                ExtraInfo: dataField.ExtraInfo,
+                ItemType: dataField.TransactionItemType
+            });
+        this.menuItemClick.emit(customizeFieldClickedData);
     }
 
     getInternalLinkHref(): string {
         let hrefStr = '';
-        const uid = this.pepperiObjectInput.Data.UID;
-        const transactionUrl = this.pepperiObjectInput.Data.MainAction === '2' ? 'transactions/scope_items/' : 'transactions/cart/';
+        const uid = this.singleData.Data.UID;
+        const transactionUrl = this.singleData.Data.MainAction === '2' ? 'transactions/scope_items/' : 'transactions/cart/';
         // let isBuyer = sessionStorage.getItem('userRole') == 'Buyer' ? true : false;
 
         if (this.listType === 'all_activities') {
-            hrefStr = this.pepperiObjectInput.Data.Type === 0 ? transactionUrl + uid : 'activities/details/' + uid;
+            hrefStr = this.singleData.Data.Type === 0 ? transactionUrl + uid : 'activities/details/' + uid;
         } else if (this.listType === 'accounts') {
             hrefStr = 'accounts/home_page/' + uid;
         }

@@ -1,4 +1,4 @@
-# PepperiLib
+# NgxLib
 
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
 
@@ -27,7 +27,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## THEME
 1. Add 'pepperi-theme' class name on your <root> element tag.
 2. Import '~@pepperi-addons/ngx-lib/theming' on your global style file (.scss).
-3. And @include pepperi-theme() to apply pepperi theme on the app.
+3. And @include pepperi-theme() to apply pep theme on the app.
 
 ## SVG's
 1. Add the following to the angular.json file.

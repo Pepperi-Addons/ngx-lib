@@ -10,60 +10,63 @@
         [ngClass]="{ 'below-header-and-top-bar' : parentScroll == null }" (mouseup)="onListResizeEnd($event)"
         (mouseenter)="onListHeaderMouseEnter($event)" (mouseleave)="onListHeaderMouseLeave($event)"
         (mousemove)="onListResize($event)">
+
+        <div class="table-header-padding-top"></div>
         <fieldset class="table-header-fieldset">
-            <mat-checkbox *ngIf="selectionTypeForActions !== SELECTION_TYPE_FOR_ACTIONS.None" #selectAllCB
-                class="pull-left flip row-selection" type="checkbox" [ngStyle]="{
+            <mat-checkbox *ngIf="selectionTypeForActions !== 'none'" #selectAllCB class="pull-left flip row-selection"
+                type="checkbox" [ngStyle]="{
                         visibility:
-                            selectionTypeForActions == SELECTION_TYPE_FOR_ACTIONS.Single || (selectionTypeForActions == SELECTION_TYPE_FOR_ACTIONS.Multi && hideAllSelectionInMulti) ? 'hidden' : 'visible'
+                            selectionTypeForActions == 'single' || (selectionTypeForActions == 'multi' && hideAllSelectionInMulti) ? 'hidden' : 'visible'
                     }"
                 [indeterminate]="isAllSelected ? unSelectedItems.size > 0 && unSelectedItems.size < totalRows : (selectedItems.size > 0 && !getIsAllSelectedForActions())"
-                [disabled]="disabled || selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Single"
-                [checked]="getIsAllSelectedForActions()" (change)="selectAllItemsForActions($event)"></mat-checkbox>
+                [disabled]="disabled || selectionTypeForActions === 'single'" [checked]="getIsAllSelectedForActions()"
+                (change)="selectAllItemsForActions($event)"></mat-checkbox>
             <fieldset>
                 <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="header-column pull-left flip"
                     [ngStyle]="{ width: field.calcTitleColumnWidthString }" [ngClass]="{
                             'support-sorting': supportSorting,
                             'has-sorting': field.ApiName === sortBy,
                             'is-resizing': field.ApiName === pressedColumn,
-                            'is-first': j === 0 && selectionTypeForActions !== SELECTION_TYPE_FOR_ACTIONS.Multi,
+                            'is-first': j === 0 && selectionTypeForActions !== 'multi',
                             'is-last': j === uiControl?.ControlFields?.length - 1
                         }"
                     (click)="supportSorting ? (onListSortingChange(field.ApiName, sortBy !== null && sortBy != field.ApiName ? true : !isAsc, $event)) : false">
 
-                    <label *ngIf="field.Title != ''" id="{{ field.ApiName }}"
+                    <label id="{{ field.ApiName }}"
                         class="header-label body-sm pull-left flip text-align-{{ field.Layout.XAlignment }}"
                         title="{{ field.Title }}">
-                        {{ field.Title }}
+                        <span *ngIf="field.Mandatory" class="required">
+                            <pep-icon name="system_must"></pep-icon>
+                        </span>
+                        {{ field.Title != '' ? field.Title : ' '}}
                     </label>
-                    <!-- (click)="onListSortingChange(field.ApiName, sortBy !== null && sortBy != field.ApiName ? true : !isAsc)" -->
-                    <label *ngIf="field.Title == ''" id="{{ field.ApiName }}"
-                        class="header-label body-sm pull-left flip">&nbsp;</label>
 
-                    <div *ngIf="supportResizing" class="resizeBox pull-right flip"
+                    <div *ngIf="supportResizing" class="resize-box pull-right flip"
                         (mousedown)="onListResizeStart($event, field.ApiName)">
-                        <mat-icon>
-                            <pep-icon name="arrow-up" class="asc"></pep-icon>
-                        </mat-icon>
+                        <div class="splitter"></div>
+                        <!-- <mat-icon>
+                            <pep-icon name="resize" class="asc"></pep-icon>
+                        </mat-icon> -->
                     </div>
 
                     <!-- The onListSortingChange moved to the column click -->
                     <!-- (click)="onListSortingChange(field.ApiName, true)" -->
-                    <div *ngIf="supportSorting" class="sortingBox pull-left flip"
+                    <div *ngIf="supportSorting" class="sorting-box pull-left flip"
                         [ngClass]="{ 'has-sorting': field.ApiName === sortBy }">
                         <mat-icon *ngIf="field.ApiName !== sortBy">
-                            <pep-icon name="arrow-either" class="asc"></pep-icon>
+                            <pep-icon name="arrow_either" class="asc"></pep-icon>
                         </mat-icon>
+                        <ng-container *ngIf="field.ApiName === sortBy">
+                            <mat-icon *ngIf="!isAsc" [ngClass]="{ 'sort-by': field.ApiName === sortBy && isAsc }"
+                                title="{{ 'LIST.SORT_ASC' | translate }}">
+                                <pep-icon name="arrow_up" class="asc"></pep-icon>
+                            </mat-icon>
+                            <mat-icon *ngIf="isAsc" [ngClass]="{ 'sort-by': field.ApiName === sortBy && !isAsc }"
+                                title="{{ 'LIST.SORT_DESC' | translate }}">
+                                <pep-icon name="arrow_down" class="desc"></pep-icon>
+                            </mat-icon>
+                        </ng-container>
 
-                        <mat-icon *ngIf="field.ApiName === sortBy && !isAsc"
-                            [ngClass]="{ 'sort-by': field.ApiName === sortBy && isAsc }"
-                            title="{{ 'LIST.SORT_ASC' | translate }}">
-                            <pep-icon name="arrow-down" class="asc"></pep-icon>
-                        </mat-icon>
-                        <mat-icon *ngIf="field.ApiName === sortBy && isAsc"
-                            [ngClass]="{ 'sort-by': field.ApiName === sortBy && !isAsc }"
-                            title="{{ 'LIST.SORT_DESC' | translate }}">
-                            <pep-icon name="arrow-down" class="desc"></pep-icon>
-                        </mat-icon>
                     </div>
                 </div>
             </fieldset>
@@ -89,48 +92,43 @@
     <ng-container *ngTemplateOutlet="listTotals"></ng-container>
 </ng-container>
 
-<!-- <img style="display:none;" src="{{ envVariables.AssetsDomain + webappDirectory }}/assets/images/no-image.svg" /> -->
-
 <ng-template #listData>
-    <ng-container *ngFor="let pepperiObjectInput of scrollItems; let index; let isFirst = first; trackBy: trackByFunc">
+    <ng-container *ngFor="let singleData of scrollItems; let index; let isFirst = first;">
         <ng-container *ngIf="isTable">
             <div class="table-row"
-                (mouseenter)="onTableRowMouseEnter($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type)"
-                (mouseleave)="onTableRowMouseLeave($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type)"
-                [ngClass]="{
-                        selected: isItemSelected(pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type),
-                        highlighted: pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === selectedItemId
+                (mouseenter)="onTableRowMouseEnter($event, singleData?.Data?.UID, singleData?.Data?.Type)"
+                (mouseleave)="onTableRowMouseLeave($event, singleData?.Data?.UID, singleData?.Data?.Type)" [ngClass]="{
+                        selected: isItemSelected(singleData?.Data?.UID, singleData?.Data?.Type),
+                        highlighted: singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId
                     }"
-                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || pepperiObjectInput ? 'visible' : 'hidden' }">
+                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || singleData ? 'visible' : 'hidden' }">
                 <fieldset class="table-row-fieldset"
-                    [ngStyle]="{ 'background-color': pepperiObjectInput?.Data?.BackgroundColor }">
+                    [ngStyle]="{ 'background-color': singleData?.Data?.BackgroundColor }">
                     <mat-checkbox
-                        *ngIf="selectionTypeForActions == SELECTION_TYPE_FOR_ACTIONS.Multi || selectionTypeForActions == SELECTION_TYPE_FOR_ACTIONS.SingleAction"
-                        type="checkbox" class="pull-left flip row-selection"
-                        [disabled]="getIsDisabled(pepperiObjectInput)" [ngStyle]="{
-                                visibility: isTouchDevice ||
-                                    pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
+                        *ngIf="selectionTypeForActions == 'multi' || selectionTypeForActions == 'single-action'"
+                        type="checkbox" class="pull-left flip row-selection" [disabled]="getIsDisabled(singleData)"
+                        [ngStyle]="{
+                                visibility: !deviceHasMouse ||
+                                singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
                             }"
-                        [checked]="getIsSelectedForActions(pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.IsSelectableForActions, pepperiObjectInput?.Data?.Type)"
-                        (change)="selectItemForActions($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.IsSelectableForActions, pepperiObjectInput?.Data?.Type)">
+                        [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
+                        (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
                     </mat-checkbox>
-                    <mat-radio-button *ngIf="selectionTypeForActions == SELECTION_TYPE_FOR_ACTIONS.Single"
-                        name="selection" class="pull-left flip row-selection pepperi-radio-button"
-                        [disabled]="getIsDisabled(pepperiObjectInput)"
-                        [checked]="getIsSelectedForActions(pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.IsSelectableForActions, pepperiObjectInput?.Data?.Type)"
-                        (change)="selectItemForActions($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.IsSelectableForActions, pepperiObjectInput?.Data?.Type)">
+                    <mat-radio-button *ngIf="selectionTypeForActions == 'single'" name="selection"
+                        class="pull-left flip row-selection pep-radio-button" [disabled]="getIsDisabled(singleData)"
+                        [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
+                        (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
                     </mat-radio-button>
                     <pep-form [checkForChanges]="checkForChanges" [uiControlHeader]="uiControl"
-                        [firstFieldAsLink]="firstFieldAsLink" [pepperiObjectInput]="pepperiObjectInput"
-                        [canEditObject]="!disabled && pepperiObjectInput?.IsEditable" [objectId]="objectId"
+                        [firstFieldAsLink]="firstFieldAsLink" [singleData]="singleData"
+                        [canEditObject]="!disabled && singleData?.IsEditable" [objectId]="objectId"
                         [parentId]="parentId" [searchCode]="searchCode" [lockEvents]="disableSelectionItems"
-                        [isReport]="isReport" [layoutType]="LAYOUT_TYPE.PepperiTable" [listType]="listType" [isActive]="
-                                (pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === selectedItemId ||
-                                pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === hoveredItemId) && !isTouchDevice
-                            " (notifyValueChanged)="onValueChanged($event)"
-                        (notifyFieldClicked)="onCustomizeFieldClick($event)"
-                        (notifyMenuItemClicked)="onCustomizeFieldMenuClicked($event)"
-                        (click)="itemClicked($event, pepperiObjectInput)" [pageType]="pageType">
+                        [isReport]="isReport" [layoutType]="'table'" [listType]="listType" [isActive]="
+                                (singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId ||
+                                singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId) && deviceHasMouse
+                            " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
+                        (menuItemClick)="onCustomizeFieldMenuClicked($event)" (click)="itemClicked($event, singleData)"
+                        [pageType]="pageType">
                     </pep-form>
                 </fieldset>
             </div>
@@ -138,30 +136,29 @@
 
         <ng-container *ngIf="!isTable">
             <div [class]="itemClass"
-                (mouseenter)="onCardMouseEnter($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type)"
-                (mouseleave)="onCardMouseLeave($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type)"
-                [ngClass]="{
-                        selected: isItemSelected(pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.Type),
-                        highlighted: pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === selectedItemId,
-                        cardView: isCardView
+                (mouseenter)="onCardMouseEnter($event, singleData?.Data?.UID, singleData?.Data?.Type)"
+                (mouseleave)="onCardMouseLeave($event, singleData?.Data?.UID, singleData?.Data?.Type)" [ngClass]="{
+                        selected: isItemSelected(singleData?.Data?.UID, singleData?.Data?.Type),
+                        highlighted: singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId,
+                        'card-view': viewType === 'cards',
+                        'line-view': viewType === 'lines'
                     }" class="pull-left flip"
-                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || pepperiObjectInput ? 'visible' : 'hidden' }">
+                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || singleData ? 'visible' : 'hidden' }">
                 <mat-checkbox *ngIf="showSelection" class="pull-left flip card-selection"
-                    [disabled]="getIsDisabled(pepperiObjectInput)"
-                    [checked]="getIsSelectedForActions(pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.IsSelectableForActions, pepperiObjectInput?.Data?.Type)"
-                    (change)="selectItemForActions($event, pepperiObjectInput?.Data?.UID, pepperiObjectInput?.Data?.IsSelectableForActions, pepperiObjectInput?.Data?.Type)">
+                    [disabled]="getIsDisabled(singleData)"
+                    [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
+                    (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
                 </mat-checkbox>
-                <pep-form [firstFieldAsLink]="isCardView ? firstFieldAsLink : false" [checkForChanges]="checkForChanges"
-                    [uiControlHeader]="uiControl" [pepperiObjectInput]="pepperiObjectInput" [isCardView]="isCardView"
-                    [canEditObject]="!disabled && pepperiObjectInput?.IsEditable" [objectId]="objectId"
-                    [parentId]="parentId" [searchCode]="searchCode" [lockEvents]="disableSelectionItems"
-                    [layoutType]="getThumbnailsLayout()" [listType]="listType" [isActive]="
-                            (pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === selectedItemId ||
-                                pepperiObjectInput?.Data?.UID + SEPARATOR + pepperiObjectInput?.Data?.Type === hoveredItemId) && !isTouchDevice
-                        " (notifyValueChanged)="onValueChanged($event)"
-                    (notifyFieldClicked)="onCustomizeFieldClick($event)"
-                    (notifyMenuItemClicked)="onCustomizeFieldMenuClicked($event)"
-                    (click)="itemClicked($event, pepperiObjectInput)" [pageType]="pageType">
+                <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges"
+                    [uiControlHeader]="uiControl" [singleData]="singleData"
+                    [canEditObject]="!disabled && singleData?.IsEditable" [objectId]="objectId" [parentId]="parentId"
+                    [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="getThumbnailsLayout()"
+                    [listType]="listType" [isActive]="
+                            (singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId ||
+                            singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId) && deviceHasMouse
+                        " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
+                    (menuItemClick)="onCustomizeFieldMenuClicked($event)" (click)="itemClicked($event, singleData)"
+                    [pageType]="pageType">
                 </pep-form>
             </div>
         </ng-container>

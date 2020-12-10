@@ -6,18 +6,18 @@ import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import {
-    PepperiIconModule,
-    PepperiIconRegistry,
-    pepperiIconSystemMenu,
-    pepperiIconSystemBolt,
-    pepperiIconIndicatorDotPlaceholder
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemMenu,
+    pepIconSystemBolt,
+    pepIconIndicatorDotPlaceholder
 } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
-import { PepperiFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
 
-import { PepperiImageComponent } from './image.component';
+import { PepImageComponent } from './image.component';
 
 @NgModule({
     imports: [
@@ -28,21 +28,21 @@ import { PepperiImageComponent } from './image.component';
         MatCommonModule,
         MatFormFieldModule,
         MatIconModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule,
-        PepperiFilesUploaderModule,
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule,
+        PepFilesUploaderModule,
     ],
-    exports: [ PepperiImageComponent ],
-    declarations: [ PepperiImageComponent ],
+    exports: [ PepImageComponent ],
+    declarations: [ PepImageComponent ],
 })
-export class PepperiImageModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemMenu,
-            pepperiIconSystemBolt,
-            pepperiIconIndicatorDotPlaceholder
+export class PepImageModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemMenu,
+            pepIconSystemBolt,
+            pepIconIndicatorDotPlaceholder
         ]);
     }
 }

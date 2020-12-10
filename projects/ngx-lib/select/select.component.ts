@@ -4,7 +4,8 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
-import { LAYOUT_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
+import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepSelectFieldType, PepSelectField, PepOption } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-select',
@@ -12,35 +13,34 @@ import { LAYOUT_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
     styleUrls: ['./select.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepperiSelectComponent implements OnChanges, OnInit, OnDestroy {
+export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() formattedValue = '';
     @Input() label = '';
-    @Input() type = 'select';
+    @Input() type: PepSelectFieldType = 'select';
     @Input() required = false;
     @Input() disabled = false;
     @Input() readonly = false;
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() options: any = [];
+    @Input() options: Array<PepOption> = [];
 
     controlType = 'select';
 
-    // @Input() field: PepperiFieldBase;
+    // @Input() field: PepFieldBase;
     @Input() form: FormGroup = null;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
     @Input() isActive = false;
     @Input() showTitle = true;
     @Input() emptyOption = true;
 
-    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() formValidationChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('select') select: MatSelect;
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     standAlone = false;
     isInEditMode = false;
     // isFocus: boolean = false;
@@ -80,7 +80,15 @@ export class PepperiSelectComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            const pepField = new PepSelectField({
+                key: this.key,
+                value: this.value,
+                required: this.required,
+                readonly: this.readonly,
+                disabled: this.disabled
+            });
+            this.form = this.customizationService.getDefaultFromGroup(pepField);
 
             this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
@@ -99,12 +107,12 @@ export class PepperiSelectComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChanged) {
-            this.valueChanged.unsubscribe();
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
         }
 
-        if (this.formValidationChanged) {
-            this.formValidationChanged.unsubscribe();
+        if (this.formValidationChange) {
+            this.formValidationChange.unsubscribe();
         }
     }
 
@@ -142,18 +150,17 @@ export class PepperiSelectComponent implements OnChanges, OnInit, OnDestroy {
                     serverError: 'Required',
                 });
             }
-            this.formValidationChanged.emit(this.form.valid);
+            this.formValidationChange.emit(this.form.valid);
         }
 
-        this.valueChanged.emit({ apiName: this.key, value });
+        this.valueChange.emit({ key: this.key, value });
     }
 
     cardTemplateClicked(event: any): void {
-        const self = this;
         this.isInEditMode = true;
 
         setTimeout(() => {
-            self.select.open();
+            this.select.open();
         }, 0);
     }
 }

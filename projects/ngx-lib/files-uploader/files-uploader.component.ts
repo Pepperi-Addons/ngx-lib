@@ -3,8 +3,10 @@ import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild, 
 import { TranslateService } from '@ngx-translate/core';
 import { FileUploader } from 'ng2-file-upload';
 import { FormGroup } from '@angular/forms';
-import { FileService, LAYOUT_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
-import { DialogService, DialogData, DialogDataType } from '@pepperi-addons/ngx-lib/dialog';
+import { FileService, PepLayoutType, CustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldClickedData } from '@pepperi-addons/ngx-lib';
+import { DialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
+import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'files-uploader',
@@ -19,7 +21,7 @@ export class FilesUploaderComponent implements OnInit {
     @Input() label = '';
     @Input() required = false;
     @Input() disabled = false;
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() controlType = '';
     @Input() sizeLimitMB = 5;
@@ -27,15 +29,14 @@ export class FilesUploaderComponent implements OnInit {
     @Input() form: FormGroup;
     @Input() standAlone = false;
     @Input() acceptedExtensions = 'bmp,jpg,jpeg,png,gif,ico,svg,html,css';
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() fileChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() elementClicked: EventEmitter<any> = new EventEmitter<any>();
+    @Output() fileChange: EventEmitter<string> = new EventEmitter<string>();
+    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
 
     @ViewChild('fileInput') fileInput: any;
     @ViewChild('imagePreview') imagePreview: any;
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     fieldHeight = '';
 
     // multiple = false;
@@ -50,12 +51,11 @@ export class FilesUploaderComponent implements OnInit {
         private customizationService: CustomizationService,
         private fileService: FileService)
     {
-        const self = this;
         this.uploader = new FileUploader({ removeAfterUpload: true });
 
         this.uploader.onAfterAddingFile = (item) => {
-            if (self.fileInput?.nativeElement) {
-                self.fileInput.nativeElement.value = '';
+            if (this.fileInput?.nativeElement) {
+                this.fileInput.nativeElement.value = '';
             }
             const reader = new FileReader();
 
@@ -63,25 +63,25 @@ export class FilesUploaderComponent implements OnInit {
                 const fileExt = item._file.name.split('.').pop();
                 const target = event.target || event.srcElement;
                 const fileStr = target.result;
-                const errorMsg = self.isValidFile(fileStr, fileExt, self.acceptedExtensions, self.sizeLimitMB);
+                const errorMsg = this.isValidFile(fileStr, fileExt, this.acceptedExtensions, this.sizeLimitMB);
                 if (errorMsg === '') {
-                    self.src = fileStr;
-                    self.setIntervalX(25, 75);
-                    self.setProgress(5);
-                    self.fileChanged.emit(
+                    this.src = fileStr;
+                    this.setIntervalX(25, 75);
+                    this.setProgress(5);
+                    this.fileChange.emit(
                         JSON.stringify({
-                            acceptedExtensions: self.acceptedExtensions,
+                            acceptedExtensions: this.acceptedExtensions,
                             fileStr,
                             fileExt,
                         }));
                 }
                 else {
-                    const title = self.translate.instant('MESSAGES.TITLE_NOTICE');
-                    const data = new DialogData({
+                    const title = this.translate.instant('MESSAGES.TITLE_NOTICE');
+                    const data = new PepDialogData({
                         title,
-                        content: errorMsg,
-                        contentType: DialogDataType.Html});
-                    self.dialogService.openDefaultDialog(data);
+                        content: errorMsg
+                    });
+                    this.dialogService.openDefaultDialog(data);
                 }
 
             };
@@ -134,18 +134,17 @@ export class FilesUploaderComponent implements OnInit {
     }
 
     setIntervalX(delay, repetitions): void {
-        const self = this;
         let x = 0;
         this.intervalID = window.setInterval(() => {
-            // self.setProgress(self.progress + 5);
-            if (++x === repetitions || self.uploader.progress >= 100) {
-                window.clearInterval(self.intervalID);
+            // this.setProgress(this.progress + 5);
+            if (++x === repetitions || this.uploader.progress >= 100) {
+                window.clearInterval(this.intervalID);
             }
         }, delay);
     }
 
     errorHandler(event): void {
-        event.target.src = this.fileService.getNoImagePath();
+        event.target.src = this.fileService.getSvgAsImageSrc(pepIconNoImage.data);
         event.target.title = this.translate.instant('IMAGE.NO_IMAGE');
     }
 
@@ -161,11 +160,11 @@ export class FilesUploaderComponent implements OnInit {
 
         const value = '';
         this.src = value;
-        this.fileChanged.emit(value);
+        this.fileChange.emit(value);
     }
 
     onElementClicked(event): void {
-        this.elementClicked.emit({ apiName: this.key, event });
+        this.elementClick.emit({ key: this.key, eventWhich: event.which });
     }
 
     onClick_ChooseFile(event): void {

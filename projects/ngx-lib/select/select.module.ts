@@ -9,11 +9,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepIconModule, PepIconRegistry, pepIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
-import { PepperiSelectComponent} from './select.component';
+import { PepSelectComponent} from './select.component';
 
 @NgModule({
     imports: [
@@ -26,18 +26,18 @@ import { PepperiSelectComponent} from './select.component';
         MatFormFieldModule,
         MatSelectModule,
         MatIconModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule
     ],
-    exports: [PepperiSelectComponent, ],
-    declarations: [PepperiSelectComponent],
+    exports: [PepSelectComponent, ],
+    declarations: [PepSelectComponent],
 })
-export class PepperiSelectModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemEdit
+export class PepSelectModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemEdit
         ]);
     }
 }

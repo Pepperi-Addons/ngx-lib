@@ -1,6 +1,8 @@
-import {Injectable} from '@angular/core';
-import { FieldLayout, PepperiRowData, ObjectSingleData, ObjectsDataRow, UIControl,
-    ObjectsData, PepperiFieldData, UIControlField, ObjectsDataRowCell } from '../model/api.model';
+import { Injectable } from '@angular/core';
+import {
+    FieldLayout, PepRowData, ObjectSingleData, ObjectsDataRow, UIControl,
+    ObjectsData, PepFieldData, UIControlField, ObjectsDataRowCell
+} from '../model/api.model';
 import { Guid } from '../model/utilities.model';
 
 @Injectable({
@@ -10,13 +12,13 @@ export class DataConvertorService {
     constructor() {
     }
 
-    convertFormData(formData: PepperiRowData): ObjectSingleData {
+    convertFormData(formData: PepRowData): ObjectSingleData {
         const objectsData = new ObjectSingleData();
         const rowData = new ObjectsDataRow();
         const uiRow = formData.Fields;
         const uiControl = new UIControl();
         uiControl.ControlFields = [];
-        uiRow.forEach( field => uiControl.ControlFields.push( this.setUIControlField(field) ));
+        uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
         rowData.Fields = [];
         rowData.Type = 0;
         rowData.UID = Guid.newGuid();
@@ -27,20 +29,20 @@ export class DataConvertorService {
         return objectsData;
     }
 
-    convertListData(tableData: PepperiRowData[]): ObjectsData {
+    convertListData(tableData: PepRowData[], rowUUID = ''): ObjectsData {
         const objectsData = new ObjectsData();
         const rows = new Array<ObjectsDataRow>();
         const uiRow = tableData[0].Fields;
         const uiControl = new UIControl();
 
         uiControl.ControlFields = [];
-        uiRow.forEach( field => uiControl.ControlFields.push(this.setUIControlField(field)));
+        uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
 
-        tableData.forEach( row => {
+        tableData.forEach(row => {
             const rowData = new ObjectsDataRow();
             rowData.Fields = [];
             rowData.Type = 0;
-            rowData.UID = Guid.newGuid();
+            rowData.UID = rowUUID ? rowUUID : Guid.newGuid();
             row.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
             rows.push(rowData);
         });
@@ -51,24 +53,27 @@ export class DataConvertorService {
         return objectsData;
     }
 
-    setUIControlField(field: PepperiFieldData): UIControlField {
+    setUIControlField(field: PepFieldData): UIControlField {
         const controlField = new UIControlField();
         controlField.ApiName = field.ApiName;
         controlField.FieldType = field.FieldType;
         // { X: 1, Width: 1, XAlignment: field.XAlignment, Y: 1, Height: 1, YAlignment: 1 };
-        controlField.Layout = new FieldLayout(1, 1, field.XAlignment, 1, 1, 1);
-        controlField.Title =  field.Title;
-        controlField.ReadOnly =  false;
+        // controlField.Layout = new FieldLayout(1, 1, field.XAlignment, 1, 1, 1);
+        controlField.Layout = new FieldLayout(
+            { X: 1, Width: 1, XAlignment: field.XAlignment, Y: 1, Height: 1, YAlignment: 1 }
+        );
+        controlField.Title = field.Title;
+        controlField.ReadOnly = field.ReadOnly === true ? true : false;
         controlField.ColumnWidth = field.ColumnWidth;
         controlField.ColumnWidthType = field.ColumnWidthType || 1;
         return controlField;
     }
 
-    setDataField(field: PepperiFieldData): ObjectsDataRowCell {
+    setDataField(field: PepFieldData): ObjectsDataRowCell {
         const dataField = new ObjectsDataRowCell();
         dataField.AdditionalValue = field.AdditionalValue;
         dataField.ApiName = field.ApiName;
-        dataField.Enabled = true;
+        dataField.Enabled = field.Enabled === false ? false : true;
         dataField.FieldType = field.FieldType;
         dataField.FormattedValue = field.FormattedValue || field.Value.toString();
         dataField.GroupFields = null;
@@ -83,8 +88,17 @@ export class DataConvertorService {
     }
 
     setFieldLayout(x: number, width: number, xAlignment: number,
-                   y: number, height: number, yAlignment: number, lineNumber: number): FieldLayout {
-        const layout = new FieldLayout(x, width, xAlignment, y, height, yAlignment, lineNumber);
+        y: number, height: number, yAlignment: number, lineNumber: number): FieldLayout {
+        const layout = new FieldLayout({
+            X: x,
+            Width: width,
+            XAlignment: xAlignment,
+            Y: y,
+            Height: height,
+            YAlignment: yAlignment,
+            LineNumber: lineNumber
+        });
+
         return layout;
     }
 }

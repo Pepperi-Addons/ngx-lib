@@ -6,7 +6,7 @@
             "attribute",
             "lib",
             "pep",
-            "pepperi",
+            "pep",
             "camelCase"
         ],
         "component-selector": [
@@ -14,7 +14,7 @@
             "element",
             "lib",
             "pep",
-            "pepperi",
+            "pep",
             "kebab-case"
         ]
     }

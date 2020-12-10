@@ -15,7 +15,7 @@ export class FakeInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
 
-        console.warn('FakeInterceptor');
+        // console.warn('FakeInterceptor');
 
         const body = { firstName: 'Mock', lastName: 'Faker' };
         return of(new HttpResponse({ status: 200, body: body }));

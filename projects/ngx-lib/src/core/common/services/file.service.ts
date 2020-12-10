@@ -1,13 +1,10 @@
 import {Injectable} from '@angular/core';
 
-export enum FileTypeEnum {
-    'Script' = 1,
-    'Style' = 2,
-}
+export type PepFileType = 'script' | 'style';
 
 export interface ExternalFileModel {
     path: string;
-    type: FileTypeEnum;
+    type: PepFileType;
 }
 
 declare var document: any;
@@ -27,9 +24,9 @@ export class FileService {
     loadFiles(files: ExternalFileModel[]): Promise<any[]> {
         const promises: any[] = [];
         files.forEach((file) => {
-            if (file.type === FileTypeEnum.Style) {
+            if (file.type === 'style') {
                 promises.push(this.loadStyle(file.path));
-            } else if (file.type === FileTypeEnum.Script) {
+            } else if (file.type === 'script') {
                 promises.push(this.loadScript(file.path));
             }
         });
@@ -42,9 +39,9 @@ export class FileService {
             const element = document.getElementById(name);
             element.parentNode.removeChild(element);
 
-            if (files[index].type === FileTypeEnum.Script && this.scripts.has(name)) {
+            if (files[index].type === 'script' && this.scripts.has(name)) {
                 this.scripts.delete(name);
-            } else if (files[index].type === FileTypeEnum.Style && this.styles.has(name)) {
+            } else if (files[index].type === 'style' && this.styles.has(name)) {
                 this.styles.delete(name);
             }
         }
@@ -78,17 +75,17 @@ export class FileService {
                         if (script.readyState === 'loaded' || script.readyState === 'complete') {
                             script.onreadystatechange = null;
                             scriptItem.loaded = true;
-                            resolve({path, type: FileTypeEnum.Script, loaded: true, status: 'Loaded'});
+                            resolve({path, type: 'script', loaded: true, status: 'Loaded'});
                         }
                     };
                 } else {
                     // Others
                     script.onload = () => {
                         scriptItem.loaded = true;
-                        resolve({path, type: FileTypeEnum.Script, loaded: true, status: 'Loaded'});
+                        resolve({path, type: 'script', loaded: true, status: 'Loaded'});
                     };
                 }
-                script.onerror = (error: any) => resolve({path, type: FileTypeEnum.Script, loaded: false, status: 'Loaded'});
+                script.onerror = (error: any) => resolve({path, type: 'script', loaded: false, status: 'Loaded'});
                 document.getElementsByTagName('head')[0].appendChild(script);
             }
         });
@@ -107,7 +104,7 @@ export class FileService {
 
             // Resolve if already loaded
             if (styleItem.loaded) {
-                resolve({path, type: FileTypeEnum.Style, loaded: true, status: 'Already Loaded'});
+                resolve({path, type: 'style', loaded: true, status: 'Already Loaded'});
             } else {
                 // Load style
                 const style = document.createElement('link');
@@ -118,22 +115,40 @@ export class FileService {
                 style.setAttribute('id', name);
 
                 styleItem.loaded = true;
-                resolve({path, type: FileTypeEnum.Style, loaded: true, status: 'Loaded'});
+                resolve({path, type: 'style', loaded: true, status: 'Loaded'});
 
                 document.getElementsByTagName('head')[0].appendChild(style);
             }
         });
     }
 
+    loadFontStyle(styleId: string, href: string): void {
+        const head = document.getElementsByTagName('head')[0];
+
+        const styleElement = document.getElementById(styleId) as HTMLLinkElement;
+
+        if (styleElement) {
+            styleElement.href = href;
+        } else {
+            const style = document.createElement('link');
+            style.id = styleId;
+            style.rel = 'stylesheet';
+            style.href = `${href}`;
+
+            head.appendChild(style);
+        }
+    }
+
+
     getFileName(filePath: string, withExtenstion: boolean = false): string {
-        let lastIndex = withExtenstion ? filePath.length - 1 : filePath.lastIndexOf('.');
+        const lastIndex = withExtenstion ? filePath.length - 1 : filePath.lastIndexOf('.');
 
         return filePath.substr(filePath.lastIndexOf('/') + 1, lastIndex);
     }
 
     getFileExtension(filePath: string): string {
-        var fileSplit = filePath.split('.');
-        var fileExt = '';
+        const fileSplit = filePath.split('.');
+        let fileExt = '';
         if (fileSplit.length > 1) {
             fileExt = fileSplit[fileSplit.length - 2];
         }
@@ -171,19 +186,26 @@ export class FileService {
         return blob;
     }
 
-    getAssetsPath(): string {
-        return `/assets/ngx-lib/`;
+    getAssetsPath(assetsDomain: string = ''): string {
+        const concatChar = (assetsDomain === '' || assetsDomain.endsWith('/')) ? '' : '/';
+        return `${assetsDomain}${concatChar}assets/ngx-lib/`;
     }
 
-    getAssetsTranslationsPath(): string {
-        return `${this.getAssetsPath()}i18n/`;
+    getAssetsTranslationsSuffix(): string {
+        return '.ngx-lib.json';
     }
 
-    getAssetsImagesPath(image: string = ''): string {
-        return `${this.getAssetsPath()}images/${image}`;
+    getAssetsTranslationsPath(assetsDomain: string = ''): string {
+        return `${this.getAssetsPath(assetsDomain)}i18n/`;
     }
 
-    getNoImagePath(): string {
-        return this.getAssetsImagesPath('no-image.svg');
+    getAssetsImagesPath(assetsDomain: string = '', image: string = ''): string {
+        return `${this.getAssetsPath(assetsDomain)}images/${image}`;
+    }
+
+    getSvgAsImageSrc(svg: string): string {
+        const blob = new Blob([svg], {type: 'image/svg+xml'});
+        const url = URL.createObjectURL(blob);
+        return url;
     }
 }

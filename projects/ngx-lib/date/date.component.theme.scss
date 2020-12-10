@@ -1,13 +1,17 @@
 @import '../src/core/style/abstracts/mixins';
 
-@mixin pepperi-date-component-theme($pepperi-theme) {
+@mixin pep-date-component-theme($pepperi-theme) {
 
     // -----------------------------------------------------
     //  Override material style
     // -----------------------------------------------------
+    .mat-datetimepicker-dialog{
+        max-width: 90vw !important;
+    }
+
     .mat-datetimepicker-content {
         border-radius: inherit;
-    
+
         .mat-datetimepicker-calendar-header {
             @include state-strong-default($pepperi-theme);
         }
@@ -15,27 +19,27 @@
         .mat-datetimepicker-calendar-content {
             // background-color: ivory;
             // color: black;
-            
+
             .mat-month-content {
                 .mat-datetimepicker-calendar-controls {
-                    color: get-pepperi-color($pepperi-theme, color-text, color-main);
+                    color: get-pep-color($pepperi-theme, color-text, color-main);
 
                     .mat-datetimepicker-calendar-previous-button {
-                        // @include select-arrow();
-                        // @include rotate(90deg);
+                        @include select-arrow();
+                        @include rotate(90deg);
 
                         svg {
                             @include state-icon($pepperi-theme);
                         }
                     }
 
-                    .mat-datetimepicker-calendar-period-button { 
+                    .mat-datetimepicker-calendar-period-button {
 
                     }
 
                     .mat-datetimepicker-calendar-next-button {
-                        // @include select-arrow();
-                        // @include rotate(-90deg);
+                        @include select-arrow();
+                        @include rotate(-90deg);
 
                         svg {
                             @include state-icon($pepperi-theme);
@@ -49,15 +53,15 @@
                 .mat-datetimepicker-calendar-table {
                     // Days string (sun, mon...)
                     .mat-datetimepicker-calendar-table-header {
-                        color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                        color: get-pep-color($pepperi-theme, color-text, color-dimmed);
                     }
 
                     // Days numbers
                     .mat-datetimepicker-calendar-body {
-                        color: get-pepperi-color($pepperi-theme, color-text, color-main);
-        
+                        color: get-pep-color($pepperi-theme, color-text, color-main);
+
                         .mat-datetimepicker-calendar-body-label {
-                            color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
                         }
 
                         .mat-datetimepicker-calendar-body-cell {
@@ -83,7 +87,7 @@
                                 // Today cell
                                 &.mat-datetimepicker-calendar-body-today {
                                     @include state-regular-default($pepperi-theme, true);
-                                    
+
                                     &:hover {
                                         @include state-regular-hover($pepperi-theme, true);
                                     }
@@ -106,7 +110,7 @@
                                         @include state-strong-focus($pepperi-theme);
                                     }
                                 }
-                            } 
+                            }
 
                         }
                     }
@@ -137,8 +141,8 @@
                     .mat-datetimepicker-clock-hours,
                     .mat-datetimepicker-clock-minutes {
                         .mat-datetimepicker-clock-cell {
-                            color: get-pepperi-color($pepperi-theme, color-text, color-main);
-                            
+                            color: get-pep-color($pepperi-theme, color-text, color-main);
+
                             &:hover {
                                 @include state-weak-hover($pepperi-theme);
                             }

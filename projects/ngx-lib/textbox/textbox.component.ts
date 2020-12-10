@@ -1,9 +1,11 @@
+import { _isNumberValue } from '@angular/cdk/coercion';
 import {
     Component, OnInit, OnChanges, Input, Output, EventEmitter,
     ChangeDetectionStrategy, ElementRef, ViewChild, Renderer2, OnDestroy
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { LAYOUT_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
+import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepTextboxFieldType, PepTextboxField } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-textbox',
@@ -11,19 +13,19 @@ import { LAYOUT_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
     styleUrls: ['./textbox.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PepperiTextboxComponent implements OnChanges, OnInit, OnDestroy {
+export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() formattedValue = '';
     @Input() label = '';
     @Input() placeholder = '';
-    @Input() type = 'text';
+    @Input() type: PepTextboxFieldType = 'text';
     @Input() required = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
     @Input() textColor = '';
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() lastFocusField: any;
     @Input() minValue = NaN;
@@ -34,15 +36,14 @@ export class PepperiTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
 
-    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() formValidationChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('input') input: ElementRef;
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     standAlone = false;
     isInEditMode = false;
     isFocus = false;
@@ -60,8 +61,21 @@ export class PepperiTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
             this.minValue = isNaN(this.minValue) && !isNaN(this.maxValue) ? 0 : this.minValue;
             this.maxValue = isNaN(this.maxValue) && !isNaN(this.minValue) ? 99999 : this.maxValue;
-            this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled,
-                this.maxFieldCharacters, this.type, false, true, this.minValue, this.maxValue);
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled,
+            //     this.maxFieldCharacters, this.type, false, true, this.minValue, this.maxValue);
+            const pepField = new PepTextboxField({
+                key: this.key,
+                value: this.value,
+                required: this.required,
+                readonly: this.readonly,
+                disabled: this.disabled,
+                maxFieldCharacters: this.maxFieldCharacters,
+                type: this.type,
+                minValue: this.minValue,
+                maxValue: this.maxValue
+            });
+            this.form = this.customizationService.getDefaultFromGroup(pepField);
+
             this.formattedValue = this.formattedValue || this.value;
 
             this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
@@ -73,23 +87,22 @@ export class PepperiTextboxComponent implements OnChanges, OnInit, OnDestroy {
     ngOnChanges(changes: any): void {
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
 
-        const self = this;
         setTimeout(() => {
-            if (self.lastFocusField) {
-                self.lastFocusField.focus();
-                self.lastFocusField = null;
+            if (this.lastFocusField) {
+                this.lastFocusField.focus();
+                this.lastFocusField = null;
             } else {
             }
         }, 100);
     }
 
     ngOnDestroy(): void {
-        if (this.valueChanged) {
-            this.valueChanged.unsubscribe();
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
         }
 
-        if (this.formValidationChanged) {
-            this.formValidationChanged.unsubscribe();
+        if (this.formValidationChange) {
+            this.formValidationChange.unsubscribe();
         }
     }
 
@@ -97,17 +110,36 @@ export class PepperiTextboxComponent implements OnChanges, OnInit, OnDestroy {
         this.isFocus = true;
     }
 
+    isValueValid(value: string): boolean {
+        let res = false;
+
+        if (this.type === 'percentage' ||
+            this.type === 'currency' ||
+            this.type === 'int' ||
+            this.type === 'real') {
+
+            if (this.value === '' || value === '' ||
+                (_isNumberValue(value) && _isNumberValue(this.value) && parseFloat(value) !== parseFloat(this.value))) {
+                res = true;
+            }
+        } else {
+            res = true;
+        }
+
+        return res;
+    }
+
     onBlur(e: any): void {
         this.isFocus = false;
-
         const value = e.target ? e.target.value : e;
-        if (value !== this.value) {
+
+        if (value !== this.value && this.isValueValid(value)) {
             this.formattedValue = this.value = value;
 
             // There is formControl.setValue in the onKeyUp so we don't need it here.
             // this.propagateChange(value, e.relatedTarget);
-            this.valueChanged.emit({
-                apiName: this.key,
+            this.valueChange.emit({
+                key: this.key,
                 value,
                 lastFocusedField: e.relatedTarget
             });
@@ -122,7 +154,7 @@ export class PepperiTextboxComponent implements OnChanges, OnInit, OnDestroy {
     onKeyUp(event: any): void {
         const value = event.target ? event.target.value : event;
         this.customizationService.updateFormFieldValue(this.form, this.key, value, this.parentFieldKey);
-        this.formValidationChanged.emit(this.form.valid);
+        this.formValidationChange.emit(this.form.valid);
     }
 
     onKeyPress(event: any): any {
@@ -205,11 +237,10 @@ export class PepperiTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     cardTemplateClicked(event: any): void {
-        const self = this;
         this.isInEditMode = true;
 
         setTimeout(() => {
-            self.input.nativeElement.focus();
+            this.input.nativeElement.focus();
         }, 0);
     }
 }

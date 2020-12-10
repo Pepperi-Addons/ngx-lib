@@ -14,49 +14,48 @@
     <pep-icon name="number_decimal">
     </pep-icon>
 </mat-icon>
-<button *ngIf="type === 'phone'" class="pepperi-button md regular" mat-button (click)="iconButtonClicked()"
+<button *ngIf="type === 'phone'" class="pep-button md regular" mat-button (click)="iconButtonClicked()"
     [disabled]="value.length === 0" [ngClass]="{ disabled: value.length === 0 }">
     <mat-icon>
         <pep-icon name="system_phone">
         </pep-icon>
     </mat-icon>
 </button>
-<button *ngIf="type === 'email'" class="pepperi-button md regular" mat-button (click)="iconButtonClicked()"
+<button *ngIf="type === 'email'" class="pep-button md regular" mat-button (click)="iconButtonClicked()"
     [disabled]="value.length === 0" [ngClass]="{ disabled: value.length === 0 }">
     <mat-icon>
         <pep-icon name="system_email">
         </pep-icon>
     </mat-icon>
 </button>
-<button *ngIf="type === 'link'" class="pepperi-button md regular" mat-button (click)="iconButtonClicked()"
+<button *ngIf="type === 'link'" class="pep-button md regular" mat-button (click)="iconButtonClicked()"
     [disabled]="value.length === 0" [ngClass]="{ disabled: value.length === 0 }">
     <mat-icon>
         <pep-icon name="system_link">
         </pep-icon>
     </mat-icon>
 </button>
-<button *ngIf="type === 'textarea'" class="pepperi-button md regular" mat-button (click)="iconButtonClicked()">
+<button *ngIf="type === 'textarea'" class="pep-button md regular" mat-button (click)="iconButtonClicked()">
     <mat-icon>
         <pep-icon name="system_full_screen">
         </pep-icon>
     </mat-icon>
 </button>
-<button *ngIf="type === 'richhtmltextarea'" class="pepperi-button md regular" mat-button (click)="iconButtonClicked()">
+<button *ngIf="type === 'richhtmltextarea'" class="pep-button md regular" mat-button (click)="iconButtonClicked()">
     <mat-icon>
         <pep-icon name="{{ disabled ? 'system_full_screen' : 'system_edit'}}">
         </pep-icon>
     </mat-icon>
 </button>
 
-<button *ngIf="!disabled && type === 'datetime'" class="pepperi-button md regular" mat-button
-    (click)="iconButtonClicked()">
+<button *ngIf="!disabled && type === 'datetime'" class="pep-button md regular" mat-button (click)="iconButtonClicked()">
     <mat-icon>
         <pep-icon name="time_datetime">
         </pep-icon>
     </mat-icon>
 </button>
 
-<button *ngIf="!disabled && type === 'date'" class="pepperi-button md regular" mat-button (click)="iconButtonClicked()">
+<button *ngIf="!disabled && type === 'date'" class="pep-button md regular" mat-button (click)="iconButtonClicked()">
     <mat-icon>
         <pep-icon name="time_cal">
         </pep-icon>

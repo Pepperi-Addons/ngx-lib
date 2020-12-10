@@ -3,13 +3,11 @@
         "lib": {
             "entryFile": "public-api.ts",
             "umdModuleIds": {
-                "@ngx-translate/core": "translate",
-                "jquery": "jquery"
+                "@ngx-translate/core": "translate"
             }
         }
     },
     "peerDependencies": {
-        "@ngx-translate/core": "^13.0.0",
-        "jquery": "^3.5.1"
+        "@ngx-translate/core": "^13.0.0"
     }
 }

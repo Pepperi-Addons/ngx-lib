@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PepperiSeparatorComponent } from './separator.component';
+import { PepSeparatorComponent } from './separator.component';
 
 @NgModule({
     imports: [
         CommonModule,
 
     ],
-    exports: [ PepperiSeparatorComponent ],
-    declarations: [ PepperiSeparatorComponent ],
+    exports: [ PepSeparatorComponent ],
+    declarations: [ PepSeparatorComponent ],
 })
-export class PepperiSeparatorModule {}
+export class PepSeparatorModule {}

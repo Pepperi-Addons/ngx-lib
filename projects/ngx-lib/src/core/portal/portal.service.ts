@@ -10,11 +10,11 @@ export class PortalService {
         this.targets = new Map<string, ViewContainerRef>();
     }
 
-    addTarget(targetName: string, viewContainer: ViewContainerRef) {
+    addTarget(targetName: string, viewContainer: ViewContainerRef): void {
         this.targets.set(targetName, viewContainer);
     }
 
-    attach(targetName: string, template: TemplateRef<any>) {
+    attach(targetName: string, template: TemplateRef<any>): void {
         const target = this.getTarget(targetName);
 
         if (target) {
@@ -22,7 +22,7 @@ export class PortalService {
         }
     }
 
-    clear(targetName: string) {
+    clear(targetName: string): void {
         const target = this.getTarget(targetName);
 
         if (target) {
@@ -30,7 +30,7 @@ export class PortalService {
         }
     }
 
-    private getTarget(targetName: string) {
+    private getTarget(targetName: string): ViewContainerRef {
         return this.targets.has(targetName) ? this.targets.get(targetName) : null;
     }
 }

@@ -2,47 +2,60 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatCommonModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import {
-    PepperiIconModule,
-    PepperiIconRegistry,
-    pepperiIconArrowDown,
-    pepperiIconArrowEither,
-    pepperiIconArrowUp
+    PepIconModule,
+    PepIconRegistry,
+    pepIconArrowDown,
+    pepIconArrowEither,
+    pepIconArrowUp,
+    pepIconSystemMust
 } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiFormModule } from '@pepperi-addons/ngx-lib/form';
+import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
+import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
+import { PepBreadCrumbsModule } from '@pepperi-addons/ngx-lib/bread-crumbs';
 
 import { VirtualScrollModule } from './virtual-scroll.component';
 
-import { PepperiListComponent } from './list.component';
+import { PepListComponent } from './list.component';
+import { PepListActionsComponent } from './list-actions.component';
+import { PepListChooserComponent } from './list-chooser.component';
+import { PepListTotalComponent } from './list-total.component';
 
 @NgModule({
     imports: [
         CommonModule,
         // Material modules,
         MatCommonModule,
+        MatButtonModule,
         MatCheckboxModule,
         MatRadioModule,
         MatIconModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFormModule,
+        MatMenuModule,
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFormModule,
+        PepMenuModule,
+        PepBreadCrumbsModule,
         VirtualScrollModule
     ],
-    exports: [ PepperiListComponent ],
-    declarations: [ PepperiListComponent ],
+    exports: [ PepListComponent, PepListActionsComponent, PepListChooserComponent, PepListTotalComponent ],
+    declarations: [ PepListComponent, PepListActionsComponent, PepListChooserComponent, PepListTotalComponent ],
 })
-export class PepperiListModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconArrowDown,
-            pepperiIconArrowEither,
-            pepperiIconArrowUp
+export class PepListModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconArrowDown,
+            pepIconArrowEither,
+            pepIconArrowUp,
+            pepIconSystemMust
         ]);
     }
 }

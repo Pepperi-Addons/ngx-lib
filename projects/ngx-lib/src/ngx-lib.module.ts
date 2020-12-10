@@ -8,6 +8,11 @@ import { Observable, Subject } from 'rxjs';
 
 import { httpInterceptorProviders } from './core/http/interceptors/index';
 
+import { ClipboardDirective } from './core/clipboard/clipboard.directive';
+const clipboardList = [
+    ClipboardDirective,
+];
+
 import { RtlClassDirective, RtlDirectionDirective } from './core/layout/rtl.directive';
 const layoutList = [
     RtlClassDirective,
@@ -40,10 +45,19 @@ const pipeList = [
 ];
 
 import { ButtonBlurDirective } from './core/common/directives/button-blur.directive';
+import { ButtonLoaderDirective } from './core/common/directives/button-loader.directive';
 import { MenuBlurDirective } from './core/common/directives/menu-blur.directive';
+import { DataQaDirective } from './core/common/directives/data-qa.directive';
+// import { PreventDoubleClickDirective } from './core/common/directives/debounce-click.directive';
+import { PreventMultiClickDirective } from './core/common/directives/prevent-multi-click.directive';
+
 const utilitiesList = [
     ButtonBlurDirective,
-    MenuBlurDirective
+    ButtonLoaderDirective,
+    MenuBlurDirective,
+    DataQaDirective,
+    // PreventDoubleClickDirective,
+    PreventMultiClickDirective,
 ];
 
 import { AttachDirective } from './core/portal/attach.directive';
@@ -64,7 +78,7 @@ import {
 
 // export class Loader implements TranslateLoader {
 //     private translations = new Subject();
-    
+
 //     $translations = this.translations.asObservable();
 //     getTranslation(lang: string) {
 //         console.log(`called with ${lang}`);
@@ -86,11 +100,12 @@ import {
     declarations: [
         pipeList,
         utilitiesList,
+        clipboardList,
         layoutList,
         portalList
     ],
     providers: [
-        httpInterceptorProviders, 
+        httpInterceptorProviders,
         // TranslateService
     ],
     imports: [
@@ -114,22 +129,23 @@ import {
     exports: [
         pipeList,
         utilitiesList,
+        clipboardList,
         layoutList,
         portalList,
         TranslateModule
     ],
 })
-export class PepperiModule {
-    // static forRoot(): ModuleWithProviders<PepperiModule> {
+export class PepNgxLibModule {
+    // static forRoot(): ModuleWithProviders<PepNgxLibModule> {
     //     return {
-    //         ngModule: PepperiModule,
+    //         ngModule: PepNgxLibModule,
     //         providers: [CustomizationService]
     //     };
     // }
 
     // static forRoot() {
     //     return {
-    //       ngModule: PepperiModule,
+    //       ngModule: PepNgxLibModule,
     //       providers: [ CustomizationService ]
     //     }
     // }

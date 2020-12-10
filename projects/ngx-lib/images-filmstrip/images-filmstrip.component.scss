@@ -4,38 +4,69 @@
 :host {
     width: 100%;
     height: inherit;
-    display: grid;
+    display: block;
     // align-items: center;
 }
-:host > * { 
+:host > * {
     align-self: center; // instead of  align-items: center; in the :host
+}
+
+.gallery-dialog {
+    // display: grid;
+    // grid-template-rows: $dialog-header-height auto;
+    height: inherit;
 }
 
 .images-filmstrip-container {
     height: 100%;
 
     .img-wrapper {
-        @include calc(height, '100% - 1.5rem');
+        height: 100%;
+        // @include calc(height, '100% - 1.5rem');
     }
 }
 
 gallery {
-    /* height: unset;*/
-    @include calc(height, '100% - 1.5rem');
-    @include calc(min-height, '100% - 1.5rem');
+   // Don't remove the direction - the gallery don't work on RTL cultures
+    direction: ltr;
+    height: 100%;
+    min-height: 100%;
+
 }
 
 // ngx-image-viewer {
 //     display: contents;
 // }
 
-.mat-dialog-content {
-    min-height: 80vh;
-    max-height: 80vh;
+.gallery-dialog-content {
+    // min-height: 80vh;
+    // max-height: 100% !important;
+    // height: 100% !important;
+    // padding-bottom: 0 !important;
 
     gallery {
-        @include calc(min-height, '100% - 50px' );
-        min-width:  65vw
+        // @include calc(min-height, '100% - 50px' );
+        min-width:  65vw;
+        // height: 427px;
+    }
+
+    ::ng-deep gallery-item {
+        gallery-image {
+            .g-image-item {
+                background-size: content !important;
+                // background-image: unset !important;
+            }
+        }
+
+        .g-item-template {
+            ngx-imageviewer {
+                canvas{
+                    max-width: 100% !important;
+                    max-height: 100% !important;
+                }
+            }
+
+        }
     }
 }
 
@@ -48,7 +79,7 @@ gallery {
         margin: $spacing-sm 0;
 
         .g-image-item {
-            background-size: cover;
+            background-size: cover !important;
         }
     }
 }
@@ -68,8 +99,8 @@ gallery {
 ::ng-deep gallery-dots {
     position: absolute !important;
     border-radius: $border-radius-md;
-    
-    &.pepperi-button {
+
+    &.pepperi-button, &.pep-button {
         display: flex !important;
     }
 }

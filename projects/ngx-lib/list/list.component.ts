@@ -1,33 +1,36 @@
 import {
-    Component, Input, Output, EventEmitter, OnInit, Renderer2, ViewChild, ElementRef,
-    ChangeDetectorRef, OnDestroy, OnChanges
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnInit,
+    Renderer2,
+    ViewChild,
+    ElementRef,
+    ChangeDetectorRef,
+    OnDestroy,
+    OnChanges
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import {
-    LAYOUT_TYPE, LayoutService, ObjectSingleData, UIControl, UIControlField,
-    FIELD_TYPE, ObjectsDataRow, SCREEN_SIZE, PepperiObjectChangedData, PepperiFieldClickedData
+    PepLayoutType,
+    LayoutService,
+    WindowScrollingService,
+    ObjectSingleData,
+    UIControl,
+    UIControlField,
+    FIELD_TYPE,
+    ObjectsDataRow,
+    PepScreenSizeType,
+    PepFormFieldChangedData,
+    PepFormFieldClickedData,
+    SessionService
 } from '@pepperi-addons/ngx-lib';
 import { VirtualScrollComponent, ChangeEvent } from './virtual-scroll.component';
 
-import disableScroll from 'disable-scroll';
+export type PepListSelectionType = 'none' | 'single' | 'single-action' | 'multi';
 
-// import { ApplicationState } from '../application-state/application-state';
-
-import * as $ from 'jquery';
-
-export enum SELECTION_TYPE_FOR_ACTIONS {
-    None,
-    Single,
-    Multi,
-    SingleAction
-}
-export enum VIEW_TYPE {
-    None,
-    Card,
-    Line,
-    Table,
-    Map
-}
+export type PepListViewType = '' | 'cards' | 'lines' | 'table' | 'map';
 
 export interface ChangeSortingEvent {
     sortBy: string;
@@ -53,7 +56,7 @@ export class SelectionData {
     }
     // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
+export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     static TOP_ITEMS_DEFAULT = 100;
     static TOP_ITEMS_TABLE = 100;
     static TOP_ITEMS_THUMBNAILS = 100;
@@ -69,7 +72,7 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() currentListTypeTranslation = '';
     @Input() noDataFoundMsg = 'Items not found';
-    @Input() selectionTypeForActions: SELECTION_TYPE_FOR_ACTIONS = SELECTION_TYPE_FOR_ACTIONS.Multi;
+    @Input() selectionTypeForActions: PepListSelectionType = 'multi';
     @Input() hideAllSelectionInMulti = false;
 
     @Input() top = -1;
@@ -86,31 +89,27 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() isPrinting = false;
     @Input() disableSelectionItems = false;
     @Input() isReport = false;
-    @Input() layoutType: LAYOUT_TYPE = null;
+    @Input() layoutType: PepLayoutType = null;
     @Input() pageType = '';
     @Input() totalsRow = [];
-    @Input() isTouchDevice = false;
 
-    @Output() notifyThumbnailClicked: EventEmitter<ObjectSingleData> = new EventEmitter<ObjectSingleData>();
-    @Output() notifyFieldClicked: EventEmitter<any> = new EventEmitter<PepperiFieldClickedData>();
-    @Output() notifyMenuItemClicked: EventEmitter<any> = new EventEmitter<PepperiFieldClickedData>();
-    @Output() notifyValueChanged: EventEmitter<PepperiObjectChangedData> = new EventEmitter<PepperiObjectChangedData>();
-    @Output() notifyListChanged: EventEmitter<ChangeEvent> = new EventEmitter<ChangeEvent>();
-    @Output() notifySortingChanged: EventEmitter<ChangeSortingEvent> = new EventEmitter<ChangeSortingEvent>();
+    @Output() thumbnailClick: EventEmitter<ObjectSingleData> = new EventEmitter<ObjectSingleData>();
+    @Output() fieldClick: EventEmitter<any> = new EventEmitter<PepFormFieldClickedData>();
+    @Output() menuItemClick: EventEmitter<any> = new EventEmitter<PepFormFieldClickedData>();
+    @Output() valueChange: EventEmitter<PepFormFieldChangedData> = new EventEmitter<PepFormFieldChangedData>();
+    @Output() listChange: EventEmitter<ChangeEvent> = new EventEmitter<ChangeEvent>();
+    @Output() sortingChange: EventEmitter<ChangeSortingEvent> = new EventEmitter<ChangeSortingEvent>();
 
-    @Output() notifySelectedItemsChanged: EventEmitter<number> = new EventEmitter<number>();
-    @Output() notifySelectAllSingleActionClicked: EventEmitter<any> = new EventEmitter<any>();
-    @Output() notifySingleActionClicked: EventEmitter<any> = new EventEmitter<any>();
+    @Output() selectedItemsChange: EventEmitter<number> = new EventEmitter<number>();
+    @Output() selectAllClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() singleActionClick: EventEmitter<any> = new EventEmitter<any>();
 
-    @Output() notifyListLoad: EventEmitter<any> = new EventEmitter<any>();
+    @Output() listLoad: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild(VirtualScrollComponent) virtualScroll: VirtualScrollComponent;
     @ViewChild('noVirtualScrollCont') noVirtualScrollCont: ElementRef;
     @ViewChild('tableHeader') tableHeader: ElementRef;
     @ViewChild('selectAllCB') selectAllCB: any;
-
-    LAYOUT_TYPE = LAYOUT_TYPE;
-    SELECTION_TYPE_FOR_ACTIONS = SELECTION_TYPE_FOR_ACTIONS;
 
     public uiControl: UIControl = null;
     public totalRows = -1;
@@ -119,9 +118,10 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     private hasColumnWidthOfTypePercentage = true;
     public items: Array<ObjectSingleData> = null;
     public showSelection = false;
-    isCardView = false;
+    // isCardView = false;
     private itemsCounter = 0;
     showItems = true;
+    viewType: PepListViewType;
     scrollItems: Array<ObjectSingleData>;
 
     public SEPARATOR = ',';
@@ -138,7 +138,8 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     private lockEvents = false;
     private containerWidth = 0;
 
-    screenSize: SCREEN_SIZE;
+    screenSize: PepScreenSizeType;
+    deviceHasMouse = false;
 
     // headerIsInFocus = false;
 
@@ -159,19 +160,20 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         private element: ElementRef,
         private layoutService: LayoutService,
+        private sessionService: SessionService,
+        private windowScrollingService: WindowScrollingService,
         private cd: ChangeDetectorRef,
-        private renderer: Renderer2,
-        // private state: ApplicationState
+        private renderer: Renderer2
     ) {
-        this.layoutService.onResize$
-            .pipe(delay(0))
-            .subscribe(size => {
-                this.screenSize = size;
-            });
+        this.layoutService.onResize$.subscribe(size => {
+            this.screenSize = size;
+        });
 
-        // this.checkForChanges = new Date().getTime();
-        // this.state.stateKey = location.href;
         this.nativeWindow = window;
+        this.deviceHasMouse = this.layoutService.getDeviceHasMouse();
+        this.layoutService.onMouseOver$.subscribe(deviceHasMouse => {
+            this.deviceHasMouse = deviceHasMouse;
+        });
     }
 
     ngOnInit(): void {
@@ -185,68 +187,74 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.notifyValueChanged) {
-            this.notifyValueChanged.unsubscribe();
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
         }
 
-        if (this.notifyListChanged) {
-            this.notifyListChanged.unsubscribe();
+        if (this.listChange) {
+            this.listChange.unsubscribe();
         }
 
-        if (this.notifySortingChanged) {
-            this.notifySortingChanged.unsubscribe();
+        if (this.sortingChange) {
+            this.sortingChange.unsubscribe();
         }
 
-        if (this.notifyFieldClicked) {
-            this.notifyFieldClicked.unsubscribe();
+        if (this.fieldClick) {
+            this.fieldClick.unsubscribe();
         }
 
-        if (this.notifyMenuItemClicked) {
-            this.notifyMenuItemClicked.unsubscribe();
+        if (this.menuItemClick) {
+            this.menuItemClick.unsubscribe();
         }
 
-        if (this.notifyThumbnailClicked) {
-            this.notifyThumbnailClicked.unsubscribe();
+        if (this.thumbnailClick) {
+            this.thumbnailClick.unsubscribe();
         }
 
         this.saveSortingToSession();
     }
 
     setContainerWidth(): void {
-        const selectionCheckBoxWidth = this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi ? 44 : 0;
+        const selectionCheckBoxWidth = this.selectionTypeForActions === 'multi' ? 44 : 0;
 
         const rowHeight = 40; // the table row height (2.5rem * 16font-size).
-        const style = window.getComputedStyle(this.element.nativeElement.parentElement);
+        const style = window.getComputedStyle(
+            this.element.nativeElement.parentElement
+        );
         // The container-fluid class padding left + right + border
-        const containerFluidSpacing = parseInt(style.paddingLeft, 10) + parseInt(style.paddingRight, 10);
+        const containerFluidSpacing =
+            parseInt(style.paddingLeft, 10) + parseInt(style.paddingRight, 10);
 
-        const parentContainer = this.element.nativeElement.parentElement.parentElement > 0 ?
-            this.element.nativeElement.parentElement.parentElement : this.element.nativeElement.parentElement;
+        const parentContainer =
+            this.element.nativeElement.parentElement.parentElement > 0
+                ? this.element.nativeElement.parentElement.parentElement
+                : this.element.nativeElement.parentElement;
 
         // Calculate if vertical scroll should appear, if so set the scroll width. (this.totalRows + 1) + 1 is for the header row.
-        const scrollWidth = parentContainer.clientHeight < rowHeight * (this.totalRows + 1) ? 18 : 0; // 18 is the default scroll width.
+        const scrollWidth =
+            parentContainer.clientHeight < rowHeight * (this.totalRows + 1)
+                ? 18
+                : 0; // 18 is the default scroll width.
 
         // The selectionCheckBoxWidth width + containerFluidSpacing + scrollWidth.
-        const rowHeaderWidthToSub = containerFluidSpacing + selectionCheckBoxWidth + scrollWidth;
+        const rowHeaderWidthToSub =
+            containerFluidSpacing + selectionCheckBoxWidth + scrollWidth;
         this.containerWidth = parentContainer.offsetWidth - rowHeaderWidthToSub;
     }
 
     saveSortingToSession(): void {
-        // this.state.setItemInState(PepperiListComponent.SORT_BY_STATE_KEY, this.sortBy);
-        // this.state.setItemInState(PepperiListComponent.ASCENDING_STATE_KEY, this.isAsc);
-        // this.state.writeToSession();
+        this.sessionService.setObject(PepListComponent.SORT_BY_STATE_KEY, this.sortBy);
+        this.sessionService.setObject(PepListComponent.ASCENDING_STATE_KEY, this.isAsc);
     }
 
     onMouseDown(event): void {
-        const self = this;
-
         // if (!this.element.nativeElement.contains(event.target) || event.target.className === 'scrollable-content') {
         //     setTimeout(() => {
-        //         if (self.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi || self.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.SingleAction) {
+        //         if (this.selectionTypeForActions === 'multi' || this.selectionTypeForActions === 'single-action') {
         //         }
 
-        //         // self.selectedItemId = '';
-        //         //self.hoveredItemId = '';
+        //         // this.selectedItemId = '';
+        //         // this.hoveredItemId = '';
         //     }, 500);
         // }
     }
@@ -257,19 +265,22 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private getTopItems(): number {
-        return this.isTable ? PepperiListComponent.TOP_ITEMS_TABLE : PepperiListComponent.TOP_ITEMS_THUMBNAILS;
+        return this.isTable
+            ? PepListComponent.TOP_ITEMS_TABLE
+            : PepListComponent.TOP_ITEMS_THUMBNAILS;
     }
 
     private toggleItems(isVisible: boolean): void {
         this.showItems = isVisible;
         this.lockEvents = !isVisible;
 
+        // TODO: Maybe we need to check the disable scrolling just on the container.
         if (this.useVirtualScroll) {
-            if (isVisible) {
-                disableScroll.off();
-            } else {
-                disableScroll.on();
-            }
+            // if (isVisible) {
+            //     this.windowScrollingService.disable();
+            // } else {
+            //     this.windowScrollingService.enable();
+            // }
         }
     }
 
@@ -312,7 +323,11 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         // }
     }
 
-    private setSelectionItems(itemId: string, uniqItemId: string, isChecked: boolean): void {
+    private setSelectionItems(
+        itemId: string,
+        uniqItemId: string,
+        isChecked: boolean
+    ): void {
         // Set selected item checkbox
         if (this.isAllSelected) {
             if (isChecked) {
@@ -339,10 +354,9 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
 
     isItemSelected(itemId: string, itemType: string = ''): boolean {
         let isSelected = false;
-        if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.SingleAction ||
-            this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi) {
-            isSelected = this.selectedItems.has(itemId) || this.isAllSelected && !this.unSelectedItems.has(itemId);
-        } else if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Single) {
+        if (this.selectionTypeForActions === 'single-action' || this.selectionTypeForActions === 'multi') {
+            isSelected = this.selectedItems.has(itemId) || (this.isAllSelected && !this.unSelectedItems.has(itemId));
+        } else if (this.selectionTypeForActions === 'single') {
             const uniqItemId = this.getUniqItemId(itemId, itemType);
             isSelected = uniqItemId === this.selectedItemId;
         }
@@ -351,7 +365,6 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     setLayout(): void {
-        const self = this;
         if (this.totalRows === 0 ||
             !this.uiControl ||
             !this.uiControl.ControlFields ||
@@ -359,12 +372,12 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
             return;
         }
 
-        this.uiControl.ControlFields.forEach((cf) => {
+        this.uiControl.ControlFields.forEach(cf => {
             if (cf.ColumnWidth === 0) {
                 cf.ColumnWidth = 10;
             }
 
-            if (self.isTable &&
+            if (this.isTable &&
                 (cf.FieldType === FIELD_TYPE.Image ||
                     // cf.FieldType === FIELD_TYPE.Indicators || ???
                     cf.FieldType === FIELD_TYPE.Signature ||
@@ -374,8 +387,7 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                     cf.FieldType === FIELD_TYPE.NumberRealForMatrix ||
                     cf.FieldType === FIELD_TYPE.Package ||
                     cf.ApiName === 'UnitsQuantity' ||
-                    cf.ApiName === 'QuantitySelector')
-            ) {
+                    cf.ApiName === 'QuantitySelector')) {
                 cf.Layout.XAlignment = 3;
             }
         });
@@ -396,20 +408,23 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     private calcColumnsWidth(): void {
         const fixedMultiple = 3.78; // for converting em to pixel.
         const length = this.uiControl.ControlFields.length;
-        const selectionCheckBoxWidth = this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi ? 44 : 0;
+        const selectionCheckBoxWidth = this.selectionTypeForActions === 'multi' ? 44 : 0;
 
         // Is table AND there is at least one column of width type of percentage.
         if (this.isTable) {
             if (this.uiControl && this.uiControl.ControlFields) {
-                this.hasColumnWidthOfTypePercentage = this.uiControl.ControlFields.filter(cf => cf.ColumnWidthType === 1).length === 0;
+                this.hasColumnWidthOfTypePercentage =
+                    this.uiControl.ControlFields.filter(
+                        cf => cf.ColumnWidthType === 1
+                    ).length === 0;
             }
         }
 
         // If the columns size is fixed and the total is small then the container change it to percentage.
         if (!this.hasColumnWidthOfTypePercentage) {
-            const totalFixedColsWidth = this.uiControl.ControlFields
-                .map(cf => cf.ColumnWidth * fixedMultiple)
-                .reduce((sum, current) => sum + current);
+            const totalFixedColsWidth = this.uiControl.ControlFields.map(
+                cf => cf.ColumnWidth * fixedMultiple
+            ).reduce((sum, current) => sum + current);
 
             if (window.innerWidth > totalFixedColsWidth) {
                 this.hasColumnWidthOfTypePercentage = true;
@@ -420,13 +435,19 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
 
         // Calc by percentage
         if (this.hasColumnWidthOfTypePercentage) {
-            const totalColsWidth: number = this.uiControl.ControlFields.map(cf => cf.ColumnWidth).reduce((sum, current) => sum + current);
+            const totalColsWidth: number = this.uiControl.ControlFields.map(
+                cf => cf.ColumnWidth
+            ).reduce((sum, current) => sum + current);
 
             for (let index = 0; index < length; index++) {
-                const uiControlField: UIControlField = this.uiControl.ControlFields[index];
-                const calcColumnWidthPercentage = (100 / totalColsWidth) * uiControlField.ColumnWidth;
+                const uiControlField: UIControlField = this.uiControl
+                    .ControlFields[index];
+                const calcColumnWidthPercentage =
+                    (100 / totalColsWidth) * uiControlField.ColumnWidth;
 
-                uiControlField.calcColumnWidth = Math.floor((this.containerWidth * calcColumnWidthPercentage) / 100);
+                uiControlField.calcColumnWidth = Math.floor(
+                    (this.containerWidth * calcColumnWidthPercentage) / 100
+                );
 
                 if (index === length - 1) {
                     uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString =
@@ -438,15 +459,24 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
 
-            this.renderer.setStyle(this.element.nativeElement, 'width', 'inherit');
+            this.renderer.setStyle(
+                this.element.nativeElement,
+                'width',
+                'inherit'
+            );
         } else {
             for (let index = 0; index < length; index++) {
-                const uiControlField: UIControlField = this.uiControl.ControlFields[index];
-                const currentFixedWidth = Math.floor(uiControlField.ColumnWidth * fixedMultiple);
+                const uiControlField: UIControlField = this.uiControl
+                    .ControlFields[index];
+                const currentFixedWidth = Math.floor(
+                    uiControlField.ColumnWidth * fixedMultiple
+                );
 
                 if (index === length - 1) {
-                    uiControlField.calcTitleColumnWidthString = currentFixedWidth + 'px';
-                    uiControlField.calcColumnWidthString = currentFixedWidth - 4 + 'px'; // -4 for the row padding.
+                    uiControlField.calcTitleColumnWidthString =
+                        currentFixedWidth + 'px';
+                    uiControlField.calcColumnWidthString =
+                        currentFixedWidth - 4 + 'px'; // -4 for the row padding.
                 } else {
                     uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString =
                         currentFixedWidth + 'px';
@@ -455,7 +485,11 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                 totalCalcColsWidth += currentFixedWidth;
             }
 
-            this.renderer.setStyle(this.element.nativeElement, 'width', totalCalcColsWidth + selectionCheckBoxWidth + 'px');
+            this.renderer.setStyle(
+                this.element.nativeElement,
+                'width',
+                totalCalcColsWidth + selectionCheckBoxWidth + 'px'
+            );
         }
     }
 
@@ -466,8 +500,8 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         this.pressedColumn = '';
     }
 
-    onListResizeStart(event, apiName): void {
-        this.pressedColumn = apiName;
+    onListResizeStart(event, columnKey): void {
+        this.pressedColumn = columnKey;
         this.startX = event.x;
         this.startWidth = event.target.closest('.header-column').offsetWidth;
         if (this.useVirtualScroll) {
@@ -480,15 +514,22 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
 
     onListResize(event): void {
         if (this.pressedColumn.length > 0) {
-            const widthToAdd = this.layoutService.isRtl() ? this.startX - event.x : event.x - this.startX;
+            const widthToAdd = this.layoutService.isRtl()
+                ? this.startX - event.x
+                : event.x - this.startX;
 
             // Set the width of the column and the container of the whole columns.
-            if (this.startWidth + widthToAdd >= PepperiListComponent.MINIMUM_COLUMN_WIDTH || widthToAdd > 0) {
+            if (
+                this.startWidth + widthToAdd >=
+                    PepListComponent.MINIMUM_COLUMN_WIDTH ||
+                widthToAdd > 0
+            ) {
                 const length = this.uiControl.ControlFields.length;
                 let totalCalcColsWidth = 0;
 
                 for (let index = 0; index < length; index++) {
-                    const uiControlField: UIControlField = this.uiControl.ControlFields[index];
+                    const uiControlField: UIControlField = this.uiControl
+                        .ControlFields[index];
 
                     if (index === length - 1) {
                         // Calc the last column only in percentage type.
@@ -497,13 +538,17 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                                 'calc(100% - ' + totalCalcColsWidth + 'px)'; // For 100%
                         } else {
                             if (uiControlField.ApiName === this.pressedColumn) {
-                                uiControlField.calcColumnWidth = this.startWidth + widthToAdd;
-                                uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidth + 'px';
-                                uiControlField.calcColumnWidthString = uiControlField.calcColumnWidth - 4 + 'px';
+                                uiControlField.calcColumnWidth =
+                                    this.startWidth + widthToAdd;
+                                uiControlField.calcTitleColumnWidthString =
+                                    uiControlField.calcColumnWidth + 'px';
+                                uiControlField.calcColumnWidthString =
+                                    uiControlField.calcColumnWidth - 4 + 'px';
                             }
                         }
                     } else if (uiControlField.ApiName === this.pressedColumn) {
-                        uiControlField.calcColumnWidth = this.startWidth + widthToAdd;
+                        uiControlField.calcColumnWidth =
+                            this.startWidth + widthToAdd;
                         uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString =
                             uiControlField.calcColumnWidth + 'px';
                     }
@@ -511,22 +556,51 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                     totalCalcColsWidth += uiControlField.calcColumnWidth;
                 }
 
-                this.renderer.setStyle(this.element.nativeElement, 'width', this.tableStartWidth + widthToAdd + 'px');
+                this.renderer.setStyle(
+                    this.element.nativeElement,
+                    'width',
+                    this.tableStartWidth + widthToAdd + 'px'
+                );
             }
 
             this.checkForChanges = new Date().getTime();
         }
     }
 
+    getParent(el, parentSelector): any {
+        // If no parentSelector defined will bubble up all the way to *document*
+        if (parentSelector === undefined) {
+            parentSelector = document;
+        }
+        const parent = [];
+        let p = el.parentNode;
+
+        while (
+            p &&
+            p.className !== '' &&
+            p.className.indexOf(parentSelector) === -1 &&
+            parentSelector !== document
+        ) {
+            const o = p;
+            p = o.parentNode;
+        }
+        if (p.className.indexOf(parentSelector) > -1) {
+            parent.push(p); // Push that parentSelector you wanted to stop at
+        }
+        return parent;
+    }
+
     onListResizeEnd(event): void {
         if (this.pressedColumn.length > 0) {
-            if (event && $(event.srcElement).parents('.resizeBox').length > 0) {
+            if (
+                event &&
+                this.getParent(event.srcElement, 'resize-box').length > 0
+            ) {
                 this.initResizeData();
             } else {
                 // Set timeout 0 for onListSortingChange will have the pressedColumn.
-                const self = this;
                 setTimeout(() => {
-                    self.initResizeData();
+                    this.initResizeData();
                 }, 0);
             }
         }
@@ -536,8 +610,10 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         if (this.isPrinting) {
             return;
         }
-
-        if (this.pressedColumn.length > 0 || (event && $(event.srcElement).parents('.resizeBox').length > 0)) {
+        if (
+            this.pressedColumn.length > 0 ||
+            (event && this.getParent(event.srcElement, 'resize-box').length > 0)
+        ) {
             return;
         }
 
@@ -546,7 +622,7 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
             this.isAsc = isAsc;
             this.saveSortingToSession();
 
-            this.notifySortingChanged.emit({ sortBy, isAsc });
+            this.sortingChange.emit({ sortBy, isAsc });
         }
     }
 
@@ -566,7 +642,10 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // For other events do nothing.
-        if (typeof event.start === 'undefined' || typeof event.end === 'undefined') {
+        if (
+            typeof event.start === 'undefined' ||
+            typeof event.end === 'undefined'
+        ) {
             return;
         }
 
@@ -591,14 +670,20 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                 const top = this.getTopItems() - 1;
 
                 if (event.addAtStart) {
-                    event.fromIndex = Math.max(event.start - (top - (event.end - event.start)), 0);
+                    event.fromIndex = Math.max(
+                        event.start - (top - (event.end - event.start)),
+                        0
+                    );
                     event.toIndex = event.end;
                 } else {
                     event.fromIndex = event.start;
-                    event.toIndex = Math.min(event.end + (top - (event.end - event.start)), this.totalRows);
+                    event.toIndex = Math.min(
+                        event.end + (top - (event.end - event.start)),
+                        this.totalRows
+                    );
                 }
 
-                this.notifyListChanged.emit(event);
+                this.listChange.emit(event);
                 // this.lockEvents = true;
             } else {
                 // this.scrollItems = this.items.slice(event.start, event.end);
@@ -643,7 +728,7 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     //             event.toIndex = Math.min(event.endIndex + (top - (event.endIndex - event.startIndex)), this.totalRows);
     //             // }
 
-    //             this.notifyListChanged.emit(event);
+    //             this.listChange.emit(event);
     //             // this.lockEvents = true;
     //         } else {
     //             // this.scrollItems = this.items.slice(event.start, event.end);
@@ -653,42 +738,44 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     // }
 
     onListLoad(event: any): void {
-        this.notifyListLoad.emit(event);
+        this.listLoad.emit(event);
     }
 
     getParentContainer(): Element | Window {
         return this.parentScroll ? this.parentScroll : window;
     }
 
-    onValueChanged(valueChanged: any): void {
+    onValueChanged(valueChange: any): void {
         if (this.disabled) {
             return;
         }
 
-        this.notifyValueChanged.emit(valueChanged);
+        this.valueChange.emit(valueChange);
     }
 
-    onCustomizeFieldClick(customizeFieldClickedData: PepperiFieldClickedData): void {
+    onCustomizeFieldClick(customizeFieldClickedData: PepFormFieldClickedData): void {
         if (this.disabled) {
             return;
         }
 
-        this.notifyFieldClicked.emit(customizeFieldClickedData);
+        this.fieldClick.emit(customizeFieldClickedData);
     }
 
-    onCustomizeFieldMenuClicked(customizeFieldClickedData: PepperiFieldClickedData): void {
+    onCustomizeFieldMenuClicked(customizeFieldClickedData: PepFormFieldClickedData): void {
         if (this.disabled) {
             return;
         }
 
-        this.notifyMenuItemClicked.emit(customizeFieldClickedData);
+        this.menuItemClick.emit(customizeFieldClickedData);
     }
 
-    getIsDisabled(pepperiObjectInput: ObjectSingleData): boolean {
+    getIsDisabled(singleData: ObjectSingleData): boolean {
         if (this.disableSelectionItems) {
             return true;
         } else {
-            const IsNotSelectableForActions = pepperiObjectInput?.Data && !pepperiObjectInput.Data.IsSelectableForActions;
+            const IsNotSelectableForActions =
+            singleData?.Data &&
+                !singleData.Data.IsSelectableForActions;
             return IsNotSelectableForActions;
         }
     }
@@ -705,10 +792,14 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                 res = this.getIsAllSelected(this.scrollItems);
             } else if (this.selectedItems.size < this.totalRows) {
                 // for (let index = 0; index < this.scrollItems.length; index++) {
-                //     const pepperiObjectInput = this.scrollItems[index];
-                for (const pepperiObjectInput of this.scrollItems) {
-                    res = pepperiObjectInput && pepperiObjectInput.Data &&
-                        this.selectedItems.has(pepperiObjectInput.Data.UID.toString());
+                //     const singleData = this.scrollItems[index];
+                for (const singleData of this.scrollItems) {
+                    res =
+                    singleData &&
+                    singleData.Data &&
+                        this.selectedItems.has(
+                            singleData.Data.UID.toString()
+                        );
 
                     if (!res) {
                         break;
@@ -721,8 +812,7 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public setIsAllSelected(isChecked: boolean): void {
-        if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi ||
-            this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.SingleAction) {
+        if (this.selectionTypeForActions === 'multi' || this.selectionTypeForActions === 'single-action') {
             this.selectAllCB.checked = isChecked;
             this.isAllSelected = isChecked;
         }
@@ -734,11 +824,13 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
 
         // Indeterminate mode
         let isIndeterminate = false;
-        const currentList = this.isAllSelected ? this.unSelectedItems : this.selectedItems;
+        const currentList = this.isAllSelected
+            ? this.unSelectedItems
+            : this.selectedItems;
         if (currentList.size > 0) {
             isIndeterminate = true;
             this.isAllSelected = false;
-            this.notifySelectedItemsChanged.emit(0);
+            this.selectedItemsChange.emit(0);
             e.source.checked = false;
         }
 
@@ -747,30 +839,35 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
 
         if (!isIndeterminate) {
             this.isAllSelected = isChecked;
-            if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.SingleAction) {
-                // Add all or remove all
-                this.notifySelectAllSingleActionClicked.emit(isChecked);
-            } else if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi) {
+            this.selectAllClick.emit(isChecked);
+
+            if (this.selectionTypeForActions === 'multi') {
                 if (!isChecked) {
-                    this.notifySelectedItemsChanged.emit(0);
+                    this.selectedItemsChange.emit(0);
                     this.selectedItemId = '';
                 } else {
-                    const filteredItems = this.items.filter(item => item.Data && item.Data.IsSelectableForActions);
-                    this.notifySelectedItemsChanged.emit(filteredItems.length);
+                    const filteredItems = this.items.filter(
+                        item => item.Data && item.Data.IsSelectableForActions
+                    );
+                    this.selectedItemsChange.emit(filteredItems.length);
                 }
             }
         } else {
-            if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.SingleAction) {
+            if (this.selectionTypeForActions === 'single-action') {
                 // Remove all
-                this.notifySelectAllSingleActionClicked.emit(false);
+                this.selectAllClick.emit(false);
             }
         }
     }
 
-    getIsSelectedForActions(itemId: string, isSelectableForActions: boolean, itemType: string = ''): boolean {
-        if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Single) {
+    getIsSelectedForActions(
+        itemId: string,
+        isSelectableForActions: boolean,
+        itemType: string = ''
+    ): boolean {
+        if (this.selectionTypeForActions === 'single') {
             return this.selectedItemId === this.getUniqItemId(itemId, itemType);
-        } else if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.SingleAction) {
+        } else if (this.selectionTypeForActions === 'single-action') {
             let res = this.isAllSelected || this.selectedItems.has(itemId);
 
             if (this.unSelectedItems.has(itemId)) {
@@ -778,7 +875,7 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             return res;
-        } else if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi) {
+        } else if (this.selectionTypeForActions === 'multi') {
             if (!isSelectableForActions) {
                 return false;
             } else {
@@ -793,10 +890,20 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    selectItemForActions(e: any, itemId: string, isSelectableForActions: boolean, itemType: string = ''): void {
+    selectItemForActions(
+        e: any,
+        itemId: string,
+        isSelectableForActions: boolean,
+        itemType: string = ''
+    ): void {
         // For material checkbox || radio.
         const isChecked = e.source.checked;
-        this.setItemClicked(itemId, isSelectableForActions, itemType, isChecked);
+        this.setItemClicked(
+            itemId,
+            isSelectableForActions,
+            itemType,
+            isChecked
+        );
     }
 
     itemClicked(e: any, objectSingleData: ObjectSingleData): void {
@@ -805,28 +912,47 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         const itemType = objectSingleData.Data.Type.toString();
         let isChecked = false;
 
-        if (objectSingleData && objectSingleData.Data && objectSingleData.Data.IsSelectableForActions) {
+        if (
+            objectSingleData &&
+            objectSingleData.Data &&
+            objectSingleData.Data.IsSelectableForActions
+        ) {
             this.selectedItemId = this.getUniqItemId(itemId, itemType);
             isChecked = true;
         }
 
         if (this.isTable) {
-            if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Single) {
-                this.setItemClicked(itemId, objectSingleData.Data.IsSelectableForActions, itemType, isChecked);
-            } else if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.None) {
+            if (this.selectionTypeForActions === 'single') {
+                this.setItemClicked(
+                    itemId,
+                    objectSingleData.Data.IsSelectableForActions,
+                    itemType,
+                    isChecked
+                );
+            } else if (this.selectionTypeForActions === 'none') {
                 // Just mark the row as highlighted
-                this.setItemClicked(itemId, objectSingleData.Data.IsSelectableForActions, itemType, true);
+                this.setItemClicked(
+                    itemId,
+                    objectSingleData.Data.IsSelectableForActions,
+                    itemType,
+                    true
+                );
             }
         } else {
             if (this.disabled) {
                 return;
             }
 
-            this.notifyThumbnailClicked.emit(objectSingleData);
+            this.thumbnailClick.emit(objectSingleData);
         }
     }
 
-    setItemClicked(itemId, isSelectableForActions: boolean, itemType: string, isChecked: boolean): void {
+    setItemClicked(
+        itemId,
+        isSelectableForActions: boolean,
+        itemType: string,
+        isChecked: boolean
+    ): void {
         const uniqItemId = this.getUniqItemId(itemId, itemType);
 
         // select the selected item.
@@ -839,24 +965,33 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Single) {
-            this.notifySelectedItemsChanged.emit(this.selectedItemId.length === 0 ? 0 : 1);
-        } else if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.SingleAction) {
+        if (this.selectionTypeForActions === 'single') {
+            this.selectedItemsChange.emit(
+                this.selectedItemId.length === 0 ? 0 : 1
+            );
+        } else if (this.selectionTypeForActions === 'single-action') {
             this.setSelectionItems(itemId, uniqItemId, isChecked);
-            this.notifySingleActionClicked.emit({ id: itemId, selected: isChecked });
-        } else if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi) {
+            this.singleActionClick.emit({
+                id: itemId,
+                selected: isChecked
+            });
+        } else if (this.selectionTypeForActions === 'multi') {
             if (isSelectableForActions) {
                 this.setSelectionItems(itemId, uniqItemId, isChecked);
 
-                const currentList = this.isAllSelected ? this.unSelectedItems : this.selectedItems;
-                const currentListCount = this.isAllSelected ? this.totalRows - currentList.size : currentList.size;
-                this.notifySelectedItemsChanged.emit(currentListCount);
+                const currentList = this.isAllSelected
+                    ? this.unSelectedItems
+                    : this.selectedItems;
+                const currentListCount = this.isAllSelected
+                    ? this.totalRows - currentList.size
+                    : currentList.size;
+                this.selectedItemsChange.emit(currentListCount);
             }
         }
     }
 
     onTableRowMouseEnter(event: any, itemId: string, itemType: string): void {
-        if (this.isTouchDevice) {
+        if (!this.deviceHasMouse) {
             return;
         }
 
@@ -869,7 +1004,7 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onCardMouseEnter(event: any, itemId: string, itemType: string): void {
-        if (this.isTouchDevice) {
+        if (!this.deviceHasMouse) {
             return;
         }
 
@@ -881,8 +1016,10 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         this.hoveredItemId = '';
     }
 
-    getThumbnailsLayout(): LAYOUT_TYPE {
-        return this.layoutType == null ? LAYOUT_TYPE.PepperiCard : this.layoutType;
+    getThumbnailsLayout(): PepLayoutType {
+        return this.layoutType == null
+            ? 'card'
+            : this.layoutType;
     }
 
     // call this function after resize + animation end
@@ -895,23 +1032,24 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         this.setLayout();
     }
 
-    trackByFunc(index: number, item: ObjectSingleData): any {
-        return item && item.Data && item.Data.UID ? item.Data.UID : index;
-        // let res: string = "";
+    // trackByFunc(index: number, item: ObjectSingleData): any {
+    //     return item && item.Data && item.Data.UID ? item.Data.UID : index;
+    //     // let res: string = "";
 
-        // if (item && item.Data && item.Data.UID) {
-        //    res = item.Data.UID + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
-        // }
-        // else {
-        //    res = index + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
-        // }
+    //     // if (item && item.Data && item.Data.UID) {
+    //     //    res = item.Data.UID + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
+    //     // }
+    //     // else {
+    //     //    res = index + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
+    //     // }
 
-        // return res;
-    }
+    //     // return res;
+    // }
 
     cleanItems(): void {
         this.itemsCounter = 0;
-        this.items = this.totalRows > 0 ? Array<ObjectSingleData>(this.totalRows) : [];
+        this.items =
+            this.totalRows > 0 ? Array<ObjectSingleData>(this.totalRows) : [];
         this.scrollItems = [];
         this.calculatedObjectHeight = '';
     }
@@ -920,56 +1058,79 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         return this.uiControl;
     }
 
-    initListData(uiControl: UIControl, totalRows: number, items: ObjectSingleData[], viewType: VIEW_TYPE = VIEW_TYPE.Table,
-        itemClass: string = '', showSelection: boolean = false): void {
-        // const selectedItemsFromState: Map<string, string> =
-        //     this.state.getItemFromState(PepperiListComponent.SELECTED_ITEMS_STATE_KEY);
-        // if (selectedItemsFromState != null && typeof selectedItemsFromState.size !== 'undefined' &&
-        //     selectedItemsFromState.size > 0) {
-        //     this.selectedItems = selectedItemsFromState;
-        //     this.state.setItemInState(PepperiListComponent.SELECTED_ITEMS_STATE_KEY, new Map<string, string>());
-        // } else {
-        this.selectedItems.clear();
-        // }
+    initVariablesFromSession(items: ObjectSingleData[]): void {
+        const selectedItemsObject = this.sessionService.getObject<Map<string, string>>(PepListComponent.SELECTED_ITEMS_STATE_KEY);
+        const selectedItemsFromMap: Map<string, string> =
+            selectedItemsObject && selectedItemsObject.size > 0 ? new Map(selectedItemsObject) : null;
+        if (selectedItemsFromMap != null && typeof selectedItemsFromMap.size !== 'undefined' &&
+            selectedItemsFromMap.size > 0) {
+            this.selectedItems = selectedItemsFromMap;
+            this.sessionService.removeObject(PepListComponent.SELECTED_ITEMS_STATE_KEY);
+        } else {
+            this.selectedItems.clear();
+        }
 
-        // const unSelectedItemsFromState: Map<string, string> =
-        //     this.state.getItemFromState(PepperiListComponent.UN_SELECTED_ITEMS_STATE_KEY);
-        // if (unSelectedItemsFromState != null && typeof unSelectedItemsFromState.size !== 'undefined' &&
-        //     unSelectedItemsFromState.size > 0) {
-        //     this.unSelectedItems = unSelectedItemsFromState;
-        //     this.state.setItemInState(PepperiListComponent.UN_SELECTED_ITEMS_STATE_KEY, new Map<string, string>());
-        // } else {
-        this.unSelectedItems.clear();
-        // }
+        const unSelectedItemsObject = this.sessionService.getObject<Map<string, string>>(PepListComponent.UN_SELECTED_ITEMS_STATE_KEY);
+        const unSelectedItemsMap: Map<string, string> =
+            unSelectedItemsObject && unSelectedItemsObject.size > 0 ? new Map(unSelectedItemsObject) : null;
+        if (unSelectedItemsMap != null && typeof unSelectedItemsMap.size !== 'undefined' &&
+        unSelectedItemsMap.size > 0) {
+            this.unSelectedItems = unSelectedItemsMap;
+            this.sessionService.removeObject(PepListComponent.UN_SELECTED_ITEMS_STATE_KEY);
+        } else {
+            this.unSelectedItems.clear();
+        }
 
-        // if (this.state.getItemFromState(PepperiListComponent.ALL_SELECTED_STATE_KEY) != null) {
-        //     let isAllSelectedFromState = this.state.getItemFromState(PepperiListComponent.ALL_SELECTED_STATE_KEY);
-        //     this.isAllSelected = isAllSelectedFromState && this.getIsAllSelected(items);
-        //     this.state.setItemInState(PepperiListComponent.ALL_SELECTED_STATE_KEY, false);
-        // } else {
-        this.isAllSelected = false;
-        // }
+        const isAllSelected = this.sessionService.getObject(PepListComponent.ALL_SELECTED_STATE_KEY);
+        if (isAllSelected != null) {
+            this.isAllSelected = isAllSelected && this.getIsAllSelected(items);
+            this.sessionService.removeObject(PepListComponent.ALL_SELECTED_STATE_KEY);
+        } else {
+            this.isAllSelected = false;
+        }
 
-        // if (this.state.getItemFromState(PepperiListComponent.SORT_BY_STATE_KEY) !== '') {
-        //     this.sortBy = this.state.getItemFromState(PepperiListComponent.SORT_BY_STATE_KEY);
-        //     this.state.setItemInState(PepperiListComponent.SORT_BY_STATE_KEY, '');
-        // }
+        const sortBy = this.sessionService.getObject(PepListComponent.SORT_BY_STATE_KEY);
+        if (sortBy && sortBy !== '') {
+            this.sortBy = sortBy;
+            this.sessionService.removeObject(PepListComponent.SORT_BY_STATE_KEY);
+        } else {
+            this.sortBy = '';
+        }
 
-        // if (this.state.getItemFromState(PepperiListComponent.ASCENDING_STATE_KEY) != null) {
-        //     this.isAsc = this.state.getItemFromState(PepperiListComponent.ASCENDING_STATE_KEY);
-        //     this.state.setItemInState(PepperiListComponent.ASCENDING_STATE_KEY, false);
-        // }
+        const isAsc = this.sessionService.getObject(PepListComponent.ASCENDING_STATE_KEY);
+        if (isAsc != null) {
+            this.isAsc = isAsc;
+            this.sessionService.removeObject(PepListComponent.ASCENDING_STATE_KEY);
+        } else {
+            this.isAsc = true;
+        }
+    }
 
-        const currentList = this.isAllSelected ? this.unSelectedItems : this.selectedItems;
-        const currentListCount = this.isAllSelected ? this.totalRows - currentList.size : currentList.size;
-        this.notifySelectedItemsChanged.emit(currentListCount);
+    initListData(
+        uiControl: UIControl,
+        totalRows: number,
+        items: ObjectSingleData[],
+        viewType: PepListViewType = '',
+        itemClass: string = '',
+        showSelection: boolean = false
+    ): void {
+        this.initVariablesFromSession(items);
 
-        this.isCardView = viewType === VIEW_TYPE.Card;
+        const currentList = this.isAllSelected
+            ? this.unSelectedItems
+            : this.selectedItems;
+        const currentListCount = this.isAllSelected
+            ? this.totalRows - currentList.size
+            : currentList.size;
+        this.selectedItemsChange.emit(currentListCount);
+
+        this.viewType = viewType;
+        this.isTable = viewType === 'table';
+        // this.isCardView = viewType === 'cards' || viewType === 'lines';
         this.showSelection = showSelection;
         this.uiControl = uiControl;
         this.itemClass = itemClass;
         this.selectedItemId = '';
-        this.isTable = viewType === VIEW_TYPE.Table;
         this.totalRows = totalRows;
 
         // fix bug for the scrollTo that doesn't work on edge div , not window
@@ -989,7 +1150,13 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.useVirtualScroll = true;
             const numberOfStartItems = this.getNumberOfStartItems();
-            this.updateListItems(items, { start: 0, end: numberOfStartItems, fromIndex: 0, toIndex: numberOfStartItems, addAtStart: true });
+            this.updateListItems(items, {
+                start: 0,
+                end: numberOfStartItems,
+                fromIndex: 0,
+                toIndex: numberOfStartItems,
+                addAtStart: true
+            });
 
             if (typeof this.virtualScroll !== 'undefined') {
                 this.virtualScroll.refresh();
@@ -1002,11 +1169,19 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     getIsAllSelected(items: Array<ObjectSingleData>): boolean {
         let result = true;
 
-        if (this.selectedItems.size > 0 && items.length > 0) {
+        if (this.selectedItems?.size > 0 && items?.length > 0) {
             // for (let index = 0; index < items.length; index++) {
-            // const pepperiObjectInput = items[index];
-            for (const pepperiObjectInput of items) {
-                if (!(pepperiObjectInput && pepperiObjectInput.Data && this.selectedItems.has(pepperiObjectInput.Data.UID.toString()))) {
+            // const singleData = items[index];
+            for (const singleData of items) {
+                if (
+                    !(
+                        singleData &&
+                        singleData.Data &&
+                        this.selectedItems.has(
+                            singleData.Data.UID.toString()
+                        )
+                    )
+                ) {
                     result = false;
                     break;
                 }
@@ -1021,14 +1196,16 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     getNumberOfStartItems(): number {
         let numberOfStartItems = 20;
 
-        if ((this.screenSize === SCREEN_SIZE.XL) ||
-            (this.screenSize === SCREEN_SIZE.LG)) {
+        if (
+            this.screenSize === PepScreenSizeType.XL ||
+            this.screenSize === PepScreenSizeType.LG
+        ) {
             numberOfStartItems = this.isTable ? 50 : 40;
-        } else if (this.screenSize === SCREEN_SIZE.MD) {
+        } else if (this.screenSize === PepScreenSizeType.MD) {
             numberOfStartItems = this.isTable ? 30 : 20;
-        } else if (this.screenSize === SCREEN_SIZE.SM) {
+        } else if (this.screenSize === PepScreenSizeType.SM) {
             numberOfStartItems = this.isTable ? 20 : 10;
-        } else if (this.screenSize === SCREEN_SIZE.XS) {
+        } else if (this.screenSize === PepScreenSizeType.XS) {
             numberOfStartItems = this.isTable ? 15 : 5;
         }
 
@@ -1048,11 +1225,14 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                     const itemId = tmp[0];
                     const itemType = tmp.length > 1 ? tmp[1] : '';
 
-                    this.selectedItems.set(itemId, this.getUniqItemId(itemId, itemType));
+                    this.selectedItems.set(
+                        itemId,
+                        this.getUniqItemId(itemId, itemType)
+                    );
                 }
             }
 
-            this.isAllSelected = this.getIsAllSelected(items ? items : this.scrollItems); // this.selectedItems.Count() === this.totalRows;
+            this.isAllSelected = this.getIsAllSelected(items ? items : this.scrollItems);
             this.setSelectionDataInSession();
         }
 
@@ -1062,15 +1242,24 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     setSelectionDataInSession(): void {
-        // this.state.setItemInState(PepperiListComponent.SELECTED_ITEMS_STATE_KEY, this.selectedItems);
-        // this.state.setItemInState(PepperiListComponent.UN_SELECTED_ITEMS_STATE_KEY, this.unSelectedItems);
-        // this.state.setItemInState(PepperiListComponent.ALL_SELECTED_STATE_KEY, this.isAllSelected);
+        if (this.selectedItems.size > 0) {
+            this.sessionService.setObject(PepListComponent.SELECTED_ITEMS_STATE_KEY, JSON.stringify([...this.selectedItems]));
+        }
+
+        if (this.unSelectedItems.size > 0) {
+            this.sessionService.setObject(PepListComponent.UN_SELECTED_ITEMS_STATE_KEY, JSON.stringify([...this.unSelectedItems]));
+        }
+
+        this.sessionService.setObject(PepListComponent.ALL_SELECTED_STATE_KEY, this.isAllSelected);
     }
 
     updateListItems(items: ObjectSingleData[], event: ChangeEvent): void {
         if (this.useVirtualScroll) {
             // Clean array
-            if (this.itemsCounter + items.length > PepperiListComponent.TOP_ITEMS_ARRAY) {
+            if (
+                this.itemsCounter + items.length >
+                PepListComponent.TOP_ITEMS_ARRAY
+            ) {
                 this.cleanItems();
             }
 
@@ -1096,12 +1285,16 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
         let index = 0;
 
         // Update items list
-        index = this.items.findIndex(i => i && i.Data && i.Data.UID === data.UID);
+        index = this.items.findIndex(
+            i => i && i.Data && i.Data.UID === data.UID
+        );
         if (index >= 0 && index < this.items.length) {
             this.items[index].Data = data;
         }
         // Update scrollItems list
-        index = this.scrollItems.findIndex(i => i && i.Data && i.Data.UID === data.UID);
+        index = this.scrollItems.findIndex(
+            i => i && i.Data && i.Data.UID === data.UID
+        );
         if (index >= 0 && index < this.scrollItems.length) {
             this.scrollItems[index].Data = data;
             this.checkForChanges = new Date().getTime();
@@ -1117,13 +1310,13 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
     getSelectedItemsData(isForEdit: boolean = false): SelectionData {
         const res: SelectionData = new SelectionData();
 
-        if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Single) {
+        if (this.selectionTypeForActions === 'single') {
             const tmp = this.selectedItemId.split(this.SEPARATOR);
 
             res.selectionType = 1;
             res.rows = [tmp[0]];
             res.rowTypes = [tmp[1]];
-        } else if (this.selectionTypeForActions === SELECTION_TYPE_FOR_ACTIONS.Multi) {
+        } else if (this.selectionTypeForActions === 'multi') {
             const items = [];
             const itemTypes = [];
             let selectionType = 1;
@@ -1136,14 +1329,26 @@ export class PepperiListComponent implements OnInit, OnChanges, OnDestroy {
                 } else {
                     // Get the id's of the items that not founded in unSelectedItems.
                     this.items.forEach(item => {
-                        if (item && !this.unSelectedItems.has(item.Data.UID.toString())) {
-                            currentList.push(this.getUniqItemId(item.Data.UID.toString(), item.Data.Type.toString()));
+                        if (
+                            item &&
+                            !this.unSelectedItems.has(item.Data.UID.toString())
+                        ) {
+                            currentList.push(
+                                this.getUniqItemId(
+                                    item.Data.UID.toString(),
+                                    item.Data.Type.toString()
+                                )
+                            );
                         }
                     });
                 }
             } else {
                 // For delete - can be the unselected with select_all functionality.
-                currentList = Array.from(this.isAllSelected ? this.unSelectedItems.values() : this.selectedItems.values());
+                currentList = Array.from(
+                    this.isAllSelected
+                        ? this.unSelectedItems.values()
+                        : this.selectedItems.values()
+                );
                 selectionType = this.isAllSelected ? 0 : 1;
             }
 

@@ -7,11 +7,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconSystemBolt } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepIconModule, PepIconRegistry, pepIconSystemBolt } from '@pepperi-addons/ngx-lib/icon';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
-import { PepperiCheckboxComponent } from './checkbox.component';
+import { PepCheckboxComponent } from './checkbox.component';
 
 @NgModule({
     imports: [
@@ -23,18 +23,18 @@ import { PepperiCheckboxComponent } from './checkbox.component';
         MatFormFieldModule,
         MatCheckboxModule,
         MatIconModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule
     ],
-    exports: [ PepperiCheckboxComponent ],
-    declarations: [ PepperiCheckboxComponent ],
+    exports: [ PepCheckboxComponent ],
+    declarations: [ PepCheckboxComponent ],
 })
-export class PepperiCheckboxModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemBolt
+export class PepCheckboxModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemBolt
         ]);
     }
 }

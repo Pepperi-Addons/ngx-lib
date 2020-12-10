@@ -1,6 +1,0 @@
-/*
- * Public API Surface of ngx-lib
- */
-export * from './ngx-lib.module';
-export * from './core/index';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvc3JjL3B1YmxpYy1hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFDSCxjQUFjLGtCQUFrQixDQUFDO0FBQ2pDLGNBQWMsY0FBYyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIG5neC1saWJcclxuICovXHJcbmV4cG9ydCAqIGZyb20gJy4vbmd4LWxpYi5tb2R1bGUnO1xyXG5leHBvcnQgKiBmcm9tICcuL2NvcmUvaW5kZXgnO1xyXG4iXX0=

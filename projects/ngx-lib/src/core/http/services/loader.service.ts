@@ -13,18 +13,39 @@ export class LoaderService {
         return this.showLoaderSubject.asObservable().pipe(distinctUntilChanged());
     }
 
-    constructor() {}
+    constructor() {
+        // Raise custom event for showing the loader.
+        this.onChanged$.subscribe((show) => {
+            this.showLoaderChanged(show);
+        });
+    }
 
-    show() {
+    private showLoaderChanged(show: boolean): void {
+        const eventData = {
+            detail: {
+                showLoader: show
+            }
+        };
+
+        const event = new CustomEvent('toggleLoader', eventData);
+        window.dispatchEvent(event);
+    }
+
+    show(): void {
         this.counter++;
         this.showLoaderSubject.next(true);
     }
 
-    hide() {
+    hide(): void {
         this.counter--;
+
+        if (this.counter < 0) {
+            this.counter = 0;
+        }
 
         if (this.counter === 0) {
             this.showLoaderSubject.next(false);
         }
     }
+
 }

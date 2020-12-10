@@ -8,10 +8,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepIconModule, PepIconRegistry, pepIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
 
-import { PepperiDefaultDialogComponent } from './dialog.component';
+import { PepDefaultDialogComponent } from './default-dialog.component';
+import { PepDialogComponent } from './dialog.component';
 
 @NgModule({
     imports: [
@@ -23,17 +24,17 @@ import { PepperiDefaultDialogComponent } from './dialog.component';
         MatButtonModule,
         MatIconModule,
         MatDialogModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule
     ],
-    exports: [ ],
-    declarations: [PepperiDefaultDialogComponent],
+    exports: [ PepDialogComponent ],
+    declarations: [PepDefaultDialogComponent, PepDialogComponent],
 })
-export class PepperiDialogModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemClose
+export class PepDialogModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemClose
         ]);
     }
 }

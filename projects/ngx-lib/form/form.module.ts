@@ -3,61 +3,68 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { SignaturePadModule } from 'angular2-signaturepad';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import {
-    PepperiIconModule,
-    PepperiIconRegistry,
-    pepperiIconIndicatorDotPlaceholder } from '@pepperi-addons/ngx-lib/icon';
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemEdit,
+    pepIconSystemMenu,
+    pepIconNumberPlus,
+    pepIconSystemBin,
+    pepIconIndicatorDotPlaceholder } from '@pepperi-addons/ngx-lib/icon';
 
-import { PepperiDialogModule } from '@pepperi-addons/ngx-lib/dialog';
+import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
-import { PepperiAddressModule } from '@pepperi-addons/ngx-lib/address';
-import { PepperiAttachmentModule } from '@pepperi-addons/ngx-lib/attachment';
-import { PepperiCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
-import { PepperiDateModule } from '@pepperi-addons/ngx-lib/date';
-import { PepperiImageModule } from '@pepperi-addons/ngx-lib/image';
-import { PepperiImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
-import { PepperiInternalButtonModule } from '@pepperi-addons/ngx-lib/internal-button';
-// import { PepperiInternalPageModule } from '@pepperi-addons/ngx-lib/internal-page';
-import { PepperiMenuModule } from '@pepperi-addons/ngx-lib/menu';
-import { PepperiQuantitySelectorModule } from '@pepperi-addons/ngx-lib/quantity-selector';
-import { PepperiRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
-import { PepperiSelectModule } from '@pepperi-addons/ngx-lib/select';
-import { PepperiSeparatorModule } from '@pepperi-addons/ngx-lib/separator';
-import { PepperiSignatureModule } from '@pepperi-addons/ngx-lib/signature';
-import { PepperiTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
-import { PepperiTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
+import { PepAddressModule } from '@pepperi-addons/ngx-lib/address';
+import { PepAttachmentModule } from '@pepperi-addons/ngx-lib/attachment';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
+import { PepDateModule } from '@pepperi-addons/ngx-lib/date';
+import { PepImageModule } from '@pepperi-addons/ngx-lib/image';
+import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
+import { PepQuantitySelectorModule } from '@pepperi-addons/ngx-lib/quantity-selector';
+import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
+import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
+import { PepSeparatorModule } from '@pepperi-addons/ngx-lib/separator';
+import { PepSignatureModule } from '@pepperi-addons/ngx-lib/signature';
+import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
+import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 
-const pepperiComponentsModules = [
-    PepperiAddressModule,
-    PepperiAttachmentModule,
-    PepperiCheckboxModule,
-    PepperiDateModule,
-    PepperiImageModule,
-    PepperiImagesFilmstripModule,
-    PepperiInternalButtonModule,
-    // PepperiInternalPageModule,
-    PepperiMenuModule,
-    PepperiQuantitySelectorModule,
-    PepperiRichHtmlTextareaModule,
-    PepperiSelectModule,
-    PepperiSeparatorModule,
-    PepperiSignatureModule,
-    PepperiTextareaModule,
-    PepperiTextboxModule,
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepGroupButtonsModule } from '@pepperi-addons/ngx-lib/group-buttons';
+
+const pepComponentsModules = [
+    PepAddressModule,
+    PepAttachmentModule,
+    PepButtonModule,
+    PepCheckboxModule,
+    PepDateModule,
+    PepImageModule,
+    PepImagesFilmstripModule,
+    PepQuantitySelectorModule,
+    PepRichHtmlTextareaModule,
+    PepSelectModule,
+    PepSeparatorModule,
+    PepSignatureModule,
+    PepTextareaModule,
+    PepTextboxModule,
 ];
 
-import { PepperiFormComponent } from './form.component';
-import { PepperiFieldGeneratorComponent } from './field-generator.component';
-import { PepperiIndicatorsComponent } from './indicators.component';
-import { PepperiInternalPageComponent } from './internal-page.component';
-import { PepperiInternalListComponent } from './internal-list.component';
+import { PepFormComponent } from './form.component';
+import { PepFieldGeneratorComponent } from './field-generator.component';
+import { PepIndicatorsComponent } from './indicators.component';
+import { PepInternalButtonComponent } from './internal-button.component';
+import { PepInternalListComponent } from './internal-list.component';
+import { PepInternalMenuComponent } from './internal-menu.component';
+import { PepInternalPageComponent } from './internal-page.component';
 
 @NgModule({
     imports: [
@@ -66,30 +73,40 @@ import { PepperiInternalListComponent } from './internal-list.component';
         FormsModule,
         // Material modules,
         MatCommonModule,
+        MatFormFieldModule,
+        MatButtonModule,
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
         // External modules
         SignaturePadModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiDialogModule,
-        PepperiIconModule,
-        pepperiComponentsModules,
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepDialogModule,
+        PepIconModule,
+        pepComponentsModules,
+        PepFieldTitleModule,
+        PepGroupButtonsModule
     ],
-    exports: [PepperiFormComponent],
+    exports: [PepFormComponent],
     declarations: [
-        PepperiFormComponent,
-        PepperiFieldGeneratorComponent,
-        PepperiIndicatorsComponent,
-        PepperiInternalPageComponent,
-        PepperiInternalListComponent
+        PepFormComponent,
+        PepFieldGeneratorComponent,
+        PepIndicatorsComponent,
+        PepInternalButtonComponent,
+        PepInternalListComponent,
+        PepInternalMenuComponent,
+        PepInternalPageComponent,
     ],
 })
-export class PepperiFormModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconIndicatorDotPlaceholder
+export class PepFormModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemEdit,
+            pepIconSystemMenu,
+            pepIconNumberPlus,
+            pepIconSystemBin,
+            pepIconIndicatorDotPlaceholder
         ]);
     }
 }

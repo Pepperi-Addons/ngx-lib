@@ -11,11 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconNumberMinus, pepperiIconNumberPlus } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepIconModule, PepIconRegistry, pepIconNumberMinus, pepIconNumberPlus } from '@pepperi-addons/ngx-lib/icon';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
-import { PepperiQuantitySelectorComponent } from './quantity-selector.component';
+import { PepQuantitySelectorComponent } from './quantity-selector.component';
 import { QuantitySelectorNumber } from './quantity-selector.pipes';
 
 @NgModule({
@@ -32,19 +32,19 @@ import { QuantitySelectorNumber } from './quantity-selector.pipes';
         MatButtonModule,
         MatBadgeModule,
         MatIconModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule
     ],
-    exports: [ PepperiQuantitySelectorComponent ],
-    declarations: [ PepperiQuantitySelectorComponent, QuantitySelectorNumber ],
+    exports: [ PepQuantitySelectorComponent ],
+    declarations: [ PepQuantitySelectorComponent, QuantitySelectorNumber ],
 })
-export class PepperiQuantitySelectorModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconNumberMinus,
-            pepperiIconNumberPlus
+export class PepQuantitySelectorModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconNumberMinus,
+            pepIconNumberPlus
         ]);
     }
 }

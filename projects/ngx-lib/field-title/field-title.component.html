@@ -1,12 +1,36 @@
-<div class="mat-form-title" [ngClass]="{disable: disabled}"
-    [ngStyle]="{'text-align': xAlignment == '3' ? 'center' : xAlignment == '2' ? 'right' : 'left'}">
-    <span *ngIf="required" class="required" [ngClass]="xAlignment == '2' ? 'pull-right flip' : 'pull-left flip'">
-        <pep-icon name="system_must">
-        </pep-icon>
-    </span>
-    <mat-label *ngIf="showTitle" class="body-xs" [ngStyle]="{'max-width': maxFieldCharacters > 0 ? '85%' : '100%'}">
-        {{ label }}</mat-label>
+<div class="mat-form-title" [ngClass]="{disable: disabled}" [ngStyle]="{'text-align': xAlignment }">
+    <ng-container *ngIf="xAlignment == 'right' then rightTemplate else leftTemplate">
+    </ng-container>
+    <ng-template #rightTemplate>
+        <ng-container *ngTemplateOutlet="maxFieldCharactersTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="requiredTemplate"></ng-container>
+    </ng-template>
+    <ng-template #leftTemplate>
+        <ng-container *ngTemplateOutlet="requiredTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="maxFieldCharactersTemplate"></ng-container>
+    </ng-template>
 
-    <span *ngIf="maxFieldCharacters > 0" class="body-xs"
-        [ngClass]="{'pull-right': xAlignment == '1' || xAlignment == '0', 'pull-left': xAlignment == '2'}">&nbsp;{{ inputLength || 0 }}/{{ maxFieldCharacters }}</span>
+    <ng-template #requiredTemplate>
+        <span *ngIf="required" class="required">
+            <pep-icon name="system_must"></pep-icon>
+        </span>
+        <!-- For the grid template () -->
+        <span *ngIf="!required"></span>
+    </ng-template>
+    <ng-template #titleTemplate>
+        <mat-label *ngIf="showTitle" [title]="label" class="body-xs">
+            {{ label }}
+        </mat-label>
+        <!-- For the grid template () -->
+        <span *ngIf="!showTitle"></span>
+    </ng-template>
+    <ng-template #maxFieldCharactersTemplate>
+        <span *ngIf="maxFieldCharacters > 0" class="body-xs">
+            &nbsp;{{ inputLength || 0 }}/{{ maxFieldCharacters }}
+        </span>
+        <!-- For the grid template () -->
+        <span *ngIf="maxFieldCharacters === 0"></span>
+    </ng-template>
 </div>

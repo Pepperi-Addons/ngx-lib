@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@pepperi-addons/ngx-lib';
 
 @Injectable()
-export class PepperiInternalPageService {
+export class InternalPageService {
 
     private transactionUrl: string;
     private objectId: string;
@@ -30,7 +30,7 @@ export class PepperiInternalPageService {
         });
 
         // Set the additional api name with view type string.
-        const moreParams = this.additionalApiName.length > 0 ?
+        const moreParams = this.additionalApiName?.length > 0 ?
             `${this.additionalApiName}/${this.viewType}` :
             `''/${this.viewType}`;
 

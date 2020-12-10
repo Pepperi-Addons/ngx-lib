@@ -1,8 +1,0 @@
-// -----------------------------------------------------
-//  Pepperi - Address
-// -----------------------------------------------------
-@mixin pepperi-address-component-theme($pepperi-theme) {
-    .pepperi-address-container {
-        background: get-pepperi-color($pepperi-theme, color-weak, color-tran-10);
-    }
-}

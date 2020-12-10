@@ -1,6 +1,0 @@
-/*
- * Public API Surface of ngx-lib/signature
- */
-export * from './signature.module';
-export * from './signature.component';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvc2lnbmF0dXJlL3B1YmxpYy1hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFDSCxjQUFjLG9CQUFvQixDQUFDO0FBQ25DLGNBQWMsdUJBQXVCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxyXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygbmd4LWxpYi9zaWduYXR1cmVcclxuICovXHJcbmV4cG9ydCAqIGZyb20gJy4vc2lnbmF0dXJlLm1vZHVsZSc7XHJcbmV4cG9ydCAqIGZyb20gJy4vc2lnbmF0dXJlLmNvbXBvbmVudCc7XHJcbiJdfQ==

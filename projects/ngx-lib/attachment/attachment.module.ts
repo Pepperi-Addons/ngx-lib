@@ -5,11 +5,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
-import { PepperiFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
 
-import { PepperiAttachmentComponent } from './attachment.component';
+import { PepAttachmentComponent } from './attachment.component';
 
 @NgModule({
     imports: [
@@ -19,12 +19,12 @@ import { PepperiAttachmentComponent } from './attachment.component';
         // Material modules
         MatCommonModule,
         MatFormFieldModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiFieldTitleModule,
-        PepperiFilesUploaderModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepFieldTitleModule,
+        PepFilesUploaderModule
     ],
-    exports: [ PepperiAttachmentComponent ],
-    declarations: [ PepperiAttachmentComponent ],
+    exports: [ PepAttachmentComponent ],
+    declarations: [ PepAttachmentComponent ],
 })
-export class PepperiAttachmentModule {}
+export class PepAttachmentModule {}

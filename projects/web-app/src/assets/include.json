@@ -1,9 +1,9 @@
-{
-    "$schema": "../../../../node_modules/ngx-library-assets/include-schema.json",
-    "libs": [
-        {
-            "name": "ngx-lib",
-            "assetsRoot": false
-        }
-    ]
-}
+// {
+//     "$schema": "../../../../node_modules/ngx-library-assets/include-schema.json",
+//     "libs": [
+//         {
+//             "name": "ngx-lib",
+//             "assetsRoot": false
+//         }
+//     ]
+// }

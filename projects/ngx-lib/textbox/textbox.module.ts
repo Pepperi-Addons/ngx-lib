@@ -9,12 +9,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepIconModule, PepIconRegistry, pepIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
+import { PepTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
-import { PepperiTextboxComponent} from './textbox.component';
+import { PepTextboxComponent} from './textbox.component';
 
 @NgModule({
     imports: [
@@ -27,19 +27,19 @@ import { PepperiTextboxComponent} from './textbox.component';
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule,
-        PepperiTextboxIconModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule,
+        PepTextboxIconModule
     ],
-    exports: [PepperiTextboxComponent, ],
-    declarations: [PepperiTextboxComponent],
+    exports: [PepTextboxComponent, ],
+    declarations: [PepTextboxComponent],
 })
-export class PepperiTextboxModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemEdit
+export class PepTextboxModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemEdit
         ]);
     }
 }

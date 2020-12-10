@@ -1,30 +1,31 @@
 <ng-container [formGroup]="form">
     <!-- New code -->
-    <ng-template #pepperiTemplate let-isFormView="isFormView">
-        <div class="pepperi-textarea-container" [ngClass]="{ 'right-alignment': xAlignment == '2', 'one-row': rowSpan === 1, 'stand-alone': standAlone,
-            'pepperi-textarea-card-container': layoutType === LAYOUT_TYPE.PepperiCard }">
+    <ng-template #pepTemplate let-isFormView="isFormView">
+        <div class="pep-textarea-container" [ngClass]="{ 'right-alignment': xAlignment == 'right', 'one-row': rowSpan === 1, 'stand-alone': standAlone,
+            'pep-textarea-card-container': layoutType === 'card' }">
             <pep-field-title *ngIf="isFormView" [label]="label" [required]="required" [disabled]="disabled"
-                [maxFieldCharacters]="maxFieldCharacters" [xAlignment]="xAlignment" [showTitle]="showTitle"
-                [inputLength]="input.value?.length">
+                [maxFieldCharacters]="disabled || readonly ? 0 : maxFieldCharacters" [xAlignment]="xAlignment"
+                [showTitle]="showTitle" [inputLength]="input.value?.length">
             </pep-field-title>
-            <mat-form-field appearance="outline" dir="{{ xAlignment == '2' ? 'rtl' : 'ltr' }}"
-                [ngClass]="{ 'pepperi-table-textarea': layoutType === LAYOUT_TYPE.PepperiTable }">
+            <mat-form-field appearance="outline" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}"
+                [ngClass]="{ 'pep-table-textarea': layoutType === 'table' }">
                 <textarea #input [hidden]="readonly" [id]="key" class="body-sm" matInput (blur)="onBlur($event)"
                     title="{{ value }}" [value]="value"
                     maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
-                    [ngStyle]="{ color: 'textColor', 'text-align': xAlignment == '2' ? 'right' : 'left' }"
+                    [ngStyle]="{ color: 'textColor', 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
                     [formControlName]="key" [style.height]="fieldHeight" [disabled]="disabled">
                 </textarea>
                 <div *ngIf="readonly" class="body-sm disable-text-div" title="{{ value }}"
-                    [ngStyle]="{ color: 'textColor', 'text-align': xAlignment == '2' ? 'right' : 'left' }"
+                    [ngStyle]="{ color: 'textColor', 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
                     [innerHtml]="value | safeHtml" [style.height]="fieldHeight">
                 </div>
-                <!-- <pep-textbox-icon *ngIf="xAlignment == '2'" matPrefix [value]="value" [label]="label" [type]="controlType" [disabled]="disabled"
-                    [ngClass]="{ 'card-one-row-icon': layoutType === LAYOUT_TYPE.PepperiCard && rowSpan === 1 }" (iconClicked)="openDialog()">
+                <!-- <pep-textbox-icon *ngIf="xAlignment == 'right'" matPrefix [value]="value" [label]="label" [type]="controlType" [disabled]="disabled"
+                    [ngClass]="{ 'card-one-row-icon': layoutType === 'card' && rowSpan === 1 }" (iconClick)="openDialog()">
                 </pep-textbox-icon> -->
-                <pep-textbox-icon matSuffix [value]="value" [label]="label" [type]="controlType" [disabled]="disabled"
-                    [ngClass]="{ 'card-one-row-icon': layoutType === LAYOUT_TYPE.PepperiCard && rowSpan === 1 }"
-                    (iconClicked)="openDialog()">
+                <pep-textbox-icon matSuffix [value]="value" [label]="label" [type]="controlType"
+                    [disabled]="disabled || readonly"
+                    [ngClass]="{ 'card-one-row-icon': layoutType === 'card' && rowSpan === 1 }"
+                    (iconClick)="openDialog()">
                 </pep-textbox-icon>
                 <mat-error>
                     <span class="body-xs"
@@ -35,24 +36,24 @@
         </div>
     </ng-template>
 
-    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm">
-        <ng-container *ngTemplateOutlet="pepperiTemplate; context: { isFormView: true }"></ng-container>
+    <ng-container *ngIf="layoutType === 'form'">
+        <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: true }"></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiCard">
+    <ng-container *ngIf="layoutType === 'card'">
         <ng-container *ngIf="isInEditMode; then editBlock; else readOnlyBlock"></ng-container>
         <ng-template #editBlock>
-            <ng-container *ngTemplateOutlet="pepperiTemplate; context: { isFormView: false }"></ng-container>
+            <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: false }"></ng-container>
         </ng-template>
         <ng-template #readOnlyBlock>
-            <div class="pepperi-textarea-card-container card-flex-container"
-                [ngClass]="{'one-row': rowSpan === 1, 'pepperi-button weak': isActive && !disabled }"
+            <div class="pep-textarea-card-container card-flex-container"
+                [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled }"
                 [ngStyle]="{ '-webkit-line-clamp': rowSpan }" [class]="'text-align-' + xAlignment"
                 (click)="!disabled ? cardTemplateClicked($event) : ''" [style.height]="fieldHeight">
-                <span *ngIf=" showTitle && label !=''" class=" body-xs title no-shrink"
-                    title="{{ label }}">{{ label }}&nbsp;</span>
+                <span *ngIf=" showTitle && label !=''" class=" body-xs title no-shrink" title="{{ label }}">{{ label
+                    }}&nbsp;</span>
                 <span [id]="key" title="{{ value }}" class="body-sm value wrap">{{ value }}</span>
-                <button *ngIf="isActive && !disabled" class="pepperi-button weak card-edit-button self-start"
+                <button *ngIf="isActive && !disabled" class="pep-button weak card-edit-button self-start"
                     [ngClass]="{'self-end' : value && value !== ''}" mat-button>
                     <mat-icon>
                         <pep-icon name="system_edit">
@@ -63,25 +64,24 @@
         </ng-template>
     </ng-container>
 
-    <ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable">
+    <ng-container *ngIf="layoutType === 'table'">
         <ng-container *ngIf="isActive && !disabled; then selectedBlock; else notSelectedBlock"></ng-container>
         <ng-template #selectedBlock>
-            <ng-container *ngTemplateOutlet="pepperiTemplate; context: { isFormView: false }"></ng-container>
+            <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: false }"></ng-container>
         </ng-template>
         <ng-template #notSelectedBlock>
             <ng-container *ngIf="value?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
             <ng-template #notEmptyBlock>
-                <mat-form-field appearance="outline" dir="{{ xAlignment == '2' ? 'rtl' : 'ltr' }}"
-                    class="pepperi-report-textarea" [ngClass]="{ readonly: disabled }">
-                    <input matInput [id]="key" class="body-sm pepperi-report-input" [ngClass]="{ readonly: disabled }"
-                        [ngStyle]="{ color: textColor, 'text-align': xAlignment == '3' ? 'center' : xAlignment == '2' ? 'right' : 'left' }"
+                <mat-form-field appearance="outline" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}"
+                    class="pep-report-textarea" [ngClass]="{ readonly: disabled }">
+                    <input matInput [id]="key" class="body-sm pep-report-input" [ngClass]="{ readonly: disabled }"
+                        [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
                         title="{{ value }}" [formControlName]="key" type="text" [value]="value" [disabled]="true" />
-                    <pep-textbox-icon *ngIf="disabled && xAlignment == '2'" matPrefix [value]="value" [label]="label"
-                        [type]="controlType" [disabled]="disabled" (iconClicked)="openDialog()">
+                    <pep-textbox-icon *ngIf="disabled && xAlignment == 'right'" matPrefix [value]="value"
+                        [label]="label" [type]="controlType" [disabled]="disabled" (iconClick)="openDialog()">
                     </pep-textbox-icon>
-                    <pep-textbox-icon *ngIf="disabled && (xAlignment == '1' || xAlignment == '0')" matSuffix
-                        [value]="value" [label]="label" [type]="controlType" [disabled]="disabled"
-                        (iconClicked)="openDialog()">
+                    <pep-textbox-icon *ngIf="disabled && (xAlignment == 'left')" matSuffix [value]="value"
+                        [label]="label" [type]="controlType" [disabled]="disabled" (iconClick)="openDialog()">
                     </pep-textbox-icon>
                 </mat-form-field>
             </ng-template>
@@ -90,8 +90,30 @@
             </ng-template>
         </ng-template>
     </ng-container>
-
-    <ng-container *ngIf="layoutType === LAYOUT_TYPE.Editmodal">
-        <ng-container *ngTemplateOutlet="pepperiTemplate; context: { isFormView: true }"></ng-container>
-    </ng-container>
 </ng-container>
+
+<ng-template #textAreaDialogTemplate>
+    <pep-dialog class="dialog-textarea-container" [title]="label">
+        <ng-container pep-dialog-content>
+            <textarea #dialogTextarea [readonly]="disabled || readonly">{{ value }}</textarea>
+        </ng-container>
+        <div pep-dialog-actions class="spacing-element-negative">
+            <ng-container *ngIf="disabled || readonly; then notEditableBlock; else editableBlock">
+            </ng-container>
+            <ng-template #editableBlock>
+                <button mat-button (click)="closeDialog()" class="spacing-element pep-button md weak">
+                    {{ 'ACTIONS.CANCEL' | translate }}
+                </button>
+                <button mat-button class="spacing-element pep-button md strong"
+                    (click)="closeDialog(dialogTextarea.value)">
+                    {{ 'ACTIONS.SAVE' | translate }}
+                </button>
+            </ng-template>
+            <ng-template #notEditableBlock>
+                <button mat-button (click)="closeDialog()" class="spacing-element pep-button md weak">
+                    {{ 'ACTIONS.CLOSE' | translate }}
+                </button>
+            </ng-template>
+        </div>
+    </pep-dialog>
+</ng-template>

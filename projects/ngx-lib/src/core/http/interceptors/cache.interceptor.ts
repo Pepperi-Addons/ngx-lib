@@ -18,7 +18,7 @@ export class CacheInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
 
-        console.warn('CacheInterceptor');
+        // console.warn('CacheInterceptor');
 
         const cachedResponse = this.cache.get(req.url);
         if (cachedResponse) {

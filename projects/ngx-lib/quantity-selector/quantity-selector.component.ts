@@ -11,13 +11,22 @@ import {
     ChangeDetectorRef,
     ChangeDetectionStrategy,
     Renderer2,
-    AfterViewChecked,
+    AfterViewChecked
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { LAYOUT_TYPE, STYLE_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
-
-import * as $ from 'jquery';
+import {
+    trigger,
+    state,
+    style,
+    animate,
+    transition
+} from '@angular/animations';
+import { PepLayoutType, PepStyleType, CustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepFieldClickedData,
+    PepQuantitySelectorFieldType, 
+    PepQuantitySelectorField} from '@pepperi-addons/ngx-lib';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'pep-quantity-selector',
@@ -30,22 +39,23 @@ import * as $ from 'jquery';
                 'show',
                 style({
                     opacity: 1,
-                    transform: 'scale(1)',
+                    transform: 'scale(1)'
                 })
             ),
             state(
                 'hide',
                 style({
                     opacity: 0,
-                    transform: 'scale(0)',
+                    transform: 'scale(0)'
                 })
             ),
             transition('show => hide', animate('250ms ease-out')),
-            transition('hide => show', animate('250ms ease-in')),
-        ]),
-    ],
+            transition('hide => show', animate('250ms ease-in'))
+        ])
+    ]
 })
-export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
+export class PepQuantitySelectorComponent
+    implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
     public static ENTER_CHILDREN = '[EnterChildren]';
     public static ENTER_PACKAGE = '[EnterPackage]';
 
@@ -53,12 +63,12 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
     @Input() value = '';
     @Input() formattedValue = '';
     @Input() label = '';
-    @Input() type = 'qs';
+    @Input() type: PepQuantitySelectorFieldType = 'qs';
     @Input() required = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() textColor = '';
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() lastFocusField: any;
     @Input() alowDecimal = false;
@@ -69,16 +79,15 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
 
     @Input() form: FormGroup = null;
     @Input() showTitle = true;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() elementClicked: EventEmitter<any> = new EventEmitter<any>();
+    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
 
     @ViewChild('QSCont') QSCont: ElementRef;
     @ViewChild('QSInput') QSInput: ElementRef;
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     standAlone = false;
     isFocus = false;
     isMatrixFocus = false;
@@ -89,8 +98,7 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
     resize: any;
 
     sameElementInTheWantedRow = null;
-    STYLE_TYPE = STYLE_TYPE;
-    styleClass = STYLE_TYPE.Strong;
+    styleClass: PepStyleType = 'strong';
     isEmptyKey = false;
 
     constructor(
@@ -98,7 +106,25 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
         private customizationService: CustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
+
+    setForm() {
+        // this.form = this.customizationService.getDefaultFromGroup(
+            //     this.key,
+            //     this.value,
+            //     this.required,
+            //     this.readonly,
+            //     this.disabled
+            // );
+            const pepField = new PepQuantitySelectorField({
+                key: this.key,
+                value: this.value,
+                required: this.required,
+                readonly: this.readonly,
+                disabled: this.disabled
+            });
+            this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -107,20 +133,21 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
             }
 
             this.standAlone = true;
-            this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            this.setForm();
             this.formattedValue = this.formattedValue || this.value;
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                CustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
 
         this.setQsView();
-        // TODO:
-        // const self = this;
-        // this.resize = Observable.fromEvent(window, 'resize')
-        //     .debounceTime(100)
-        //     .subscribe((event) => {
-        //         self.setQsView();
-        //     });
+        this.resize = fromEvent(window, 'resize').pipe(
+            debounceTime(100)
+        ).subscribe((event) => {
+            this.setQsView();
+        });
     }
 
     // TODO:
@@ -133,12 +160,15 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
     ngOnChanges(changes: any): void {
         // Bug fix for addons when the key is '' in the ngOnInit for some reson
         if (this.isEmptyKey && this.key !== '') {
-            this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            this.setForm();
         }
 
         this.isCaution = this.textColor === '#FF0000';
 
-        const messages = this.notificationInfo && this.notificationInfo.length > 0 ? JSON.parse(this.notificationInfo).Messages : '';
+        const messages =
+            this.notificationInfo && this.notificationInfo.length > 0
+                ? JSON.parse(this.notificationInfo).Messages
+                : '';
         if (messages && messages.length > 0) {
             // Replace the msg keys.
             for (const msg of messages) {
@@ -157,7 +187,7 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
 
             const fieldControl = this.form.controls[this.key];
             fieldControl.setErrors({
-                serverError: 'Error',
+                serverError: 'Error'
             });
             setTimeout(() => {
                 if (this.QSInput && this.QSInput.nativeElement) {
@@ -165,13 +195,12 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
                 }
             }, 150);
         } else {
-            const self = this;
             setTimeout(() => {
-                if (self.lastFocusField) {
-                    self.lastFocusField.focus();
-                    self.lastFocusField = null;
+                if (this.lastFocusField) {
+                    this.lastFocusField.focus();
+                    this.lastFocusField = null;
                 } else {
-                    self.focusToTheSameElementInTheWantedRow();
+                    this.focusToTheSameElementInTheWantedRow();
                 }
             }, 100);
         }
@@ -182,12 +211,12 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
             this.resize.unsubscribe();
         }
 
-        if (this.valueChanged) {
-            this.valueChanged.unsubscribe();
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
         }
 
-        if (this.elementClicked) {
-            this.elementClicked.unsubscribe();
+        if (this.elementClick) {
+            this.elementClick.unsubscribe();
         }
     }
 
@@ -195,40 +224,48 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
         return this.additionalValue.length > 0 ? 'show' : 'hide';
     }
 
+    getParentByClass(el, parentSelector /* optional */): any {
+        // If no parentSelector defined will bubble up all the way to *document*
+        if (parentSelector === undefined) {
+            parentSelector = document;
+        }
+
+        let p = el.parentNode;
+
+        while (p && !p?.classList?.contains(parentSelector) && parentSelector !== document) {
+            const o = p;
+            p = o?.parentNode || null;
+        }
+
+        return p?.className.indexOf(parentSelector) > -1 ? p : null;
+    }
+
     getSameElementInTheWantedRowByClassName(event: any, isNext = true): any {
         const eventTarget = event.target || event.srcElement;
         let sameElementInTheWantedRowByClassName;
 
         let parentSelector;
-        if (this.layoutType === LAYOUT_TYPE.PepperiTable) {
-            parentSelector = sameElementInTheWantedRowByClassName = $(eventTarget).parents('.table-row');
-        } else if (this.layoutType === LAYOUT_TYPE.PepperiCard) {
-            parentSelector = sameElementInTheWantedRowByClassName = $(eventTarget).parents('.card-view');
-
-            if (parentSelector.length === 0) {
-                parentSelector = sameElementInTheWantedRowByClassName = $(eventTarget).parents('.line-view');
+        if (this.layoutType === 'table') {
+            parentSelector = this.getParentByClass(eventTarget, 'table-row');
+        } else if (this.layoutType === 'card') {
+            parentSelector = this.getParentByClass(eventTarget, 'card-view');
+            if (!parentSelector) {
+                parentSelector = this.getParentByClass(eventTarget, 'line-view');
             }
         }
 
         if (isNext) {
-            if (parentSelector.is(':last-child')) {
-                sameElementInTheWantedRowByClassName = parentSelector
-                    .parent()
-                    .children()
-                    .first()
-                    .find('[name=' + this.key + ']');
+            if (parentSelector.nextElementSibling === null) {
+                sameElementInTheWantedRowByClassName = parentSelector.parentElement.querySelectorAll('[name=' + this.key + ']')[0];
             } else {
-                sameElementInTheWantedRowByClassName = parentSelector.next().find('[name=' + this.key + ']');
+                sameElementInTheWantedRowByClassName = parentSelector.nextElementSibling.querySelectorAll('[name=' + this.key + ']')[0];
             }
         } else {
-            if (parentSelector.is(':first-child')) {
-                sameElementInTheWantedRowByClassName = parentSelector
-                    .parent()
-                    .children()
-                    .last()
-                    .find('[name=' + this.key + ']');
+                if (parentSelector.previousElementSibling === null) {
+                const elementsList = parentSelector.parentElement.querySelectorAll('[name=' + this.key + ']');
+                sameElementInTheWantedRowByClassName = elementsList[elementsList.length - 1];
             } else {
-                sameElementInTheWantedRowByClassName = parentSelector.prev().find('[name=' + this.key + ']');
+                sameElementInTheWantedRowByClassName = parentSelector.previousElementSibling.querySelectorAll('[name=' + this.key + ']')[0];
             }
         }
 
@@ -237,19 +274,28 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
 
     setSameElementInTheWantedRow(event: any, isNext = true): void {
         // Navigate to the QS in the next row.
-        // const target = event.target || event.srcElement;
-        this.sameElementInTheWantedRow = this.getSameElementInTheWantedRowByClassName(event, isNext);
+        if (this.layoutType === 'card' || this.layoutType === 'table') {
+            this.sameElementInTheWantedRow = this.getSameElementInTheWantedRowByClassName(
+                event,
+                isNext
+            );
+        }
+
         this.QSInput.nativeElement.blur();
     }
 
     focusToTheSameElementInTheWantedRow(): void {
+
         if (this.sameElementInTheWantedRow) {
+            const elem = this.sameElementInTheWantedRow;
             // If this is regular item (qs and not button) .
-            if (this.sameElementInTheWantedRow.is('input')) {
-                this.sameElementInTheWantedRow.click().select();
+            if (elem instanceof HTMLInputElement && elem.type === 'text') {
+                elem.click();
+                elem.select();
             } else {
-                this.sameElementInTheWantedRow.parent().click();
-                this.sameElementInTheWantedRow.focus();
+                const parentElem = elem.parentNode;
+                parentElem.click();
+                elem.focus();
             }
             this.sameElementInTheWantedRow = null;
         }
@@ -282,7 +328,10 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
     }
 
     onMatrixBlur(event: any): void {
-        if (!event.relatedTarget || event.relatedTarget.className.indexOf('qs') < 0) {
+        if (
+            !event.relatedTarget ||
+            event.relatedTarget.className.indexOf('qs') < 0
+        ) {
             this.isMatrixFocus = false;
         }
 
@@ -302,7 +351,11 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
         if (parseFloat(this.value) !== parseFloat(value)) {
             this.value = value;
             this.formattedValue = value;
-            this.customizationService.updateFormFieldValue(this.form, this.key, value);
+            this.customizationService.updateFormFieldValue(
+                this.form,
+                this.key,
+                value
+            );
 
             // this.propagateChange(this.value, event.relatedTarget);
             this.changeValue(this.value, event.relatedTarget);
@@ -312,7 +365,12 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
     }
 
     changeValue(value: any, lastFocusedField: any = null): void {
-        this.valueChanged.emit({ apiName: this.key, value, controlType: this.controlType, lastFocusedField });
+        this.valueChange.emit({
+            key: this.key,
+            value,
+            controlType: this.controlType,
+            lastFocusedField
+        });
     }
 
     increment(event): void {
@@ -320,7 +378,11 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
             let tmp = parseFloat(this.value);
 
             this.value = this.formattedValue = (++tmp).toString();
-            this.customizationService.updateFormFieldValue(this.form, this.key, this.value);
+            this.customizationService.updateFormFieldValue(
+                this.form,
+                this.key,
+                this.value
+            );
         }
 
         // this.propagateChange('+');
@@ -333,7 +395,11 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
             let tmp = parseFloat(this.value);
 
             this.value = this.formattedValue = (--tmp).toString();
-            this.customizationService.updateFormFieldValue(this.form, this.key, this.value);
+            this.customizationService.updateFormFieldValue(
+                this.form,
+                this.key,
+                this.value
+            );
         }
 
         // this.propagateChange('-');
@@ -342,19 +408,24 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
     }
 
     enterChildren(event): void {
-        this.elementClicked.emit({ apiName: PepperiQuantitySelectorComponent.ENTER_CHILDREN, eventWhich: event.which });
+        this.elementClick.emit({
+            key: this.key,
+            value: PepQuantitySelectorComponent.ENTER_CHILDREN,
+            eventWhich: event.which
+        });
     }
 
     enterPackage(event): void {
-        this.elementClicked.emit({
-            apiName: PepperiQuantitySelectorComponent.ENTER_PACKAGE,
-            eventWhich: event.which, otherData: this.notificationInfo
+        this.elementClick.emit({
+            key: this.key,
+            value: PepQuantitySelectorComponent.ENTER_PACKAGE,
+            eventWhich: event.which,
+            otherData: this.notificationInfo
         });
     }
 
     setQsView(): void {
-        if (this.layoutType === LAYOUT_TYPE.Editmodal ||
-            this.layoutType === LAYOUT_TYPE.PepperiCard && this.rowSpan <= 1) {
+        if (this.layoutType === 'card' && this.rowSpan <= 1) {
             this.showQsBtn = false;
         } else {
             if (this.QSCont && this.QSCont.nativeElement) {
@@ -364,7 +435,9 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
 
         // Get state class from theme.
         // this.styleClass = this.customizationService.getThemeVariable(CustomizationService.STYLE_QS_KEY);
-        this.styleClass = document.documentElement.style.getPropertyValue(CustomizationService.STYLE_QS_KEY) as STYLE_TYPE;
+        this.styleClass = document.documentElement.style.getPropertyValue(
+            CustomizationService.STYLE_QS_KEY
+        ) as PepStyleType;
 
         if (!this.cd['destroyed']) {
             this.cd.detectChanges();
@@ -375,12 +448,15 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
         let inputChar = String.fromCharCode(event.charCode);
         const keyboardEvent = event as KeyboardEvent;
 
-        if (keyboardEvent.keyCode === 13) {
-            this.setSameElementInTheWantedRow(keyboardEvent, !keyboardEvent.shiftKey);
+        if (keyboardEvent.key === 'Enter') {
+            this.setSameElementInTheWantedRow(
+                keyboardEvent,
+                !keyboardEvent.shiftKey
+            );
             return true;
         }
 
-        // TODO: Make it one function like in PepperiTextboxComponent
+        // TODO: Make it one function like in PepTextboxComponent
         if (
             /*[8, 9, 27, 13, 190].indexOf(keyboardEvent.keyCode) !== -1 ||*/
             // Allow: Ctrl+A
@@ -391,7 +467,8 @@ export class PepperiQuantitySelectorComponent implements OnChanges, OnInit, Afte
             (keyboardEvent.keyCode === 86 && keyboardEvent.ctrlKey === true) ||
             // Allow: Ctrl+X
             (keyboardEvent.keyCode === 88 &&
-                keyboardEvent.ctrlKey === true) /*||
+                keyboardEvent.ctrlKey ===
+                    true) /*||
             // Allow: home, end, left, right
             (keyboardEvent.keyCode >= 35 && keyboardEvent.keyCode <= 39)*/
         ) {

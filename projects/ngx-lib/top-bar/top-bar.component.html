@@ -1,0 +1,73 @@
+<div pepRtlDirection [hidden]="isHidden" class="top-bar-container" [ngClass]="{ inline: inline }">
+    <div class="header-content">
+        <div class="main-layout">
+            <div class="content pep-border-bottom">
+                <div class="left-container spacing-element-negative pull-left flip">
+                    <ng-container *ngTemplateOutlet="listActionsTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="listChooserTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="leftContentTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="listTotalTemplate"></ng-container>
+                </div>
+                <div class="right-container spacing-element-negative pull-right flip">
+                    <ng-container *ngTemplateOutlet="rightContentTemplate"></ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div #footer *ngIf="!inline" class="footer" [hidden]="!showFooter"
+        [style.height.rem]="customizationService.footerHeight">
+        <div class="content pep-border-top">
+            <div #footerStartContent class="left-container spacing-element-negative pull-left flip">
+                <ng-content select="[footer-start-content]"></ng-content>
+            </div>
+            <div #footerEndContent class="right-container spacing-element-negative pull-right flip">
+                <ng-content select="[footer-end-content]"></ng-content>
+            </div>
+        </div>
+        <ng-container *ngIf="showFooter && screenSize >= PepScreenSizeType.MD; then footerBlock; else noFooterBlock">
+        </ng-container>
+        <ng-template #footerBlock>
+            {{ customizationService.showFooter() }}
+        </ng-template>
+        <ng-template #noFooterBlock>
+            {{ customizationService.hideFooter() }}
+        </ng-template>
+    </div>
+
+</div>
+
+<ng-template #listActionsTemplate>
+    <ng-content select="pep-list-actions"></ng-content>
+</ng-template>
+
+<ng-template #titleTemplate>
+    <div *ngIf="title?.length > 0" class="spacing-element title pull-left flip">
+        <span [title]="title">{{ title }}</span>
+    </div>
+</ng-template>
+
+<ng-template #listChooserTemplate>
+    <div class="pull-left flip">
+        <ng-content select="pep-list-chooser"></ng-content>
+    </div>
+</ng-template>
+
+<ng-template #leftContentTemplate>
+    <div class="pull-left flip">
+        <ng-content select="[header-start-content]"></ng-content>
+    </div>
+</ng-template>
+
+<ng-template #listTotalTemplate>
+    <div class="pull-left flip">
+        <ng-content select="pep-list-total"></ng-content>
+    </div>
+</ng-template>
+
+<ng-template #rightContentTemplate>
+    <div class="pull-right flip">
+        <ng-content select="[header-end-content]"></ng-content>
+    </div>
+</ng-template>

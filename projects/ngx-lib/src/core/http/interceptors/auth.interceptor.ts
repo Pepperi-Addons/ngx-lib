@@ -1,150 +1,129 @@
-import { Injectable } from '@angular/core';
-import {
-    HttpEvent,
-    HttpInterceptor,
-    HttpHandler,
-    HttpRequest,
-    HttpErrorResponse
-} from '@angular/common/http';
-import { throwError, Observable, BehaviorSubject, of } from 'rxjs';
-import { catchError, filter, finalize, take, switchMap } from 'rxjs/operators';
-import { SessionService } from '../../common/services/session.service';
+// import { Injectable } from '@angular/core';
+// import {
+//     HttpEvent,
+//     HttpInterceptor,
+//     HttpHandler,
+//     HttpRequest,
+//     HttpErrorResponse
+// } from '@angular/common/http';
+// import { throwError, Observable, BehaviorSubject, of } from 'rxjs';
+// import { catchError, filter, finalize, take, switchMap } from 'rxjs/operators';
+// import { SessionService } from '../../common/services/session.service';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-    private AUTH_HEADER = 'Authorization';
-    private PEPPERI_TOKEN_HEADER = 'PepperiSessionToken';
-    private PEPPERI_CONSUMER_KEY_HEADER = 'X-Pepperi-ConsumerKey';
+// @Injectable()
+// export class AuthInterceptor implements HttpInterceptor {
+//     private AUTH_HEADER = 'Authorization';
+//     private PEPPERI_TOKEN_HEADER = 'PepperiSessionToken';
 
-    // private SESSION_TOKEN_KEY = 'auth_token';
-    // private token = 'secrettoken';
-    // private refreshTokenInProgress = false;
-    // private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+//     // private SESSION_TOKEN_KEY = 'auth_token';
+//     // private token = 'secrettoken';
+//     // private refreshTokenInProgress = false;
+//     // private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    constructor(private sessionService: SessionService) {}
+//     constructor(private sessionService: SessionService) {}
 
-    // Add authorization token if the token exist.
-    private addAuthorizationToken(request: HttpRequest<any>): HttpRequest<any> {
-        if (!request.headers.has(this.AUTH_HEADER)) {
-            const idpToken = this.sessionService.getIdpToken();
+//     // Add authorization token if the token exist.
+//     private addAuthorizationToken(request: HttpRequest<any>): HttpRequest<any> {
+//         if (!request.headers.has(this.AUTH_HEADER)) {
+//             const idpToken = this.sessionService.getIdpToken();
 
-            if (idpToken) {
-                request = request.clone({
-                    headers: request.headers.set(this.AUTH_HEADER, `Bearer ${idpToken}`)
-                });
-            }
-        }
+//             if (idpToken) {
+//                 request = request.clone({
+//                     headers: request.headers.set(this.AUTH_HEADER, `Bearer ${idpToken}`)
+//                 });
+//             }
+//         }
 
-        return request;
-    }
+//         return request;
+//     }
 
-    // Add pepperi consumer token if calling to papi domain.
-    private addPepperiConsumerToken(request: HttpRequest<any>): HttpRequest<any> {
-        if (!request.headers.has(this.PEPPERI_CONSUMER_KEY_HEADER)) {
-            const papiBaseUrl = this.sessionService.getPapiBaseUrl();
+//     // Add web api token if calling to wapi domain.
+//     private addWebApiToken(request: HttpRequest<any>): HttpRequest<any> {
+//         if (!request.headers.has(this.PEPPERI_TOKEN_HEADER)) {
+//             const wapiBaseUrl = this.sessionService.getWapiBaseUrl();
 
-            if (papiBaseUrl && request.url.match(new RegExp(papiBaseUrl, 'g'))) {
-                const pepperiConsumerToken = this.sessionService.getPepperiConsumerToken();
-                if (pepperiConsumerToken) {
-                    request = request.clone({
-                        headers: request.headers.set(this.PEPPERI_CONSUMER_KEY_HEADER, pepperiConsumerToken)
-                    });
-                }
-            }
-        }
+//             if (wapiBaseUrl && request.url.match(new RegExp(wapiBaseUrl, 'g'))) {
+//                 const webApiToken = this.sessionService.getWapiToken();
+//                 if (webApiToken) {
+//                     request = request.clone({
+//                         headers: request.headers.set(this.PEPPERI_TOKEN_HEADER, webApiToken)
+//                     });
+//                 }
+//             }
+//         }
 
-        return request;
-    }
+//         return request;
+//     }
 
-    // Add web api token if calling to wapi domain.
-    private addWebApiToken(request: HttpRequest<any>): HttpRequest<any> {
-        if (!request.headers.has(this.PEPPERI_TOKEN_HEADER)) {
-            const wapiBaseUrl = this.sessionService.getWapiBaseUrl();
+//     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+//         console.warn('AuthInterceptor');
 
-            if (wapiBaseUrl && request.url.match(new RegExp(wapiBaseUrl, 'g'))) {
-                const webApiToken = this.sessionService.gettWapiToken();
-                if (webApiToken) {
-                    request = request.clone({
-                        headers: request.headers.set(this.PEPPERI_TOKEN_HEADER, webApiToken)
-                    });
-                }
-            }
-        }
+//         // Add content type
+//         if (!req.headers.has('Content-Type')) {
+//             req = req.clone({
+//                 headers: req.headers.set('Content-Type', 'application/json')
+//             });
+//         }
 
-        return request;
-    }
+//         req = this.addAuthorizationToken(req);
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.warn('AuthInterceptor');
+//         req = this.addWebApiToken(req);
 
-        // Add content type
-        if (!req.headers.has('Content-Type')) {
-            req = req.clone({
-                headers: req.headers.set('Content-Type', 'application/json')
-            });
-        }
+//         return next.handle(req);
 
-        req = this.addAuthorizationToken(req);
+//         // TODO: Check if we need this - this is an advance code that try to refresh the token in case of expired.
+//         // return next.handle(req).pipe(
+//         //     catchError((error: HttpErrorResponse) => {
+//         //         if (error && error.status === 401) {
+//         //             // 401 errors are most likely going to be because we have an expired token that we need to refresh.
+//         //             if (this.refreshTokenInProgress) {
+//         //                 // If refreshTokenInProgress is true, we will wait until refreshTokenSubject has a non-null value
+//         //                 // which means the new token is ready and we can retry the request again
+//         //                 return this.refreshTokenSubject.pipe(
+//         //                     filter(result => result !== null),
+//         //                     take(1),
+//         //                     switchMap(() => next.handle(this.addAuthenticationToken(req)))
+//         //                 );
+//         //             } else {
+//         //                 this.refreshTokenInProgress = true;
 
-        req = this.addPepperiConsumerToken(req);
+//         //                 // Set the refreshTokenSubject to null so that subsequent API calls will
+//         //                 // wait until the new token has been retrieved
+//         //                 this.refreshTokenSubject.next(null);
 
-        req = this.addWebApiToken(req);
+//         //                 return this.refreshAccessToken().pipe(
+//         //                     switchMap((success: boolean) => {
+//         //                         this.refreshTokenSubject.next(success);
+//         //                         return next.handle(this.addAuthenticationToken(req));
+//         //                     }),
+//         //                     // When the call to refreshToken completes we reset the refreshTokenInProgress to false
+//         //                     // for the next time the token needs to be refreshed
+//         //                     finalize(() => (this.refreshTokenInProgress = false))
+//         //                 );
+//         //             }
+//         //         } else {
+//         //             return throwError(error);
+//         //         }
+//         //     })
+//         // );
+//     }
 
-        return next.handle(req);
+//     // private refreshAccessToken(): Observable<any> {
+//     //     return of('secret token');
+//     // }
 
-        // TODO: Check if we need this - this is an advance code that try to refresh the token in case of expired.
-        // return next.handle(req).pipe(
-        //     catchError((error: HttpErrorResponse) => {
-        //         if (error && error.status === 401) {
-        //             // 401 errors are most likely going to be because we have an expired token that we need to refresh.
-        //             if (this.refreshTokenInProgress) {
-        //                 // If refreshTokenInProgress is true, we will wait until refreshTokenSubject has a non-null value
-        //                 // which means the new token is ready and we can retry the request again
-        //                 return this.refreshTokenSubject.pipe(
-        //                     filter(result => result !== null),
-        //                     take(1),
-        //                     switchMap(() => next.handle(this.addAuthenticationToken(req)))
-        //                 );
-        //             } else {
-        //                 this.refreshTokenInProgress = true;
-
-        //                 // Set the refreshTokenSubject to null so that subsequent API calls will
-        //                 // wait until the new token has been retrieved
-        //                 this.refreshTokenSubject.next(null);
-
-        //                 return this.refreshAccessToken().pipe(
-        //                     switchMap((success: boolean) => {
-        //                         this.refreshTokenSubject.next(success);
-        //                         return next.handle(this.addAuthenticationToken(req));
-        //                     }),
-        //                     // When the call to refreshToken completes we reset the refreshTokenInProgress to false
-        //                     // for the next time the token needs to be refreshed
-        //                     finalize(() => (this.refreshTokenInProgress = false))
-        //                 );
-        //             }
-        //         } else {
-        //             return throwError(error);
-        //         }
-        //     })
-        // );
-    }
-
-    // private refreshAccessToken(): Observable<any> {
-    //     return of('secret token');
-    // }
-
-    // private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {
-    //     // If we do not have a token yet then we should not set the header.
-    //     // Here we could first retrieve the token from where we store it.
-    //     if (!this.token) {
-    //         return request;
-    //     }
-    //     // If you are calling an outside domain then do not add the token.
-    //     if (!request.url.match(/www.mydomain.com\//)) {
-    //         return request;
-    //     }
-    //     return request.clone({
-    //         headers: request.headers.set(this.AUTH_HEADER, `Bearer ${this.token}`)
-    //     });
-    // }
-}
+//     // private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {
+//     //     // If we do not have a token yet then we should not set the header.
+//     //     // Here we could first retrieve the token from where we store it.
+//     //     if (!this.token) {
+//     //         return request;
+//     //     }
+//     //     // If you are calling an outside domain then do not add the token.
+//     //     if (!request.url.match(/www.mydomain.com\//)) {
+//     //         return request;
+//     //     }
+//     //     return request.clone({
+//     //         headers: request.headers.set(this.AUTH_HEADER, `Bearer ${this.token}`)
+//     //     });
+//     // }
+// }

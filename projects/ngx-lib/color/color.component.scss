@@ -2,11 +2,11 @@
 :host {
     display: grid;
 }
-.pepperi-color-container {
-    .pepperi-color {
+.pepperi-color-container, .pep-color-container {
+    .pepperi-color, .pep-color {
         padding: 0;
         display: grid;
-        
+
         .btn-edit {
             width: $form-field-button-size;
             min-width: unset;
@@ -18,7 +18,7 @@
     }
 
     &.right-alignment {
-        .pepperi-color {
+        .pepperi-color, .pep-color {
             .btn-edit {
                 justify-self: start;
             }

@@ -76,23 +76,44 @@ export enum FIELD_TYPE {
     'RichTextHTML' = 56 // Html Text
 }
 
+export enum X_ALIGNMENT_TYPE {
+    None = 0,
+    Left = 1,
+    Right = 2,
+    Center = 3,
+}
+
+export enum Y_ALIGNMENT_TYPE {
+    None = 0,
+    Top = 1,
+    Bottom = 2,
+    Center = 3,
+}
+
 export class FieldLayout {
     X: number;
     Width: number;
-    XAlignment: number;
-    Y: number;
+    XAlignment: X_ALIGNMENT_TYPE;
+    Y: Y_ALIGNMENT_TYPE;
     Height: number;
-    YAlignment: number;
+    YAlignment: Y_ALIGNMENT_TYPE;
     LineNumber: number;
 
-    constructor(x = 0, width = 1, xAlignment = 1, y = 0, height = 1, yAlignment = 1, lineNumber = 1) {
-        this.X = x;
-        this.Width = width;
-        this.XAlignment = xAlignment;
-        this.Y = y;
-        this.Height = height;
-        this.YAlignment = yAlignment;
-        this.LineNumber = lineNumber;
+    // constructor(
+    //     x = 0,
+    //     width = 1,
+    //     xAlignment: X_ALIGNMENT_TYPE = 1, y: Y_ALIGNMENT_TYPE = 0, height = 1, yAlignment = 1, lineNumber = 1) {
+    //     this.X = x;
+    //     this.Width = width;
+    //     this.XAlignment = xAlignment;
+    //     this.Y = y;
+    //     this.Height = height;
+    //     this.YAlignment = yAlignment;
+    //     this.LineNumber = lineNumber;
+    // }
+
+    constructor(data: Partial<FieldLayout>) {
+        Object.assign(this, data);
     }
 }
 
@@ -110,6 +131,7 @@ export class UIControlField {
     MinValue: number;
     MaxValue: number;
     MaxCharacters: number;
+    MaxFieldCharacters: number;
     MaxLines: number;
     Layout: FieldLayout; // { X: number; Height: number; Y: number; Width: number; XAlignment: number; YAlignment: number };
     ColumnWidth: number;
@@ -160,7 +182,7 @@ export class ObjectsDataRow {
     BackgroundColor: string;
     IsSelectableForActions = true;
     IsEditable = true;
-    ExtraInfo: Map<string, string>;
+    ExtraInfo: Array<{ Key: string, Value: string}>;
     MainAction: string;
 }
 
@@ -223,14 +245,16 @@ export interface KeyValuePair<T> {
     Value: T;
 }
 
-export class PepperiFieldData {
+export class PepFieldData {
     ApiName: string;
+    Enabled?: boolean;
     Value: string;
     FormattedValue?: string;
     FieldType: FIELD_TYPE;
+    ReadOnly?: boolean;
     ColumnWidth: number;
     ColumnWidthType?: number;
-    XAlignment: number;
+    XAlignment: X_ALIGNMENT_TYPE;
     Title: string;
     AdditionalValue?: string;
     OptionalValues?: any;
@@ -238,26 +262,30 @@ export class PepperiFieldData {
     constructor(
         options: {
             ApiName?: string;
+            Enabled?: boolean;
             Value?: string;
             FormattedValue?: string;
             FieldType?: FIELD_TYPE;
+            ReadOnly?: boolean;
             ColumnWidth?: number;
             ColumnWidthType?: number;
-            XAlignment?: number;
+            XAlignment?: X_ALIGNMENT_TYPE;
             Title?: string;
         } = {}
     ) {
         this.ApiName = options.ApiName;
+        this.Enabled = !!options.Enabled;
         this.Value = options.Value;
         this.FormattedValue = options.FormattedValue || '';
         this.FieldType = options.FieldType;
+        this.ReadOnly = !!options.ReadOnly;
         this.ColumnWidth = options.ColumnWidth;
         this.ColumnWidthType = options.ColumnWidthType;
-        this.XAlignment = options.XAlignment;
+        this.XAlignment = options.XAlignment || X_ALIGNMENT_TYPE.Left;
         this.Title = options.Title || '';
     }
 }
 
-export class PepperiRowData {
-    Fields: PepperiFieldData[];
+export class PepRowData {
+    Fields: PepFieldData[];
 }

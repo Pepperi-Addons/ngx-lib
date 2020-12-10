@@ -1,6 +1,0 @@
-/*
- * Public API Surface of ngx-lib/image
- */
-export * from './image.module';
-export * from './image.component';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvaW1hZ2UvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUNILGNBQWMsZ0JBQWdCLENBQUM7QUFDL0IsY0FBYyxtQkFBbUIsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXHJcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBuZ3gtbGliL2ltYWdlXHJcbiAqL1xyXG5leHBvcnQgKiBmcm9tICcuL2ltYWdlLm1vZHVsZSc7XHJcbmV4cG9ydCAqIGZyb20gJy4vaW1hZ2UuY29tcG9uZW50JztcclxuIl19

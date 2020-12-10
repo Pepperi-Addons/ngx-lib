@@ -1,27 +1,24 @@
 @import '../src/core/style/abstracts/variables';
 
-@mixin pepperi-color-picker-component-theme($pepperi-theme) {
-    .pepperi-color-picker-container {
-
-        .mat-dialog-content {
-        }
+@mixin pep-color-picker-component-theme($pepperi-theme) {
+    .pepperi-color-picker-container, .pep-color-picker-container {
 
         .color-chooser-content {
-            
+
             .current-color {
-                
+
             }
 
             .current-hue {
                 .mat-slider {
                     .mat-slider-wrapper {
-                        background: linear-gradient(to right, 
-                            hsl(0, 100%, 50%) 0%, 
-                            hsl(60, 100%, 50%) 17%, 
-                            hsl(120, 100%, 50%) 33%, 
-                            hsl(180, 100%, 50%) 50%, 
-                            hsl(240, 100%, 50%) 67%, 
-                            hsl(300, 100%, 50%) 83%, 
+                        background: linear-gradient(to right,
+                            hsl(0, 100%, 50%) 0%,
+                            hsl(60, 100%, 50%) 17%,
+                            hsl(120, 100%, 50%) 33%,
+                            hsl(180, 100%, 50%) 50%,
+                            hsl(240, 100%, 50%) 67%,
+                            hsl(300, 100%, 50%) 83%,
                             hsl(360, 100%, 50%) 100%);
                     }
                 }
@@ -31,8 +28,8 @@
                 &.success {
                     .mat-slider {
                         .mat-slider-wrapper {
-                            background: linear-gradient(to right, 
-                                hsl(70, 100%, 50%) 0%, 
+                            background: linear-gradient(to right,
+                                hsl(70, 100%, 50%) 0%,
                                 hsl(150, 100%, 50%) 100%);
                         }
                     }
@@ -40,8 +37,8 @@
                 &.caution {
                     .mat-slider {
                         .mat-slider-wrapper {
-                            background: linear-gradient(to right, 
-                                hsl(340, 100%, 50%) 0%, 
+                            background: linear-gradient(to right,
+                                hsl(340, 100%, 50%) 0%,
                                 hsl(20, 100%, 50%) 100%);
                         }
                     }
@@ -51,8 +48,8 @@
             .current-saturation {
                 .mat-slider {
                     .mat-slider-wrapper {
-                        background: linear-gradient(to right, 
-                            hsl(var(--pep-color-picker-current-hue), 0.01%, 50%) 0%, 
+                        background: linear-gradient(to right,
+                            hsl(var(--pep-color-picker-current-hue), 0.01%, 50%) 0%,
                             hsl(var(--pep-color-picker-current-hue), 100%, 50%) 100%);
                     }
                 }
@@ -62,8 +59,8 @@
                 &.success {
                     .mat-slider {
                         .mat-slider-wrapper {
-                            background: linear-gradient(to right, 
-                                hsl(var(--pep-color-picker-current-hue), 50%, 50%) 50%, 
+                            background: linear-gradient(to right,
+                                hsl(var(--pep-color-picker-current-hue), 50%, 50%) 50%,
                                 hsl(var(--pep-color-picker-current-hue), 100%, 50%) 100%);
                         }
                     }
@@ -71,8 +68,8 @@
                 &.caution {
                        .mat-slider {
                         .mat-slider-wrapper {
-                            background: linear-gradient(to right, 
-                                hsl(var(--pep-color-picker-current-hue), 75%, 50%) 75%, 
+                            background: linear-gradient(to right,
+                                hsl(var(--pep-color-picker-current-hue), 75%, 50%) 75%,
                                 hsl(var(--pep-color-picker-current-hue), 100%, 50%) 100%);
                         }
                     }
@@ -82,9 +79,9 @@
             .current-lightness {
                 .mat-slider {
                     .mat-slider-wrapper {
-                        background: linear-gradient(to right, 
-                            hsl(var(--pep-color-picker-current-hue), 100%, 100%) 0%, 
-                            hsl(var(--pep-color-picker-current-hue), 100%, 50%) 50%, 
+                        background: linear-gradient(to right,
+                            hsl(var(--pep-color-picker-current-hue), 100%, 100%) 0%,
+                            hsl(var(--pep-color-picker-current-hue), 100%, 50%) 50%,
                             hsl(var(--pep-color-picker-current-hue), 100%, 0.01%) 100%);
                     }
                 }
@@ -92,9 +89,9 @@
                 &.main {
                     .mat-slider {
                         .mat-slider-wrapper {
-                            background: linear-gradient(to right, 
-                                hsl(var(--pep-color-picker-current-hue), 100%, 10%) 0%, 
-                                hsl(var(--pep-color-picker-current-hue), 100%, 5%) 5%, 
+                            background: linear-gradient(to right,
+                                hsl(var(--pep-color-picker-current-hue), 100%, 10%) 0%,
+                                hsl(var(--pep-color-picker-current-hue), 100%, 5%) 5%,
                                 hsl(var(--pep-color-picker-current-hue), 100%, 0.01%) 10%);
                         }
                     }
@@ -102,9 +99,9 @@
                 &.success {
                     .mat-slider {
                         .mat-slider-wrapper {
-                            background: linear-gradient(to right, 
-                                hsl(var(--pep-color-picker-current-hue), 100%, 65%) 10%, 
-                                hsl(var(--pep-color-picker-current-hue), 100%, 35%) 35%, 
+                            background: linear-gradient(to right,
+                                hsl(var(--pep-color-picker-current-hue), 100%, 65%) 10%,
+                                hsl(var(--pep-color-picker-current-hue), 100%, 35%) 35%,
                                 hsl(var(--pep-color-picker-current-hue), 100%, 10%) 65%);
                         }
                     }
@@ -112,9 +109,9 @@
                 &.caution {
                     .mat-slider {
                         .mat-slider-wrapper {
-                            background: linear-gradient(to right, 
-                                hsl(var(--pep-color-picker-current-hue), 100%, 75%) 25%, 
-                                hsl(var(--pep-color-picker-current-hue), 100%, 50%) 50%, 
+                            background: linear-gradient(to right,
+                                hsl(var(--pep-color-picker-current-hue), 100%, 75%) 25%,
+                                hsl(var(--pep-color-picker-current-hue), 100%, 50%) 50%,
                                 hsl(var(--pep-color-picker-current-hue), 100%, 25%) 75%);
                         }
                     }
@@ -127,7 +124,7 @@
                 .color-complient {
                     .mat-icon {
                         .svg-icon {
-                            fill: get-pepperi-color($pepperi-theme, color-text, color-invert);
+                            fill: get-pep-color($pepperi-theme, color-text, color-invert);
                         }
                     }
                 }
@@ -135,8 +132,8 @@
         }
 
         .mat-slider {
-            background: get-pepperi-color($pepperi-theme, color-system-primary, color-tran-30);
-            
+            background: get-pep-color($pepperi-theme, color-system-primary, color-tran-30);
+
             &.mat-slider-horizontal {
                 height: 1rem;
                 width: 100%;
@@ -156,7 +153,7 @@
                 .mat-slider-track-wrapper {
                     display: none;
                 }
-                
+
                 .mat-slider-ticks-container {
                     // Not in use.
                 }
@@ -173,10 +170,10 @@
                         right: $sliderSize / 2 * -1;
                         bottom: $sliderSize / 2 * -1;
                         transform: scale(.7) !important;
-                        border-color: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base); //get-pepperi-color($pepperi-theme, color-system-primary, color-tran-50);
+                        border-color: get-pep-color($pepperi-theme, color-system-primary-invert, color-base); //get-pep-color($pepperi-theme, color-system-primary, color-tran-50);
                         border-width: 5px;
                         background-color: transparent !important;
-                        box-shadow: 0 0 0 $spacing-2xs get-pepperi-color($pepperi-theme, color-text, color-link-focus);
+                        box-shadow: 0 0 0 $spacing-2xs get-pep-color($pepperi-theme, color-text, color-link-focus);
                         // .default-theme .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb
                     }
                 }

@@ -11,12 +11,12 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepIconModule, PepIconRegistry, pepIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
+import { PepTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
-import { PepperiDateComponent } from './date.component';
+import { PepDateComponent } from './date.component';
 
 @NgModule({
     imports: [
@@ -33,19 +33,19 @@ import { PepperiDateComponent } from './date.component';
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule,
-        PepperiTextboxIconModule,
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule,
+        PepTextboxIconModule,
     ],
-    exports: [ PepperiDateComponent ],
-    declarations: [ PepperiDateComponent ],
+    exports: [ PepDateComponent ],
+    declarations: [ PepDateComponent ],
 })
-export class PepperiDateModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemEdit
+export class PepDateModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemEdit
         ]);
     }
 }

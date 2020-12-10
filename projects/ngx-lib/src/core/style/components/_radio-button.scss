@@ -3,7 +3,7 @@
 // -----------------------------------------------------
 //  Override material style
 // -----------------------------------------------------
-.pepperi-radio-button {
+.pepperi-radio-button, .pep-radio-button {
     &.mat-radio-button {
         .mat-radio-container,
         .mat-radio-outer-circle,
@@ -24,8 +24,8 @@
     }
 }
 
-@mixin pepperi-radio-button-theme($pepperi-theme) {
-    .pepperi-radio-button {
+@mixin pep-radio-button-theme($pepperi-theme) {
+    .pepperi-radio-button, .pep-radio-button {
         &.mat-radio-button {
             .mat-radio-inner-circle,
             .mat-radio-outer-circle {
@@ -50,12 +50,12 @@
             &.mat-radio-checked {
                 .mat-radio-inner-circle {
                     border: unset;
-                    background: get-pepperi-color($pepperi-theme, color-system-primary, color-flat-l-10);
+                    background: get-pep-color($pepperi-theme, color-system-primary, color-flat-l-10);
                 }
 
                 .mat-radio-outer-circle {
                     @include state-regular-active($pepperi-theme, true);
-                    background: get-pepperi-color($pepperi-theme, color-system-primary, color-flat-r-30);
+                    background: get-pep-color($pepperi-theme, color-system-primary, color-flat-r-30);
                 }
 
                 &:hover {
@@ -64,7 +64,7 @@
                     }
 
                     .mat-radio-inner-circle {
-                        background: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                        background: get-pep-color($pepperi-theme, color-text, color-dimmed);
                     }
                 }
             }
@@ -78,7 +78,7 @@
                     }
 
                     .mat-radio-inner-circle {
-                        background: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                        background: get-pep-color($pepperi-theme, color-text, color-dimmed);
                     }
                 }
 
@@ -99,7 +99,7 @@
                 pointer-events: none;
 
                 .mat-radio-inner-circle {
-                    background: get-pepperi-color($pepperi-theme, color-text, color-disabled);
+                    background: get-pep-color($pepperi-theme, color-text, color-disabled);
                 }
 
                 .mat-radio-outer-circle {

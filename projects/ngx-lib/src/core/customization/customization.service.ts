@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { SessionService } from '../common/services/session.service';
-import { LAYOUT_TYPE, STYLE_TYPE } from './customization.model';
+import { FileService } from '../common/services/file.service';
+import { PepStyleType, PepFieldBase } from './customization.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CustomizationService {
-    static STAND_ALONE_FIELD_CLASS_NAME = 'pepperi-field';
+    static STAND_ALONE_FIELD_CLASS_NAME = 'pep-field';
 
     static REM_STRING = 'rem';
     static PX_STRING = 'px';
@@ -19,8 +20,21 @@ export class CustomizationService {
     // Header height
     static HEADER_HEIGHT_KEY = '--pep-header-height';
 
-    // Footer height
+    // Side bar variables keys
+    static SIDE_BAR_WIDTH_KEY = '--pep-side-bar-width';
+
+    // Settings width
+    static SETTINGS_WIDTH_KEY = '--pep-settings-bar-width';
+
+    // Top bar variables keys
+    static TOP_BAR_SPACING_TOP_KEY = '--pep-top-bar-spacing-top';
+    static TOP_BAR_SPACING_BOTTOM_KEY = '--pep-top-bar-spacing-bottom';
+    static TOP_BAR_FIELD_HEIGHT_KEY = '--pep-top-bar-field-height';
+
+    // Footer variables keys
     static FOOTER_HEIGHT_KEY = '--pep-footer-bar-height';
+    static FOOTER_BAR_SPACING_TOP_KEY = '--pep-footer-bar-spacing-top';
+    static FOOTER_BAR_SPACING_BOTTOM_KEY = '--pep-footer-bar-spacing-bottom';
 
     // Main container height
     static MAIN_HEIGHT_KEY = '--pep-main-height';
@@ -47,7 +61,11 @@ export class CustomizationService {
 
     // Fonts variables keys
     static FONT_FAMILY_TITLE_KEY = '--pep-font-family-title';
+    static FONT_FAMILY_TITLE_NORMAL_URL_KEY = '--pep-font-family-title-normal-url';
+    static FONT_FAMILY_TITLE_BOLD_URL_KEY = '--pep-font-family-title-bold-url';
     static FONT_FAMILY_BODY_KEY = '--pep-font-family-body';
+    static FONT_FAMILY_BODY_NORMAL_URL_KEY = '--pep-font-family-body-normal-url';
+    static FONT_FAMILY_BODY_BOLD_URL_KEY = '--pep-font-family-body-bold-url';
 
     // Border radius variables keys
     static BORDER_RADIUS_KEY = '--pep-border-radius';
@@ -90,18 +108,6 @@ export class CustomizationService {
     static SPACING_SIZE_XL_KEY = '--pep-spacing-xl';
     static SPACING_SIZE_2XL_KEY = '--pep-spacing-2xl';
 
-    // Side bar variables keys
-    static SIDE_BAR_WIDTH_KEY = '--pep-side-bar-width';
-
-    // Top bar variables keys
-    static TOP_BAR_SPACING_TOP_KEY = '--pep-top-bar-spacing-top';
-    static TOP_BAR_SPACING_BOTTOM_KEY = '--pep-top-bar-spacing-bottom';
-    static TOP_BAR_FIELD_HEIGHT_KEY = '--pep-top-bar-field-height';
-
-    // Footer variables keys
-    static FOOTER_BAR_SPACING_TOP_KEY = '--pep-footer-bar-spacing-top';
-    static FOOTER_BAR_SPACING_BOTTOM_KEY = '--pep-footer-bar-spacing-bottom';
-
     // Form variables keys
     static FORM_FIELD_HEIGHT_KEY = '--pep-form-field-height';
     static FORM_FIELD_TITLE_HEIGHT_KEY = '--pep-form-field-title-height';
@@ -129,74 +135,21 @@ export class CustomizationService {
     public customHeaderHeight = CustomizationService.DEFAULT_HEADER_HEIGHT;
     public mainContHeight = 0;
     public footerHeight = new BehaviorSubject<number>(0);
+    public settingsWidth = new BehaviorSubject<number>(0);
 
     constructor(
         private sessionService: SessionService,
+        private fileService: FileService,
         public fb: FormBuilder) { }
 
-    getValidatorsForField(required: boolean, readonly: boolean, disabled: boolean,
-                          maxFieldCharacters: number, type: string, isCheckbox = false,
-                          minValue = NaN, maxValue = NaN): Array<any> {
-        const validators = [];
-
-        if (required && !readonly && !disabled) {
-            if (isCheckbox) {
-                validators.push(Validators.requiredTrue);
-            } else {
-                validators.push(Validators.required);
-            }
-        } else {
-            validators.push(Validators.nullValidator);
-        }
-
-        if (maxFieldCharacters > 0) {
-            validators.push(Validators.maxLength(maxFieldCharacters));
-        }
-
-        if (type === 'email') {
-            validators.push(
-                Validators.pattern(
-                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                )
-            );
-        } else if (type === 'phone') {
-            validators.push(Validators.pattern(/^[\d\.\-\+\(\)\*\#]+$/));
-        } else if (type === 'int' || type === 'real') {
-            validators.push(Validators.pattern(/^[\.,\-\+\d]+$/));
-
-            if (!isNaN(minValue)) {
-                validators.push(Validators.min(minValue));
-            }
-
-            if (!isNaN(maxValue)) {
-                validators.push(Validators.max(maxValue));
-            }
-        }
-
-        return validators;
-    }
-
-    getDefaultFromGroup(
-        key: string,
-        value: string,
-        required: boolean,
-        readonly: boolean,
-        disabled: boolean,
-        maxFieldCharacters: number = 0,
-        type: string = '',
-        isCheckbox = false,
-        withValidators = true,
-        minValue = NaN,
-        maxValue = NaN
-    ): FormGroup {
-        const validators = withValidators ?
-            this.getValidatorsForField(required, readonly, disabled, maxFieldCharacters, type, isCheckbox, minValue, maxValue) : [];
+    getDefaultFromGroup(field: PepFieldBase, withValidators = true): FormGroup {
+        const validators = withValidators ? field.getValidators() : [];
         const group = {};
-        group[key] = [{ value, disabled }, validators];
+        group[field.key] = [{ value: field.value, disabled: field.disabled }, validators];
         return this.fb.group(group);
     }
 
-    private getFormControl(form, fieldKey, parentFieldKey = null): any {
+    private getFormControl(form: FormGroup, fieldKey: string, parentFieldKey: string = null): any {
         let formControl = null;
 
         if (form && form.controls) {
@@ -210,15 +163,15 @@ export class CustomizationService {
         return formControl;
     }
 
-    updateFormFieldValue(form, fieldKey, value = '', parentFieldKey = null): void {
+    updateFormFieldValue(form: FormGroup, fieldKey: string, value = '', parentFieldKey: string = null): void {
         const formControl = this.getFormControl(form, fieldKey, parentFieldKey);
         if (formControl) {
             formControl.setValue(value);
         }
     }
 
-    updateFormField(form, field, value = '', parentField = null): void {
-        const formControl: FormControl = this.getFormControl(form, field.key, parentField);
+    updateFormField(form: FormGroup, field: PepFieldBase, value = '', parentField: PepFieldBase = null): void {
+        const formControl: FormControl = this.getFormControl(form, field.key, parentField?.key);
         if (formControl) {
             formControl.setValue(value);
 
@@ -226,8 +179,10 @@ export class CustomizationService {
             if (formControl.disabled !== field.disabled) {
                 field.disabled ? formControl.disable() : formControl.enable();
 
-                const validators = this.getValidatorsForField(field.required, field.readonly, field.disabled,
-                    field.maxFieldCharacters, field.type, field.controlType === 'checkbox');
+                // const validators = this.getValidatorsForField(field.required, field.readonly, field.disabled,
+                //     field.maxFieldCharacters, field.type, field.controlType === 'checkbox');
+
+                const validators = field.getValidators();
                 formControl.setValidators(validators);
             }
         }
@@ -271,14 +226,14 @@ export class CustomizationService {
         return fieldHeight;
     }
 
-    calculateFieldHeight(layoutType = LAYOUT_TYPE.PepperiForm, rowSpan, standAlone): string {
+    calculateFieldHeight(layoutType = 'form', rowSpan, standAlone): string {
         let fieldHeight = 'inherit'; // Default for card (with no title)
-        if (layoutType === LAYOUT_TYPE.PepperiTable) {
+        if (layoutType === 'table') {
             fieldHeight = this.getThemeVariable(CustomizationService.TABLE_FIELD_HEIGHT_KEY);
-        } else if (layoutType === LAYOUT_TYPE.PepperiCard) {
+        } else if (layoutType === 'card') {
             fieldHeight = this.calculateCardRowsHeight(rowSpan, !standAlone) + CustomizationService.REM_STRING;
         } else {
-            // PepperiForm
+            // Form
             fieldHeight = this.calculateFormFieldHeight(false, rowSpan, standAlone) + CustomizationService.REM_STRING;
         }
 
@@ -525,7 +480,7 @@ export class CustomizationService {
     }
 
     getDefaultThemeQSCustomizationVariables(themeVars: any): void {
-        const qsState = STYLE_TYPE.Regular;
+        const qsState: PepStyleType = 'regular';
         themeVars[CustomizationService.STYLE_QS_KEY] = qsState;
 
         themeVars[CustomizationService.COLOR_QS_KEY + '-h'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h)';
@@ -534,7 +489,7 @@ export class CustomizationService {
     }
 
     getDefaultThemeTopHeaderCustomizationVariables(themeVars: any): void {
-        const topHeaderState = STYLE_TYPE.Strong;
+        const topHeaderState: PepStyleType = 'strong';
         themeVars[CustomizationService.STYLE_TOP_HEADER_KEY] = topHeaderState;
 
         themeVars[CustomizationService.COLOR_TOP_HEADER_KEY + '-h'] = '';
@@ -614,8 +569,25 @@ export class CustomizationService {
 
         // tslint:disable-next-line: forin
         for (const key in themeVariables) {
-            document.documentElement.style.setProperty(key, themeVariables[key]);
+            if (this.isFontUrlKey(key)) {
+                this.fileService.loadFontStyle(key, themeVariables[key]);
+            } else {
+                document.documentElement.style.setProperty(key, themeVariables[key]);
+            }
         }
+    }
+
+    isFontUrlKey(key: string): boolean {
+        let res = false;
+
+        if ((key === CustomizationService.FONT_FAMILY_TITLE_NORMAL_URL_KEY) ||
+            (key === CustomizationService.FONT_FAMILY_TITLE_BOLD_URL_KEY) ||
+            (key === CustomizationService.FONT_FAMILY_BODY_NORMAL_URL_KEY) ||
+            (key === CustomizationService.FONT_FAMILY_BODY_BOLD_URL_KEY)) {
+            res = true;
+        }
+
+        return res;
     }
 
     getThemeVariable(key: string): string {
@@ -642,16 +614,21 @@ export class CustomizationService {
         }
     }
 
-    setFooterHeight(height): void {
-        const self = this;
+    private setFooterHeight(height): void {
         if (this.footerHeight.getValue() !== height) {
             // it is publishing this value to all the subscribers that have already subscribed to this message
-            setTimeout(() => self.footerHeight.next(height), 0);
+            setTimeout(() => {
+                this.footerHeight.next(height);
+            }, 0);
         }
         document.documentElement.style.setProperty(CustomizationService.FOOTER_HEIGHT_KEY, height + CustomizationService.REM_STRING);
     }
 
-    setDefaultFooterHeight(): void {
+    hideFooter(): void {
+        this.setFooterHeight(0);
+    }
+
+    showFooter(): void {
         const themeVars = this.getThemeVariables();
 
         const res =
@@ -660,6 +637,28 @@ export class CustomizationService {
             this.getNumberThemeVariable(themeVars, CustomizationService.TOP_BAR_FIELD_HEIGHT_KEY);
 
         this.setFooterHeight(res);
+    }
+
+    private setSettingsWidth(width): void {
+        if (this.settingsWidth.getValue() !== width) {
+            // it is publishing this value to all the subscribers that have already subscribed to this message
+            setTimeout(() => {
+                this.settingsWidth.next(width);
+            }, 0);
+        }
+        document.documentElement.style.setProperty(CustomizationService.SETTINGS_WIDTH_KEY, width + CustomizationService.REM_STRING);
+    }
+
+    hideSettings(): void {
+        this.setSettingsWidth(0);
+    }
+
+    showSettings(): void {
+        const themeVars = this.getThemeVariables();
+
+        const res = this.getNumberThemeVariable(themeVars, CustomizationService.SIDE_BAR_WIDTH_KEY);
+
+        this.setSettingsWidth(res);
     }
 
     getTopBarHeight(): number {

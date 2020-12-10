@@ -1,10 +1,12 @@
 import {
     Component, OnInit, OnChanges, Input, Output, EventEmitter,
-    ChangeDetectionStrategy, ElementRef, ViewChild, OnDestroy, Renderer2
+    ChangeDetectionStrategy, ElementRef, ViewChild, OnDestroy, Renderer2, TemplateRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { LAYOUT_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
-import { DialogService, DialogData, DialogDataType } from '@pepperi-addons/ngx-lib/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepTextareaField } from '@pepperi-addons/ngx-lib';
+import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
 
 @Component({
     selector: 'pep-textarea',
@@ -12,7 +14,7 @@ import { DialogService, DialogData, DialogDataType } from '@pepperi-addons/ngx-l
     styleUrls: ['./textarea.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PepperiTextareaComponent implements OnChanges, OnInit, OnDestroy {
+export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() label = '';
@@ -21,7 +23,7 @@ export class PepperiTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
     @Input() textColor = '';
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() lastFocusField: any;
 
@@ -30,16 +32,18 @@ export class PepperiTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
 
-    @ViewChild('input') input: ElementRef;
+    // @ViewChild('input') input: ElementRef;
+    @ViewChild('textAreaDialogTemplate', { read: TemplateRef }) textAreaDialogTemplate: TemplateRef<any>;
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     fieldHeight = '';
     standAlone = false;
     isInEditMode = false;
+
+    dialogRef: MatDialogRef<any>;
 
     constructor(
         private dialogService: DialogService,
@@ -52,8 +56,17 @@ export class PepperiTextareaComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            this.form = this.customizationService.getDefaultFromGroup(
-                this.key, this.value, this.required, this.readonly, this.disabled, this.maxFieldCharacters);
+            // this.form = this.customizationService.getDefaultFromGroup(
+            //     this.key, this.value, this.required, this.readonly, this.disabled, this.maxFieldCharacters);
+            const pepField = new PepTextareaField({
+                key: this.key,
+                value: this.value,
+                required: this.required,
+                readonly: this.readonly,
+                disabled: this.disabled,
+                maxFieldCharacters: this.maxFieldCharacters
+            });
+            this.form = this.customizationService.getDefaultFromGroup(pepField);
 
             this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
@@ -62,18 +75,17 @@ export class PepperiTextareaComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
-        const self = this;
         setTimeout(() => {
-            if (self.lastFocusField) {
-                self.lastFocusField.focus();
-                self.lastFocusField = null;
+            if (this.lastFocusField) {
+                this.lastFocusField.focus();
+                this.lastFocusField = null;
             }
         }, 100);
     }
 
     ngOnDestroy(): void {
-        if (this.valueChanged) {
-            this.valueChanged.unsubscribe();
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
         }
     }
 
@@ -92,7 +104,7 @@ export class PepperiTextareaComponent implements OnChanges, OnInit, OnDestroy {
         if (value !== this.value) {
             this.value = value;
             this.customizationService.updateFormFieldValue(this.form, this.key, value);
-            this.valueChanged.emit({ apiName: this.key, value, lastFocusedField });
+            this.valueChange.emit({ key: this.key, value, lastFocusedField });
         }
     }
 
@@ -101,26 +113,24 @@ export class PepperiTextareaComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     openDialog(): void {
-        // TODO:
-        const data = new DialogData({
-            title: this.label,
-            content: this.value,
-            contentType: DialogDataType.TextArea,
-            contentData: { key: this.key, disabled: this.disabled },
-            showFooter: true
-        });
-
         const config = this.dialogService.getDialogConfig({
-            maxWidth: '90vw',
-            maxHeight: '90vh'
-        });
+            // maxWidth: '90vw',
+            // maxHeight: '90vh'
+        }, 'regular');
 
-        const dialogRef = this.dialogService.openDefaultDialog(data, config);
+        this.dialogRef = this.dialogService.openDialog(
+            this.textAreaDialogTemplate,
+            {},
+            config);
 
-        dialogRef.afterClosed().subscribe(value => {
+        this.dialogRef.afterClosed().subscribe(value => {
             if (value !== undefined && value !== null) {
                 this.changeValue(value);
             }
         });
+    }
+
+    closeDialog(data: any = null): void {
+        this.dialogRef?.close(data);
     }
 }

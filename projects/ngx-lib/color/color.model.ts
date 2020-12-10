@@ -1,7 +1,1 @@
-
-export enum PepColorType {
-    AnyColor,
-    MainColor,
-    SuccessColor,
-    CautionColor
-}
+export type PepColorType = 'any' | 'main' | 'success' | 'caution';

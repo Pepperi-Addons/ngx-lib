@@ -1,0 +1,10 @@
+@import '../src/core/style/abstracts/variables';
+
+.total-items-container {
+    height: $top-bar-height-with-no-top;
+    display: flex;
+    align-items: center;
+    
+    // .total-items {
+    // }
+}

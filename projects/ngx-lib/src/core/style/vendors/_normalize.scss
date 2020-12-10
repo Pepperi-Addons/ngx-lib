@@ -19,8 +19,8 @@
 }
 
 html {
-    font-family: sans-serif; /* 1 */
-    line-height: 1.15; /* 2 */
+    // font-family: sans-serif; /* 1 */
+    // line-height: 1.15; /* 2 */
     -ms-text-size-adjust: 100%; /* 3 */
     -webkit-text-size-adjust: 100%; /* 3 */
 }
@@ -31,9 +31,17 @@ html {
 /**
  * Remove the margin in all browsers (opinionated).
  */
-
 body {
     margin: 0;
+}
+
+/**
+ * Init box sizing in all browsers (opinionated).
+ */
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /**
@@ -100,8 +108,8 @@ hr {
  */
 
 pre {
-    font-family: monospace, monospace; /* 1 */
-    font-size: 1em; /* 2 */
+    // font-family: monospace, monospace; /* 1 */
+    // font-size: 1em; /* 2 */
 }
 
 /* Text-level semantics
@@ -170,8 +178,8 @@ strong {
 code,
 kbd,
 samp {
-    font-family: monospace, monospace; /* 1 */
-    font-size: 1em; /* 2 */
+    // font-family: monospace, monospace; /* 1 */
+    // font-size: 1em; /* 2 */
 }
 
 /**
@@ -258,25 +266,9 @@ svg:not(:root) {
 }
 
 svg {
-    &.svg-icon {
-        height: inherit;
-        width: inherit;
-        display: inline-block;
-        fill: #fff;
-
-        &.spin-icon {
-            animation: spin 2s linear infinite;
-        }
-    }
-}
-
-.spin-icon {
-
-    svg {
-        &.svg-icon {
-            animation: spin 2s linear infinite;
-        }
-    }
+    height: inherit;
+    width: inherit;
+    display: inline-block;
 }
 
 /* Forms
@@ -357,6 +349,9 @@ fieldset {
     // border: 1px solid #c0c0c0;
     // margin: 0 2px;
     // padding: 0.35em 0.625em 0.75em;
+    border:unset;
+    padding: 0;
+    margin: 0;
 }
 
 /**

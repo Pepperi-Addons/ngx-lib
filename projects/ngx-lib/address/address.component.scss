@@ -11,7 +11,7 @@
     grid-column: 1 / span 3;
 }
 
-.pepperi-address-container {
+.pep-address-container {
     // padding: 0.75rem 1rem 0.5rem 1rem;
     padding: 0.875rem $spacing-md;
     border-radius: $border-radius-md;
@@ -42,7 +42,7 @@
 }
 
 @media screen and (max-width: 630px) {
-    // .pepperi-address-container {
+    // .pep-address-container {
     //     display: block;
     // }
 }

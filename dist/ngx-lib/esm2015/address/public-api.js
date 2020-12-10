@@ -1,6 +1,0 @@
-/*
- * Public API Surface of ngx-lib/address
- */
-export * from './address.module';
-export * from './address.component';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvYWRkcmVzcy9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBQ0gsY0FBYyxrQkFBa0IsQ0FBQztBQUNqQyxjQUFjLHFCQUFxQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIG5neC1saWIvYWRkcmVzc1xyXG4gKi9cclxuZXhwb3J0ICogZnJvbSAnLi9hZGRyZXNzLm1vZHVsZSc7XHJcbmV4cG9ydCAqIGZyb20gJy4vYWRkcmVzcy5jb21wb25lbnQnO1xyXG4iXX0=

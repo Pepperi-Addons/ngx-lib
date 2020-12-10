@@ -75,7 +75,7 @@ mat-select {
 }
 
 
-@mixin pepperi-select-theme($pepperi-theme) {
+@mixin pep-select-theme($pepperi-theme) {
     // -----------------------------------------------------
     //  Override material style
     // -----------------------------------------------------
@@ -84,7 +84,7 @@ mat-select {
 
         &.mat-select-disabled {
             .mat-select-value {
-                color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                color: get-pep-color($pepperi-theme, color-text, color-dimmed);
             }
         }
     }
@@ -95,13 +95,13 @@ mat-select {
         vertical-align: unset;
 
         .mat-select-arrow {
-            background: url(#../../../assets/symbol-defs.svg) no-repeat center center fixed;
+            // background: url(#../../../assets/symbol-defs.svg) no-repeat center center fixed;
             border-left: 1px solid Transparent;
             border-right: 0px solid Transparent;
             border-top: 0px solid Transparent;
 
             &:after {
-                color: get-pepperi-color($pepperi-theme, color-system-primary, color-base);
+                color: get-pep-color($pepperi-theme, color-system-primary, color-base);
             }
         }
     }
@@ -112,7 +112,7 @@ mat-select {
         }
 
         .mat-option {
-            background: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base);
+            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
 
             //&.mat-active,
             &:hover {
@@ -120,7 +120,7 @@ mat-select {
             }
             &:active {
                 @include state-weak-active($pepperi-theme, color-weak, false);
-                background: get-pepperi-color($pepperi-theme, color-weak, color-tran-50) !important;
+                background: get-pep-color($pepperi-theme, color-weak, color-tran-50) !important;
             }
             &:disabled {
                 @include state-weak-disable($pepperi-theme);
@@ -128,7 +128,7 @@ mat-select {
         }
         .mat-option.mat-selected {
             @include state-weak-default($pepperi-theme);
-            // box-shadow: get-pepperi-shadow($pepperi-theme, shadow-xs, soft);
+            // box-shadow: get-pep-shadow($pepperi-theme, shadow-xs, soft);
 
             //&.mat-active,
             &:hover {
@@ -136,7 +136,7 @@ mat-select {
             }
             &:active {
                 @include state-weak-active($pepperi-theme, color-weak, false);
-                background: get-pepperi-color($pepperi-theme, color-weak, color-tran-50) !important;
+                background: get-pep-color($pepperi-theme, color-weak, color-tran-50) !important;
             }
             &:disabled {
                 @include state-weak-disable($pepperi-theme);
@@ -160,7 +160,7 @@ mat-select {
         .mat-pseudo-checkbox.mat-pseudo-checkbox-checked,
         .mat-pseudo-checkbox.mat-pseudo-checkbox-indeterminate {
             @include state-regular-default($pepperi-theme, true);
-            @include inline(get-pepperi-color($pepperi-theme, color-system-primary, color-flat-r-10), 1px, solid, true);
+            @include inline(get-pep-color($pepperi-theme, color-system-primary, color-flat-r-10), 1px, solid, true);
 
             &:hover {
                 @include state-regular-hover($pepperi-theme, true);
@@ -174,7 +174,7 @@ mat-select {
         }
 
         .mat-pseudo-checkbox::after {
-            color: get-pepperi-color($pepperi-theme, color-text, color-main) !important;
+            color: get-pep-color($pepperi-theme, color-text, color-main) !important;
         }
     }
 }

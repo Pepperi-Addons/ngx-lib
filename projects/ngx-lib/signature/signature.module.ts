@@ -11,19 +11,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { SignaturePadModule } from 'angular2-signaturepad';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import {
-    PepperiIconModule,
-    PepperiIconRegistry,
-    pepperiIconSystemBin,
-    pepperiIconSystemSignature,
-    pepperiIconSystemClose
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemBin,
+    pepIconSystemSignature,
+    pepIconSystemClose
 } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
-import { PepperiFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
-import { PepperiDialogModule } from '@pepperi-addons/ngx-lib/dialog';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
+import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
-import { PepperiSignatureComponent } from './signature.component';
+import { PepSignatureComponent } from './signature.component';
 
 @NgModule({
     imports: [
@@ -39,22 +39,22 @@ import { PepperiSignatureComponent } from './signature.component';
         MatDialogModule,
         // External modules
         SignaturePadModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule,
-        PepperiFilesUploaderModule,
-        PepperiDialogModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule,
+        PepFilesUploaderModule,
+        PepDialogModule
     ],
-    exports: [ PepperiSignatureComponent ],
-    declarations: [ PepperiSignatureComponent ],
+    exports: [ PepSignatureComponent ],
+    declarations: [ PepSignatureComponent ],
 })
-export class PepperiSignatureModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemBin,
-            pepperiIconSystemSignature,
-            pepperiIconSystemClose
+export class PepSignatureModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemBin,
+            pepIconSystemSignature,
+            pepIconSystemClose
         ]);
     }
 }

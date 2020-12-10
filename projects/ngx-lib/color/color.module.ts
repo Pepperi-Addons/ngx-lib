@@ -10,18 +10,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 import {
-    PepperiIconModule,
-    PepperiIconRegistry,
-    pepperiIconSystemEdit,
-    pepperiIconSystemOk,
-    pepperiIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
-import { PepperiTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemEdit,
+    pepIconSystemOk,
+    pepIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 
-import { PepperiColorComponent } from './color.component';
-import { PepperiColorPickerComponent } from './color-picker.component';
+import { PepColorComponent } from './color.component';
+import { PepColorPickerComponent } from './color-picker.component';
 
 @NgModule({
     imports: [
@@ -36,21 +37,22 @@ import { PepperiColorPickerComponent } from './color-picker.component';
         MatDialogModule,
         MatIconModule,
         MatSliderModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule,
-        PepperiTextboxModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepDialogModule,
+        PepIconModule,
+        PepFieldTitleModule,
+        PepTextboxModule,
     ],
-    exports: [ PepperiColorComponent ],
-    declarations: [ PepperiColorComponent, PepperiColorPickerComponent ],
+    exports: [ PepColorComponent ],
+    declarations: [ PepColorComponent, PepColorPickerComponent ],
 })
-export class PepperiColorModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemEdit,
-            pepperiIconSystemOk,
-            pepperiIconSystemClose
+export class PepColorModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemEdit,
+            pepIconSystemOk,
+            pepIconSystemClose
         ]);
     }
 }

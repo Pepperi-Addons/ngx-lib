@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, Renderer2, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FileService, CustomizationService, LAYOUT_TYPE } from '@pepperi-addons/ngx-lib';
+import { FileService, CustomizationService, PepLayoutType, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepFieldClickedData, PepAttachmentField } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-attachment',
@@ -8,27 +9,26 @@ import { FileService, CustomizationService, LAYOUT_TYPE } from '@pepperi-addons/
     styleUrls: ['./attachment.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepperiAttachmentComponent implements OnInit, OnChanges, OnDestroy {
+export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
     @Input() src = '';
     @Input() label = '';
     @Input() required = false;
     @Input() disabled = false;
     @Input() readonly = false;
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
 
     controlType = 'attachment';
 
     @Input() form: FormGroup = null;
     @Input() showTitle = true;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() elementClicked: EventEmitter<any> = new EventEmitter<any>();
+    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     fieldHeight = '';
     standAlone = false;
     dataURI = null;
@@ -43,19 +43,28 @@ export class PepperiAttachmentComponent implements OnInit, OnChanges, OnDestroy 
         private fileService: FileService) { }
 
     ngOnDestroy(): void {
-        if (this.elementClicked) {
-            this.elementClicked.unsubscribe();
+        if (this.elementClick) {
+            this.elementClick.unsubscribe();
         }
 
-        if (this.valueChanged) {
-            this.valueChanged.unsubscribe();
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
         }
     }
 
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            this.form = this.customizationService.getDefaultFromGroup(this.key, this.src, this.required, this.readonly, this.disabled);
+
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.src, this.required, this.readonly, this.disabled);
+            const pepField = new PepAttachmentField({
+                key: this.key,
+                value: this.src,
+                required: this.required,
+                readonly: this.readonly,
+                disabled: this.disabled
+            });
+            this.form = this.customizationService.getDefaultFromGroup(pepField);
 
             this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
@@ -74,10 +83,10 @@ export class PepperiAttachmentComponent implements OnInit, OnChanges, OnDestroy 
         this.dataURI = value.length > 0 ? JSON.parse(value) : null;
         this.src = this.dataURI ? this.dataURI.fileStr : '';
         this.customizationService.updateFormFieldValue(this.form, this.key, this.dataURI ? this.dataURI.fileExt : '');
-        this.valueChanged.emit({ apiName: this.key, value, controlType: this.controlType });
+        this.valueChange.emit({ key: this.key, value, controlType: this.controlType });
     }
 
-    onFileClicked(event): void {
+    onFileClicked(event: PepFieldClickedData): void {
         if (this.dataURI != null) {
             const fileStrArr = this.dataURI.fileStr.split(';');
             if (fileStrArr.length === 2) {
@@ -95,6 +104,6 @@ export class PepperiAttachmentComponent implements OnInit, OnChanges, OnDestroy 
             }
         }
 
-        this.elementClicked.emit({ apiName: this.key, eventWhich: event.which });
+        this.elementClick.emit(event);
     }
 }

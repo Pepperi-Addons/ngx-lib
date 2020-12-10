@@ -10,7 +10,6 @@ export class CapitalizePipe implements PipeTransform {
         }
         return value;
     }
-
 }
 
 @Pipe({ name: 'encodePipe' })
@@ -86,9 +85,7 @@ export class SafeHtmlPipe implements PipeTransform {
     }
 }
 
-@Pipe({
-    name: 'safe'
-})
+@Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
     constructor(protected sanitizer: DomSanitizer) { }
 

@@ -19,20 +19,14 @@ $z-index-medium: 100;
 $z-index-low: 50;
 $z-index-lowest: 1;
 
-//  Screen size - General
+//  Screen size - General (flex layout breakpoints)
 // -----------------------------------------------------------------------------
 $screen-max-size-2xs: 460px;
-$screen-max-size-xs: 767px;
-$screen-max-size-sm: 991px;
-$screen-max-size-md: 1199px; 
-$screen-max-size-lg: 1366px; 
-$screen-max-size-xl: 1920px;
-// $screen-max-size-2xs: var(--pep-screen-max-size-2xs); // 460px;
-// $screen-max-size-xs: var(--pep-screen-max-size-xs); // 767px;
-// $screen-max-size-sm: var(--pep-screen-max-size-sm); // 991px;
-// $screen-max-size-md: var(--pep-screen-max-size-md); // 1199px; 
-// $screen-max-size-lg: var(--pep-screen-max-size-lg); // 1366px; 
-// $screen-max-size-xl: var(--pep-screen-max-size-xl); // 1920px;
+$screen-max-size-xs: 599px;
+$screen-max-size-sm: 959px;
+$screen-max-size-md: 1279px; 
+$screen-max-size-lg: 1919px; 
+$screen-max-size-xl: 5000px;
 
 // Fonts - General
 // -----------------------------------------------------------------------------
@@ -108,6 +102,11 @@ $main-height: var(--pep-main-height); // window.innerHeight - header
 //  Side bar
 // -----------------------------------------------------------------------------
 $side-layout-width: var(--pep-side-bar-width, 16rem);
+$settings-bar-width: var(--pep-settings-bar-width, 16rem);
+
+//  Dialogs
+// -----------------------------------------------------------------------------
+$dialog-header-height: 3rem;
 
 //  Top bar & Footer
 // -----------------------------------------------------------------------------

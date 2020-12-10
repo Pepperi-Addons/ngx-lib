@@ -6,29 +6,19 @@
 //  Layout - General
 // -----------------------------------------------------
 
-@include spacing-element();
-@include spacing-element-negative();
-
-// header {
-//     // @include spacing-element();
-//     // @include spacing-element-negative();
-// }
-
 aside {
-    // padding: 0 0 0 $double-content-padding;
-    z-index: $z-index-medium + 1;
+    z-index: $z-index-medium + 2 !important;
 
     .settings-bar-container {
         // position: fixed;
         z-index: $z-index-medium + 1;
-        // width: calc(#{$side-layout-width} - #{$double-content-padding});
-        width: $side-layout-width;
+        width: $settings-bar-width;
         padding: 0 0 0 $double-content-padding;
 
         .header-content {
             z-index: $z-index-medium + 1;
             position: fixed;
-            width: calc(#{$side-layout-width} - #{$double-content-padding});
+            width: calc(#{$settings-bar-width} - #{$double-content-padding});
             height: $top-bar-height;
             padding-top: $top-bar-spacing-top;
 
@@ -41,8 +31,7 @@ aside {
 
         .main-content {
             position: fixed;
-            // width: calc(#{$side-layout-width} - #{$double-content-padding});
-            width: calc(#{$side-layout-width} - #{$content-padding});
+            width: calc(#{$settings-bar-width} - #{$content-padding});
             height: inherit;
             padding-top: $top-bar-height;
             margin-right: calc(#{$content-padding} * -1);
@@ -65,7 +54,6 @@ aside {
 }
 [dir='rtl'] {
     aside {
-        // padding: 0 $double-content-padding 0 0;
 
         .settings-bar-container {
             padding: 0 $double-content-padding 0 0;
@@ -74,9 +62,6 @@ aside {
 }
 
 main {
-    // @include spacing-element();
-    // @include spacing-element-negative();
-
     .side-layout {
         width: $side-layout-width;
         height: inherit;
@@ -114,7 +99,6 @@ main {
     }
 
     .main-content {
-        // margin-left: 16rem; // Not needed because the pull-right on the main-layout div.
         padding-top: $top-bar-height;
         margin-right: 0;
         margin-left: 0;
@@ -132,23 +116,15 @@ main {
         display: block;
         width: 100%;
 
-        // padding-right: $content-padding;
-        // padding-left: $content-padding;
-
         .header-content {
             z-index: $z-index-medium + 1;
             position: fixed;
-            width: calc(100% - (#{$side-layout-width}));
-            // width: calc(100% - (#{$double-content-padding} + #{$double-content-margin}));
+            width: calc(100% - (#{$settings-bar-width}));
 
             height: $top-bar-height;
             padding-top: $top-bar-spacing-top;
             padding-right: $content-padding;
             padding-left: $content-padding;
-
-            @media (max-width: $screen-max-size-md) {
-                width: 100%;
-            }
 
             .content {
                 // height: inherit;
@@ -207,9 +183,69 @@ main {
                 max-width: 896px;
             }
         }
+
+        //  Tabs.
+        // -----------------------------------------------------
+        .mat-tab-group {
+            &.fixed-header {
+                .mat-tab-header {
+                    @include mat-tabs-fixed-header-width($settings-bar-width);
+                }
+            }
+        }
+    }
+
+    // This is for the ng 10 with ngxlib - addoon
+    .addon-page-container {
+        display: block;
+        width: 100%;
+
+        .main-content {
+            display: block;
+            padding-right: $content-padding;
+            padding-left: $content-padding;
+
+            .content {
+                // height: auto;
+                margin-right: $content-margin;
+                margin-left: $content-margin;
+
+                &.spacing-top {
+                    margin-top: $content-margin;
+                }
+            }
+
+            @media (max-width: $screen-max-size-xs) {
+                .content {
+                    margin-right: 0;
+                    margin-left: 0;
+                }
+            }
+        }
+
+        //  Tabs.
+        // -----------------------------------------------------
+        .mat-tab-group {
+            &.fixed-header {
+                .mat-tab-header {
+                    @include mat-tabs-fixed-header-width($settings-bar-width);
+                }
+            }
+        }
     }
 }
 
+
+
+//  Spacing
+// ------------------------
+.spacing-element-negative {
+    @include spacing-element-negative();
+}
+
+.spacing-element {
+    @include spacing-element();
+}
 //  Floating alignment
 // ------------------------
 .pull-right {
@@ -233,17 +269,23 @@ main {
 
 //  Text alignment
 // ------------------------
+.text-align-center,
 .text-align-3 {
     text-align: center !important;
+    justify-self: center !important;
     justify-content: center !important;
 }
+.text-align-right,
 .text-align-2 {
     text-align: right !important;
+    justify-self: right !important;
     justify-content: right !important;
 }
+.text-align-left,
 .text-align-0,
 .text-align-1 {
     text-align: left !important;
+    justify-self: left !important;
     justify-content: left !important;
 }
 
@@ -264,7 +306,7 @@ main {
 //  Modal - General
 // -----------------------------------------------------
 .modal-footer {
-    .pepperi-button {
+    .pepperi-button, .pep-button {
         margin: 0 $spacing-xs;
     }
 }
@@ -326,17 +368,10 @@ main {
 
     &.fixed-header {
         .mat-tab-header {
-            width: calc(100% - (#{$side-layout-width} + #{$double-content-padding} + #{$double-content-margin}));
             position: fixed;
             z-index: $tabs-z-index + 1;
 
-            @media (max-width: $screen-max-size-md) {
-                width: calc(100% - (#{$double-content-padding} + #{$double-content-margin}));
-            }
-
-            @media (max-width: $screen-max-size-xs) {
-                width: calc(100% - (#{$content-padding} + #{$content-margin}));
-            }
+            @include mat-tabs-fixed-header-width($side-layout-width);
         }
 
         .mat-tab-body-wrapper {
@@ -353,7 +388,7 @@ main {
     }
 }
 
-.pepperi-accordion {
+.pepperi-accordion, .pep-accordion {
     &.mat-accordion .mat-expansion-panel {
         padding: 0 $content-padding;
         margin: 0 calc(#{$content-padding} * -1);
@@ -416,7 +451,54 @@ main {
     }
 }
 
-.pepperi-chips {
+
+.pepperi-accordion2, .pep-accordion2 {
+    &.mat-accordion .mat-expansion-panel {
+        // padding: 0 $content-padding;
+        // margin: 0 calc(#{$content-padding} * -1);
+
+        .mat-expansion-panel-header {
+            flex-flow: row-reverse;
+            height: $spacing-5xl;
+            padding: $spacing-lg 0 $spacing-sm;
+
+            .mat-expansion-panel-header-title {
+                display: flex;
+                align-items: center;
+                margin: 0;
+                padding: $spacing-xs 0;
+
+                .mat-icon {
+                    @include align-center();
+
+                    .svg-icon {
+                        height: 1rem;
+                        width: 1rem;
+                    }
+                }
+            }
+
+            &.mat-expanded {
+                .mat-expansion-panel-header-title {
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+
+        .mat-expansion-panel-content {
+            .mat-expansion-panel-body {
+                padding: $content-padding $spacing-sm;
+            }
+        }
+
+        &:first-of-type,
+        &:last-of-type {
+            border-radius: 0;
+        }
+    }
+}
+
+.pepperi-chips, .pep-chips {
     &.mat-accordion .mat-expansion-panel {
         $shadow-bottom: $spacing-xl;
 
@@ -517,23 +599,48 @@ main {
     border-radius: 0.25rem !important; // $border-radius-md
 }
 
-.pepperi-dialog {
+.pepperi-dialog, .pep-dialog {
+    max-width: 90vw;
+    min-width: 18rem;
+
+    $dialog-content-padding: $content-padding;
+
     .mat-dialog-container {
         border-radius: 0.25rem !important; // $border-radius-md
         padding: $content-padding;
-        
-        .mat-dialog-title {
-            height: 3rem;
+
+        .dialog-header-container {
+            height: $dialog-header-height;
             margin-bottom: 0;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-areas: "title close";
+
+            .dialog-title {
+                @include ellipsis();
+                grid-area: title;
+
+                &:after {
+                    content: ' ';
+                    display: block;
+                    width: $spacing-sm;
+                }
+            }
+
+            .dialog-close {
+                grid-area: close;
+            }
         }
 
         .mat-dialog-content {
-            padding: $content-padding 0;
-            margin: 0;
-            border: none;//1px solid rgba(0, 0, 0, 0.24%);
-            display: grid;            
+            padding: $dialog-content-padding $spacing-sm;
+            margin: 0 calc(#{$spacing-sm} * -1);
+            // margin: 0;
+            border: none;
+            display: grid;
             overflow: auto;
             -webkit-overflow-scrolling: touch;
+            min-height: 5rem;
             max-height: 65vh;
             @include box-sizing(border-box);
             // grid-row: mat-dialog-content;
@@ -546,12 +653,72 @@ main {
             margin-bottom: 0;
             padding: $spacing-md 0 0; // override material padding.
             min-height: unset;
-
-            &.split-actions {
-                justify-content: space-between;
-            }
         }
 
+    }
+
+    &.small {
+        max-width: 10rem !important;
+        height: auto;
+    }
+
+    &.regular {
+        max-width: 34rem !important;
+        height: auto;
+    }
+
+    &.large {
+        max-width: 40rem !important;
+        width: 90vw;
+        height: auto;
+        max-height: 90vh;
+
+        .mat-dialog-container {
+            .mat-dialog-content {
+                max-height: calc(90vh - (#{$dialog-header-height} + (#{$content-padding} * 2)));
+            }
+        }
+    }
+
+    &.full-screen {
+        $dialog-height: 95vh;
+
+        max-width: 95vw !important;
+        width: 95vw !important;
+        max-height: $dialog-height !important;
+        height: $dialog-height !important;
+
+        .mat-dialog-container {
+            .mat-dialog-content {
+                // $height: calc(100vh - (#{$dialog-header-height} + (#{$dialog-padding} * 2) + #{$dialog-actions-height}));
+                $height: calc(100% - ((#{$dialog-content-padding} * 2)));
+                height: $height;
+                max-height: $height;
+            }
+        }
+    }
+
+    &.inline {
+        .mat-dialog-container {
+            overflow: hidden;
+
+            .gallery-dialog {
+                .mat-dialog-content {
+                    $height: calc(100% - ((#{$dialog-content-padding} * 2)));
+                    height: $height;
+                    max-height: $height;
+                }
+            }
+
+            .iframe-container {
+                height: 100%;
+
+                .mat-dialog-content {
+                    max-height: calc(100% - ((#{$dialog-content-padding} * 2)));
+                    height: inherit;
+                }
+            }
+        }
     }
 }
 
@@ -565,35 +732,30 @@ main {
     z-index: $z-index-high - 2;
 }
 
-#loadingSpinner,
-#loadingSpinnerModal {
-    z-index: $z-index-high;
-}
-
 @mixin declare-system-base-theme($pepperi-theme) {
     .header-content {
-        background: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base);
+        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
     }
 
     .settings-bar-container {
-        background: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base);
+        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
     }
 
     .splitter {
         height: 1px;
-        @include pepperi-border(border-bottom, $pepperi-theme);
+        @include pep-border(border-bottom, $pepperi-theme);
     }
 
-    .pepperi-border-top {
-        @include pepperi-border(border-top, $pepperi-theme);
+    .pepperi-border-top, .pep-border-top {
+        @include pep-border(border-top, $pepperi-theme);
     }
 
-    .pepperi-border-bottom {
-        @include pepperi-border(border-bottom, $pepperi-theme);
+    .pepperi-border-bottom, .pep-border-bottom {
+        @include pep-border(border-bottom, $pepperi-theme);
     }
 
-    .pepperi-loading-spinner {
-        background-color: get-pepperi-color($pepperi-theme, color-top-header, color-base);
+    .pepperi-loading-spinner, .pep-loading-spinner {
+        background-color: get-pep-color($pepperi-theme, color-top-header, color-base);
     }
 
     //  Tabs.
@@ -606,10 +768,10 @@ main {
 
         .mat-tab-header {
             .mat-tab-labels {
-                @include pepperi-border(border-bottom, $pepperi-theme);
+                @include pep-border(border-bottom, $pepperi-theme);
 
                 .mat-tab-label {
-                    color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                    color: get-pep-color($pepperi-theme, color-text, color-dimmed);
 
                     &:hover {
                         @include state-weak-hover($pepperi-theme);
@@ -623,7 +785,7 @@ main {
 
                     &.mat-tab-label-active {
                         @include state-weak-default($pepperi-theme);
-                        color: get-pepperi-color($pepperi-theme, color-text, color-main);
+                        color: get-pep-color($pepperi-theme, color-text, color-main);
 
                         &:hover {
                             @include state-weak-hover($pepperi-theme);
@@ -651,30 +813,30 @@ main {
 
         &.fixed-header {
             .mat-tab-header {
-                background: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base);
+                background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
             }
         }
     }
 
     //  Accordion.
     // -----------------------------------------------------
-    .pepperi-accordion {
+    .pepperi-accordion, .pep-accordion {
         &.mat-accordion .mat-expansion-panel {
             box-shadow: unset;
 
             .mat-expansion-panel-header {
-                @include pepperi-border(border-top, $pepperi-theme);
+                @include pep-border(border-top, $pepperi-theme);
 
                 &.mat-expanded {
-                    @include pepperi-border(border-bottom, $pepperi-theme);
+                    @include pep-border(border-bottom, $pepperi-theme);
 
                     .mat-expansion-panel-header-title {
-                        color: get-pepperi-color($pepperi-theme, color-text, color-main);
+                        color: get-pep-color($pepperi-theme, color-text, color-main);
                     }
                 }
 
                 .mat-expansion-panel-header-title {
-                    color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                    color: get-pep-color($pepperi-theme, color-text, color-dimmed);
                 }
             }
 
@@ -692,15 +854,39 @@ main {
 
             &:last-child {
                 .mat-expansion-panel-header {
-                    @include pepperi-border(border-bottom, $pepperi-theme);
+                    @include pep-border(border-bottom, $pepperi-theme);
                 }
+            }
+        }
+    }
+
+    .pepperi-accordion2, .pep-accordion2 {
+        &.mat-accordion .mat-expansion-panel {
+            box-shadow: unset;
+
+            .mat-expansion-panel-header {
+                @include pep-border(border-top, $pepperi-theme);
+
+                .mat-expansion-panel-header-title {
+                    color: get-pep-color($pepperi-theme, color-text, color-main);
+                }
+            }
+
+            .mat-expansion-panel-header.cdk-keyboard-focused,
+            .mat-expansion-panel-header.cdk-program-focused,
+            .mat-expansion-panel-header:hover {
+                @include state-weak-hover($pepperi-theme);
+            }
+
+            &:last-child {
+                @include pep-border(border-bottom, $pepperi-theme);
             }
         }
     }
 
     //  Accordion - chips.
     // -----------------------------------------------------
-    .pepperi-chips {
+    .pepperi-chips, .pep-chips {
         &.mat-accordion .mat-expansion-panel {
             box-shadow: unset;
 
@@ -712,9 +898,17 @@ main {
                 &.mat-expanded {
                     .mat-expansion-panel-header-title {
                         @include state-weak-active($pepperi-theme);
-                        background: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base);
-                        @include inline(get-pepperi-color($pepperi-theme, color-text, color-main));
-                        box-shadow: get-pepperi-shadow($pepperi-theme, shadow-md, soft);
+                        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+                        @include inline(get-pep-color($pepperi-theme, color-text, color-main));
+                        box-shadow: get-pep-shadow($pepperi-theme, shadow-md, soft);
+
+                        &:hover {
+                            @include state-weak-hover($pepperi-theme);
+                        }
+
+                        &:after {
+                            z-index: 1 !important;
+                        }
                     }
                 }
 
@@ -730,11 +924,11 @@ main {
             .mat-expansion-panel-body {
                 .expansion-content {
                     li {
-                        color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                        color: get-pep-color($pepperi-theme, color-text, color-dimmed);
 
                         &:hover,
                         &.active {
-                            color: get-pepperi-color($pepperi-theme, color-text, color-main);
+                            color: get-pep-color($pepperi-theme, color-text, color-main);
                         }
                     }
                 }
@@ -745,29 +939,29 @@ main {
     // Auto complete.
     // -------------------------------------------------
     .mat-autocomplete-panel {
-        @include pepperi-border(border, $pepperi-theme);
+        @include pep-border(border, $pepperi-theme);
 
         .mat-option:active {
-            background: get-pepperi-color($pepperi-theme, color-system-primary, color-tran-40) !important;
+            background: get-pep-color($pepperi-theme, color-system-primary, color-tran-40) !important;
         }
     }
 
     // Modals overlay pane
     // -------------------------------------------------
     // .cdk-overlay-pane {
-    //     // box-shadow: get-pepperi-shadow($pepperi-theme, shadow-sm, hard);
+    //     // box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
     // }
 
     //  Menu
     // -------------------------------------------------
     .mat-menu-panel {
-        box-shadow: get-pepperi-shadow($pepperi-theme, shadow-sm, hard);
-        border: 1px solid get-pepperi-color($pepperi-theme, color-system-primary, color-base);
+        box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
+        border: 1px solid get-pep-color($pepperi-theme, color-system-primary, color-base);
         max-width: 30rem;
         min-height: unset;
 
         .mat-menu-item {
-            background: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base);
+            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
 
             &:hover {
                 @include state-weak-hover($pepperi-theme);
@@ -780,7 +974,7 @@ main {
             }
 
             &.selected {
-                background: get-pepperi-color($pepperi-theme, color-system-success, color-tran-20);
+                background: get-pep-color($pepperi-theme, color-system-success, color-tran-20);
             }
         }
     }
@@ -789,14 +983,18 @@ main {
     // -------------------------------------------------
     .mat-dialog-container {
         box-shadow: unset;
-        // box-shadow: get-pepperi-shadow($pepperi-theme, shadow-sm, hard);
-        border: 1px solid get-pepperi-color($pepperi-theme, color-system-primary, color-base);
+        // box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
+        border: 1px solid get-pep-color($pepperi-theme, color-system-primary, color-base);
+
+        .dialog-header-container {
+            @include pep-border(border-bottom, $pepperi-theme);
+        }
     }
 
     /*----------------- ngx Overrides ---------------------*/
     // Temporary until we'll write it again.
     #cartSummary {
-        $border-color: get-pepperi-color($pepperi-theme, color-system-primary, color-tran-50);
+        $border-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-50);
 
         .carousel-indicators {
             margin-bottom: 0px;
@@ -809,7 +1007,7 @@ main {
                 margin: 0 0.25rem;
 
                 &.active {
-                    background-color: get-pepperi-color($pepperi-theme, color-system-primary, color-tran-60);
+                    background-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-60);
                 }
             }
         }

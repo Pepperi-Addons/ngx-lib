@@ -1,5 +1,5 @@
-import { Injectable, Optional, Inject } from '@angular/core';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -28,83 +28,108 @@ const _BIDI_RTL_LANGS = [
     'yi'    /* 'ייִדיש', Yiddish */
 ];
 
-export enum ORIENTATION {
-    Landscape,
-    Portrait,
-}
+export type PepOrientationType = 'landscape' | 'portrait';
 
-export enum SCREEN_SIZE {
+export enum PepScreenSizeType {
     XL,
     LG,
     MD,
     SM,
     XS,
 }
+// export type PepScreenSizeType = 'xl' | 'lg' | 'md' | 'sm' | 'xs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LayoutService {
-    private resizeSubject: BehaviorSubject<SCREEN_SIZE>;
+    private resizeSubject: BehaviorSubject<PepScreenSizeType>;
+    private deviceHasMouseSubject: BehaviorSubject<boolean>;
 
-    get onResize$(): Observable<SCREEN_SIZE> {
+    get onResize$(): Observable<PepScreenSizeType> {
         return this.resizeSubject.asObservable().pipe(distinctUntilChanged());
     }
 
-    constructor(private translate: TranslateService) {
-        this.resizeSubject = new BehaviorSubject(SCREEN_SIZE.LG);
+    get onMouseOver$(): Observable<boolean> {
+        return this.deviceHasMouseSubject.asObservable().pipe(distinctUntilChanged());
     }
+
+    constructor() {
+        this.resizeSubject = new BehaviorSubject(PepScreenSizeType.LG);
+
+        this.deviceHasMouseSubject = new BehaviorSubject(false);
+        document.addEventListener('mouseover', this.documentMouseoverListener, false);
+        // document.addEventListener('touchstart', this._documentTouchstartListener, false);
+    }
+
+    private documentMouseoverListener = (event: MouseEvent) => {
+        this.deviceHasMouseSubject.next(true);
+        this.deviceHasMouseSubject.complete();
+        document.removeEventListener('mouseover', this.documentMouseoverListener, false);
+    }
+
+    // private _documentTouchstartListener = (event: TouchEvent) => {
+    //     debugger;
+    //     this.isTouchDevice = true;
+    //     document.removeEventListener('touchstart', this._documentTouchstartListener, false);
+    // }
 
     /**
      * Set the current screen size.
      * @param size The size to change to.
      */
-    onResize(size: SCREEN_SIZE): void {
+    onResize(size: PepScreenSizeType): void {
         this.resizeSubject.next(size);
     }
 
-    public getOrintation(): ORIENTATION {
+    getDeviceHasMouse(): boolean {
+        return this.deviceHasMouseSubject.getValue();
+    }
+
+    getOrintation(): PepOrientationType {
         if (window.innerHeight > window.innerWidth) {
-            return ORIENTATION.Portrait;
+            return 'portrait';
         } else {
-            return ORIENTATION.Landscape;
+            return 'landscape';
         }
     }
 
-    public getScreenWidth(): number {
+    getScreenWidth(): number {
         let retVal = 250.0;
         switch (this.resizeSubject.getValue()) {
-            case SCREEN_SIZE.XS: {
-                retVal = this.getOrintation() === ORIENTATION.Landscape ? 130.0 : 65.0;
+            case PepScreenSizeType.XS: {
+                retVal = this.getOrintation() === 'landscape' ? 130.0 : 65.0;
                 break;
             }
-            case SCREEN_SIZE.SM:
-            case SCREEN_SIZE.MD: {
-                retVal = this.getOrintation() === ORIENTATION.Landscape ? 220.0 : 140.0;
+            case PepScreenSizeType.SM:
+            case PepScreenSizeType.MD: {
+                retVal = this.getOrintation() === 'landscape' ? 220.0 : 140.0;
                 break;
             }
-            case SCREEN_SIZE.LG: {
-                retVal = this.getOrintation() === ORIENTATION.Landscape ? 400.0 : 250.0;
+            case PepScreenSizeType.LG:
+            case PepScreenSizeType.XL: {
+                retVal = this.getOrintation() === 'landscape' ? 400.0 : 250.0;
                 break;
             }
         }
         return retVal;
     }
 
-    public getScreenHeight(): number {
+    getScreenHeight(): number {
         let retVal = 250.0;
         switch (this.resizeSubject.getValue()) {
-            case SCREEN_SIZE.XS: {
-                retVal = this.getOrintation() === ORIENTATION.Landscape ? 65.0 : 130.0;
+            case PepScreenSizeType.XS: {
+                retVal = this.getOrintation() === 'landscape' ? 65.0 : 130.0;
                 break;
             }
-            case SCREEN_SIZE.SM:
-            case SCREEN_SIZE.MD: {
-                retVal = this.getOrintation() === ORIENTATION.Landscape ? 140.0 : 220.0;
+            case PepScreenSizeType.SM:
+            case PepScreenSizeType.MD: {
+                retVal = this.getOrintation() === 'landscape' ? 140.0 : 220.0;
                 break;
             }
-            case SCREEN_SIZE.LG: {
-                retVal = this.getOrintation() === ORIENTATION.Landscape ? 250.0 : 400.0;
+            case PepScreenSizeType.LG:
+            case PepScreenSizeType.XL: {
+                retVal = this.getOrintation() === 'landscape' ? 250.0 : 400.0;
                 break;
             }
         }
@@ -119,11 +144,11 @@ export class LayoutService {
         return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     }
 
-    getCurrentLanguage(): string {
-        return this.translate && this.translate.currentLang || navigator.language;
+    getCurrentLanguage(translate: TranslateService = null): string {
+        return translate?.currentLang || navigator.language;
     }
 
-    public isRtl(): boolean {
+    isRtl(): boolean {
         const userLang = this.getCurrentLanguage();
         const isRtl = _BIDI_RTL_LANGS.indexOf(userLang) >= 0;
 

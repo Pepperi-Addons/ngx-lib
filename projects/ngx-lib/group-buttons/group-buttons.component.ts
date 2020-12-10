@@ -1,39 +1,27 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { LayoutService, SCREEN_SIZE } from '@pepperi-addons/ngx-lib';
+import { LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { PepButton, PepButtonClick } from '@pepperi-addons/ngx-lib/button';
 import { delay } from 'rxjs/operators';
 
-export interface PepperiGroupButton {
-    Value;
-    Class;
-    Icon;
-    Callback;
-}
-
-export enum GROUP_BUTTONS_VIEW_TYPE {
-    Regular,
-    Dropdown,
-    Split,
-}
-
+export type PepGroupButtonsViewType = 'regular' | 'dropdown' | 'split';
 @Component({
     selector: 'pep-group-buttons',
     templateUrl: './group-buttons.component.html',
     styleUrls: ['./group-buttons.component.scss'],
 })
 export class GroupButtonsComponent implements OnInit, OnDestroy {
-    GROUP_BUTTONS_VIEW_TYPE = GROUP_BUTTONS_VIEW_TYPE;
-    screenSize: SCREEN_SIZE;
+    PepScreenSizeType = PepScreenSizeType;
+    screenSize: PepScreenSizeType;
 
-    @Input() viewType: GROUP_BUTTONS_VIEW_TYPE = GROUP_BUTTONS_VIEW_TYPE.Regular;
-    @Input() buttons: Array<PepperiGroupButton>;
+    @Input() viewType: PepGroupButtonsViewType = 'regular';
+    @Input() buttons: Array<PepButton>;
     @Input() buttonsClass: string;
     @Input() buttonsDisabled: string;
 
-    // @Output() buttonClick: EventEmitter<PepperiGroupButton> = new EventEmitter<PepperiGroupButton>();
+    @Output() buttonClick: EventEmitter<PepButtonClick> = new EventEmitter<PepButtonClick>();
 
     constructor(public layoutService: LayoutService) {
         this.layoutService.onResize$
-            .pipe(delay(0))
             .subscribe(size => {
                 this.screenSize = size;
             });
@@ -41,11 +29,19 @@ export class GroupButtonsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void { }
 
-    ngOnDestroy() {
-        // if (this.buttonClick) this.buttonClick.unsubscribe();
+    ngOnDestroy(): void {
+        if (this.buttonClick) {
+            this.buttonClick.unsubscribe();
+        }
     }
 
-    // onButtonClicked(button: PepperiGroupButton) {
-    //     this.buttonClick.emit(button);
-    // }
+    onButtonClicked(event: Event, button: PepButton): void {
+        const buttonClick = new PepButtonClick(button, event);
+
+        if (button?.callback) {
+            button.callback(buttonClick);
+        } else {
+            this.buttonClick.emit(buttonClick);
+        }
+    }
 }

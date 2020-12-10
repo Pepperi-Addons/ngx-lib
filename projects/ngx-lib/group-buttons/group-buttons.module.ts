@@ -7,8 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconArrowUp, pepperiIconArrowDown } from '@pepperi-addons/ngx-lib/icon';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepIconModule, PepIconRegistry, pepIconArrowUp, pepIconArrowDown } from '@pepperi-addons/ngx-lib/icon';
 
 import { GroupButtonsComponent } from './group-buttons.component';
 
@@ -21,18 +21,18 @@ import { GroupButtonsComponent } from './group-buttons.component';
         MatButtonModule,
         MatMenuModule,
         MatIconModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule
     ],
     exports: [ GroupButtonsComponent ],
     declarations: [ GroupButtonsComponent ],
 })
-export class PepperiGroupButtonsModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconArrowUp,
-            pepperiIconArrowDown
+export class PepGroupButtonsModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconArrowUp,
+            pepIconArrowDown
         ]);
     }
 }

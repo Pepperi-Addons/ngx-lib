@@ -1,5 +1,11 @@
-import { Component, OnInit, AfterViewInit, HostListener, ElementRef } from '@angular/core';
-import { LayoutService, SCREEN_SIZE } from '@pepperi-addons/ngx-lib';
+import { Component, OnInit, AfterViewInit, HostListener, ElementRef, Input } from '@angular/core';
+import { LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+
+interface SizeDetectorItem {
+    id: PepScreenSizeType;
+    name: string;
+    css: string;
+}
 
 @Component({
     selector: 'pep-size-detector',
@@ -7,30 +13,32 @@ import { LayoutService, SCREEN_SIZE } from '@pepperi-addons/ngx-lib';
 })
 export class SizeDetectorComponent implements AfterViewInit {
 
+    @Input() showScreenSize = false;
+
     prefix = 'is-';
-    sizes = [
+    sizes: Array<SizeDetectorItem> = [
         {
-            id: SCREEN_SIZE.XS,
+            id: PepScreenSizeType.XS,
             name: 'xs',
             css: `d-block d-sm-none`
         },
         {
-            id: SCREEN_SIZE.SM,
+            id: PepScreenSizeType.SM,
             name: 'sm',
             css: `d-none d-sm-block d-md-none`
         },
         {
-            id: SCREEN_SIZE.MD,
+            id: PepScreenSizeType.MD,
             name: 'md',
             css: `d-none d-md-block d-lg-none`
         },
         {
-            id: SCREEN_SIZE.LG,
+            id: PepScreenSizeType.LG,
             name: 'lg',
             css: `d-none d-lg-block d-xl-none`
         },
         {
-            id: SCREEN_SIZE.XL,
+            id: PepScreenSizeType.XL,
             name: 'xl',
             css: `d-none d-xl-block`
         },

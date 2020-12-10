@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 
 import { SizeDetectorComponent} from './size-detector.component';
 
@@ -14,10 +14,10 @@ import { SizeDetectorComponent} from './size-detector.component';
         ReactiveFormsModule,
         FormsModule,
         FlexLayoutModule,
-        // Pepperi modules
-        PepperiModule,
+        // ngx-lib modules
+        PepNgxLibModule,
     ],
     exports: [SizeDetectorComponent],
     declarations: [SizeDetectorComponent],
 })
-export class PepperiSizeDetectorModule {}
+export class PepSizeDetectorModule {}

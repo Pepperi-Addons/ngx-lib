@@ -1,8 +1,0 @@
-/*
- * Public API Surface of ngx-lib/icon
- */
-export * from './icon-registry.service';
-export * from './icon.component';
-export * from './icon.model';
-export * from './icon.module';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvaWNvbi9wdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBQ0gsY0FBYyx5QkFBeUIsQ0FBQztBQUN4QyxjQUFjLGtCQUFrQixDQUFDO0FBQ2pDLGNBQWMsY0FBYyxDQUFDO0FBQzdCLGNBQWMsZUFBZSxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIG5neC1saWIvaWNvblxyXG4gKi9cclxuZXhwb3J0ICogZnJvbSAnLi9pY29uLXJlZ2lzdHJ5LnNlcnZpY2UnO1xyXG5leHBvcnQgKiBmcm9tICcuL2ljb24uY29tcG9uZW50JztcclxuZXhwb3J0ICogZnJvbSAnLi9pY29uLm1vZGVsJztcclxuZXhwb3J0ICogZnJvbSAnLi9pY29uLm1vZHVsZSc7XHJcbiJdfQ==

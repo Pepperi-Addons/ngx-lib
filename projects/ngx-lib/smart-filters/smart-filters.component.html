@@ -1,0 +1,26 @@
+<div class="smart-filters-container">
+    <span class="title body-md bold">{{ "SMART_FILTERS.TITLE" | translate}}</span>
+
+    <mat-accordion [displayMode]="'flat'" [multi]="true" class="pep-accordion2">
+        <mat-expansion-panel *ngFor="let filter of data; let i = index" hideToggle="true"
+            (opened)="toggleFilter(i, true)" (closed)="toggleFilter(i, false)">
+            <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeaderHeight"
+                [expandedHeight]="expansionPanelHeaderHeight">
+                <mat-panel-title>
+                    <mat-icon *ngIf="!filters[i].isOpen" class="spacing-element">
+                        <pep-icon name="number_plus"></pep-icon>
+                    </mat-icon>
+                    <mat-icon *ngIf="filters[i].isOpen" class="spacing-element">
+                        <pep-icon name="number_minus"></pep-icon>
+                    </mat-icon>
+                    <span class="spacing-element ellipsis body-sm">{{ filter.title }}</span>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="expansion-content filter-content">
+                <div>
+                    Filters
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

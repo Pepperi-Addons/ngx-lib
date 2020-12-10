@@ -1,11 +1,11 @@
 // -----------------------------------------------------
-//  Pepperi - Textarea & Override material style
+//  Textarea & Override material style
 // -----------------------------------------------------
-.pepperi-textarea-container {
+.pepperi-textarea-container, .pep-textarea-container {
     height: inherit;
     display: grid;
     align-items: center;
-    
+
     // Hide scroll
     .mat-form-field {
         .mat-form-field-wrapper {
@@ -16,7 +16,7 @@
                 overflow: hidden;
                 display: grid !important;
             }
-            
+
             .mat-input-element {
                 margin: 0;
                 padding: 0.5rem 1.5rem 0.5rem 0;
@@ -45,14 +45,14 @@
                         padding-top: 0.35rem;
                     }
                 }
-                
+
                 .mat-form-field-prefix,
                 .mat-form-field-suffix {
                     align-self: center !important;
                     margin-bottom: unset;
-        
+
                     .card-one-row-icon {
-                        .pepperi-button {
+                        .pepperi-button, .pep-button {
                             width: 1rem !important;
                             height: 1rem !important;
                         }
@@ -60,26 +60,27 @@
                 }
             }
 
-            &.pepperi-table-textarea {
+            &.pepperi-table-textarea, &.pep-table-textarea {
                 .mat-input-element {
                     padding-top: 0.135rem !important;
                 }
-            }        
+            }
         }
     }
 
     .rich-text-cont {
         overflow-x: hidden;
         display: inline-block;
-        vertical-align: middle;
+        // vertical-align: middle;
+        vertical-align: unset;
         margin: 0;
         padding: 0.5rem 1.5rem 0.5rem 0;
         resize: none;
-        @include calc(width, '100%');
+        // @include calc(width, '100%');
+        @include calc(width, '100% + 3rem');
         max-width: unset;
         overflow-y: scroll;
         @include box-sizing(border-box);
-        overflow-y: hidden;
     }
 
     &.right-alignment {
@@ -94,23 +95,17 @@
         .rich-text-cont {
             padding: 0.5rem 0 0.5rem 1.5rem;
         }
-
-        // .rich-text-cont,
-        // .mat-input-element {
-        //     padding-right: 0;
-        //     padding-left: 2rem;
-        // }
     }
 }
 
-.pepperi-textarea-card-container {
+.pepperi-textarea-card-container, .pep-textarea-card-container {
     .mat-form-field {
         .mat-form-field-wrapper {
 
             .mat-form-field-flex {
                 padding-left: 0.5rem;
                 padding-right: 0.5rem;
-                
+
                 .mat-input-element {
                     padding: 0.25rem 1.5rem 0.5rem 0;
                 }
@@ -126,7 +121,7 @@
         // padding: 0.5rem 1.5rem 0.5rem 0;
         padding: 0.25rem;
 
-        &.one-row { 
+        &.one-row {
             .title {
                 padding-top: 0.25rem;
             }
@@ -166,7 +161,7 @@
     }
 }
 
-.pepperi-report-textarea {
+.pepperi-report-textarea, .pep-report-textarea {
     .mat-form-field-wrapper {
         // margin-top: 0 !important;
     }
@@ -184,9 +179,9 @@
     }
 }
 
-@mixin pepperi-textarea-theme($pepperi-theme) {
-    
-    .pepperi-report-textarea {
+@mixin pep-textarea-theme($pepperi-theme) {
+
+    .pepperi-report-textarea, .pep-report-textarea {
         .mat-form-field-flex {
             background: transparent !important;
         }

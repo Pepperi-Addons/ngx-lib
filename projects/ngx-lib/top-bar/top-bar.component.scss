@@ -1,0 +1,97 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.top-bar-container {
+    height: $top-bar-height;
+    position: fixed;
+    // width: 100%;
+    // width: calc(100% - ((#{$content-padding} * 2)));
+    z-index: $z-index-medium + 1;
+    width: calc(100% - (#{$settings-bar-width}));
+
+    .title {
+        @include align-center();
+    }
+
+    .header-content {
+        height: $top-bar-height-with-no-top;
+        margin-top: $top-bar-spacing-top;
+        padding-right: $content-padding;
+        padding-left: $content-padding;
+
+        .main-layout {
+            width: inherit;
+            height: inherit;
+            padding: 0;
+
+            .content {
+                height: inherit;
+                // margin: 0;
+            }
+        }
+
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: $footer-bar-height;
+
+        .content {
+            margin: 0 $double-content-margin;
+            padding-top: $footer-bar-spacing-top;
+        }
+
+        @media (max-width: $screen-max-size-xs) {
+            .content {
+                margin-right: $content-margin;
+                margin-left: $content-margin;
+            }
+        }
+    }
+
+    .left-container {
+        display: flex;
+    }
+
+    .right-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &:not(.inline) {
+        ::ng-deep .pepperi-button,
+        ::ng-deep .pep-button,
+        .pepperi-button, .pep-button {
+            @include pep-top-bar-button();
+        }
+    }
+
+    &.inline {
+        position: inherit;
+        height: calc(#{$top-bar-spacing-bottom} + #{$top-bar-field-height});
+        width: 100%;
+        
+        .header-content {
+            margin-top: 0;
+            height: $top-bar-field-height;
+            padding: 0;
+            position: inherit;
+            width: inherit;
+
+            .main-layout {
+                width: inherit;
+                height: inherit;
+                padding: 0;
+
+                .content {
+                    height: inherit;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+

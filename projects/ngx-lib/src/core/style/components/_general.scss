@@ -2,7 +2,7 @@
     padding: 0 0.25rem;
 }
 
-.pepperi-report-fields {
+.pepperi-report-fields, .pep-report-fields {
     height: inherit;
 
     span {
@@ -19,7 +19,9 @@
     padding: $spacing-2xs 0;
     height: $form-field-title-height;
     line-height: 1rem;
-    display: block;
+    // display: block;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
 
     span {
         line-height: 0.875rem;
@@ -55,9 +57,9 @@
 
 .mat-form-field {
     @include fix-inline-z-index();
-    // display: unset;
+    display: flow-root !important;
     width: 100%;
-    
+
     .mat-form-field-wrapper {
         width: inherit;
         margin: 0;
@@ -87,7 +89,7 @@
 
                     height: $form-field-button-size; // 1.5rem;
                     width: $form-field-button-size; // 1.5rem;
-                
+
                     .mat-icon {
                         // height: calc(#{$form-field-button-size} - 2px); // - 2px is the border size
                         // width: calc(#{$form-field-button-size} - 2px); // - 2px is the border size
@@ -106,7 +108,7 @@
                     // height: calc(#{$form-field-button-size} - 2px); // - 2px is the border size
                     // width: calc(#{$form-field-button-size} - 2px); // - 2px is the border size
                     height: calc(#{$form-field-button-size});
-                    width: calc(#{$form-field-button-size}); 
+                    width: calc(#{$form-field-button-size});
 
                     .svg-icon {
                         height: $form-field-button-size; // 1.5rem;
@@ -125,6 +127,7 @@
                 .mat-input-element {
                     // vertical-align: unset;
                     margin-top: unset;
+                    text-overflow: ellipsis;
                 }
 
                 .mat-form-field-label-wrapper {
@@ -132,15 +135,15 @@
                 }
             }
         }
-        
+
         .mat-form-field-subscript-wrapper {
             position: relative;
             margin-top: 0;
             padding: 0;
             font-weight: $font-weight-bold;
-            z-index: $z-index-medium;
+            z-index: $z-index-medium - 4;
             border-radius: $border-radius-md;
-            
+
             .mat-error {
                 padding: $spacing-xs $spacing-sm;
             }
@@ -150,7 +153,7 @@
     .mat-form-field-flex {
         border-radius: $border-radius-md;
     }
-    
+
 }
 
 .mat-grid-tile {
@@ -172,16 +175,24 @@
 
 //  Table view
 // ------------------------
+$sorting-width: 1rem;
+
 .table-total,
 .table-header {
     position: -webkit-sticky;
     position: sticky;
-    z-index: $z-index-medium;
+    z-index: $z-index-medium - 5;
     @include box-sizing(border-box);
     width: inherit;
     height: calc(#{$table-field-height} + #{$table-spacing} + #{$table-half-spacing});
-    padding-top: $table-spacing;
-    
+    // padding-top: $table-spacing;
+    // padding: 0 $spacing-sm;
+
+    .table-header-padding-top {
+        height: $table-spacing;
+        width: 100%;
+    }
+
     .row-selection {
         margin: 0 calc(#{$spacing-sm} + calc(#{$spacing-xs} / 2)); // 0 0.625rem;
         height: inherit;
@@ -216,6 +227,12 @@
                 line-height: 2rem !important;
                 margin-bottom: 0;
                 // cursor: text;
+
+                .required {
+                    height: 0.75rem;
+                    width: 0.75rem;
+                    padding: 0;
+                }
             }
 
             img {
@@ -226,9 +243,9 @@
             }
 
             &.support-sorting {
-                .sortingBox {
+                .sorting-box {
                     display: none;
-                    width: 1rem;
+                    width: $sorting-width;
                     height: 1rem;
                     margin: 0.5rem 0;
 
@@ -238,12 +255,12 @@
                         height: inherit;
                         width: inherit;
 
-                        .svg-icon {
-                            &.asc {
-                                @include rotate(180deg);
-                            }
-                        }
-                        
+                        // .svg-icon {
+                        //     &.asc {
+                        //         @include rotate(180deg);
+                        //     }
+                        // }
+
                         &:hover {
                             cursor: pointer;
                         }
@@ -259,18 +276,24 @@
                 }
             }
 
-            .resizeBox {
-                // display: none;
+            .resize-box {
+                display: none;
                 cursor: w-resize;
-                margin-right: -1.5rem; // header column padding.
+                margin-right: calc((#{$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
                 height: $table-field-height; // 2rem;
+                align-items: center;
 
-                .mat-icon {
+                // .mat-icon,
+                .splitter {
                     width: 0.125rem;
-                    height: 1.5rem;
+                    height: 1rem;
                     line-height: $table-field-height; // 2rem;
-                    padding: 0 0.125rem 0 0.375rem;
-                    //margin: 0.15rem 0 0 0;
+                    // padding: 0 0.625rem 0 0.375rem;
+
+                    padding-right: 0.425rem;
+                    border:none;
+                    border-right-width: 1px;
+                    border-right-style: dashed;
                 }
             }
 
@@ -283,7 +306,7 @@
                         // @include calc(max-width, '100% - 2rem');
                     }
 
-                    .sortingBox {
+                    .sorting-box {
                         display: block;
                     }
                 }
@@ -299,7 +322,7 @@
             }
 
             &.is-resizing {
-                .sortingBox {
+                .sorting-box {
                     display: block;
                 }
             }
@@ -310,9 +333,9 @@
 
             &.is-last {
                 border-radius: 0 $table-border-radius $table-border-radius 0;
-                
+
                 &:hover {
-                    .resizeBox {
+                    .resize-box {
                         // width: 1rem;
                         border-radius: 0 $table-border-radius $table-border-radius 0;
                     }
@@ -321,15 +344,9 @@
         }
     }
 
-    // .table-header-fieldset {
-    //     height: 2rem;
-    //     margin-top: 0.25rem;
-    //     margin-bottom: 0.25rem;
-    // }
-
     &:hover {
-        .resizeBox {
-            display: block !important;
+        .resize-box {
+            display: flex !important;
         }
     }
 }
@@ -337,11 +354,37 @@
     .table-header {
         .table-header-fieldset {
             .header-column {
-                .resizeBox {
-                    margin-left: calc(#{$spacing-sm} * -1); // header column padding.
+                .resize-box {
+                    margin-right: unset;
+                    margin-left: calc((#{$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
 
-                    .mat-icon {
-                        padding: 0 $spacing-sm 0 0;
+                    // .mat-icon,
+                    .splitter {
+                        // padding: 0 $spacing-sm 0 0;
+                        padding-right: unset;
+                        padding-left: 0.425rem;
+
+                        border:none;
+                        border-left-width: 1px;
+                        border-left-style: dashed;
+                    }
+                }
+
+                &:hover {
+                    &.support-sorting {
+                        .header-label {
+                            padding-right: unset;
+                            padding-left: 1rem;
+                        }
+                    }
+                }
+
+                &.has-sorting {
+                    &.support-sorting {
+                        .header-label {
+                            padding-right: unset;
+                            padding-left: 1rem;
+                        }
                     }
                 }
 
@@ -353,7 +396,7 @@
                     border-radius: $table-border-radius 0 0 $table-border-radius;
 
                     &:hover {
-                        .resizeBox {
+                        .resize-box {
                             border-radius: $table-border-radius 0 0 $table-border-radius;
                         }
                     }
@@ -372,6 +415,7 @@
         width: inherit;
         height: $table-row-height; // 3rem;
         padding: $table-half-spacing 0; // 0.25rem 0;
+        // padding: $table-half-spacing $spacing-sm; // 0.25rem 0.5rem;
         border-radius: $table-border-radius;
 
         .row-selection {
@@ -389,8 +433,8 @@
             height: $table-row-fieldset-height; // 2.5rem;
             border-radius: $table-border-radius;
             // padding: 0 $spacing-2xs;
-            .table-cell {  
-                box-sizing: border-box;  
+            .table-cell {
+                box-sizing: border-box;
                 padding: 0 $spacing-2xs;
 
                 &:first-of-type {
@@ -401,8 +445,8 @@
                     padding: 0 $spacing-xs 0 $spacing-2xs;
                 }
             }
-            
-            .pepperi-input {
+
+            .pepperi-input, .pep-input {
                 padding: 0 $spacing-md;
                 height: $table-field-height; // 2rem;
             }
@@ -423,6 +467,15 @@
                 }
             }
         }
+
+        &:hover,
+        &.highlighted,
+        &:active,
+        &.selected {
+            .pepperi-form, .pep-form {
+                z-index: $z-index-lowest + 1;
+            }
+        }
     }
 }
 
@@ -430,7 +483,7 @@
     .table-body {
         .table-row {
             fieldset {
-                .table-cell {    
+                .table-cell {
                     &:first-of-type {
                         padding: 0 $spacing-xs 0 $spacing-2xs;
                     }
@@ -483,13 +536,12 @@
 }
 
 .line-view,
-.card-view,
-.cardView {
+.card-view {
     margin: 0;
     padding: 0 !important;
 
     .card-selection {
-        margin: $spacing-xs calc(#{$spacing-xs} * -1) 0 $spacing-xs;
+        margin: $spacing-xs calc(#{$content-margin} * -1) 0 $spacing-xs;
         height: 1rem;
         width: 1rem;
         position: relative;
@@ -505,11 +557,11 @@
             margin: $spacing-lg !important; // spacing inside card.
         }
 
-        // Showing two labels in the same row with ellipsis.                    
+        // Showing two labels in the same row with ellipsis.
         .card-flex-container {
             display: flex;
 
-            &.pepperi-button {
+            &.pepperi-button, &.pep-button {
                 background: unset; // Cancel the default background and shows background only on the declared states (hover, etc).
             }
 
@@ -542,7 +594,7 @@
             .card-edit-button {
                 flex-basis: $card-field-button-size;
                 flex-shrink: 0;
-                
+
                 &.self-end {
                     align-self: flex-end;
                 }
@@ -553,7 +605,7 @@
                 min-width: unset;
                 padding: 0;
                 pointer-events: none;
-                
+
                 .mat-icon {
                     // line-height: 0.5rem !important;
 
@@ -573,7 +625,7 @@
                 align-items: center;
             }
 
-            .pepperi-button:not(.card-edit-button) {
+            .pepperi-button:not(.card-edit-button), .pep-button:not(.card-edit-button) {
                 // height: $card-field-height !important; // 1.5rem !important;
                 // line-height: 1.5rem !important;
                 padding: 0 $spacing-xs;
@@ -586,7 +638,7 @@
                     padding: 0 $spacing-xs;
                 }
 
-                .pepperi-button,
+                .pepperi-button, .pep-button,
                 .mat-select-trigger,
                 .mat-form-field-infix {
                     height: $card-field-height !important; // 1.5rem !important;
@@ -619,80 +671,81 @@
     width:100%;
 }
 .card-view {
+    $screen-almost-full-width: 99.99%;
+
     /* > XLarge */
     @media (min-width: $screen-max-size-xl) {
-        @include calc(min-width, '100% / 6');
-        
+        @include calc(min-width, $screen-almost-full-width + ' / 6');
+
         &.small-card {
-            @include calc(min-width, '100% / 8');
+            @include calc(min-width, $screen-almost-full-width + ' / 8');
         }
     }
     /* Large - XLarge */
     @media (max-width: $screen-max-size-xl) and (min-width: $screen-max-size-lg) {
-        @include calc(min-width, '100% / 4');
+        @include calc(min-width, $screen-almost-full-width + ' / 4');
 
         &.small-card {
-            @include calc(min-width, '100% / 6');
+            @include calc(min-width, $screen-almost-full-width + ' / 6');
         }
     }
     /* Medium - Large */
     @media (max-width: $screen-max-size-lg) and (min-width: $screen-max-size-md) {
-        @include calc(min-width, '100% / 3');
+        @include calc(min-width, $screen-almost-full-width + ' / 3');
 
         &.small-card {
-            @include calc(min-width, '100% / 4');
+            @include calc(min-width, $screen-almost-full-width + ' / 4');
         }
     }
     /* Small - Medium */
     @media (max-width: $screen-max-size-md) and (min-width: $screen-max-size-sm) {
-        @include calc(min-width, '100% / 3');
+        @include calc(min-width, $screen-almost-full-width + ' / 3');
 
         &.small-card {
-            @include calc(min-width, '100% / 4');
+            @include calc(min-width, $screen-almost-full-width + ' / 4');
         }
     }
     /* Extra small - Small */
     @media (max-width: $screen-max-size-sm) and (min-width: $screen-max-size-xs) {
-        @include calc(min-width, '100% / 2');
+        @include calc(min-width, $screen-almost-full-width + ' / 2');
 
         &.small-card {
-            @include calc(min-width, '100% / 3');
+            @include calc(min-width, $screen-almost-full-width + ' / 3');
         }
     }
     /* < Extra small */
     @media (max-width: $screen-max-size-xs) {
-        @include calc(min-width, '100% / 1');
+        @include calc(min-width, $screen-almost-full-width + ' / 1');
 
         &.small-card {
-            @include calc(min-width, '100% / 2');
+            @include calc(min-width, $screen-almost-full-width + ' / 2');
         }
     }
 }
 
 [dir='rtl'] {
     .line-view,
-    .card-view,
-    .cardView {
+    .card-view {
         .card-selection {
-            margin: 0.25rem 0.25rem 0 -2rem;
+            margin: $spacing-xs $spacing-xs 0 calc(#{$content-margin} * -1);
         }
     }
 }
 
 //  Custom field (added for stand alone field).
 // ---------------------------------------------
-.pepperi-field {
+.pepperi-field, .pep-field {
     min-height: $form-row-height;
     margin-bottom: $form-spacing;
 }
 
-@mixin pepperi-general-theme($pepperi-theme) {
+@mixin pep-general-theme($pepperi-theme) {
 
     .required {
-        color: get-pepperi-color($pepperi-theme, color-system-caution, color-base);
+        color: get-pep-color($pepperi-theme, color-system-caution, color-base);
 
         .svg-icon {
-            fill: get-pepperi-color($pepperi-theme, color-system-caution, color-base);
+            fill: get-pep-color($pepperi-theme, color-system-caution, color-base);
         }
     }
 
@@ -700,8 +753,8 @@
         @include state-icon($pepperi-theme);
     }
 
-    .pepperi-report-fields {
-        .pepperi-input {
+    .pepperi-report-fields, .pep-report-fields {
+        .pepperi-input, .pep-input {
             background: transparent !important;
         }
     }
@@ -711,7 +764,7 @@
     // -----------------------------------------------------
     .mat-form-title {
         &.disable {
-            color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
         }
     }
 
@@ -729,18 +782,18 @@
         .mat-form-field-wrapper {
             .mat-form-field-prefix,
             .mat-form-field-suffix {
-                color: get-pepperi-color($pepperi-theme, color-weak, color-flat-r-20);
+                color: get-pep-color($pepperi-theme, color-weak, color-flat-r-20);
 
                 // For non icons symbols.
                 .text-icon {
-                    color: get-pepperi-color($pepperi-theme, color-weak, color-flat-r-20);
+                    color: get-pep-color($pepperi-theme, color-weak, color-flat-r-20);
                 }
             }
 
             .mat-form-field-infix {
                 .mat-input-element {
                     &:disabled {
-                        color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                        color: get-pep-color($pepperi-theme, color-text, color-dimmed);
                     }
                 }
             }
@@ -748,28 +801,9 @@
 
         .mat-form-field-flex {
             border-radius: $border-radius-md;
-            @include state-weak-default($pepperi-theme);
         }
 
-        &:hover .mat-form-field-flex {
-            // cursor: pointer;
-            @include state-weak-hover($pepperi-theme);
-        }
-
-        // Focused
-        &.mat-focused .mat-form-field-flex {
-            @include state-weak-focus($pepperi-theme);
-        }
-
-        // Active
-        &:active .mat-form-field-flex {
-            @include state-weak-active($pepperi-theme);
-        }
-
-        // Disabled
-        &.mat-form-field-disabled .mat-form-field-flex {
-            @include state-weak-disable($pepperi-theme);
-        }
+        @include pep-form-field-states($pepperi-theme);
 
         // Invalid (Error)
         &.mat-form-field-invalid {
@@ -781,10 +815,10 @@
                 }
 
                 .mat-form-field-subscript-wrapper {
-                    background: get-pepperi-color($pepperi-theme, color-system-caution, color-base);
-                    
+                    background: get-pep-color($pepperi-theme, color-system-caution, color-base);
+
                     .mat-error {
-                        color: get-pepperi-color($pepperi-theme, color-text, color-invert);
+                        color: get-pep-color($pepperi-theme, color-text, color-invert);
                     }
                 }
             }
@@ -792,90 +826,61 @@
             // Focused & Error
             &.mat-focused .mat-form-field-wrapper {
                 @include focus($pepperi-theme);
-                z-index: $z-index-medium + 1; // To show error on table above the next row element.
+                z-index: $z-index-medium - 3; // To show error on table above the next row element.
 
                 .mat-form-field-flex {
                     box-shadow: unset !important;
                 }
             }
         }
-
-        // &.regular {
-        //     .mat-form-field-flex {
-        //         @include state-regular-default($pepperi-theme, true);
-        //     }
-
-        //     // Focused
-        //     &.mat-focused .mat-form-field-flex {
-        //         @include state-regular-focus($pepperi-theme, true);
-        //     }
-
-        //     // Active
-        //     &:active .mat-form-field-flex {
-        //         //@include state-regular-active($pepperi-theme);
-        //     }
-
-        //     // Disabled
-        //     &.mat-form-field-disabled .mat-form-field-flex {
-        //         @include state-regular-disable($pepperi-theme, true);
-        //     }
-
-        //     // Hover
-        //     :hover {
-        //         .mat-form-field-flex {
-        //             @include state-regular-hover($pepperi-theme);
-        //         }
-        //     }
-        // }
     }
-    
+
     //  Table view
     // ------------------------
     .table-total,
     .table-header {
-        @include state-list-body-default($pepperi-theme);
+        // @include state-list-body-default($pepperi-theme);
+        background: transparent;
+
+        .table-header-padding-top {
+            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+        }
 
         .table-header-fieldset {
-            background-color: get-pepperi-color($pepperi-theme, color-weak, color-flat-r-30);
-            color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+            background-color: get-pep-color($pepperi-theme, color-weak, color-flat-r-30);
+            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
 
             .header-column {
-                .sortingBox {
+                .sorting-box {
                     .mat-icon {
                         .svg-icon {
-                            fill: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                            fill: get-pep-color($pepperi-theme, color-text, color-dimmed);
                         }
                     }
                 }
 
-                .resizeBox {
-                    .mat-icon {
-                        .svg-icon {
-                            fill: get-pepperi-color($pepperi-theme, color-weak, color-tran-50);
-                        }
+                .resize-box {
+                    .splitter {
+                        border-color: get-pep-color($pepperi-theme, color-weak, color-tran-50);
                     }
                 }
 
                 &:hover {
-                    color: get-pepperi-color($pepperi-theme, color-weak, color-tran-80);
-                    background-color: get-pepperi-color($pepperi-theme, color-weak, color-tran-20);
+                    color: get-pep-color($pepperi-theme, color-weak, color-tran-80);
+                    background-color: get-pep-color($pepperi-theme, color-weak, color-tran-20);
 
-                    .resizeBox {
-                        background: get-pepperi-color($pepperi-theme, color-text, color-link-highlight);
+                    .resize-box {
+                        background: get-pep-color($pepperi-theme, color-text, color-link-highlight);
 
-                        .mat-icon {
-                            .svg-icon {
-                                fill: get-pepperi-color($pepperi-theme, color-weak, color-tran-80);
-                            }
+                        .splitter {
+                            border-color: get-pep-color($pepperi-theme, color-weak, color-tran-80);
                         }
 
                         &:hover {
-                            background: get-pepperi-color($pepperi-theme, color-text, color-link-focus);
+                            background: get-pep-color($pepperi-theme, color-text, color-link-focus);
 
-                            .mat-icon {
-                                .svg-icon {
-                                    fill: get-pepperi-color($pepperi-theme, color-weak, color-base);
-                                }
+                            .splitter {
+                                border-color: get-pep-color($pepperi-theme, color-weak, color-base);
                             }
                         }
                     }
@@ -883,6 +888,12 @@
             }
         }
     }
+
+    // .table-header {
+    //     .table-header-fieldset {
+    //         box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, soft);
+    //     }
+    // }
 
     .table-body {
         @include state-list-body-default($pepperi-theme);
@@ -898,7 +909,7 @@
                     @include state-table-row-hover($pepperi-theme);
                 }
             }
-    
+
             &:active {
                 .table-row-fieldset {
                     @include state-table-row-active($pepperi-theme);
@@ -916,8 +927,7 @@
     //  Card view & Line view
     // ------------------------
     .line-view,
-    .card-view,
-    .cardView {
+    .card-view {
         @include state-list-body-default($pepperi-theme);
 
         fieldset {
@@ -932,7 +942,7 @@
             }
 
             .title {
-                color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                color: get-pep-color($pepperi-theme, color-text, color-dimmed);
             }
         }
 

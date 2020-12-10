@@ -3,7 +3,7 @@
 // *****************************************************************************************
 
 /// Gets color-system-primary-invert
-@function get-pepperi-color-system-primary-invert() {
+@function get-pep-color-system-primary-invert() {
     @return (
         // Transparent colors.
         color-base: $color-system-primary-invert-base,
@@ -28,7 +28,7 @@
 }
 
 /// Gets color-system-primary
-@function get-pepperi-color-system-primary() {
+@function get-pep-color-system-primary() {
     @return (
         // Transparent colors.
         color-base: $color-system-primary-base,
@@ -53,7 +53,7 @@
 }
 
 /// Gets color-system-success
-@function get-pepperi-color-system-success() {
+@function get-pep-color-system-success() {
     @return (
         // Transparent colors.
         color-base: $color-system-success-base,
@@ -78,7 +78,7 @@
 }
 
 /// Gets color-system-caution
-@function get-pepperi-color-system-caution() {
+@function get-pep-color-system-caution() {
     @return (
         // Transparent colors.
         color-base: $color-system-caution-base,
@@ -103,7 +103,7 @@
 }
 
 /// Gets color-user-primary
-@function get-pepperi-color-user-primary() {
+@function get-pep-color-user-primary() {
     @return (
         // Transparent colors.
         color-base: $color-user-primary-base,
@@ -128,7 +128,7 @@
 }
 
 /// Gets color-user-secondary
-@function get-pepperi-color-user-secondary() {
+@function get-pep-color-user-secondary() {
     @return (
         // Transparent colors.
         color-base: $color-user-secondary-base,
@@ -153,7 +153,7 @@
 }
 
 /// Gets color-weak
-@function get-pepperi-color-weak() {
+@function get-pep-color-weak() {
     @return (
         // Transparent colors.
         color-base: $color-weak-base,
@@ -178,7 +178,7 @@
 }
 
 /// Gets color-regular
-@function get-pepperi-color-regular() {
+@function get-pep-color-regular() {
     @return (
         // Transparent colors.
         color-base: $color-regular-base,
@@ -203,7 +203,7 @@
 }
 
 /// Gets color-strong
-@function get-pepperi-color-strong() {
+@function get-pep-color-strong() {
     @return (
         // Transparent colors.
         color-base: $color-strong-base,
@@ -228,7 +228,7 @@
 }
 
 /// Gets color-top-header
-@function get-pepperi-color-top-header() {
+@function get-pep-color-top-header() {
     @return (
         // Transparent colors.
         color-base: $color-top-header-base,
@@ -252,7 +252,7 @@
     );
 }
 /// Gets color-qs
-@function get-pepperi-color-qs() {
+@function get-pep-color-qs() {
     @return (
         // Transparent colors.
         color-base: $color-qs-base,
@@ -277,7 +277,7 @@
 }
 
 /// Gets color-text
-@function get-pepperi-color-text() {
+@function get-pep-color-text() {
     @return (
         color-main: $color-text-main,
         color-dimmed: $color-text-dimmed,
@@ -291,26 +291,26 @@
     );
 }
 
-/// Gets all pepperi colors
-@function get-pepperi-colors-for-theme() {
+/// Gets all pep colors
+@function get-pep-colors-for-theme() {
     @return (
-        color-system-primary-invert: get-pepperi-color-system-primary-invert(),
-        color-system-primary: get-pepperi-color-system-primary(),
-        color-system-success: get-pepperi-color-system-success(),
-        color-system-caution: get-pepperi-color-system-caution(),
-        color-user-primary: get-pepperi-color-user-primary(),
-        color-user-secondary: get-pepperi-color-user-secondary(),
-        color-weak: get-pepperi-color-weak(),
-        color-regular: get-pepperi-color-regular(),
-        color-strong: get-pepperi-color-strong(),
-        color-top-header: get-pepperi-color-top-header(),
-        color-qs: get-pepperi-color-qs(),
-        color-text: get-pepperi-color-text(),
+        color-system-primary-invert: get-pep-color-system-primary-invert(),
+        color-system-primary: get-pep-color-system-primary(),
+        color-system-success: get-pep-color-system-success(),
+        color-system-caution: get-pep-color-system-caution(),
+        color-user-primary: get-pep-color-user-primary(),
+        color-user-secondary: get-pep-color-user-secondary(),
+        color-weak: get-pep-color-weak(),
+        color-regular: get-pep-color-regular(),
+        color-strong: get-pep-color-strong(),
+        color-top-header: get-pep-color-top-header(),
+        color-qs: get-pep-color-qs(),
+        color-text: get-pep-color-text(),
     );
 }
 
-/// Gets all pepperi shadows
-@function get-pepperi-shadows-for-theme() {
+/// Gets all pep shadows
+@function get-pep-shadows-for-theme() {
     @return (
         //*********************************************************************************
         //                            Shadows
@@ -333,11 +333,11 @@
     );
 }
 
-/// Gets pepperi theme
+/// Gets pep theme
 @function get-pepperi-theme() {
     @return (
-        colors: get-pepperi-colors-for-theme(),
-        shadows: get-pepperi-shadows-for-theme(),
+        colors: get-pep-colors-for-theme(),
+        shadows: get-pep-shadows-for-theme(),
     );
 }
 
@@ -346,22 +346,22 @@
 //                      Public function (for use all application-wide)
 // *****************************************************************************************
 
-/// Gets color from pepperi theme
-/// @param {Map} $pepperi-theme - the pepperi theme map 
+/// Gets color from pep theme
+/// @param {Map} $pepperi-theme - the pep theme map 
 /// @param {String} $color-map - the colors map 
 /// @param {String} $color-name - the color name
 /// @return {color} - wanted color
-@function get-pepperi-color($pepperi-theme, $color-map, $color-name) {
+@function get-pep-color($pepperi-theme, $color-map, $color-name) {
     $colors: map-get($pepperi-theme, colors);
     @return map-get(map-get($colors, $color-map), $color-name);
 }
 
-/// Gets shadow from pepperi theme
-/// @param {Map} $pepperi-theme - the pepperi theme map 
+/// Gets shadow from pep theme
+/// @param {Map} $pepperi-theme - the pep theme map 
 /// @param {String} $shadow-map - the shadow map 
 /// @param {String} $shadow-name - the shadow name
 /// @return {shadow} - wanted shadow
-@function get-pepperi-shadow($pepperi-theme, $shadow-map, $shadow-name) {
+@function get-pep-shadow($pepperi-theme, $shadow-map, $shadow-name) {
     $shadows: map-get($pepperi-theme, shadows);
     @return map-get(map-get($shadows, $shadow-map), $shadow-name);
 }

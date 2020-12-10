@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { LAYOUT_TYPE } from '@pepperi-addons/ngx-lib';
+import { PepLayoutType } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-indicators',
@@ -7,14 +7,13 @@ import { LAYOUT_TYPE } from '@pepperi-addons/ngx-lib';
     styleUrls: ['./indicators.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PepperiIndicatorsComponent {
+export class PepIndicatorsComponent {
     @Input() key: string;
     @Input() value: string;
 
     controlType = 'indicators';
 
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiTable;
-    LAYOUT_TYPE = LAYOUT_TYPE;
+    @Input() layoutType: PepLayoutType = 'table';
 
     constructor() { }
 }

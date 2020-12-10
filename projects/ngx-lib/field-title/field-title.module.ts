@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconSystemMust } from '@pepperi-addons/ngx-lib/icon';
+import { PepIconModule, PepIconRegistry, pepIconSystemMust } from '@pepperi-addons/ngx-lib/icon';
 
-import { PepperiFieldTitleComponent } from './field-title.component';
+import { PepFieldTitleComponent } from './field-title.component';
 
 @NgModule({
     imports: [
@@ -14,16 +14,16 @@ import { PepperiFieldTitleComponent } from './field-title.component';
         // Material modules,
         MatCommonModule,
         MatFormFieldModule,
-        // Pepperi modules
-        PepperiIconModule
+        // ngx-lib modules
+        PepIconModule
     ],
-    exports: [PepperiFieldTitleComponent],
-    declarations: [PepperiFieldTitleComponent],
+    exports: [PepFieldTitleComponent],
+    declarations: [PepFieldTitleComponent],
 })
-export class PepperiFieldTitleModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemMust
+export class PepFieldTitleModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemMust
         ]);
     }
 }

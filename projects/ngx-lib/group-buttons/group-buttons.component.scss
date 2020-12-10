@@ -10,6 +10,7 @@
         // margin-top: $spacing-xs;
 
         .first-button {
+            // This is only for .dropdown-buttons override in .split-buttons class
             margin-right: 1px;
         }
 
@@ -23,18 +24,19 @@
             border-radius: 0 $border-radius-md $border-radius-md 0;
         }
 
-        .pepperi-button {
+        .pepperi-button, .pep-button {
             margin-top: 0 !important; // override material defaults.
 
             &.cdk-focused {
-                z-index: $z-index-lowest;
+                z-index: $z-index-lowest + 1;
             }
         }
 
         @media (max-width: $screen-max-size-xs) {
             &.dropup {
                 .first-button {
-                    @include calc(max-width, '75vw - 4rem'); //we have a variants for it !!!
+                    // @include calc(max-width, '75vw - 4rem'); //we have a variants for it !!!
+                    max-width: 200px;
                     padding: 0 0.25rem;
                 }
 
@@ -46,8 +48,13 @@
     }
 
     .split-buttons {
+        display: grid;
+        grid-template-columns: auto auto;
+        max-width: 100%;
+
         .first-button {
             margin-right: -1px;
+            max-width: unset;
         }
 
         .middle-button {

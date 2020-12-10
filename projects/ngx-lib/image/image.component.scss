@@ -7,7 +7,7 @@
     display: grid;
     // align-items: center;
 }
-:host > * { 
+:host > * {
     align-self: center; // instead of  align-items: center; in the :host
 }
 
@@ -35,7 +35,7 @@
     }
 }
 
-.pepperi-file-container {
+.pepperi-file-container, .pep-file-container {
     height: 100%;
 
     .img-wrapper {
@@ -53,11 +53,11 @@
     mat-icon {
         height: 100%;
         width: 100%;
-        padding: 0.4rem; 
+        padding: 0.4rem;
 
-        .svg-icon {
-            height: 0.75rem;
-            width: 0.75rem;
+        pep-icon {
+            height: 0.75rem !important;
+            width: 0.75rem !important;
             margin: 0.05rem;
         }
     }
@@ -70,7 +70,7 @@
     padding: 0.5rem;
     // margin: 0.5rem 0;
     cursor: pointer;
-    position: absolute;
+    position: absolute !important;
 }
 
 .top {

@@ -1,4 +1,4 @@
-<div class="indicators-container" [ngClass]="{ 'is-inside-table': layoutType === LAYOUT_TYPE.PepperiTable }">
+<div class="indicators-container" [ngClass]="{ 'is-inside-table': layoutType === 'table' }">
     <ng-container *ngFor="let value of value?.split(';')">
         <pep-icon name="indicator_dot_placeholder" class="pull-left flip" [fill]="value"></pep-icon>
     </ng-container>

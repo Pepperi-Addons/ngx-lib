@@ -11,15 +11,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiIconModule, PepperiIconRegistry, pepperiIconSystemEdit, pepperiIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
-import { PepperiDialogModule } from '@pepperi-addons/ngx-lib/dialog';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepIconModule, PepIconRegistry, pepIconSystemEdit, pepIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
+import { PepTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
 import { QuillModule } from 'ngx-quill';
 
-import { PepperiRichHtmlTextareaComponent } from './rich-html-textarea.component';
+import { PepRichHtmlTextareaComponent } from './rich-html-textarea.component';
 
 @NgModule({
     imports: [
@@ -37,21 +37,21 @@ import { PepperiRichHtmlTextareaComponent } from './rich-html-textarea.component
         MatDialogModule,
         // External modules
         QuillModule.forRoot(),
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule,
-        PepperiTextboxIconModule,
-        PepperiDialogModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule,
+        PepTextboxIconModule,
+        PepDialogModule
     ],
-    exports: [ PepperiRichHtmlTextareaComponent ],
-    declarations: [ PepperiRichHtmlTextareaComponent ],
+    exports: [ PepRichHtmlTextareaComponent ],
+    declarations: [ PepRichHtmlTextareaComponent ],
 })
-export class PepperiRichHtmlTextareaModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemEdit,
-            pepperiIconSystemClose
+export class PepRichHtmlTextareaModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemEdit,
+            pepIconSystemClose
         ]);
     }
 }

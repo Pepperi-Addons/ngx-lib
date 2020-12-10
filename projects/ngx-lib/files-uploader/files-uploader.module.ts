@@ -10,16 +10,16 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { FileUploadModule } from 'ng2-file-upload';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import {
-    PepperiIconModule,
-    PepperiIconRegistry,
-    pepperiIconSystemBin,
-    pepperiIconSystemAttach,
-    pepperiIconSystemFileUploadCloud,
-    pepperiIconSystemProcessing
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemBin,
+    pepIconSystemAttach,
+    pepIconSystemFileUploadCloud,
+    pepIconSystemProcessing
 } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiDialogModule } from '@pepperi-addons/ngx-lib/dialog';
+import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
 import { FilesUploaderComponent } from './files-uploader.component';
 
@@ -36,21 +36,21 @@ import { FilesUploaderComponent } from './files-uploader.component';
         MatIconModule,
         // External modules
         FileUploadModule,
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiDialogModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepDialogModule
     ],
     exports: [FilesUploaderComponent],
     declarations: [FilesUploaderComponent],
 })
-export class PepperiFilesUploaderModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemBin,
-            pepperiIconSystemAttach,
-            pepperiIconSystemFileUploadCloud,
-            pepperiIconSystemProcessing
+export class PepFilesUploaderModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemBin,
+            pepIconSystemAttach,
+            pepIconSystemFileUploadCloud,
+            pepIconSystemProcessing
         ]);
     }
 }

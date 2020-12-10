@@ -3,7 +3,7 @@ import {
     ViewEncapsulation, ChangeDetectionStrategy, OnDestroy
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { LAYOUT_TYPE } from '@pepperi-addons/ngx-lib';
+import { PepLayoutType, PepFieldValueChangedData, PepFieldClickedData } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-field-generator',
@@ -12,22 +12,21 @@ import { LAYOUT_TYPE } from '@pepperi-addons/ngx-lib';
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PepperiFieldGeneratorComponent implements OnChanges, OnDestroy {
+export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Input() field: any;
-    @Input() hasHeightLimit = false;
     @Input() isActive = false;
     @Input() objectId: any = null;
     @Input() form: FormGroup;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
     @Input() showTitle = true;
 
     @Input() checkForChanges: any = null;
-    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() childChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() formValidationChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() elementClicked: EventEmitter<any> = new EventEmitter<any>();
-    @Output() notifyMenuItemClicked: EventEmitter<any> = new EventEmitter<any>();
-    @Output() notifyChildClicked: EventEmitter<any> = new EventEmitter<any>();
+    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
+    @Output() menuItemClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
 
     get isValid(): boolean {
         if (this.field.readonly || this.field.disabled) {
@@ -56,46 +55,46 @@ export class PepperiFieldGeneratorComponent implements OnChanges, OnDestroy {
     constructor() { }
 
     ngOnDestroy(): void {
-        if (this.valueChanged) { this.valueChanged.unsubscribe(); }
+        if (this.valueChange) { this.valueChange.unsubscribe(); }
 
-        if (this.formValidationChanged) { this.formValidationChanged.unsubscribe(); }
+        if (this.formValidationChange) { this.formValidationChange.unsubscribe(); }
 
-        if (this.childChanged) { this.childChanged.unsubscribe(); }
+        if (this.childChange) { this.childChange.unsubscribe(); }
 
-        if (this.elementClicked) { this.elementClicked.unsubscribe(); }
+        if (this.elementClick) { this.elementClick.unsubscribe(); }
 
-        if (this.notifyMenuItemClicked) { this.notifyMenuItemClicked.unsubscribe(); }
+        if (this.menuItemClick) { this.menuItemClick.unsubscribe(); }
 
-        if (this.notifyChildClicked) { this.notifyChildClicked.unsubscribe(); }
+        if (this.childClick) { this.childClick.unsubscribe(); }
     }
 
-    onValueChanged(valueChanged: any): void {
-        this.valueChanged.emit(valueChanged);
+    onValueChanged(valueChange: PepFieldValueChangedData): void {
+        this.valueChange.emit(valueChange);
     }
 
-    onChildChanged(childChanged: any): void {
-        this.childChanged.emit(childChanged);
+    onChildChanged(childChange: any): void {
+        this.childChange.emit(childChange);
     }
 
-    onFormValidationChanged(formValidationChanged: any): void {
-        this.formValidationChanged.emit(formValidationChanged);
+    onFormValidationChanged(formValidationChange: any): void {
+        this.formValidationChange.emit(formValidationChange);
     }
 
     onClick(fieldClicked: any): void {
-        this.elementClicked.emit(fieldClicked);
+        this.elementClick.emit(fieldClicked);
     }
 
     onMenuItemClicked(fieldToEdit: any): void {
-        this.notifyMenuItemClicked.emit(fieldToEdit);
+        this.menuItemClick.emit(fieldToEdit);
     }
 
-    onChildClick(childClicked: any): void {
-        this.notifyChildClicked.emit(childClicked);
+    onChildClick(childClick: any): void {
+        this.childClick.emit(childClick);
     }
 
     ngOnChanges(changes: any): void {
         // debugger;
-        // TODO: Remove it only for testing.
+        // For testing.
         // this.field.disabled = this.field.readonly = false;
     }
 }

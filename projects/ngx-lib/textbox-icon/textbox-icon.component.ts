@@ -5,14 +5,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     templateUrl: './textbox-icon.component.html',
     styleUrls: ['./textbox-icon.component.scss'],
 })
-export class PepperiTextboxIconComponent {
+export class PepTextboxIconComponent {
     @Input() value: string;
     @Input() label: string;
     @Input() type?: string;
     @Input() disabled: boolean;
 
     test = true;
-    @Output() iconClicked: EventEmitter<void> = new EventEmitter<void>();
+    @Output() iconClick: EventEmitter<void> = new EventEmitter<void>();
 
     constructor() { }
 
@@ -34,6 +34,6 @@ export class PepperiTextboxIconComponent {
             }
         }
 
-        this.iconClicked.emit();
+        this.iconClick.emit();
     }
 }

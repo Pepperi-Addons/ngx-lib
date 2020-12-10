@@ -1,17 +1,17 @@
 // -----------------------------------------------------
-//  Pepperi - File
+//  File
 // -----------------------------------------------------
 $file-input-z-index: 1;
 
-.pepperi-file-container {
+.pepperi-file-container, .pep-file-container {
     .mat-form-field {
-        .pepperi-file-wrapper {
+        .pepperi-file-wrapper, .pep-file-wrapper {
             position: relative;
             border-radius: $border-radius-md;
             cursor: pointer;
             padding: 1px 0.25rem;
 
-            .pepperi-file {
+            .pepperi-file, .pep-file {
                 border-radius: $border-radius-md;
                 display: grid;
                 justify-content: center;
@@ -21,11 +21,11 @@ $file-input-z-index: 1;
                 height: inherit;
                 text-align: center;
 
-                .pepperi-file-message {
+                .pepperi-file-message, .pep-file-message {
                     display: grid;
                     align-items: center;
                     justify-items: center;
-                    
+
                     .svg-icon {
                         height: 1.5rem;
                         width: 1.5rem;
@@ -43,12 +43,12 @@ $file-input-z-index: 1;
                     }
                 }
 
-                .pepperi-file-preview {
+                .pepperi-file-preview, .pep-file-preview {
                     display: grid;
                     align-items: center;
                     justify-items: center;
                     z-index: $file-input-z-index + 1;
-                    
+
                     img {
                         object-fit: contain;
                         max-height: 100%;
@@ -62,10 +62,11 @@ $file-input-z-index: 1;
                     }
                 }
 
-                .pepperi-button {
-                    height: 2.5rem;
+                .pepperi-button, .pep-button {
+                    // + 2px for the border top + bottom (as :after)
+                    height: calc(2.5rem + 2px);
+                    max-height: calc(2.5rem + 2px);
                     width: 2.5rem;
-                    max-height: 2.5rem;
                     max-width: 2.5rem;
                     position: absolute;
                     z-index: $file-input-z-index + 8;
@@ -94,7 +95,7 @@ $file-input-z-index: 1;
                     cursor: pointer;
                     z-index: $file-input-z-index + 4;
                 }
-                
+
             }
 
             .hidden-input {
@@ -124,9 +125,9 @@ $file-input-z-index: 1;
 
     &.one-row {
         .mat-form-field {
-            .pepperi-file-wrapper {
-                .pepperi-file {
-                    .pepperi-file-message {
+            .pepperi-file-wrapper, .pep-file-wrapper {
+                .pepperi-file, .pep-file {
+                    .pepperi-file-message, .pep-file-message {
                         display: flex;
 
                         a {
@@ -134,7 +135,7 @@ $file-input-z-index: 1;
                         }
                     }
 
-                    .pepperi-button {
+                    .pepperi-button, .pep-button {
                         border-radius: 0 $border-radius-md $border-radius-md 0;
 
                         &.right-alignment {
@@ -149,12 +150,12 @@ $file-input-z-index: 1;
     }
 }
 
-.pepperi-report-file {
+.pepperi-report-file, .pep-report-file {
     cursor: pointer;
     border-radius: $border-radius-md;
     // margin: 0.25rem;
 
-    &.pepperi-report-img {
+    &.pepperi-report-img, &.pep-report-img {
         visibility: hidden;
         // margin-top: 0.25rem;
     }
@@ -163,9 +164,9 @@ $file-input-z-index: 1;
 // -----------------------------------------------------
 //  Override material style
 // -----------------------------------------------------
-.pepperi-file-container {
+.pepperi-file-container, .pep-file-container {
     display: grid;
-    
+
     .mat-form-field {
         .mat-form-field-flex {
             padding: 0 !important;
@@ -178,41 +179,41 @@ $file-input-z-index: 1;
     }
 }
 
-@mixin pepperi-file-theme($pepperi-theme) {
-    .pepperi-file-container {
+@mixin pep-file-theme($pepperi-theme) {
+    .pepperi-file-container, .pep-file-container {
         .mat-form-field {
-            .pepperi-file-wrapper {
-                color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
-                @include inline(get-pepperi-color($pepperi-theme, color-system-primary, color-flat-r-20), 1px, dashed);
+            .pepperi-file-wrapper, .pep-file-wrapper {
+                color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                @include inline(get-pep-color($pepperi-theme, color-system-primary, color-flat-r-20), 1px, dashed);
 
-                .pepperi-file {
-                    .pepperi-button {
-                        color: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base);
+                .pepperi-file, .pep-file {
+                    .pepperi-button, .pep-button {
+                        color: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
 
                         &.delete {
-                            background-color: get-pepperi-color($pepperi-theme, color-system-primary, color-tran-70);
+                            background-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-70);
 
                             .svg-icon {
-                                fill: get-pepperi-color($pepperi-theme, color-system-primary-invert, color-base);
+                                fill: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
                             }
-                        
+
                             &:hover {
-                                background: get-pepperi-color($pepperi-theme, color-system-caution, color-base);
-                                box-shadow: get-pepperi-shadow($pepperi-theme, shadow-xs, regular);
+                                background: get-pep-color($pepperi-theme, color-system-caution, color-base);
+                                box-shadow: get-pep-shadow($pepperi-theme, shadow-xs, regular);
                             }
                         }
                     }
 
                     .svg-icon {
-                        fill: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                        fill: get-pep-color($pepperi-theme, color-text, color-dimmed);
                     }
 
-                    .pepperi-file-preview {
+                    .pepperi-file-preview, .pep-file-preview {
                         a {
-                            color: get-pepperi-color($pepperi-theme, color-text, color-link);
-                            
+                            color: get-pep-color($pepperi-theme, color-text, color-link);
+
                             .svg-icon {
-                                fill: get-pepperi-color($pepperi-theme, color-text, color-link);
+                                fill: get-pep-color($pepperi-theme, color-text, color-link);
                             }
                         }
                     }
@@ -221,9 +222,9 @@ $file-input-z-index: 1;
 
             // Disabled
             &.mat-form-field-disabled {
-                .pepperi-file-wrapper:after {
+                .pepperi-file-wrapper:after, .pep-file-wrapper:after {
                     border: unset;
-                }   
+                }
             }
         }
     }

@@ -8,23 +8,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PepperiModule } from '@pepperi-addons/ngx-lib';
-import { PepperiFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import {
-    PepperiIconModule,
-    PepperiIconRegistry,
-    pepperiIconSystemEdit,
-    pepperiIconSystemClose,
-    pepperiIconArrowRightAlt,
-    pepperiIconArrowLeftAlt
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemEdit,
+    pepIconSystemClose,
+    pepIconArrowRightAlt,
+    pepIconArrowLeftAlt
 } from '@pepperi-addons/ngx-lib/icon';
-import { PepperiDialogModule } from '@pepperi-addons/ngx-lib/dialog';
+import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
 import { GalleryModule } from '@ngx-gallery/core';
 import { ImageViewerModule } from '@hallysonh/ngx-imageviewer';
 // import { ImageViewerModule } from 'ngx-image-viewer';
 
-import { PepperiImagesFilmstripComponent } from './images-filmstrip.component';
+import { PepImagesFilmstripComponent } from './images-filmstrip.component';
 
 @NgModule({
     imports: [
@@ -57,22 +57,22 @@ import { PepperiImagesFilmstripComponent } from './images-filmstrip.component';
         //         fullscreen: 'fa fa-arrows-alt'
         //     }
         // }),
-        // Pepperi modules
-        PepperiModule,
-        PepperiIconModule,
-        PepperiFieldTitleModule,
-        PepperiDialogModule
+        // ngx-lib modules
+        PepNgxLibModule,
+        PepIconModule,
+        PepFieldTitleModule,
+        PepDialogModule
     ],
-    exports: [ PepperiImagesFilmstripComponent ],
-    declarations: [ PepperiImagesFilmstripComponent ],
+    exports: [ PepImagesFilmstripComponent ],
+    declarations: [ PepImagesFilmstripComponent ],
 })
-export class PepperiImagesFilmstripModule {
-    constructor(private pepperiIconRegistry: PepperiIconRegistry) {
-        this.pepperiIconRegistry.registerIcons([
-            pepperiIconSystemEdit,
-            pepperiIconSystemClose,
-            pepperiIconArrowRightAlt,
-            pepperiIconArrowLeftAlt
+export class PepImagesFilmstripModule {
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemEdit,
+            pepIconSystemClose,
+            pepIconArrowRightAlt,
+            pepIconArrowLeftAlt
         ]);
     }
 }

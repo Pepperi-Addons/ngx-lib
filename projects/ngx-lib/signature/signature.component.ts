@@ -4,8 +4,10 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
-import { FileService, LAYOUT_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
+import { FileService, PepLayoutType, CustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepSignatureField } from '@pepperi-addons/ngx-lib';
 import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'pep-signature',
@@ -13,14 +15,14 @@ import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
     templateUrl: './signature.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PepperiSignatureComponent implements OnInit, OnChanges, OnDestroy {
+export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
     @Input() src = '';
     @Input() label = '';
     @Input() required = false;
     @Input() disabled = false;
     @Input() readonly = false;
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() signatureURL = '';
     // @Input() inDialog = false;
@@ -29,15 +31,15 @@ export class PepperiSignatureComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() form: FormGroup = null;
     @Input() showTitle = true;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
 
     @ViewChild('signaturePad') signaturePad: SignaturePad;
     @ViewChild('signaturePopupPad', { read: TemplateRef }) signaturePopupPad: TemplateRef<any>;
+    dialogRef: MatDialogRef<any>;
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     fieldHeight = '';
     standAlone = false;
     dataURI = null;
@@ -67,7 +69,15 @@ export class PepperiSignatureComponent implements OnInit, OnChanges, OnDestroy {
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            this.form = this.customizationService.getDefaultFromGroup(this.key, this.src, this.required, this.readonly, this.disabled);
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.src, this.required, this.readonly, this.disabled);
+            const pepField = new PepSignatureField({
+                key: this.key,
+                value: this.src,
+                required: this.required,
+                readonly: this.readonly,
+                disabled: this.disabled
+            });
+            this.form = this.customizationService.getDefaultFromGroup(pepField);
 
             this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
@@ -86,8 +96,8 @@ export class PepperiSignatureComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChanged) {
-            this.valueChanged.unsubscribe();
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
         }
     }
 
@@ -118,12 +128,12 @@ export class PepperiSignatureComponent implements OnInit, OnChanges, OnDestroy {
             this.openSignatoreDlg(this.signatureURL);
         }
     }
+
     openSignatoreDlg(src: string = ''): void {
         this.showActionBtn = this.signatureURL && this.signatureURL !== '' ? false : true;
-        // const signatureData = new DialogData('', this.signaturePopupPad, DialogDataType.Template);
 
-        const dialogRef = this.dialogService.openDialog(this.signaturePopupPad);
-        dialogRef.afterOpened().subscribe(() => {
+        this.dialogRef = this.dialogService.openDialog(this.signaturePopupPad);
+        this.dialogRef.afterOpened().subscribe(() => {
             this.afterDialogOpened();
         });
     }
@@ -160,6 +170,8 @@ export class PepperiSignatureComponent implements OnInit, OnChanges, OnDestroy {
             this.signatureURL = '';
             this.changeValue(this.signatureURL);
         }
+
+        this.dialogRef.close(this.signatureURL);
     }
 
     errorHandler(event: any): void {
@@ -170,7 +182,7 @@ export class PepperiSignatureComponent implements OnInit, OnChanges, OnDestroy {
         this.dataURI = value.length > 0 ? JSON.parse(value) : null;
         this.src = this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
         this.customizationService.updateFormFieldValue(this.form, this.key, this.dataURI ? this.dataURI.fileExt : '');
-        this.valueChanged.emit({ apiName: this.key, value, controlType: this.controlType, lastFocusedField });
+        this.valueChange.emit({ key: this.key, value, controlType: this.controlType, lastFocusedField });
     }
 
     onKeyPress_OpenSignModal(event: any): void {

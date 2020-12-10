@@ -4,5 +4,6 @@
 <!-- Angular flex-layout -->
 <div *ngFor="let s of sizes" fxShow.xs="{{s.name == 'xs'}}" fxShow.sm="{{s.name == 'sm'}}"
   fxShow.md="{{s.name == 'md'}}" fxShow.lg="{{s.name == 'lg'}}" fxShow.xl="{{s.name == 'xl'}}"
-  class="{{s.css + ' ' + (prefix + s.id) }}">The current screen size is - {{s.name}}
+  class="{{s.css + ' ' + (prefix + s.id) }}">
+  <ng-container *ngIf="showScreenSize"> The current screen size is - {{s.name}}</ng-container>
 </div>

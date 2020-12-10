@@ -1,6 +1,0 @@
-/*
- * Public API Surface of ngx-lib/separator
- */
-export * from './separator.module';
-export * from './separator.component';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL25neC1saWIvc2VwYXJhdG9yL3B1YmxpYy1hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFDSCxjQUFjLG9CQUFvQixDQUFDO0FBQ25DLGNBQWMsdUJBQXVCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxyXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygbmd4LWxpYi9zZXBhcmF0b3JcclxuICovXHJcbmV4cG9ydCAqIGZyb20gJy4vc2VwYXJhdG9yLm1vZHVsZSc7XHJcbmV4cG9ydCAqIGZyb20gJy4vc2VwYXJhdG9yLmNvbXBvbmVudCc7XHJcbiJdfQ==

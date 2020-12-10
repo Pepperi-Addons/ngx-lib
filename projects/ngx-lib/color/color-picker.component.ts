@@ -3,38 +3,37 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { hex2hsl, hslString2hsl, rgbString2hsl, HslColor, findClosestAccessibleColor, hsl2hex, convertHslToStringHsl } from './color-utils';
 import { PepColorType } from './color.model';
 
-export enum ContrastRatioType {
+enum PepContrastRatioType {
     AA = 4.5,
     AAA = 7
 }
 
-export interface ColorPickerDialogData {
+interface PepColorPickerDialogData {
     value: string;
     type: PepColorType;
     showAAComplient: boolean;
     textColor: string;
-    contrastRatio: ContrastRatioType;
+    contrastRatio: PepContrastRatioType;
 }
 
 @Component({
     templateUrl: './color-picker.component.html',
     styleUrls: ['./color-picker.component.scss']
 })
-export class PepperiColorPickerComponent implements OnInit {
+export class PepColorPickerComponent implements OnInit {
 
     static CURRENT_HUE = '--pep-color-picker-current-hue';
 
-    PepColorType = PepColorType;
     checkAAComplient = true;
 
     constructor(
-        private dialogRef: MatDialogRef<PepperiColorPickerComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: ColorPickerDialogData
+        private dialogRef: MatDialogRef<PepColorPickerComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: PepColorPickerDialogData
     ) {
-        this.data.type = data ? data.type : PepColorType.AnyColor;
+        this.data.type = data ? data.type : 'any';
         this.data.showAAComplient = data && data.showAAComplient === undefined ? true : (data ? data.showAAComplient : false);
         this.data.textColor = data && data.textColor ? data.textColor : '#fff';
-        this.data.contrastRatio = data && data.contrastRatio ? data.contrastRatio : ContrastRatioType.AA;
+        this.data.contrastRatio = data && data.contrastRatio ? data.contrastRatio : PepContrastRatioType.AA;
     }
 
     currentHue = 100;
@@ -59,10 +58,10 @@ export class PepperiColorPickerComponent implements OnInit {
     }
 
     initVars(): void {
-        if (this.data.type === PepColorType.MainColor) {
+        if (this.data.type === 'main') {
             this.currentLightnessMax = 10;
             this.currentLightness = 5;
-        } else if (this.data.type === PepColorType.SuccessColor) {
+        } else if (this.data.type === 'success') {
             this.currentHueMin = 70;
             this.currentHueMax = 150;
             this.currentHue = 100;
@@ -74,7 +73,7 @@ export class PepperiColorPickerComponent implements OnInit {
             this.currentLightnessMin = 10;
             this.currentLightnessMax = 65;
             this.currentLightness = 50;
-        } else if (this.data.type === PepColorType.CautionColor) {
+        } else if (this.data.type === 'caution') {
             this.currentHueMin = -20;
             this.currentHueMax = 20;
             this.currentHue = 10;
@@ -90,7 +89,7 @@ export class PepperiColorPickerComponent implements OnInit {
     }
 
     setCurrentHueInCss(): void {
-        document.documentElement.style.setProperty(PepperiColorPickerComponent.CURRENT_HUE, this.currentHue.toString());
+        document.documentElement.style.setProperty(PepColorPickerComponent.CURRENT_HUE, this.currentHue.toString());
     }
 
     convertValueStringToColor(color): void {

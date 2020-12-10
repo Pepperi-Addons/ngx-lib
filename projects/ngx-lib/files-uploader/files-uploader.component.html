@@ -1,26 +1,26 @@
 ﻿<!-- New code -->
-<ng-template #pepperiTemplate>
+<ng-template #pepTemplate>
     <mat-form-field [formGroup]="form" appearance="outline">
-        <div class="pepperi-file-wrapper">
-            <div class="pepperi-file body-sm" [style.height]="fieldHeight" [ngClass]="{
+        <div class="pep-file-wrapper">
+            <div class="pep-file body-sm" [style.height]="fieldHeight" [ngClass]="{
                     'one-row': rowSpan == 1,
                     disable: disabled
                 }">
                 <ng-container *ngIf="src != ''; then withImg; else noImg"></ng-container>
                 <ng-template #withImg>
                     <button *ngIf="!disabled" mat-button (click)="deleteFile()"
-                        class="pepperi-button icon-button weak md delete" tabindex="-1"
-                        [ngClass]="{ 'right-alignment': xAlignment == '2' }">
+                        class="pep-button icon-button weak md delete" tabindex="-1"
+                        [ngClass]="{ 'right-alignment': xAlignment == 'right' }">
                         <mat-icon>
                             <pep-icon name="system_bin">
                             </pep-icon>
                         </mat-icon>
                     </button>
-                    <div class="pepperi-file-preview" (click)="onElementClicked($event)">
-                        <img *ngIf="controlType === 'image'" #imagePreview [src]="src" class="pepperi-file-preview-img"
+                    <div class="pep-file-preview" (click)="onElementClicked($event)">
+                        <img *ngIf="controlType === 'image'" #imagePreview [src]="src" class="pep-file-preview-img"
                             [style.max-height]="fieldHeight" (error)="errorHandler($event)" [alt]="label"
                             [ngClass]="['text-align-' + xAlignment]" />
-                        <div *ngIf="controlType === 'attachment'" class="ellipsis pepperi-file-message">
+                        <div *ngIf="controlType === 'attachment'" class="ellipsis pep-file-message">
                             <a *ngIf="src != ''" href="javascript:void(0)">
                                 <pep-icon name="system_attach">
                                 </pep-icon>
@@ -30,7 +30,7 @@
                     </div>
                 </ng-template>
                 <ng-template #noImg>
-                    <div class="ellipsis pepperi-file-message">
+                    <div class="ellipsis pep-file-message">
                         <pep-icon *ngIf="controlType === 'attachment'" name="system_attach">
                         </pep-icon>
                         <pep-icon *ngIf="controlType === 'image'" name="system_file_upload_cloud">
@@ -44,12 +44,12 @@
                         </p> -->
                     </div>
                     <ng-container *ngIf="!disabled">
-                        <input #fileInput id="pepperi-file-{{ key }}" tabindex="-1" type="file"
-                            accept="acceptedExtensions" ng2FileSelect [uploader]="uploader" autocomplete="off" />
-                        <button *ngIf="progress != 0" mat-button class="pepperi-button icon-button weak md delete"
-                            [ngClass]="{ 'right-alignment': xAlignment == '2' }">
+                        <input #fileInput id="pep-file-{{ key }}" tabindex="-1" type="file" accept="acceptedExtensions"
+                            ng2FileSelect [uploader]="uploader" autocomplete="off" />
+                        <button *ngIf="progress != 0" mat-button class="pep-button icon-button weak md delete"
+                            [ngClass]="{ 'right-alignment': xAlignment == 'right' }">
                             <mat-icon>
-                                <pep-icon name="system_processing" class="spin-icon">
+                                <pep-icon name="system_processing" [spin]="true">
                                 </pep-icon>
                             </mat-icon>
                         </button>
@@ -68,14 +68,14 @@
     </mat-form-field>
 </ng-template>
 
-<ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiForm">
-    <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container>
+<ng-container *ngIf="layoutType === 'form'">
+    <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
 </ng-container>
 
-<ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiCard">
-    <!-- <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container> -->
+<ng-container *ngIf="layoutType === 'card'">
+    <!-- <ng-container *ngTemplateOutlet="pepTemplate"></ng-container> -->
 </ng-container>
 
-<ng-container *ngIf="layoutType === LAYOUT_TYPE.PepperiTable">
-    <!-- <ng-container *ngTemplateOutlet="pepperiTemplate"></ng-container> -->
+<ng-container *ngIf="layoutType === 'table'">
+    <!-- <ng-container *ngTemplateOutlet="pepTemplate"></ng-container> -->
 </ng-container>

@@ -111,7 +111,7 @@ export class VirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
     change: EventEmitter<ChangeEvent> = new EventEmitter<ChangeEvent>();
 
     @Output()
-    load: EventEmitter<any> = new EventEmitter<any>();
+    load: EventEmitter<void> = new EventEmitter<void>();
 
     @Output()
     start: EventEmitter<ChangeEvent> = new EventEmitter<ChangeEvent>();
@@ -468,7 +468,7 @@ export class VirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
         } else if (this.startupLoop === true) {
             this.startupLoop = false;
             // Added to know when the scroll is ready (UI elements are displayed already).
-            this.load.emit(); 
+            this.load.emit();
             this.refresh();
         }
     }

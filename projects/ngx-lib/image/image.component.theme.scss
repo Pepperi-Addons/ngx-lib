@@ -1,18 +1,18 @@
 // -----------------------------------------------------
 //  Override material style
 // -----------------------------------------------------
-@mixin pepperi-image-component-theme($pepperi-theme) {
+@mixin pep-image-component-theme($pepperi-theme) {
     .indicators-container {
         .circle {
-            box-shadow: get-pepperi-shadow($pepperi-theme, shadow-xs, soft);
-            @include inline(get-pepperi-color($pepperi-theme, color-system-primary, color-flat-r-10), 1px, solid, true);
+            box-shadow: get-pep-shadow($pepperi-theme, shadow-xs, soft);
+            @include inline(get-pep-color($pepperi-theme, color-system-primary, color-flat-r-10), 1px, solid, true);
         }
     }
     
     .floating-field {
         &.has-active-campaign {
             .svg-icon {
-                fill: get-pepperi-color($pepperi-theme, color-system-caution, color-base);
+                fill: get-pep-color($pepperi-theme, color-system-caution, color-base);
             }
         }
 

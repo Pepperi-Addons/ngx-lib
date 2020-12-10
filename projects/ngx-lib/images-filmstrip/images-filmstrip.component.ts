@@ -3,17 +3,20 @@ import {
     TemplateRef, Renderer2, ChangeDetectorRef, Inject, Optional, ViewContainerRef
 } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Gallery, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsPosition, GalleryItem, ImageItem, GalleryRef } from '@ngx-gallery/core';
-import { CustomizationService, LAYOUT_TYPE, LayoutService, FileService } from '@pepperi-addons/ngx-lib';
+import { CustomizationService, PepLayoutType, LayoutService, FileService,
+    PepHorizontalAlignment, DEFAULT_HORIZONTAL_ALIGNMENT, PepImagesField
+} from '@pepperi-addons/ngx-lib';
 import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
-import { pepperiIconArrowRightAlt } from '@pepperi-addons/ngx-lib/icon';
-import { FormGroup } from '@angular/forms';
+import { pepIconArrowRightAlt } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
 
 import 'hammerjs';
 
-export interface ImagesFilmstripDialogData {
+export interface PepImagesFilmstripDialogData {
     currIndex: number;
     key: string;
     value: string;
@@ -36,10 +39,10 @@ export interface ImagesFilmstripDialogData {
 import { IMAGEVIEWER_CONFIG, ImageViewerConfig, createButtonConfig } from '@hallysonh/ngx-imageviewer';
 
 
-export function createViewerConfig(translate: TranslateService): ImageViewerConfig {
+export function createViewerConfig(translate: TranslateService, ): ImageViewerConfig {
     return {
-        // width: 800, // component default width
-        // height: 600, // component default height
+        // width: 850,
+        // height: 150,
         bgStyle: '#FFF', // component background style
         // scaleStep: 0.1, // zoom scale step (using the zoom in/out buttons)
         // rotateStepper: false, // touch rotate should rotate only 90 to 90 degrees
@@ -73,49 +76,6 @@ export function createViewerConfig(translate: TranslateService): ImageViewerConf
     };
 }
 
-// This is the default
-// export const IMAGEVIEWER_CONFIG_DEFAULT: ImageViewerConfig = {
-//     width: 800, // component default width
-//     height: 600, // component default height
-//     bgStyle: '#ECEFF1', // component background style
-//     scaleStep: 0.1, // zoom scale step (using the zoom in/out buttons)
-//     rotateStepper: false, // touch rotate should rotate only 90 to 90 degrees
-//     loadingMessage: 'Loading...',
-//     buttonStyle: {
-//         iconFontFamily: 'Material Icons', // font used to render the button icons
-//         alpha: 0.5, // buttons' transparence value
-//         hoverAlpha: 0.7, // buttons' transparence value when mouse is over
-//         bgStyle: '#000000', //  buttons' background style
-//         iconStyle: '#ffffff', // buttons' icon colors
-//         borderStyle: '#000000', // buttons' border style
-//         borderWidth: 0, // buttons' border width (0 == disabled)
-//     },
-//     tooltips: {
-//         enabled: true, // enable or disable tooltips for buttons
-//         bgStyle: '#000000', // tooltip background style
-//         bgAlpha: 0.5, // tooltip background transparence
-//         textStyle: '#ffffff', // tooltip's text style
-//         textAlpha: 0.9, // tooltip's text transparence
-//         padding: 15, // tooltip padding
-//         radius: 20, // tooltip border radius
-//     },
-//     zoomOutButton: {
-//         // zoomOut button config
-//         icon: 'zoom_out', // icon text
-//         tooltip: 'Zoom out', // button tooltip
-//         sortId: 0, // number used to determine the order of the buttons
-//         show: true, // used to show/hide the button
-//     },
-
-//     // shorter button configuration style
-//     nextPageButton: createButtonConfig('navigate_next', 'Next page', 0),
-//     beforePageButton: createButtonConfig('navigate_before', 'Previous page', 1),
-//     zoomInButton: createButtonConfig('zoom_in', 'Zoom in', 1),
-//     rotateLeftButton: createButtonConfig('rotate_left', 'Rotate left', 2),
-//     rotateRightButton: createButtonConfig('rotate_right', 'Rotate right', 3),
-//     resetButton: createButtonConfig('autorenew', 'Reset', 4),
-// };
-
 @Component({
     selector: 'pep-images-filmstrip',
     templateUrl: './images-filmstrip.component.html',
@@ -130,12 +90,12 @@ export function createViewerConfig(translate: TranslateService): ImageViewerConf
         }
     ]
 })
-export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDestroy {
     // @ViewChild('ngxViewerImage') ngxViewerImage: any; // TODO: Check if we need to use this??
     @Input() value = '';
     @Input() key = '';
     @Input() label = '';
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
 
     controlType = 'images';
@@ -143,7 +103,7 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
     @Input() form: FormGroup = null;
     @Input() objectId = '';
     @Input() showTitle = false;
-    @Input() layoutType: LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
     @Input() currIndex = 0;
     @Input() showThumbnails = false;
 
@@ -176,8 +136,8 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
         private renderer: Renderer2,
         private element: ElementRef,
         private cd: ChangeDetectorRef,
-        @Optional() private dialogRef: MatDialogRef<PepperiImagesFilmstripComponent>,
-        @Optional() @Inject(MAT_DIALOG_DATA) private data: ImagesFilmstripDialogData
+        @Optional() private dialogRef: MatDialogRef<PepImagesFilmstripComponent>,
+        @Optional() @Inject(MAT_DIALOG_DATA) private data: PepImagesFilmstripDialogData
     ) {
         // If data exist copy all data properties into this.
         if (dialogRef && data) {
@@ -192,7 +152,7 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
 
         this.config = {
             // nav: false, // Show navigation buttons
-            navIcon: pepperiIconArrowRightAlt.data,
+            navIcon: pepIconArrowRightAlt.data,
             // loop: true,
             // zoomOut: 0,
             // dots: false,
@@ -204,7 +164,7 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
             // autoPlay: false,
             // thumbWidth: 120,
             // thumbHeight: 90,
-            // imageSize: 'contain',
+            imageSize: 'contain',
             // panSensitivity: 25,
             // disableThumb: false,
             // playerInterval: 3000,
@@ -219,12 +179,19 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
         if (!this.inDialog) {
             if (this.form === null) {
                 this.standAlone = true;
-                this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required,
-                    this.readonly, this.disabled);
+                // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required,
+                //     this.readonly, this.disabled);
+                const pepField = new PepImagesField({
+                    key: this.key,
+                    value: this.value,
+                    required: this.required,
+                    readonly: this.readonly,
+                    disabled: this.disabled
+                });
+                this.form = this.customizationService.getDefaultFromGroup(pepField);
 
                 this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
             }
-
             this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
         }
 
@@ -232,7 +199,7 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
             const imgArr = this.value ? this.value.split(';') : [];
             // add No image image when there is no images
             if (imgArr.length === 0) {
-                const noImageSrc = this.fileService.getNoImagePath();
+                const noImageSrc = this.fileService.getSvgAsImageSrc(pepIconNoImage.data);
                 imgArr.push(noImageSrc);
             }
 
@@ -265,35 +232,52 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
     }
 
     initGalleryStyle(galleryContainer, galleryRef): void {
+        setTimeout(() => {
         // Set thumbnails position and sliding direction
-        this.setThumbnailDimension(galleryContainer);
-
-        galleryRef.setConfig(this.config);
-        galleryRef.load(this.items);
+            this.setThumbnailDimension(galleryContainer);
+            galleryRef.setConfig(this.config);
+        }, 0);
 
         const currentIndex = this.currIndex;
         if (currentIndex > 0) {
-            galleryRef.set(currentIndex);
+            setTimeout(() => {
+                galleryRef.load(this.items);
+                galleryRef.set(currentIndex);
+              }, 0);
+           // galleryRef.set(currentIndex);
+        }
+        else{
+            galleryRef.load(this.items);
         }
     }
 
     onError(e): void {
-        const noImageSrc = this.fileService.getNoImagePath();
+        const noImageSrc = this.fileService.getSvgAsImageSrc(pepIconNoImage.data);
         const noimg = new ImageItem({ src: noImageSrc, thumb: noImageSrc });
         this.items.splice(e.itemIndex, 1, noimg);
     }
 
     enlargeImage(event: any): void {
-        const dialogRef = this.dialogService.openDialog(this.galleryDialogTemplate);
+        const config = this.dialogService.getDialogConfig({}, 'inline');
+        config.maxWidth = '75vw';
+        config.height = '95vh';
+
+        const dialogRef = this.dialogService.openDialog(
+            this.galleryDialogTemplate,
+            {
+                currIndex: this.currIndex,
+            }
+            ,
+            config);
 
         dialogRef.afterOpened().subscribe(() => {
             this.afterDialogOpened();
         });
 
         // Update currentIndex in galleryRef
-        dialogRef.afterClosed().subscribe(value => {
-            this.galleryRef.set(this.currIndex);
-        });
+        // dialogRef.afterClosed().subscribe(value => {
+        //     this.galleryRef.set(this.currIndex);
+        // });
     }
 
     afterDialogOpened(): void {
@@ -303,10 +287,13 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
 
     setThumbnailDimension(galleryContainer): void {
         this.galleryWidth = galleryContainer.nativeElement.clientWidth;
-        this.galleryHeight = galleryContainer.nativeElement.clientHeight;
+        // this.galleryHeight = galleryContainer.nativeElement.clientHeight - 32; // TODO - TALK WITH TOMER
+        this.galleryHeight = this.inDialog ? galleryContainer.nativeElement.clientHeight - 32 : galleryContainer.nativeElement.clientHeight;
+        // this.galleryHeight = galleryContainer.nativeElement.clientHeight - 32;
+        this.cd.detectChanges();
 
         this.isVertical = this.galleryWidth < this.galleryHeight;
-
+        this.cd.detectChanges();
         if (this.isVertical) {
             let width = (this.galleryWidth - ((this.items.length - 1) * 16)) / this.items.length;
             width = Math.min(Math.max(width, 24), 96);
@@ -327,6 +314,8 @@ export class PepperiImagesFilmstripComponent implements OnInit, AfterViewInit, O
         this.config.slidingDirection = this.key !== 'ItemFilmstripImages' ?
             SlidingDirection.Horizontal : this.isVertical ?
                 SlidingDirection.Horizontal : SlidingDirection.Vertical;
+
+        this.config.imageSize = 'contain';
     }
 
     indexChange(item: any): void {

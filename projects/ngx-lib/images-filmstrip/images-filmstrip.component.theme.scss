@@ -1,11 +1,11 @@
-@mixin pepperi-images-filmstrip-component-theme($pepperi-theme) {
+@mixin pep-images-filmstrip-component-theme($pepperi-theme) {
 
     gallery {
         background-color: transparent;
     }
     
     gallery-thumb {
-        box-shadow: get-pepperi-shadow($pepperi-theme, shadow-sm, hard);
+        box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
     }
     
     .g-nav-prev,

@@ -1,28 +1,28 @@
 @import '../abstracts/mixins';
 // -----------------------------------------------------
-//  Pepperi - Checkbox
+//  Checkbox
 // -----------------------------------------------------
-@mixin pepperi-checkbox-size($size) {
-    $checkbox-width: 1.5rem; 
-    $checkbox-height: 1.5rem; 
+@mixin pep-checkbox-size($size) {
+    $checkbox-width: 1.5rem;
+    $checkbox-height: 1.5rem;
 
     @if $size == 'xs' {
-        $checkbox-width: 0.75rem; 
-        $checkbox-height: 0.75rem; 
+        $checkbox-width: 0.75rem;
+        $checkbox-height: 0.75rem;
     }
     @else if $size == 'sm' {
-        $checkbox-width: 1rem; 
-        $checkbox-height: 1rem; 
+        $checkbox-width: 1rem;
+        $checkbox-height: 1rem;
     }
     @else if $size == 'md' {
-        $checkbox-width: 1.25rem; 
-        $checkbox-height: 1.25rem; 
+        $checkbox-width: 1.25rem;
+        $checkbox-height: 1.25rem;
     }
     @else if $size == 'lg' {
-        $checkbox-width: 1.5rem; 
-        $checkbox-height: 1.5rem; 
+        $checkbox-width: 1.5rem;
+        $checkbox-height: 1.5rem;
     }
-    
+
     width: $checkbox-width;
     height: $checkbox-height;
 }
@@ -50,7 +50,7 @@
             content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+CiAgICA8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNy41MTExNjM5LDcuMDAwNjI5NjggQzE3LjEzNTI3Myw3LjAxMDk5Mjg1IDE2Ljc3OTE1ODIsNy4xNjgzMTkwOSAxNi41MTYzMjg4LDcuNDM3NzU0MjEgQzE0LjIyNjEzMzksOS43MzI2NTE5MiAxMi4xMzU2Nzc4LDExLjk4MjQwMjIgOS45MzY5MTEzNSwxNC4yMjgxOTczIEw3LjM1MTc4NzA4LDEyLjE1NTYxMiBDNy4wNTIyMDMwMywxMS45MTUzODI5IDYuNjY5NzI4MTIsMTEuODA0MjI0MiA2LjI4ODE2OTY2LDExLjg0NjYyMjMgQzUuOTA1Njk0NzUsMTEuODg5MDE1NSA1LjU1NzEyODY0LDEyLjA4MTIwMDggNS4zMTY4OTcwNiwxMi4zODE3MzUxIEM1LjA3NzYwODQ2LDEyLjY4MTMxOTEgNC45NjY0NDk4MSwxMy4wNjM3OTQgNS4wMDg4NDc4NywxMy40NDUzNTI1IEM1LjA1MTI0MTExLDEzLjgyNzgyNzQgNS4yNDM0MjYzOCwxNC4xNzYzOTM1IDUuNTQyOTk1OTUsMTQuNDE2NjI1MSBMOS4xNjA1NzgyLDE3LjMxMDY5MDkgQzkuNzM5MDA1NDksMTcuNzcwNDEzMiAxMC41Njk5NCwxNy43MjIzNzE3IDExLjA4OTk1NTQsMTcuMTk3NjQxNCBDMTMuNjkxOTYxNywxNC41OTAwODgxIDE2LjAyMzYxNDEsMTIuMDI4MzU3NiAxOC41NjYyOTIxLDkuNDgwMTMyNjIgQzE4Ljk5MTE2NSw5LjA2Mjc4NDIxIDE5LjExNzQxODcsOC40Mjc4MjYxOCAxOC44ODQ3MTE2LDcuODgwNDg1OTggQzE4LjY1MTA3NjEsNy4zMzIyMDUyMSAxOC4xMDY1NDU2LDYuOTgzNjE0OTkgMTcuNTExMTYzOSw3LjAwMDU5MzUxIEwxNy41MTExNjM5LDcuMDAwNjI5NjggWiIvPgogIDwvc3ZnPg==");
             width: inherit;
             height: inherit;
-            
+
             .mat-checkbox-checkmark-path {
                 display: none;
             }
@@ -64,7 +64,7 @@
             content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+Cgk8cmVjdCB3aWR0aD0iMTYiIGhlaWdodD0iNCIgeD0iNCIgeT0iMTAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgcng9IjIiLz4KICAgPCEtLSA8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNy41MTExNjM5LDcuMDAwNjI5NjggQzE3LjEzNTI3Myw3LjAxMDk5Mjg1IDE2Ljc3OTE1ODIsNy4xNjgzMTkwOSAxNi41MTYzMjg4LDcuNDM3NzU0MjEgQzE0LjIyNjEzMzksOS43MzI2NTE5MiAxMi4xMzU2Nzc4LDExLjk4MjQwMjIgOS45MzY5MTEzNSwxNC4yMjgxOTczIEw3LjM1MTc4NzA4LDEyLjE1NTYxMiBDNy4wNTIyMDMwMywxMS45MTUzODI5IDYuNjY5NzI4MTIsMTEuODA0MjI0MiA2LjI4ODE2OTY2LDExLjg0NjYyMjMgQzUuOTA1Njk0NzUsMTEuODg5MDE1NSA1LjU1NzEyODY0LDEyLjA4MTIwMDggNS4zMTY4OTcwNiwxMi4zODE3MzUxIEM1LjA3NzYwODQ2LDEyLjY4MTMxOTEgNC45NjY0NDk4MSwxMy4wNjM3OTQgNS4wMDg4NDc4NywxMy40NDUzNTI1IEM1LjA1MTI0MTExLDEzLjgyNzgyNzQgNS4yNDM0MjYzOCwxNC4xNzYzOTM1IDUuNTQyOTk1OTUsMTQuNDE2NjI1MSBMOS4xNjA1NzgyLDE3LjMxMDY5MDkgQzkuNzM5MDA1NDksMTcuNzcwNDEzMiAxMC41Njk5NCwxNy43MjIzNzE3IDExLjA4OTk1NTQsMTcuMTk3NjQxNCBDMTMuNjkxOTYxNywxNC41OTAwODgxIDE2LjAyMzYxNDEsMTIuMDI4MzU3NiAxOC41NjYyOTIxLDkuNDgwMTMyNjIgQzE4Ljk5MTE2NSw5LjA2Mjc4NDIxIDE5LjExNzQxODcsOC40Mjc4MjYxOCAxOC44ODQ3MTE2LDcuODgwNDg1OTggQzE4LjY1MTA3NjEsNy4zMzIyMDUyMSAxOC4xMDY1NDU2LDYuOTgzNjE0OTkgMTcuNTExMTYzOSw3LjAwMDU5MzUxIEwxNy41MTExNjM5LDcuMDAwNjI5NjggWiIgLz4gLS0+CiAgPC9zdmc+");
             width: inherit;
             height: inherit;
-            
+
             .mat-checkbox-checkmark-path {
                 display: none;
             }
@@ -72,7 +72,8 @@
     }
 }
 
-.pepperi-checkbox-container {
+.pepperi-checkbox-container, .pep-checkbox-container {
+    z-index: 0;
     // width: inherit !important;
     display: grid;
     align-items: center;
@@ -100,7 +101,7 @@
         border-radius: $border-radius-md;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-        @include pepperi-checkbox-size('lg');
+        @include pep-checkbox-size('lg');
     }
 
     .emoji-title {
@@ -114,7 +115,7 @@
             margin-left: 0 !important;
             margin-right: 0.25rem !important;
         }
-        
+
         .emoji-icon {
             margin-left: 0 !important;
             margin-right: 0.25rem;
@@ -124,6 +125,8 @@
     &.center-alignment {
         .mat-checkbox-inner-container {
             // margin: auto 0 auto 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
         }
 
         .mat-checkbox-layout {
@@ -140,18 +143,18 @@
         // }
     }
 
-    &.pepperi-input {
+    &.pepperi-input, &.pep-input {
         padding-left: 0.5rem;
         padding-right: 0.5rem;
     }
-    
+
 }
 
-.pepperi-report-checkbox {
+.pepperi-report-checkbox, .pep-report-checkbox {
     background: transparent !important;
 }
 
-.pepperi-card-checkbox {
+.pepperi-card-checkbox, .pep-card-checkbox {
     display: flex;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -163,7 +166,7 @@
     &.center-alignment {
         justify-self: center;
     }
-    
+
     &.no-title {
         width: 2.5rem !important;
     }
@@ -179,7 +182,7 @@
         margin: auto 0.25rem;
     }
 
-    &.pepperi-input {
+    &.pepperi-input, &.pep-input {
         padding-left: 0.25rem;
         padding-right: 0.25rem;
     }
@@ -200,7 +203,7 @@
                 margin-left: 0 !important;
                 margin-right: 0 !important;
             }
-            
+
             .emoji-icon {
                 margin-left: 0 !important;
                 margin-right: 0 !important;
@@ -222,7 +225,7 @@
         .mat-checkbox-inner-container {
             border-radius: $border-radius-md;
 
-            @include pepperi-checkbox-size('sm');
+            @include pep-checkbox-size('sm');
         }
     }
 
@@ -241,14 +244,16 @@
     margin-bottom: unset; // Cancel bootstrap defaults for Label.
     width: fit-content;
     font-weight: inherit;
-    display: flex;
     align-items: unset !important;
     vertical-align: unset !important;
+    // display: flex;
+    display: grid !important;
+    grid-auto-flow: column;
 
     .mat-checkbox-inner-container {
         border-radius: $border-radius-md;
 
-        @include pepperi-checkbox-size('lg');
+        @include pep-checkbox-size('lg');
     }
 
     .mat-checkbox-label {
@@ -280,43 +285,43 @@
 
     &.lg {
         .mat-checkbox-inner-container {
-            @include pepperi-checkbox-size('lg');
+            @include pep-checkbox-size('lg');
         }
     }
     &.md {
         .mat-checkbox-inner-container {
-            @include pepperi-checkbox-size('md');
+            @include pep-checkbox-size('md');
         }
     }
     &.sm {
         .mat-checkbox-inner-container {
-            @include pepperi-checkbox-size('sm');
+            @include pep-checkbox-size('sm');
         }
     }
     &.xs {
         .mat-checkbox-inner-container {
-            @include pepperi-checkbox-size('xs');
+            @include pep-checkbox-size('xs');
         }
     }
 }
 
-@mixin pepperi-checkbox-theme($pepperi-theme) {
-    .pepperi-checkbox-container {
-        
+@mixin pep-checkbox-theme($pepperi-theme) {
+    .pepperi-checkbox-container, .pep-checkbox-container {
+
         &:not(.disable) {
             .emoji-icon {
                 border: unset;
-    
+
                 &:focus {
                     @include focus($pepperi-theme);
                 }
             }
         }
 
-        &.pepperi-card-checkbox {
-            background: get-pepperi-color($pepperi-theme, color-weak, color-tran-10);
+        &.pepperi-card-checkbox, &.pep-card-checkbox {
+            background: get-pep-color($pepperi-theme, color-weak, color-tran-10);
         }
-        
+
     }
 
     .has-active-campaign {
@@ -324,7 +329,7 @@
         justify-content: center;
 
         .svg-icon {
-            fill: get-pepperi-color($pepperi-theme, color-system-caution, color-base);
+            fill: get-pep-color($pepperi-theme, color-system-caution, color-base);
         }
     }
 
@@ -383,7 +388,7 @@
 
     .mat-checkbox-indeterminate {
         .mat-checkbox-mixedmark {
-            background: get-pepperi-color($pepperi-theme, color-text, color-dimmed) !important;
+            background: get-pep-color($pepperi-theme, color-text, color-dimmed) !important;
         }
     }
 
@@ -441,7 +446,7 @@
             }
 
             .mat-checkbox-label {
-                color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+                color: get-pep-color($pepperi-theme, color-text, color-dimmed);
             }
         }
     }

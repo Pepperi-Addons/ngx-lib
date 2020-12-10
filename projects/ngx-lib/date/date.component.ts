@@ -5,7 +5,8 @@ import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core'
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
 import { TranslateService } from '@ngx-translate/core';
-import { UtilitiesService, LAYOUT_TYPE, CustomizationService } from '@pepperi-addons/ngx-lib';
+import { UtilitiesService, PepLayoutType, CustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepDateFieldType, PepDateField } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-date',
@@ -70,17 +71,17 @@ import { UtilitiesService, LAYOUT_TYPE, CustomizationService } from '@pepperi-ad
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepperiDateComponent implements OnInit, OnDestroy {
+export class PepDateComponent implements OnInit, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() formattedValue = '';
     @Input() label = '';
-    @Input() type = 'date';
+    @Input() type: PepDateFieldType = 'date';
     @Input() required = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() textColor = '';
-    @Input() xAlignment = '0';
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() minValue = 0;
     @Input() maxValue = 0;
@@ -90,14 +91,13 @@ export class PepperiDateComponent implements OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
-    @Input() layoutType: LAYOUT_TYPE = LAYOUT_TYPE.PepperiForm;
+    @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
     @ViewChild('datetimePicker') datetimePicker: any;
 
     @ViewChild('input') input: ElementRef;
 
-    LAYOUT_TYPE = LAYOUT_TYPE;
     standAlone = false;
     isInEditMode = false;
     dateModel: Date;
@@ -118,7 +118,16 @@ export class PepperiDateComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            const pepField = new PepDateField({
+                key: this.key,
+                value: this.value,
+                required: this.required,
+                readonly: this.readonly,
+                disabled: this.disabled
+            });
+            this.form = this.customizationService.getDefaultFromGroup(pepField);
+
             this.formattedValue = this.formattedValue || this.value;
 
             this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
@@ -138,8 +147,8 @@ export class PepperiDateComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChanged) {
-            this.valueChanged.unsubscribe();
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
         }
     }
 
@@ -177,7 +186,7 @@ export class PepperiDateComponent implements OnInit, OnDestroy {
         }
 
         this.customizationService.updateFormFieldValue(this.form, this.key, value);
-        this.valueChanged.emit({ apiName: this.key, value });
+        this.valueChange.emit({ key: this.key, value });
 
         if (this.isInEditMode) {
             setTimeout(() => {
@@ -187,12 +196,11 @@ export class PepperiDateComponent implements OnInit, OnDestroy {
     }
 
     cardTemplateClicked(event): void {
-        const self = this;
         this.isInEditMode = true;
 
         setTimeout(() => {
-            self.input.nativeElement.focus();
-            self.openDatetimePicker(self.datetimePicker);
+            this.input.nativeElement.focus();
+            this.openDatetimePicker(this.datetimePicker);
         }, 0);
     }
 }

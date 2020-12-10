@@ -1,41 +1,44 @@
-<ng-container *ngIf="options?.length > 0; then subMenuBlock; else noSubMenuBlock"></ng-container>
-<ng-template #noSubMenuBlock>
-    <button (click)="menuClicked($event)" title="{{ label }}" mat-button
-        class="pepperi-menu pepperi-button icon-button weak {{ layoutType === LAYOUT_TYPE.PepperiTable ? 'sm' : 'md' }}"
-        [ngClass]="{
-            'lock-events': disabled,
-            'left-alignment': xAlignment == '1' || xAlignment == '0',
-            'right-alignment': xAlignment == '2',
-            'center-alignment': xAlignment == '3',
-            'invert': invertClass
-        }">
-        <mat-icon>
-            <pep-icon name="system_menu">
-            </pep-icon>
-        </mat-icon>
-    </button>
-</ng-template>
-
-<ng-template #subMenuBlock>
-    <button mat-button [matMenuTriggerFor]="menu" menu-blur
-        class="pepperi-menu pepperi-button icon-button weak {{ layoutType === LAYOUT_TYPE.PepperiTable ? 'sm' : 'md' }}"
-        [ngClass]="{
-            'left-alignment': xAlignment == '1' || xAlignment == '0',
-            'right-alignment': xAlignment == '2',
-            'center-alignment': xAlignment == '3',
-            'invert': invertClass
-        }" title="{{ label }}">
-        <mat-icon>
-            <pep-icon name="system_menu">
-            </pep-icon>
-        </mat-icon>
-    </button>
-
-    <mat-menu #menu="matMenu" xPosition="{{xAlignment == '2' ? 'after' : 'before'}}"
-        [ngClass]="{ rtlMenu: xAlignment == '2' }">
-        <button *ngFor="let option of options" mat-menu-item (click)="menuItemClicked(option.Key)">
-            <span>{{ option.Value | translate }}</span>
+<div class="menu-container" [ngClass]="{ 'spacing-element': state === 'visible' }">
+    <ng-container *ngIf="showAnimation then animationTemplate else regularTemplate">
+    </ng-container>
+    <ng-template #animationTemplate>
+        <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+            [matMenuTriggerFor]="actionsMenu" pepMenuBlur [@slideInOut]="state" (@slideInOut.done)="animationDone()"
+            (@slideInOut.start)="animationStart()" (menuClick)="onMenuClicked($event)">
+            <mat-icon>
+                <pep-icon name="{{icon}}"></pep-icon>
+            </mat-icon>
         </button>
-    </mat-menu>
+    </ng-template>
+    <ng-template #regularTemplate>
+        <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+            [matMenuTriggerFor]="actionsMenu" pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
+            [ngClass]="{ disabled: disabled }">
+            <mat-icon>
+                <pep-icon name="{{icon}}"></pep-icon>
+            </mat-icon>
+        </button>
+    </ng-template>
 
-</ng-template>
+    <mat-menu #actionsMenu="matMenu" xPosition="{{ xPosition }}">
+        <ng-container *ngFor="let item of items">
+            <button *ngIf="!item.hidden" mat-menu-item (click)="onMenuItemClicked(item)" title="{{ item.title }}"
+                [disabled]="item.disabled"
+                [ngClass]="{ 'splitter': item.type === 'splitter', disabled: item.disabled }">
+                <ng-container *ngIf="item.type !== 'splitter'">
+                    <mat-icon *ngIf="item?.icon && item?.icon.position === 'before'" class="pull-left flip">
+                        <pep-icon name="{{ item?.icon?.name }}"></pep-icon>
+                    </mat-icon>
+                    <span class="pull-left flip">
+                        <span *ngIf="item?.icon && item?.icon.position === 'before'">&nbsp;</span>
+                        {{ item?.title }}
+                        <span *ngIf="item?.icon && item?.icon.position === 'after'">&nbsp;</span>
+                    </span>
+                    <mat-icon *ngIf="item?.icon && item?.icon.position === 'after'" class="pull-left flip">
+                        <pep-icon name="{{ item?.icon?.name }}"></pep-icon>
+                    </mat-icon>
+                </ng-container>
+            </button>
+        </ng-container>
+    </mat-menu>
+</div>

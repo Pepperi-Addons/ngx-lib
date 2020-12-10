@@ -1,7 +1,7 @@
 // -----------------------------------------------------
-//  Pepperi - Input
+//  Input
 // -----------------------------------------------------
-.pepperi-input {
+.pepperi-input, .pep-input {
     border-radius: $border-radius-md;
     min-width: 1.5rem;
     // width: 100%;
@@ -26,12 +26,12 @@
     }
 }
 
-.pepperi-card-input {
+.pepperi-card-input, .pep-card-input {
     @include ellipsis();
     padding: 0.125rem 0.25rem;
 }
 
-.pepperi-report-input {
+.pepperi-report-input, .pep-report-input {
     // padding: 0.7rem 0.75rem;
     padding: 0 0.25rem;
     height: $table-row-fieldset-height; // 2.5rem;
@@ -45,24 +45,24 @@
     }
 }
 
-@mixin pepperi-input-theme($pepperi-theme) {
-    .pepperi-input {
-        background: get-pepperi-color($pepperi-theme, color-system-primary, color-tran-30);
+@mixin pep-input-theme($pepperi-theme) {
+    .pepperi-input, .pep-input {
+        background: get-pep-color($pepperi-theme, color-system-primary, color-tran-30);
         border: none;
 
         &::placeholder {
-            color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
             opacity: 1; /* Firefox */
         }
 
         &::-ms-input-placeholder {
             /* Internet Explorer 10-11 */
-            color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
         }
 
         &::-ms-input-placeholder {
             /* Microsoft Edge */
-            color: get-pepperi-color($pepperi-theme, color-text, color-dimmed);
+            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
         }
 
         &::error {
