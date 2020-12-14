@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/
 import { throwError, Observable } from 'rxjs';
 import { retry, catchError, tap } from 'rxjs/operators';
 import { SessionService } from '../../common/services/session.service';
+import { CookieService } from '../../common/services/cookie.service';
 
 @Injectable({
     providedIn: 'root',
@@ -10,9 +11,12 @@ import { SessionService } from '../../common/services/session.service';
 export class HttpService {
     private readonly AUTH_HEADER = 'Authorization';
     private readonly PEPPERI_TOKEN_HEADER = 'PepperiSessionToken';
+    private readonly WAPI_TOKEN_KEY = 'auth_token';
+    private readonly PEPPERI_TOKEN_COOKIE = 'PepperiUserSettings';
 
     constructor(
         private sessionService: SessionService,
+        private cookieService: CookieService,
         private http: HttpClient) {
     }
 
@@ -65,9 +69,17 @@ export class HttpService {
             const wapiBaseUrl = this.sessionService.getWapiBaseUrl();
 
             if (wapiBaseUrl && url.match(new RegExp(wapiBaseUrl, 'g'))) {
-                const webApiToken = this.sessionService.getWapiToken();
-                if (webApiToken) {
-                    httpOptions.headers = httpOptions.headers.set(this.PEPPERI_TOKEN_HEADER, webApiToken);
+                // TODO:
+                // const webApiToken = this.sessionService.getWapiToken();
+                try {
+                    const userSettingCookie = this.cookieService.get(this.PEPPERI_TOKEN_COOKIE);
+                    const webApiToken = JSON.parse(userSettingCookie).values.items[this.WAPI_TOKEN_KEY];
+                    if (webApiToken) {
+                        httpOptions.headers = httpOptions.headers.set(this.PEPPERI_TOKEN_HEADER, webApiToken);
+                    }
+                }
+                catch {
+                    // Do nothing.
                 }
             }
         }

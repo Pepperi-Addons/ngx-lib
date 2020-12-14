@@ -7,7 +7,7 @@ import { JwtHelperService } from './jwt-helper.service';
 export class SessionService {
     private readonly IDP_TOKEN_KEY = 'idp_token';
     private readonly PAPI_BASE_URL_KEY = 'pepperi.baseurl';
-    private readonly WAPI_TOKEN_KEY = 'auth_token';
+    // private readonly WAPI_TOKEN_KEY = 'auth_token';
     private readonly WAPI_BASE_URL_KEY = 'serverHostURL'; // pepperi.webapibaseurl
     // private readonly PEPPERI_CONSUMER_TOKEN: 'YY2pAwx6Exo2LWXrUllF9xzSfWF53wqc';
 
@@ -60,9 +60,9 @@ export class SessionService {
         sessionStorage.removeItem(key);
     }
 
-    getWapiToken(): string {
-        return this.getObject(this.WAPI_TOKEN_KEY);
-    }
+    // getWapiToken(): string {
+    //     return this.getObject(this.WAPI_TOKEN_KEY);
+    // }
 
     getWapiBaseUrl(): string {
         return this.getObject(this.WAPI_BASE_URL_KEY);
@@ -76,5 +76,4 @@ export class SessionService {
         const tokenObj = this.getParseToken();
         return tokenObj ? tokenObj[this.PAPI_BASE_URL_KEY] : null;
     }
-
 }
