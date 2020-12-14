@@ -60,6 +60,7 @@ $pep-typography: mat-typography-config(
 @import './images-filmstrip/images-filmstrip.component.theme';
 @import './quantity-selector/quantity-selector.component.theme';
 @import './rich-html-textarea/rich-html-textarea.component.theme';
+@import './search/search.component.theme';
 @import './select/select.component.theme';
 @import './separator/separator.component.theme';
 @import './signature/signature.component.theme';
@@ -146,6 +147,7 @@ $material-theme-for-pep: $material-default-theme;
         @include pep-images-filmstrip-component-theme($pepperi-theme);
         @include pep-quantity-selector-component-theme($pepperi-theme);
         @include pep-rich-html-textarea-component-theme($pepperi-theme);
+        @include pep-search-component-theme($pepperi-theme);
         @include pep-select-component-theme($pepperi-theme);
         @include pep-separator-component-theme($pepperi-theme);
         @include pep-signature-component-theme($pepperi-theme);

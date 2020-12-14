@@ -52,10 +52,10 @@ export class PepperiNgxLibExamplesComponent implements OnInit {
 
         if (withChildren) {
             menuItems = [
-                { key: 'test1', title: 'test 1'},
-                { key: 'test2', title: 'test 2', disabled: true },
+                { key: 'test1', title: 'test 1', iconName: pepIconSystemBin.name},
+                { key: 'test2', title: 'test 2', disabled: true, iconName: pepIconSystemBin.name },
                 { key: 'sep', type: 'splitter' },
-                { key: 'test3', title: 'test 3', children: this.getMenuItems(index <= 5, index)}
+                { key: 'test3', title: 'test 3', iconName: pepIconSystemBin.name, children: this.getMenuItems(index <= 5, index)}
             ];
         } else {
             menuItems = [

@@ -13,6 +13,7 @@ import { PepImageModule } from '@pepperi-addons/ngx-lib/image';
 import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
 import { PepQuantitySelectorModule } from '@pepperi-addons/ngx-lib/quantity-selector';
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
+import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepSeparatorModule } from '@pepperi-addons/ngx-lib/separator';
 import { PepSignatureModule } from '@pepperi-addons/ngx-lib/signature';
@@ -111,6 +112,7 @@ const pepperiComponentsModules = [
     PepCheckboxModule,
     PepQuantitySelectorModule,
     PepRichHtmlTextareaModule,
+    PepSearchModule,
     PepSelectModule,
     PepSeparatorModule,
     PepSignatureModule,

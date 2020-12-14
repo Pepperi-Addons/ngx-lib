@@ -98,10 +98,11 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         this.isMulti = this.type === 'multi';
         if (this.isMulti) {
             this.selectedValuesModel = this.value.length > 0 ? this.value.split(';') : [];
+            this.fieldFormattedValue = typeof this.value === 'string' ? this.value.replace(new RegExp(';', 'g'), ', ') : '';
         } else {
             this.selectedValueModel = this.value;
+            this.fieldFormattedValue = this.formattedValue;
         }
-        this.fieldFormattedValue = typeof this.value === 'string' ? this.value.replace(new RegExp(';', 'g'), ', ') : '';
 
         this.addOptionsIfNeeded();
     }

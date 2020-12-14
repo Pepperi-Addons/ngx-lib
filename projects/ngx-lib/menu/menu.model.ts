@@ -1,5 +1,3 @@
-import { PepIcon } from '@pepperi-addons/ngx-lib/icon';
-
 export type PepMenuItemType = 'text' | 'splitter';
 
 export type PepMenuStateType = 'visible' | 'hidden';

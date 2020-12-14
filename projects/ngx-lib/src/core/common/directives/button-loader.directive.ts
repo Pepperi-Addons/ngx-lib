@@ -6,12 +6,22 @@ import { UtilitiesService } from '../services/utilities.service';
     selector: '[pepButtonLoader]'
 })
 export class ButtonLoaderDirective implements OnInit {
-    @Input() loaderTime = 1000;
+    @Input() loaderTime = 0;
     @Input() loaderColor = null;
     @Input() loaderWidth = '1.5rem';
     @Input() loaderHeight = 'inherit';
     @Input() ignoreDisabledStyle = false;
 
+    private _finish = null;
+    @Input()
+    set finish(value: boolean) {
+        this._finish = value;
+
+        if (value) {
+            this.toggleLoading(false);
+        }
+    }
+    
     private svgIcon: SVGElement;
 
     constructor(
@@ -23,10 +33,22 @@ export class ButtonLoaderDirective implements OnInit {
     @HostListener('click', ['$event'])
     clickEvent(event): void {
         this.toggleLoading(true);
-        setTimeout(() => {
-            this.toggleLoading(false);
+        
+        if (this._finish !== null) {
+            this._finish = false;
+        } else {
+           // In case that the finish input is nt supply.
+            if (this.loaderTime === 0) {
+                this.loaderTime = 3000;
+            }
+        }
 
-        }, this.loaderTime);
+        if (this.loaderTime > 0) {
+            setTimeout(() => {
+                this.toggleLoading(false);
+
+            }, this.loaderTime);
+        }
     }
 
     ngOnInit(): void {

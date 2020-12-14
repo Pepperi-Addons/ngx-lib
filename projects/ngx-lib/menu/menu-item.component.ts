@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, ViewChild } from '@angular/core';
-import { LayoutService } from '@pepperi-addons/ngx-lib';
 import { pepIconArrowRight } from '@pepperi-addons/ngx-lib/icon';
 import { PepMenuItem, PepMenuItemClick } from './menu.model';
 
@@ -18,7 +17,7 @@ export class PepMenuItemComponent implements OnDestroy {
 
     @Output() menuItemClick: EventEmitter<PepMenuItemClick> = new EventEmitter<PepMenuItemClick>();
 
-    constructor(public layoutService: LayoutService) {}
+    constructor() {}
 
     ngOnDestroy(): void {
         if (this.menuItemClick) {

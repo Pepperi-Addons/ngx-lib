@@ -1,19 +1,21 @@
-<div class="menu-container" [ngClass]="{ 'spacing-element': state === 'visible' }">
+<div class="menu-container" [ngClass]="{ 'spacing-element': state === 'visible' }"
+    dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
     <ng-container *ngIf="showAnimation then animationTemplate else regularTemplate">
     </ng-container>
     <ng-template #animationTemplate>
         <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-            [matMenuTriggerFor]="menu.childMenu" pepMenuBlur [@slideInOut]="state" (@slideInOut.done)="animationDone()"
-            (@slideInOut.start)="animationStart()" (menuClick)="onMenuClicked($event)">
-            <ng-container *ngTemplateOutlet="buttonTemplate; context: { itemIconName: iconName, itemTitle: title }">
+            pepRtlDirection [matMenuTriggerFor]="menu.childMenu" pepMenuBlur [@slideInOut]="state"
+            (@slideInOut.done)="animationDone()" (@slideInOut.start)="animationStart()"
+            (menuClick)="onMenuClicked($event)">
+            <ng-container *ngTemplateOutlet="itemTemplate; context: { itemIconName: iconName, itemTitle: title }">
             </ng-container>
         </button>
     </ng-template>
     <ng-template #regularTemplate>
         <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-            [matMenuTriggerFor]="menu.childMenu" pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
-            [ngClass]="{ disabled: disabled }">
-            <ng-container *ngTemplateOutlet="buttonTemplate; context: { itemIconName: iconName, itemTitle: title }">
+            pepRtlDirection [matMenuTriggerFor]="menu.childMenu" pepMenuBlur (menuClick)="onMenuClicked($event)"
+            [disabled]="disabled" [ngClass]="{ disabled: disabled }">
+            <ng-container *ngTemplateOutlet="itemTemplate; context: { itemIconName: iconName, itemTitle: title }">
             </ng-container>
         </button>
     </ng-template>
@@ -21,7 +23,7 @@
     <pep-menu-item #menu [items]="items" (menuItemClick)="onMenuItemClicked($event)"></pep-menu-item>
 </div>
 
-<ng-template #buttonTemplate let-itemIconName="itemIconName" let-itemTitle="itemTitle">
+<ng-template #itemTemplate let-itemIconName="itemIconName" let-itemTitle="itemTitle">
     <mat-icon *ngIf="itemIconName">
         <pep-icon name="{{itemIconName}}"></pep-icon>
     </mat-icon>

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { PepStyleType, PepSizeType } from '@pepperi-addons/ngx-lib';
+import { LayoutService, PepStyleType, PepSizeType } from '@pepperi-addons/ngx-lib';
 import { pepIconSystemMenu } from '@pepperi-addons/ngx-lib/icon';
 import { PepMenuItem, PepMenuItemClick, PepMenuStateType } from './menu.model';
 
@@ -49,7 +49,7 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
 
     state: PepMenuStateType = 'hidden';
 
-    constructor() {
+    constructor(public layoutService: LayoutService) {
     }
 
     ngOnChanges(changes): void {

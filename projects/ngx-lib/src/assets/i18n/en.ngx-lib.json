@@ -29,6 +29,10 @@
     "RICH_TEXTAREA": {
         "HINT": "Enter Text"
     },
+    "SEARCH": {
+        "HINT": "Search",
+        "MORE_RESULTS": "More Results"
+    },
     "SELECT": {
         "HINT": "Please select an option"
     },
