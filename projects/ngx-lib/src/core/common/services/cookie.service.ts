@@ -108,12 +108,13 @@ export class CookieService {
         }
 
         if (domain) {
-        cookieString += 'domain=' + domain + ';';
+            cookieString += 'domain=' + domain + ';';
         }
 
         if (secure === false && sameSite === 'None') {
             secure = true;
         }
+        
         if (secure) {
             cookieString += 'secure;';
         }
