@@ -559,7 +559,9 @@ $sorting-width: 1rem;
 
         // Showing two labels in the same row with ellipsis.
         .card-flex-container {
-            display: flex;
+            // display: flex;
+            display: grid;
+            grid-auto-flow: column;
 
             &.pepperi-button, &.pep-button {
                 background: unset; // Cancel the default background and shows background only on the declared states (hover, etc).
@@ -569,7 +571,7 @@ $sorting-width: 1rem;
                 // flex-grow: 0;
                 flex-shrink: 5000;
                 @include ellipsis();
-                padding: $spacing-2xs;
+                // padding: $spacing-2xs;
                 height: inherit;
 
                 &.no-shrink {

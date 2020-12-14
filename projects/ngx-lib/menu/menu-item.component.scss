@@ -1,0 +1,38 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.mat-menu-item-submenu-trigger::after {
+    display: none;   
+}
+
+.submenu-trigger {
+    position: absolute;
+    right: 0;
+    top: 25%;
+    width: 1rem;
+    margin: 0 $spacing-sm !important;
+
+    &.rotate {
+        @include rotate(180deg);
+    }
+}
+
+[dir='rtl'] {
+    .submenu-trigger {
+        right: unset;
+        left: 0;
+        @include rotate(180deg);
+
+        &.rotate {
+            @include rotate(0deg);
+        }
+    }
+}
+
+// .mat-menu-item-submenu-trigger {
+
+//     &:after {
+//         @include select-arrow();
+//         cursor: pointer;
+//     }
+// }

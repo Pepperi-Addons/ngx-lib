@@ -7,8 +7,8 @@ export type PepLayoutType = 'form' | 'card' | 'table';
 /** Allowed style options */
 export type PepStyleType = 'weak' | 'regular' | 'strong';
 
-/** Allowed button size options */
-export type PepButtonSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+/** Allowed size options */
+export type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 /** Allowed horizontal alignment options */
 export type PepHorizontalAlignment = 'left' | 'center' | 'right';

@@ -9,7 +9,7 @@
                 toggle menu
             </button>
         </div>
-        <pep-list-actions [actions]="menuItems"></pep-list-actions>
+        <pep-list-actions [actions]="menuItems" (actionClick)="onMenuItemClicked($event)"></pep-list-actions>
     </pep-top-bar>
     <!-- <div class="header-content ">
         <div class="content pep-border-bottom">

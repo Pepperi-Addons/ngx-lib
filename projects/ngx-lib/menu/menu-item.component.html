@@ -1,0 +1,63 @@
+<mat-menu #childMenu="matMenu" xPosition="{{ xPosition }}" dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
+    <ng-container *ngFor="let menuItem of items">
+        <ng-container *ngIf="!menuItem.hidden">
+            <ng-container *ngIf="menuItem.children?.length > 0; then childrenBlock; else regularBlock"></ng-container>
+            <ng-template #childrenBlock>
+                <button mat-menu-item [matMenuTriggerFor]="menu.childMenu" title="{{ menuItem.title }}" pepRtlDirection
+                    [disabled]="menuItem.disabled"
+                    [ngClass]="{ 'splitter': menuItem.type === 'splitter', disabled: menuItem.disabled }">
+                    <ng-container *ngIf="menuItem.type !== 'splitter'">
+                        <mat-icon class="pull-left flip" *ngIf="menuItem.iconName">
+                            <pep-icon name="{{menuItem.iconName}}"></pep-icon>
+                        </mat-icon>
+                        <span *ngIf="menuItem.title" class="pull-left flip ellipsis"
+                            [ngClass]="{ 'button-title-with-icon': menuItem.iconName }" [title]="menuItem.title">
+                            {{ menuItem.title }}
+                        </span>
+                        <mat-icon class="pull-left flip submenu-trigger"
+                            [ngClass]="{ 'rotate': xPosition === 'before' }">
+                            <pep-icon name="{{ subMenuIconName }}"></pep-icon>
+                        </mat-icon>
+                    </ng-container>
+                </button>
+                <pep-menu-item #menu [items]="menuItem.children" (menuItemClick)="onChildClicked($event)">
+                </pep-menu-item>
+            </ng-template>
+            <ng-template #regularBlock>
+                <button mat-menu-item (click)="onMenuItemClicked(menuItem)" title="{{ menuItem.title }}"
+                    [disabled]="menuItem.disabled"
+                    [ngClass]="{ 'splitter': menuItem.type === 'splitter', disabled: menuItem.disabled }">
+                    <ng-container *ngIf="menuItem.type !== 'splitter'">
+                        <mat-icon *ngIf="menuItem.iconName">
+                            <pep-icon name="{{menuItem.iconName}}"></pep-icon>
+                        </mat-icon>
+                        <span *ngIf="menuItem.title" class="ellipsis"
+                            [ngClass]="{ 'button-title-with-icon': menuItem.iconName }" [title]="menuItem.title">
+                            {{ menuItem.title }}
+                        </span>
+                    </ng-container>
+                </button>
+            </ng-template>
+        </ng-container>
+    </ng-container>
+</mat-menu>
+
+<!-- <mat-menu #childMenu="matMenu" [overlapTrigger]="false">
+    <span *ngFor="let child of items">
+        
+        <span *ngIf="child.children && child.children.length > 0">
+            <button mat-menu-item color="primary" [matMenuTriggerFor]="menu.childMenu">
+                <mat-icon>{{child.iconName}}</mat-icon>
+                <span>{{child.displayName}}</span>
+            </button>
+            <pep-menu-item #menu [items]="child.children"></pep-menu-item>
+        </span>
+        
+        <span *ngIf="!child.children || child.children.length === 0">
+            <button mat-menu-item [routerLink]="child.route">
+                <mat-icon>{{child.iconName}}</mat-icon>
+                <span>{{child.displayName}}</span>
+            </button>
+        </span>
+    </span>
+</mat-menu> -->

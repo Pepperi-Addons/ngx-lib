@@ -45,12 +45,26 @@ export class PepperiNgxLibExamplesComponent implements OnInit {
         this.loadMenuItems();
     }
 
-    getMenuItems(): Array<PepMenuItem> {
-        const menuItems: Array<PepMenuItem> = [
-            { key: 'test1', title: 'test 1'},
-            { key: 'test2', title: 'test 2', disabled: true },
-            { key: 'sep', type: 'splitter' },
-            { key: 'test3', title: 'test 3'}];
+    getMenuItems(withChildren = true, index = 0): Array<PepMenuItem> {
+        let menuItems: Array<PepMenuItem>;
+        
+        index++;
+
+        if (withChildren) {
+            menuItems = [
+                { key: 'test1', title: 'test 1'},
+                { key: 'test2', title: 'test 2', disabled: true },
+                { key: 'sep', type: 'splitter' },
+                { key: 'test3', title: 'test 3', children: this.getMenuItems(index <= 5, index)}
+            ];
+        } else {
+            menuItems = [
+                { key: 'test1', title: 'test 1'},
+                { key: 'test2', title: 'test 2', disabled: true },
+                { key: 'sep', type: 'splitter' },
+                { key: 'test3', title: 'test 3'}
+            ];
+        }
 
         return menuItems;
     }

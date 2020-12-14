@@ -1,39 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { PepStyleType, PepButtonSizeType } from '@pepperi-addons/ngx-lib';
+import { PepStyleType, PepSizeType } from '@pepperi-addons/ngx-lib';
 import { pepIconSystemMenu } from '@pepperi-addons/ngx-lib/icon';
-
-export type PepMenuItemType = 'text' | 'splitter';
-
-export type PepMenuStateType = 'visible' | 'hidden';
-
-export class PepMenuIcon {
-    name: string;
-    position?: 'before' | 'after' = 'before';
-
-    constructor(data: Partial<PepMenuIcon>){
-        Object.assign(this, data);
-    }
-}
-
-export class PepMenuItem {
-    key: string;
-    title?: string;
-    disabled?: boolean = false;
-    hidden?: boolean = false;
-    icon?: PepMenuIcon;
-    type?: PepMenuItemType = 'text';
-
-    constructor(data: Partial<PepMenuItem>){
-        Object.assign(this, data);
-    }
-}
-
-export class PepMenuItemClick {
-    constructor(
-        public source: PepMenuItem,
-    ) { }
-}
+import { PepMenuItem, PepMenuItemClick, PepMenuStateType } from './menu.model';
 
 @Component({
     selector: 'pep-menu',
@@ -63,14 +32,16 @@ export class PepMenuItemClick {
     ]
 })
 export class PepMenuComponent implements OnChanges, OnDestroy {
-    @Input() icon = pepIconSystemMenu.name;
+    @Input() title: string = null;
+    @Input() iconName = pepIconSystemMenu.name;
     @Input() styleType: PepStyleType = 'weak';
-    @Input() sizeType: PepButtonSizeType = 'md';
+    @Input() sizeType: PepSizeType = 'md';
     @Input() classNames = '';
-    @Input() xPosition: 'before' | 'after' = 'before';
+    @Input() xPosition: 'before' | 'after' = 'after';
     @Input() showAnimation = false;
     @Input() items: Array<PepMenuItem> = [];
     @Input() disabled = false;
+    @Input() subMenuIconName: string = null;
 
     @Output() stateChange: EventEmitter<PepMenuStateType> = new EventEmitter<PepMenuStateType>();
     @Output() menuItemClick: EventEmitter<PepMenuItemClick> = new EventEmitter<PepMenuItemClick>();
@@ -78,7 +49,8 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
 
     state: PepMenuStateType = 'hidden';
 
-    constructor() { }
+    constructor() {
+    }
 
     ngOnChanges(changes): void {
         if (this.showAnimation) {
@@ -98,8 +70,8 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         this.menuClick.emit();
     }
 
-    onMenuItemClicked(item: PepMenuItem): void {
-        this.menuItemClick.emit(new PepMenuItemClick(item));
+    onMenuItemClicked(click: PepMenuItemClick): void {
+        this.menuItemClick.emit(click);
     }
 
     animationDone(): void {

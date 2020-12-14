@@ -27,7 +27,7 @@
             "./projects/ngx-lib/icon/svgs/**/*.svg"
         ],
         "outputDirectory": "./projects/ngx-lib/icon",
-        "interfaceName": "PepIcon",
+        "interfaceName": "PepIconData",
         "typeName": "PepIconType",
         "prefix": "pepIcon",
         "svgoConfig": {
@@ -37,7 +37,7 @@
                 }
             ]
         },
-        "fileName": "icon.model",
+        "fileName": "icon-generated.model",
         "additionalModelFile": "./projects/ngx-lib/icon",
         "compileSources": true
     },

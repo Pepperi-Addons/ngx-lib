@@ -1,8 +1,7 @@
 import { Component, OnInit, Injectable, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { LayoutService, PepScreenSizeType, PepButtonSizeType } from '@pepperi-addons/ngx-lib';
+import { LayoutService, PepScreenSizeType, PepSizeType } from '@pepperi-addons/ngx-lib';
 import { PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
 import { PepBreadCrumbItem } from '@pepperi-addons/ngx-lib/bread-crumbs';
-import { delay } from 'rxjs/operators';
 
 @Component({
     selector: 'pep-list-chooser',
@@ -15,7 +14,7 @@ export class PepListChooserComponent implements OnInit, OnChanges {
 
     @Input() options: Array<PepMenuItem> = null;
     @Input() selectedOption: PepMenuItem = null;
-    @Input() sizeType: PepButtonSizeType = 'md';
+    @Input() sizeType: PepSizeType = 'md';
 
     @Output() optionClick: EventEmitter<PepMenuItemClick> = new EventEmitter<PepMenuItemClick>();
 

@@ -3,42 +3,29 @@
     </ng-container>
     <ng-template #animationTemplate>
         <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-            [matMenuTriggerFor]="actionsMenu" pepMenuBlur [@slideInOut]="state" (@slideInOut.done)="animationDone()"
+            [matMenuTriggerFor]="menu.childMenu" pepMenuBlur [@slideInOut]="state" (@slideInOut.done)="animationDone()"
             (@slideInOut.start)="animationStart()" (menuClick)="onMenuClicked($event)">
-            <mat-icon>
-                <pep-icon name="{{icon}}"></pep-icon>
-            </mat-icon>
+            <ng-container *ngTemplateOutlet="buttonTemplate; context: { itemIconName: iconName, itemTitle: title }">
+            </ng-container>
         </button>
     </ng-template>
     <ng-template #regularTemplate>
         <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-            [matMenuTriggerFor]="actionsMenu" pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
+            [matMenuTriggerFor]="menu.childMenu" pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
             [ngClass]="{ disabled: disabled }">
-            <mat-icon>
-                <pep-icon name="{{icon}}"></pep-icon>
-            </mat-icon>
+            <ng-container *ngTemplateOutlet="buttonTemplate; context: { itemIconName: iconName, itemTitle: title }">
+            </ng-container>
         </button>
     </ng-template>
 
-    <mat-menu #actionsMenu="matMenu" xPosition="{{ xPosition }}">
-        <ng-container *ngFor="let item of items">
-            <button *ngIf="!item.hidden" mat-menu-item (click)="onMenuItemClicked(item)" title="{{ item.title }}"
-                [disabled]="item.disabled"
-                [ngClass]="{ 'splitter': item.type === 'splitter', disabled: item.disabled }">
-                <ng-container *ngIf="item.type !== 'splitter'">
-                    <mat-icon *ngIf="item?.icon && item?.icon.position === 'before'" class="pull-left flip">
-                        <pep-icon name="{{ item?.icon?.name }}"></pep-icon>
-                    </mat-icon>
-                    <span class="pull-left flip">
-                        <span *ngIf="item?.icon && item?.icon.position === 'before'">&nbsp;</span>
-                        {{ item?.title }}
-                        <span *ngIf="item?.icon && item?.icon.position === 'after'">&nbsp;</span>
-                    </span>
-                    <mat-icon *ngIf="item?.icon && item?.icon.position === 'after'" class="pull-left flip">
-                        <pep-icon name="{{ item?.icon?.name }}"></pep-icon>
-                    </mat-icon>
-                </ng-container>
-            </button>
-        </ng-container>
-    </mat-menu>
+    <pep-menu-item #menu [items]="items" (menuItemClick)="onMenuItemClicked($event)"></pep-menu-item>
 </div>
+
+<ng-template #buttonTemplate let-itemIconName="itemIconName" let-itemTitle="itemTitle">
+    <mat-icon *ngIf="itemIconName">
+        <pep-icon name="{{itemIconName}}"></pep-icon>
+    </mat-icon>
+    <span *ngIf="itemTitle" class="ellipsis" [ngClass]="{ 'button-title-with-icon': itemIconName }" [title]="itemTitle">
+        {{ itemTitle}}
+    </span>
+</ng-template>

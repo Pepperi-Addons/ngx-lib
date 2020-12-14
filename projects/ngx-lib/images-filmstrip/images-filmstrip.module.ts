@@ -22,7 +22,6 @@ import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
 import { GalleryModule } from '@ngx-gallery/core';
 import { ImageViewerModule } from '@hallysonh/ngx-imageviewer';
-// import { ImageViewerModule } from 'ngx-image-viewer';
 
 import { PepImagesFilmstripComponent } from './images-filmstrip.component';
 
