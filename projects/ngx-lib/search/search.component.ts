@@ -7,7 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormControl } from '@angular/forms';
 import { LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { debounceTime } from 'rxjs/operators';
-import { PepSearchChangedData, PepSearchAutocompleteChangedData } from './search.model';
+import { PepSearchClick, PepSearchValueChange } from './search.model';
 
 @Component({
     selector: 'pep-search',
@@ -54,29 +54,32 @@ import { PepSearchChangedData, PepSearchAutocompleteChangedData } from './search
 })
 @Injectable()
 export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() searchString = '';
-    @Input() isFloatingSearch = false;
-    @Input() actionBtnIsVisable = false;
+    @Input() value = '';
     @Input() autoCompleteValues = [];
+    @Input() autoCompleteTop = 20;
     
-    @Output() searchStateChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() searchStringChanged: EventEmitter<PepSearchChangedData> = new EventEmitter<PepSearchChangedData>();
-    @Output() searchAutocompleteChanged: EventEmitter<PepSearchAutocompleteChangedData> = new EventEmitter<PepSearchAutocompleteChangedData>();
+    @Output() search: EventEmitter<PepSearchClick> = new EventEmitter<PepSearchClick>();
+    @Output() valueChange: EventEmitter<PepSearchValueChange> = new EventEmitter<PepSearchValueChange>();
+    @Output() stateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     
     @ViewChild('searchInput') searchInput: ElementRef;
-    @ViewChild('searchCont') searchCont: ElementRef;
     
+    lastValue = null;
     showFloatSrcBtn = true;
-    isRtl = false;
-    isFocused = false;
-    autoComplete: any;
-    fadeState = this.isFloatingSearch ? 'fadeOut' : 'fadeIn';
-    lastSearchSTR = null;
-    state = 'open';
+    fadeState: 'fadeOut' | 'fadeIn';
+    state: 'open' | 'close' = 'open';
     searchControl = new FormControl();
     searchCtrlSub: Subscription;
+    isRtl = false;
+    isFloating = false;
+    screenSize: PepScreenSizeType;
 
     constructor(private layoutService: LayoutService) {
+        this.layoutService.onResize$.pipe().subscribe(size => {
+            this.screenSize = size;
+            this.isFloating = this.screenSize > PepScreenSizeType.SM;
+            this.fadeState = this.isFloating ? 'fadeOut' : 'fadeIn';
+        });
     }
 
     ngOnInit(): void {
@@ -86,10 +89,11 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
             .pipe(debounceTime(1000))
             .subscribe(newValue => {
                 this.autoCompleteValues = [];
-                if (newValue && newValue.length > 2 && newValue !== this.lastSearchSTR) {
-                    this.searchAutocompleteChanged.emit(
-                        new PepSearchAutocompleteChangedData({
-                            value: newValue
+                if (newValue && newValue.length > 2 && newValue !== this.lastValue) {
+                    this.valueChange.emit(
+                        new PepSearchValueChange({
+                            value: newValue,
+                            top: this.autoCompleteTop
                         })
                     );
                 }
@@ -97,90 +101,83 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes) {
-        if (changes.actionBtnIsVisable && changes.actionBtnIsVisable.firstChange) {
-            this.fadeState = this.isFloatingSearch ? 'fadeOut' : 'fadeIn';
-        }
-        if (changes.searchString) {
-            this.searchControl.setValue(changes.searchString.currentValue);
+        if (changes.value) {
+            this.searchControl.setValue(changes.value.currentValue);
         }
     }
 
     ngOnDestroy(): void {
-        this.searchCtrlSub.unsubscribe();
+        if (this.searchCtrlSub) {
+            this.searchCtrlSub.unsubscribe();
+        }
     }
 
-    private hideKeyboard(element: any) {
+    private blur() {
         setTimeout(() => {
-            element.blur();  // actually close the keyboard
+            this.searchInput.nativeElement.blur();
         }, 0);
     }
 
     onClearClicked(event: any) {
         this.autoCompleteValues = [];
-        this.lastSearchSTR = null;
+        this.lastValue = null;
         this.searchInput.nativeElement.value = '';
-        this.searchStringChanged.emit(new PepSearchChangedData({ value: '' }));
+        this.search.emit(new PepSearchClick());
 
         event.preventDefault();
 
-        if (this.isFloatingSearch) {
+        if (this.isFloating) {
             this.fadeState = 'fadeOut';
 
             setTimeout(() => {
-                this.searchStateChanged.emit(false);
+                this.stateChange.emit(false);
                 this.showFloatSrcBtn = true;
-            }, 400);
+            }, 500);
 
             // close the phone keyboard
-            this.hideKeyboard(this.searchInput.nativeElement);
+            this.blur();
         }
     }
 
     onSearchClicked() {
-        if (this.isFloatingSearch) {
-            this.triggerSearchChanged();
+        if (this.isFloating) {
+            this.triggerSearch();
         } else {
-            this.autoCompleteValues = [];
-            this.animateSearch();
-        }
-    }
-    
-    onEnterSearchClicked(event) {
-        if (event.key === 'Enter') {
-            this.triggerSearchChanged();
-        }
-    }
-
-    triggerSearchChanged() {
-        this.autoCompleteValues = [];
-        this.searchInput.nativeElement.blur();
-        this.searchChanged();
-    }
-
-    animateSearch() {
-        if (this.state === 'open') {
-            if (this.isFloatingSearch) {
-                this.fadeState = this.fadeState === 'fadeOut' ? 'fadeIn' : 'fadeOut';
-                if (this.fadeState === 'fadeIn') {
-                    this.searchStateChanged.emit(true);
-                    this.showFloatSrcBtn = false;
-                    this.searchInput.nativeElement.focus();
-                }
-            } else {
-                this.searchChanged();
-            }
-        } else {
-            // state = close / fade out
-            if (this.isFloatingSearch) {
-                this.fadeState = 'fadeIn';
+            if (this.state === 'open') {
+                this.triggerSearch();
             } else {
                 this.state = 'open';
             }
         }
     }
+    
+    onEnterSearchClicked(event) {
+        if (event.key === 'Enter') {
+            this.triggerSearch();
+        }
+    }
+
+    triggerSearch() {
+        this.autoCompleteValues = [];
+        this.blur();
+        this.emitSearchClick();
+    }
+
+    animateSearch() {
+        if (this.state === 'open') {
+            this.fadeState = this.fadeState === 'fadeOut' ? 'fadeIn' : 'fadeOut';
+            if (this.fadeState === 'fadeIn') {
+                this.stateChange.emit(true);
+                this.showFloatSrcBtn = false;
+                this.searchInput.nativeElement.focus();
+            }
+        } else {
+            this.fadeState = 'fadeIn';
+        }
+    }
 
     initSearch() {
-        this.lastSearchSTR = null;
+        this.lastValue = null;
         this.searchInput.nativeElement.value = '';
     }
 
@@ -188,16 +185,16 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
     // component and showen all other components before
     animateSearchDone() {
         if (this.state !== 'open') {
-            this.searchStateChanged.emit(false);
+            this.stateChange.emit(false);
         }
     }
 
-    searchChanged() {
+    emitSearchClick() {
         const value = this.searchInput.nativeElement.value;
 
-        if (value !== this.lastSearchSTR) {
-            this.lastSearchSTR = value;
-            this.searchStringChanged.emit(new PepSearchChangedData({ value }));
+        if (value !== this.lastValue) {
+            this.lastValue = value;
+            this.search.emit(new PepSearchClick(value));
         }
     }
 

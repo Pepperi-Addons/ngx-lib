@@ -1,27 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PepperiListExampleComponent } from './pepperi-list-example/pepperi-list-example.component';
-import { PepperiNgxLibExamplesComponent } from './pepperi-ngx-lib-examples/pepperi-ngx-lib-examples.component'
+import { ListExampleComponent } from './list-example/pepperi-list-example.component';
+import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component'
+import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component'
 import { EmptyRouteComponent } from './empty-route/empty-route.component';
 // import * as config from '../../../addon.config.json';
 
 const routes: Routes = [
     {
-        path: `ngx-lib-components`,
-        component: PepperiNgxLibExamplesComponent
+        path: `form-fields-example`,
+        component: FormFieldsExampleComponent
     },
     {
-        path: `ngx-lib-list`,
-        component: PepperiListExampleComponent
+        path: `list-example`,
+        component: ListExampleComponent
+    },
+    {
+        path: `top-bar-example`,
+        component: TopBarExampleComponent
+    },
+    {
+        path: '**',
+        component: FormFieldsExampleComponent
     },
     // {
     //     path: '**',
     //     component: EmptyRouteComponent
     // }
-    {
-        path: '**',
-        component: PepperiNgxLibExamplesComponent
-    }
 ];
 
 @NgModule({

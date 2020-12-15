@@ -12,12 +12,23 @@
         </button>
     </ng-template>
     <ng-template #regularTemplate>
-        <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-            pepRtlDirection [matMenuTriggerFor]="menu.childMenu" pepMenuBlur (menuClick)="onMenuClicked($event)"
-            [disabled]="disabled" [ngClass]="{ disabled: disabled }">
-            <ng-container *ngTemplateOutlet="itemTemplate; context: { itemIconName: iconName, itemTitle: title }">
-            </ng-container>
-        </button>
+        <ng-container *ngIf="items then menuTemplate else buttonTemplate"></ng-container>
+        <ng-template #menuTemplate>
+            <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+                pepRtlDirection [matMenuTriggerFor]="menu.childMenu" pepMenuBlur (menuClick)="onMenuClicked($event)"
+                [disabled]="disabled" [ngClass]="{ disabled: disabled }">
+                <ng-container *ngTemplateOutlet="itemTemplate; context: { itemIconName: iconName, itemTitle: title }">
+                </ng-container>
+            </button>
+        </ng-template>
+        <ng-template #buttonTemplate>
+            <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+                pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
+                [ngClass]="{ disabled: disabled }">
+                <ng-container *ngTemplateOutlet="itemTemplate; context: { itemIconName: iconName, itemTitle: title }">
+                </ng-container>
+            </button>
+        </ng-template>
     </ng-template>
 
     <pep-menu-item #menu [items]="items" (menuItemClick)="onMenuItemClicked($event)"></pep-menu-item>

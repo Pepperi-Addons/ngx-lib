@@ -31,21 +31,24 @@ export class DataConvertorService {
 
     convertListData(tableData: PepRowData[], rowUUID = ''): ObjectsData {
         const objectsData = new ObjectsData();
-        const rows = new Array<ObjectsDataRow>();
-        const uiRow = tableData[0].Fields;
         const uiControl = new UIControl();
+        const rows = new Array<ObjectsDataRow>();
 
-        uiControl.ControlFields = [];
-        uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
+        if (tableData.length > 0) {
+            const uiRow = tableData[0].Fields;
 
-        tableData.forEach(row => {
-            const rowData = new ObjectsDataRow();
-            rowData.Fields = [];
-            rowData.Type = 0;
-            rowData.UID = rowUUID ? rowUUID : Guid.newGuid();
-            row.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
-            rows.push(rowData);
-        });
+            uiControl.ControlFields = [];
+            uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
+
+            tableData.forEach(row => {
+                const rowData = new ObjectsDataRow();
+                rowData.Fields = [];
+                rowData.Type = 0;
+                rowData.UID = rowUUID ? rowUUID : Guid.newGuid();
+                row.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
+                rows.push(rowData);
+            });
+        }
 
         objectsData.Rows = rows;
         objectsData.UIControl = uiControl;

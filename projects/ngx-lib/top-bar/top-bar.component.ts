@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, ContentChild, ElementRef, ViewChild } from '@angular/core';
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { CustomizationService, LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { PepSearchComponent } from '@pepperi-addons/ngx-lib/search';
 @Component({
     selector: 'pep-top-bar',
     templateUrl: './top-bar.component.html',
@@ -15,11 +16,13 @@ export class PepTopBarComponent implements AfterViewInit, OnChanges {
     @ViewChild('footerStartContent') footerStartContent: ElementRef;
     @ViewChild('footerEndContent') footerEndContent: ElementRef;
 
+    @ContentChild(PepSearchComponent) searchComp: PepSearchComponent;
+
     showFooter = false;
     isHidden = true;
     screenSize: PepScreenSizeType;
-    // searchListCompStateIsOpen = false;
-    // searchOpenOnSmallDevice = false;
+    searchIsOpen = false;
+    searchIsOpenAndSmallDevice = false;
 
     PepScreenSizeType = PepScreenSizeType;
 
@@ -30,8 +33,7 @@ export class PepTopBarComponent implements AfterViewInit, OnChanges {
     ) {
         this.layoutService.onResize$.subscribe(size => {
             this.screenSize = size;
-
-            // this.searchOpenOnSmallDevice = this.screenSize > PepScreenSizeType.SM && this.searchListCompStateIsOpen;
+            this.setSearchIsOpenAndSmallDevice();
         });
     }
 
@@ -47,22 +49,22 @@ export class PepTopBarComponent implements AfterViewInit, OnChanges {
         }
     }
 
+    ngAfterContentInit() {
+        if (this.searchComp) {
+            this.searchComp.stateChange.subscribe((searchState) => {
+                this.searchIsOpen = searchState;
+                this.setSearchIsOpenAndSmallDevice();
+            });
+        }
+    }
+    
     ngOnChanges(changes): void {
 
     }
 
-    onListActionClicked(action): void {
-
+    private setSearchIsOpenAndSmallDevice(): void {
+        // check if search is open and the device size is small or extra small
+        this.searchIsOpenAndSmallDevice = this.screenSize > PepScreenSizeType.SM && this.searchIsOpen;
     }
-
-    // onSearchChanged(search: any): void {
-    //     this.searchStringChanged.emit(search);
-    // }
-
-    // onSearchStateChanged(searchState: boolean): void {
-    //     // check if search is open and the device size is small or extra small
-    //     this.searchListCompStateIsOpen = searchState;
-    //     this.searchOpenOnSmallDevice = this.screenSize > PepScreenSizeType.SM && searchState;
-    // }
 
 }

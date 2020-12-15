@@ -1,15 +1,17 @@
-export class PepSearchChangedData {
+export class PepSearchClick {
     value: string;
     
-    constructor(data: Partial<PepSearchChangedData>) {
-        Object.assign(this, data);
+    constructor(value: string = '') {
+        this.value = value;
     }
 }
 
-export class PepSearchAutocompleteChangedData extends PepSearchChangedData {
+
+export class PepSearchValueChange {
+    value: string;
+    top: number;
     
-    constructor(data: Partial<PepSearchAutocompleteChangedData>) {
-        super(data);
+    constructor(data: Partial<PepSearchValueChange>) {
         Object.assign(this, data);
     }
 }

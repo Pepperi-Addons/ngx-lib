@@ -7,11 +7,10 @@ import { PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
 import { FakeData } from './fake-data';
 
 @Component({
-    selector: 'addon-pepperi-list-exmaple',
-    templateUrl: './pepperi-list-example.component.html',
-    styleUrls: ['./pepperi-list-example.component.scss']
+    templateUrl: './list-example.component.html',
+    styleUrls: ['./list-example.component.scss']
 })
-export class PepperiListExampleComponent implements OnInit, AfterViewInit {
+export class ListExampleComponent implements OnInit, AfterViewInit {
     @ViewChild(PepListComponent) customList: PepListComponent;
     dataSource = FakeData.Addons;
 

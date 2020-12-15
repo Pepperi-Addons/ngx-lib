@@ -26,7 +26,11 @@
 
             .content {
                 height: inherit;
-                // margin: 0;
+                
+                .left-container,
+                .right-container {
+                    height: inherit;
+                }
             }
         }
 

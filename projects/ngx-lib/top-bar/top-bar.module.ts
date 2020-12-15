@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepIconModule, PepIconRegistry, pepIconSystemMenu, pepIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
+import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 
 import { PepTopBarComponent } from './top-bar.component';
 
@@ -25,7 +26,8 @@ import { PepTopBarComponent } from './top-bar.component';
         // ngx-lib modules
         PepNgxLibModule,
         PepMenuModule,
-        PepIconModule
+        PepIconModule,
+        PepSearchModule
     ],
     exports: [ PepTopBarComponent ],
     declarations: [ PepTopBarComponent ],

@@ -12,12 +12,13 @@ export class ButtonLoaderDirective implements OnInit {
     @Input() loaderHeight = 'inherit';
     @Input() ignoreDisabledStyle = false;
 
+    private _isLoading = false;
     private _finish = null;
     @Input()
     set finish(value: boolean) {
         this._finish = value;
 
-        if (value) {
+        if (this._isLoading && value) {
             this.toggleLoading(false);
         }
     }
@@ -34,10 +35,11 @@ export class ButtonLoaderDirective implements OnInit {
     clickEvent(event): void {
         this.toggleLoading(true);
         
+        // In case that the finish input is supplied - init it.
         if (this._finish !== null) {
             this._finish = false;
         } else {
-           // In case that the finish input is nt supply.
+            // Init loaderTime if is not supplied (3000 - default 3 seconds).
             if (this.loaderTime === 0) {
                 this.loaderTime = 3000;
             }
@@ -82,13 +84,17 @@ export class ButtonLoaderDirective implements OnInit {
 
     private toggleLoading(show: boolean): void {
         if (show) {
-            this.element.nativeElement.appendChild(this.svgIcon);
+            this._isLoading = true;
+            this.renderer.appendChild(this.element.nativeElement, this.svgIcon);
             this.renderer.setAttribute(this.element.nativeElement, 'disabled', 'true');
             this.renderer.addClass(this.element.nativeElement, 'lock-events');
         } else {
-            this.element.nativeElement.removeChild(this.svgIcon);
-            this.renderer.removeAttribute(this.element.nativeElement, 'disabled');
-            this.renderer.removeClass(this.element.nativeElement, 'lock-events');
+            if (this._isLoading) {
+                this._isLoading = false;
+                this.renderer.removeChild(this.element.nativeElement, this.svgIcon);
+                this.renderer.removeAttribute(this.element.nativeElement, 'disabled');
+                this.renderer.removeClass(this.element.nativeElement, 'lock-events');
+            }
         }
     }
 }

@@ -40,7 +40,8 @@
             <pep-icon name="{{itemIconName}}"></pep-icon>
         </mat-icon>
         <span *ngIf="itemTitle" class="pull-left flip title ellipsis"
-            [ngClass]="{ 'padding-from-submenu-trigger': hasChildren }" [title]="itemTitle">
+            [ngClass]="{ 'spacing-from-icon': itemIconName, 'spacing-from-submenu-trigger': hasChildren }"
+            [title]="itemTitle">
             {{ itemTitle }}
         </span>
         <mat-icon *ngIf="hasChildren" class="pull-left flip submenu-trigger"

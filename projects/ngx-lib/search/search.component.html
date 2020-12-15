@@ -1,4 +1,4 @@
-﻿<div pepRtlClass class="search-container pull-right flip" [ngClass]="{ 'floating-search': isFloatingSearch}"
+﻿<div pepRtlClass class="search-container pull-right flip" [ngClass]="{ 'floating-search': isFloating}"
     [@fadeInOut]="fadeState">
 
     <div class="search-input spacing-element pull-left flip">
@@ -9,21 +9,21 @@
                 results="5" [formControl]="searchControl" placeholder="{{ 'SEARCH.HINT' | translate }}..."
                 [matAutocomplete]="auto" />
             <mat-autocomplete #auto="matAutocomplete" class="pep-select">
-                <mat-option *ngFor="let value of autoCompleteValues" [value]="value" (click)="triggerSearchChanged()">
+                <mat-option *ngFor="let value of autoCompleteValues" [value]="value" (click)="triggerSearch()">
                     {{value}}
                 </mat-option>
-                <mat-option *ngIf="autoCompleteValues?.length > 19" [value]="searchString"
-                    (click)="triggerSearchChanged()">{{ 'SEARCH.MORE_RESULTS' | translate }}</mat-option>
+                <mat-option *ngIf="autoCompleteValues?.length > autoCompleteTop - 1" [value]="value"
+                    (click)="triggerSearch()">{{ 'SEARCH.MORE_RESULTS' | translate }}</mat-option>
             </mat-autocomplete>
             <div matSuffix>
                 <mat-icon class="text-icon pull-right flip " (click)="onSearchClicked()">
                     <pep-icon name="system_search"></pep-icon>
                 </mat-icon>
                 <span
-                    *ngIf="(state == 'open' && searchInput?.value?.length > 0) || (isFloatingSearch && fadeState == 'fadeIn')"
+                    *ngIf="(state == 'open' && searchInput?.value?.length > 0) || (isFloating && fadeState == 'fadeIn')"
                     class="text-icon pull-right flip v-separator">|</span>
                 <mat-icon
-                    *ngIf="(state == 'open' && searchInput?.value?.length > 0) || (isFloatingSearch && fadeState == 'fadeIn')"
+                    *ngIf="(state == 'open' && searchInput?.value?.length > 0) || (isFloating && fadeState == 'fadeIn')"
                     class="text-icon pull-right flip" (click)="onClearClicked($event)">
                     <pep-icon name="system_close"></pep-icon>
                 </mat-icon>
@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<button *ngIf="isFloatingSearch && fadeState !='fadeIn' && showFloatSrcBtn"
+<button *ngIf="isFloating && fadeState !='fadeIn' && showFloatSrcBtn"
     class="spacing-element pep-button icon-button md weak pull-right flip" mat-button (click)="animateSearch()">
     <mat-icon>
         <pep-icon name="system_search"></pep-icon>

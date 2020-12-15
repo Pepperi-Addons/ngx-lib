@@ -2,11 +2,7 @@
 
     <pep-top-bar [title]="'Components_Example_Title' | translate">
         <div header-start-content>
-            <!-- <pep-search #searchComp class="pull-left flip" [isFloatingSearch]="screenSize > PepScreenSizeType.SM"
-                (searchStateChanged)="onSearchStateChanged($event)" (searchStringChanged)="onSearchChanged($event)"
-                (searchAutocompleteChanged)="onSearchAutocompleteChanged($event)"
-                [autoCompleteValues]="searchAutoCompleteValues" [searchString]="searchString">
-            </pep-search> -->
+
         </div>
         <div header-end-content>
             <button class="mat-button pep-button weak md spacing-element" (click)="toggleMenu()">
@@ -84,8 +80,9 @@
                 </pep-attachment>
 
                 <!-- Icons Examples -->
-                <pep-icon name="system_spinner" [spin]="true"></pep-icon>
-                <!-- <pep-icon name="system_bolt"></pep-icon>
+                <!--
+                    <pep-icon name="system_spinner" [spin]="true"></pep-icon>
+                    <pep-icon name="system_bolt"></pep-icon>
                     <pep-icon name="no_image"></pep-icon> 
                 -->
             </div>
@@ -115,16 +112,6 @@
             </div>
 
             <div class="child4 child-container">
-
-                <pep-group-buttons [buttons]="groupButtons" [buttonsClass]="'md regular'" [buttonsDisabled]="false"
-                    [viewType]="'split'">
-                </pep-group-buttons>
-
-                <!-- Color Picker Example -->
-                <pep-color [key]="'color1'" [label]="'Pepperi Color Picker'" [value]="'hsl(77, 87%, 42%)'"
-                    [xAlignment]="'right'" [showAAComplient]="true" [type]="'any'">
-                </pep-color>
-
                 <!-- Quantity Selector -->
                 <pep-quantity-selector [key]="'qs1'" [label]="'Pepperi Quantity Selector 2'" [value]="'50'"
                     [xAlignment]="'right'" (elementClicked)="elementClicked($event)">
