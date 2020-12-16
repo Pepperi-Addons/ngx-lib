@@ -56,12 +56,11 @@
         [showTitle]="showTitle" [layoutType]="layoutType" (valueChange)="onValueChanged($event)" [isActive]="isActive">
     </pep-rich-html-textarea>
 
-    <pep-select *ngSwitchCase="'select'" [form]="form" [key]="field.key" [value]="field.value"
-        [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type" [required]="field.required"
-        [disabled]="field.disabled" [readonly]="field.readonly" [xAlignment]="field.xAlignment"
-        [rowSpan]="field.rowSpan" [options]="field.options" [showTitle]="showTitle" [layoutType]="layoutType"
-        (valueChange)="onValueChanged($event)" (formValidationChange)="onFormValidationChanged($event)"
-        [isActive]="isActive">
+    <pep-select *ngSwitchCase="'select'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
+        [type]="field.type" [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [options]="field.options" [showTitle]="showTitle"
+        [layoutType]="layoutType" (valueChange)="onValueChanged($event)"
+        (formValidationChange)="onFormValidationChanged($event)" [isActive]="isActive">
     </pep-select>
 
     <pep-separator *ngSwitchCase="'separator'" [form]="form" [key]="field.key" [label]="field.label"

@@ -16,11 +16,11 @@
                 </pep-textbox>
 
                 <pep-select *ngSwitchCase="'select'" [layoutType]="layoutType" title="{{ groupField.formattedValue }}"
-                    [form]="form" [key]="groupField.key" [value]="groupField.value"
-                    [formattedValue]="groupField.formattedValue" [label]="groupField.label" [type]="groupField.type"
-                    [required]="groupField.required" [disabled]="groupField.disabled" [readonly]="groupField.readonly"
-                    [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan" [options]="groupField.options"
-                    [parentFieldKey]="key" (valueChange)="onValueChange($event, groupField.key)">
+                    [form]="form" [key]="groupField.key" [value]="groupField.value" [label]="groupField.label"
+                    [type]="groupField.type" [required]="groupField.required" [disabled]="groupField.disabled"
+                    [readonly]="groupField.readonly" [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan"
+                    [options]="groupField.options" [parentFieldKey]="key"
+                    (valueChange)="onValueChange($event, groupField.key)">
                 </pep-select>
             </div>
         </div>

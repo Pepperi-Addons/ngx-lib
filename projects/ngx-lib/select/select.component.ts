@@ -16,7 +16,6 @@ import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
 export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() value = '';
-    @Input() formattedValue = '';
     @Input() label = '';
     @Input() type: PepSelectFieldType = 'select';
     @Input() required = false;
@@ -52,7 +51,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     constructor(
         private customizationService: CustomizationService,
         private renderer: Renderer2,
-        private element: ElementRef) { }
+        private element: ElementRef
+        ) { }
 
     private addOptionsIfNeeded(): void {
         if (this.isMulti) {
@@ -72,7 +72,27 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
             }
         } else {
             if (this.value && this.value !== '' && this.options && !this.options.find((opt) => opt.Key === this.value)) {
-                this.options.push({ Key: this.value, Value: this.formattedValue });
+                this.options.push({ Key: this.value, Value: this.value });
+            }
+        }
+    }
+
+    private setFieldFormattedValue(value: any): void {
+        if (this.isMulti) {
+            if (this.selectedValuesModel.length > 0) {
+                this.fieldFormattedValue = this.selectedValuesModel.map((value) => {
+                    return (this.options.find(opt => opt.Key === value))?.Value
+                }).join(', ');
+            } else {
+                this.fieldFormattedValue = '';
+            }
+
+            // this.fieldFormattedValue = typeof value === 'string' ? value.replace(new RegExp(';', 'g'), ', ') : '';
+        } else {
+            const selectedOpt = this.options.find(opt => opt.Key === value);
+            
+            if (selectedOpt) {
+                this.fieldFormattedValue = selectedOpt.Value;
             }
         }
     }
@@ -98,15 +118,12 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         this.isMulti = this.type === 'multi';
         if (this.isMulti) {
             this.selectedValuesModel = this.value.length > 0 ? this.value.split(';') : [];
-            this.fieldFormattedValue = typeof this.value === 'string' ? this.value.replace(new RegExp(';', 'g'), ', ') : '';
         } else {
             this.selectedValueModel = this.value;
-
-            const selectedOpt = this.options.find(opt => opt.Key === this.value);
-            this.fieldFormattedValue = selectedOpt?.Value;
         }
 
         this.addOptionsIfNeeded();
+        this.setFieldFormattedValue(this.value);
     }
 
     ngOnDestroy(): void {
@@ -141,7 +158,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     changeValue(value: any): void {
-        this.formattedValue = value;
+        this.setFieldFormattedValue(value);
         this.customizationService.updateFormFieldValue(this.form, this.key, value, this.parentFieldKey);
 
         if (this.required) {
