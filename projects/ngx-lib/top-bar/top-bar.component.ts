@@ -57,11 +57,10 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
             this.showFooter =
                 this.footerStartContent?.nativeElement?.children?.length > 0 ||
                 this.footerEndContent?.nativeElement?.children?.length > 0;
-
-            this.cdRef.detectChanges();
         }
-
+            
         this.isHidden = false;
+        this.cdRef.detectChanges();
     }
 
     ngAfterContentInit() {

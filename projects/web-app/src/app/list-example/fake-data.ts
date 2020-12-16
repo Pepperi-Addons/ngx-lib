@@ -1,5 +1,6 @@
 export const FakeData = { Addons: [
       {
+          Type: 'OverwriteExisting',
           UUID: '2e51566e-7035-42dd-a7c2-fb92bc4ed135',
           Addon: {
               UUID: 'e738c47c-ed34-49a9-9c02-f8fb5209d151',
@@ -20,6 +21,7 @@ export const FakeData = { Addons: [
           ModificationDate: '2020-04-22T11:58:50.587Z'
       },
       {
+          Type: 'OverwriteExisting',
           UUID: '31f078b4-e368-4f95-b512-15cb3d2d6fac',
           Addon: {
               UUID: 'bd629d5f-a7b4-4d03-9e7c-67865a6d82a9',
@@ -40,6 +42,7 @@ export const FakeData = { Addons: [
           ModificationDate: '2020-08-03T08:19:09.013Z'
       },
       {
+          Type: 'UseExisting',
           UUID: '14fb64d8-2b2c-4dec-8563-ac9fa98cd701',
           Addon: {
               UUID: 'fcb7ced2-4c81-4705-9f2b-89310d45e6c7',
@@ -60,6 +63,7 @@ export const FakeData = { Addons: [
           ModificationDate: '2020-08-30T12:01:12.083Z'
       },
       {
+          Type: 'UseExisting',
           UUID: 'ba0adbdc-52e2-4049-816b-41d67b4a5bb7',
           Addon: {
               UUID: '1e66237b-b604-450e-92cf-81bcd171185a',
@@ -80,6 +84,7 @@ export const FakeData = { Addons: [
           ModificationDate: '2020-08-27T11:17:12.67Z'
       },
       {
+          Type: 'UseExisting',
           UUID: '8c24db9d-3c6f-4814-a92f-ac45a991df74',
           Addon: {
               UUID: '00000000-0000-0000-0000-000000abcdef',

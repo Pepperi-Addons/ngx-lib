@@ -101,7 +101,9 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
             this.fieldFormattedValue = typeof this.value === 'string' ? this.value.replace(new RegExp(';', 'g'), ', ') : '';
         } else {
             this.selectedValueModel = this.value;
-            this.fieldFormattedValue = this.formattedValue;
+
+            const selectedOpt = this.options.find(opt => opt.Key === this.value);
+            this.fieldFormattedValue = selectedOpt?.Value;
         }
 
         this.addOptionsIfNeeded();

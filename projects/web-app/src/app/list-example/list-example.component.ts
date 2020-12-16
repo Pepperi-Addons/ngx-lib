@@ -96,7 +96,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         if (this.customList && dataSource) {
             const tableData = new Array<PepRowData>();
             dataSource.forEach((rowData: any) => {
-                const displayedColumns = ['Name', 'Description', 'Version', 'Type', 'AutomaticUpgrade'];
+                const displayedColumns = ['UUID', 'Description', 'Version', 'Type', 'AutomaticUpgrade'];
                 tableData.push(this.convertToPepRowData(rowData, displayedColumns));
             });
             const pepperiListObj = this.dataConvertorService.convertListData(tableData);
@@ -142,6 +142,20 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
                 break;
             case 'Name':
                 dataRowField.ColumnWidth = 15;
+                break;
+            case "Type":
+                dataRowField.ColumnWidth = 15;
+                dataRowField.FieldType = FIELD_TYPE.ComboBox;
+                dataRowField.OptionalValues = [
+                    {
+                        Key: "UseExisting",
+                        Value: "Use Existing",
+                    },
+                    {
+                        Key: "OverwriteExisting",
+                        Value: "Overwrite Existing",
+                    },
+                ];
                 break;
             default:
                 dataRowField.FormattedValue = object[key] ? object[key].toString() : '';
