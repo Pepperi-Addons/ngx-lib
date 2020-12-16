@@ -3,6 +3,7 @@ import { LayoutService, PepFieldClickedData, PepFieldValueChangedData, PepScreen
 import { PepButtonClick, PepButton } from '@pepperi-addons/ngx-lib/button';
 import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
 import { PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
+import { PepSearchStateType } from '@pepperi-addons/ngx-lib/search';
 
 @Component({
     templateUrl: './top-bar-example.component.html',
@@ -91,7 +92,7 @@ export class TopBarExampleComponent implements OnInit {
         alert(`${event.source.key}: was clicked`);
     }
 
-    onSearchStateChanged(searchState: boolean) {
+    onSearchStateChanged(searchState: PepSearchStateType) {
         debugger;
     }
 

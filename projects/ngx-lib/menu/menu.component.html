@@ -1,5 +1,4 @@
-<div class="menu-container" [ngClass]="{ 'spacing-element': state === 'visible' }"
-    dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
+<div class="menu-container" dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
     <ng-container *ngIf="showAnimation then animationTemplate else regularTemplate">
     </ng-container>
     <ng-template #animationTemplate>

@@ -4,6 +4,7 @@ import { CustomizationService, HttpService, ObjectSingleData, DataConvertorServi
     PepRowData, PepFieldData, AddonService, FIELD_TYPE, UtilitiesService } from '@pepperi-addons/ngx-lib';
 import { PepListComponent, ChangeSortingEvent } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
+import { PepFooterStateType } from '@pepperi-addons/ngx-lib/top-bar';
 import { FakeData } from './fake-data';
 
 @Component({
@@ -16,6 +17,8 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
 
     menuItems: Array<PepMenuItem>;
     options: Array<PepMenuItem>;
+    
+    footerState: PepFooterStateType;
 
     constructor(
         private translate: TranslateService,
@@ -146,6 +149,10 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         }
 
         return dataRowField;
+    }
+
+    onFooterStateChange(footerState: PepFooterStateType) {
+        this.footerState = footerState;
     }
 
     onListChange(event) {

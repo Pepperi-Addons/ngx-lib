@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component';
-import { ListExampleComponent } from './list-example/pepperi-list-example.component';
+import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
 import { PepUIModule } from './modules/pepperi.module';
 import { MaterialModule } from './modules/material.module';

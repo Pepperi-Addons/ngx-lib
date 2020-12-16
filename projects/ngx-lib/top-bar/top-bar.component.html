@@ -41,7 +41,9 @@
 
 <!-- Left side templates -->
 <ng-template #listActionsTemplate>
-    <ng-content *ngIf="!searchIsOpenAndSmallDevice" select="pep-list-actions"></ng-content>
+    <div class="pull-left flip" [ngClass]="{ 'spacing-element': listActionsIsVisible }">
+        <ng-content *ngIf="!searchIsOpenAndSmallDevice" select="pep-list-actions"></ng-content>
+    </div>
 </ng-template>
 
 <ng-template #titleTemplate>
@@ -51,7 +53,7 @@
 </ng-template>
 
 <ng-template #listChooserTemplate>
-    <div *ngIf="!searchIsOpenAndSmallDevice" class="pull-left flip">
+    <div *ngIf="!searchIsOpenAndSmallDevice" class="spacing-element pull-left flip">
         <ng-content select="pep-list-chooser"></ng-content>
     </div>
 </ng-template>
@@ -63,14 +65,16 @@
 </ng-template>
 
 <ng-template #listTotalTemplate>
-    <div *ngIf="!searchIsOpenAndSmallDevice" class="pull-left flip">
+    <div *ngIf="!searchIsOpenAndSmallDevice" class="spacing-element pull-left flip">
         <ng-content select="pep-list-total"></ng-content>
     </div>
 </ng-template>
 
 <!-- Right side templates -->
 <ng-template #searchTemplate>
-    <ng-content select="pep-search"></ng-content>
+    <div class="spacing-element pull-right flip">
+        <ng-content select="pep-search"></ng-content>
+    </div>
 </ng-template>
 
 <ng-template #rightContentTemplate>

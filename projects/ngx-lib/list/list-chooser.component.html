@@ -1,8 +1,8 @@
 ﻿<ng-container *ngIf="options?.length > 1">
     <button mat-button
         [ngClass]="{ 'icon-button': screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS  }"
-        class="spacing-element pep-button {{ sizeType }} weak " title="{{ selectedOption?.title }}"
-        [matMenuTriggerFor]="chooserMenu" pepMenuBlur>
+        class="pep-button {{ sizeType }} weak " title="{{ selectedOption?.title }}" [matMenuTriggerFor]="chooserMenu"
+        pepMenuBlur>
         <span *ngIf="screenSize < PepScreenSizeType.XS" class="pull-left flip button-title-with-icon">
             {{ selectedOption?.title }}
         </span>

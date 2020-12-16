@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { PepStyleType, PepSizeType } from '@pepperi-addons/ngx-lib';
-import { PepIcon } from '@pepperi-addons/ngx-lib/icon';
+import { PepIconType } from '@pepperi-addons/ngx-lib/icon';
 import { PepButton, PepButtonClick } from './button.model';
 
 @Component({
@@ -11,15 +11,13 @@ import { PepButton, PepButtonClick } from './button.model';
 export class ButtonComponent implements OnInit, OnDestroy {
     @Input() key: string;
     @Input() value: string;
-
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
     @Input() classNames = '';
-
     @Input() disabled = false;
-    @Input() icon: PepIcon = null;
-    // @Input() callback?: (action: PepButtonClick) => void = null;
-
+    @Input() iconName: PepIconType;
+    @Input() iconPosition: 'start' | 'end' = 'end';
+    
     @Output() buttonClick: EventEmitter<PepButtonClick> = new EventEmitter<PepButtonClick>();
 
     constructor() {

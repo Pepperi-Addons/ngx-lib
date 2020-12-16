@@ -2,12 +2,13 @@ import { Directive, OnInit, Input, Renderer2, ElementRef, Optional, Inject } fro
 import { DOCUMENT } from '@angular/common';
 import { PepIconRegistry } from './icon-registry.service';
 import { UtilitiesService } from '@pepperi-addons/ngx-lib';
+import { PepIconType } from './icon-generated.model';
 
 @Directive({
     selector: '[pepSvgIcon]',
 })
 export class PepIconDirective implements OnInit {
-    @Input('pepSvgIcon') iconName: string;
+    @Input('pepSvgIcon') iconName: PepIconType;
 
     constructor(
         private renderer: Renderer2,

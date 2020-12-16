@@ -1,3 +1,5 @@
+export type PepSearchStateType = 'open' | 'close';
+
 export class PepSearchClick {
     value: string;
     
@@ -5,7 +7,6 @@ export class PepSearchClick {
         this.value = value;
     }
 }
-
 
 export class PepSearchValueChange {
     value: string;

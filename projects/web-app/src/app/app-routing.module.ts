@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListExampleComponent } from './list-example/pepperi-list-example.component';
+import { ListExampleComponent } from './list-example/list-example.component';
 import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component'
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component'
 import { EmptyRouteComponent } from './empty-route/empty-route.component';

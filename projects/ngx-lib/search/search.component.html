@@ -1,7 +1,7 @@
 ﻿<div pepRtlClass class="search-container pull-right flip" [ngClass]="{ 'floating-search': isFloating}"
     [@fadeInOut]="fadeState">
 
-    <div class="search-input spacing-element pull-left flip">
+    <div class="search-input pull-left flip">
         <mat-form-field class="search-field" appearance="outline">
             <input id="searchInput" #searchInput class="body-sm search-input" matInput autocomplete="off"
                 [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" [@slideInOut]="state"
@@ -33,7 +33,7 @@
 </div>
 
 <button *ngIf="isFloating && fadeState !='fadeIn' && showFloatSrcBtn"
-    class="spacing-element pep-button icon-button md weak pull-right flip" mat-button (click)="animateSearch()">
+    class="pep-button icon-button md weak pull-right flip" mat-button (click)="animateSearch()">
     <mat-icon>
         <pep-icon name="system_search"></pep-icon>
     </mat-icon>

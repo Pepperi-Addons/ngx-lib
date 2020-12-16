@@ -7,7 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormControl } from '@angular/forms';
 import { LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { debounceTime } from 'rxjs/operators';
-import { PepSearchClick, PepSearchValueChange } from './search.model';
+import { PepSearchStateType, PepSearchClick, PepSearchValueChange } from './search.model';
 
 @Component({
     selector: 'pep-search',
@@ -60,7 +60,7 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
     
     @Output() search: EventEmitter<PepSearchClick> = new EventEmitter<PepSearchClick>();
     @Output() valueChange: EventEmitter<PepSearchValueChange> = new EventEmitter<PepSearchValueChange>();
-    @Output() stateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() stateChange: EventEmitter<PepSearchStateType> = new EventEmitter<PepSearchStateType>();
     
     @ViewChild('searchInput') searchInput: ElementRef;
     
@@ -130,7 +130,7 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
             this.fadeState = 'fadeOut';
 
             setTimeout(() => {
-                this.stateChange.emit(false);
+                this.stateChange.emit('close');
                 this.showFloatSrcBtn = true;
             }, 500);
 
@@ -167,7 +167,7 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
         if (this.state === 'open') {
             this.fadeState = this.fadeState === 'fadeOut' ? 'fadeIn' : 'fadeOut';
             if (this.fadeState === 'fadeIn') {
-                this.stateChange.emit(true);
+                this.stateChange.emit('open');
                 this.showFloatSrcBtn = false;
                 this.searchInput.nativeElement.focus();
             }
@@ -185,7 +185,7 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
     // component and showen all other components before
     animateSearchDone() {
         if (this.state !== 'open') {
-            this.stateChange.emit(false);
+            this.stateChange.emit('close');
         }
     }
 

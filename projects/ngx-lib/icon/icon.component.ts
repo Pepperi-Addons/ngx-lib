@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Inject, Input, Optional, ViewEncapsulation, Renderer2 } from '@angular/core';
-import { PepIconRegistry } from './icon-registry.service';
 import { DOCUMENT } from '@angular/common';
 import { UtilitiesService } from '@pepperi-addons/ngx-lib';
+import { PepIconRegistry } from './icon-registry.service';
+import { PepIconType } from './icon-generated.model';
 
 @Component({
     selector: 'pep-icon',
@@ -48,7 +49,7 @@ export class PepIconComponent {
     }
 
     @Input()
-    set name(iconName: string) {
+    set name(iconName: PepIconType) {
         if (this.svgIcon) {
             this.element.nativeElement.removeChild(this.svgIcon);
         }

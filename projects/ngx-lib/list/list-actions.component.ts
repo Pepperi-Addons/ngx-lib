@@ -1,7 +1,6 @@
 import { Component, OnInit, Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { PepSizeType } from '@pepperi-addons/ngx-lib';
 import { PepMenuStateType, PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
-import { PepIcon } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'pep-list-actions',
@@ -11,8 +10,6 @@ import { PepIcon } from '@pepperi-addons/ngx-lib/icon';
 
 @Injectable()
 export class PepListActionsComponent implements OnInit {
-
-    @Input() icon: PepIcon = null;
     @Input() actions: Array<PepMenuItem> = null;
     @Input() sizeType: PepSizeType = 'md';
     @Input() xPosition: 'before' | 'after' = 'before';

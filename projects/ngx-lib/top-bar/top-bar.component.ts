@@ -1,29 +1,38 @@
-import { ChangeDetectorRef, ContentChild, ElementRef, ViewChild } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, ElementRef, ViewChild } from '@angular/core';
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { CustomizationService, LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { PepSearchComponent } from '@pepperi-addons/ngx-lib/search';
+import { PepListActionsComponent } from '@pepperi-addons/ngx-lib/list';
+import { PepMenuStateType } from '@pepperi-addons/ngx-lib/menu';
+import { PepSearchStateType } from '@pepperi-addons/ngx-lib/search';
+
+export type PepFooterStateType = 'visible' | 'hidden';
+
 @Component({
     selector: 'pep-top-bar',
     templateUrl: './top-bar.component.html',
     styleUrls: ['./top-bar.component.scss']
 })
-export class PepTopBarComponent implements AfterViewInit, OnChanges {
+export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnChanges {
 
     @Input() inline = false;
     @Input() title: string = null;
 
-    // @Output() searchStringChange: EventEmitter<any> = new EventEmitter<string>();
+    @Output() footerStateChange: EventEmitter<PepFooterStateType> = new EventEmitter<PepFooterStateType>();
+
     @ViewChild('footerStartContent') footerStartContent: ElementRef;
     @ViewChild('footerEndContent') footerEndContent: ElementRef;
 
     @ContentChild(PepSearchComponent) searchComp: PepSearchComponent;
+    @ContentChild(PepListActionsComponent) listActionsComp: PepListActionsComponent;
 
     showFooter = false;
     isHidden = true;
     screenSize: PepScreenSizeType;
-    searchIsOpen = false;
+    listActionsIsVisible = false;
+    searchState: PepSearchStateType;
     searchIsOpenAndSmallDevice = false;
-
+    footerState: PepFooterStateType;
     PepScreenSizeType = PepScreenSizeType;
 
     constructor(
@@ -31,14 +40,18 @@ export class PepTopBarComponent implements AfterViewInit, OnChanges {
         public layoutService: LayoutService,
         private cdRef: ChangeDetectorRef
     ) {
-        this.layoutService.onResize$.subscribe(size => {
+        
+    }
+    
+    ngAfterViewInit(): void {
+        this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
             this.setSearchIsOpenAndSmallDevice();
-        });
-    }
 
-    ngAfterViewInit(): void {
-        this.isHidden = false;
+            if (!this.inline) {
+                this.setFooterState();
+            }
+        });
 
         if (!this.inline) {
             this.showFooter =
@@ -47,12 +60,20 @@ export class PepTopBarComponent implements AfterViewInit, OnChanges {
 
             this.cdRef.detectChanges();
         }
+
+        this.isHidden = false;
     }
 
     ngAfterContentInit() {
+        if (this.listActionsComp) {
+            this.listActionsComp.stateChange.subscribe((listActionsState: PepMenuStateType) => {
+                this.listActionsIsVisible = listActionsState === 'visible';
+            });
+        } 
+        
         if (this.searchComp) {
-            this.searchComp.stateChange.subscribe((searchState) => {
-                this.searchIsOpen = searchState;
+            this.searchComp.stateChange.subscribe((searchState: PepSearchStateType) => {
+                this.searchState = searchState;
                 this.setSearchIsOpenAndSmallDevice();
             });
         }
@@ -64,7 +85,15 @@ export class PepTopBarComponent implements AfterViewInit, OnChanges {
 
     private setSearchIsOpenAndSmallDevice(): void {
         // check if search is open and the device size is small or extra small
-        this.searchIsOpenAndSmallDevice = this.screenSize > PepScreenSizeType.SM && this.searchIsOpen;
+        this.searchIsOpenAndSmallDevice = this.screenSize > PepScreenSizeType.SM && this.searchState === 'open';
     }
 
+    private setFooterState() {
+        const newFooterState: PepFooterStateType = this.showFooter && this.screenSize >= PepScreenSizeType.MD ? 'visible' : 'hidden';
+        
+        if (this.footerState !== newFooterState) {
+            this.footerState = newFooterState;
+            this.footerStateChange.emit(this.footerState);
+        }
+    }
 }

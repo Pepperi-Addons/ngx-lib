@@ -1,25 +1,29 @@
 <!-- <main> -->
 <div class="addon-page-container">
-    <pep-top-bar [title]="'List_Example_Title' | translate">
+    <pep-top-bar [title]="'List_Example_Title' | translate" (footerStateChange)="onFooterStateChange($event)">
         <div header-start-content>
 
         </div>
-        <div header-end-content>
-            <button class="mat-button pep-button weak md spacing-element" (click)="toggleMenu()">
-                toggle menu
-            </button>
+        <div *ngIf="footerState === 'hidden'" header-end-content>
+            <pep-button [value]="'toggle menu'" [classNames]="'spacing-element'" (click)="toggleMenu()">
+            </pep-button>
+            <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'"
+                [classNames]="'spacing-element pull-right flip'"></pep-button>
+            <pep-button [sizeType]="'sm'" [classNames]="'spacing-element pull-right flip'" [value]="'Tomer test'"
+                [iconName]="'system_bolt'">
+            </pep-button>
         </div>
         <div footer-start-content>
             <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'"
                 [classNames]="'spacing-element pull-right flip'"></pep-button>
-            <pep-button [value]="'test 2'" [sizeType]="'sm'" [classNames]="'spacing-element pull-right flip'"
-                [icon]="'system_bolt'">
+            <pep-button [sizeType]="'sm'" [classNames]="'spacing-element pull-right flip'" [value]="'Tomer test'"
+                [iconName]="'system_bolt'">
+            </pep-button>
+            <pep-button [value]="'toggle menu'" [classNames]="'spacing-element'" (click)="toggleMenu()">
             </pep-button>
         </div>
         <div footer-end-content>
-            <button class="mat-button pep-button weak md spacing-element" (click)="toggleMenu()">
-                toggle menu
-            </button>
+
         </div>
         <pep-list-actions [actions]="menuItems"></pep-list-actions>
     </pep-top-bar>
@@ -37,13 +41,13 @@
             <div class="inline-top-bar-container">
                 <pep-top-bar [title]="'inline top bar'" [inline]="true">
                     <div header-end-content>
-                        <button class="mat-button pep-button weak sm spacing-element">
+                        <button class="pep-button weak sm spacing-element">
                             button
                         </button>
                         <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'"
                             [classNames]="'spacing-element pull-right flip'"></pep-button>
                         <pep-button [value]="'test 2'" [sizeType]="'sm'"
-                            [classNames]="'spacing-element pull-right flip'" [icon]="'system_bolt'">
+                            [classNames]="'spacing-element pull-right flip'" [iconName]="'system_settings'">
                         </pep-button>
                     </div>
                     <pep-list-actions [actions]="menuItems" [sizeType]="'sm'"></pep-list-actions>
