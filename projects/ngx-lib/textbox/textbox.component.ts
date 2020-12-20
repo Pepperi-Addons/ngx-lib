@@ -85,6 +85,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.formattedValue = this.formattedValue || this.value;
+        }
+
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
 
         setTimeout(() => {

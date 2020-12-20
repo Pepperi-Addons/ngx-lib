@@ -158,6 +158,10 @@ export class PepQuantitySelectorComponent
     }
 
     ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.formattedValue = this.formattedValue || this.value;
+        }
+
         // Bug fix for addons when the key is '' in the ngOnInit for some reson
         if (this.isEmptyKey && this.key !== '') {
             this.setForm();

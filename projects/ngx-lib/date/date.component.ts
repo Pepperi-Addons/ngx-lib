@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, Renderer2, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, Renderer2, OnDestroy, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
@@ -71,7 +71,7 @@ import { UtilitiesService, PepLayoutType, CustomizationService, PepHorizontalAli
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepDateComponent implements OnInit, OnDestroy {
+export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() formattedValue = '';
@@ -146,6 +146,12 @@ export class PepDateComponent implements OnInit, OnDestroy {
         this.initDate();
     }
 
+    ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.formattedValue = this.formattedValue || this.value;
+        }
+    }
+    
     ngOnDestroy(): void {
         if (this.valueChange) {
             this.valueChange.unsubscribe();
