@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CarouselExampleComponent } from './carousel-example/carousel-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
-import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component'
-import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component'
+import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component';
+import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
 import { EmptyRouteComponent } from './empty-route/empty-route.component';
 // import * as config from '../../../addon.config.json';
 
 const routes: Routes = [
+    {
+        path: `carousel-example`,
+        component: CarouselExampleComponent
+    },
     {
         path: `form-fields-example`,
         component: FormFieldsExampleComponent

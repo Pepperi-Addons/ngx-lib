@@ -5,7 +5,7 @@ import { FIELD_TYPE } from '../common/model/api.model';
 export type PepLayoutType = 'form' | 'card' | 'table';
 
 /** Allowed style options */
-export type PepStyleType = 'weak' | 'regular' | 'strong';
+export type PepStyleType = 'weak' | 'weak-invert' | 'regular' | 'strong';
 
 /** Allowed size options */
 export type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

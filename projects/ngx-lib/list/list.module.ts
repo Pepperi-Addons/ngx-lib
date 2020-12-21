@@ -9,13 +9,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { PepCarouselModule } from '@pepperi-addons/ngx-lib/carousel';
 import {
     PepIconModule,
     PepIconRegistry,
     pepIconArrowDown,
     pepIconArrowEither,
     pepIconArrowUp,
-    pepIconSystemMust
+    pepIconSystemMust,
+    pepIconArrowRightAlt,
+    pepIconArrowLeftAlt,
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
@@ -26,6 +30,7 @@ import { VirtualScrollModule } from './virtual-scroll.component';
 import { PepListComponent } from './list.component';
 import { PepListActionsComponent } from './list-actions.component';
 import { PepListChooserComponent } from './list-chooser.component';
+import { PepListCarouselComponent } from './list-carousel.component';
 import { PepListTotalComponent } from './list-total.component';
 
 @NgModule({
@@ -40,14 +45,28 @@ import { PepListTotalComponent } from './list-total.component';
         MatMenuModule,
         // ngx-lib modules
         PepNgxLibModule,
+        PepButtonModule,
+        PepCarouselModule,
         PepIconModule,
         PepFormModule,
         PepMenuModule,
         PepBreadCrumbsModule,
         VirtualScrollModule
     ],
-    exports: [ PepListComponent, PepListActionsComponent, PepListChooserComponent, PepListTotalComponent ],
-    declarations: [ PepListComponent, PepListActionsComponent, PepListChooserComponent, PepListTotalComponent ],
+    exports: [
+        PepListComponent,
+        PepListActionsComponent,
+        PepListCarouselComponent,
+        PepListChooserComponent,
+        PepListTotalComponent
+    ],
+    declarations: [
+        PepListComponent,
+        PepListActionsComponent,
+        PepListCarouselComponent,
+        PepListChooserComponent,
+        PepListTotalComponent
+    ],
 })
 export class PepListModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
@@ -55,7 +74,9 @@ export class PepListModule {
             pepIconArrowDown,
             pepIconArrowEither,
             pepIconArrowUp,
-            pepIconSystemMust
+            pepIconSystemMust,
+            pepIconArrowRightAlt,
+            pepIconArrowLeftAlt,
         ]);
     }
 }

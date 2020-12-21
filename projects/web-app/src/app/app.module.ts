@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CarouselExampleComponent } from './carousel-example/carousel-example.component';
 import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
@@ -14,6 +15,7 @@ import { MaterialModule } from './modules/material.module';
 @NgModule({
     declarations: [
         AppComponent,
+        CarouselExampleComponent,
         FormFieldsExampleComponent,
         ListExampleComponent,
         TopBarExampleComponent

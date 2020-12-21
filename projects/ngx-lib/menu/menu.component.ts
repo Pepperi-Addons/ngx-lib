@@ -15,6 +15,7 @@ import { PepMenuItem, PepMenuItemClick, PepMenuStateType } from './menu.model';
                 style({
                     width: '0px',
                     padding: '0',
+                    margin: '0',
                     minWidth: '0px',
                     opacity: 0
                 })

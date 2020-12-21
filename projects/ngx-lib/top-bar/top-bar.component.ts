@@ -29,7 +29,7 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
     showFooter = false;
     isHidden = true;
     screenSize: PepScreenSizeType;
-    listActionsIsVisible = false;
+    // listActionsIsVisible = false;
     searchState: PepSearchStateType;
     searchIsOpenAndSmallDevice = false;
     footerState: PepFooterStateType;
@@ -64,17 +64,17 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
     }
 
     ngAfterContentInit() {
-        if (this.listActionsComp) {
-            this.listActionsComp.stateChange.subscribe((listActionsState: PepMenuStateType) => {
-                this.listActionsIsVisible = listActionsState === 'visible';
-            });
-        } 
+        // if (this.listActionsComp) {
+        //     this.listActionsComp.stateChange.subscribe((listActionsState: PepMenuStateType) => {
+        //         this.listActionsIsVisible = listActionsState === 'visible';
+        //     }).unsubscribe();
+        // } 
         
         if (this.searchComp) {
             this.searchComp.stateChange.subscribe((searchState: PepSearchStateType) => {
                 this.searchState = searchState;
                 this.setSearchIsOpenAndSmallDevice();
-            });
+            }).unsubscribe();
         }
     }
     

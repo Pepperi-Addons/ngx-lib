@@ -77,6 +77,7 @@ $pep-typography: mat-typography-config(
 @import './form/form.component.theme';
 
 @import './list/list-actions.component.theme';
+@import './list/list-carousel.component.theme';
 @import './list/list-chooser.component.theme';
 @import './list/list-total.component.theme';
 @import './list/list.component.theme';
@@ -164,6 +165,7 @@ $material-theme-for-pep: $material-default-theme;
         @include pep-form-component-theme($pepperi-theme);
         
         @include pep-list-actions-component-theme($pepperi-theme);
+        @include pep-list-carousel-component-theme($pepperi-theme);
         @include pep-list-chooser-component-theme($pepperi-theme);
         @include pep-list-total-component-theme($pepperi-theme);
         @include pep-list-component-theme($pepperi-theme);

@@ -19,6 +19,7 @@
 
     &.floating-search {
         display: inline-flex; // flex;
+        // justify-content: flex-start;
 
         &.is-action-button-visable {
             @include calc(width, '100% -' calc(#{$spacing-sm} * 2 + #{$spacing-xl})); // content spacing in both sides + 1.5 rem is the action-button width.
@@ -30,4 +31,9 @@
             max-width: 3.125rem;
         }
     }
+}
+
+.pep-button {
+    // display: flex;
+    // justify-content: flex-end;
 }

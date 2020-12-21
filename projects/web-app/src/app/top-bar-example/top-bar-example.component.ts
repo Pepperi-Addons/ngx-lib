@@ -56,7 +56,7 @@ export class TopBarExampleComponent implements OnInit {
         if (withChildren) {
             menuItems = [
                 { key: 'test1', title: 'test 1', iconName: pepIconSystemBin.name},
-                { key: 'test2', title: 'test 2', disabled: true, iconName: pepIconSystemBin.name },
+                { key: 'test2', title: 'test 2', iconName: pepIconSystemBin.name },
                 { key: 'sep', type: 'splitter' },
                 { key: 'test3', title: 'test 3', iconName: pepIconSystemBin.name, children: this.getMenuItems(index <= 3, index)}
             ];

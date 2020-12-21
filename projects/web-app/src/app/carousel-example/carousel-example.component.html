@@ -1,0 +1,31 @@
+<div class="addon-page-container ">
+    <pep-top-bar [title]="'Carousel title'">
+        <div header-start-content>
+        </div>
+        <div header-end-content>
+        </div>
+    </pep-top-bar>
+    <div class="main-content ">
+        <div class="content">
+            <!-- <div class="carousel-container">
+                <pep-button [iconName]="'arrow_left_alt'" [classNames]="'invert'" (click)="moveLeft()"
+                    class="carousel-arrow start-arrow">
+                </pep-button>
+                <pep-carousel #nav [scroll-x-wheel-enabled]="true" [scrollbar-hidden]="true">
+                    <ng-container *ngFor="let item of items">
+                        <pep-form pepCarouselItem class="card-view small-card" [uiControlHeader]="uiControl"
+                            [singleData]="item" [layoutType]="'card'">
+                        </pep-form>
+                    </ng-container>
+                </pep-carousel>
+                <pep-button [iconName]="'arrow_right_alt'" [classNames]="'invert'" (click)="moveRight()"
+                    class="carousel-arrow end-arrow">
+                </pep-button>
+            </div> -->
+            <pep-list-carousel [uiControl]="uiControl" [items]="items" (itemClick)="onItemClicked($event)"
+                [itemSize]="'xs'">
+
+            </pep-list-carousel>
+        </div>
+    </div>
+</div>

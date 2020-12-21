@@ -25,6 +25,8 @@
             padding: 0;
 
             .content {
+                display: flex;
+                justify-content: space-between;
                 height: inherit;
                 
                 .left-container,
@@ -44,6 +46,8 @@
         height: $footer-bar-height;
 
         .content {
+            display: flex;
+            justify-content: space-between;
             margin: 0 $double-content-margin;
             padding-top: $footer-bar-spacing-top;
         }
@@ -63,6 +67,18 @@
     .right-container {
         display: flex;
         justify-content: flex-end;
+    }
+    
+    .flex-wrapper {
+        ::ng-deep > * {
+            display: flex;
+        }
+    }
+
+    .list-actions-wrapper {
+        ::ng-deep.pep-button {
+            @include spacing-element(false);
+        }
     }
 
     &:not(.inline) {

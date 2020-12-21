@@ -1,32 +1,38 @@
-<mat-menu #childMenu="matMenu" xPosition="{{ xPosition }}">
+<mat-menu #childMenu="matMenu" xPosition="{{ xPosition }}" class="pep-menu">
     <ng-container *ngFor="let menuItem of items">
         <ng-container *ngIf="!menuItem.hidden">
-            <ng-container *ngIf="menuItem.children?.length > 0; then childrenBlock; else regularBlock"></ng-container>
-            <ng-template #childrenBlock>
-                <button mat-menu-item [matMenuTriggerFor]="menu.childMenu" title="{{ menuItem.title }}" pepRtlDirection
-                    [disabled]="menuItem.disabled"
-                    [ngClass]="{ 'splitter': menuItem.type === 'splitter', disabled: menuItem.disabled }">
-                    <ng-container *ngTemplateOutlet="itemTemplate; context: {
-                        itemIconName: menuItem.iconName,
-                        itemTitle: menuItem.title,
-                        itemType: menuItem.type,
-                        hasChildren: true
-                    }"></ng-container>
-                </button>
-                <pep-menu-item #menu [items]="menuItem.children" (menuItemClick)="onChildClicked($event)">
-                </pep-menu-item>
+            <ng-container *ngIf="menuItem.type === 'splitter'; then splitterBlock; else buttonBlock"></ng-container>
+            <ng-template #splitterBlock>
+                <div mat-menu-item class="splitter"></div>
             </ng-template>
-            <ng-template #regularBlock>
-                <button mat-menu-item (click)="onMenuItemClicked(menuItem)" title="{{ menuItem.title }}" pepRtlDirection
-                    [disabled]="menuItem.disabled"
-                    [ngClass]="{ 'splitter': menuItem.type === 'splitter', disabled: menuItem.disabled }">
-                    <ng-container *ngTemplateOutlet="itemTemplate; context: {
-                        itemIconName: menuItem.iconName,
-                        itemTitle: menuItem.title,
-                        itemType: menuItem.type,
-                        hasChildren: false
-                    }"></ng-container>
-                </button>
+
+            <ng-template #buttonBlock>
+                <ng-container *ngIf="menuItem.children?.length > 0; then childrenBlock; else regularBlock">
+                </ng-container>
+                <ng-template #childrenBlock>
+                    <button mat-menu-item [matMenuTriggerFor]="menu.childMenu" title="{{ menuItem.title }}"
+                        pepRtlDirection [disabled]="menuItem.disabled" [ngClass]="{ disabled: menuItem.disabled }">
+                        <ng-container *ngTemplateOutlet="itemTemplate; context: {
+                            itemIconName: menuItem.iconName,
+                            itemTitle: menuItem.title,
+                            itemType: menuItem.type,
+                            hasChildren: true
+                        }"></ng-container>
+                    </button>
+                    <pep-menu-item #menu [items]="menuItem.children" (menuItemClick)="onChildClicked($event)">
+                    </pep-menu-item>
+                </ng-template>
+                <ng-template #regularBlock>
+                    <button mat-menu-item (click)="onMenuItemClicked(menuItem)" title="{{ menuItem.title }}"
+                        pepRtlDirection [disabled]="menuItem.disabled" [ngClass]="{ disabled: menuItem.disabled }">
+                        <ng-container *ngTemplateOutlet="itemTemplate; context: {
+                            itemIconName: menuItem.iconName,
+                            itemTitle: menuItem.title,
+                            itemType: menuItem.type,
+                            hasChildren: false
+                        }"></ng-container>
+                    </button>
+                </ng-template>
             </ng-template>
         </ng-container>
     </ng-container>
@@ -34,8 +40,7 @@
 
 <ng-template #itemTemplate let-itemIconName="itemIconName" let-itemTitle="itemTitle" let-itemType="itemType"
     let-hasChildren="hasChildren">
-
-    <ng-container *ngIf="itemType !== 'splitter'">
+    <ng-container>
         <mat-icon *ngIf="itemIconName" class="pull-left flip">
             <pep-icon name="{{itemIconName}}"></pep-icon>
         </mat-icon>

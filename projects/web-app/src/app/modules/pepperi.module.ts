@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { PepNgxLibModule, AddonService, CustomizationService, FileService } from '@pepperi-addons/ngx-lib';
 import { PepAttachmentModule } from '@pepperi-addons/ngx-lib/attachment';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { PepCarouselModule } from '@pepperi-addons/ngx-lib/carousel';
 import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { PepColorModule } from '@pepperi-addons/ngx-lib/color';
 import { PepDateModule } from '@pepperi-addons/ngx-lib/date';
@@ -23,6 +24,8 @@ import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { PepListModule } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
+
+import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 
 import { PepSmartFiltersModule } from '@pepperi-addons/ngx-lib/smart-filters';
 
@@ -101,6 +104,7 @@ const pepIcons = [
 
 const pepperiComponentsModules = [
     PepAttachmentModule,
+    PepCarouselModule,
     PepButtonModule,
     PepCheckboxModule,
     PepColorModule,
@@ -122,7 +126,8 @@ const pepperiComponentsModules = [
     PepIconModule,
     PepMenuModule,
     PepTopBarModule,
-    PepSmartFiltersModule
+    PepSmartFiltersModule,
+    PepFormModule
 ];
 
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';

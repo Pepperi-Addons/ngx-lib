@@ -247,6 +247,10 @@
             }
         }
 
+        &.weak-invert {
+            @include pep-button-state-weak-invert($pepperi-theme);
+        }
+
         &.regular {
             @include pep-button-state-regular($pepperi-theme);
 

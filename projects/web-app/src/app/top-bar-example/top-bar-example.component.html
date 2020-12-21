@@ -4,11 +4,8 @@
 
         </div>
         <div header-end-content>
-            <pep-menu class="weak md pull-right flip" [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
+            <pep-menu class="weak md spacing-element" [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
             </pep-menu>
-            <button class="pep-button weak md spacing-element pull-right flip" (click)="toggleMenu()">
-                toggle menu
-            </button>
         </div>
         <pep-search [autoCompleteValues]="searchAutoCompleteValues" [value]="searchString"
             (search)="onSearchChanged($event)" (valueChange)="onSearchAutocompleteChanged($event)"

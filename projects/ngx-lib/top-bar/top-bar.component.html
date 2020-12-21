@@ -2,14 +2,14 @@
     <div class="header-content">
         <div class="main-layout">
             <div class="content pep-border-bottom">
-                <div class="left-container spacing-element-negative pull-left flip">
+                <div class="left-container spacing-element-negative">
                     <ng-container *ngTemplateOutlet="listActionsTemplate"></ng-container>
                     <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
                     <ng-container *ngTemplateOutlet="listChooserTemplate"></ng-container>
                     <ng-container *ngTemplateOutlet="leftContentTemplate"></ng-container>
                     <ng-container *ngTemplateOutlet="listTotalTemplate"></ng-container>
                 </div>
-                <div class="right-container spacing-element-negative pull-right flip">
+                <div class="right-container spacing-element-negative">
                     <ng-container *ngTemplateOutlet="searchTemplate"></ng-container>
                     <ng-container *ngTemplateOutlet="rightContentTemplate"></ng-container>
                 </div>
@@ -20,10 +20,10 @@
     <div #footer *ngIf="!inline" class="footer" [hidden]="!showFooter"
         [style.height.rem]="customizationService.footerHeight">
         <div class="content pep-border-top">
-            <div #footerStartContent class="left-container spacing-element-negative pull-left flip">
+            <div #footerStartContent class="left-container spacing-element-negative flex-wrapper">
                 <ng-content select="[footer-start-content]"></ng-content>
             </div>
-            <div #footerEndContent class="right-container spacing-element-negative pull-right flip">
+            <div #footerEndContent class="right-container spacing-element-negative flex-wrapper">
                 <ng-content select="[footer-end-content]"></ng-content>
             </div>
         </div>
@@ -41,44 +41,44 @@
 
 <!-- Left side templates -->
 <ng-template #listActionsTemplate>
-    <div class="pull-left flip" [ngClass]="{ 'spacing-element': listActionsIsVisible }">
+    <div class="list-actions-wrapper">
         <ng-content *ngIf="!searchIsOpenAndSmallDevice" select="pep-list-actions"></ng-content>
     </div>
 </ng-template>
 
 <ng-template #titleTemplate>
-    <div *ngIf="title?.length > 0" class="spacing-element title pull-left flip">
+    <div *ngIf="title?.length > 0" class="spacing-element title">
         <span [title]="title">{{ title }}</span>
     </div>
 </ng-template>
 
 <ng-template #listChooserTemplate>
-    <div *ngIf="!searchIsOpenAndSmallDevice" class="spacing-element pull-left flip">
+    <div *ngIf="!searchIsOpenAndSmallDevice" class="spacing-element ">
         <ng-content select="pep-list-chooser"></ng-content>
     </div>
 </ng-template>
 
 <ng-template #leftContentTemplate>
-    <div *ngIf="!searchIsOpenAndSmallDevice" class="pull-left flip">
+    <div *ngIf="!searchIsOpenAndSmallDevice" class="flex-wrapper">
         <ng-content select="[header-start-content]"></ng-content>
     </div>
 </ng-template>
 
 <ng-template #listTotalTemplate>
-    <div *ngIf="!searchIsOpenAndSmallDevice" class="spacing-element pull-left flip">
+    <div *ngIf="!searchIsOpenAndSmallDevice" class="spacing-element ">
         <ng-content select="pep-list-total"></ng-content>
     </div>
 </ng-template>
 
 <!-- Right side templates -->
 <ng-template #searchTemplate>
-    <div class="spacing-element pull-right flip">
+    <div class="spacing-element ">
         <ng-content select="pep-search"></ng-content>
     </div>
 </ng-template>
 
 <ng-template #rightContentTemplate>
-    <div *ngIf="!searchIsOpenAndSmallDevice" class="pull-right flip">
+    <div *ngIf="!searchIsOpenAndSmallDevice" class="flex-wrapper">
         <ng-content select="[header-end-content]"></ng-content>
     </div>
 </ng-template>

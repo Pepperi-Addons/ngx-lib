@@ -22,6 +22,11 @@
                         <pep-icon name="system_menu"></pep-icon>
                     </mat-icon>
                 </button>
+                <button [routerLink]="['carousel-example']"
+                    class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
+                    mat-button>
+                    carousel
+                </button>
                 <button [routerLink]="['components-example']"
                     class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
                     mat-button>

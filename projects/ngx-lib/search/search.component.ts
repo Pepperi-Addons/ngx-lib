@@ -78,7 +78,15 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
         this.layoutService.onResize$.pipe().subscribe(size => {
             this.screenSize = size;
             this.isFloating = this.screenSize > PepScreenSizeType.SM;
-            this.fadeState = this.isFloating ? 'fadeOut' : 'fadeIn';
+
+            // Just for the smoote animation
+            if (this.isFloating) {
+                this.showFloatSrcBtn = false;
+                
+                this.showFloatingButton();
+            } else {
+                this.fadeState = 'fadeIn';
+            }
         });
     }
 
@@ -118,14 +126,7 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
         }, 0);
     }
 
-    onClearClicked(event: any) {
-        this.autoCompleteValues = [];
-        this.lastValue = null;
-        this.searchInput.nativeElement.value = '';
-        this.search.emit(new PepSearchClick());
-
-        event.preventDefault();
-
+    private showFloatingButton() {
         if (this.isFloating) {
             this.fadeState = 'fadeOut';
 
@@ -137,6 +138,17 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
             // close the phone keyboard
             this.blur();
         }
+    }
+
+    onClearClicked(event: any) {
+        this.autoCompleteValues = [];
+        this.lastValue = null;
+        this.searchInput.nativeElement.value = '';
+        this.search.emit(new PepSearchClick());
+
+        event.preventDefault();
+
+        this.showFloatingButton();
     }
 
     onSearchClicked() {

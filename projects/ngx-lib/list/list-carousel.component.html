@@ -1,0 +1,17 @@
+﻿<div class="carousel-container">
+    <pep-button [iconName]="'arrow_left_alt'" [styleType]="'regular'" [disabled]="prevDisabled" (click)="moveLeft()"
+        class="carousel-arrow start-arrow">
+    </pep-button>
+    <pep-carousel #carousel [xWheelEnabled]="true" [scrollbarHidden]="true" [snapDuration]="duration"
+        (reachesLeftBound)="onReachesLeftBound($event)" (reachesRightBound)="onReachesRightBound($event)">
+        <ng-container *ngFor="let item of items">
+            <pep-form pepCarouselItem [uiControlHeader]="uiControl" [singleData]="item" [layoutType]="'card'"
+                (click)="itemClicked(item)" class="card-view "
+                [ngClass]="{ 'x-small-card': itemSize === 'xs', 'small-card': itemSize === 'sm'}">
+            </pep-form>
+        </ng-container>
+    </pep-carousel>
+    <pep-button [iconName]="'arrow_right_alt'" [styleType]="'regular'" [disabled]="nextDisabled" (click)="moveRight()"
+        class="carousel-arrow end-arrow">
+    </pep-button>
+</div>

@@ -682,6 +682,10 @@ $sorting-width: 1rem;
         &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 8');
         }
+
+        &.x-small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 9');
+        }
     }
     /* Large - XLarge */
     @media (max-width: $screen-max-size-xl) and (min-width: $screen-max-size-lg) {
@@ -689,6 +693,10 @@ $sorting-width: 1rem;
 
         &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 6');
+        }
+
+        &.x-small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 7');
         }
     }
     /* Medium - Large */
@@ -698,6 +706,10 @@ $sorting-width: 1rem;
         &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 4');
         }
+
+        &.x-small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 5');
+        }
     }
     /* Small - Medium */
     @media (max-width: $screen-max-size-md) and (min-width: $screen-max-size-sm) {
@@ -705,6 +717,10 @@ $sorting-width: 1rem;
 
         &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 4');
+        }
+
+        &.x-small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 5');
         }
     }
     /* Extra small - Small */
@@ -714,12 +730,20 @@ $sorting-width: 1rem;
         &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 3');
         }
+
+        &.x-small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 4');
+        }
     }
     /* < Extra small */
     @media (max-width: $screen-max-size-xs) {
         @include calc(min-width, $screen-almost-full-width + ' / 1');
 
         &.small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 2');
+        }
+
+        &.x-small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 2');
         }
     }

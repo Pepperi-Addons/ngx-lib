@@ -236,7 +236,6 @@ main {
 }
 
 
-
 //  Spacing
 // ------------------------
 .spacing-element-negative {
@@ -595,6 +594,12 @@ main {
             padding: 0 $content-padding;
             display: flex;
             align-items: center;
+        }
+    }
+
+    &.pep-menu {
+        .mat-menu-content {
+            padding: $spacing-sm !important;
         }
     }
 }
@@ -977,6 +982,7 @@ main {
             }
             &:disabled {
                 @include state-weak-disable($pepperi-theme);
+                background: unset !important;
             }
 
             &.selected {
