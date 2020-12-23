@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepIconModule, PepIconRegistry, pepIconArrowUp, pepIconArrowDown } from '@pepperi-addons/ngx-lib/icon';
 
-import { GroupButtonsComponent } from './group-buttons.component';
+import { PepGroupButtonsComponent } from './group-buttons.component';
 
 @NgModule({
     imports: [
@@ -25,8 +25,8 @@ import { GroupButtonsComponent } from './group-buttons.component';
         PepNgxLibModule,
         PepIconModule
     ],
-    exports: [ GroupButtonsComponent ],
-    declarations: [ GroupButtonsComponent ],
+    exports: [ PepGroupButtonsComponent ],
+    declarations: [ PepGroupButtonsComponent ],
 })
 export class PepGroupButtonsModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

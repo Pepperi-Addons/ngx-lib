@@ -1,10 +1,10 @@
 <!-- New code -->
 <ng-template #pepTemplate>
-    <files-uploader [key]="key" [src]="src" [label]="label" [required]="required" [disabled]="disabled"
+    <pep-files-uploader [key]="key" [src]="src" [label]="label" [required]="required" [disabled]="disabled"
         [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
         [layoutType]="layoutType" [standAlone]="standAlone" (fileChange)="onFileChanged($event)"
         (elementClick)="onFileClicked($event)" [acceptedExtensions]="acceptAttachmentType">
-    </files-uploader>
+    </pep-files-uploader>
 </ng-template>
 
 <ng-template #pepReadonlyTemplate>

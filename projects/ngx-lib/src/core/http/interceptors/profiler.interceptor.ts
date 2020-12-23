@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 
 @Injectable()
-export class ProfilerInterceptor implements HttpInterceptor {
+export class PepProfilerInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // console.warn('ProfilerInterceptor');
 

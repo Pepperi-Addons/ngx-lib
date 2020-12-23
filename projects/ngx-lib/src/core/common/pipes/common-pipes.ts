@@ -1,8 +1,8 @@
 import {Pipe, PipeTransform} from "@angular/core";
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
-@Pipe({ name: 'capitalize' })
-export class CapitalizePipe implements PipeTransform {
+@Pipe({ name: 'pepCapitalize' })
+export class PepCapitalizePipe implements PipeTransform {
 
     transform(value: any) {
         if (value) {
@@ -12,8 +12,8 @@ export class CapitalizePipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'encodePipe' })
-export class EncodePipe implements PipeTransform {
+@Pipe({ name: 'pepEncode' })
+export class PepEncodePipe implements PipeTransform {
 
     transform(value: any) {
         if (value) {
@@ -26,8 +26,8 @@ export class EncodePipe implements PipeTransform {
 
 declare function escape(s: string): string;
 
-@Pipe({ name: 'escapePipe' })
-export class EscapePipe implements PipeTransform {
+@Pipe({ name: 'pepEscape' })
+export class PepEscapePipe implements PipeTransform {
 
     transform(value: any) {
         if (value) {
@@ -38,16 +38,16 @@ export class EscapePipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'replaceLineBreaks' })
-export class ReplaceLineBreaks implements PipeTransform {
+@Pipe({ name: 'pepReplaceLineBreaks' })
+export class PepReplaceLineBreaksPipe implements PipeTransform {
     transform(value: string): string {
         const newValue = value.replace(/(<br\ ?\/?>)/g, ' ');
         return newValue;
     }
 }
 
-@Pipe({ name: 'dateFormatter' })
-export class DateFormatter implements PipeTransform {
+@Pipe({ name: 'pepDateFormatter' })
+export class PepDateFormatterPipe implements PipeTransform {
     transform(value: Date, culture: any, showTime: boolean = false): string {
         let res = '';
         value = new Date(value);
@@ -61,8 +61,8 @@ export class DateFormatter implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'dateStringFormatter' })
-export class DateStringFormatter implements PipeTransform {
+@Pipe({ name: 'pepDateStringFormatter' })
+export class PepDateStringFormatterPipe implements PipeTransform {
     transform(value: string, culture: any, showTime: boolean = false): string {
         let res = '';
         const tmpDate = new Date(value);
@@ -76,8 +76,8 @@ export class DateStringFormatter implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'safeHtml' })
-export class SafeHtmlPipe implements PipeTransform {
+@Pipe({ name: 'pepSafeHtml' })
+export class PepSafeHtmlPipe implements PipeTransform {
     constructor(private sanitizer: DomSanitizer) { }
 
     transform(html) {
@@ -85,8 +85,8 @@ export class SafeHtmlPipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'safe' })
-export class SafePipe implements PipeTransform {
+@Pipe({ name: 'pepSafe' })
+export class PepSafePipe implements PipeTransform {
     constructor(protected sanitizer: DomSanitizer) { }
 
     public transform(value: any, type: string): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
@@ -107,16 +107,16 @@ export class SafePipe implements PipeTransform {
     }
 }
 
-@Pipe({ name: 'splitUppercase' })
-export class SplitUppercase implements PipeTransform {
+@Pipe({ name: 'pepSplitUppercase' })
+export class PepSplitUppercasePipe implements PipeTransform {
     transform(value: string): string {
         const newValue = value.replace(/([a-z])([A-Z])/g, '$1 $2');
         return newValue;
     }
 }
 
-@Pipe({ name: 'toNumber' })
-export class ToNumber implements PipeTransform {
+@Pipe({ name: 'pepToNumber' })
+export class PepToNumberPipe implements PipeTransform {
     transform(value: string): number {
         return parseInt(value);
     }

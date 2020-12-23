@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class CacheInterceptor implements HttpInterceptor {
+export class PepCacheInterceptor implements HttpInterceptor {
     private cache = new Map<string, any>();
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

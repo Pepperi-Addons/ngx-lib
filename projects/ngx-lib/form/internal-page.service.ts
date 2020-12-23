@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@pepperi-addons/ngx-lib';
+import { PepHttpService } from '@pepperi-addons/ngx-lib';
 
 @Injectable()
-export class InternalPageService {
+export class PepInternalPageService {
 
     private transactionUrl: string;
     private objectId: string;
@@ -11,7 +11,7 @@ export class InternalPageService {
     private viewType: string;
     public additionalApiName = '';
 
-    constructor(private httpService: HttpService) {
+    constructor(private httpService: PepHttpService) {
         this.transactionUrl = 'Service1.svc/v1/OrderCenter/Transaction/';
     }
 

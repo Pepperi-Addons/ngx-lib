@@ -13,14 +13,13 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { FileService, PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepFieldClickedData,
+import { PepFileService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, IPepFieldClickEvent,
     PepOption, PepImageField } from '@pepperi-addons/ngx-lib';
 
-import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import {
-    PepImagesFilmstripComponent,
-    PepImagesFilmstripDialogData
+    PepImagesFilmstripComponent
 } from '@pepperi-addons/ngx-lib/images-filmstrip';
 import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
 import { ImageItem } from '@ngx-gallery/core';
@@ -59,8 +58,8 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() sizeLimitMB = 5;
     @Input() acceptImagesType = 'bmp,jpg,jpeg,png,gif'; // "image/bmp, image/jpg, image/jpeg, image/png, image/tif, image/tiff";
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
-    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     fieldHeight = '';
     standAlone = false;
@@ -68,9 +67,9 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
 
     constructor(
         private translate: TranslateService,
-        private dialogService: DialogService,
-        private customizationService: CustomizationService,
-        private fileService: FileService,
+        private dialogService: PepDialogService,
+        private customizationService: PepCustomizationService,
+        private fileService: PepFileService,
         private renderer: Renderer2,
         private element: ElementRef
     ) {}
@@ -97,7 +96,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
 
             this.renderer.addClass(
                 this.element.nativeElement,
-                CustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
         }
 
@@ -167,7 +166,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         return this.objectId?.length > 0 && this.objectId !== '0';
     }
 
-    onFileClicked(event: PepFieldClickedData): void {
+    onFileClicked(event: IPepFieldClickEvent): void {
         let hasParentImage = true;
         if (
             this.objectIdIsNotEmpty() &&

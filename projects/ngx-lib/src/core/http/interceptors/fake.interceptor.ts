@@ -9,7 +9,7 @@ import {
 import { Observable, of } from 'rxjs';
 
 @Injectable()
-export class FakeInterceptor implements HttpInterceptor {
+export class PepFakeInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!req.url.includes('fake-call')) {
             return next.handle(req);

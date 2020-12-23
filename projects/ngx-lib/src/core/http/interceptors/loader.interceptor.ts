@@ -8,17 +8,17 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { finalize, delay, map, catchError } from 'rxjs/operators';
-import { LoaderService } from '../services/loader.service';
+import { PepLoaderService } from '../services/loader.service';
 
 @Injectable()
-export class LoaderInterceptor implements HttpInterceptor {
+export class PepLoaderInterceptor implements HttpInterceptor {
 
     constructor(private injector: Injector) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // console.warn('LoaderInterceptor');
 
-        const loaderService = this.injector.get(LoaderService);
+        const loaderService = this.injector.get(PepLoaderService);
         loaderService.show();
 
         return next.handle(req).pipe(

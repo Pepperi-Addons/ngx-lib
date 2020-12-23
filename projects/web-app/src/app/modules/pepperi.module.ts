@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
-import { PepNgxLibModule, AddonService, CustomizationService, FileService } from '@pepperi-addons/ngx-lib';
+import { PepNgxLibModule, PepAddonService, PepCustomizationService, PepFileService } from '@pepperi-addons/ngx-lib';
 import { PepAttachmentModule } from '@pepperi-addons/ngx-lib/attachment';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { PepCarouselModule } from '@pepperi-addons/ngx-lib/carousel';
@@ -138,7 +138,7 @@ import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 //    return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 // }
 
-export function createTranslateLoader(http: HttpClient, fileService: FileService, addonService: AddonService) {
+export function createTranslateLoader(http: HttpClient, fileService: PepFileService, addonService: PepAddonService) {
     const addonStaticFolder = addonService.getAddonStaticFolder();
     const translationsPath: string = fileService.getAssetsTranslationsPath();
     const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
@@ -159,7 +159,7 @@ export function createTranslateLoader(http: HttpClient, fileService: FileService
             loader: {
                 provide: TranslateLoader,
                 useFactory: createTranslateLoader,
-                deps: [HttpClient, FileService, AddonService]
+                deps: [HttpClient, PepFileService, PepAddonService]
             }
         })
     ],

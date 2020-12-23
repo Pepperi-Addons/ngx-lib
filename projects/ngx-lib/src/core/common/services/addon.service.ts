@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SessionService } from './session.service';
-import { HttpService } from '../../http/services/http.service';
+import { PepSessionService } from './session.service';
+import { PepHttpService } from '../../http/services/http.service';
 import { Observable } from 'rxjs';
 
 /*
@@ -9,12 +9,12 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class AddonService {
+export class PepAddonService {
     private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
 
     constructor(
-        private sessionService: SessionService,
-        private httpService: HttpService
+        private sessionService: PepSessionService,
+        private httpService: PepHttpService
     ) {}
 
     getAddonStaticFolder(): string {

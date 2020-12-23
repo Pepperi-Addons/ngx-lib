@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { PepSizeType } from '@pepperi-addons/ngx-lib';
-import { PepMenuStateType, PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
+import { IPepMenuStateChangeEvent, PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
 
 @Component({
     selector: 'pep-list-actions',
@@ -15,8 +15,8 @@ export class PepListActionsComponent implements OnInit {
     @Input() xPosition: 'before' | 'after' = 'before';
     @Input() hidden = false;
 
-    @Output() actionClick: EventEmitter<PepMenuItemClick> = new EventEmitter<PepMenuItemClick>();
-    @Output() stateChange: EventEmitter<PepMenuStateType> = new EventEmitter();
+    @Output() actionClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
+    @Output() stateChange: EventEmitter<IPepMenuStateChangeEvent> = new EventEmitter<IPepMenuStateChangeEvent>();
 
     constructor() { }
 
@@ -28,7 +28,7 @@ export class PepListActionsComponent implements OnInit {
         this.actionClick.emit(action);
     }
 
-    onStateChanged(state): void {
-        this.stateChange.emit(state);
+    onStateChanged(menuStateChangeEvent: IPepMenuStateChangeEvent): void {
+        this.stateChange.emit(menuStateChangeEvent);
     }
 }

@@ -5,7 +5,7 @@ import { DOCUMENT } from '@angular/common';
 @Injectable({
     providedIn: 'root',
 })
-export class ClipboardService {
+export class PepClipboardService {
     // private dom: Document;
 
     // // I initialize the Clipboard service.

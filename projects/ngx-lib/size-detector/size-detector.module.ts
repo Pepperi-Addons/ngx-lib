@@ -6,7 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 
-import { SizeDetectorComponent} from './size-detector.component';
+import { PepSizeDetectorComponent} from './size-detector.component';
 
 @NgModule({
     imports: [
@@ -17,7 +17,7 @@ import { SizeDetectorComponent} from './size-detector.component';
         // ngx-lib modules
         PepNgxLibModule,
     ],
-    exports: [SizeDetectorComponent],
-    declarations: [SizeDetectorComponent],
+    exports: [PepSizeDetectorComponent],
+    declarations: [PepSizeDetectorComponent],
 })
 export class PepSizeDetectorModule {}

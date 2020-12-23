@@ -4,7 +4,8 @@
 .carousel-container {
     position: relative;
     margin: 0 calc(#{$spacing-sm} * -1);
-
+    display: grid;
+    
     .carousel-arrow {
         position: absolute;
         top: 50%;

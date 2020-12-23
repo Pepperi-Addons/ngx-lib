@@ -21,8 +21,8 @@ import {
     animate,
     transition
 } from '@angular/animations';
-import { PepLayoutType, PepStyleType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepFieldClickedData,
+import { PepLayoutType, PepStyleType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, IPepFieldClickEvent,
     PepQuantitySelectorFieldType, 
     PepQuantitySelectorField} from '@pepperi-addons/ngx-lib';
 import { fromEvent } from 'rxjs';
@@ -82,8 +82,8 @@ export class PepQuantitySelectorComponent
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
-    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     @ViewChild('QSCont') QSCont: ElementRef;
     @ViewChild('QSInput') QSInput: ElementRef;
@@ -103,27 +103,20 @@ export class PepQuantitySelectorComponent
 
     constructor(
         private cd: ChangeDetectorRef,
-        private customizationService: CustomizationService,
+        private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
     ) {}
 
     setForm() {
-        // this.form = this.customizationService.getDefaultFromGroup(
-            //     this.key,
-            //     this.value,
-            //     this.required,
-            //     this.readonly,
-            //     this.disabled
-            // );
-            const pepField = new PepQuantitySelectorField({
-                key: this.key,
-                value: this.value,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+        const pepField = new PepQuantitySelectorField({
+            key: this.key,
+            value: this.value,
+            required: this.required,
+            readonly: this.readonly,
+            disabled: this.disabled
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
     }
 
     ngOnInit(): void {
@@ -138,7 +131,7 @@ export class PepQuantitySelectorComponent
 
             this.renderer.addClass(
                 this.element.nativeElement,
-                CustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
         }
 
@@ -438,9 +431,9 @@ export class PepQuantitySelectorComponent
         }
 
         // Get state class from theme.
-        // this.styleClass = this.customizationService.getThemeVariable(CustomizationService.STYLE_QS_KEY);
+        // this.styleClass = this.customizationService.getThemeVariable(PepCustomizationService.STYLE_QS_KEY);
         this.styleClass = document.documentElement.style.getPropertyValue(
-            CustomizationService.STYLE_QS_KEY
+            PepCustomizationService.STYLE_QS_KEY
         ) as PepStyleType;
 
         if (!this.cd['destroyed']) {

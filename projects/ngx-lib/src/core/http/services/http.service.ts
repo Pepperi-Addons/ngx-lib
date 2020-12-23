@@ -2,54 +2,59 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { retry, catchError, tap } from 'rxjs/operators';
-import { SessionService } from '../../common/services/session.service';
-import { CookieService } from '../../common/services/cookie.service';
+import { PepSessionService } from '../../common/services/session.service';
+import { PepCookieService } from '../../common/services/cookie.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class HttpService {
+export class PepHttpService {
     private readonly AUTH_HEADER = 'Authorization';
     private readonly PEPPERI_TOKEN_HEADER = 'PepperiSessionToken';
     private readonly WAPI_TOKEN_KEY = 'auth_token';
     private readonly PEPPERI_TOKEN_COOKIE = 'PepperiUserSettings';
 
     constructor(
-        private sessionService: SessionService,
-        private cookieService: CookieService,
+        private sessionService: PepSessionService,
+        private cookieService: PepCookieService,
         private http: HttpClient) {
     }
 
-    private handleError(error: HttpErrorResponse): Observable<never> {
+    private handleError(response: HttpErrorResponse): Observable<never> {
         let errorMessage = 'Unknown error!';
-        if (error.error instanceof ErrorEvent) {
+        if (response.error instanceof ErrorEvent) {
             // Client-side errors
-            errorMessage = `Error: ${error.error.message}`;
+            errorMessage = `Error: ${response.error.message}`;
         } else {
             // Server-side errors
-            errorMessage = this.getServerErrorMessage(error);
+            errorMessage = this.getServerErrorMessage(response);
         }
 
         return throwError(errorMessage);
     }
 
-    private getServerErrorMessage(error: HttpErrorResponse): string {
-        switch (error.status) {
+    private getServerErrorMessage(response: HttpErrorResponse): string {
+        switch (response.status) {
             case 404: {
-                return `Not Found: ${error.message}`;
+                return `Not Found: ${response.message}`;
             }
             case 403: {
-                return `Access Denied: ${error.message}`;
+                return `Access Denied: ${response.message}`;
             }
             case 500: {
-                return `Internal Server Error: ${error.message}`;
+                if (response?.error?.fault?.faultString) {
+                    return `Internal Server Error: ${response.error.fault.faultString}`;
+                }
+                else {
+                    return `Internal Server Error: ${response.message}`;
+                }
             }
             default: {
-                return `Unknown Server Error\nError Code: ${error.status}\nMessage: ${error.message}`;
+                return `Unknown Server Error\nError Code: ${response.status}\nMessage: ${response.message}`;
             }
         }
     }
-
+    
     // Add authorization token if the token exist.
     private addAuthorizationToken(httpOptions: any = {}): any {
         if (!httpOptions.headers.has(this.AUTH_HEADER)) {

@@ -42,7 +42,7 @@ export enum PepScreenSizeType {
 @Injectable({
     providedIn: 'root',
 })
-export class LayoutService {
+export class PepLayoutService {
     private resizeSubject: BehaviorSubject<PepScreenSizeType>;
     private deviceHasMouseSubject: BehaviorSubject<boolean>;
 

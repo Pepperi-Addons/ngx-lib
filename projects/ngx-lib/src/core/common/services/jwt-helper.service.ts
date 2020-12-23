@@ -4,7 +4,7 @@ import { Injectable, Inject } from '@angular/core';
 @Injectable({
     providedIn: 'root',
 })
-export class JwtHelperService {
+export class PepJwtHelperService {
     constructor() {
     }
 

@@ -4,19 +4,19 @@ const THREE_DIGIT_HEX_COLOR_WITH_HASH_REGEX = /^#[0-9a-fA-F]{3}$/;
 const SIX_DIGIT_HEX_COLOR_REGEX = /^[0-9a-fA-F]{6}$/;
 const SIX_DIGIT_HEX_COLOR_WITH_HASH_REGEX = /^#[0-9a-fA-F]{6}$/;
 
-export interface RgbColor {
+export interface IPepRgbColor {
     r?: any;
     g?: any;
     b?: any;
 }
 
-export interface HslColor {
+export interface IPepHslColor {
     h?: any;
     s?: any;
     l?: any;
 }
 
-export interface ClosestColor {
+export interface IPepClosestColor {
     color: string;
     lightness: number;
 }
@@ -55,7 +55,7 @@ export function hex2sixDigitHex(str: string): string {
  * Convert rgb color to 6 digits hex string.
  * @param color The rgb color to convert.
  */
-export function rgb2sixDigitHex(color: RgbColor): string {
+export function rgb2sixDigitHex(color: IPepRgbColor): string {
     color.r = color.r.toString(16);
     color.g = color.g.toString(16);
     color.b = color.b.toString(16);
@@ -79,7 +79,7 @@ export function rgb2sixDigitHex(color: RgbColor): string {
  * Convert hex string to rgb color.
  * @param str The hex string to convert.
  */
-export function hex2rgb(str: string): RgbColor {
+export function hex2rgb(str: string): IPepRgbColor {
     const sixDigitHex = hex2sixDigitHex(str);
 
     if (sixDigitHex === null) {
@@ -93,7 +93,7 @@ export function hex2rgb(str: string): RgbColor {
     };
 }
 
-export function rgbString2hsl(str: string): HslColor {
+export function rgbString2hsl(str: string): IPepHslColor {
     const sep = str.indexOf(',') > -1 ? ',' : ' ';
     const rgbArr = str.substr(4).split(')')[0].split(sep);
 
@@ -104,7 +104,7 @@ export function rgbString2hsl(str: string): HslColor {
     return rgb2hsl({ r, g, b });
 }
 
-export function rgb2hsl({ r, g, b }: RgbColor): HslColor {
+export function rgb2hsl({ r, g, b }: IPepRgbColor): IPepHslColor {
     r /= 255;
     g /= 255;
     b /= 255;
@@ -142,7 +142,7 @@ export function rgb2hsl({ r, g, b }: RgbColor): HslColor {
     return { h, s, l };
 }
 
-export function hslString2hsl(str: string): HslColor {
+export function hslString2hsl(str: string): IPepHslColor {
     const sep = str.indexOf(',') > -1 ? ',' : ' ';
     const hslArr = str.substr(4).split(')')[0].split(sep);
 
@@ -177,7 +177,7 @@ export function hslString2hsl(str: string): HslColor {
     return { h, s, l };
 }
 
-export function hsl2rgb({ h, s, l }: HslColor): RgbColor {
+export function hsl2rgb({ h, s, l }: IPepHslColor): IPepRgbColor {
     let r;
     let g;
     let b;
@@ -242,7 +242,7 @@ export function hsl2rgb({ h, s, l }: HslColor): RgbColor {
     return { r, g, b };
 }
 
-export function hex2hsl(str: string): HslColor {
+export function hex2hsl(str: string): IPepHslColor {
     const sixDigitHex = hex2sixDigitHex(str);
 
     if (sixDigitHex === null) {
@@ -258,13 +258,13 @@ export function hex2hsl(str: string): HslColor {
     return rgb2hsl(rgb);
 }
 
-export function hsl2hex(hsl: HslColor): string {
+export function hsl2hex(hsl: IPepHslColor): string {
     const rgb = hsl2rgb(hsl);
 
     return rgb2sixDigitHex(rgb);
 }
 
-export function relativeLuminance({ r, g, b }: RgbColor): number {
+export function relativeLuminance({ r, g, b }: IPepRgbColor): number {
     [r, g, b] = [r, g, b].map(c => {
         c = c / 255;
 
@@ -290,7 +290,7 @@ export function contrast(str1: string, str2: string): number {
 }
 
 export function findClosestAccessibleDarkerColor(
-    adjustableColor: string, otherColor: string, contrastRatio: number): ClosestColor {
+    adjustableColor: string, otherColor: string, contrastRatio: number): IPepClosestColor {
     let { h, s, l } = hex2hsl(adjustableColor);
 
     if (contrast(adjustableColor, otherColor) >= contrastRatio) {
@@ -335,7 +335,7 @@ export function findClosestAccessibleDarkerColor(
 }
 
 export function findClosestAccessibleLighterColor(
-    adjustableColor: string, otherColor: string, contrastRatio: number): ClosestColor {
+    adjustableColor: string, otherColor: string, contrastRatio: number): IPepClosestColor {
     let { h, s, l } = hex2hsl(adjustableColor);
 
     if (contrast(adjustableColor, otherColor) >= contrastRatio) {
@@ -381,9 +381,9 @@ export function findClosestAccessibleLighterColor(
 
 export function findClosestAccessibleColor(
     adjustableColor: string, otherColor: string, contrastRatio: number): string {
-    const closestDarkerColor: ClosestColor =
+    const closestDarkerColor: IPepClosestColor =
         findClosestAccessibleDarkerColor(adjustableColor, otherColor, contrastRatio);
-    const closestLighterColor: ClosestColor =
+    const closestLighterColor: IPepClosestColor =
         findClosestAccessibleLighterColor(adjustableColor, otherColor, contrastRatio);
 
     if (closestDarkerColor === null) {
@@ -407,6 +407,6 @@ export function findClosestAccessibleColor(
     return closestDarkerColor.color;
 }
 
-export function convertHslToStringHsl(hsl: HslColor): string {
+export function convertHslToStringHsl(hsl: IPepHslColor): string {
     return 'hsl(' + (hsl.h < 0 ? hsl.h + 360 : hsl.h) + ', ' + hsl.s + '%, ' + hsl.l + '%)';
 }

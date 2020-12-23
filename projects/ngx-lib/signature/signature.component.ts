@@ -4,9 +4,9 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
-import { FileService, PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepSignatureField } from '@pepperi-addons/ngx-lib';
-import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { PepFileService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepSignatureField } from '@pepperi-addons/ngx-lib';
+import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -34,7 +34,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     @ViewChild('signaturePad') signaturePad: SignaturePad;
     @ViewChild('signaturePopupPad', { read: TemplateRef }) signaturePopupPad: TemplateRef<any>;
@@ -57,9 +57,9 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     };
 
     constructor(
-        private dialogService: DialogService,
-        private customizationService: CustomizationService,
-        private fileService: FileService,
+        private dialogService: PepDialogService,
+        private customizationService: PepCustomizationService,
+        private fileService: PepFileService,
         private cd: ChangeDetectorRef,
         private renderer: Renderer2,
         private element: ElementRef) {
@@ -79,7 +79,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
 
         this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);

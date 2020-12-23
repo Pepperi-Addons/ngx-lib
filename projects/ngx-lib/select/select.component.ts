@@ -4,8 +4,8 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
-import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepSelectFieldType, PepSelectField, PepOption } from '@pepperi-addons/ngx-lib';
+import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepSelectFieldType, PepSelectField, PepOption } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-select',
@@ -35,7 +35,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() showTitle = true;
     @Input() emptyOption = true;
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('select') select: MatSelect;
@@ -49,7 +49,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     fieldFormattedValue = '';
 
     constructor(
-        private customizationService: CustomizationService,
+        private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
         ) { }
@@ -110,7 +110,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
     }
 

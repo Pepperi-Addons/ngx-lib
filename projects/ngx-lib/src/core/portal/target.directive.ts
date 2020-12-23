@@ -1,14 +1,14 @@
 import {Directive, OnInit, Input, ViewContainerRef} from '@angular/core';
-import {PortalService} from './portal.service';
+import {PepPortalService} from './portal.service';
 
 @Directive({
     selector: '[pepTarget]',
 })
-export class TargetDirective implements OnInit {
+export class PepTargetDirective implements OnInit {
     @Input('pepTarget') targetName: string;
 
     constructor(
-        private portalService: PortalService,
+        private portalService: PepPortalService,
         private viewContainer: ViewContainerRef
     ) {}
 

@@ -20,13 +20,13 @@
 
                     <!-- We can use the quill-view-html
                     <quill-view-html class="body-sm rich-text-cont "
-                    [ngStyle]="{ 'text-align': xAlignment == 'right' ? 'right' : 'left' }" [content]="value | safeHtml"
+                    [ngStyle]="{ 'text-align': xAlignment == 'right' ? 'right' : 'left' }" [content]="value | pepSafeHtml"
                     theme="snow" [style.height]="fieldHeight"></quill-view-html> 
                 -->
 
                     <div class="body-sm rich-text-cont "
                         [ngStyle]="{ 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
-                        [innerHtml]="value | safeHtml" [style.height]="fieldHeight">
+                        [innerHtml]="value | pepSafeHtml" [style.height]="fieldHeight">
                     </div>
                 </ng-template>
                 <pep-textbox-icon matSuffix [value]="value" [label]="label" [type]="controlType"
@@ -55,7 +55,7 @@
             (click)="!disabled ? cardTemplateClicked($event) : ''" [style.height]="fieldHeight">
             <span *ngIf="showTitle && label != ''" class="body-xs title no-shrink" title="{{ label }}">{{ label
                 }}:&nbsp;</span>
-            <span [id]="key" class="body-sm value wrap" [innerHtml]="value | safeHtml"></span>
+            <span [id]="key" class="body-sm value wrap" [innerHtml]="value | pepSafeHtml"></span>
             <button *ngIf="isActive && !disabled" class="pep-button weak card-edit-button self-start"
                 [ngClass]="{'self-end' : value && value !== ''}" mat-button>
                 <mat-icon>
@@ -75,7 +75,7 @@
             <ng-container *ngIf="value?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
             <ng-template #notEmptyBlock>
                 <div class="pep-textarea-card-container card-flex-container one-row">
-                    <span [id]="key" class="wrap" [innerHtml]="value | safeHtml"></span>
+                    <span [id]="key" class="wrap" [innerHtml]="value | pepSafeHtml"></span>
                 </div>
             </ng-template>
             <ng-template #emptyBlock>

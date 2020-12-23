@@ -1,14 +1,16 @@
-export type PepMenuItemType = 'text' | 'splitter';
+export type PepMenuType = 'action' | 'select';
+
+export type PepMenuItemType = 'regular' | 'splitter';
 
 export type PepMenuStateType = 'visible' | 'hidden';
 
 export class PepMenuItem {
     key: string;
-    title?: string;
+    text?: string;
     disabled?: boolean = false;
     hidden?: boolean = false;
     iconName?: string = null;
-    type?: PepMenuItemType = 'text';
+    type?: PepMenuItemType = 'regular';
     children?: Array<PepMenuItem> = null;
 
     constructor(data: Partial<PepMenuItem>){
@@ -16,8 +18,10 @@ export class PepMenuItem {
     }
 }
 
-export class PepMenuItemClick {
-    constructor(
-        public source: PepMenuItem,
-    ) { }
+export interface IPepMenuItemClickEvent {
+    source: PepMenuItem;
+}
+
+export interface IPepMenuStateChangeEvent {
+    state: PepMenuStateType;
 }

@@ -3,7 +3,7 @@ import { Directive, HostListener, ElementRef } from '@angular/core';
 @Directive({
     selector: '[pepButtonBlur]'
 })
-export class ButtonBlurDirective {
+export class PepButtonBlurDirective {
     constructor(private element: ElementRef) { }
 
     @HostListener('click')

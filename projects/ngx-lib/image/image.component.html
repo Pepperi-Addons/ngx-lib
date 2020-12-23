@@ -6,12 +6,12 @@
                 <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
                     [showTitle]="showTitle">
                 </pep-field-title>
-                <files-uploader [id]="key" [key]="key" [layoutType]="layoutType" [standAlone]="standAlone"
+                <pep-files-uploader [id]="key" [key]="key" [layoutType]="layoutType" [standAlone]="standAlone"
                     [src]="srcLarge || src" [label]="label" [required]="required" [disabled]="disabled"
                     [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
                     [acceptedExtensions]="acceptImagesType" (fileChange)="onFileChanged($event)"
                     (elementClick)="onFileClicked($event)" [sizeLimitMB]="sizeLimitMB">
-                </files-uploader>
+                </pep-files-uploader>
             </div>
         </ng-container>
 

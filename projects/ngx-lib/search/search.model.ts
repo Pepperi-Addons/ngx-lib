@@ -1,18 +1,14 @@
 export type PepSearchStateType = 'open' | 'close';
 
-export class PepSearchClick {
+export interface IPepSearchClickEvent {
     value: string;
-    
-    constructor(value: string = '') {
-        this.value = value;
-    }
 }
 
-export class PepSearchValueChange {
+export interface IPepSearchValueChangeEvent {
     value: string;
     top: number;
-    
-    constructor(data: Partial<PepSearchValueChange>) {
-        Object.assign(this, data);
-    }
+}
+
+export interface IPepSearchStateChangeEvent {
+    state: PepSearchStateType;
 }

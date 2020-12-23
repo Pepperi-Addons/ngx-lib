@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { SessionService } from '../common/services/session.service';
-import { FileService } from '../common/services/file.service';
+import { PepSessionService } from '../common/services/session.service';
+import { PepFileService } from '../common/services/file.service';
 import { PepStyleType, PepFieldBase } from './customization.model';
 
 @Injectable({
     providedIn: 'root',
 })
-export class CustomizationService {
+export class PepCustomizationService {
     static STAND_ALONE_FIELD_CLASS_NAME = 'pep-field';
 
     static REM_STRING = 'rem';
@@ -69,9 +69,9 @@ export class CustomizationService {
 
     // Border radius variables keys
     static BORDER_RADIUS_KEY = '--pep-border-radius';
-    static BORDER_RADIUS_SM_KEY = CustomizationService.BORDER_RADIUS_KEY + '-sm';
-    static BORDER_RADIUS_MD_KEY = CustomizationService.BORDER_RADIUS_KEY + '-md';
-    static BORDER_RADIUS_LG_KEY = CustomizationService.BORDER_RADIUS_KEY + '-lg';
+    static BORDER_RADIUS_SM_KEY = PepCustomizationService.BORDER_RADIUS_KEY + '-sm';
+    static BORDER_RADIUS_MD_KEY = PepCustomizationService.BORDER_RADIUS_KEY + '-md';
+    static BORDER_RADIUS_LG_KEY = PepCustomizationService.BORDER_RADIUS_KEY + '-lg';
 
     // Fonts variables keys
     static FONT_SIZE_2XS_KEY = '--pep-font-size-2xs';
@@ -132,14 +132,14 @@ export class CustomizationService {
 
     public hasCustomHomepage: boolean = null;
     public hasCustomHeader: boolean = null;
-    public customHeaderHeight = CustomizationService.DEFAULT_HEADER_HEIGHT;
+    public customHeaderHeight = PepCustomizationService.DEFAULT_HEADER_HEIGHT;
     public mainContHeight = 0;
     public footerHeight = new BehaviorSubject<number>(0);
     public settingsWidth = new BehaviorSubject<number>(0);
 
     constructor(
-        private sessionService: SessionService,
-        private fileService: FileService,
+        private sessionService: PepSessionService,
+        private fileService: PepFileService,
         public fb: FormBuilder) { }
 
     getDefaultFromGroup(field: PepFieldBase, withValidators = true): FormGroup {
@@ -190,9 +190,9 @@ export class CustomizationService {
 
     calculateFormFieldHeight(withTitle = true, rowSpan = 1, standAlone = false): number {
         const themeVars = this.getThemeVariables();
-        const rowFieldHeight = this.getNumberThemeVariable(themeVars, CustomizationService.FORM_FIELD_HEIGHT_KEY);
-        const rowFieldTitleHeight = this.getNumberThemeVariable(themeVars, CustomizationService.FORM_FIELD_TITLE_HEIGHT_KEY);
-        const rowFieldSpacingBottom = this.getNumberThemeVariable(themeVars, CustomizationService.FORM_SPACEING_KEY);
+        const rowFieldHeight = this.getNumberThemeVariable(themeVars, PepCustomizationService.FORM_FIELD_HEIGHT_KEY);
+        const rowFieldTitleHeight = this.getNumberThemeVariable(themeVars, PepCustomizationService.FORM_FIELD_TITLE_HEIGHT_KEY);
+        const rowFieldSpacingBottom = this.getNumberThemeVariable(themeVars, PepCustomizationService.FORM_SPACEING_KEY);
 
         let fieldHeight = 0;
         if (rowSpan === 1) {
@@ -210,8 +210,8 @@ export class CustomizationService {
 
     calculateCardRowsHeight(rowsCount = 1, withSpacing = true): number {
         const themeVars = this.getThemeVariables();
-        const cardFieldHeight = this.getNumberThemeVariable(themeVars, CustomizationService.CARD_FIELD_HEIGHT_KEY);
-        const cardFieldSpacing = this.getNumberThemeVariable(themeVars, CustomizationService.CARD_SPACEING_KEY);
+        const cardFieldHeight = this.getNumberThemeVariable(themeVars, PepCustomizationService.CARD_FIELD_HEIGHT_KEY);
+        const cardFieldSpacing = this.getNumberThemeVariable(themeVars, PepCustomizationService.CARD_SPACEING_KEY);
 
         const fieldHeight = rowsCount * cardFieldHeight + (rowsCount - 1) * (withSpacing ? cardFieldSpacing : 0);
         return fieldHeight;
@@ -219,8 +219,8 @@ export class CustomizationService {
 
     calculateTableRowsHeight(rowsCount = 1, withSpacing = true): number {
         const themeVars = this.getThemeVariables();
-        const tableFieldHeight = this.getNumberThemeVariable(themeVars, CustomizationService.TABLE_FIELD_HEIGHT_KEY);
-        const tableFieldSpacing = this.getNumberThemeVariable(themeVars, CustomizationService.TABLE_SPACEING_KEY);
+        const tableFieldHeight = this.getNumberThemeVariable(themeVars, PepCustomizationService.TABLE_FIELD_HEIGHT_KEY);
+        const tableFieldSpacing = this.getNumberThemeVariable(themeVars, PepCustomizationService.TABLE_SPACEING_KEY);
 
         const fieldHeight = rowsCount * (tableFieldHeight + (withSpacing ? tableFieldSpacing * 2 : 0));
         return fieldHeight;
@@ -229,84 +229,84 @@ export class CustomizationService {
     calculateFieldHeight(layoutType = 'form', rowSpan, standAlone): string {
         let fieldHeight = 'inherit'; // Default for card (with no title)
         if (layoutType === 'table') {
-            fieldHeight = this.getThemeVariable(CustomizationService.TABLE_FIELD_HEIGHT_KEY);
+            fieldHeight = this.getThemeVariable(PepCustomizationService.TABLE_FIELD_HEIGHT_KEY);
         } else if (layoutType === 'card') {
-            fieldHeight = this.calculateCardRowsHeight(rowSpan, !standAlone) + CustomizationService.REM_STRING;
+            fieldHeight = this.calculateCardRowsHeight(rowSpan, !standAlone) + PepCustomizationService.REM_STRING;
         } else {
             // Form
-            fieldHeight = this.calculateFormFieldHeight(false, rowSpan, standAlone) + CustomizationService.REM_STRING;
+            fieldHeight = this.calculateFormFieldHeight(false, rowSpan, standAlone) + PepCustomizationService.REM_STRING;
         }
 
         return fieldHeight;
     }
 
     getBrandingTheme(): string {
-        const themeObj = this.sessionService.getObject(CustomizationService.USER_THEME);
+        const themeObj = this.sessionService.getObject(PepCustomizationService.USER_THEME);
         return (themeObj && themeObj.Theme) || 'default-theme'; // 'light-theme';
     }
 
     getDefaultThemeLayoutVariables(themeVars: any): void {
         // Declare default screen sizes.
-        themeVars['--pep-screen-max-size-2xs'] = '460' + CustomizationService.PX_STRING;
-        themeVars['--pep-screen-max-size-xs'] = '767' + CustomizationService.PX_STRING;
-        themeVars['--pep-screen-max-size-sm'] = '991' + CustomizationService.PX_STRING;
-        themeVars['--pep-screen-max-size-md'] = '1199' + CustomizationService.PX_STRING;
-        themeVars['--pep-screen-max-size-lg'] = '1366' + CustomizationService.PX_STRING;
-        themeVars['--pep-screen-max-size-xl'] = '1920' + CustomizationService.PX_STRING;
+        themeVars['--pep-screen-max-size-2xs'] = '460' + PepCustomizationService.PX_STRING;
+        themeVars['--pep-screen-max-size-xs'] = '767' + PepCustomizationService.PX_STRING;
+        themeVars['--pep-screen-max-size-sm'] = '991' + PepCustomizationService.PX_STRING;
+        themeVars['--pep-screen-max-size-md'] = '1199' + PepCustomizationService.PX_STRING;
+        themeVars['--pep-screen-max-size-lg'] = '1366' + PepCustomizationService.PX_STRING;
+        themeVars['--pep-screen-max-size-xl'] = '1920' + PepCustomizationService.PX_STRING;
 
         // Declare default top bar.
-        themeVars[CustomizationService.SIDE_BAR_WIDTH_KEY] = '16' + CustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SIDE_BAR_WIDTH_KEY] = '16' + PepCustomizationService.REM_STRING;
 
         // Declare default top bar.
-        themeVars[CustomizationService.TOP_BAR_SPACING_TOP_KEY] = '1.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.TOP_BAR_SPACING_BOTTOM_KEY] = '0.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.TOP_BAR_FIELD_HEIGHT_KEY] = '2.5' + CustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.TOP_BAR_SPACING_TOP_KEY] = '1.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.TOP_BAR_SPACING_BOTTOM_KEY] = '0.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.TOP_BAR_FIELD_HEIGHT_KEY] = '2.5' + PepCustomizationService.REM_STRING;
 
         // Declare default footer.
-        themeVars[CustomizationService.FOOTER_BAR_SPACING_TOP_KEY] = '0.75' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FOOTER_BAR_SPACING_BOTTOM_KEY] = '1.25' + CustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FOOTER_BAR_SPACING_TOP_KEY] = '0.75' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FOOTER_BAR_SPACING_BOTTOM_KEY] = '1.25' + PepCustomizationService.REM_STRING;
     }
 
     getDefaultThemeBorderRadiusVariables(themeVars: any): void {
-        themeVars[CustomizationService.BORDER_RADIUS_SM_KEY] = '0.125' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.BORDER_RADIUS_MD_KEY] = '0.25' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.BORDER_RADIUS_LG_KEY] = '0.5' + CustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.BORDER_RADIUS_SM_KEY] = '0.125' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.BORDER_RADIUS_MD_KEY] = '0.25' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.BORDER_RADIUS_LG_KEY] = '0.5' + PepCustomizationService.REM_STRING;
     }
 
     getDefaultThemeSpacingVariables(themeVars: any): void {
-        themeVars[CustomizationService.SPACING_SIZE_2XS_KEY] = '0.125' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.SPACING_SIZE_XS_KEY] = '0.25' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.SPACING_SIZE_SM_KEY] = '0.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.SPACING_SIZE_MD_KEY] = '0.75' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.SPACING_SIZE_LG_KEY] = '1' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.SPACING_SIZE_XL_KEY] = '1.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.SPACING_SIZE_2XL_KEY] = '2' + CustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_2XS_KEY] = '0.125' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_XS_KEY] = '0.25' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_SM_KEY] = '0.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_MD_KEY] = '0.75' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_LG_KEY] = '1' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_XL_KEY] = '1.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_2XL_KEY] = '2' + PepCustomizationService.REM_STRING;
     }
 
     getDefaultThemeFontsVariables(themeVars: any): void {
         // Title font family
-        themeVars[CustomizationService.FONT_FAMILY_TITLE_KEY] = 'Nexa';
+        themeVars[PepCustomizationService.FONT_FAMILY_TITLE_KEY] = 'Nexa';
 
         // Body font family
-        themeVars[CustomizationService.FONT_FAMILY_BODY_KEY] = 'Inter';
+        themeVars[PepCustomizationService.FONT_FAMILY_BODY_KEY] = 'Inter';
 
         // Font sizes
-        themeVars[CustomizationService.FONT_SIZE_2XS_KEY] = '0.625' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FONT_SIZE_XS_KEY] = '0.75' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FONT_SIZE_SM_KEY] = '0.875' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FONT_SIZE_MD_KEY] = '1' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FONT_SIZE_LG_KEY] = '1.125' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FONT_SIZE_XL_KEY] = '1.25' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FONT_SIZE_2XL_KEY] = '1.5' + CustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FONT_SIZE_2XS_KEY] = '0.625' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FONT_SIZE_XS_KEY] = '0.75' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FONT_SIZE_SM_KEY] = '0.875' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FONT_SIZE_MD_KEY] = '1' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FONT_SIZE_LG_KEY] = '1.125' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FONT_SIZE_XL_KEY] = '1.25' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FONT_SIZE_2XL_KEY] = '1.5' + PepCustomizationService.REM_STRING;
 
         // Line height
-        themeVars[CustomizationService.LINE_HEIGHT_2XS_KEY] = '0.75' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.LINE_HEIGHT_XS_KEY] = '1' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.LINE_HEIGHT_SM_KEY] = '1.25' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.LINE_HEIGHT_MD_KEY] = '1.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.LINE_HEIGHT_LG_KEY] = '1.75' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.LINE_HEIGHT_XL_KEY] = '2' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.LINE_HEIGHT_2XL_KEY] = '2.25' + CustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.LINE_HEIGHT_2XS_KEY] = '0.75' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.LINE_HEIGHT_XS_KEY] = '1' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.LINE_HEIGHT_SM_KEY] = '1.25' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.LINE_HEIGHT_MD_KEY] = '1.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.LINE_HEIGHT_LG_KEY] = '1.75' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.LINE_HEIGHT_XL_KEY] = '2' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.LINE_HEIGHT_2XL_KEY] = '2.25' + PepCustomizationService.REM_STRING;
 
         // Font weight
         themeVars['--pep-font-weight-normal'] = 400;
@@ -315,101 +315,101 @@ export class CustomizationService {
     }
 
     getDefaultThemeButtonsVariables(themeVars: any): void {
-        themeVars['--pep-button-2xs-horizontal-spacing'] = '0.25' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-2xs-min-width'] = '1' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-2xs-height'] = '1' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-2xs-font-size'] = 'var(' + CustomizationService.FONT_SIZE_2XS_KEY + ')';
-        // themeVars['--pep-button-2xs-icon-horizontal-spacing'] = '0.125' + CustomizationService.REM_STRING;
+        themeVars['--pep-button-2xs-horizontal-spacing'] = '0.25' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-2xs-min-width'] = '1' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-2xs-height'] = '1' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-2xs-font-size'] = 'var(' + PepCustomizationService.FONT_SIZE_2XS_KEY + ')';
+        // themeVars['--pep-button-2xs-icon-horizontal-spacing'] = '0.125' + PepCustomizationService.REM_STRING;
 
-        themeVars['--pep-button-xs-horizontal-spacing'] = '0.5' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-xs-min-width'] = '2' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-xs-height'] = '1.5' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-xs-font-size'] = 'var(' + CustomizationService.FONT_SIZE_XS_KEY + ')';
-        // themeVars['--pep-button-xs-icon-horizontal-spacing'] = '0.25' + CustomizationService.REM_STRING;
+        themeVars['--pep-button-xs-horizontal-spacing'] = '0.5' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-xs-min-width'] = '2' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-xs-height'] = '1.5' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-xs-font-size'] = 'var(' + PepCustomizationService.FONT_SIZE_XS_KEY + ')';
+        // themeVars['--pep-button-xs-icon-horizontal-spacing'] = '0.25' + PepCustomizationService.REM_STRING;
 
-        themeVars['--pep-button-sm-horizontal-spacing'] = '0.75' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-sm-min-width'] = '2' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-sm-height'] = '2' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-sm-font-size'] = 'var(' + CustomizationService.FONT_SIZE_SM_KEY + ')';
-        // themeVars['--pep-button-sm-icon-horizontal-spacing'] = '0.5' + CustomizationService.REM_STRING;
+        themeVars['--pep-button-sm-horizontal-spacing'] = '0.75' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-sm-min-width'] = '2' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-sm-height'] = '2' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-sm-font-size'] = 'var(' + PepCustomizationService.FONT_SIZE_SM_KEY + ')';
+        // themeVars['--pep-button-sm-icon-horizontal-spacing'] = '0.5' + PepCustomizationService.REM_STRING;
 
-        themeVars['--pep-button-md-horizontal-spacing'] = '1' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-md-min-width'] = '2.5' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-md-height'] = '2.5' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-md-font-size'] = 'var(' + CustomizationService.FONT_SIZE_MD_KEY + ')';
-        // themeVars['--pep-button-md-icon-horizontal-spacing'] = '0.5' + CustomizationService.REM_STRING;
+        themeVars['--pep-button-md-horizontal-spacing'] = '1' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-md-min-width'] = '2.5' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-md-height'] = '2.5' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-md-font-size'] = 'var(' + PepCustomizationService.FONT_SIZE_MD_KEY + ')';
+        // themeVars['--pep-button-md-icon-horizontal-spacing'] = '0.5' + PepCustomizationService.REM_STRING;
 
-        themeVars['--pep-button-lg-horizontal-spacing'] = '1' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-lg-min-width'] = '3' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-lg-height'] = '3' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-lg-font-size'] = 'var(' + CustomizationService.FONT_SIZE_LG_KEY + ')';
-        // themeVars['--pep-button-lg-icon-horizontal-spacing'] = '0.75' + CustomizationService.REM_STRING;
+        themeVars['--pep-button-lg-horizontal-spacing'] = '1' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-lg-min-width'] = '3' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-lg-height'] = '3' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-lg-font-size'] = 'var(' + PepCustomizationService.FONT_SIZE_LG_KEY + ')';
+        // themeVars['--pep-button-lg-icon-horizontal-spacing'] = '0.75' + PepCustomizationService.REM_STRING;
 
-        themeVars['--pep-button-xl-horizontal-spacing'] = '1.5' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-xl-min-width'] = '5' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-xl-height'] = '4' + CustomizationService.REM_STRING;
-        themeVars['--pep-button-xl-font-size'] = 'var(' + CustomizationService.FONT_SIZE_XL_KEY + ')';
-        // themeVars['--pep-button-xl-icon-horizontal-spacing'] = '1' + CustomizationService.REM_STRING;
+        themeVars['--pep-button-xl-horizontal-spacing'] = '1.5' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-xl-min-width'] = '5' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-xl-height'] = '4' + PepCustomizationService.REM_STRING;
+        themeVars['--pep-button-xl-font-size'] = 'var(' + PepCustomizationService.FONT_SIZE_XL_KEY + ')';
+        // themeVars['--pep-button-xl-icon-horizontal-spacing'] = '1' + PepCustomizationService.REM_STRING;
     }
 
     getSystemPrimaryInvertColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_SYSTEM_PRIMARY_INVERT_KEY + '-h'] = '255';
-        themeVars[CustomizationService.COLOR_SYSTEM_PRIMARY_INVERT_KEY + '-s'] = '100%';
-        themeVars[CustomizationService.COLOR_SYSTEM_PRIMARY_INVERT_KEY + '-l'] = '100%';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_PRIMARY_INVERT_KEY + '-h'] = '255';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_PRIMARY_INVERT_KEY + '-s'] = '100%';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_PRIMARY_INVERT_KEY + '-l'] = '100%';
     }
 
     getSystemPrimaryColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h'] = '0';
-        themeVars[CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-s'] = '0%';
-        themeVars[CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-l'] = '10%';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h'] = '0';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-s'] = '0%';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-l'] = '10%';
     }
 
     getSystemSuccessColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_SYSTEM_SUCCESS_KEY + '-h'] = '100';
-        themeVars[CustomizationService.COLOR_SYSTEM_SUCCESS_KEY + '-s'] = '100%';
-        themeVars[CustomizationService.COLOR_SYSTEM_SUCCESS_KEY + '-l'] = '25%';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_SUCCESS_KEY + '-h'] = '100';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_SUCCESS_KEY + '-s'] = '100%';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_SUCCESS_KEY + '-l'] = '25%';
     }
 
     getSystemCautionColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_SYSTEM_CAUTION_KEY + '-h'] = '360';
-        themeVars[CustomizationService.COLOR_SYSTEM_CAUTION_KEY + '-s'] = '100%';
-        themeVars[CustomizationService.COLOR_SYSTEM_CAUTION_KEY + '-l'] = '40%';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_CAUTION_KEY + '-h'] = '360';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_CAUTION_KEY + '-s'] = '100%';
+        themeVars[PepCustomizationService.COLOR_SYSTEM_CAUTION_KEY + '-l'] = '40%';
     }
 
     getUserPrimaryColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_USER_PRIMARY_KEY + '-h'] = '78';
-        themeVars[CustomizationService.COLOR_USER_PRIMARY_KEY + '-s'] = '87%';
-        themeVars[CustomizationService.COLOR_USER_PRIMARY_KEY + '-l'] = '27%';
+        themeVars[PepCustomizationService.COLOR_USER_PRIMARY_KEY + '-h'] = '78';
+        themeVars[PepCustomizationService.COLOR_USER_PRIMARY_KEY + '-s'] = '87%';
+        themeVars[PepCustomizationService.COLOR_USER_PRIMARY_KEY + '-l'] = '27%';
     }
 
     getUserSecondaryColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_USER_SECONDARY_KEY + '-h'] = '77';
-        themeVars[CustomizationService.COLOR_USER_SECONDARY_KEY + '-s'] = '87%';
-        themeVars[CustomizationService.COLOR_USER_SECONDARY_KEY + '-l'] = '42%';
+        themeVars[PepCustomizationService.COLOR_USER_SECONDARY_KEY + '-h'] = '77';
+        themeVars[PepCustomizationService.COLOR_USER_SECONDARY_KEY + '-s'] = '87%';
+        themeVars[PepCustomizationService.COLOR_USER_SECONDARY_KEY + '-l'] = '42%';
     }
 
     getWeakColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_WEAK_KEY + '-h'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h)';
-        themeVars[CustomizationService.COLOR_WEAK_KEY + '-s'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-s)';
-        themeVars[CustomizationService.COLOR_WEAK_KEY + '-l'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-l)';
+        themeVars[PepCustomizationService.COLOR_WEAK_KEY + '-h'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h)';
+        themeVars[PepCustomizationService.COLOR_WEAK_KEY + '-s'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-s)';
+        themeVars[PepCustomizationService.COLOR_WEAK_KEY + '-l'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-l)';
     }
 
     getRegularColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_REGULAR_KEY + '-h'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h)';
-        themeVars[CustomizationService.COLOR_REGULAR_KEY + '-s'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-s)';
-        themeVars[CustomizationService.COLOR_REGULAR_KEY + '-l'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-l)';
+        themeVars[PepCustomizationService.COLOR_REGULAR_KEY + '-h'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h)';
+        themeVars[PepCustomizationService.COLOR_REGULAR_KEY + '-s'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-s)';
+        themeVars[PepCustomizationService.COLOR_REGULAR_KEY + '-l'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-l)';
     }
 
     getStrongColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_STRONG_KEY + '-h'] = 'var(' + CustomizationService.COLOR_USER_PRIMARY_KEY + '-h)';
-        themeVars[CustomizationService.COLOR_STRONG_KEY + '-s'] = 'var(' + CustomizationService.COLOR_USER_PRIMARY_KEY + '-s)';
-        themeVars[CustomizationService.COLOR_STRONG_KEY + '-l'] = 'var(' + CustomizationService.COLOR_USER_PRIMARY_KEY + '-l)';
+        themeVars[PepCustomizationService.COLOR_STRONG_KEY + '-h'] = 'var(' + PepCustomizationService.COLOR_USER_PRIMARY_KEY + '-h)';
+        themeVars[PepCustomizationService.COLOR_STRONG_KEY + '-s'] = 'var(' + PepCustomizationService.COLOR_USER_PRIMARY_KEY + '-s)';
+        themeVars[PepCustomizationService.COLOR_STRONG_KEY + '-l'] = 'var(' + PepCustomizationService.COLOR_USER_PRIMARY_KEY + '-l)';
     }
 
     getTextColorsVariables(themeVars: any): void {
-        themeVars[CustomizationService.COLOR_TEXT_LINK_KEY + '-h'] = '207';
-        themeVars[CustomizationService.COLOR_TEXT_LINK_KEY + '-s'] = '76%';
-        themeVars[CustomizationService.COLOR_TEXT_LINK_KEY + '-l'] = '37%';
+        themeVars[PepCustomizationService.COLOR_TEXT_LINK_KEY + '-h'] = '207';
+        themeVars[PepCustomizationService.COLOR_TEXT_LINK_KEY + '-s'] = '76%';
+        themeVars[PepCustomizationService.COLOR_TEXT_LINK_KEY + '-l'] = '37%';
     }
 
     getDefaultThemeColorsVariables(themeVars: any): void {
@@ -439,62 +439,62 @@ export class CustomizationService {
 
     getDefaultThemeShadowsVariables(themeVars: any): void {
         const noneOffset = '0';
-        themeVars[CustomizationService.SHADOW_NONE_OFFSET_KEY] = noneOffset;
+        themeVars[PepCustomizationService.SHADOW_NONE_OFFSET_KEY] = noneOffset;
 
         const xsOffset = '0 0.125rem 0.25rem 0';
-        themeVars[CustomizationService.SHADOW_XS_OFFSET_KEY] = xsOffset;
+        themeVars[PepCustomizationService.SHADOW_XS_OFFSET_KEY] = xsOffset;
 
         const smOffset = '0 0.25rem 0.5rem 0';
-        themeVars[CustomizationService.SHADOW_SM_OFFSET_KEY] = smOffset;
+        themeVars[PepCustomizationService.SHADOW_SM_OFFSET_KEY] = smOffset;
 
         const mdOffset = '0 0.5rem 1rem 0';
-        themeVars[CustomizationService.SHADOW_MD_OFFSET_KEY] = mdOffset;
+        themeVars[PepCustomizationService.SHADOW_MD_OFFSET_KEY] = mdOffset;
 
         const lgOffset = '0 1rem 2rem 0';
-        themeVars[CustomizationService.SHADOW_LG_OFFSET_KEY] = lgOffset;
+        themeVars[PepCustomizationService.SHADOW_LG_OFFSET_KEY] = lgOffset;
 
         const xlOffset = '0 2rem 4rem 0';
-        themeVars[CustomizationService.SHADOW_XL_OFFSET_KEY] = xlOffset;
+        themeVars[PepCustomizationService.SHADOW_XL_OFFSET_KEY] = xlOffset;
     }
 
     getDefaultThemeFormCustomizationVariables(themeVars: any): void {
         const formFieldSpacing = 1;
-        themeVars[CustomizationService.FORM_FIELD_HEIGHT_KEY] = '2.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FORM_FIELD_TITLE_HEIGHT_KEY] = '1.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FORM_SPACEING_KEY] = formFieldSpacing + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.FORM_FIELD_SPACEING_KEY] = formFieldSpacing + CustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FORM_FIELD_HEIGHT_KEY] = '2.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FORM_FIELD_TITLE_HEIGHT_KEY] = '1.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FORM_SPACEING_KEY] = formFieldSpacing + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.FORM_FIELD_SPACEING_KEY] = formFieldSpacing + PepCustomizationService.REM_STRING;
     }
 
     getDefaultThemeCardCustomizationVariables(themeVars: any): void {
-        themeVars[CustomizationService.CARD_FIELD_HEIGHT_KEY] = '1.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.CARD_SPACEING_KEY] = 'var(' + CustomizationService.SPACING_SIZE_XS_KEY + ')';
+        themeVars[PepCustomizationService.CARD_FIELD_HEIGHT_KEY] = '1.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.CARD_SPACEING_KEY] = 'var(' + PepCustomizationService.SPACING_SIZE_XS_KEY + ')';
 
-        themeVars[CustomizationService.CARD_BORDER_RADIUS_KEY] = 'var(' + CustomizationService.BORDER_RADIUS_MD_KEY + ')';
-        themeVars[CustomizationService.CARD_SHADOW_OFFSET_KEY] = 'var(' + CustomizationService.SHADOW_MD_OFFSET_KEY + ')';
+        themeVars[PepCustomizationService.CARD_BORDER_RADIUS_KEY] = 'var(' + PepCustomizationService.BORDER_RADIUS_MD_KEY + ')';
+        themeVars[PepCustomizationService.CARD_SHADOW_OFFSET_KEY] = 'var(' + PepCustomizationService.SHADOW_MD_OFFSET_KEY + ')';
     }
 
     getDefaultThemeTableCustomizationVariables(themeVars: any): void {
-        themeVars[CustomizationService.TABLE_FIELD_HEIGHT_KEY] = '2' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.TABLE_SPACEING_KEY] = '0.5' + CustomizationService.REM_STRING;
-        themeVars[CustomizationService.TABLE_BORDER_RADIUS_KEY] = 'var(' + CustomizationService.BORDER_RADIUS_MD_KEY + ')';
+        themeVars[PepCustomizationService.TABLE_FIELD_HEIGHT_KEY] = '2' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.TABLE_SPACEING_KEY] = '0.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.TABLE_BORDER_RADIUS_KEY] = 'var(' + PepCustomizationService.BORDER_RADIUS_MD_KEY + ')';
     }
 
     getDefaultThemeQSCustomizationVariables(themeVars: any): void {
         const qsState: PepStyleType = 'regular';
-        themeVars[CustomizationService.STYLE_QS_KEY] = qsState;
+        themeVars[PepCustomizationService.STYLE_QS_KEY] = qsState;
 
-        themeVars[CustomizationService.COLOR_QS_KEY + '-h'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h)';
-        themeVars[CustomizationService.COLOR_QS_KEY + '-s'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-s)';
-        themeVars[CustomizationService.COLOR_QS_KEY + '-l'] = 'var(' + CustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-l)';
+        themeVars[PepCustomizationService.COLOR_QS_KEY + '-h'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-h)';
+        themeVars[PepCustomizationService.COLOR_QS_KEY + '-s'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-s)';
+        themeVars[PepCustomizationService.COLOR_QS_KEY + '-l'] = 'var(' + PepCustomizationService.COLOR_SYSTEM_PRIMARY_KEY + '-l)';
     }
 
     getDefaultThemeTopHeaderCustomizationVariables(themeVars: any): void {
         const topHeaderState: PepStyleType = 'strong';
-        themeVars[CustomizationService.STYLE_TOP_HEADER_KEY] = topHeaderState;
+        themeVars[PepCustomizationService.STYLE_TOP_HEADER_KEY] = topHeaderState;
 
-        themeVars[CustomizationService.COLOR_TOP_HEADER_KEY + '-h'] = '';
-        themeVars[CustomizationService.COLOR_TOP_HEADER_KEY + '-s'] = '';
-        themeVars[CustomizationService.COLOR_TOP_HEADER_KEY + '-l'] = '';
+        themeVars[PepCustomizationService.COLOR_TOP_HEADER_KEY + '-h'] = '';
+        themeVars[PepCustomizationService.COLOR_TOP_HEADER_KEY + '-s'] = '';
+        themeVars[PepCustomizationService.COLOR_TOP_HEADER_KEY + '-l'] = '';
     }
 
     getDefaultThemeVariables(): any {
@@ -541,7 +541,7 @@ export class CustomizationService {
 
     getThemeVariables(): any {
         const ret = this.getDefaultThemeVariables();
-        const themeVars = this.sessionService.getObject(CustomizationService.USER_THEME_VARIABLES);
+        const themeVars = this.sessionService.getObject(PepCustomizationService.USER_THEME_VARIABLES);
 
         // Override defaults.
         if (themeVars) {
@@ -565,7 +565,7 @@ export class CustomizationService {
             }
         }
 
-        this.sessionService.setObject(CustomizationService.USER_THEME_VARIABLES, JSON.stringify(themeVariables));
+        this.sessionService.setObject(PepCustomizationService.USER_THEME_VARIABLES, JSON.stringify(themeVariables));
 
         // tslint:disable-next-line: forin
         for (const key in themeVariables) {
@@ -580,10 +580,10 @@ export class CustomizationService {
     isFontUrlKey(key: string): boolean {
         let res = false;
 
-        if ((key === CustomizationService.FONT_FAMILY_TITLE_NORMAL_URL_KEY) ||
-            (key === CustomizationService.FONT_FAMILY_TITLE_BOLD_URL_KEY) ||
-            (key === CustomizationService.FONT_FAMILY_BODY_NORMAL_URL_KEY) ||
-            (key === CustomizationService.FONT_FAMILY_BODY_BOLD_URL_KEY)) {
+        if ((key === PepCustomizationService.FONT_FAMILY_TITLE_NORMAL_URL_KEY) ||
+            (key === PepCustomizationService.FONT_FAMILY_TITLE_BOLD_URL_KEY) ||
+            (key === PepCustomizationService.FONT_FAMILY_BODY_NORMAL_URL_KEY) ||
+            (key === PepCustomizationService.FONT_FAMILY_BODY_BOLD_URL_KEY)) {
             res = true;
         }
 
@@ -607,7 +607,7 @@ export class CustomizationService {
                 key = themeVars[key].substr(4).split(')')[0];
             }
 
-            const tmp = Number(themeVars[key].replace(CustomizationService.REM_STRING, ''));
+            const tmp = Number(themeVars[key].replace(PepCustomizationService.REM_STRING, ''));
             return tmp;
         } else {
             return 0;
@@ -621,7 +621,7 @@ export class CustomizationService {
                 this.footerHeight.next(height);
             }, 0);
         }
-        document.documentElement.style.setProperty(CustomizationService.FOOTER_HEIGHT_KEY, height + CustomizationService.REM_STRING);
+        document.documentElement.style.setProperty(PepCustomizationService.FOOTER_HEIGHT_KEY, height + PepCustomizationService.REM_STRING);
     }
 
     hideFooter(): void {
@@ -632,9 +632,9 @@ export class CustomizationService {
         const themeVars = this.getThemeVariables();
 
         const res =
-            this.getNumberThemeVariable(themeVars, CustomizationService.FOOTER_BAR_SPACING_TOP_KEY) +
-            this.getNumberThemeVariable(themeVars, CustomizationService.FOOTER_BAR_SPACING_BOTTOM_KEY) +
-            this.getNumberThemeVariable(themeVars, CustomizationService.TOP_BAR_FIELD_HEIGHT_KEY);
+            this.getNumberThemeVariable(themeVars, PepCustomizationService.FOOTER_BAR_SPACING_TOP_KEY) +
+            this.getNumberThemeVariable(themeVars, PepCustomizationService.FOOTER_BAR_SPACING_BOTTOM_KEY) +
+            this.getNumberThemeVariable(themeVars, PepCustomizationService.TOP_BAR_FIELD_HEIGHT_KEY);
 
         this.setFooterHeight(res);
     }
@@ -646,7 +646,7 @@ export class CustomizationService {
                 this.settingsWidth.next(width);
             }, 0);
         }
-        document.documentElement.style.setProperty(CustomizationService.SETTINGS_WIDTH_KEY, width + CustomizationService.REM_STRING);
+        document.documentElement.style.setProperty(PepCustomizationService.SETTINGS_WIDTH_KEY, width + PepCustomizationService.REM_STRING);
     }
 
     hideSettings(): void {
@@ -656,7 +656,7 @@ export class CustomizationService {
     showSettings(): void {
         const themeVars = this.getThemeVariables();
 
-        const res = this.getNumberThemeVariable(themeVars, CustomizationService.SIDE_BAR_WIDTH_KEY);
+        const res = this.getNumberThemeVariable(themeVars, PepCustomizationService.SIDE_BAR_WIDTH_KEY);
 
         this.setSettingsWidth(res);
     }
@@ -665,9 +665,9 @@ export class CustomizationService {
         const themeVars = this.getThemeVariables();
 
         const res =
-            this.getNumberThemeVariable(themeVars, CustomizationService.TOP_BAR_SPACING_TOP_KEY) +
-            this.getNumberThemeVariable(themeVars, CustomizationService.TOP_BAR_SPACING_BOTTOM_KEY) +
-            this.getNumberThemeVariable(themeVars, CustomizationService.TOP_BAR_FIELD_HEIGHT_KEY);
+            this.getNumberThemeVariable(themeVars, PepCustomizationService.TOP_BAR_SPACING_TOP_KEY) +
+            this.getNumberThemeVariable(themeVars, PepCustomizationService.TOP_BAR_SPACING_BOTTOM_KEY) +
+            this.getNumberThemeVariable(themeVars, PepCustomizationService.TOP_BAR_FIELD_HEIGHT_KEY);
 
         return res;
     }
@@ -678,17 +678,17 @@ export class CustomizationService {
             Theme: res.Theme || 'default-theme',
         };
 
-        this.sessionService.setObject(CustomizationService.USER_THEME, JSON.stringify(themeObj));
+        this.sessionService.setObject(PepCustomizationService.USER_THEME, JSON.stringify(themeObj));
 
         let spinnerColor;
         let brandingFontColor;
 
         if (this.isLightColor(res.BrandingMainColor)) {
-            spinnerColor = CustomizationService.DEFAULT_SPINNER_COLOR;
+            spinnerColor = PepCustomizationService.DEFAULT_SPINNER_COLOR;
             brandingFontColor = '#222';
         } else {
             spinnerColor = res.BrandingMainColor;
-            brandingFontColor = CustomizationService.DEFAULT_BRANDING_COLOR;
+            brandingFontColor = PepCustomizationService.DEFAULT_BRANDING_COLOR;
         }
 
         const color = {
@@ -698,7 +698,7 @@ export class CustomizationService {
             SpinnerColor: spinnerColor,
         };
 
-        this.sessionService.setObject(CustomizationService.USER_COLOR, JSON.stringify(color));
+        this.sessionService.setObject(PepCustomizationService.USER_COLOR, JSON.stringify(color));
 
         this.hasCustomHeader = res.TopHeaderFiles && res.TopHeaderFiles.length > 0 && res.TopHeaderFiles[0] !== '' ? true : false;
         this.hasCustomHomepage =
@@ -707,9 +707,9 @@ export class CustomizationService {
     }
 
     isLegacyColor(): boolean {
-        const h = document.documentElement.style.getPropertyValue(CustomizationService.COLOR_TOP_HEADER_KEY + '-h');
-        const s = document.documentElement.style.getPropertyValue(CustomizationService.COLOR_TOP_HEADER_KEY + '-s');
-        const l = document.documentElement.style.getPropertyValue(CustomizationService.COLOR_TOP_HEADER_KEY + '-l');
+        const h = document.documentElement.style.getPropertyValue(PepCustomizationService.COLOR_TOP_HEADER_KEY + '-h');
+        const s = document.documentElement.style.getPropertyValue(PepCustomizationService.COLOR_TOP_HEADER_KEY + '-s');
+        const l = document.documentElement.style.getPropertyValue(PepCustomizationService.COLOR_TOP_HEADER_KEY + '-l');
 
         return !(h && s && l);
     }
@@ -718,12 +718,12 @@ export class CustomizationService {
         let spinnerColor = '';
 
         if (this.isLegacyColor()) {
-            const color = this.sessionService.getObject(CustomizationService.USER_COLOR);
+            const color = this.sessionService.getObject(PepCustomizationService.USER_COLOR);
 
             if (color && color.SpinnerColor) {
                 spinnerColor = color.SpinnerColor;
             } else {
-                spinnerColor = CustomizationService.DEFAULT_SPINNER_COLOR;
+                spinnerColor = PepCustomizationService.DEFAULT_SPINNER_COLOR;
             }
         }
 
@@ -734,12 +734,12 @@ export class CustomizationService {
         let brandingMainColor = '';
 
         if (this.isLegacyColor()) {
-            const color = this.sessionService.getObject(CustomizationService.USER_COLOR);
+            const color = this.sessionService.getObject(PepCustomizationService.USER_COLOR);
 
             if (color && color.BrandingMainColor) {
                 brandingMainColor = color.BrandingMainColor;
             } else {
-                brandingMainColor = CustomizationService.DEFAULT_BRANDING_COLOR;
+                brandingMainColor = PepCustomizationService.DEFAULT_BRANDING_COLOR;
             }
         }
 

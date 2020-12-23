@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Injectable } from '@angular/core';
-import { LayoutService } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService } from '@pepperi-addons/ngx-lib';
 
 export class PepBreadCrumbItem {
     text: string;
@@ -26,7 +26,7 @@ export class PepBreadCrumbsComponent implements OnInit {
 
     breadCrumbSeparator = ' / ';
 
-    constructor(private layoutService: LayoutService) { }
+    constructor(private layoutService: PepLayoutService) { }
 
     ngOnInit(): void {
         if (this.layoutService.isRtl()) {

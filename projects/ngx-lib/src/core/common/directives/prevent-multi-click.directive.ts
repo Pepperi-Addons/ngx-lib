@@ -3,7 +3,7 @@ import { Directive, HostListener, Input } from '@angular/core';
 @Directive({
     selector: '[pepPreventMultiClick]'
 })
-export class PreventMultiClickDirective {
+export class PepPreventMultiClickDirective {
     @Input() disabledTime = 1000;
 
     constructor() { }

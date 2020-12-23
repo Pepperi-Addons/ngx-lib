@@ -36,6 +36,7 @@
             .mat-button-wrapper {
                 display: grid !important;
                 grid-auto-flow: column;
+                grid-template-rows: auto;
             }
 
             mat-icon {

@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { LayoutService, PepStyleType, PepSizeType } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService, PepStyleType, PepSizeType, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { pepIconSystemMenu } from '@pepperi-addons/ngx-lib/icon';
-import { PepMenuItem, PepMenuItemClick, PepMenuStateType } from './menu.model';
+import { PepMenuItem, IPepMenuItemClickEvent, IPepMenuStateChangeEvent, PepMenuStateType, PepMenuType } from './menu.model';
 
 @Component({
     selector: 'pep-menu',
@@ -33,24 +33,37 @@ import { PepMenuItem, PepMenuItemClick, PepMenuStateType } from './menu.model';
     ]
 })
 export class PepMenuComponent implements OnChanges, OnDestroy {
-    @Input() title: string = null;
+    @Input() text: string = null;
     @Input() iconName = pepIconSystemMenu.name;
+    @Input() type: PepMenuType = 'action';
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
     @Input() classNames = '';
     @Input() xPosition: 'before' | 'after' = 'after';
     @Input() showAnimation = false;
-    @Input() items: Array<PepMenuItem> = [];
+    @Input() items: Array<PepMenuItem> = null;
+    @Input() selectedItem: PepMenuItem = null;
     @Input() disabled = false;
-    @Input() subMenuIconName: string = null;
-
-    @Output() stateChange: EventEmitter<PepMenuStateType> = new EventEmitter<PepMenuStateType>();
-    @Output() menuItemClick: EventEmitter<PepMenuItemClick> = new EventEmitter<PepMenuItemClick>();
+    
+    @Output() stateChange: EventEmitter<IPepMenuStateChangeEvent> = new EventEmitter<IPepMenuStateChangeEvent>();
+    @Output() menuItemClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
     @Output() menuClick: EventEmitter<void> = new EventEmitter<void>();
 
     state: PepMenuStateType = 'hidden';
 
-    constructor(public layoutService: LayoutService) {
+    PepScreenSizeType = PepScreenSizeType;
+    screenSize: PepScreenSizeType;
+
+    constructor(
+        public layoutService: PepLayoutService
+    ) {
+        this.layoutService.onResize$.subscribe(size => {
+            this.screenSize = size;
+        });
+    }
+
+    private updateText(): void {
+        this.text = this.selectedItem != null ? this.selectedItem.text : '';
     }
 
     ngOnChanges(changes): void {
@@ -58,6 +71,14 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
             this.state = (!this.disabled && this.items && this.items.filter(item => !item.disabled).length > 0) ? 'visible' : 'hidden';
         } else {
             this.state = 'visible';
+        }
+
+        if (this.type === 'select') {
+            if (this.selectedItem === null && this.items.length > 0) {
+                this.selectedItem = this.items[0];
+            }
+
+            this.updateText();
         }
     }
 
@@ -71,21 +92,26 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         this.menuClick.emit();
     }
 
-    onMenuItemClicked(click: PepMenuItemClick): void {
+    onMenuItemClicked(click: IPepMenuItemClickEvent): void {
+        if (this.type === 'select') {
+            this.selectedItem = click.source;
+            this.updateText();
+        }
+
         this.menuItemClick.emit(click);
     }
 
     animationDone(): void {
         if (this.state === 'hidden') {
             setTimeout(() => {
-                this.stateChange.emit(this.state);
-            }, 100);
+                this.stateChange.emit({ state: this.state });
+            }, 500);
         }
     }
 
     animationStart(): void {
         if (this.state === 'visible') {
-            this.stateChange.emit(this.state);
+            this.stateChange.emit({ state: this.state });
         }
     }
 }

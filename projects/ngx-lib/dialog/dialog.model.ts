@@ -18,8 +18,6 @@ export class PepDialogData {
     title: string;
     type: PepDialogActionsType;
     content: any;
-    // contentType: PepDialogDataType;
-    // contentData?: any;
     showClose: boolean;
     showHeader: boolean;
     showFooter: boolean;
@@ -30,9 +28,7 @@ export class PepDialogData {
             title?: string,
             type?: PepDialogActionsType,
             content?: any,
-            // contentType?: PepDialogDataType,
             contentDisabled?: boolean,
-            // contentData?: any,
             showClose?: boolean,
             showHeader?: boolean,
             showFooter?: boolean,
@@ -42,12 +38,9 @@ export class PepDialogData {
         this.title = options.title || '';
         this.type = options.type || 'close';
         this.content = options.content || '';
-        // this.contentType = options.contentType || PepDialogDataType.Html;
-        // this.contentData = options.contentData || { disabled: true };
         this.showClose = options.showClose === undefined ? true : options.showClose;
         this.showHeader = options.showHeader === undefined ? true : options.showHeader;
         this.showFooter = options.showFooter === undefined ? true : options.showFooter;
         this.actionButtons = options.actionButtons ?? null;
-        // this.showLoadingSpinner = showLoadingSpinner;
     }
 }

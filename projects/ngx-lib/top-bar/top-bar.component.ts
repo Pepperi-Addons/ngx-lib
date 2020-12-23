@@ -1,12 +1,12 @@
 import { AfterContentInit, ChangeDetectorRef, ContentChild, ElementRef, ViewChild } from '@angular/core';
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { CustomizationService, LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { PepCustomizationService, PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { PepSearchComponent } from '@pepperi-addons/ngx-lib/search';
 import { PepListActionsComponent } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuStateType } from '@pepperi-addons/ngx-lib/menu';
-import { PepSearchStateType } from '@pepperi-addons/ngx-lib/search';
+import { IPepSearchStateChangeEvent, PepSearchStateType } from '@pepperi-addons/ngx-lib/search';
+import { IPepFooterStateChangeEvent, PepFooterStateType } from './top-bar.model';
 
-export type PepFooterStateType = 'visible' | 'hidden';
 
 @Component({
     selector: 'pep-top-bar',
@@ -18,7 +18,7 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
     @Input() inline = false;
     @Input() title: string = null;
 
-    @Output() footerStateChange: EventEmitter<PepFooterStateType> = new EventEmitter<PepFooterStateType>();
+    @Output() footerStateChange: EventEmitter<IPepFooterStateChangeEvent> = new EventEmitter<IPepFooterStateChangeEvent>();
 
     @ViewChild('footerStartContent') footerStartContent: ElementRef;
     @ViewChild('footerEndContent') footerEndContent: ElementRef;
@@ -36,8 +36,8 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
     PepScreenSizeType = PepScreenSizeType;
 
     constructor(
-        public customizationService: CustomizationService,
-        public layoutService: LayoutService,
+        public customizationService: PepCustomizationService,
+        public layoutService: PepLayoutService,
         private cdRef: ChangeDetectorRef
     ) {
         
@@ -64,15 +64,9 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
     }
 
     ngAfterContentInit() {
-        // if (this.listActionsComp) {
-        //     this.listActionsComp.stateChange.subscribe((listActionsState: PepMenuStateType) => {
-        //         this.listActionsIsVisible = listActionsState === 'visible';
-        //     }).unsubscribe();
-        // } 
-        
         if (this.searchComp) {
-            this.searchComp.stateChange.subscribe((searchState: PepSearchStateType) => {
-                this.searchState = searchState;
+            this.searchComp.stateChange.subscribe((searchStateChangeEvent: IPepSearchStateChangeEvent) => {
+                this.searchState = searchStateChangeEvent.state;
                 this.setSearchIsOpenAndSmallDevice();
             }).unsubscribe();
         }
@@ -92,7 +86,8 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
         
         if (this.footerState !== newFooterState) {
             this.footerState = newFooterState;
-            this.footerStateChange.emit(this.footerState);
+            this.cdRef.detectChanges();
+            this.footerStateChange.emit({ state: this.footerState });
         }
     }
 }

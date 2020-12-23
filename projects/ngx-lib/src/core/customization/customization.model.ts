@@ -1,5 +1,4 @@
 import { ValidatorFn, Validators } from '@angular/forms';
-import { FIELD_TYPE } from '../common/model/api.model';
 
 /** Allowed layout options */
 export type PepLayoutType = 'form' | 'card' | 'table';
@@ -27,7 +26,7 @@ export class PepOption {
 
 // export type PepFieldBaseType = '' | PepInternalButtonFieldType | PepTextboxFieldType |
 //     PepQuantitySelectorFieldType | PepDateFieldType | PepCheckboxFieldType | PepSelectFieldType;
-interface PepFieldBaseOptions {
+interface IPepFieldBaseOptions {
     value?: any;
     formattedValue?: any;
     additionalValue?: string;
@@ -83,7 +82,7 @@ export class PepFieldBase {
     lastFocusField: any;
     // options: PepOption[];
 
-    constructor(options: PepFieldBaseOptions = {}) {
+    constructor(options: IPepFieldBaseOptions = {}) {
         this.key = options.key || '';
         this.label = options.label || '';
         this.accessory = options.accessory || '';
@@ -135,7 +134,7 @@ export class PepFieldBase {
         return validators;
     }
 
-    public update(options: PepFieldBaseOptions): void {
+    public update(options: IPepFieldBaseOptions): void {
         this.value = options.value;
         this.formattedValue = options.formattedValue;
         this.additionalValue = options.additionalValue;
@@ -150,7 +149,7 @@ export class PepFieldBase {
 export class PepPlaceholderField extends PepFieldBase {
     controlType = 'placeholder';
 
-    constructor(options: PepFieldBaseOptions = {}) {
+    constructor(options: IPepFieldBaseOptions = {}) {
         super(options);
     }
 }
@@ -158,7 +157,7 @@ export class PepPlaceholderField extends PepFieldBase {
 export class PepSeparatorField extends PepFieldBase {
     controlType = 'separator';
 
-    constructor(options: PepFieldBaseOptions = {}) {
+    constructor(options: IPepFieldBaseOptions = {}) {
         super(options);
     }
 }
@@ -166,7 +165,7 @@ export class PepSeparatorField extends PepFieldBase {
 export class PepAttachmentField extends PepFieldBase {
     controlType = 'attachment';
 
-    constructor(options: PepFieldBaseOptions = {}) {
+    constructor(options: IPepFieldBaseOptions = {}) {
         super(options);
     }
 }
@@ -174,20 +173,20 @@ export class PepAttachmentField extends PepFieldBase {
 export class PepIndicatorsField extends PepFieldBase {
     controlType = 'indicators';
 
-    constructor(options: PepFieldBaseOptions = {}) {
+    constructor(options: IPepFieldBaseOptions = {}) {
         super(options);
     }
 }
 
 export type PepTextboxFieldType = 'text' | 'link' | 'email' | 'phone' | 'duration' | 'int' | 'percentage' | 'currency' | 'real';
-interface PepTextboxFieldOptions extends PepFieldBaseOptions {
+interface IPepTextboxFieldOptions extends IPepFieldBaseOptions {
     type?: PepTextboxFieldType;
 }
 export class PepTextboxField extends PepFieldBase {
     controlType = 'textbox';
     type: PepTextboxFieldType = 'text';
 
-    constructor(options: PepTextboxFieldOptions = {}) {
+    constructor(options: IPepTextboxFieldOptions = {}) {
         super(options);
 
         this.type = options.type || 'text';
@@ -195,7 +194,7 @@ export class PepTextboxField extends PepFieldBase {
         this.update(options);
     }
 
-    public update(options: PepTextboxFieldOptions): void {
+    public update(options: IPepTextboxFieldOptions): void {
         super.update(options);
 
         if (this.type === 'link') {
@@ -234,7 +233,7 @@ export class PepTextboxField extends PepFieldBase {
 export class PepTextareaField extends PepFieldBase {
     controlType = 'textarea';
 
-    constructor(options: PepFieldBaseOptions = {}) {
+    constructor(options: IPepFieldBaseOptions = {}) {
         super(options);
         // this.type = 'textarea';
     }
@@ -243,26 +242,26 @@ export class PepTextareaField extends PepFieldBase {
 export class PepRichHtmlTextareaField extends PepFieldBase {
     controlType = 'richhtmltextarea';
 
-    constructor(options: PepFieldBaseOptions = {}) {
+    constructor(options: IPepFieldBaseOptions = {}) {
         super(options);
         // this.type = 'richhtmltextarea';
     }
 }
 
-interface PepSignatureFieldOptions extends PepFieldBaseOptions {
+interface IPepSignatureFieldOptions extends IPepFieldBaseOptions {
     options?: PepOption[];
 }
 export class PepSignatureField extends PepFieldBase {
     controlType = 'signature';
     options: PepOption[] = [];
 
-    constructor(options: PepSignatureFieldOptions = {}) {
+    constructor(options: IPepSignatureFieldOptions = {}) {
         super(options);
         this.options = options.options || [];
     }
 }
 
-interface PepImageFieldOptions extends PepFieldBaseOptions {
+interface IPepImageFieldOptions extends IPepFieldBaseOptions {
     hasCampaignField?: any;
     indicatorsField?: any;
     menuField?: any;
@@ -277,7 +276,7 @@ export class PepImageField extends PepFieldBase {
     options: PepOption[] = [];
     sizeLimitMB = 5;
 
-    constructor(options: PepImageFieldOptions = {}) {
+    constructor(options: IPepImageFieldOptions = {}) {
         super(options);
         this.hasCampaignField = options.hasCampaignField || null;
         this.indicatorsField = options.indicatorsField || null;
@@ -287,21 +286,21 @@ export class PepImageField extends PepFieldBase {
     }
 }
 
-interface PepImagesFieldOptions extends PepFieldBaseOptions {
+interface IPepImagesFieldOptions extends IPepFieldBaseOptions {
     options?: PepOption[];
 }
 export class PepImagesField extends PepFieldBase {
     controlType = 'images';
     options: PepOption[] = [];
 
-    constructor(options: PepImagesFieldOptions = {}) {
+    constructor(options: IPepImagesFieldOptions = {}) {
         super(options);
         this.options = options.options || [];
     }
 }
 
 export type PepQuantitySelectorFieldType = 'button' | 'packageButton' | 'qs' | 'qsForMatrix';
-interface PepQuantitySelectorFieldOptions extends PepFieldBaseOptions {
+interface IPepQuantitySelectorFieldOptions extends IPepFieldBaseOptions {
     alowDecimal?: boolean;
     notificationInfo?: any;
     type?: PepQuantitySelectorFieldType;
@@ -313,7 +312,7 @@ export class PepQuantitySelectorField extends PepFieldBase {
     updatedDataCount: number;
     type: PepQuantitySelectorFieldType;
 
-    constructor(options: PepQuantitySelectorFieldOptions = {}) {
+    constructor(options: IPepQuantitySelectorFieldOptions = {}) {
         super(options);
 
         this.updatedDataCount = 0;
@@ -323,7 +322,7 @@ export class PepQuantitySelectorField extends PepFieldBase {
         this.update(options);
     }
 
-    public update(options: PepQuantitySelectorFieldOptions): void {
+    public update(options: IPepQuantitySelectorFieldOptions): void {
         super.update(options);
 
         this.notificationInfo = options.notificationInfo;
@@ -332,14 +331,14 @@ export class PepQuantitySelectorField extends PepFieldBase {
 }
 
 export type PepDateFieldType = 'datetime' | 'date';
-interface PepDateFieldOptions extends PepFieldBaseOptions {
+interface IPepDateFieldOptions extends IPepFieldBaseOptions {
     type?: PepDateFieldType;
 }
 export class PepDateField extends PepFieldBase {
     controlType = 'date';
     type: PepDateFieldType;
 
-    constructor(options: PepDateFieldOptions = {}) {
+    constructor(options: IPepDateFieldOptions = {}) {
         super(options);
 
         this.type = options.type || 'date';
@@ -347,14 +346,14 @@ export class PepDateField extends PepFieldBase {
 }
 
 export type PepCheckboxFieldType = 'checkbox' | 'booleanText';
-interface PepCheckboxFieldOptions extends PepFieldBaseOptions {
+interface IPepCheckboxFieldOptions extends IPepFieldBaseOptions {
     type?: PepCheckboxFieldType;
 }
 export class PepCheckboxField extends PepFieldBase {
     controlType = 'checkbox';
     type: PepCheckboxFieldType;
 
-    constructor(options: PepCheckboxFieldOptions = {}) {
+    constructor(options: IPepCheckboxFieldOptions = {}) {
         super(options);
 
         this.type = options.type || 'checkbox';
@@ -367,7 +366,7 @@ export class PepCheckboxField extends PepFieldBase {
 }
 
 export type PepSelectFieldType = 'select' | 'multi';
-interface PepSelectFieldOptions extends PepFieldBaseOptions {
+interface IPepSelectFieldOptions extends IPepFieldBaseOptions {
     options?: PepOption[];
     type?: PepSelectFieldType;
 }
@@ -376,35 +375,35 @@ export class PepSelectField extends PepFieldBase {
     options: PepOption[] = [];
     type: PepSelectFieldType;
 
-    constructor(options: PepSelectFieldOptions = {}) {
+    constructor(options: IPepSelectFieldOptions = {}) {
         super(options);
         this.type = options.type || 'select';
 
         this.update(options);
     }
 
-    public update(options: PepSelectFieldOptions): void {
+    public update(options: IPepSelectFieldOptions): void {
         super.update(options);
 
         this.options = options.options || [];
     }
 }
 
-interface PepAddressFieldOptions extends PepFieldBaseOptions {
+interface IPepAddressFieldOptions extends IPepFieldBaseOptions {
     groupFields?: PepFieldBase[];
 }
 export class PepAddressField extends PepFieldBase {
     controlType = 'address';
     groupFields: PepFieldBase[] = null;
 
-    constructor(options: PepAddressFieldOptions = {}) {
+    constructor(options: IPepAddressFieldOptions = {}) {
         super(options);
         this.groupFields = options.groupFields || null;
     }
 }
 
 export type PepInternalButtonFieldType = 'button' | 'reference' | 'listofobjects';
-interface PepInternalButtonFieldOptions extends PepFieldBaseOptions {
+interface IPepInternalButtonFieldOptions extends IPepFieldBaseOptions {
     referenceObjectType?: any;
     referenceObjectSubType?: string;
     referenceObjectInternalType?: string;
@@ -417,7 +416,7 @@ export class PepInternalButtonField extends PepFieldBase {
     referenceObjectInternalType = '';
     type: PepInternalButtonFieldType;
 
-    constructor(options: PepInternalButtonFieldOptions = {}) {
+    constructor(options: IPepInternalButtonFieldOptions = {}) {
         super(options);
 
         this.referenceObjectType = options.referenceObjectType || null;
@@ -428,7 +427,7 @@ export class PepInternalButtonField extends PepFieldBase {
     }
 }
 
-interface PepInternalPageFieldOptions extends PepFieldBaseOptions {
+interface IPepInternalPageFieldOptions extends IPepFieldBaseOptions {
     objectId?: string;
     parentId?: string;
     searchCode?: string;
@@ -439,7 +438,7 @@ export class PepInternalPageField extends PepFieldBase {
     parentId = '';
     searchCode = '';
 
-    constructor(options: PepInternalPageFieldOptions = {}) {
+    constructor(options: IPepInternalPageFieldOptions = {}) {
         super(options);
         this.objectId = options.objectId || '';
         this.parentId = options.parentId || '';
@@ -447,7 +446,7 @@ export class PepInternalPageField extends PepFieldBase {
     }
 }
 
-interface PepInternalMenuFieldOptions extends PepFieldBaseOptions {
+interface IPepInternalMenuFieldOptions extends IPepFieldBaseOptions {
     options?: PepOption[];
 }
 export class PepInternalMenuField extends PepFieldBase {
@@ -455,72 +454,23 @@ export class PepInternalMenuField extends PepFieldBase {
     options: PepOption[] = [];
     // hasSubMenu: boolean = false;
 
-    constructor(options: PepInternalMenuFieldOptions = {}) {
+    constructor(options: IPepInternalMenuFieldOptions = {}) {
         super(options);
         this.options = options.options || [];
         // this.hasSubMenu = options['hasSubMenu'];
     }
 }
 
-export class PepFieldValueChangedData {
+export interface IPepFieldValueChangeEvent {
     key: string;
     value: string;
     controlType?: string;
-    lastFocusedField?: any = null;
-
-    constructor(data: Partial<PepFieldValueChangedData>) {
-        Object.assign(this, data);
-    }
+    lastFocusedField?: any;
 }
 
-// This object should be deprecated.
-export class PepFormFieldChangedData extends PepFieldValueChangedData {
-    Id: string;
-    ApiName: string;
-    Value: string;
-    ControlType: string;
-
-    constructor(id: string, apiName: string, value: string, controlType: string = '') {
-        super({key: apiName, value, controlType});
-
-        this.Id = id;
-        this.ApiName = this.key;
-        this.Value = this.value;
-        this.ControlType = this.controlType;
-    }
-}
-
-export class PepFieldClickedData {
+export interface IPepFieldClickEvent {
     key: string;
     value?: string;
-    eventWhich?: any = null;
-    otherData?: any = null;
-
-    constructor(data: Partial<PepFieldClickedData>) {
-        Object.assign(this, data);
-    }
-}
-
-// This object should be deprecated.
-export class PepFormFieldClickedData extends PepFieldClickedData {
-    Id: string;
-    ApiName: string;
-    FieldType: FIELD_TYPE;
-    IdType: string;
-    Which: any;
-    Value: any;
-    Editable: boolean;
-    OtherData: any;
-
-    constructor(id: string, apiName: string, idType: any, which: any, value: any, fieldType: FIELD_TYPE, otherData: any = null) {
-        super({key: apiName, eventWhich: which, value, otherData});
-
-        this.Id = id;
-        this.ApiName = this.key;
-        this.IdType = idType;
-        this.FieldType = fieldType;
-        this.Which = this.eventWhich;
-        this.Value = this.value;
-        this.OtherData = this.otherData;
-    }
+    eventWhich?: any;
+    otherData?: any;
 }

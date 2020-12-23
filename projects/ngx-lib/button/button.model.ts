@@ -3,16 +3,14 @@ export class PepButton {
     value?: string;
     class?: string;
     icon?: string;
-    callback?: (action: PepButtonClick) => void;
+    callback?: (action: IPepButtonClickEvent) => void;
 
     constructor(data: Partial<PepButton>) {
         Object.assign(this, data);
     }
 }
 
-export class PepButtonClick {
-    constructor(
-        public source: PepButton,
-        public event?: Event
-    ) { }
+export interface IPepButtonClickEvent {
+    source: PepButton;
+    event?: Event;
 }

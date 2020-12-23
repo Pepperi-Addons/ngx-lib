@@ -31,9 +31,9 @@
                     </span>
                 </ng-template>
                 <ng-template #otherError>
-                    <span class="body-xs" [title]="(input.value | toNumber) > this.maxValue || (input.value | toNumber) < this.minValue ?
+                    <span class="body-xs" [title]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
                             ('MESSAGES.ERROR_RANGE_IS_NOT_VALID' | translate: { min: minValue, max: maxValue }) :
-                            ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })" [innerText]="(input.value | toNumber) > this.maxValue || (input.value | toNumber) < this.minValue ?
+                            ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })" [innerText]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
                             ('MESSAGES.ERROR_RANGE_IS_NOT_VALID' | translate: { min: minValue, max: maxValue }) :
                             ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })">
                     </span>

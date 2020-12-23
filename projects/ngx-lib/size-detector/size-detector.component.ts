@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, HostListener, ElementRef, Input } from '@angular/core';
-import { LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 
-interface SizeDetectorItem {
+interface IPepSizeDetectorItem {
     id: PepScreenSizeType;
     name: string;
     css: string;
@@ -11,12 +11,12 @@ interface SizeDetectorItem {
     selector: 'pep-size-detector',
     templateUrl: './size-detector.component.html'
 })
-export class SizeDetectorComponent implements AfterViewInit {
+export class PepSizeDetectorComponent implements AfterViewInit {
 
     @Input() showScreenSize = false;
 
     prefix = 'is-';
-    sizes: Array<SizeDetectorItem> = [
+    sizes: Array<IPepSizeDetectorItem> = [
         {
             id: PepScreenSizeType.XS,
             name: 'xs',
@@ -44,7 +44,7 @@ export class SizeDetectorComponent implements AfterViewInit {
         },
     ];
 
-    constructor(private element: ElementRef, private layoutService: LayoutService) { }
+    constructor(private element: ElementRef, private layoutService: PepLayoutService) { }
 
     @HostListener('window:resize', ['$event'])
     onResize(event): void {

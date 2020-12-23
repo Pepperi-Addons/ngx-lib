@@ -4,9 +4,9 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepTextareaField } from '@pepperi-addons/ngx-lib';
-import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepTextareaField } from '@pepperi-addons/ngx-lib';
+import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 
 @Component({
     selector: 'pep-textarea',
@@ -34,7 +34,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     // @ViewChild('input') input: ElementRef;
     @ViewChild('textAreaDialogTemplate', { read: TemplateRef }) textAreaDialogTemplate: TemplateRef<any>;
@@ -46,8 +46,8 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     dialogRef: MatDialogRef<any>;
 
     constructor(
-        private dialogService: DialogService,
-        private customizationService: CustomizationService,
+        private dialogService: PepDialogService,
+        private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
     ) {
@@ -68,7 +68,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
 
         this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);

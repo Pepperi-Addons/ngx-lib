@@ -14,34 +14,19 @@ import {
 import { delay } from 'rxjs/operators';
 import {
     PepLayoutType,
-    LayoutService,
-    WindowScrollingService,
+    PepLayoutService,
+    PepWindowScrollingService,
+    PepScreenSizeType,
+    PepSessionService,
     ObjectSingleData,
     UIControl,
     UIControlField,
     FIELD_TYPE,
     ObjectsDataRow,
-    PepScreenSizeType,
-    PepFormFieldChangedData,
-    PepFormFieldClickedData,
-    SessionService
 } from '@pepperi-addons/ngx-lib';
-import { VirtualScrollComponent, ChangeEvent } from './virtual-scroll.component';
-
-export type PepListSelectionType = 'none' | 'single' | 'single-action' | 'multi';
-
-export type PepListViewType = '' | 'cards' | 'lines' | 'table' | 'map';
-
-export interface ChangeSortingEvent {
-    sortBy: string;
-    isAsc: boolean;
-}
-
-export class SelectionData {
-    selectionType: number;
-    rows: Array<any>;
-    rowTypes: Array<any>;
-}
+import { IPepFormFieldValueChangeEvent, IPepFormFieldClickEvent } from '@pepperi-addons/ngx-lib/form';
+import { PepVirtualScrollComponent } from './virtual-scroll.component';
+import { IPepListChangeEvent, IPepListSortingChangeEvent, IPepListItemClickEvent, PepListSelectionType, PepListViewType, PepSelectionData } from './list.model';
 
 @Component({
     selector: 'pep-list',
@@ -93,12 +78,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pageType = '';
     @Input() totalsRow = [];
 
-    @Output() thumbnailClick: EventEmitter<ObjectSingleData> = new EventEmitter<ObjectSingleData>();
-    @Output() fieldClick: EventEmitter<any> = new EventEmitter<PepFormFieldClickedData>();
-    @Output() menuItemClick: EventEmitter<any> = new EventEmitter<PepFormFieldClickedData>();
-    @Output() valueChange: EventEmitter<PepFormFieldChangedData> = new EventEmitter<PepFormFieldChangedData>();
-    @Output() listChange: EventEmitter<ChangeEvent> = new EventEmitter<ChangeEvent>();
-    @Output() sortingChange: EventEmitter<ChangeSortingEvent> = new EventEmitter<ChangeSortingEvent>();
+    @Output() thumbnailClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
+    @Output() fieldClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
+    @Output() menuItemClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
+    @Output() valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
+    @Output() listChange: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
+    @Output() sortingChange: EventEmitter<IPepListSortingChangeEvent> = new EventEmitter<IPepListSortingChangeEvent>();
 
     @Output() selectedItemsChange: EventEmitter<number> = new EventEmitter<number>();
     @Output() selectAllClick: EventEmitter<any> = new EventEmitter<any>();
@@ -106,7 +91,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Output() listLoad: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild(VirtualScrollComponent) virtualScroll: VirtualScrollComponent;
+    @ViewChild(PepVirtualScrollComponent) virtualScroll: PepVirtualScrollComponent;
     @ViewChild('noVirtualScrollCont') noVirtualScrollCont: ElementRef;
     @ViewChild('tableHeader') tableHeader: ElementRef;
     @ViewChild('selectAllCB') selectAllCB: any;
@@ -159,9 +144,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private element: ElementRef,
-        private layoutService: LayoutService,
-        private sessionService: SessionService,
-        private windowScrollingService: WindowScrollingService,
+        private layoutService: PepLayoutService,
+        private sessionService: PepSessionService,
+        private windowScrollingService: PepWindowScrollingService,
         private cd: ChangeDetectorRef,
         private renderer: Renderer2
     ) {
@@ -636,7 +621,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.initResizeData();
     }
 
-    onListChange(event: ChangeEvent): void {
+    onListChange(event: IPepListChangeEvent): void {
         if (this.isPrinting) {
             return;
         }
@@ -745,7 +730,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         return this.parentScroll ? this.parentScroll : window;
     }
 
-    onValueChanged(valueChange: any): void {
+    onValueChanged(valueChange: IPepFormFieldValueChangeEvent): void {
         if (this.disabled) {
             return;
         }
@@ -753,7 +738,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.valueChange.emit(valueChange);
     }
 
-    onCustomizeFieldClick(customizeFieldClickedData: PepFormFieldClickedData): void {
+    onCustomizeFieldClick(customizeFieldClickedData: IPepFormFieldClickEvent): void {
         if (this.disabled) {
             return;
         }
@@ -761,7 +746,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.fieldClick.emit(customizeFieldClickedData);
     }
 
-    onCustomizeFieldMenuClicked(customizeFieldClickedData: PepFormFieldClickedData): void {
+    onCustomizeFieldMenuClicked(customizeFieldClickedData: IPepFormFieldClickEvent): void {
         if (this.disabled) {
             return;
         }
@@ -943,7 +928,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 return;
             }
 
-            this.thumbnailClick.emit(objectSingleData);
+            this.thumbnailClick.emit({ source: objectSingleData });
         }
     }
 
@@ -1059,9 +1044,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     initVariablesFromSession(items: ObjectSingleData[]): void {
-        const selectedItemsObject = this.sessionService.getObject<Map<string, string>>(PepListComponent.SELECTED_ITEMS_STATE_KEY);
+        const selectedItemsObject: Array<any> = this.sessionService.getObject<Array<any>>(PepListComponent.SELECTED_ITEMS_STATE_KEY);
         const selectedItemsFromMap: Map<string, string> =
-            selectedItemsObject && selectedItemsObject.size > 0 ? new Map(selectedItemsObject) : null;
+            selectedItemsObject && selectedItemsObject.length > 0 ? new Map(selectedItemsObject) : null;
         if (selectedItemsFromMap != null && typeof selectedItemsFromMap.size !== 'undefined' &&
             selectedItemsFromMap.size > 0) {
             this.selectedItems = selectedItemsFromMap;
@@ -1070,9 +1055,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.selectedItems.clear();
         }
 
-        const unSelectedItemsObject = this.sessionService.getObject<Map<string, string>>(PepListComponent.UN_SELECTED_ITEMS_STATE_KEY);
+        const unSelectedItemsObject: Array<any> = this.sessionService.getObject<Array<any>>(PepListComponent.UN_SELECTED_ITEMS_STATE_KEY);
         const unSelectedItemsMap: Map<string, string> =
-            unSelectedItemsObject && unSelectedItemsObject.size > 0 ? new Map(unSelectedItemsObject) : null;
+            unSelectedItemsObject && unSelectedItemsObject.length > 0 ? new Map(unSelectedItemsObject) : null;
         if (unSelectedItemsMap != null && typeof unSelectedItemsMap.size !== 'undefined' &&
         unSelectedItemsMap.size > 0) {
             this.unSelectedItems = unSelectedItemsMap;
@@ -1253,7 +1238,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.sessionService.setObject(PepListComponent.ALL_SELECTED_STATE_KEY, this.isAllSelected);
     }
 
-    updateListItems(items: ObjectSingleData[], event: ChangeEvent): void {
+    updateListItems(items: ObjectSingleData[], event: IPepListChangeEvent): void {
         if (this.useVirtualScroll) {
             // Clean array
             if (
@@ -1307,8 +1292,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    getSelectedItemsData(isForEdit: boolean = false): SelectionData {
-        const res: SelectionData = new SelectionData();
+    getSelectedItemsData(isForEdit: boolean = false): PepSelectionData {
+        const res = new PepSelectionData();
 
         if (this.selectionTypeForActions === 'single') {
             const tmp = this.selectedItemId.split(this.SEPARATOR);

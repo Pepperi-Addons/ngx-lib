@@ -1,6 +1,6 @@
 <pep-dialog [showClose]="data?.showClose" [showHeader]="data?.showHeader" [showFooter]="data?.showFooter"
     [title]="data?.title">
-    <div pep-dialog-content [innerHtml]="data?.content | safeHtml"></div>
+    <div pep-dialog-content [innerHtml]="data?.content | pepSafeHtml"></div>
     <div pep-dialog-actions class="spacing-element-negative">
         <ng-container [ngSwitch]="data?.type">
             <ng-container *ngSwitchCase="'close'">

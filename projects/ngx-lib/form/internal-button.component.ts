@@ -1,10 +1,10 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy, Renderer2, ElementRef, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepFieldClickedData,
+import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, IPepFieldClickEvent,
     PepInternalButtonFieldType,
     PepInternalButtonField} from '@pepperi-addons/ngx-lib';
-import { PepButton, PepButtonClick } from '@pepperi-addons/ngx-lib/button';
+import { PepButton, IPepButtonClickEvent } from '@pepperi-addons/ngx-lib/button';
 import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
@@ -32,18 +32,18 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     standAlone = false;
     createNewReference = false;
     referenceButtons: Array<PepButton> = [
-        { key: 'action', callback: (action: PepButtonClick) => this.onButtonClicked(action.event) },
-        { key: 'delete', callback: (action: PepButtonClick) => this.remove(), class: 'caution', icon: pepIconSystemBin.name }
+        { key: 'action', callback: (action: IPepButtonClickEvent) => this.onButtonClicked(action.event) },
+        { key: 'delete', callback: (action: IPepButtonClickEvent) => this.remove(), class: 'caution', icon: pepIconSystemBin.name }
     ];
 
     constructor(
-        private customizationService: CustomizationService,
+        private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef) { }
 
@@ -61,7 +61,7 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
             this.formattedValue = this.formattedValue || this.value;
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
     }
 
@@ -78,7 +78,7 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
         }
     }
 
-    // groupButtonClicked(action: PepButtonClick): void {
+    // groupButtonClicked(action: IPepButtonClickEvent): void {
     //     if (action.source.key === 'action') {
     //         this.onButtonClicked(action.event);
     //     } else if (action.source.key === 'delete') {

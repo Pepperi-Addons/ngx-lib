@@ -26,7 +26,7 @@
                         <input type="decimalNumber" inputmode="decimal" matInput #QSInput name="{{ key }}"
                             class="body-lg ellipsis" title="{{ formattedValue }}" autocomplete="off" [id]="key"
                             [formControlName]="key"
-                            [value]="isFocus ? (value | quantitySelectorNumber: alowDecimal) : formattedValue"
+                            [value]="isFocus ? (value | pepQuantitySelectorNumber: alowDecimal) : formattedValue"
                             [disabled]="disabled" (keypress)="onKeyPress($event)"
                             (click)="$event.target.setSelectionRange(0, 999)" (blur)="onBlur($event)"
                             (focus)="onFocus($event)" />
@@ -76,7 +76,7 @@
                         <input type="decimalNumber" inputmode="decimal" matInput #QSInput name="{{ key }}"
                             title="{{ formattedValue }}" class="body-sm ellipsis" autocomplete="off" [id]="key"
                             [formControlName]="key"
-                            [value]="isFocus ? (value | quantitySelectorNumber: alowDecimal) : formattedValue"
+                            [value]="isFocus ? (value | pepQuantitySelectorNumber: alowDecimal) : formattedValue"
                             [disabled]="disabled" (keypress)="onKeyPress($event)"
                             (click)="onMatrixClick($event); $event.target.setSelectionRange(0, 999)"
                             (blur)="onMatrixBlur($event)" (focus)="onMatrixMouseEnter($event); onFocus($event)"
@@ -100,7 +100,8 @@
             </ng-container>
 
             <ng-container *ngIf="type == 'button'">
-                <ng-container *ngIf="(value | toNumber) == 0; then regularBlock; else withBadgeBlock"></ng-container>
+                <ng-container *ngIf="(value | pepToNumber) == 0; then regularBlock; else withBadgeBlock">
+                </ng-container>
                 <ng-template #regularBlock>
                     <button mat-button [disabled]="disabled" class="pep-button {{ styleClass }} ellipsis" [id]="key"
                         name="{{ key }}"

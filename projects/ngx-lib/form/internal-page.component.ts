@@ -13,25 +13,21 @@ import {
     ChangeDetectorRef
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { InternalPageService } from './internal-page.service';
+import { PepInternalPageService } from './internal-page.service';
 
 import {
     PepLayoutType,
     UIControl,
     KeyValuePair,
-    CustomizationService,
+    PepCustomizationService,
     ObjectSingleData,
     UIControlField,
     ObjectsData,
-    FIELD_TYPE,
-    PepFormFieldClickedData,
-    PepFormFieldChangedData
+    FIELD_TYPE
 } from '@pepperi-addons/ngx-lib';
-import {
-    PepInternalListComponent,
-    PepListViewType
-} from './internal-list.component';
-import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { PepInternalListComponent, PepListViewType } from './internal-list.component';
+import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.component';
+import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -39,7 +35,7 @@ import { debounceTime } from 'rxjs/operators';
     selector: 'pep-internal-page',
     templateUrl: './internal-page.component.html',
     styleUrls: ['./internal-page.component.scss'],
-    providers: [InternalPageService],
+    providers: [PepInternalPageService],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PepInternalPageComponent implements OnInit, OnDestroy {
@@ -51,7 +47,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     @Input() field: any;
     @Input() layoutType: PepLayoutType = 'form';
     @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
-    @Output() childClick: EventEmitter<PepFormFieldClickedData> = new EventEmitter<PepFormFieldClickedData>();
+    @Output() childClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
 
     @ViewChild('my1mm') my1mm: ElementRef;
     @ViewChild('mainViewCont') mainViewCont: ElementRef;
@@ -94,9 +90,9 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
 
     constructor(
         protected fb: FormBuilder,
-        private dialogService: DialogService,
-        private internalPageService: InternalPageService,
-        public customizationService: CustomizationService,
+        private dialogService: PepDialogService,
+        private internalPageService: PepInternalPageService,
+        public customizationService: PepCustomizationService,
         private elementRef: ElementRef,
         private changeDetectorRef: ChangeDetectorRef
     ) {}
@@ -466,33 +462,33 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     }
 
     onCustomizeObjectChanged(
-        customizeObjectChangedData: PepFormFieldChangedData
+        customizeObjectChangedData: IPepFormFieldValueChangeEvent
     ): void {
         let handledEvent = false;
         const boundSetValueCallback = this.setValueCallback.bind(this); // .bind() to have this in the bound function.
 
-        // For the new custom form, the plus and minus events transform in the PepFormFieldChangedData
-        if (customizeObjectChangedData.ControlType === 'qs') {
-            if (customizeObjectChangedData.Value === '+') {
+        // For the new custom form, the plus and minus events transform in the IPepFormFieldValueChangeEvent
+        if (customizeObjectChangedData.controlType === 'qs') {
+            if (customizeObjectChangedData.value === '+') {
                 handledEvent = true;
                 this.internalPageService.childPlusClick(
-                    customizeObjectChangedData.Id,
-                    customizeObjectChangedData.ApiName,
+                    customizeObjectChangedData.id,
+                    customizeObjectChangedData.key,
                     (res: any) => {
                         boundSetValueCallback(
-                            customizeObjectChangedData.Id,
+                            customizeObjectChangedData.id,
                             res
                         );
                     }
                 );
-            } else if (customizeObjectChangedData.Value === '-') {
+            } else if (customizeObjectChangedData.value === '-') {
                 handledEvent = true;
                 this.internalPageService.childMinusClick(
-                    customizeObjectChangedData.Id,
-                    customizeObjectChangedData.ApiName,
+                    customizeObjectChangedData.id,
+                    customizeObjectChangedData.key,
                     (res: any) => {
                         boundSetValueCallback(
-                            customizeObjectChangedData.Id,
+                            customizeObjectChangedData.id,
                             res
                         );
                     }
@@ -502,17 +498,17 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
 
         if (!handledEvent) {
             this.internalPageService.childValueChanged(
-                customizeObjectChangedData.Id,
-                customizeObjectChangedData.ApiName,
-                customizeObjectChangedData.Value,
+                customizeObjectChangedData.id,
+                customizeObjectChangedData.key,
+                customizeObjectChangedData.value,
                 (res: any) => {
-                    boundSetValueCallback(customizeObjectChangedData.Id, res);
+                    boundSetValueCallback(customizeObjectChangedData.id, res);
                 }
             );
         }
     }
 
-    onCustomizeFieldClick(fieldClickEvent: PepFormFieldClickedData): void {
+    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent): void {
         this.childClick.emit(fieldClickEvent);
     }
 }

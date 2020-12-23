@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, Renderer2, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FileService, CustomizationService, PepLayoutType, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepFieldClickedData, PepAttachmentField } from '@pepperi-addons/ngx-lib';
+import { PepFileService, PepCustomizationService, PepLayoutType, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, IPepFieldClickEvent, PepAttachmentField } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-attachment',
@@ -26,8 +26,8 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
-    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     fieldHeight = '';
     standAlone = false;
@@ -37,10 +37,10 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         'application/pdf,application/json,text/csv,text/csv-schema,application/msword,application/vnd.ms-excel,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/bmp,image/jpg, image/jpeg, image/png, image/tif, image/tiff, txt, json';
 
     constructor(
-        private customizationService: CustomizationService,
+        private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         public element: ElementRef,
-        private fileService: FileService) { }
+        private fileService: PepFileService) { }
 
     ngOnDestroy(): void {
         if (this.elementClick) {
@@ -66,7 +66,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
 
         this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
@@ -86,7 +86,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         this.valueChange.emit({ key: this.key, value, controlType: this.controlType });
     }
 
-    onFileClicked(event: PepFieldClickedData): void {
+    onFileClicked(event: IPepFieldClickEvent): void {
         if (this.dataURI != null) {
             const fileStrArr = this.dataURI.fileStr.split(';');
             if (fileStrArr.length === 2) {

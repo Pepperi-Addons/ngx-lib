@@ -680,10 +680,10 @@ export type PepIconType =
   | 'view_line'
   | 'view_matrix'
   | 'view_table';
-export interface PepIconData {
+export interface IPepIconData {
   name: PepIconType;
   data: string;
 }
 export type IconNameSubset<
-  T extends Readonly<PepIconData[]>
+  T extends Readonly<IPepIconData[]>
 > = T[number]['name'];

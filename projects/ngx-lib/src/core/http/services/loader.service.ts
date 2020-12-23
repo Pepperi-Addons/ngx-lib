@@ -5,7 +5,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class LoaderService {
+export class PepLoaderService {
     counter = 0;
     private showLoaderSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 

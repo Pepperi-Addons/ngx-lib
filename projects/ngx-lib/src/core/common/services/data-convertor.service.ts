@@ -1,14 +1,58 @@
 import { Injectable } from '@angular/core';
 import {
-    FieldLayout, PepRowData, ObjectSingleData, ObjectsDataRow, UIControl,
-    ObjectsData, PepFieldData, UIControlField, ObjectsDataRowCell
-} from '../model/api.model';
-import { Guid } from '../model/utilities.model';
+    FieldLayout, ObjectSingleData, ObjectsDataRow, UIControl,
+    ObjectsData, UIControlField, ObjectsDataRowCell, FIELD_TYPE, X_ALIGNMENT_TYPE
+} from '../model/wapi.model';
+import { PepGuid } from '../model/utilities.model';
+
+export class PepFieldData {
+    ApiName: string;
+    Enabled?: boolean;
+    Value: string;
+    FormattedValue?: string;
+    FieldType: FIELD_TYPE;
+    ReadOnly?: boolean;
+    ColumnWidth: number;
+    ColumnWidthType?: number;
+    XAlignment: X_ALIGNMENT_TYPE;
+    Title: string;
+    AdditionalValue?: string;
+    OptionalValues?: any;
+
+    constructor(
+        options: {
+            ApiName?: string;
+            Enabled?: boolean;
+            Value?: string;
+            FormattedValue?: string;
+            FieldType?: FIELD_TYPE;
+            ReadOnly?: boolean;
+            ColumnWidth?: number;
+            ColumnWidthType?: number;
+            XAlignment?: X_ALIGNMENT_TYPE;
+            Title?: string;
+        } = {}
+    ) {
+        this.ApiName = options.ApiName;
+        this.Enabled = !!options.Enabled;
+        this.Value = options.Value;
+        this.FormattedValue = options.FormattedValue || '';
+        this.FieldType = options.FieldType;
+        this.ReadOnly = !!options.ReadOnly;
+        this.ColumnWidth = options.ColumnWidth;
+        this.ColumnWidthType = options.ColumnWidthType;
+        this.XAlignment = options.XAlignment || X_ALIGNMENT_TYPE.Left;
+        this.Title = options.Title || '';
+    }
+}
+export class PepRowData {
+    Fields: PepFieldData[];
+}
 
 @Injectable({
     providedIn: 'root'
 })
-export class DataConvertorService {
+export class PepDataConvertorService {
     constructor() {
     }
 
@@ -21,7 +65,7 @@ export class DataConvertorService {
         uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
         rowData.Fields = [];
         rowData.Type = 0;
-        rowData.UID = Guid.newGuid();
+        rowData.UID = PepGuid.newGuid();
         formData.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
         objectsData.Data = rowData;
         objectsData.UIControl = uiControl;
@@ -44,7 +88,7 @@ export class DataConvertorService {
                 const rowData = new ObjectsDataRow();
                 rowData.Fields = [];
                 rowData.Type = 0;
-                rowData.UID = rowUUID ? rowUUID : Guid.newGuid();
+                rowData.UID = rowUUID ? rowUUID : PepGuid.newGuid();
                 row.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
                 rows.push(rowData);
             });

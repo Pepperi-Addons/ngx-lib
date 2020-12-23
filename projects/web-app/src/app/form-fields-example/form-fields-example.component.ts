@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutService, PepFieldClickedData, PepFieldValueChangedData, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
-import { PepButtonClick, PepButton } from '@pepperi-addons/ngx-lib/button';
+import { PepLayoutService, IPepFieldClickEvent, IPepFieldValueChangeEvent, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
-import { PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
+import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
 
 @Component({
     templateUrl: './form-fields-example.component.html',
@@ -25,7 +24,7 @@ export class FormFieldsExampleComponent implements OnInit {
     searchAutoCompleteValues = [];
 
     constructor(
-        public layoutService: LayoutService
+        public layoutService: PepLayoutService
     ) { 
         this.minDateValue = new Date('1-1-2019').getTime();
         this.maxDateValue = new Date('1-1-2021').getTime();
@@ -43,10 +42,10 @@ export class FormFieldsExampleComponent implements OnInit {
 
     getMenuItems(): Array<PepMenuItem> {
         const menuItems: Array<PepMenuItem> = [
-            { key: 'test1', title: 'test 1'},
-            { key: 'test2', title: 'test 2', disabled: true },
+            { key: 'test1', text: 'test 1'},
+            { key: 'test2', text: 'test 2', disabled: true },
             { key: 'sep', type: 'splitter' },
-            { key: 'test3', title: 'test 3'}];
+            { key: 'test3', text: 'test 3'}];
 
         return menuItems;
     }
@@ -59,7 +58,7 @@ export class FormFieldsExampleComponent implements OnInit {
         this.menuItems = this.menuItems === null ? this.getMenuItems() : null;
     }
 
-    onMenuItemClicked(action: PepMenuItemClick): void {
+    onMenuItemClicked(action: IPepMenuItemClickEvent): void {
         alert(action.source.key);
     }
 
@@ -67,11 +66,11 @@ export class FormFieldsExampleComponent implements OnInit {
         alert('menu clicked');
     }
 
-    onValueChanged(event: PepFieldValueChangedData) {
+    onValueChanged(event: IPepFieldValueChangeEvent) {
         alert(`${event.key}: value was changed to ${event.value}`);
     }
 
-    elementClicked(event: PepFieldClickedData) {
+    elementClicked(event: IPepFieldClickEvent) {
         alert(`${event.key}: was clicked`);
     }
 }

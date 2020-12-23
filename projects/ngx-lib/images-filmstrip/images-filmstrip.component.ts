@@ -7,16 +7,16 @@ import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Gallery, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsPosition, GalleryItem, ImageItem, GalleryRef } from '@ngx-gallery/core';
-import { CustomizationService, PepLayoutType, LayoutService, FileService,
+import { PepCustomizationService, PepLayoutType, PepLayoutService, PepFileService,
     PepHorizontalAlignment, DEFAULT_HORIZONTAL_ALIGNMENT, PepImagesField
 } from '@pepperi-addons/ngx-lib';
-import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconArrowRightAlt } from '@pepperi-addons/ngx-lib/icon';
 import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
 
 import 'hammerjs';
 
-export interface PepImagesFilmstripDialogData {
+interface IPepImagesFilmstripDialogData {
     currIndex: number;
     key: string;
     value: string;
@@ -128,16 +128,16 @@ export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDes
     dialogGalleryRef: GalleryRef;
 
     constructor(
-        private customizationService: CustomizationService,
-        private dialogService: DialogService,
-        private layoutService: LayoutService,
-        private fileService: FileService,
+        private customizationService: PepCustomizationService,
+        private dialogService: PepDialogService,
+        private layoutService: PepLayoutService,
+        private fileService: PepFileService,
         private gallery: Gallery,
         private renderer: Renderer2,
         private element: ElementRef,
         private cd: ChangeDetectorRef,
         @Optional() private dialogRef: MatDialogRef<PepImagesFilmstripComponent>,
-        @Optional() @Inject(MAT_DIALOG_DATA) private data: PepImagesFilmstripDialogData
+        @Optional() @Inject(MAT_DIALOG_DATA) private data: IPepImagesFilmstripDialogData
     ) {
         // If data exist copy all data properties into this.
         if (dialogRef && data) {
@@ -190,7 +190,7 @@ export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDes
                 });
                 this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-                this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+                this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
             }
             this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
         }

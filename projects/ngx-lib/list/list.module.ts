@@ -25,7 +25,6 @@ import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepBreadCrumbsModule } from '@pepperi-addons/ngx-lib/bread-crumbs';
 
-import { VirtualScrollModule } from './virtual-scroll.component';
 
 import { PepListComponent } from './list.component';
 import { PepListActionsComponent } from './list-actions.component';
@@ -33,6 +32,7 @@ import { PepListChooserComponent } from './list-chooser.component';
 import { PepListCarouselComponent } from './list-carousel.component';
 import { PepListTotalComponent } from './list-total.component';
 
+import { PepVirtualScrollComponent } from './virtual-scroll.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -50,8 +50,7 @@ import { PepListTotalComponent } from './list-total.component';
         PepIconModule,
         PepFormModule,
         PepMenuModule,
-        PepBreadCrumbsModule,
-        VirtualScrollModule
+        PepBreadCrumbsModule
     ],
     exports: [
         PepListComponent,
@@ -61,6 +60,7 @@ import { PepListTotalComponent } from './list-total.component';
         PepListTotalComponent
     ],
     declarations: [
+        PepVirtualScrollComponent,
         PepListComponent,
         PepListActionsComponent,
         PepListCarouselComponent,

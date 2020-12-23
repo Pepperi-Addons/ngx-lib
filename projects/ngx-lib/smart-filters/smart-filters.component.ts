@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, HostListener, ElementRef, Input, ChangeDetectionStrategy } from '@angular/core';
-import { LayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { PepSmartFilterType, PepSmartFilterData } from './smart-filters.model';
 
-export class SmartFilterBase extends PepSmartFilterData {
+export class PepSmartFilterBase extends PepSmartFilterData {
     isOpen = false;
     hasFilter = false;
 
@@ -37,25 +37,25 @@ export class SmartFilterBase extends PepSmartFilterData {
     styleUrls: ['./smart-filters.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SmartFiltersComponent  {
+export class PepSmartFiltersComponent  {
 
     private _data: Array<PepSmartFilterData> = [];
     @Input()
     set data(value: Array<PepSmartFilterData>) {
         this._data = value;
         this._data?.forEach((filter: PepSmartFilterData) => {
-            this.filters.push(new SmartFilterBase(filter));
+            this.filters.push(new PepSmartFilterBase(filter));
         });
     }
     get data(): Array<PepSmartFilterData> {
         return this._data;
     }
 
-    filters: Array<SmartFilterBase> = [];
+    filters: Array<PepSmartFilterBase> = [];
 
     expansionPanelHeaderHeight = '*';
 
-    constructor(private element: ElementRef, private layoutService: LayoutService) {
+    constructor(private element: ElementRef, private layoutService: PepLayoutService) {
 
 
     }

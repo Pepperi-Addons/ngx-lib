@@ -1,5 +1,5 @@
 
-export class Guid {
+export class PepGuid {
     private static pad4(num: number): string {
         let ret: string = num.toString(16);
         while (ret.length < 4) {
@@ -36,97 +36,4 @@ export class Guid {
                 this.random4() + '-' + this.random4() + this.random4() + this.random4();
         }
     }
-}
-
-export class JsonFilter {
-    ExpressionId: number;
-    ComplexId: number;
-    ApiName: string;
-    Operation: string;
-    Values: string[];
-    constructor() {
-        this.ExpressionId = 1;
-        this.ApiName = '';
-        this.Operation = '';
-        this.Values = [];
-    }
-
-    initFromObj(obj: JsonFilter): void {
-        if (obj) {
-            this.ExpressionId = obj.ExpressionId;
-            this.ApiName = obj.ApiName;
-            this.Operation = obj.Operation;
-
-            if (this.Values !== obj.Values) {
-                this.Values = [];
-                if (obj.Values) {
-                    obj.Values.forEach((value) => this.Values.push(value));
-                }
-            }
-        }
-    }
-
-    Valid(): boolean {
-        return this.Operation !== '' && this.ApiName !== '';
-    }
-}
-
-export class JsonFilters {
-    leftNode: string;
-    rightNode: string;
-    operator: string;
-    ComplexId: number;
-
-    constructor(left = '', right = '', operator = 'AND', complexId = 2) {
-        this.leftNode = left;
-        this.rightNode = right;
-        this.operator = operator;
-        this.ComplexId = complexId;
-    }
-
-    toString(): string {
-        let retVal = '';
-        if (this.leftNode !== '' && this.rightNode === '') {
-            retVal = this.leftNode;
-        } else if (this.leftNode === '' && this.rightNode !== '') {
-            retVal = this.rightNode;
-        } else if (this.leftNode !== '' && this.rightNode !== '') {
-            retVal = '{ "ComplexId":' + this.ComplexId + ',';
-            retVal += ' "Operation":"' + this.operator + '",';
-            retVal += ' "LeftNode": ' + this.leftNode + ',';
-            retVal += ' "RightNode": ' + this.rightNode + '}';
-        }
-        return retVal;
-    }
-}
-
-export enum DATE_RANGE {
-    None = 0,
-    InTheLast = 1,
-    Today = 2,
-    ThisWeek = 3,
-    ThisMonth = 4,
-    /*Before = 5, After = 6,*/ Between = 5,
-    DueIn = 6,
-    On = 7,
-    NotInTheLast = 8,
-    NotDueIn = 9,
-    IsEmpty = 10,
-    IsNotEmpty = 11,
-}
-
-export enum DATE_PERIOD {
-    None = 0,
-    Days = 1,
-    Weeks = 2,
-    Months = 3,
-    Years = 4,
-}
-
-export enum DATE_RANGE_VIEWTYPE {
-    None = 0,
-    Period = 1,
-    OneCalendar = 2,
-    TwoCalendars = 3,
-    NoCalendars = 4,
 }

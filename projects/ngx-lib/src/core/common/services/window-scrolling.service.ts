@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root',
 })
-export class WindowScrollingService {
+export class PepWindowScrollingService {
 
     // Inject a STYLE element for overrides the scroll behavior, this way we can add | remove it in order to the behavior.
     private styleTag: HTMLStyleElement;

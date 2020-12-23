@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, Renderer2, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { CustomizationService, PepLayoutType, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepCheckboxFieldType, PepCheckboxField } from '@pepperi-addons/ngx-lib';
+import { PepCustomizationService, PepLayoutType, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepCheckboxFieldType, PepCheckboxField } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-checkbox',
@@ -29,7 +29,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     standAlone = false;
 
@@ -38,7 +38,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
 
     constructor(
         private renderer: Renderer2,
-        private customizationService: CustomizationService,
+        private customizationService: PepCustomizationService,
         public translate: TranslateService,
         private element: ElementRef
     ) { }
@@ -57,7 +57,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
 
         if (this.type === 'booleanText') {

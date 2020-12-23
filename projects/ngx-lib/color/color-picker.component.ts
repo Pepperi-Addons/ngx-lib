@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { hex2hsl, hslString2hsl, rgbString2hsl, HslColor, findClosestAccessibleColor, hsl2hex, convertHslToStringHsl } from './color-utils';
+import { hex2hsl, hslString2hsl, rgbString2hsl, IPepHslColor, findClosestAccessibleColor, hsl2hex, convertHslToStringHsl } from './color-utils';
 import { PepColorType } from './color.model';
 
 enum PepContrastRatioType {
@@ -8,7 +8,7 @@ enum PepContrastRatioType {
     AAA = 7
 }
 
-interface PepColorPickerDialogData {
+interface IPepColorPickerDialogData {
     value: string;
     type: PepColorType;
     showAAComplient: boolean;
@@ -28,7 +28,7 @@ export class PepColorPickerComponent implements OnInit {
 
     constructor(
         private dialogRef: MatDialogRef<PepColorPickerComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: PepColorPickerDialogData
+        @Inject(MAT_DIALOG_DATA) public data: IPepColorPickerDialogData
     ) {
         this.data.type = data ? data.type : 'any';
         this.data.showAAComplient = data && data.showAAComplient === undefined ? true : (data ? data.showAAComplient : false);
@@ -109,7 +109,7 @@ export class PepColorPickerComponent implements OnInit {
         this.setCurrentHueInCss();
     }
 
-    convertColorToValueString(hslColor: HslColor): void {
+    convertColorToValueString(hslColor: IPepHslColor): void {
         // Regular hue
         if (hslColor.h >= this.currentHueMin && hslColor.h <= this.currentHueMax) {
             this.currentHue = hslColor.h;

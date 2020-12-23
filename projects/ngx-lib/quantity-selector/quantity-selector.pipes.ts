@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({ name: 'quantitySelectorNumber' })
-export class QuantitySelectorNumber implements PipeTransform {
+@Pipe({ name: 'pepQuantitySelectorNumber' })
+export class PepQuantitySelectorNumberPipe implements PipeTransform {
 
     transform(value: string, allowDecimal: boolean): string {
 

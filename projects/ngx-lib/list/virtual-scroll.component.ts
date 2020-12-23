@@ -1,21 +1,13 @@
 import { Component, ContentChild, ElementRef, EventEmitter, Input, NgModule, NgZone, OnChanges,
     OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
+import { IPepListChangeEvent } from './list.model';
 
 import * as tween from '@tweenjs/tween.js';
+
 declare var _: any;
 
-export interface ChangeEvent {
-    start?: number;
-    end?: number;
-    fromIndex?: number;
-    toIndex?: number;
-    addAtStart?: boolean;
-    calculatedChildHeight?: number;
-}
-
 @Component({
-    selector: 'virtual-scroll,[virtualScroll]',
-    exportAs: 'virtualScroll',
+    selector: 'pep-virtual-scroll',
     template: `
         <div class="total-padding" #shim></div>
         <div class="scrollable-content" #content>
@@ -55,7 +47,7 @@ export interface ChangeEvent {
   `
     ]
 })
-export class VirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
+export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
     //@Input()
     //items: any[] = [];
 
@@ -108,16 +100,16 @@ export class VirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
     //viewPortItems: any[];
 
     @Output()
-    change: EventEmitter<ChangeEvent> = new EventEmitter<ChangeEvent>();
+    change: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
 
     @Output()
     load: EventEmitter<void> = new EventEmitter<void>();
 
     @Output()
-    start: EventEmitter<ChangeEvent> = new EventEmitter<ChangeEvent>();
+    start: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
 
     @Output()
-    end: EventEmitter<ChangeEvent> = new EventEmitter<ChangeEvent>();
+    end: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
 
     @ViewChild('content', { read: ElementRef })
     contentElementRef: ElementRef;
@@ -473,9 +465,3 @@ export class VirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 }
-
-@NgModule({
-    exports: [VirtualScrollComponent],
-    declarations: [VirtualScrollComponent]
-})
-export class VirtualScrollModule { }

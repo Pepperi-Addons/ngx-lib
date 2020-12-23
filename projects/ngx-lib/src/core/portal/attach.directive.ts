@@ -1,14 +1,14 @@
 import {Directive, OnInit, OnDestroy, Input, TemplateRef} from '@angular/core';
-import {PortalService} from './portal.service';
+import {PepPortalService} from './portal.service';
 
 @Directive({
     selector: '[pepAttach]',
 })
-export class AttachDirective implements OnInit, OnDestroy {
+export class PepAttachDirective implements OnInit, OnDestroy {
     @Input('pepAttach') targetName: string;
 
     constructor(
-        private portalService: PortalService,
+        private portalService: PepPortalService,
         private templateRef: TemplateRef<any>
     ) {}
 

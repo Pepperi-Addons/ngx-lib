@@ -11,7 +11,7 @@ import { catchError, retry } from 'rxjs/operators';
 // import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
-export class ErrorInterceptor implements HttpInterceptor {
+export class PepErrorInterceptor implements HttpInterceptor {
     constructor(
         // private toastr: ToastrService
     ) {}

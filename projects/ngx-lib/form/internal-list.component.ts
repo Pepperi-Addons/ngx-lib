@@ -14,15 +14,14 @@ import {
 import { delay } from 'rxjs/operators';
 import {
     PepLayoutType,
-    LayoutService,
+    PepLayoutService,
     ObjectSingleData,
     UIControl,
     UIControlField,
     FIELD_TYPE,
-    ObjectsDataRow,
-    PepFormFieldChangedData,
-    PepFormFieldClickedData
+    ObjectsDataRow
 } from '@pepperi-addons/ngx-lib';
+import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.component';
 
 export type PepListViewType = 'cards' | 'lines' | 'table';
 
@@ -56,10 +55,9 @@ export class PepInternalListComponent
     @Input() pageType = '';
     @Input() totalsRow = [];
 
-    @Output() thumbnailClick: EventEmitter<ObjectSingleData> = new EventEmitter<ObjectSingleData>();
-    @Output() fieldClick: EventEmitter<any> = new EventEmitter<PepFormFieldClickedData>();
-    @Output() menuItemClick: EventEmitter<any> = new EventEmitter<PepFormFieldClickedData>();
-    @Output() valueChange: EventEmitter<PepFormFieldChangedData> = new EventEmitter<PepFormFieldChangedData>();
+    @Output() fieldClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
+    @Output() menuItemClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
+    @Output() valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
 
     @Output() listLoad: EventEmitter<any> = new EventEmitter<any>();
 
@@ -106,7 +104,7 @@ export class PepInternalListComponent
 
     constructor(
         private element: ElementRef,
-        private layoutService: LayoutService,
+        private layoutService: PepLayoutService,
         private cd: ChangeDetectorRef,
         private renderer: Renderer2
     ) {
@@ -138,10 +136,6 @@ export class PepInternalListComponent
 
         if (this.menuItemClick) {
             this.menuItemClick.unsubscribe();
-        }
-
-        if (this.thumbnailClick) {
-            this.thumbnailClick.unsubscribe();
         }
     }
 
@@ -462,7 +456,7 @@ export class PepInternalListComponent
         return this.parentScroll ? this.parentScroll : window;
     }
 
-    onValueChanged(valueChange: any): void {
+    onValueChanged(valueChange: IPepFormFieldValueChangeEvent): void {
         if (this.disabled) {
             return;
         }
@@ -470,7 +464,7 @@ export class PepInternalListComponent
         this.valueChange.emit(valueChange);
     }
 
-    onCustomizeFieldClick(customizeFieldClickedData: PepFormFieldClickedData): void {
+    onCustomizeFieldClick(customizeFieldClickedData: IPepFormFieldClickEvent): void {
         if (this.disabled) {
             return;
         }
@@ -478,7 +472,7 @@ export class PepInternalListComponent
         this.fieldClick.emit(customizeFieldClickedData);
     }
 
-    onCustomizeFieldMenuClicked(customizeFieldClickedData: PepFormFieldClickedData): void {
+    onCustomizeFieldMenuClicked(customizeFieldClickedData: IPepFormFieldClickEvent): void {
         if (this.disabled) {
             return;
         }
@@ -514,8 +508,6 @@ export class PepInternalListComponent
             if (this.disabled) {
                 return;
             }
-
-            this.thumbnailClick.emit(objectSingleData);
         }
     }
 

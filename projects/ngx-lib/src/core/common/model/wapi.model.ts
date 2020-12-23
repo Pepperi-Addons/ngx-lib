@@ -240,52 +240,7 @@ export class SmartSearchResponse {
     SmartSearchData: SmartSearchValues;
 }
 
-export interface KeyValuePair<T> {
+export class KeyValuePair<T> {
     Key: string;
     Value: T;
-}
-
-export class PepFieldData {
-    ApiName: string;
-    Enabled?: boolean;
-    Value: string;
-    FormattedValue?: string;
-    FieldType: FIELD_TYPE;
-    ReadOnly?: boolean;
-    ColumnWidth: number;
-    ColumnWidthType?: number;
-    XAlignment: X_ALIGNMENT_TYPE;
-    Title: string;
-    AdditionalValue?: string;
-    OptionalValues?: any;
-
-    constructor(
-        options: {
-            ApiName?: string;
-            Enabled?: boolean;
-            Value?: string;
-            FormattedValue?: string;
-            FieldType?: FIELD_TYPE;
-            ReadOnly?: boolean;
-            ColumnWidth?: number;
-            ColumnWidthType?: number;
-            XAlignment?: X_ALIGNMENT_TYPE;
-            Title?: string;
-        } = {}
-    ) {
-        this.ApiName = options.ApiName;
-        this.Enabled = !!options.Enabled;
-        this.Value = options.Value;
-        this.FormattedValue = options.FormattedValue || '';
-        this.FieldType = options.FieldType;
-        this.ReadOnly = !!options.ReadOnly;
-        this.ColumnWidth = options.ColumnWidth;
-        this.ColumnWidthType = options.ColumnWidthType;
-        this.XAlignment = options.XAlignment || X_ALIGNMENT_TYPE.Left;
-        this.Title = options.Title || '';
-    }
-}
-
-export class PepRowData {
-    Fields: PepFieldData[];
 }

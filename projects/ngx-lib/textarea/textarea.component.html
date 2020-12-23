@@ -17,7 +17,7 @@
                 </textarea>
                 <div *ngIf="readonly" class="body-sm disable-text-div" title="{{ value }}"
                     [ngStyle]="{ color: 'textColor', 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
-                    [innerHtml]="value | safeHtml" [style.height]="fieldHeight">
+                    [innerHtml]="value | pepSafeHtml" [style.height]="fieldHeight">
                 </div>
                 <!-- <pep-textbox-icon *ngIf="xAlignment == 'right'" matPrefix [value]="value" [label]="label" [type]="controlType" [disabled]="disabled"
                     [ngClass]="{ 'card-one-row-icon': layoutType === 'card' && rowSpan === 1 }" (iconClick)="openDialog()">

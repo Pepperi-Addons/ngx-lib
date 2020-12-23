@@ -21,7 +21,7 @@ import {
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
-import { FilesUploaderComponent } from './files-uploader.component';
+import { PepFilesUploaderComponent } from './files-uploader.component';
 
 @NgModule({
     imports: [
@@ -41,8 +41,8 @@ import { FilesUploaderComponent } from './files-uploader.component';
         PepIconModule,
         PepDialogModule
     ],
-    exports: [FilesUploaderComponent],
-    declarations: [FilesUploaderComponent],
+    exports: [PepFilesUploaderComponent],
+    declarations: [PepFilesUploaderComponent],
 })
 export class PepFilesUploaderModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

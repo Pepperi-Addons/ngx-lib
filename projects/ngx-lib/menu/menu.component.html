@@ -1,43 +1,50 @@
 <div class="menu-container" dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
+
     <ng-container *ngIf="showAnimation then animationTemplate else regularTemplate">
     </ng-container>
     <ng-template #animationTemplate>
-        <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-            pepRtlDirection [matMenuTriggerFor]="menu.childMenu" pepMenuBlur [@slideInOut]="state"
+        <button mat-button class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+            [ngClass]="{ 'icon-button': !text || screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS  }"
+            pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [@slideInOut]="state"
             (@slideInOut.done)="animationDone()" (@slideInOut.start)="animationStart()"
-            (menuClick)="onMenuClicked($event)">
-            <ng-container *ngTemplateOutlet="itemTemplate; context: { itemIconName: iconName, itemTitle: title }">
+            [matMenuTriggerFor]="menu.childMenu">
+            <ng-container *ngTemplateOutlet="triggerTemplate">
             </ng-container>
         </button>
+        <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem"
+            (menuItemClick)="onMenuItemClicked($event)">
+        </pep-menu-item>
     </ng-template>
     <ng-template #regularTemplate>
         <ng-container *ngIf="items then menuTemplate else buttonTemplate"></ng-container>
         <ng-template #menuTemplate>
-            <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-                pepRtlDirection [matMenuTriggerFor]="menu.childMenu" pepMenuBlur (menuClick)="onMenuClicked($event)"
-                [disabled]="disabled" [ngClass]="{ disabled: disabled }">
-                <ng-container *ngTemplateOutlet="itemTemplate; context: { itemIconName: iconName, itemTitle: title }">
+            <button mat-button class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+                [ngClass]="{ 'icon-button': !text || screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS, disabled: disabled }"
+                pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
+                [matMenuTriggerFor]="menu.childMenu">
+                <ng-container *ngTemplateOutlet="triggerTemplate">
                 </ng-container>
             </button>
+            <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem"
+                (menuItemClick)="onMenuItemClicked($event)"></pep-menu-item>
         </ng-template>
         <ng-template #buttonTemplate>
-            <button mat-button class="pep-button icon-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-                pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
-                [ngClass]="{ disabled: disabled }">
-                <ng-container *ngTemplateOutlet="itemTemplate; context: { itemIconName: iconName, itemTitle: title }">
+            <button mat-button class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+                [ngClass]="{ 'icon-button': !text || screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS, disabled: disabled }"
+                pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled">
+                <ng-container *ngTemplateOutlet="triggerTemplate">
                 </ng-container>
             </button>
         </ng-template>
     </ng-template>
-
-    <pep-menu-item #menu [items]="items" (menuItemClick)="onMenuItemClicked($event)"></pep-menu-item>
 </div>
 
-<ng-template #itemTemplate let-itemIconName="itemIconName" let-itemTitle="itemTitle">
-    <mat-icon *ngIf="itemIconName">
-        <pep-icon name="{{itemIconName}}"></pep-icon>
-    </mat-icon>
-    <span *ngIf="itemTitle" class="ellipsis" [ngClass]="{ 'button-title-with-icon': itemIconName }" [title]="itemTitle">
-        {{ itemTitle}}
+<ng-template #triggerTemplate>
+    <span *ngIf="text && screenSize <= PepScreenSizeType.SM" class="ellipsis"
+        [ngClass]="{ 'button-title-with-icon': iconName }" [title]="text">
+        {{ text }}
     </span>
+    <mat-icon *ngIf="iconName">
+        <pep-icon name="{{ iconName }}"></pep-icon>
+    </mat-icon>
 </ng-template>

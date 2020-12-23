@@ -73,12 +73,12 @@
         </fieldset>
     </div>
 
-    <virtual-scroll *ngIf="useVirtualScroll" [totalRows]="totalRows" [isTable]="isTable" (load)="onListLoad($event)"
+    <pep-virtual-scroll *ngIf="useVirtualScroll" [totalRows]="totalRows" [isTable]="isTable" (load)="onListLoad($event)"
         (change)="onListChange($event)" [parentScroll]="parentScroll ? parentScroll : nativeWindow"
         [bufferAmount]="isReport ? (isTable ? 20 : 3) : isTable ? 15 : 3"
         [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
         <ng-container *ngTemplateOutlet="listData"></ng-container>
-    </virtual-scroll>
+    </pep-virtual-scroll>
 
     <!-- <virtual-scroller *ngIf="useVirtualScroll" [totalItems]="totalRows" (vsChange)="onScrollerListChange($event)"
         [parentScroll]="parentScroll ? parentScroll : nativeWindow"

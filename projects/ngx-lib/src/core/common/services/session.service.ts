@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
-import { JwtHelperService } from './jwt-helper.service';
+import { PepJwtHelperService } from './jwt-helper.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class SessionService {
+export class PepSessionService {
     private readonly IDP_TOKEN_KEY = 'idp_token';
     private readonly PAPI_BASE_URL_KEY = 'pepperi.baseurl';
     // private readonly WAPI_TOKEN_KEY = 'auth_token';
     private readonly WAPI_BASE_URL_KEY = 'serverHostURL'; // pepperi.webapibaseurl
     // private readonly PEPPERI_CONSUMER_TOKEN: 'YY2pAwx6Exo2LWXrUllF9xzSfWF53wqc';
 
-    constructor(private jwtHelper: JwtHelperService) { }
+    constructor(private jwtHelper: PepJwtHelperService) { }
 
     // TODO: Maybe need to move this parse into the c'tor.
     private getParseToken(): any {

@@ -8,10 +8,10 @@
 // } from '@angular/common/http';
 // import { throwError, Observable, BehaviorSubject, of } from 'rxjs';
 // import { catchError, filter, finalize, take, switchMap } from 'rxjs/operators';
-// import { SessionService } from '../../common/services/session.service';
+// import { PepSessionService } from '../../common/services/session.service';
 
 // @Injectable()
-// export class AuthInterceptor implements HttpInterceptor {
+// export class PepAuthInterceptor implements HttpInterceptor {
 //     private AUTH_HEADER = 'Authorization';
 //     private PEPPERI_TOKEN_HEADER = 'PepperiSessionToken';
 
@@ -20,7 +20,7 @@
 //     // private refreshTokenInProgress = false;
 //     // private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-//     constructor(private sessionService: SessionService) {}
+//     constructor(private sessionService: PepSessionService) {}
 
 //     // Add authorization token if the token exist.
 //     private addAuthorizationToken(request: HttpRequest<any>): HttpRequest<any> {

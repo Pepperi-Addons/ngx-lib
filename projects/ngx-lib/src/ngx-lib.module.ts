@@ -8,64 +8,64 @@ import { Observable, Subject } from 'rxjs';
 
 import { httpInterceptorProviders } from './core/http/interceptors/index';
 
-import { ClipboardDirective } from './core/clipboard/clipboard.directive';
+import { PepClipboardDirective } from './core/clipboard/clipboard.directive';
 const clipboardList = [
-    ClipboardDirective,
+    PepClipboardDirective,
 ];
 
-import { RtlClassDirective, RtlDirectionDirective } from './core/layout/rtl.directive';
+import { PepRtlClassDirective, PepRtlDirectionDirective } from './core/layout/rtl.directive';
 const layoutList = [
-    RtlClassDirective,
-    RtlDirectionDirective,
+    PepRtlClassDirective,
+    PepRtlDirectionDirective,
 ];
 
 import {
-    CapitalizePipe,
-    EncodePipe,
-    EscapePipe,
-    ReplaceLineBreaks,
-    DateFormatter,
-    DateStringFormatter,
-    SafeHtmlPipe,
-    SafePipe,
-    SplitUppercase,
-    ToNumber
+    PepCapitalizePipe,
+    PepEncodePipe,
+    PepEscapePipe,
+    PepReplaceLineBreaksPipe,
+    PepDateFormatterPipe,
+    PepDateStringFormatterPipe,
+    PepSafeHtmlPipe,
+    PepSafePipe,
+    PepSplitUppercasePipe,
+    PepToNumberPipe
 } from './core/common/pipes/common-pipes';
 const pipeList = [
-    CapitalizePipe,
-    EncodePipe,
-    EscapePipe,
-    ReplaceLineBreaks,
-    DateFormatter,
-    DateStringFormatter,
-    SafeHtmlPipe,
-    SafePipe,
-    SplitUppercase,
-    ToNumber
+    PepCapitalizePipe,
+    PepEncodePipe,
+    PepEscapePipe,
+    PepReplaceLineBreaksPipe,
+    PepDateFormatterPipe,
+    PepDateStringFormatterPipe,
+    PepSafeHtmlPipe,
+    PepSafePipe,
+    PepSplitUppercasePipe,
+    PepToNumberPipe
 ];
 
-import { ButtonBlurDirective } from './core/common/directives/button-blur.directive';
-import { ButtonLoaderDirective } from './core/common/directives/button-loader.directive';
-import { MenuBlurDirective } from './core/common/directives/menu-blur.directive';
-import { DataQaDirective } from './core/common/directives/data-qa.directive';
+import { PepButtonBlurDirective } from './core/common/directives/button-blur.directive';
+import { PepButtonLoaderDirective } from './core/common/directives/button-loader.directive';
+import { PepMenuBlurDirective } from './core/common/directives/menu-blur.directive';
+import { PepDataQaDirective } from './core/common/directives/data-qa.directive';
 // import { PreventDoubleClickDirective } from './core/common/directives/debounce-click.directive';
-import { PreventMultiClickDirective } from './core/common/directives/prevent-multi-click.directive';
+import { PepPreventMultiClickDirective } from './core/common/directives/prevent-multi-click.directive';
 
 const utilitiesList = [
-    ButtonBlurDirective,
-    ButtonLoaderDirective,
-    MenuBlurDirective,
-    DataQaDirective,
+    PepButtonBlurDirective,
+    PepButtonLoaderDirective,
+    PepMenuBlurDirective,
+    PepDataQaDirective,
     // PreventDoubleClickDirective,
-    PreventMultiClickDirective,
+    PepPreventMultiClickDirective,
 ];
 
-import { AttachDirective } from './core/portal/attach.directive';
-import { TargetDirective } from './core/portal/target.directive';
+import { PepAttachDirective } from './core/portal/attach.directive';
+import { PepTargetDirective } from './core/portal/target.directive';
 
 const portalList = [
-    AttachDirective,
-    TargetDirective
+    PepAttachDirective,
+    PepTargetDirective
 ];
 
 import {
@@ -75,27 +75,6 @@ import {
     // MissingTranslationHandler,
     // MissingTranslationHandlerParams
 } from '@ngx-translate/core';
-
-// export class Loader implements TranslateLoader {
-//     private translations = new Subject();
-
-//     $translations = this.translations.asObservable();
-//     getTranslation(lang: string) {
-//         console.log(`called with ${lang}`);
-//         return this.$translations;
-//     }
-// }
-
-// export class Missing implements MissingTranslationHandler {
-//     handle(params: MissingTranslationHandlerParams) {
-//         return 'missing in libary...';
-//     }
-// }
-
-// export function LoaderFactory() {
-//     return new Loader();
-// }
-
 @NgModule({
     declarations: [
         pipeList,
@@ -115,16 +94,6 @@ import {
         BrowserAnimationsModule,
         ReactiveFormsModule,
         FormsModule,
-        // TranslateModule.forChild({
-        //     loader: {
-        //         provide: TranslateLoader,
-        //         useFactory: LoaderFactory
-        //     },
-        //     missingTranslationHandler: {
-        //         provide: MissingTranslationHandler,
-        //         useClass: Missing
-        //     }
-        // }),
     ],
     exports: [
         pipeList,
@@ -139,14 +108,14 @@ export class PepNgxLibModule {
     // static forRoot(): ModuleWithProviders<PepNgxLibModule> {
     //     return {
     //         ngModule: PepNgxLibModule,
-    //         providers: [CustomizationService]
+    //         providers: [PepCustomizationService]
     //     };
     // }
 
     // static forRoot() {
     //     return {
     //       ngModule: PepNgxLibModule,
-    //       providers: [ CustomizationService ]
+    //       providers: [ PepCustomizationService ]
     //     }
     // }
 }

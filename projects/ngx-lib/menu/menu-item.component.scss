@@ -2,13 +2,10 @@
 @import '../src/core/style/abstracts/mixins';
 
 .mat-menu-item-submenu-trigger::after {
-    display: none;   
+    display: none;
 }
 
 .mat-menu-item {
-    padding: 0 $spacing-sm !important;
-    height: $form-field-height;
-    border-radius: $border-radius-md;
     
     .title {
         margin: 0 $spacing-xs;

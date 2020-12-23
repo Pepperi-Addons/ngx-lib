@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CustomizationService, HttpService, ObjectSingleData, DataConvertorService,
-    PepRowData, PepFieldData, AddonService, FIELD_TYPE, UtilitiesService } from '@pepperi-addons/ngx-lib';
-import { PepListComponent, ChangeSortingEvent } from '@pepperi-addons/ngx-lib/list';
-import { PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
-import { PepFooterStateType } from '@pepperi-addons/ngx-lib/top-bar';
+import { PepHttpService, ObjectSingleData, PepDataConvertorService,
+    PepRowData, PepFieldData, FIELD_TYPE } from '@pepperi-addons/ngx-lib';
+import { PepListComponent } from '@pepperi-addons/ngx-lib/list';
+import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
+import { PepFooterStateType, IPepFooterStateChangeEvent } from '@pepperi-addons/ngx-lib/top-bar';
 import { FakeData } from './fake-data';
 
 @Component({
@@ -22,8 +22,8 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
 
     constructor(
         private translate: TranslateService,
-        private dataConvertorService: DataConvertorService,
-        private httpService: HttpService
+        private dataConvertorService: PepDataConvertorService,
+        private httpService: PepHttpService
     ) {
         const browserCultureLang = translate.getBrowserCultureLang();
     }
@@ -61,18 +61,18 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
 
     getMenuItems(): Array<PepMenuItem> {
         const menuItems: Array<PepMenuItem> = [
-            { key: 'test1', title: 'test 1'},
-            { key: 'test2', title: 'test 2', disabled: true },
+            { key: 'test1', text: 'test 1'},
+            { key: 'test2', text: 'test 2', disabled: true },
             { key: 'sep', type: 'splitter' },
-            { key: 'test3', title: 'test 3'}];
+            { key: 'test3', text: 'test 3'}];
 
         return menuItems;
     }
 
     private loadListChooser(): void {
         this.options =  [
-            { key: 'accounts', title: 'accounts'},
-            { key: 'orders', title: 'orders'}
+            { key: 'accounts', text: 'accounts'},
+            { key: 'orders', text: 'orders'}
         ];
     }
 
@@ -80,7 +80,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         this.menuItems = this.menuItems === null ? this.getMenuItems() : null;
     }
 
-    onMenuItemClicked(action: PepMenuItemClick): void {
+    onMenuItemClicked(action: IPepMenuItemClickEvent): void {
         alert(action.source.key);
     }
 
@@ -165,8 +165,8 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         return dataRowField;
     }
 
-    onFooterStateChange(footerState: PepFooterStateType) {
-        this.footerState = footerState;
+    onFooterStateChange(footerStateType: IPepFooterStateChangeEvent) {
+        this.footerState = footerStateType.state;
     }
 
     onListChange(event) {

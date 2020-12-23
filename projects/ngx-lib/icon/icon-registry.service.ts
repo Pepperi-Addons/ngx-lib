@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PepIconData, PepIconType } from './icon-generated.model';
+import { IPepIconData, PepIconType } from './icon-generated.model';
 
 @Injectable({
     providedIn: 'root'
@@ -8,8 +8,8 @@ export class PepIconRegistry {
 
     private registry = new Map<PepIconType, string>();
 
-    public registerIcons(icons: PepIconData[]): void {
-        icons.forEach((icon: PepIconData) => this.registry.set(icon.name, icon.data));
+    public registerIcons(icons: IPepIconData[]): void {
+        icons.forEach((icon: IPepIconData) => this.registry.set(icon.name, icon.data));
     }
 
     public getIcon(iconName: PepIconType): string | undefined {

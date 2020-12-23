@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, Renderer2, ElementRef, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
-import { CustomizationService, PepLayoutType, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData } from '@pepperi-addons/ngx-lib';
-import { DialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { PepCustomizationService, PepLayoutType, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent } from '@pepperi-addons/ngx-lib';
+import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepColorPickerComponent } from './color-picker.component';
 import { PepColorType } from './color.model';
 
@@ -24,17 +24,17 @@ export class PepColorComponent implements OnInit, OnDestroy {
     @Input() showAAComplient = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     constructor(
-        private dialogService: DialogService,
+        private dialogService: PepDialogService,
         private renderer: Renderer2,
         private element: ElementRef
     ) {
     }
 
     ngOnInit(): void {
-        this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+        this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
     }
 
     ngOnDestroy(): void {

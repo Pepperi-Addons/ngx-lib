@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Directive, ElementRef, HostListener, Inject, Input, OnInit, Optional, Renderer2 } from '@angular/core';
-import { UtilitiesService } from '../services/utilities.service';
+import { PepUtilitiesService } from '../services/utilities.service';
 
 @Directive({
     selector: '[pepButtonLoader]'
 })
-export class ButtonLoaderDirective implements OnInit {
+export class PepButtonLoaderDirective implements OnInit {
     @Input() loaderTime = 0;
     @Input() loaderColor = null;
     @Input() loaderWidth = '1.5rem';
@@ -28,7 +28,7 @@ export class ButtonLoaderDirective implements OnInit {
     constructor(
         private renderer: Renderer2,
         private element: ElementRef,
-        private utilitiesService: UtilitiesService,
+        private utilitiesService: PepUtilitiesService,
         @Optional() @Inject(DOCUMENT) private document: any) { }
 
     @HostListener('click', ['$event'])

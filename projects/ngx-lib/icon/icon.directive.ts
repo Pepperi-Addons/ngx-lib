@@ -1,7 +1,7 @@
 import { Directive, OnInit, Input, Renderer2, ElementRef, Optional, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { PepIconRegistry } from './icon-registry.service';
-import { UtilitiesService } from '@pepperi-addons/ngx-lib';
+import { PepUtilitiesService } from '@pepperi-addons/ngx-lib';
 import { PepIconType } from './icon-generated.model';
 
 @Directive({
@@ -13,7 +13,7 @@ export class PepIconDirective implements OnInit {
     constructor(
         private renderer: Renderer2,
         private element: ElementRef,
-        private utilitiesService: UtilitiesService,
+        private utilitiesService: PepUtilitiesService,
         private iconRegistry: PepIconRegistry,
         @Optional() @Inject(DOCUMENT) private document: any) { }
 

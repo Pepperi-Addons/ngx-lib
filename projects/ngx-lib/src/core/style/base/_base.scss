@@ -597,9 +597,27 @@ main {
         }
     }
 
-    &.pep-menu {
+    &.pep-select-menu {
+        .mat-menu-content {
+            padding: 0 !important;
+
+            .mat-menu-item {
+                height: $spacing-4xl;
+                padding: 0 $spacing-md;
+                border-radius: unset;
+            }
+        }    
+    }
+
+    &.pep-action-menu {
         .mat-menu-content {
             padding: $spacing-sm !important;
+            
+            .mat-menu-item {
+                height: $spacing-3xl;
+                padding: 0 $spacing-sm;
+                border-radius: $border-radius-md;
+            }
         }
     }
 }

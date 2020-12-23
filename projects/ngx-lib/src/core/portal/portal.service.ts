@@ -3,7 +3,7 @@ import {Injectable, TemplateRef, ViewContainerRef} from '@angular/core';
 @Injectable({
     providedIn: 'root',
 })
-export class PortalService {
+export class PepPortalService {
     private targets: Map<string, ViewContainerRef>;
 
     constructor() {

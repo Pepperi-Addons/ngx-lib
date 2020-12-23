@@ -3,19 +3,19 @@ import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild, 
 import { TranslateService } from '@ngx-translate/core';
 import { FileUploader } from 'ng2-file-upload';
 import { FormGroup } from '@angular/forms';
-import { FileService, PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldClickedData } from '@pepperi-addons/ngx-lib';
-import { DialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
+import { PepFileService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldClickEvent } from '@pepperi-addons/ngx-lib';
+import { PepDialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
-    selector: 'files-uploader',
+    selector: 'pep-files-uploader',
     templateUrl: './files-uploader.component.html',
     styleUrls: ['./files-uploader.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Injectable()
-export class FilesUploaderComponent implements OnInit {
+export class PepFilesUploaderComponent implements OnInit {
     @Input() key = '';
     @Input() src = '';
     @Input() label = '';
@@ -32,7 +32,7 @@ export class FilesUploaderComponent implements OnInit {
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output() fileChange: EventEmitter<string> = new EventEmitter<string>();
-    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
+    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     @ViewChild('fileInput') fileInput: any;
     @ViewChild('imagePreview') imagePreview: any;
@@ -47,9 +47,9 @@ export class FilesUploaderComponent implements OnInit {
 
     constructor(
         private translate: TranslateService,
-        private dialogService: DialogService,
-        private customizationService: CustomizationService,
-        private fileService: FileService)
+        private dialogService: PepDialogService,
+        private customizationService: PepCustomizationService,
+        private fileService: PepFileService)
     {
         this.uploader = new FileUploader({ removeAfterUpload: true });
 

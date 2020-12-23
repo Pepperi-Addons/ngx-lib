@@ -4,7 +4,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
-export class CookieService {
+export class PepCookieService {
     private readonly documentIsAccessible: boolean;
 
     constructor(

@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PepIconModule } from '@pepperi-addons/ngx-lib/icon';
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 
-import { ButtonComponent } from './button.component';
+import { PepButtonComponent } from './button.component';
 
 @NgModule({
     imports: [
@@ -20,7 +20,7 @@ import { ButtonComponent } from './button.component';
         PepNgxLibModule,
         PepIconModule
     ],
-    exports: [ ButtonComponent ],
-    declarations: [ ButtonComponent ],
+    exports: [ PepButtonComponent ],
+    declarations: [ PepButtonComponent ],
 })
 export class PepButtonModule {}

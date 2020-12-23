@@ -1,6 +1,6 @@
 <!-- <main> -->
 <div class="addon-page-container">
-    <pep-top-bar [title]="'List_Example_Title' | translate" (footerStateChange)="onFooterStateChange($event)">
+    <pep-top-bar (footerStateChange)="onFooterStateChange($event)">
         <div header-start-content>
 
         </div>
@@ -26,6 +26,8 @@
 
         </div>
         <pep-list-actions [actions]="menuItems"></pep-list-actions>
+        <pep-list-total [totalRows]="customList?.totalRows"></pep-list-total>
+        <pep-list-chooser [options]="options"></pep-list-chooser>
     </pep-top-bar>
     <div class="main-content ">
         <div class="content">

@@ -4,8 +4,8 @@ import {
     ChangeDetectionStrategy, ElementRef, ViewChild, Renderer2, OnDestroy
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepTextboxFieldType, PepTextboxField } from '@pepperi-addons/ngx-lib';
+import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepTextboxFieldType, PepTextboxField } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-textbox',
@@ -39,7 +39,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('input') input: ElementRef;
@@ -50,7 +50,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     constructor(
         public fb: FormBuilder,
-        private customizationService: CustomizationService,
+        private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
     ) { }
@@ -78,7 +78,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
             this.formattedValue = this.formattedValue || this.value;
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field

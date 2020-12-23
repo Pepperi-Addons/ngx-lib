@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { PepLayoutType, PepOption, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldClickedData } from '@pepperi-addons/ngx-lib';
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldClickEvent } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-internal-menu',
@@ -20,8 +20,8 @@ export class PepInternalMenuComponent implements OnDestroy {
     controlType = 'menu';
 
     @Input() layoutType: PepLayoutType = 'form';
-    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
-    @Output() menuItemClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
+    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    @Output() menuItemClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
     
     constructor() { }
 

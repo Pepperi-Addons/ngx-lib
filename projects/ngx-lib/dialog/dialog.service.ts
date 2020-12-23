@@ -1,6 +1,6 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { LayoutService } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService } from '@pepperi-addons/ngx-lib';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentType } from '@angular/cdk/portal';
 import { PepDialogSizeType, PepDialogData } from './dialog.model';
@@ -9,11 +9,11 @@ import { PepDefaultDialogComponent } from './default-dialog.component';
 @Injectable({
     providedIn: 'root'
 })
-export class DialogService {
+export class PepDialogService {
 
     constructor(
         private dialog: MatDialog,
-        private layoutService: LayoutService,
+        private layoutService: PepLayoutService,
         private overlay: Overlay) { }
 
     getDialogConfig(

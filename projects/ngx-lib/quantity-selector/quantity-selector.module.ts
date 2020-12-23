@@ -16,7 +16,7 @@ import { PepIconModule, PepIconRegistry, pepIconNumberMinus, pepIconNumberPlus }
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
 import { PepQuantitySelectorComponent } from './quantity-selector.component';
-import { QuantitySelectorNumber } from './quantity-selector.pipes';
+import { PepQuantitySelectorNumberPipe } from './quantity-selector.pipes';
 
 @NgModule({
     imports: [
@@ -38,7 +38,7 @@ import { QuantitySelectorNumber } from './quantity-selector.pipes';
         PepFieldTitleModule
     ],
     exports: [ PepQuantitySelectorComponent ],
-    declarations: [ PepQuantitySelectorComponent, QuantitySelectorNumber ],
+    declarations: [ PepQuantitySelectorComponent, PepQuantitySelectorNumberPipe ],
 })
 export class PepQuantitySelectorModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

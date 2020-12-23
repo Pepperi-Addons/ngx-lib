@@ -1,12 +1,12 @@
 import {Directive, Renderer2, ElementRef, OnInit} from '@angular/core';
-import { LayoutService } from './layout.service';
+import { PepLayoutService } from './layout.service';
 
 @Directive({
     selector: '[pepRtlClass]',
 })
-export class RtlClassDirective implements OnInit {
+export class PepRtlClassDirective implements OnInit {
     constructor(
-        private layoutService: LayoutService,
+        private layoutService: PepLayoutService,
         private renderer: Renderer2,
         private element: ElementRef
     ) {}
@@ -23,9 +23,9 @@ export class RtlClassDirective implements OnInit {
 @Directive({
     selector: '[pepRtlDirection]',
 })
-export class RtlDirectionDirective implements OnInit {
+export class PepRtlDirectionDirective implements OnInit {
     constructor(
-        private layoutService: LayoutService,
+        private layoutService: PepLayoutService,
         private renderer: Renderer2,
         private element: ElementRef
     ) {}

@@ -4,7 +4,7 @@ import { Directive, HostListener, ElementRef, Renderer2, OnInit, Input } from '@
 @Directive({
     selector: '[pepDataQa]'
 })
-export class DataQaDirective implements OnInit {
+export class PepDataQaDirective implements OnInit {
     @Input('pepDataQa') dataQa: string;
 
     constructor(

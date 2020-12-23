@@ -3,12 +3,12 @@ import {
     ChangeDetectionStrategy, OnDestroy, ElementRef, Renderer2, TemplateRef, ViewChild, OnChanges, SimpleChanges
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepRichHtmlTextareaField } from '@pepperi-addons/ngx-lib';
-import { DialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
+import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepRichHtmlTextareaField } from '@pepperi-addons/ngx-lib';
+import { PepDialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
-export interface PepRichHtmlTextareaToolbarOptions {
+export interface IPepRichHtmlTextareaToolbarOptions {
     font?: any;
     size?: any;
     header?: any;
@@ -50,16 +50,16 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() inlineMode = false;
 
-    protected _toolbarOptions: PepRichHtmlTextareaToolbarOptions;
+    protected _toolbarOptions: IPepRichHtmlTextareaToolbarOptions;
     @Input()
-    get toolbarOptions(): PepRichHtmlTextareaToolbarOptions { return this._toolbarOptions; }
-    set toolbarOptions(options: PepRichHtmlTextareaToolbarOptions) {
+    get toolbarOptions(): IPepRichHtmlTextareaToolbarOptions { return this._toolbarOptions; }
+    set toolbarOptions(options: IPepRichHtmlTextareaToolbarOptions) {
         if (options) {
             this._toolbarOptions = options;
         }
     }
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     @ViewChild('richTextEditorDialogTemplate', { read: TemplateRef }) richTextEditorDialogTemplate: TemplateRef<any>;
     quillContent = '';
@@ -71,8 +71,8 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
 
     constructor(
         private sanitizer: DomSanitizer,
-        private dialogService: DialogService,
-        private customizationService: CustomizationService,
+        private dialogService: PepDialogService,
+        private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
     ) {
@@ -94,7 +94,7 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
 
         this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
@@ -108,7 +108,7 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
         }
     }
 
-    getDefaultToolbarOptions(): PepRichHtmlTextareaToolbarOptions {
+    getDefaultToolbarOptions(): IPepRichHtmlTextareaToolbarOptions {
         return {
             font: false,
             size: false,

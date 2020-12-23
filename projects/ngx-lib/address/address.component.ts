@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, Renderer2, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepLayoutType, PepHorizontalAlignment, DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData } from '@pepperi-addons/ngx-lib';
+import { PepLayoutType, PepHorizontalAlignment, DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-address',
@@ -23,7 +23,7 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     constructor(
         private element: ElementRef,

@@ -27,7 +27,7 @@
             "./projects/ngx-lib/icon/svgs/**/*.svg"
         ],
         "outputDirectory": "./projects/ngx-lib/icon",
-        "interfaceName": "PepIconData",
+        "interfaceName": "IPepIconData",
         "typeName": "PepIconType",
         "prefix": "pepIcon",
         "svgoConfig": {

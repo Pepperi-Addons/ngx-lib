@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 export type PepFileType = 'script' | 'style';
 
-export interface ExternalFileModel {
+export interface IPepExternalFileModel {
     path: string;
     type: PepFileType;
 }
@@ -12,7 +12,7 @@ declare var document: any;
 @Injectable({
     providedIn: 'root',
 })
-export class FileService {
+export class PepFileService {
     private scripts: Map<string, {loaded: boolean; src: string}>;
     private styles: Map<string, {loaded: boolean; src: string}>;
 
@@ -21,7 +21,7 @@ export class FileService {
         this.styles = new Map<string, {loaded: boolean; src: string}>();
     }
 
-    loadFiles(files: ExternalFileModel[]): Promise<any[]> {
+    loadFiles(files: IPepExternalFileModel[]): Promise<any[]> {
         const promises: any[] = [];
         files.forEach((file) => {
             if (file.type === 'style') {
@@ -33,7 +33,7 @@ export class FileService {
         return Promise.all(promises);
     }
 
-    removeFiles(files: ExternalFileModel[]): void {
+    removeFiles(files: IPepExternalFileModel[]): void {
         for (let index = 0; index < files.length && files[index].path && files[index].path.trim() !== ''; index++) {
             const name = this.getFileName(files[index].path, true);
             const element = document.getElementById(name);

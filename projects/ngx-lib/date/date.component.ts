@@ -5,8 +5,8 @@ import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core'
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
 import { TranslateService } from '@ngx-translate/core';
-import { UtilitiesService, PepLayoutType, CustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, PepFieldValueChangedData, PepDateFieldType, PepDateField } from '@pepperi-addons/ngx-lib';
+import { PepUtilitiesService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepDateFieldType, PepDateField } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-date',
@@ -93,7 +93,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @ViewChild('datetimePicker') datetimePicker: any;
 
     @ViewChild('input') input: ElementRef;
@@ -108,8 +108,8 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(
         private element: ElementRef,
-        private utilitiesService: UtilitiesService,
-        private customizationService: CustomizationService,
+        private utilitiesService: PepUtilitiesService,
+        private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private translate: TranslateService,
         private adapter: DateAdapter<any>
@@ -130,7 +130,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
 
             this.formattedValue = this.formattedValue || this.value;
 
-            this.renderer.addClass(this.element.nativeElement, CustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
         }
 
         this.showTime = this.type === 'datetime';

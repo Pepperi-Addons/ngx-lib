@@ -3,7 +3,7 @@ import {
     ViewEncapsulation, ChangeDetectionStrategy, OnDestroy
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepLayoutType, PepFieldValueChangedData, PepFieldClickedData } from '@pepperi-addons/ngx-lib';
+import { PepLayoutType, IPepFieldValueChangeEvent, IPepFieldClickEvent } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-field-generator',
@@ -21,10 +21,10 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Input() showTitle = true;
 
     @Input() checkForChanges: any = null;
-    @Output() valueChange: EventEmitter<PepFieldValueChangedData> = new EventEmitter<PepFieldValueChangedData>();
+    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() elementClick: EventEmitter<PepFieldClickedData> = new EventEmitter<PepFieldClickedData>();
+    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
     @Output() menuItemClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
 
@@ -68,7 +68,7 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         if (this.childClick) { this.childClick.unsubscribe(); }
     }
 
-    onValueChanged(valueChange: PepFieldValueChangedData): void {
+    onValueChanged(valueChange: IPepFieldValueChangeEvent): void {
         this.valueChange.emit(valueChange);
     }
 

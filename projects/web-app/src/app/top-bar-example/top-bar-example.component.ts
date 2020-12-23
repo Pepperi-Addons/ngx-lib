@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutService, PepFieldClickedData, PepFieldValueChangedData, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
-import { PepButtonClick, PepButton } from '@pepperi-addons/ngx-lib/button';
+import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { IPepButtonClickEvent, PepButton } from '@pepperi-addons/ngx-lib/button';
 import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
-import { PepMenuItem, PepMenuItemClick } from '@pepperi-addons/ngx-lib/menu';
-import { PepSearchStateType } from '@pepperi-addons/ngx-lib/search';
+import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
+import { IPepSearchStateChangeEvent } from '@pepperi-addons/ngx-lib/search';
 
 @Component({
     templateUrl: './top-bar-example.component.html',
@@ -23,7 +23,7 @@ export class TopBarExampleComponent implements OnInit {
     searchAutoCompleteValues = [];
 
     constructor(
-        public layoutService: LayoutService
+        public layoutService: PepLayoutService
     ) { 
         this.layoutService.onResize$.pipe().subscribe(size => {
             this.screenSize = size;
@@ -33,12 +33,12 @@ export class TopBarExampleComponent implements OnInit {
             {
                 key: 'action',
                 value: 'test for check the size of the button',
-                callback: (event: PepButtonClick) => this.onGroupButtonClicked(event)
+                callback: (event: IPepButtonClickEvent) => this.onGroupButtonClicked(event)
             },
             {
                 key: 'del',
                 class: 'caution',
-                callback: (event: PepButtonClick) => this.onGroupButtonClicked(event),
+                callback: (event: IPepButtonClickEvent) => this.onGroupButtonClicked(event),
                 icon: pepIconSystemBin.name 
             }
         ];
@@ -55,17 +55,17 @@ export class TopBarExampleComponent implements OnInit {
 
         if (withChildren) {
             menuItems = [
-                { key: 'test1', title: 'test 1', iconName: pepIconSystemBin.name},
-                { key: 'test2', title: 'test 2', iconName: pepIconSystemBin.name },
+                { key: 'test1', text: 'test 1', iconName: pepIconSystemBin.name},
+                { key: 'test2', text: 'test 2', iconName: pepIconSystemBin.name },
                 { key: 'sep', type: 'splitter' },
-                { key: 'test3', title: 'test 3', iconName: pepIconSystemBin.name, children: this.getMenuItems(index <= 3, index)}
+                { key: 'test3', text: 'test 3', iconName: pepIconSystemBin.name, children: this.getMenuItems(index <= 3, index)}
             ];
         } else {
             menuItems = [
-                { key: 'test1', title: 'test 1'},
-                { key: 'test2', title: 'test 2', disabled: true },
+                { key: 'test1', text: 'test 1'},
+                { key: 'test2', text: 'test 2', disabled: true },
                 { key: 'sep', type: 'splitter' },
-                { key: 'test3', title: 'test 3'}
+                { key: 'test3', text: 'test 3'}
             ];
         }
 
@@ -80,7 +80,7 @@ export class TopBarExampleComponent implements OnInit {
         this.menuItems = this.menuItems === null ? this.getMenuItems() : null;
     }
 
-    onMenuItemClicked(action: PepMenuItemClick): void {
+    onMenuItemClicked(action: IPepMenuItemClickEvent): void {
         alert(action.source.key);
     }
 
@@ -88,20 +88,20 @@ export class TopBarExampleComponent implements OnInit {
         alert('menu clicked');
     }
 
-    onGroupButtonClicked(event: PepButtonClick): void {
+    onGroupButtonClicked(event: IPepButtonClickEvent): void {
         alert(`${event.source.key}: was clicked`);
     }
 
-    onSearchStateChanged(searchState: PepSearchStateType) {
-        debugger;
+    onSearchStateChanged(searchStateChangeEvent: IPepSearchStateChangeEvent) {
+        // debugger;
     }
 
     onSearchChanged(search: any) {
-        debugger;
+        // debugger;
     }
 
     onSearchAutocompleteChanged(value) {
-        debugger;
+        // debugger;
         
     }
 }

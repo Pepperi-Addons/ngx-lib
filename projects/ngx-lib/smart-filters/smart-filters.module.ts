@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -11,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepIconModule, PepIconRegistry, pepIconNumberMinus, pepIconNumberPlus } from '@pepperi-addons/ngx-lib/icon';
 
-import { SmartFiltersComponent} from './smart-filters.component';
+import { PepSmartFiltersComponent} from './smart-filters.component';
 
 @NgModule({
     imports: [
@@ -27,8 +26,8 @@ import { SmartFiltersComponent} from './smart-filters.component';
         PepNgxLibModule,
         PepIconModule
     ],
-    exports: [SmartFiltersComponent],
-    declarations: [SmartFiltersComponent],
+    exports: [PepSmartFiltersComponent],
+    declarations: [PepSmartFiltersComponent],
 })
 export class PepSmartFiltersModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

@@ -4,15 +4,14 @@ import {
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { DialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
+import { PepDialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
 import { Subscription } from 'rxjs';
 import {
-    PepFieldValueChangedData,
-    PepFormFieldClickedData,
-    PepFormFieldChangedData,
+    IPepFieldValueChangeEvent,
+    IPepFieldClickEvent,
     PepLayoutType,
     FIELD_TYPE,
-    CustomizationService,
+    PepCustomizationService,
     UIControl,
     UIControlField,
     ObjectSingleData,
@@ -44,6 +43,23 @@ import {
     DEFAULT_HORIZONTAL_ALIGNMENT
 } from '@pepperi-addons/ngx-lib';
 
+export interface IPepFormFieldValueChangeEvent {
+    id: string;
+    key: string;
+    value: string;
+    controlType?: string;
+}
+export interface IPepFormFieldClickEvent {
+    id: string;
+    key: string;
+    value: any;
+    fieldType?: FIELD_TYPE;
+    idType?: string;
+    which?: any;
+    editable?: boolean;
+    otherData?: any;
+}
+
 // tslint:disable-next-line: no-conflicting-lifecycle
 @Component({
     selector: 'pep-form',
@@ -68,12 +84,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() checkForChanges: any = null;
     @Input() pageType = '';
 
-    @Output() valueChange: EventEmitter<PepFormFieldChangedData> = new EventEmitter<PepFormFieldChangedData>();
+    @Output() valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
     @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
-    @Output() fieldClick: EventEmitter<PepFormFieldClickedData> = new EventEmitter<PepFormFieldClickedData>();
-    @Output() menuItemClick: EventEmitter<PepFormFieldClickedData> = new EventEmitter<PepFormFieldClickedData>();
+    @Output() fieldClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
+    @Output() menuItemClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
 
     isLocked = false;
     formGutterSize;
@@ -562,7 +578,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         return fieldFormattedValue;
     }
 
-    private toControlGroup(fields: PepFieldBase[], fb: FormBuilder, customizationService: CustomizationService): FormGroup {
+    private toControlGroup(fields: PepFieldBase[], fb: FormBuilder, customizationService: PepCustomizationService): FormGroup {
         const group = {};
         if (fields && fields.length > 0) {
             fields.forEach(field => {
@@ -597,8 +613,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     constructor(
-        private dialogService: DialogService,
-        private customizationService: CustomizationService,
+        private dialogService: PepDialogService,
+        private customizationService: PepCustomizationService,
         private translate: TranslateService,
         public fb: FormBuilder,
         differs: KeyValueDiffers
@@ -652,9 +668,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         // convert rem to pixel
         const RemToPixel = 16;
         this.formGutterSize = this.customizationService.getNumberThemeVariable(themeVars,
-            CustomizationService.FORM_SPACEING_KEY) * RemToPixel;
+            PepCustomizationService.FORM_SPACEING_KEY) * RemToPixel;
         this.cardGutterSize = this.customizationService.getNumberThemeVariable(themeVars,
-            CustomizationService.CARD_SPACEING_KEY) * RemToPixel;
+            PepCustomizationService.CARD_SPACEING_KEY) * RemToPixel;
     }
 
     ngDoCheck(): void {
@@ -706,13 +722,13 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         // Set form row height.
         if (this.layoutType === 'card') {
             const cardFieldHeight = this.customizationService.getNumberThemeVariable(themeVars,
-                CustomizationService.CARD_FIELD_HEIGHT_KEY);
+                PepCustomizationService.CARD_FIELD_HEIGHT_KEY);
             this.rowHeight = cardFieldHeight;
         } else {
             const rowFieldHeight = this.customizationService.getNumberThemeVariable(themeVars,
-                CustomizationService.FORM_FIELD_HEIGHT_KEY);
+                PepCustomizationService.FORM_FIELD_HEIGHT_KEY);
             const rowFieldTitleHeight = this.customizationService.getNumberThemeVariable(themeVars,
-                CustomizationService.FORM_FIELD_TITLE_HEIGHT_KEY);
+                PepCustomizationService.FORM_FIELD_TITLE_HEIGHT_KEY);
             this.rowHeight = rowFieldHeight + rowFieldTitleHeight;
         }
 
@@ -1139,10 +1155,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     1 : f1.col < f2.col ? -1 : 0));
     }
 
-    onValueChanged(valueChange: PepFieldValueChangedData, isEditModal: boolean = false): void {
+    onValueChanged(event: IPepFieldValueChangeEvent, isEditModal: boolean = false): void {
         this.onFormValidationChanged(this.form.valid);
 
-        const formControl = this.getFormControlById(valueChange.key);
+        const formControl = this.getFormControlById(event.key);
 
         const isValid = formControl ? formControl.valid : true;
         // const isValid = true;
@@ -1154,19 +1170,18 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             }
 
             // Update the current field value.
-            const currentField = this.fields.find(f => f.key === valueChange.key);
+            const currentField = this.fields.find(f => f.key === event.key);
             if (currentField) {
-                currentField.formattedValue = currentField.value = valueChange.value;
+                currentField.formattedValue = currentField.value = event.value;
             }
 
-            this.lastFocusedField = valueChange.lastFocusedField;
-            const customizeObjectChangedData = new PepFormFieldChangedData(
-                this.singleData.Data.UID.toString(),
-                valueChange.key,
-                valueChange.value,
-                valueChange.controlType
-            );
-            this.valueChange.emit(customizeObjectChangedData);
+            this.lastFocusedField = event.lastFocusedField;
+            this.valueChange.emit({
+                id: this.singleData.Data.UID.toString(),
+                key: event.key,
+                value: event.value,
+                controlType: event.controlType
+            });
         }
     }
 
@@ -1184,56 +1199,51 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         // }
     }
 
-    onClick(fieldClickEvent: any): void {
+    onClick(fieldClickEvent: IPepFieldClickEvent): void {
         const clickedUiControlField = this.singleData.Data.Fields.filter(f => f.ApiName === fieldClickEvent.key)[0];
-
+        
         if (clickedUiControlField) {
             if (clickedUiControlField.FieldType === FIELD_TYPE.GuidReferenceType) {
-                const customizeFieldClickedData = new PepFormFieldClickedData(
-                    this.singleData.Data.UID.toString(),
-                    fieldClickEvent.key,
-                    this.singleData.Data.Type,
-                    fieldClickEvent.eventWhich,
-                    fieldClickEvent.value,
-                    clickedUiControlField.FieldType,
-                    fieldClickEvent.otherData
-                );
-                this.fieldClick.emit(customizeFieldClickedData);
+                this.fieldClick.emit({
+                    id: this.singleData.Data.UID.toString(),
+                    key: fieldClickEvent.key,
+                    idType: this.singleData.Data.Type.toString(),
+                    which: fieldClickEvent.eventWhich,
+                    value: fieldClickEvent.value,
+                    fieldType: clickedUiControlField.FieldType,
+                    otherData: fieldClickEvent.otherData
+                });
             } else if (clickedUiControlField.FieldType === FIELD_TYPE.ListOfObjects) {
-                const customizeFieldClickedData = new PepFormFieldClickedData(
-                    this.singleData.Data.UID.toString(),
-                    fieldClickEvent.key,
-                    this.singleData.Data.Type,
-                    fieldClickEvent.eventWhich,
-                    fieldClickEvent.value,
-                    clickedUiControlField.FieldType,
-                    fieldClickEvent.otherData
-                );
-                this.fieldClick.emit(customizeFieldClickedData);
+                this.fieldClick.emit({
+                    id: this.singleData.Data.UID.toString(),
+                    key: fieldClickEvent.key,
+                    idType: this.singleData.Data.Type.toString(),
+                    which: fieldClickEvent.eventWhich,
+                    value: fieldClickEvent.value,
+                    fieldType: clickedUiControlField.FieldType,
+                    otherData: fieldClickEvent.otherData
+                });
             } else {
-                const customizeFieldClickedData = new PepFormFieldClickedData(
-                    this.singleData.Data.UID.toString(),
-                    fieldClickEvent.key,
-                    this.singleData.Data.Type,
-                    fieldClickEvent.eventWhich,
-                    fieldClickEvent.value,
-                    clickedUiControlField.FieldType,
-                    fieldClickEvent.otherData
-                );
-                this.fieldClick.emit(customizeFieldClickedData);
+                this.fieldClick.emit({
+                    id: this.singleData.Data.UID.toString(),
+                    key: fieldClickEvent.key,
+                    idType: this.singleData.Data.Type.toString(),
+                    which: fieldClickEvent.eventWhich,
+                    value: fieldClickEvent.value,
+                    fieldType: clickedUiControlField.FieldType,
+                    otherData: fieldClickEvent.otherData
+                });
             }
         } else {
             // For other api names (like enter children etc).
-            const customizeFieldClickedData = new PepFormFieldClickedData(
-                this.singleData.Data.UID.toString(),
-                fieldClickEvent.key,
-                this.singleData.Data.Type,
-                fieldClickEvent.eventWhich,
-                fieldClickEvent.value,
-                null,
-                fieldClickEvent.otherData
-            );
-            this.fieldClick.emit(customizeFieldClickedData);
+            this.fieldClick.emit({
+                id: this.singleData.Data.UID.toString(),
+                key: fieldClickEvent.key,
+                idType: this.singleData.Data.Type.toString(),
+                which: fieldClickEvent.eventWhich,
+                value: fieldClickEvent.value,
+                otherData: fieldClickEvent.otherData
+            });
         }
     }
 
@@ -1241,18 +1251,19 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         const clickedUiControlField = this.singleData.Data.Fields.filter(f => f.ApiName === fieldClickEvent.key)[0];
         const dataField: any = this.singleData.Data;
         const fieldType = typeof clickedUiControlField !== 'undefined' ? clickedUiControlField.FieldType : FIELD_TYPE.Package;
-        const customizeFieldClickedData = new PepFormFieldClickedData(
-            dataField.UID.toString(),
-            fieldClickEvent.key,
-            dataField.Type,
-            fieldClickEvent.eventWhich,
-            fieldClickEvent.value,
+         
+        this.menuItemClick.emit({
+            id: dataField.UID.toString(),
+            key: fieldClickEvent.key,
+            idType: dataField.Type,
+            which: fieldClickEvent.eventWhich,
+            value: fieldClickEvent.value,
             fieldType,
-            {
+            otherData: {
                 ExtraInfo: dataField.ExtraInfo,
                 ItemType: dataField.TransactionItemType
-            });
-        this.menuItemClick.emit(customizeFieldClickedData);
+            }
+        });
     }
 
     getInternalLinkHref(): string {

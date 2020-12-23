@@ -5,7 +5,7 @@
 // @Directive({
 //     selector: '[pepPreventDoubleClick]'
 // })
-// export class PreventDoubleClickDirective implements OnInit, OnDestroy {
+// export class PepPreventDoubleClickDirective implements OnInit, OnDestroy {
 //     @Input() throttleTime = 2000;
 //     @Output() throttledClick = new EventEmitter();
 
