@@ -1,17 +1,12 @@
 <div class="addon-page-container ui-test-container">
-
     <pep-top-bar [title]="'Components_Example_Title' | translate">
         <div header-start-content>
 
         </div>
         <div header-end-content>
-            <button class="pep-button stong md spacing-element" (click)="toggleMenu()">
-                toggle menu
-            </button>
             <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'spacing-element '">
             </pep-button>
         </div>
-        <pep-list-actions [actions]="menuItems" (actionClick)="onMenuItemClicked($event)"></pep-list-actions>
     </pep-top-bar>
     <!-- <div class="header-content ">
         <div class="content pep-border-bottom">

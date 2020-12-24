@@ -1,0 +1,11 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.sorting-container {
+    display: flex;
+    align-items: center;
+
+    .sort-by {
+        margin-inline-end: $spacing-sm;
+    }
+}

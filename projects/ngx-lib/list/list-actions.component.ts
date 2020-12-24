@@ -7,7 +7,6 @@ import { IPepMenuStateChangeEvent, PepMenuItem, IPepMenuItemClickEvent } from '@
     templateUrl: './list-actions.component.html',
     styleUrls: ['./list-actions.component.scss']
 })
-
 @Injectable()
 export class PepListActionsComponent implements OnInit {
     @Input() actions: Array<PepMenuItem> = null;

@@ -78,18 +78,17 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pageType = '';
     @Input() totalsRow = [];
 
-    @Output() thumbnailClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
-    @Output() fieldClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
-    @Output() menuItemClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
+    @Output() itemClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
+    @Output() fieldClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
     @Output() valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
-    @Output() listChange: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
+    @Output() change: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
     @Output() sortingChange: EventEmitter<IPepListSortingChangeEvent> = new EventEmitter<IPepListSortingChangeEvent>();
 
     @Output() selectedItemsChange: EventEmitter<number> = new EventEmitter<number>();
     @Output() selectAllClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() singleActionClick: EventEmitter<any> = new EventEmitter<any>();
 
-    @Output() listLoad: EventEmitter<any> = new EventEmitter<any>();
+    @Output() load: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild(PepVirtualScrollComponent) virtualScroll: PepVirtualScrollComponent;
     @ViewChild('noVirtualScrollCont') noVirtualScrollCont: ElementRef;
@@ -176,8 +175,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.valueChange.unsubscribe();
         }
 
-        if (this.listChange) {
-            this.listChange.unsubscribe();
+        if (this.change) {
+            this.change.unsubscribe();
         }
 
         if (this.sortingChange) {
@@ -188,12 +187,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.fieldClick.unsubscribe();
         }
 
-        if (this.menuItemClick) {
-            this.menuItemClick.unsubscribe();
-        }
-
-        if (this.thumbnailClick) {
-            this.thumbnailClick.unsubscribe();
+        if (this.itemClick) {
+            this.itemClick.unsubscribe();
         }
 
         this.saveSortingToSession();
@@ -668,7 +663,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     );
                 }
 
-                this.listChange.emit(event);
+                this.change.emit(event);
                 // this.lockEvents = true;
             } else {
                 // this.scrollItems = this.items.slice(event.start, event.end);
@@ -713,7 +708,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     //             event.toIndex = Math.min(event.endIndex + (top - (event.endIndex - event.startIndex)), this.totalRows);
     //             // }
 
-    //             this.listChange.emit(event);
+    //             this.change.emit(event);
     //             // this.lockEvents = true;
     //         } else {
     //             // this.scrollItems = this.items.slice(event.start, event.end);
@@ -723,7 +718,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     // }
 
     onListLoad(event: any): void {
-        this.listLoad.emit(event);
+        this.load.emit(event);
     }
 
     getParentContainer(): Element | Window {
@@ -744,14 +739,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.fieldClick.emit(customizeFieldClickedData);
-    }
-
-    onCustomizeFieldMenuClicked(customizeFieldClickedData: IPepFormFieldClickEvent): void {
-        if (this.disabled) {
-            return;
-        }
-
-        this.menuItemClick.emit(customizeFieldClickedData);
     }
 
     getIsDisabled(singleData: ObjectSingleData): boolean {
@@ -928,8 +915,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 return;
             }
 
-            this.thumbnailClick.emit({ source: objectSingleData });
         }
+
+        this.itemClick.emit({ source: objectSingleData, viewType: this.viewType });
     }
 
     setItemClicked(
@@ -1002,9 +990,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getThumbnailsLayout(): PepLayoutType {
-        return this.layoutType == null
-            ? 'card'
-            : this.layoutType;
+        return this.layoutType ?? 'card';
     }
 
     // call this function after resize + animation end

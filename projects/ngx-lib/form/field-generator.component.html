@@ -99,7 +99,7 @@
     </pep-internal-button>
     <pep-internal-menu *ngSwitchCase="'menu'" [key]="field.key" [label]="field.label" [disabled]="field.disabled"
         [xAlignment]="field.xAlignment" [options]="field.options" [layoutType]="layoutType"
-        (elementClick)="onClick($event)" (menuItemClick)="onMenuItemClicked($event)">
+        (elementClick)="onClick($event)">
     </pep-internal-menu>
     <pep-internal-page *ngSwitchCase="'internalPage'" [field]="field" [layoutType]="layoutType"
         (childClick)="onChildClick($event)" (childChange)="onChildChanged($event)">

@@ -22,9 +22,7 @@ export class TopBarExampleComponent implements OnInit {
     searchString = '';
     searchAutoCompleteValues = [];
 
-    constructor(
-        public layoutService: PepLayoutService
-    ) { 
+    constructor(public layoutService: PepLayoutService) { 
         this.layoutService.onResize$.pipe().subscribe(size => {
             this.screenSize = size;
         });

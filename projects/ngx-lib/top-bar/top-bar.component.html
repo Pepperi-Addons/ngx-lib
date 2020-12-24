@@ -11,6 +11,8 @@
                 </div>
                 <div class="right-container spacing-element-negative">
                     <ng-container *ngTemplateOutlet="searchTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="sortingTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="viewsTemplate"></ng-container>
                     <ng-container *ngTemplateOutlet="rightContentTemplate"></ng-container>
                 </div>
             </div>
@@ -53,7 +55,7 @@
 </ng-template>
 
 <ng-template #listChooserTemplate>
-    <div *ngIf="!searchIsOpenAndSmallDevice" class="spacing-element ">
+    <div *ngIf="!searchIsOpenAndSmallDevice" [ngClass]="{ 'spacing-element': listChooserComp }">
         <ng-content select="pep-list-chooser"></ng-content>
     </div>
 </ng-template>
@@ -65,15 +67,27 @@
 </ng-template>
 
 <ng-template #listTotalTemplate>
-    <div *ngIf="!searchIsOpenAndSmallDevice" class="spacing-element ">
+    <div *ngIf="!searchIsOpenAndSmallDevice" [ngClass]="{ 'spacing-element': listTotalComp }">
         <ng-content select="pep-list-total"></ng-content>
     </div>
 </ng-template>
 
 <!-- Right side templates -->
 <ng-template #searchTemplate>
-    <div class="spacing-element ">
+    <div [ngClass]="{ 'spacing-element': searchComp }">
         <ng-content select="pep-search"></ng-content>
+    </div>
+</ng-template>
+
+<ng-template #sortingTemplate>
+    <div *ngIf="!searchIsOpenAndSmallDevice" [ngClass]="{ 'spacing-element': listSortingComp }">
+        <ng-content select="pep-list-sorting"></ng-content>
+    </div>
+</ng-template>
+
+<ng-template #viewsTemplate>
+    <div *ngIf="!searchIsOpenAndSmallDevice" [ngClass]="{ 'spacing-element': listViewsComp }" class="flex-wrapper">
+        <ng-content select="pep-list-views"></ng-content>
     </div>
 </ng-template>
 

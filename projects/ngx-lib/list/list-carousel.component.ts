@@ -3,10 +3,8 @@ import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild,
 import { ObjectSingleData, UIControl } from '@pepperi-addons/ngx-lib';
 import { PepCarouselComponent } from '@pepperi-addons/ngx-lib/carousel';
 
-export class PepListCarouselItemClickEvent {
-    constructor(
-        public source: ObjectSingleData,
-    ) { }
+export interface IPepListCarouselItemClickEvent {
+    source: ObjectSingleData;
 }
 
 @Component({
@@ -21,7 +19,7 @@ export class PepListCarouselComponent implements OnInit, OnDestroy {
     @Input() items: Array<ObjectSingleData>; 
     @Input() itemSize: 'xs' | 'sm' | 'md' = 'xs';
 
-    @Output() itemClick: EventEmitter<PepListCarouselItemClickEvent> = new EventEmitter<PepListCarouselItemClickEvent>();
+    @Output() itemClick: EventEmitter<IPepListCarouselItemClickEvent> = new EventEmitter<IPepListCarouselItemClickEvent>();
     
     @ViewChild('carousel', {read: PepCarouselComponent}) carousel: PepCarouselComponent;
     
@@ -44,7 +42,7 @@ export class PepListCarouselComponent implements OnInit, OnDestroy {
     }
 
     itemClicked(objectSingleData: ObjectSingleData): void {
-        this.itemClick.emit(new PepListCarouselItemClickEvent(objectSingleData));
+        this.itemClick.emit({ source: objectSingleData });
     }
 
     moveLeft() {

@@ -21,7 +21,7 @@ export class PepInternalMenuComponent implements OnDestroy {
 
     @Input() layoutType: PepLayoutType = 'form';
     @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
-    @Output() menuItemClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    // @Output() menuItemClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
     
     constructor() { }
 
@@ -30,9 +30,9 @@ export class PepInternalMenuComponent implements OnDestroy {
             this.elementClick.unsubscribe();
         }
 
-        if (this.menuItemClick) {
-            this.menuItemClick.unsubscribe();
-        }
+        // if (this.menuItemClick) {
+        //     this.menuItemClick.unsubscribe();
+        // }
     }
 
     menuClicked(event: any): void {
@@ -40,6 +40,7 @@ export class PepInternalMenuComponent implements OnDestroy {
     }
 
     menuItemClicked(itemKey: any): void {
-        this.menuItemClick.emit({ key: itemKey });
+        // Not in use comment in version 16.55 for webapp.
+        // this.menuItemClick.emit({ key: itemKey });
     }
 }

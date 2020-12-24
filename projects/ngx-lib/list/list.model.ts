@@ -5,7 +5,8 @@ export type PepListSelectionType = 'none' | 'single' | 'single-action' | 'multi'
 export type PepListViewType = '' | 'cards' | 'lines' | 'table' | 'map';
 
 export interface IPepListItemClickEvent {
-    source: ObjectSingleData
+    source: ObjectSingleData,
+    viewType: PepListViewType
 }
 
 export class PepSelectionData {

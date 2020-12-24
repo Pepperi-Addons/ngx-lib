@@ -62,6 +62,7 @@
         "NONE": "None",
         "SELECT": "Select",
         "SELECTED": "selected",
+        "SORT_BY": "Sort by",
         "SORT_ASC": "Ascending",
         "SORT_DESC": "Descending",
         "TOTAL_RESULTS": "<span class='bold number'>{{ totalRows }}</span> results",

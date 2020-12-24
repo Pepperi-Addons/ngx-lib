@@ -89,8 +89,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
     @Output() fieldClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
-    @Output() menuItemClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
-
+    
     isLocked = false;
     formGutterSize;
     cardGutterSize;
@@ -706,8 +705,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         if (this.childChange) { this.childChange.unsubscribe(); }
 
         if (this.fieldClick) { this.fieldClick.unsubscribe(); }
-
-        if (this.menuItemClick) { this.menuItemClick.unsubscribe(); }
     }
 
     getUiControlFields(): Array<UIControlField> {
@@ -1245,25 +1242,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 otherData: fieldClickEvent.otherData
             });
         }
-    }
-
-    onMenuItemClicked(fieldClickEvent: any): void {
-        const clickedUiControlField = this.singleData.Data.Fields.filter(f => f.ApiName === fieldClickEvent.key)[0];
-        const dataField: any = this.singleData.Data;
-        const fieldType = typeof clickedUiControlField !== 'undefined' ? clickedUiControlField.FieldType : FIELD_TYPE.Package;
-         
-        this.menuItemClick.emit({
-            id: dataField.UID.toString(),
-            key: fieldClickEvent.key,
-            idType: dataField.Type,
-            which: fieldClickEvent.eventWhich,
-            value: fieldClickEvent.value,
-            fieldType,
-            otherData: {
-                ExtraInfo: dataField.ExtraInfo,
-                ItemType: dataField.TransactionItemType
-            }
-        });
     }
 
     getInternalLinkHref(): string {

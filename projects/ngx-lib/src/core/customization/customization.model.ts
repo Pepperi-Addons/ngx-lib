@@ -88,23 +88,23 @@ export class PepFieldBase {
         this.accessory = options.accessory || '';
         this.required = !!options.required;
 
-        this.order = options.order === undefined ? 1 : options.order;
+        this.order = options.order ?? 1;
         this.controlType = options.controlType || '';
         // this.type = options.type || '';
         this.placeholder = options.placeholder || '';
         this.hidden = !!options.hidden;
 
-        this.row = options.row === undefined ? 1 : options.row;
-        this.rowSpan = options.rowSpan === undefined ? 1 : options.rowSpan;
-        this.col = options.col === undefined ? 1 : options.col;
-        this.colSpan = options.colSpan === undefined ? 1 : options.colSpan;
+        this.row = options.row ?? 1;
+        this.rowSpan = options.rowSpan ?? 1;
+        this.col = options.col ?? 1;
+        this.colSpan = options.colSpan ?? 1;
 
-        this.xAlignment = options.xAlignment === undefined ? DEFAULT_HORIZONTAL_ALIGNMENT : options.xAlignment;
-        this.yAlignment = options.yAlignment === undefined ? DEFAULT_VERTICAL_ALIGNMENT : options.yAlignment;
+        this.xAlignment = options.xAlignment ?? DEFAULT_HORIZONTAL_ALIGNMENT;
+        this.yAlignment = options.yAlignment ?? DEFAULT_VERTICAL_ALIGNMENT;
 
-        this.maxFieldCharacters = options.maxFieldCharacters === undefined ? 0 : options.maxFieldCharacters;
-        this.minValue = options.minValue === undefined ? 0 : options.minValue;
-        this.maxValue = options.maxValue === undefined ? 0 : options.maxValue;
+        this.maxFieldCharacters = options.maxFieldCharacters ?? 0;
+        this.minValue = options.minValue ?? 0;
+        this.maxValue = options.maxValue ?? 0;
 
         this.update(options);
     }

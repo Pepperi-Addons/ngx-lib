@@ -76,7 +76,7 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
         private renderer: Renderer2,
         private element: ElementRef
     ) {
-        this._toolbarOptions = this.getDefaultToolbarOptions();
+        this.toolbarOptions = this.getDefaultToolbarOptions();
     }
 
     ngOnInit(): void {

@@ -31,7 +31,7 @@ export class PepColorPickerComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: IPepColorPickerDialogData
     ) {
         this.data.type = data ? data.type : 'any';
-        this.data.showAAComplient = data && data.showAAComplient === undefined ? true : (data ? data.showAAComplient : false);
+        this.data.showAAComplient = !data ? false : data.showAAComplient ?? true;
         this.data.textColor = data && data.textColor ? data.textColor : '#fff';
         this.data.contrastRatio = data && data.contrastRatio ? data.contrastRatio : PepContrastRatioType.AA;
     }

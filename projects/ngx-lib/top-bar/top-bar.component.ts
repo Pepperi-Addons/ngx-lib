@@ -2,7 +2,7 @@ import { AfterContentInit, ChangeDetectorRef, ContentChild, ElementRef, ViewChil
 import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { PepCustomizationService, PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { PepSearchComponent } from '@pepperi-addons/ngx-lib/search';
-import { PepListActionsComponent } from '@pepperi-addons/ngx-lib/list';
+import { PepListActionsComponent, PepListChooserComponent, PepListSortingComponent, PepListTotalComponent, PepListViewsComponent } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuStateType } from '@pepperi-addons/ngx-lib/menu';
 import { IPepSearchStateChangeEvent, PepSearchStateType } from '@pepperi-addons/ngx-lib/search';
 import { IPepFooterStateChangeEvent, PepFooterStateType } from './top-bar.model';
@@ -25,6 +25,10 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
 
     @ContentChild(PepSearchComponent) searchComp: PepSearchComponent;
     @ContentChild(PepListActionsComponent) listActionsComp: PepListActionsComponent;
+    @ContentChild(PepListChooserComponent) listChooserComp: PepListChooserComponent;
+    @ContentChild(PepListTotalComponent) listTotalComp: PepListTotalComponent;
+    @ContentChild(PepListSortingComponent) listSortingComp: PepListSortingComponent;
+    @ContentChild(PepListViewsComponent) listViewsComp: PepListViewsComponent;
 
     showFooter = false;
     isHidden = true;
@@ -44,6 +48,12 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
     }
     
     ngAfterViewInit(): void {
+        if (!this.inline) {
+            this.showFooter =
+                this.footerStartContent?.nativeElement?.children?.length > 0 ||
+                this.footerEndContent?.nativeElement?.children?.length > 0;
+        }
+
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
             this.setSearchIsOpenAndSmallDevice();
@@ -52,12 +62,6 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnCh
                 this.setFooterState();
             }
         });
-
-        if (!this.inline) {
-            this.showFooter =
-                this.footerStartContent?.nativeElement?.children?.length > 0 ||
-                this.footerEndContent?.nativeElement?.children?.length > 0;
-        }
             
         this.isHidden = false;
         this.cdRef.detectChanges();

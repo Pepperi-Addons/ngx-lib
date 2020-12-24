@@ -127,8 +127,7 @@
                                 (singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId ||
                                 singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId) && deviceHasMouse
                             " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
-                        (menuItemClick)="onCustomizeFieldMenuClicked($event)" (click)="itemClicked($event, singleData)"
-                        [pageType]="pageType">
+                        (click)="itemClicked($event, singleData)" [pageType]="pageType">
                     </pep-form>
                 </fieldset>
             </div>
@@ -157,8 +156,7 @@
                             (singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId ||
                             singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
-                    (menuItemClick)="onCustomizeFieldMenuClicked($event)" (click)="itemClicked($event, singleData)"
-                    [pageType]="pageType">
+                    (click)="itemClicked($event, singleData)" [pageType]="pageType">
                 </pep-form>
             </div>
         </ng-container>

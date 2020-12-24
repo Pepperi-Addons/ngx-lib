@@ -1,24 +1,7 @@
-﻿<ng-container *ngIf="options?.length > 1">
-    <pep-menu [type]="'select'" [sizeType]="sizeType" [items]="options" [iconName]="'arrow_down'"></pep-menu>
-
-    <!-- <button mat-button
-        [ngClass]="{ 'icon-button': screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS  }"
-        class="pep-button {{ sizeType }} weak " title="{{ selectedOption?.text }}" [matMenuTriggerFor]="chooserMenu"
-        pepMenuBlur>
-        <span *ngIf="screenSize < PepScreenSizeType.XS" class="pull-left flip button-title-with-icon">
-            {{ selectedOption?.text }}
-        </span>
-        <mat-icon>
-            <pep-icon name="arrow_down"></pep-icon>
-        </mat-icon>
-    </button>
-    <mat-menu #chooserMenu="matMenu" xPosition="after">
-        <button mat-menu-item *ngFor="let opt of options" [ngClass]="{ selected: selectedOption?.key == opt?.key }"
-            (click)="onOptionClicked(opt)" title="{{ opt?.text }}">
-            <span>{{ opt?.text }}</span>
-        </button>
-    </mat-menu> -->
+﻿<ng-container *ngIf="menuItems?.length > 1">
+    <pep-menu [type]="'select'" [sizeType]="sizeType" [items]="menuItems" [iconName]="'arrow_down'"
+        (menuItemClick)="onMenuItemClicked($event)"></pep-menu>
 </ng-container>
-<ng-container *ngIf="options?.length == 1">
+<ng-container *ngIf="menuItems?.length == 1">
     <pep-bread-crumbs [breadCrumbs]="breadCrumbs" [addSpacing]="true"></pep-bread-crumbs>
 </ng-container>

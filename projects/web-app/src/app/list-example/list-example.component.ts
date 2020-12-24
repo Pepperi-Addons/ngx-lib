@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { PepHttpService, ObjectSingleData, PepDataConvertorService,
-    PepRowData, PepFieldData, FIELD_TYPE } from '@pepperi-addons/ngx-lib';
-import { PepListComponent } from '@pepperi-addons/ngx-lib/list';
+import { PepHttpService, ObjectSingleData, PepDataConvertorService, PepLayoutService,
+    PepRowData, PepFieldData, FIELD_TYPE, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { IPepFormFieldClickEvent } from '@pepperi-addons/ngx-lib/form';
+import { IPepListChangeEvent, IPepListChooserOptionChangeEvent, IPepListSortingOptionChangeEvent, PepListComponent, IPepListSortingOption, IPepListView, IListViewChangeEvent } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
 import { PepFooterStateType, IPepFooterStateChangeEvent } from '@pepperi-addons/ngx-lib/top-bar';
 import { FakeData } from './fake-data';
@@ -15,23 +16,26 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     @ViewChild(PepListComponent) customList: PepListComponent;
     dataSource = FakeData.Addons;
 
-    menuItems: Array<PepMenuItem>;
-    options: Array<PepMenuItem>;
+    menuActions: Array<PepMenuItem>;
+    listOptions: Array<PepMenuItem>;
+    sortingOptions: Array<IPepListSortingOption>;
+    views: Array<IPepListView>;
     
     footerState: PepFooterStateType;
+
+    PepScreenSizeType = PepScreenSizeType;
+    screenSize: PepScreenSizeType;
 
     constructor(
         private translate: TranslateService,
         private dataConvertorService: PepDataConvertorService,
-        private httpService: PepHttpService
-    ) {
-        const browserCultureLang = translate.getBrowserCultureLang();
-    }
-
-    ngOnInit() {
-        this.loadMenuItems();
-        this.loadListChooser();
-
+        public layoutService: PepLayoutService
+        // private httpService: PepHttpService
+    ) { 
+        this.layoutService.onResize$.pipe().subscribe(size => {
+            this.screenSize = size;
+        });
+        
         // this.httpService.getPapiHttpCall('/meta_data/transactions/types')
         //     .subscribe(
         //         (res) => {
@@ -46,7 +50,13 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         //             debugger;
         //         }
         // );
+    }
 
+    ngOnInit() {
+        this.loadMenuItems();
+        this.loadListChooser();
+        this.loadListSorting();
+        this.loadViews();
     }
 
     ngAfterViewInit(): void {
@@ -56,36 +66,48 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     }
 
     private loadMenuItems(): void {
-        this.menuItems = this.getMenuItems();
+        this.menuActions = this.getMenuActions();
     }
 
-    getMenuItems(): Array<PepMenuItem> {
-        const menuItems: Array<PepMenuItem> = [
+    getMenuActions(): Array<PepMenuItem> {
+        const menuActions: Array<PepMenuItem> = [
             { key: 'test1', text: 'test 1'},
             { key: 'test2', text: 'test 2', disabled: true },
             { key: 'sep', type: 'splitter' },
             { key: 'test3', text: 'test 3'}];
 
-        return menuItems;
-    }
-
-    private loadListChooser(): void {
-        this.options =  [
-            { key: 'accounts', text: 'accounts'},
-            { key: 'orders', text: 'orders'}
-        ];
-    }
-
-    toggleMenu(): void {
-        this.menuItems = this.menuItems === null ? this.getMenuItems() : null;
+        return menuActions;
     }
 
     onMenuItemClicked(action: IPepMenuItemClickEvent): void {
         alert(action.source.key);
     }
 
-    menuClicked(event): void {
-        alert('menu clicked');
+    private loadListChooser(): void {
+        this.listOptions =  [
+            { key: 'accounts', text: 'accounts'},
+            { key: 'orders', text: 'orders'}
+        ];
+    }
+
+    private loadListSorting(): void {
+        this.sortingOptions =  [
+            { sortBy: 'a-z', title: 'A -> Z', isAsc: true},
+            { sortBy: 'z-a', title: 'Z -> A', isAsc: false},
+            { sortBy: 'index', title: 'Index'}
+        ];
+    }
+
+    private loadViews(): void {
+        this.views =  [
+            { key: 'table', title: 'table view', iconName: 'view_table'},
+            { key: 'line', title: 'line view', iconName: 'view_line'},
+            { key: 'card', title: 'card view', iconName: 'view_card_md'},
+        ];
+    }
+
+    toggleMenu(): void {
+        this.menuActions = this.menuActions === null ? this.getMenuActions() : null;
     }
 
     onAnimationStateChange(state): void {
@@ -169,12 +191,23 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         this.footerState = footerStateType.state;
     }
 
-    onListChange(event) {
+    onListChange(event: IPepListChangeEvent) {
     }
 
-    onCustomizeFieldClick(event) {
+    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) {
     }
 
-    selectedRowsChanged(selectedRowsCount) {
+    selectedRowsChanged(selectedRowsCount: number) {
+    }
+
+    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) {
+    }
+
+    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) {
+        
+    }
+
+    onViewChanged(viewChangeEvent: IListViewChangeEvent) {
+        debugger;
     }
 }

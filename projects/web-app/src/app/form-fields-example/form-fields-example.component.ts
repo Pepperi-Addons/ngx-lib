@@ -37,29 +37,11 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadMenuItems();
-    }
-
-    getMenuItems(): Array<PepMenuItem> {
-        const menuItems: Array<PepMenuItem> = [
+        this.menuItems = [
             { key: 'test1', text: 'test 1'},
             { key: 'test2', text: 'test 2', disabled: true },
             { key: 'sep', type: 'splitter' },
             { key: 'test3', text: 'test 3'}];
-
-        return menuItems;
-    }
-
-    private loadMenuItems(): void {
-        this.menuItems = this.getMenuItems();
-    }
-
-    toggleMenu(): void {
-        this.menuItems = this.menuItems === null ? this.getMenuItems() : null;
-    }
-
-    onMenuItemClicked(action: IPepMenuItemClickEvent): void {
-        alert(action.source.key);
     }
 
     menuClicked(event): void {

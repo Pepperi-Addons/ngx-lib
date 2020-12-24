@@ -38,9 +38,9 @@ export class PepDialogData {
         this.title = options.title || '';
         this.type = options.type || 'close';
         this.content = options.content || '';
-        this.showClose = options.showClose === undefined ? true : options.showClose;
-        this.showHeader = options.showHeader === undefined ? true : options.showHeader;
-        this.showFooter = options.showFooter === undefined ? true : options.showFooter;
+        this.showClose = options.showClose ?? true;
+        this.showHeader = options.showHeader ?? true;
+        this.showFooter = options.showFooter ?? true;
         this.actionButtons = options.actionButtons ?? null;
     }
 }

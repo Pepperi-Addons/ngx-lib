@@ -25,18 +25,21 @@
         <div footer-end-content>
 
         </div>
-        <pep-list-actions [actions]="menuItems"></pep-list-actions>
+        <pep-list-actions [actions]="menuActions" (actionClick)="onMenuItemClicked($event)"></pep-list-actions>
         <pep-list-total [totalRows]="customList?.totalRows"></pep-list-total>
-        <pep-list-chooser [options]="options"></pep-list-chooser>
+        <pep-list-chooser [options]="listOptions" (change)="onListChanged($event)"></pep-list-chooser>
+        <pep-list-sorting [options]="sortingOptions" (change)="onSortingChanged($event)">
+        </pep-list-sorting>
+        <pep-list-views [views]="views" [displayType]="screenSize > PepScreenSizeType.SM ? 'menu' : 'buttons'"
+            (change)="onViewChanged($event)"></pep-list-views>
     </pep-top-bar>
     <div class="main-content ">
         <div class="content">
             <div class="list-container" #listContainer>
                 <pep-list [firstFieldAsLink]="false" [isReport]="false" [supportSorting]="false"
                     [supportResizing]="false" [selectionTypeForActions]="'multi'" [noDataFoundMsg]="'No data'"
-                    [parentScroll]="listContainer" (notifyListChanged)="onListChange($event)"
-                    (notifyFieldClicked)="onCustomizeFieldClick($event)"
-                    (notifySelectedItemsChanged)="selectedRowsChanged($event)">
+                    [parentScroll]="listContainer" (listChanged)="onListChange($event)"
+                    (fieldClick)="onCustomizeFieldClick($event)" (selectedItemsChange)="selectedRowsChanged($event)">
                 </pep-list>
             </div>
 
@@ -52,8 +55,10 @@
                             [iconName]="'system_settings'">
                         </pep-button>
                     </div>
-                    <pep-list-actions [actions]="menuItems" [sizeType]="'sm'"></pep-list-actions>
-                    <pep-list-chooser [options]="options" [sizeType]="'sm'"></pep-list-chooser>
+                    <pep-list-actions [actions]="menuActions" [sizeType]="'sm'"></pep-list-actions>
+                    <pep-list-chooser [options]="listOptions" [sizeType]="'sm'"></pep-list-chooser>
+                    <pep-list-sorting [options]="sortingOptions" [sizeType]="'sm'" (change)="onSortingChanged($event)">
+                    </pep-list-sorting>
                 </pep-top-bar>
                 <pep-textbox [key]="'Number'" [label]="'Pepperi Number'" [type]="'real'" [xAlignment]="'left'"
                     [value]="'9399371'" [required]="true" [formattedValue]="'9,399,371'">

@@ -56,10 +56,7 @@ export class PepInternalListComponent
     @Input() totalsRow = [];
 
     @Output() fieldClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
-    @Output() menuItemClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
     @Output() valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
-
-    @Output() listLoad: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('noVirtualScrollCont') noVirtualScrollCont: ElementRef;
     @ViewChild('tableHeader') tableHeader: ElementRef;
@@ -132,10 +129,6 @@ export class PepInternalListComponent
 
         if (this.fieldClick) {
             this.fieldClick.unsubscribe();
-        }
-
-        if (this.menuItemClick) {
-            this.menuItemClick.unsubscribe();
         }
     }
 
@@ -448,10 +441,6 @@ export class PepInternalListComponent
         }
     }
 
-    onListLoad(event: any): void {
-        this.listLoad.emit(event);
-    }
-
     getParentContainer(): Element | Window {
         return this.parentScroll ? this.parentScroll : window;
     }
@@ -470,14 +459,6 @@ export class PepInternalListComponent
         }
 
         this.fieldClick.emit(customizeFieldClickedData);
-    }
-
-    onCustomizeFieldMenuClicked(customizeFieldClickedData: IPepFormFieldClickEvent): void {
-        if (this.disabled) {
-            return;
-        }
-
-        this.menuItemClick.emit(customizeFieldClickedData);
     }
 
     getIsDisabled(singleData: ObjectSingleData): boolean {
@@ -588,8 +569,7 @@ export class PepInternalListComponent
         this.cleanItems();
 
         this.updateListItems(items, null);
-        this.onListLoad(null);
-
+        
         this.setLayout();
     }
 
