@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { retry, catchError, tap } from 'rxjs/operators';
 import { PepSessionService } from '../../common/services/session.service';
@@ -42,8 +42,8 @@ export class PepHttpService {
                 return `Access Denied: ${response.message}`;
             }
             case 500: {
-                if (response?.error?.fault?.faultString) {
-                    return `Internal Server Error: ${response.error.fault.faultString}`;
+                if (response?.error?.fault?.faultstring) {
+                    return `Internal Server Error: ${response.error.fault.faultstring}`;
                 }
                 else {
                     return `Internal Server Error: ${response.message}`;
@@ -54,7 +54,7 @@ export class PepHttpService {
             }
         }
     }
-    
+
     // Add authorization token if the token exist.
     private addAuthorizationToken(httpOptions: any = {}): any {
         if (!httpOptions.headers.has(this.AUTH_HEADER)) {

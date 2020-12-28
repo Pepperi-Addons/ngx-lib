@@ -1,0 +1,26 @@
+{
+    "name": "ngx-lib-elements",
+    "version": "0.0.1",
+    "description": "Pep Web Components",
+    "main": "karma.conf.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Pep-Addons/ngx-lib.git"
+    },
+    "author": "Pep",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Pep-Addons/ngx-lib/issues"
+    },
+    "homepage": "https://github.com/Pep-Addons/ngx-lib#readme",
+    "files": [
+        "elements.js",
+        "styles.css"
+    ],
+    "dependencies": {
+        "concat-files": "^0.1.1"
+    }
+}

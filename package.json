@@ -19,7 +19,12 @@
         "build+pack+install-lib": "npm run build-lib && npm run pack-lib && npm i",
         "generate-icons": "svg-to-ts",
         "analyze": "ng build web-app --prod --stats-json && webpack-bundle-analyzer ./dist/web-app/stats.json",
-        "webpack": "webpack"
+        "webpack": "webpack",
+        "bundle:ngx-lib-elements": "cd dist && cd ngx-lib-elements && concat-cli -f main.js polyfills.js runtime.js 4.js -o assets/scripts/pepperi-elements.js",
+        "build:ngx-lib-elements": "ng build --prod --project ngx-lib-elements --output-hashing none && cd dist && cd ngx-lib-elements && npm run bundle:ngx-lib-elements",
+        "delete:ngx-lib-elements": "rimraf ./dist/ngx-lib-elements/main.js ./dist/ngx-lib-elements/polyfills.js ./dist/ngx-lib-elements/runtime.js ./dist/ngx-lib-elements/scripts.js ./dist/ngx-lib-elements/4.js ./dist/ngx-lib-elements/3rdpartylicenses.txt",
+        "serve:ngx-lib-elements": "cd dist && cd ngx-lib-elements &&  http-server  -p 4333 -d --cors",
+        "build+serve:ngx-lib-elements": "npm run build:ngx-lib-elements && npm run delete:ngx-lib-elements && npm run serve:ngx-lib-elements"
     },
     "svg-to-ts": {
         "conversionType": "constants",
@@ -43,6 +48,7 @@
     },
     "private": true,
     "dependencies": {
+        "@angular-builders/custom-webpack": "^11.0.0",
         "@angular/animations": "~10.0.6",
         "@angular/cdk": "^10.0.1",
         "@angular/common": "~10.0.6",
