@@ -2,6 +2,8 @@ import { ObjectSingleData } from '@pepperi-addons/ngx-lib';
 
 export type PepListSelectionType = 'none' | 'single' | 'single-action' | 'multi';
 
+export type PepListPagerType = 'pages' | 'scroll' ;
+
 export type PepListViewType = '' | 'cards' | 'lines' | 'table' | 'map';
 
 export interface IPepListItemClickEvent {
@@ -15,14 +17,19 @@ export class PepSelectionData {
     rowTypes: Array<any>;
 }
 
-export interface IPepListChangeEvent {
-    start?: number;
-    end?: number;
-    fromIndex?: number;
-    toIndex?: number;
-    addAtStart?: boolean;
-    calculatedChildHeight?: number;
+export interface IPepListLoadItemsEvent {
+    start: number;
+    end: number;
+    fromIndex: number;
+    toIndex: number;
 }
+
+export interface IPepListLoadPageEvent {
+    pageIndex: number;
+    pageSize: number;
+}
+
+export const DEFAULT_PAGE_SIZE: number = 50;
 
 export interface IPepListSortingChangeEvent {
     sortBy: string;

@@ -16,7 +16,7 @@ export interface IPepListCarouselItemClickEvent {
 export class PepListCarouselComponent implements OnInit, OnDestroy {
     @Input() duration: number = 500;
     @Input() uiControl: UIControl = null;
-    @Input() items: Array<ObjectSingleData>; 
+    @Input() items: Array<ObjectSingleData> = null; 
     @Input() itemSize: 'xs' | 'sm' | 'md' = 'xs';
 
     @Output() itemClick: EventEmitter<IPepListCarouselItemClickEvent> = new EventEmitter<IPepListCarouselItemClickEvent>();

@@ -471,6 +471,7 @@ export interface IPepFieldValueChangeEvent {
 export interface IPepFieldClickEvent {
     key: string;
     value?: string;
+    controlType?: string;
     eventWhich?: any;
     otherData?: any;
 }

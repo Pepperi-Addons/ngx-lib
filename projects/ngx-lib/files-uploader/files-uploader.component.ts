@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FileUploader } from 'ng2-file-upload';
 import { FormGroup } from '@angular/forms';
@@ -46,11 +46,11 @@ export class PepFilesUploaderComponent implements OnInit {
     intervalID: any = null;
 
     constructor(
-        private translate: TranslateService,
         private dialogService: PepDialogService,
         private customizationService: PepCustomizationService,
-        private fileService: PepFileService)
-    {
+        private fileService: PepFileService,
+        private translate: TranslateService
+    ) {
         this.uploader = new FileUploader({ removeAfterUpload: true });
 
         this.uploader.onAfterAddingFile = (item) => {
@@ -164,7 +164,11 @@ export class PepFilesUploaderComponent implements OnInit {
     }
 
     onElementClicked(event): void {
-        this.elementClick.emit({ key: this.key, eventWhich: event.which });
+        this.elementClick.emit({ 
+            key: this.key,
+            controlType: this.controlType,
+            eventWhich: event.which
+        });
     }
 
     onClick_ChooseFile(event): void {

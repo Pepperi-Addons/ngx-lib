@@ -1,10 +1,15 @@
 import { Component, ContentChild, ElementRef, EventEmitter, Input, NgModule, NgZone, OnChanges,
     OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
-import { IPepListChangeEvent } from './list.model';
-
+    
 import * as tween from '@tweenjs/tween.js';
 
 declare var _: any;
+export interface IPepVirtualScrollChangeEvent {
+    start?: number;
+    end?: number;
+    addAtStart?: boolean;
+    calculatedChildHeight?: number;
+}
 
 @Component({
     selector: 'pep-virtual-scroll',
@@ -100,16 +105,16 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
     //viewPortItems: any[];
 
     @Output()
-    change: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
+    change: EventEmitter<IPepVirtualScrollChangeEvent> = new EventEmitter<IPepVirtualScrollChangeEvent>();
 
     @Output()
     load: EventEmitter<void> = new EventEmitter<void>();
 
-    @Output()
-    start: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
+    // @Output()
+    // start: EventEmitter<IPepVirtualScrollChangeEvent> = new EventEmitter<IPepVirtualScrollChangeEvent>();
 
-    @Output()
-    end: EventEmitter<IPepListChangeEvent> = new EventEmitter<IPepListChangeEvent>();
+    // @Output()
+    // end: EventEmitter<IPepVirtualScrollChangeEvent> = new EventEmitter<IPepVirtualScrollChangeEvent>();
 
     @ViewChild('content', { read: ElementRef })
     contentElementRef: ElementRef;

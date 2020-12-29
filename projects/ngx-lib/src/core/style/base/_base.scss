@@ -339,7 +339,7 @@ main {
         }
     }
 
-    $tabs-z-index: 1;
+    $tabs-z-index: $z-index-lowest;
 
     .mat-tab-body-wrapper {
         margin: 0 calc(#{$content-margin} * -1);
@@ -936,7 +936,7 @@ main {
                         }
 
                         &:after {
-                            z-index: 1 !important;
+                            z-index: $z-index-lowest !important;
                         }
                     }
                 }
@@ -996,7 +996,8 @@ main {
                 @include state-weak-hover($pepperi-theme);
             }
             &:active {
-                @include state-weak-active($pepperi-theme);
+                @include state-weak-active($pepperi-theme, color-weak, false);
+                background: get-pep-color($pepperi-theme, color-weak, color-tran-50) !important;
             }
             &:disabled {
                 @include state-weak-disable($pepperi-theme);

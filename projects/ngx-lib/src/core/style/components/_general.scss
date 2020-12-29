@@ -81,7 +81,8 @@
                 top: 0; // Override material default.
                 display: flex;
                 align-self: center;
-
+                z-index: $z-index-lowest + 1;
+                
                 .mat-button {
                     min-width: unset;
                     line-height: unset;
@@ -126,6 +127,7 @@
 
                 .mat-input-element {
                     // vertical-align: unset;
+                    z-index: $z-index-lowest;
                     margin-top: unset;
                     text-overflow: ellipsis;
                 }
@@ -177,16 +179,12 @@
 // ------------------------
 $sorting-width: 1rem;
 
-.table-total,
 .table-header {
-    position: -webkit-sticky;
     position: sticky;
     z-index: $z-index-medium - 5;
     @include box-sizing(border-box);
     width: inherit;
     height: calc(#{$table-field-height} + #{$table-spacing} + #{$table-half-spacing});
-    // padding-top: $table-spacing;
-    // padding: 0 $spacing-sm;
 
     .table-header-padding-top {
         height: $table-spacing;
@@ -498,35 +496,49 @@ $sorting-width: 1rem;
 }
 
 .table-total {
-    // width: inherit;
-    // height: $table-field-height; // 2rem;
-    // margin-bottom: $spacing-xs;
-    // z-index: $z-index-medium;
-    // @include box-sizing(border-box);
-    // border-radius: $table-border-radius;
-    // padding: 0;
-
+    position: sticky;
+    z-index: $z-index-medium - 5;
+    @include box-sizing(border-box);
+    width: inherit;
+    height: calc(#{$table-field-height} + #{$table-spacing} + #{$table-half-spacing});
     padding-top: $table-half-spacing;
 
-    .total-column {
-        padding: 0 $spacing-sm;
-        height: inherit;
-        display: flex;
-        align-items: center;
+    .table-header-fieldset {
+        border-radius: $table-border-radius;
+        height: $table-field-height; // 2rem;
+        margin-bottom: $table-half-spacing; // 0.25rem;
 
-        .total-label {
-            width: 100%;
-            @include box-sizing(border-box);
-            user-select: none;
-            // @include calc(max-width, '100% - 0');
-            max-width: 100%;
-            @include ellipsis();
-            font-weight: $font-weight-bold !important;
-            line-height: $table-field-height; // 2rem !important;
-            margin-bottom: 0;
+        .total-column {
+            padding: 0 $spacing-sm;
+            height: inherit;
+            display: flex;
+            align-items: center;
+
+            .total-label {
+                width: 100%;
+                @include box-sizing(border-box);
+                user-select: none;
+                // @include calc(max-width, '100% - 0');
+                max-width: 100%;
+                @include ellipsis();
+                font-weight: $font-weight-bold !important;
+                line-height: $table-field-height; // 2rem !important;
+                margin-bottom: 0;
+            }
         }
     }
 }
+
+.list-pager {
+    .pager-container {
+        position: sticky;
+        bottom: 0;
+        z-index: $z-index-medium - 5;
+        width: inherit;
+        height: auto;
+    }
+}
+
 
 //  Card view & Line view
 // ------------------------
@@ -915,6 +927,11 @@ $sorting-width: 1rem;
         }
     }
 
+    .list-pager {
+        .pager-container {
+            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+        }
+    }
     // .table-header {
     //     .table-header-fieldset {
     //         box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, soft);

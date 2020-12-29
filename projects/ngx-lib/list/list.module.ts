@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepBreadCrumbsModule } from '@pepperi-addons/ngx-lib/bread-crumbs';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { PepCarouselModule } from '@pepperi-addons/ngx-lib/carousel';
 import {
@@ -18,29 +19,33 @@ import {
     pepIconArrowEither,
     pepIconArrowUp,
     pepIconSystemMust,
+    pepIconArrowRight,
     pepIconArrowRightAlt,
+    pepIconArrowLeft,
     pepIconArrowLeftAlt,
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
-import { PepBreadCrumbsModule } from '@pepperi-addons/ngx-lib/bread-crumbs';
+import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 
 import { PepListComponent } from './list.component';
 import { PepListActionsComponent } from './list-actions.component';
 import { PepListCarouselComponent } from './list-carousel.component';
-import { PepListViewsComponent } from './list-views.component';
 import { PepListChooserComponent } from './list-chooser.component';
+import { PepListPagerComponent } from './list-pager.component';
 import { PepListSortingComponent } from './list-sorting.component';
 import { PepListTotalComponent } from './list-total.component';
+import { PepListViewsComponent } from './list-views.component';
 
 const listComponents = [
     PepListComponent,
     PepListActionsComponent,
     PepListCarouselComponent,
-    PepListViewsComponent,
     PepListChooserComponent,
+    PepListPagerComponent,
     PepListSortingComponent,
     PepListTotalComponent,
+    PepListViewsComponent,
 ];
 
 import { PepVirtualScrollComponent } from './virtual-scroll.component';
@@ -56,12 +61,13 @@ import { PepVirtualScrollComponent } from './virtual-scroll.component';
         MatMenuModule,
         // ngx-lib modules
         PepNgxLibModule,
+        PepBreadCrumbsModule,
         PepButtonModule,
         PepCarouselModule,
         PepIconModule,
         PepFormModule,
         PepMenuModule,
-        PepBreadCrumbsModule
+        PepTextboxModule,
     ],
     exports: [
         listComponents
@@ -78,7 +84,9 @@ export class PepListModule {
             pepIconArrowEither,
             pepIconArrowUp,
             pepIconSystemMust,
+            pepIconArrowRight,
             pepIconArrowRightAlt,
+            pepIconArrowLeft,
             pepIconArrowLeftAlt,
         ]);
     }

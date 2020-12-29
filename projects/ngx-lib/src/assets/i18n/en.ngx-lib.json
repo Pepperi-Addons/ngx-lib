@@ -60,6 +60,10 @@
     "LIST": {
         "ALL": "All",
         "NONE": "None",
+        "PAGER_PREVIOUS": "Previous",
+        "PAGER_NEXT": "Next",
+        "PAGER_OUT_OF": "Out of",
+        "PAGER_PAGE": "Page",
         "SELECT": "Select",
         "SELECTED": "selected",
         "SORT_BY": "Sort by",

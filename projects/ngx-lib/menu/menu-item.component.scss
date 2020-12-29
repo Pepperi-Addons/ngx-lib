@@ -57,3 +57,9 @@
         }
     }
 }
+
+.mat-menu-item-submenu-trigger::after {
+    width: unset;
+    height: unset;
+    transform: unset;
+}

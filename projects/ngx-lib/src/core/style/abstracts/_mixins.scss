@@ -263,7 +263,7 @@
 
         // 👆 Requires parent element to be 'position: relative;'
         &:after {
-            z-index: -1;
+            z-index: $z-index-lowest -1;
             content: "";
             transition: all 0.25s; // same as 'pep-btn' @mixin
             display: block;
@@ -279,8 +279,8 @@
 }
 
 @mixin fix-inline-z-index() {
-    // to fix the -1 z-index in the inline &:after.
-    z-index: 1;
+    // to fix the z-index in the inline &:after.
+    z-index: $z-index-lowest;
 }
 
 @mixin mat-badge-content() {
@@ -386,7 +386,7 @@
 // ******************************************************************************
 //                       State weak declerations
 // ******************************************************************************
-@mixin pep-state-default($pepperi-theme, $style: weak, $color-name: null) {
+@mixin pep-state-default($pepperi-theme, $style: weak, $color-name: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-default($pepperi-theme);
     } @else if ($style == 'weak-invert') {
@@ -396,10 +396,10 @@
     } @else if ($style == 'strong') {
         @include state-strong-default($pepperi-theme, $color-name);
     } @else { // regular.
-        @include state-regular-default($pepperi-theme, true, $color-name);
+        @include state-regular-default($pepperi-theme, $regularBorder, $color-name);
     }
 }
-@mixin pep-state-disable($pepperi-theme, $style: weak, $color-name: null) {
+@mixin pep-state-disable($pepperi-theme, $style: weak, $color-name: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-disable($pepperi-theme);
     } @else if ($style == 'weak-invert') {
@@ -409,10 +409,10 @@
     } @else if ($style == 'strong') {
         @include state-strong-disable($pepperi-theme, $color-name);
     } @else { // regular.
-        @include state-regular-disable($pepperi-theme, true, $color-name);
+        @include state-regular-disable($pepperi-theme, $regularBorder, $color-name);
     }
 }
-@mixin pep-state-hover($pepperi-theme, $style: weak, $color-name: null) {
+@mixin pep-state-hover($pepperi-theme, $style: weak, $color-name: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-hover($pepperi-theme);
     } @else if ($style == 'weak-invert') {
@@ -422,10 +422,10 @@
     } @else if ($style == 'strong') {
         @include state-strong-hover($pepperi-theme, $color-name);
     } @else { // regular.
-        @include state-regular-hover($pepperi-theme, true, $color-name);
+        @include state-regular-hover($pepperi-theme, $regularBorder, $color-name);
     }
 }
-@mixin pep-state-active($pepperi-theme, $style: weak, $color-name: null) {
+@mixin pep-state-active($pepperi-theme, $style: weak, $color-name: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-active($pepperi-theme);
     } @else if ($style == 'weak-invert') {
@@ -435,10 +435,10 @@
     } @else if ($style == 'strong') {
         @include state-strong-active($pepperi-theme, $color-name);
     } @else { // regular.
-        @include state-regular-active($pepperi-theme, true, $color-name);
+        @include state-regular-active($pepperi-theme, $regularBorder, $color-name);
     }
 }
-@mixin pep-state-focus($pepperi-theme, $style: weak, $color-name: null) {
+@mixin pep-state-focus($pepperi-theme, $style: weak, $color-name: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-focus($pepperi-theme);
     } @else if ($style == 'weak-invert') {
@@ -448,7 +448,7 @@
     } @else if ($style == 'strong') {
         @include state-strong-focus($pepperi-theme, $color-name);
     } @else { // regular.
-        @include state-regular-focus($pepperi-theme, true, $color-name);
+        @include state-regular-focus($pepperi-theme, $regularBorder, $color-name);
     }
 }
 
@@ -484,8 +484,8 @@
     }
 
     &:not(.keep-background-on-focus) {
-        background: get-pep-color($pepperi-theme, $color-map-name, color-tran-0); // TODO: In Table view is gray so what sould we do ask Yonatan.
-        // background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+        // background: get-pep-color($pepperi-theme, $color-map-name, color-tran-0); // TODO: In Table view is gray so what sould we do ask Yonatan.
+        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
     }
 
     box-shadow: get-pep-shadow($pepperi-theme, shadow-xs, soft);
@@ -672,19 +672,19 @@
 //                       Buttons states declerations
 // ******************************************************************************
 @mixin pep-button-states($pepperi-theme, $style: weak, $color-name: null) {
-    @include pep-state-default($pepperi-theme, $style, $color-name);
+    @include pep-state-default($pepperi-theme, $style, $color-name, true);
     &:hover {
-        @include pep-state-hover($pepperi-theme, $style, $color-name);
+        @include pep-state-hover($pepperi-theme, $style, $color-name, true);
     }
     &:focus {
-        @include pep-state-focus($pepperi-theme, $style, $color-name);
+        @include pep-state-focus($pepperi-theme, $style, $color-name, true);
     }
     &:active {
-        @include pep-state-active($pepperi-theme, $style, $color-name);
+        @include pep-state-active($pepperi-theme, $style, $color-name, true);
     }
     &:disabled {
         &:not(.ignore-disabled) {
-            @include pep-state-disable($pepperi-theme, $style, $color-name);
+            @include pep-state-disable($pepperi-theme, $style, $color-name, true);
         }
     }
 }

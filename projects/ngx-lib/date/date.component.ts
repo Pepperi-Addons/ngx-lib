@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, Renderer2, OnDestroy, OnChanges } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, Renderer2, OnDestroy, OnChanges, Optional } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
@@ -111,8 +111,8 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
-        private translate: TranslateService,
-        private adapter: DateAdapter<any>
+        private adapter: DateAdapter<any>,
+        private translate: TranslateService
     ) { }
 
     ngOnInit(): void {

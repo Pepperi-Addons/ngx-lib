@@ -49,7 +49,7 @@ export class PepInternalListComponent
     @Input() supportResizing = true;
     @Input() parentScroll: Element | Window = null;
     @Input() disabled = false;
-    @Input() isPrinting = false;
+    @Input() disableEvents = false;
     @Input() disableSelectionItems = false;
     @Input() layoutType: PepLayoutType = null;
     @Input() pageType = '';
@@ -420,7 +420,7 @@ export class PepInternalListComponent
     }
 
     onListChange(event: any): void {
-        if (this.isPrinting) {
+        if (this.disableEvents) {
             return;
         }
 
@@ -568,12 +568,12 @@ export class PepInternalListComponent
 
         this.cleanItems();
 
-        this.updateListItems(items, null);
+        this.updateItems(items);
         
         this.setLayout();
     }
 
-    updateListItems(items: ObjectSingleData[], event: any): void {
+    private updateItems(items: ObjectSingleData[]): void {
         this.scrollItems = this.items = items;
         this.itemsCounter = items.length;
     }

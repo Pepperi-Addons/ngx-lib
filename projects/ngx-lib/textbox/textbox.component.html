@@ -1,9 +1,9 @@
 <ng-container [formGroup]="form">
     <!-- New code -->
     <ng-template #pepTemplate let-isFormView="isFormView" let-hasParent="hasParent">
-        <pep-field-title *ngIf="isFormView && !hasParent" [label]="label" [required]="required" [disabled]="disabled"
-            [maxFieldCharacters]="maxFieldCharacters" [xAlignment]="xAlignment" [showTitle]="showTitle"
-            [inputLength]="input.value?.length">
+        <pep-field-title *ngIf="renderTitle && isFormView && !hasParent" [label]="label" [required]="required"
+            [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [xAlignment]="xAlignment"
+            [showTitle]="showTitle" [inputLength]="input.value?.length">
         </pep-field-title>
         <mat-form-field appearance="outline">
             <input #input [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
@@ -22,7 +22,7 @@
                 <a href="javascript:void(0)" (click)="anchorClicked()" [id]="key" [name]="key"
                     class="color-link body-sm "> {{formattedValue}}</a>
             </span>
-            <mat-error>
+            <mat-error *ngIf="renderError">
                 <ng-container *ngIf="required && input.value.length == 0 then requiredError else otherError">
                 </ng-container>
                 <ng-template #requiredError>
@@ -40,11 +40,11 @@
                 </ng-template>
             </mat-error>
 
-            <pep-textbox-icon *ngIf="isFormView && xAlignment == 'right'" matPrefix [value]="value" [label]="label"
-                [type]="type" [disabled]="disabled">
+            <pep-textbox-icon *ngIf="renderSymbol && isFormView && xAlignment == 'right'" matPrefix [value]="value"
+                [label]="label" [type]="type" [disabled]="disabled">
             </pep-textbox-icon>
-            <pep-textbox-icon *ngIf="isFormView && (xAlignment == 'left')" matSuffix [value]="value" [label]="label"
-                [type]="type" [disabled]="disabled">
+            <pep-textbox-icon *ngIf="renderSymbol && isFormView && (xAlignment == 'left')" matSuffix [value]="value"
+                [label]="label" [type]="type" [disabled]="disabled">
             </pep-textbox-icon>
         </mat-form-field>
     </ng-template>
@@ -122,4 +122,5 @@
             </ng-template>
         </ng-template>
     </ng-container>
+
 </ng-container>

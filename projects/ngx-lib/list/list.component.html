@@ -1,95 +1,39 @@
 <ng-container *ngIf="totalRows == 0">
-    <div class="no-data">{{ noDataFoundMsg }}</div>
+    <div class="no-data body-xl">{{ noDataFoundMsg }}</div>
 </ng-container>
 <ng-container *ngIf="totalRows > 0">
-    <!--
-            appDebounceMouseMove
-            [debounceTime]="10"
-            (debounceMouseMove)="onListResize($event)" -->
-    <div *ngIf="isTable" #tableHeader class="table-header"
-        [ngClass]="{ 'below-header-and-top-bar' : parentScroll == null }" (mouseup)="onListResizeEnd($event)"
-        (mouseenter)="onListHeaderMouseEnter($event)" (mouseleave)="onListHeaderMouseLeave($event)"
-        (mousemove)="onListResize($event)">
+    <ng-container *ngIf="isTable; then tableBlock; else cardsBlock"></ng-container>
+    <ng-template #tableBlock>
+        <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
+        <ng-container *ngTemplateOutlet="listBody"></ng-container>
+        <ng-container *ngTemplateOutlet="tableTotal"></ng-container>
+    </ng-template>
 
-        <div class="table-header-padding-top"></div>
-        <fieldset class="table-header-fieldset">
-            <mat-checkbox *ngIf="selectionTypeForActions !== 'none'" #selectAllCB class="pull-left flip row-selection"
-                type="checkbox" [ngStyle]="{
-                        visibility:
-                            selectionTypeForActions == 'single' || (selectionTypeForActions == 'multi' && hideAllSelectionInMulti) ? 'hidden' : 'visible'
-                    }"
-                [indeterminate]="isAllSelected ? unSelectedItems.size > 0 && unSelectedItems.size < totalRows : (selectedItems.size > 0 && !getIsAllSelectedForActions())"
-                [disabled]="disabled || selectionTypeForActions === 'single'" [checked]="getIsAllSelectedForActions()"
-                (change)="selectAllItemsForActions($event)"></mat-checkbox>
-            <fieldset>
-                <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="header-column pull-left flip"
-                    [ngStyle]="{ width: field.calcTitleColumnWidthString }" [ngClass]="{
-                            'support-sorting': supportSorting,
-                            'has-sorting': field.ApiName === sortBy,
-                            'is-resizing': field.ApiName === pressedColumn,
-                            'is-first': j === 0 && selectionTypeForActions !== 'multi',
-                            'is-last': j === uiControl?.ControlFields?.length - 1
-                        }"
-                    (click)="supportSorting ? (onListSortingChange(field.ApiName, sortBy !== null && sortBy != field.ApiName ? true : !isAsc, $event)) : false">
+    <ng-template #cardsBlock>
+        <ng-container *ngTemplateOutlet="listBody"></ng-container>
+    </ng-template>
 
-                    <label id="{{ field.ApiName }}"
-                        class="header-label body-sm pull-left flip text-align-{{ field.Layout.XAlignment }}"
-                        title="{{ field.Title }}">
-                        <span *ngIf="field.Mandatory" class="required">
-                            <pep-icon name="system_must"></pep-icon>
-                        </span>
-                        {{ field.Title != '' ? field.Title : ' '}}
-                    </label>
+    <ng-template #listBody>
+        <ng-container *ngIf="useVirtualScroll; then virtualScrollBlock; else noVirtualScrollBlock"></ng-container>
+        <ng-template #virtualScrollBlock>
+            <pep-virtual-scroll [totalRows]="totalRows" [isTable]="isTable" (load)="onListLoad()"
+                (change)="onScrollChange($event)" [parentScroll]="parentScroll ? parentScroll : nativeWindow"
+                [bufferAmount]="isReport ? (isTable ? 20 : 3) : isTable ? 15 : 3"
+                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
+                <ng-container *ngTemplateOutlet="listData"></ng-container>
+            </pep-virtual-scroll>
+        </ng-template>
 
-                    <div *ngIf="supportResizing" class="resize-box pull-right flip"
-                        (mousedown)="onListResizeStart($event, field.ApiName)">
-                        <div class="splitter"></div>
-                        <!-- <mat-icon>
-                            <pep-icon name="resize" class="asc"></pep-icon>
-                        </mat-icon> -->
-                    </div>
-
-                    <!-- The onListSortingChange moved to the column click -->
-                    <!-- (click)="onListSortingChange(field.ApiName, true)" -->
-                    <div *ngIf="supportSorting" class="sorting-box pull-left flip"
-                        [ngClass]="{ 'has-sorting': field.ApiName === sortBy }">
-                        <mat-icon *ngIf="field.ApiName !== sortBy">
-                            <pep-icon name="arrow_either" class="asc"></pep-icon>
-                        </mat-icon>
-                        <ng-container *ngIf="field.ApiName === sortBy">
-                            <mat-icon *ngIf="!isAsc" [ngClass]="{ 'sort-by': field.ApiName === sortBy && isAsc }"
-                                title="{{ 'LIST.SORT_ASC' | translate }}">
-                                <pep-icon name="arrow_up" class="asc"></pep-icon>
-                            </mat-icon>
-                            <mat-icon *ngIf="isAsc" [ngClass]="{ 'sort-by': field.ApiName === sortBy && !isAsc }"
-                                title="{{ 'LIST.SORT_DESC' | translate }}">
-                                <pep-icon name="arrow_down" class="desc"></pep-icon>
-                            </mat-icon>
-                        </ng-container>
-
-                    </div>
-                </div>
-            </fieldset>
-        </fieldset>
-    </div>
-
-    <pep-virtual-scroll *ngIf="useVirtualScroll" [totalRows]="totalRows" [isTable]="isTable" (load)="onListLoad($event)"
-        (change)="onListChange($event)" [parentScroll]="parentScroll ? parentScroll : nativeWindow"
-        [bufferAmount]="isReport ? (isTable ? 20 : 3) : isTable ? 15 : 3"
-        [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
-        <ng-container *ngTemplateOutlet="listData"></ng-container>
-    </pep-virtual-scroll>
-
-    <!-- <virtual-scroller *ngIf="useVirtualScroll" [totalItems]="totalRows" (vsChange)="onScrollerListChange($event)"
-        [parentScroll]="parentScroll ? parentScroll : nativeWindow"
-        [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
-        <ng-container *ngTemplateOutlet="listData"></ng-container>
-    </virtual-scroller> -->
-
-    <div #noVirtualScrollCont *ngIf="!useVirtualScroll" [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
-        <ng-container *ngTemplateOutlet="listData"></ng-container>
-    </div>
-    <ng-container *ngTemplateOutlet="listTotals"></ng-container>
+        <ng-template #noVirtualScrollBlock>
+            <div #noVirtualScrollContnainer [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }"
+                style="height: auto;">
+                <ng-container *ngTemplateOutlet="listData"></ng-container>
+            </div>
+            <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [length]="totalRows" [pageSize]="pageSize"
+                (pagerChange)="onPagerChange($event)">
+            </pep-list-pager>
+        </ng-template>
+    </ng-template>
 </ng-container>
 
 <ng-template #listData>
@@ -163,7 +107,72 @@
     </ng-container>
 </ng-template>
 
-<ng-template #listTotals>
+<ng-template #tableHeader>
+    <div class="table-header" [ngClass]="{ 'below-header-and-top-bar' : parentScroll == null }"
+        (mouseup)="onListResizeEnd($event)" (mouseenter)="onListHeaderMouseEnter($event)"
+        (mouseleave)="onListHeaderMouseLeave($event)" (mousemove)="onListResize($event)">
+
+        <div class="table-header-padding-top"></div>
+        <fieldset class="table-header-fieldset">
+            <mat-checkbox *ngIf="selectionTypeForActions !== 'none'" #selectAllCB class="pull-left flip row-selection"
+                type="checkbox" [ngStyle]="{
+                        visibility:
+                            selectionTypeForActions == 'single' || 
+                            (selectionTypeForActions == 'multi' && hideAllSelectionInMulti) ? 'hidden' : 'visible'
+                    }"
+                [indeterminate]="isAllSelected ? unSelectedItems.size > 0 && unSelectedItems.size < totalRows : (selectedItems.size > 0 && !getIsAllSelectedForActions())"
+                [disabled]="disabled || selectionTypeForActions === 'single'" [checked]="getIsAllSelectedForActions()"
+                (change)="selectAllItemsForActions($event)"></mat-checkbox>
+            <fieldset>
+                <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="header-column pull-left flip"
+                    [ngStyle]="{ width: field.calcTitleColumnWidthString }" [ngClass]="{
+                            'support-sorting': supportSorting,
+                            'has-sorting': field.ApiName === sortBy,
+                            'is-resizing': field.ApiName === pressedColumn,
+                            'is-first': j === 0 && selectionTypeForActions !== 'multi',
+                            'is-last': j === uiControl?.ControlFields?.length - 1
+                        }"
+                    (click)="supportSorting ? (onListSortingChange(field.ApiName, sortBy !== null && sortBy != field.ApiName ? true : !isAsc, $event)) : false">
+
+                    <label id="{{ field.ApiName }}"
+                        class="header-label body-sm pull-left flip text-align-{{ field.Layout.XAlignment }}"
+                        title="{{ field.Title }}">
+                        <span *ngIf="field.Mandatory" class="required">
+                            <pep-icon name="system_must"></pep-icon>
+                        </span>
+                        {{ field.Title != '' ? field.Title : ' '}}
+                    </label>
+
+                    <div *ngIf="supportResizing" class="resize-box pull-right flip"
+                        (mousedown)="onListResizeStart($event, field.ApiName)">
+                        <div class="splitter"></div>
+                    </div>
+
+                    <!-- The onListSortingChange moved to the column click -->
+                    <!-- (click)="onListSortingChange(field.ApiName, true)" -->
+                    <div *ngIf="supportSorting" class="sorting-box pull-left flip"
+                        [ngClass]="{ 'has-sorting': field.ApiName === sortBy }">
+                        <mat-icon *ngIf="field.ApiName !== sortBy">
+                            <pep-icon name="arrow_either" class="asc"></pep-icon>
+                        </mat-icon>
+                        <ng-container *ngIf="field.ApiName === sortBy">
+                            <mat-icon *ngIf="!isAsc" [ngClass]="{ 'sort-by': field.ApiName === sortBy && isAsc }"
+                                title="{{ 'LIST.SORT_ASC' | translate }}">
+                                <pep-icon name="arrow_up" class="asc"></pep-icon>
+                            </mat-icon>
+                            <mat-icon *ngIf="isAsc" [ngClass]="{ 'sort-by': field.ApiName === sortBy && !isAsc }"
+                                title="{{ 'LIST.SORT_DESC' | translate }}">
+                                <pep-icon name="arrow_down" class="desc"></pep-icon>
+                            </mat-icon>
+                        </ng-container>
+                    </div>
+                </div>
+            </fieldset>
+        </fieldset>
+    </div>
+</ng-template>
+
+<ng-template #tableTotal>
     <div *ngIf="totalsRow?.length > 0 && totalsRow.length <= uiControl?.ControlFields.length" class="table-total">
         <fieldset class="table-header-fieldset">
             <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="total-column pull-left flip"

@@ -44,6 +44,7 @@ const pipeList = [
     PepToNumberPipe
 ];
 
+import { PepInputAutoWidthDirective } from './core/common/directives/auto-width.directive';
 import { PepButtonBlurDirective } from './core/common/directives/button-blur.directive';
 import { PepButtonLoaderDirective } from './core/common/directives/button-loader.directive';
 import { PepMenuBlurDirective } from './core/common/directives/menu-blur.directive';
@@ -52,6 +53,7 @@ import { PepDataQaDirective } from './core/common/directives/data-qa.directive';
 import { PepPreventMultiClickDirective } from './core/common/directives/prevent-multi-click.directive';
 
 const utilitiesList = [
+    PepInputAutoWidthDirective,
     PepButtonBlurDirective,
     PepButtonLoaderDirective,
     PepMenuBlurDirective,

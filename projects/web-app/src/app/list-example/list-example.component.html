@@ -35,15 +35,15 @@
     </pep-top-bar>
     <div class="main-content ">
         <div class="content">
-            <div class="list-container" #listContainer>
+            <div class="list-wrapper" #listContainer>
                 <pep-list [firstFieldAsLink]="false" [isReport]="false" [supportSorting]="false"
-                    [supportResizing]="false" [selectionTypeForActions]="'multi'" [noDataFoundMsg]="'No data'"
-                    [parentScroll]="listContainer" (listChanged)="onListChange($event)"
+                    [supportResizing]="false" [pagerType]="'pages'" [pageSize]="4" [selectionTypeForActions]="'multi'"
+                    [noDataFoundMsg]="'No data'" [parentScroll]="listContainer"
                     (fieldClick)="onCustomizeFieldClick($event)" (selectedItemsChange)="selectedRowsChanged($event)">
                 </pep-list>
             </div>
 
-            <div class="inline-top-bar-container">
+            <!-- <div class="inline-top-bar-container">
                 <pep-top-bar [title]="'inline top bar'" [inline]="true">
                     <div header-end-content>
                         <button class="pep-button weak sm spacing-element">
@@ -66,7 +66,7 @@
                 <pep-textbox [key]="'Email'" [label]="'Pepperi Email'" [type]="'email'" [xAlignment]="'left'"
                     [value]="'email@pepperi.com'">
                 </pep-textbox>
-            </div>
+            </div> -->
 
         </div>
     </div>

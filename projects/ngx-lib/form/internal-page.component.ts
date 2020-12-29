@@ -30,6 +30,7 @@ import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.c
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { PepQuantitySelectorComponent } from '@pepperi-addons/ngx-lib/quantity-selector';
 
 @Component({
     selector: 'pep-internal-page',
@@ -461,54 +462,88 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         this.changeDetectorRef.markForCheck();
     }
 
-    onCustomizeObjectChanged(
-        customizeObjectChangedData: IPepFormFieldValueChangeEvent
-    ): void {
+    onCustomizeObjectChanged(customizeObjectChangedData: IPepFormFieldValueChangeEvent): void {
+        this.internalPageService.childValueChanged(
+            customizeObjectChangedData.id,
+            customizeObjectChangedData.key,
+            customizeObjectChangedData.value,
+            (res: any) => {
+                this.setValueCallback(customizeObjectChangedData.id, res);
+            }
+        );
+
+        // let handledEvent = false;
+        // const boundSetValueCallback = this.setValueCallback.bind(this); // .bind() to have this in the bound function.
+
+        // // For the new custom form, the plus and minus events transform in the IPepFormFieldValueChangeEvent
+        // if (customizeObjectChangedData.controlType === 'qs') {
+        //     if (customizeObjectChangedData.value === '+') {
+        //         handledEvent = true;
+        //         this.internalPageService.childPlusClick(
+        //             customizeObjectChangedData.id,
+        //             customizeObjectChangedData.key,
+        //             (res: any) => {
+        //                 boundSetValueCallback(
+        //                     customizeObjectChangedData.id,
+        //                     res
+        //                 );
+        //             }
+        //         );
+        //     } else if (customizeObjectChangedData.value === '-') {
+        //         handledEvent = true;
+        //         this.internalPageService.childMinusClick(
+        //             customizeObjectChangedData.id,
+        //             customizeObjectChangedData.key,
+        //             (res: any) => {
+        //                 boundSetValueCallback(
+        //                     customizeObjectChangedData.id,
+        //                     res
+        //                 );
+        //             }
+        //         );
+        //     }
+        // }
+
+        // if (!handledEvent) {
+        //     this.internalPageService.childValueChanged(
+        //         customizeObjectChangedData.id,
+        //         customizeObjectChangedData.key,
+        //         customizeObjectChangedData.value,
+        //         (res: any) => {
+        //             boundSetValueCallback(customizeObjectChangedData.id, res);
+        //         }
+        //     );
+        // }
+    }
+
+    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent): void {
         let handledEvent = false;
-        const boundSetValueCallback = this.setValueCallback.bind(this); // .bind() to have this in the bound function.
 
         // For the new custom form, the plus and minus events transform in the IPepFormFieldValueChangeEvent
-        if (customizeObjectChangedData.controlType === 'qs') {
-            if (customizeObjectChangedData.value === '+') {
+        if (fieldClickEvent.controlType === 'qs') {
+            if (fieldClickEvent.value === PepQuantitySelectorComponent.PLUS) {
                 handledEvent = true;
                 this.internalPageService.childPlusClick(
-                    customizeObjectChangedData.id,
-                    customizeObjectChangedData.key,
+                    fieldClickEvent.id,
+                    fieldClickEvent.key,
                     (res: any) => {
-                        boundSetValueCallback(
-                            customizeObjectChangedData.id,
-                            res
-                        );
+                        this.setValueCallback(fieldClickEvent.id, res);
                     }
                 );
-            } else if (customizeObjectChangedData.value === '-') {
+            } else if (fieldClickEvent.value === PepQuantitySelectorComponent.MINUS) {
                 handledEvent = true;
                 this.internalPageService.childMinusClick(
-                    customizeObjectChangedData.id,
-                    customizeObjectChangedData.key,
+                    fieldClickEvent.id,
+                    fieldClickEvent.key,
                     (res: any) => {
-                        boundSetValueCallback(
-                            customizeObjectChangedData.id,
-                            res
-                        );
+                        this.setValueCallback(fieldClickEvent.id, res);
                     }
                 );
             }
         }
 
         if (!handledEvent) {
-            this.internalPageService.childValueChanged(
-                customizeObjectChangedData.id,
-                customizeObjectChangedData.key,
-                customizeObjectChangedData.value,
-                (res: any) => {
-                    boundSetValueCallback(customizeObjectChangedData.id, res);
-                }
-            );
+            this.childClick.emit(fieldClickEvent);
         }
-    }
-
-    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent): void {
-        this.childClick.emit(fieldClickEvent);
     }
 }

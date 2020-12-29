@@ -1,6 +1,6 @@
 import {
     Component, ChangeDetectionStrategy, OnInit, OnDestroy,
-    Input, KeyValueDiffers, Output, EventEmitter, OnChanges, DoCheck
+    Input, KeyValueDiffers, Output, EventEmitter, OnChanges, DoCheck, Optional
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -53,6 +53,7 @@ export interface IPepFormFieldClickEvent {
     id: string;
     key: string;
     value: any;
+    controlType: string;
     fieldType?: FIELD_TYPE;
     idType?: string;
     which?: any;
@@ -614,9 +615,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     constructor(
         private dialogService: PepDialogService,
         private customizationService: PepCustomizationService,
-        private translate: TranslateService,
         public fb: FormBuilder,
-        differs: KeyValueDiffers
+        differs: KeyValueDiffers,
+        private translate: TranslateService
     ) {
         // store the initial value to compare with
         this.differ = differs.find({}).create();
@@ -1198,15 +1199,17 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
     onClick(fieldClickEvent: IPepFieldClickEvent): void {
         const clickedUiControlField = this.singleData.Data.Fields.filter(f => f.ApiName === fieldClickEvent.key)[0];
-        
+        const idType = this.singleData.Data.Type ? this.singleData.Data.Type.toString() : '';
+
         if (clickedUiControlField) {
             if (clickedUiControlField.FieldType === FIELD_TYPE.GuidReferenceType) {
                 this.fieldClick.emit({
                     id: this.singleData.Data.UID.toString(),
                     key: fieldClickEvent.key,
-                    idType: this.singleData.Data.Type.toString(),
+                    idType,
                     which: fieldClickEvent.eventWhich,
                     value: fieldClickEvent.value,
+                    controlType: fieldClickEvent.controlType,
                     fieldType: clickedUiControlField.FieldType,
                     otherData: fieldClickEvent.otherData
                 });
@@ -1214,9 +1217,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 this.fieldClick.emit({
                     id: this.singleData.Data.UID.toString(),
                     key: fieldClickEvent.key,
-                    idType: this.singleData.Data.Type.toString(),
+                    idType,
                     which: fieldClickEvent.eventWhich,
                     value: fieldClickEvent.value,
+                    controlType: fieldClickEvent.controlType,
                     fieldType: clickedUiControlField.FieldType,
                     otherData: fieldClickEvent.otherData
                 });
@@ -1224,9 +1228,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 this.fieldClick.emit({
                     id: this.singleData.Data.UID.toString(),
                     key: fieldClickEvent.key,
-                    idType: this.singleData.Data.Type.toString(),
+                    idType,
                     which: fieldClickEvent.eventWhich,
                     value: fieldClickEvent.value,
+                    controlType: fieldClickEvent.controlType,
                     fieldType: clickedUiControlField.FieldType,
                     otherData: fieldClickEvent.otherData
                 });
@@ -1236,9 +1241,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             this.fieldClick.emit({
                 id: this.singleData.Data.UID.toString(),
                 key: fieldClickEvent.key,
-                idType: this.singleData.Data.Type.toString(),
+                idType,
                 which: fieldClickEvent.eventWhich,
                 value: fieldClickEvent.value,
+                controlType: fieldClickEvent.controlType,
                 otherData: fieldClickEvent.otherData
             });
         }

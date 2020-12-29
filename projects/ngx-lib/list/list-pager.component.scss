@@ -1,0 +1,27 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.pager-container {
+    $pager-size: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $spacing-sm;
+    height: calc(#{$pager-size} + calc(#{$spacing-sm} * 2));
+
+    .page-index {
+        min-height: unset;
+        margin-bottom: 0;
+        // max-width: 2.5rem;
+        
+        ::ng-deep .mat-form-field-flex {
+            padding: 0 0.5rem;
+            min-height: $pager-size;
+
+            .mat-input-element {
+                min-width: 1.25rem;
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, Renderer2, ElementRef, Optional } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { PepCustomizationService, PepLayoutType, PepHorizontalAlignment,
@@ -39,8 +39,8 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     constructor(
         private renderer: Renderer2,
         private customizationService: PepCustomizationService,
-        public translate: TranslateService,
-        private element: ElementRef
+        private element: ElementRef,
+        private translate: TranslateService
     ) { }
 
     ngOnInit(): void {

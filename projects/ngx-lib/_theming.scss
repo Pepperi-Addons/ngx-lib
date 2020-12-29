@@ -79,13 +79,14 @@ $pep-typography: mat-typography-config(
 @import './list/list-actions.component.theme';
 @import './list/list-carousel.component.theme';
 @import './list/list-chooser.component.theme';
+@import './list/list-pager.component.theme';
 @import './list/list-sorting.component.theme';
 @import './list/list-total.component.theme';
 @import './list/list-views.component.theme';
 @import './list/list.component.theme';
 
 // Use this import in a real project instead
-@import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
+// @import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
 @import './src/core/style/themes/default-theme.scss';
 $material-theme-for-pep: $material-default-theme;
 
@@ -98,8 +99,8 @@ $material-theme-for-pep: $material-default-theme;
     // Add angular-material-theme.
     @include angular-material-theme($material-theme);
 
-    // Add mat-datetimepicker-theme.
-    @include mat-datetimepicker-theme($material-theme);
+    // // Add mat-datetimepicker-theme.
+    // @include mat-datetimepicker-theme($material-theme);
 
     // Remove background
     &:focus,
@@ -169,6 +170,7 @@ $material-theme-for-pep: $material-default-theme;
         @include pep-list-actions-component-theme($pepperi-theme);
         @include pep-list-carousel-component-theme($pepperi-theme);
         @include pep-list-chooser-component-theme($pepperi-theme);
+        @include pep-list-pager-component-theme($pepperi-theme);
         @include pep-list-sorting-component-theme($pepperi-theme);
         @include pep-list-total-component-theme($pepperi-theme);
         @include pep-list-views-component-theme($pepperi-theme);

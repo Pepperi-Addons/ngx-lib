@@ -92,19 +92,25 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
 
             this.elementClick.emit({
                 key: this.key,
-                eventWhich: event.which,
                 value: valueArr[valueArr.length - 1], // .replace(/[^a-zA-Z0-9 ]/g, ''),
+                controlType: this.controlType,
+                eventWhich: event.which,
                 otherData: this.referenceObjectInternalType,
             });
         } else if (this.type === 'button' && true) {
             this.elementClick.emit({
                 key: this.key,
+                value: this.value, // should contain the program name
+                controlType: this.controlType,
                 eventWhich: event.which,
-                value: this.value // should contain the program name
             });
         }
         else {
-            this.elementClick.emit({ key: this.key, eventWhich: event.which });
+            this.elementClick.emit({
+                key: this.key,
+                controlType: this.controlType,
+                eventWhich: event.which
+            });
         }
     }
 
@@ -117,8 +123,9 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
     openReferenceObjectInternal(event): void {
         this.elementClick.emit({
             key: this.key,
-            eventWhich: event.which,
             value: this.value,
+            controlType: this.controlType,
+            eventWhich: event.which,
             otherData: this.referenceObjectInternalType
         });
     }

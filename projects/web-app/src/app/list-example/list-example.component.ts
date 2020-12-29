@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PepHttpService, ObjectSingleData, PepDataConvertorService, PepLayoutService,
     PepRowData, PepFieldData, FIELD_TYPE, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { IPepFormFieldClickEvent } from '@pepperi-addons/ngx-lib/form';
-import { IPepListChangeEvent, IPepListChooserOptionChangeEvent, IPepListSortingOptionChangeEvent, PepListComponent, IPepListSortingOption, IPepListView, IListViewChangeEvent } from '@pepperi-addons/ngx-lib/list';
+import { IPepListChooserOptionChangeEvent, IPepListSortingOptionChangeEvent, PepListComponent, IPepListSortingOption, IPepListView, IListViewChangeEvent } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
 import { PepFooterStateType, IPepFooterStateChangeEvent } from '@pepperi-addons/ngx-lib/top-bar';
 import { FakeData } from './fake-data';
@@ -27,10 +27,10 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     screenSize: PepScreenSizeType;
 
     constructor(
-        private translate: TranslateService,
         private dataConvertorService: PepDataConvertorService,
-        public layoutService: PepLayoutService
-        // private httpService: PepHttpService
+        public layoutService: PepLayoutService,
+        // private httpService: PepHttpService,
+        private translate: TranslateService
     ) { 
         this.layoutService.onResize$.pipe().subscribe(size => {
             this.screenSize = size;
@@ -191,9 +191,6 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         this.footerState = footerStateType.state;
     }
 
-    onListChange(event: IPepListChangeEvent) {
-    }
-
     onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) {
     }
 
@@ -208,6 +205,6 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     }
 
     onViewChanged(viewChangeEvent: IListViewChangeEvent) {
-        debugger;
+        // debugger;
     }
 }

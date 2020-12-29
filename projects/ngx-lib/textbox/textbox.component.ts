@@ -1,4 +1,4 @@
-import { _isNumberValue } from '@angular/cdk/coercion';
+import { coerceNumberProperty, _isNumberValue } from '@angular/cdk/coercion';
 import {
     Component, OnInit, OnChanges, Input, Output, EventEmitter,
     ChangeDetectionStrategy, ElementRef, ViewChild, Renderer2, OnDestroy
@@ -36,6 +36,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
+    @Input() renderTitle = true;
+    @Input() renderError = true;
+    @Input() renderSymbol = true;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
 
@@ -74,7 +77,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 minValue: this.minValue,
                 maxValue: this.maxValue
             });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+            this.form = this.customizationService.getDefaultFromGroup(pepField, this.renderError);
 
             this.formattedValue = this.formattedValue || this.value;
 
@@ -114,17 +117,43 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         this.isFocus = true;
     }
 
+    isNumberType(): boolean {
+        return (
+            this.type === 'percentage' ||
+            this.type === 'currency' ||
+            this.type === 'int' ||
+            this.type === 'real');
+    }
+
     isValueValid(value: string): boolean {
         let res = false;
 
-        if (this.type === 'percentage' ||
-            this.type === 'currency' ||
-            this.type === 'int' ||
-            this.type === 'real') {
+        if (this.isNumberType()) {
+            if (value === '') {
+                res = this.required ? false : true;
+            } else {
+                const numberValue = coerceNumberProperty(value);
+                res = numberValue >= this.minValue && numberValue <= this.maxValue;
+            }
+        } else {
+            // TODO: Maybe need to check other types.
+            res = true;
+        }
 
-            if (this.value === '' || value === '' ||
-                (_isNumberValue(value) && _isNumberValue(this.value) && parseFloat(value) !== parseFloat(this.value))) {
+        return res;
+    }
+    
+    isDifferentValue(value: string): boolean {
+        let res = false;
+
+        if (this.isNumberType()) {
+            if (this.value === '' || value === '') {
                 res = true;
+            } else {
+                const currentValue = coerceNumberProperty(this.value);
+                const newValue = coerceNumberProperty(value);
+                
+                res = currentValue !== newValue;
             }
         } else {
             res = true;
@@ -137,17 +166,21 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         this.isFocus = false;
         const value = e.target ? e.target.value : e;
 
-        if (value !== this.value && this.isValueValid(value)) {
-            this.formattedValue = this.value = value;
+        if (value !== this.value && this.isDifferentValue(value)) {
+            // If renderError is false and the new value is not valid.
+            if (!this.renderError && !this.isValueValid(value)) {
+                this.renderer.setProperty(this.input.nativeElement, 'value', this.value);
+            } else {
+                this.formattedValue = this.value = value;
 
-            // There is formControl.setValue in the onKeyUp so we don't need it here.
-            // this.propagateChange(value, e.relatedTarget);
-            this.valueChange.emit({
-                key: this.key,
-                value,
-                lastFocusedField: e.relatedTarget
-            });
-            // return true; // What this is for? Tomer.p comment this in 16.4.
+                // There is formControl.setValue in the onKeyUp so we don't need it here.
+                // this.propagateChange(value, e.relatedTarget);
+                this.valueChange.emit({
+                    key: this.key,
+                    value,
+                    lastFocusedField: e.relatedTarget
+                });
+            }
         }
 
         if (this.isInEditMode) {

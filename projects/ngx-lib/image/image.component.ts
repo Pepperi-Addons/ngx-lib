@@ -9,7 +9,8 @@ import {
     ChangeDetectionStrategy,
     ElementRef,
     OnDestroy,
-    Renderer2
+    Renderer2,
+    Optional
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -66,12 +67,12 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     dataURI = null;
 
     constructor(
-        private translate: TranslateService,
         private dialogService: PepDialogService,
         private customizationService: PepCustomizationService,
         private fileService: PepFileService,
         private renderer: Renderer2,
-        private element: ElementRef
+        private element: ElementRef,
+        private translate: TranslateService
     ) {}
 
     ngOnInit(): void {
@@ -141,6 +142,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         this.elementClick.emit({
             key: this.key,
             value: PepImageComponent.MENU_CLICKED,
+            controlType: this.controlType,
             eventWhich: event.which
         });
     }

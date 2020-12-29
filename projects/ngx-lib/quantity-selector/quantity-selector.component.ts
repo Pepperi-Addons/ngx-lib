@@ -54,10 +54,11 @@ import { debounceTime } from 'rxjs/operators';
         ])
     ]
 })
-export class PepQuantitySelectorComponent
-    implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
+export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
     public static ENTER_CHILDREN = '[EnterChildren]';
     public static ENTER_PACKAGE = '[EnterPackage]';
+    public static PLUS = '[+]';
+    public static MINUS = '[-]';
 
     @Input() key = '';
     @Input() value = '';
@@ -354,7 +355,6 @@ export class PepQuantitySelectorComponent
                 value
             );
 
-            // this.propagateChange(this.value, event.relatedTarget);
             this.changeValue(this.value, event.relatedTarget);
         } else {
             this.focusToTheSameElementInTheWantedRow();
@@ -382,8 +382,13 @@ export class PepQuantitySelectorComponent
             );
         }
 
-        // this.propagateChange('+');
-        this.changeValue('+', null);
+        // this.changeValue('+', null);
+        this.elementClick.emit({
+            key: this.key,
+            value: PepQuantitySelectorComponent.PLUS,
+            controlType: this.controlType,
+            eventWhich: event.which
+        });
         event.stopPropagation();
     }
 
@@ -399,8 +404,13 @@ export class PepQuantitySelectorComponent
             );
         }
 
-        // this.propagateChange('-');
-        this.changeValue('-', null);
+        // this.changeValue('-', null);
+        this.elementClick.emit({
+            key: this.key,
+            value: PepQuantitySelectorComponent.MINUS,
+            controlType: this.controlType,
+            eventWhich: event.which
+        });
         event.stopPropagation();
     }
 
@@ -408,6 +418,7 @@ export class PepQuantitySelectorComponent
         this.elementClick.emit({
             key: this.key,
             value: PepQuantitySelectorComponent.ENTER_CHILDREN,
+            controlType: this.controlType,
             eventWhich: event.which
         });
     }
@@ -416,6 +427,7 @@ export class PepQuantitySelectorComponent
         this.elementClick.emit({
             key: this.key,
             value: PepQuantitySelectorComponent.ENTER_PACKAGE,
+            controlType: this.controlType,
             eventWhich: event.which,
             otherData: this.notificationInfo
         });

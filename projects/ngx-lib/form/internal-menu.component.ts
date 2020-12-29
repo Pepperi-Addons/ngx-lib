@@ -36,7 +36,11 @@ export class PepInternalMenuComponent implements OnDestroy {
     }
 
     menuClicked(event: any): void {
-        this.elementClick.emit({ key: this.key, eventWhich: event.which });
+        this.elementClick.emit({
+            key: this.key,
+            controlType: this.controlType,
+            eventWhich: event.which
+        });
     }
 
     menuItemClicked(itemKey: any): void {
