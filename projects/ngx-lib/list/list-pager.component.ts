@@ -9,7 +9,7 @@ export class IPepListPagerChangeEvent {
     pageSize: number;
     length: number;
 }
-
+    
 @Component({
     selector: 'pep-list-pager',
     templateUrl: './list-pager.component.html',

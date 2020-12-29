@@ -36,9 +36,8 @@
     <div class="main-content ">
         <div class="content">
             <div class="list-wrapper" #listContainer>
-                <pep-list [firstFieldAsLink]="false" [isReport]="false" [supportSorting]="false"
-                    [supportResizing]="false" [pagerType]="'pages'" [pageSize]="4" [selectionTypeForActions]="'multi'"
-                    [noDataFoundMsg]="'No data'" [parentScroll]="listContainer"
+                <pep-list [supportSorting]="false" [supportResizing]="false" [pagerType]="'pages'" [pageSize]="4"
+                    [selectionTypeForActions]="'multi'" [noDataFoundMsg]="'No data'" [parentScroll]="listContainer"
                     (fieldClick)="onCustomizeFieldClick($event)" (selectedItemsChange)="selectedRowsChanged($event)">
                 </pep-list>
             </div>

@@ -545,6 +545,8 @@ $sorting-width: 1rem;
 .cards-body {
     margin: 0 (calc(#{$content-margin} * -1) / 2); // -0.5rem;
     position: relative;
+    display: flex;
+    flex-flow: wrap;
 }
 
 .line-view,

@@ -25,12 +25,12 @@
         </ng-template>
 
         <ng-template #noVirtualScrollBlock>
-            <div #noVirtualScrollContnainer [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }"
-                style="height: auto;">
+            <div #noVirtualScrollContnainer class="list-body"
+                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
                 <ng-container *ngTemplateOutlet="listData"></ng-container>
             </div>
-            <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [length]="totalRows" [pageSize]="pageSize"
-                (pagerChange)="onPagerChange($event)">
+            <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="lockEvents"
+                [length]="totalRows" [pageSize]="pageSize" (pagerChange)="onPagerChange($event)">
             </pep-list-pager>
         </ng-template>
     </ng-template>
