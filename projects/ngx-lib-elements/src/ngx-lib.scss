@@ -13,8 +13,9 @@
 // @include angular-material-theme($theme);
 
 // Define pepperi lib theme and include theme styles for pepperi components.
-@import '~@pepperi-addons/ngx-lib/theming';
-// @import 'ngx-lib/theming';
+// @import '~@pepperi-addons/ngx-lib/theming';
+// Working local
+@import 'ngx-lib/theming';
 
 @include pepperi-theme();
 

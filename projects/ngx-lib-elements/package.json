@@ -21,6 +21,7 @@
         "styles.css"
     ],
     "dependencies": {
-        "concat-files": "^0.1.1"
+        "concat-files": "^0.1.1",
+        "document-register-element": "^1.14.10"
     }
 }

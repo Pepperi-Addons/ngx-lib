@@ -1,28 +1,29 @@
 import { PepTextboxComponent, PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
+import { PepNgxLibModule, PepFileService } from '@pepperi-addons/ngx-lib';
 import { createCustomElement } from '@angular/elements';
-
-import { PepNgxLibModule, FileService } from '@pepperi-addons/ngx-lib';
-
 import {
     PepIconModule, PepIconRegistry,
     pepIconSystemBolt,
     pepIconNoImage
 } from '@pepperi-addons/ngx-lib/icon';
-import { DataConvertorService } from '@pepperi-addons/ngx-lib';
+import { PepDataConvertorService } from '@pepperi-addons/ngx-lib';
 
 import { PepAttachmentComponent, PepAttachmentModule } from '@pepperi-addons/ngx-lib/attachment';
 import { PepCheckboxComponent, PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { PepColorComponent, PepColorModule } from '@pepperi-addons/ngx-lib/color';
 import { PepDateComponent, PepDateModule } from '@pepperi-addons/ngx-lib/date';
-import { PepGroupButton, PepGroupButtonsModule } from '@pepperi-addons/ngx-lib/group-buttons';
+import { PepGroupButtonsModule } from '@pepperi-addons/ngx-lib/group-buttons';
 import { PepImageComponent, PepImageModule } from '@pepperi-addons/ngx-lib/image';
-import { PepImagesFilmstripComponent, PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
-import { PepInternalButtonComponent, PepInternalButtonModule } from '@pepperi-addons/ngx-lib/internal-button';
+import { PepImagesFilmstripModule, PepImagesFilmstripComponent } from '@pepperi-addons/ngx-lib/images-filmstrip';
+// import { PepInternalButtonComponent, PepInternalButtonModule } from '@pepperi-addons/ngx-lib/internal-button';
 import { PepMenuComponent, PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepQuantitySelectorComponent, PepQuantitySelectorModule } from '@pepperi-addons/ngx-lib/quantity-selector';
-import { PepRichHtmlTextareaComponent, PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
+import {
+    PepRichHtmlTextareaComponent,
+    // PepRichHtmlTextareaModule
+} from '@pepperi-addons/ngx-lib/rich-html-textarea';
 import { PepSelectComponent, PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepSeparatorComponent, PepSeparatorModule } from '@pepperi-addons/ngx-lib/separator';
 import { PepSignatureComponent, PepSignatureModule } from '@pepperi-addons/ngx-lib/signature';
@@ -30,26 +31,21 @@ import { PepTextareaComponent, PepTextareaModule } from '@pepperi-addons/ngx-lib
 import { PepSizeDetectorModule } from '@pepperi-addons/ngx-lib/size-detector';
 
 import {
-    TranslateModule,
-    TranslateLoader,
-    TranslateService,
-    MissingTranslationHandler,
-    MissingTranslationHandlerParams
+    TranslateModule, TranslateLoader,
+    TranslateService
 } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 // import * as ElementsDictionary from './ngx-lib-dictionary.json';
 
-export function createTranslateLoader(http: HttpClient, fileService: FileService) {
-    const translationsPath: string = fileService.getAssetsTranslationsPath();
+export function createTranslateLoader(http: HttpClient, PepFileService: PepFileService) {
+    const translationsPath: string = PepFileService.getAssetsTranslationsPath();
 
     return new MultiTranslateHttpLoader(http, [
         { prefix: translationsPath, suffix: '.json' },
         { prefix: '/assets/i18n/', suffix: '.json' },
     ]);
 }
-
 
 const pepperiComponentsModules = [
     PepAttachmentModule,
@@ -59,10 +55,10 @@ const pepperiComponentsModules = [
     PepGroupButtonsModule,
     PepImageModule,
     PepImagesFilmstripModule,
-    PepInternalButtonModule,
+    // PepInternalButtonModule,
     PepMenuModule,
     PepQuantitySelectorModule,
-    PepRichHtmlTextareaModule,
+    // PepRichHtmlTextareaModule,
     PepSelectModule,
     PepSeparatorModule,
     PepSignatureModule,
@@ -70,8 +66,6 @@ const pepperiComponentsModules = [
     PepTextareaModule,
     PepTextboxModule
 ];
-
-
 @NgModule({
     declarations: [
     ],
@@ -84,7 +78,7 @@ const pepperiComponentsModules = [
             loader: {
                 provide: TranslateLoader,
                 useFactory: createTranslateLoader,
-                deps: [HttpClient, FileService]
+                deps: [HttpClient, PepFileService]
             }
         })
     ],
@@ -124,14 +118,14 @@ export class AppModule {
         customElements.define('pep-image', imageElement);
         const imagesFilmstripElement = createCustomElement(PepImagesFilmstripComponent, { injector: this.injector });
         customElements.define('pep-images-filmstrip', imagesFilmstripElement);
-        const internalButtonElement = createCustomElement(PepInternalButtonComponent, { injector: this.injector });
-        customElements.define('pep-internal-button', internalButtonElement);
+        // const internalButtonElement = createCustomElement(PepInternalButtonComponent, { injector: this.injector });
+        // customElements.define('pep-internal-button', internalButtonElement);
         const menuElement = createCustomElement(PepMenuComponent, { injector: this.injector });
         customElements.define('pep-menu', menuElement);
         const quantitySelectorElement = createCustomElement(PepQuantitySelectorComponent, { injector: this.injector });
         customElements.define('pep-quantity-selector', quantitySelectorElement);
-        const richTextElement = createCustomElement(PepRichHtmlTextareaComponent, { injector: this.injector });
-        customElements.define('pep-rich-html-textarea', richTextElement);
+        // const richTextElement = createCustomElement(PepRichHtmlTextareaComponent, { injector: this.injector });
+        // customElements.define('pep-rich-html-textarea', richTextElement);
         const selectElement = createCustomElement(PepSelectComponent, { injector: this.injector });
         customElements.define('pep-select', selectElement);
         const separatorElement = createCustomElement(PepSeparatorComponent, { injector: this.injector });

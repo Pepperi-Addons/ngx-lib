@@ -21,6 +21,15 @@
         },
         {
             "path": "./projects/web-app/e2e/tsconfig.json"
+        },
+        {
+            "path": "./projects/ngx-lib-elements/tsconfig.app.json"
+        },
+        {
+            "path": "./projects/ngx-lib-elements/tsconfig.spec.json"
+        },
+        {
+            "path": "./projects/ngx-lib-elements/e2e/tsconfig.json"
         }
     ]
 }

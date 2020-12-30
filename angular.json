@@ -195,6 +195,13 @@
                 "build": {
                     "builder": "@angular-builders/custom-webpack:browser",
                     "options": {
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "dist",
+                                "node_modules",
+                                "node_modules/@pepperi-addons"
+                            ]
+                        },
                         "indexTransform": "projects/ngx-lib-elements/index-transform.ts",
                         "outputPath": "dist/ngx-lib-elements",
                         "index": "projects/ngx-lib-elements/src/index.html",

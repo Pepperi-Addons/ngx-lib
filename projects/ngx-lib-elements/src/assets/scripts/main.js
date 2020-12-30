@@ -5,14 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Bind valueChanged and elementClick to all 'pepperi-field' elements
     const elements = document.getElementsByClassName('pep-field');
     Object.values(elements).forEach(element => {
-        element.addEventListener('valueChanged', event => this.onValueChanged(event));
-        element.addEventListener('elementClicked', event => this.onElementClicked(event));
+        element.addEventListener('valueChange', event => this.onValueChanged(event));
+        element.addEventListener('elementClick', event => this.onElementClicked(event));
     });
 
     const menuElements = document.getElementsByTagName('pep-menu');
 
     Object.values(menuElements).forEach(element => {
-        element.addEventListener('notifyMenuItemClicked', event => this.onMenuItemClicked(event));
+        element.addEventListener('menuItemClick', event => this.onMenuItemClicked(event));
     });
 
 });
