@@ -7,9 +7,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: $content-margin;
-    padding: $spacing-sm;
     height: calc(#{$pager-size} + calc(#{$spacing-sm} * 2));
+    padding: $spacing-sm;
+    // margin-top: $content-margin;
 
     .page-index {
         min-height: unset;
