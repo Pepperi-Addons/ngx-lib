@@ -6,7 +6,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Gallery, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsPosition, GalleryItem, ImageItem, GalleryRef } from '@ngx-gallery/core';
+import { Gallery, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsPosition, GalleryItem, ImageItem, GalleryRef } from 'ng-gallery';
 import { PepCustomizationService, PepLayoutType, PepLayoutService, PepFileService,
     PepHorizontalAlignment, DEFAULT_HORIZONTAL_ALIGNMENT, PepImagesField
 } from '@pepperi-addons/ngx-lib';

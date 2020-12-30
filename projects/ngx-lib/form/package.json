@@ -4,12 +4,12 @@
             "entryFile": "public-api.ts",
             "umdModuleIds": {
                 "@ngx-translate/core": "translate",
-                "angular2-signaturepad": "signaturepad"
+                "ngx-signaturepad": "ngxSignaturepad"
             }
         }
     },
     "peerDependencies": {
         "@ngx-translate/core": "^13.0.0",
-        "angular2-signaturepad": ">= 2.11.0"
+        "ngx-signaturepad": "0.0.9"
     }
 }

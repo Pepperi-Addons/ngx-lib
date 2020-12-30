@@ -3,7 +3,7 @@ import {
     ChangeDetectionStrategy, OnChanges, ElementRef, Renderer2, TemplateRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+import { SignaturePad } from 'ngx-signaturepad/signature-pad';
 import { PepFileService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepSignatureField } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';

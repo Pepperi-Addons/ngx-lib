@@ -9,7 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { SignaturePadModule } from 'angular2-signaturepad';
+import { SignaturePadModule } from 'ngx-signaturepad';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import {

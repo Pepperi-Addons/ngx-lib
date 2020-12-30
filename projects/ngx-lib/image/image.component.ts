@@ -23,7 +23,6 @@ import {
     PepImagesFilmstripComponent
 } from '@pepperi-addons/ngx-lib/images-filmstrip';
 import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
-import { ImageItem } from '@ngx-gallery/core';
 
 @Component({
     selector: 'pep-image',

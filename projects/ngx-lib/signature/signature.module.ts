@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { SignaturePadModule } from 'angular2-signaturepad';
+import { SignaturePadModule } from 'ngx-signaturepad';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import {

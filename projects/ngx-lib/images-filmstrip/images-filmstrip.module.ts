@@ -20,7 +20,7 @@ import {
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
-import { GalleryModule } from '@ngx-gallery/core';
+import { GalleryModule } from 'ng-gallery';
 import { ImageViewerModule } from '@hallysonh/ngx-imageviewer';
 
 import { PepImagesFilmstripComponent } from './images-filmstrip.component';
