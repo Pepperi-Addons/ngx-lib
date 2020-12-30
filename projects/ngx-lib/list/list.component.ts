@@ -123,9 +123,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     selectedItemId = '';
     hoveredItemId = '';
 
-    private lockEvents = false;
     private containerWidth = 0;
-
+    private _lockEvents = false;
+    get lockEvents() {
+        return this._lockEvents;
+    }
+    
     screenSize: PepScreenSizeType;
     deviceHasMouse = false;
 
@@ -263,7 +266,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     private toggleItems(isVisible: boolean): void {
         this.showItems = isVisible;
-        this.lockEvents = !isVisible;
+        this._lockEvents = !isVisible;
 
         // TODO: Maybe we need to check the disable scrolling just on the container.
         if (this.useVirtualScroll) {
@@ -632,11 +635,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             return;
         } 
         
-        if (!this.lockEvents) {
+        if (!this._lockEvents) {
             this.toggleItems(false);
             const startIndex = event.pageIndex * event.pageSize;
-            const endIndex = Math.min(startIndex + event.pageSize, this.totalRows)
-            this.updateScrollItems(startIndex, endIndex, false);
+            const endIndex = Math.min(startIndex + event.pageSize, this.totalRows);
+            // this.updateScrollItems(startIndex, endIndex, false);
 
             let getItemsFromApi = false;
             let index: number = startIndex;
@@ -655,6 +658,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     pageSize: event.pageSize,
                 });
             } else {
+                this.updateScrollItems(startIndex, endIndex, false);
                 this.toggleItems(true);
             }
         }
@@ -673,7 +677,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         this.calculatedObjectHeight = event.calculatedChildHeight + 'px';
 
-        if (!this.lockEvents) {
+        if (!this._lockEvents) {
             this.toggleItems(false);
             this.updateScrollItems(event.start, event.end, false);
 
@@ -1123,7 +1127,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             if (this.totalRows === items.length) {
                 this.useVirtualScroll = false;
                 this.updateItems(items);
-                this.onListLoad();
             } else {
                 this.useVirtualScroll = true;
                 const numberOfStartItems = this.getNumberOfStartItems();
@@ -1139,6 +1142,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     this.virtualScroll.refresh();
                 }
             }
+        }
+
+        // Raise list load event immediately, else will be raised from the scroller load event.
+        if (!this.useVirtualScroll) {
+            this.onListLoad();
         }
 
         this.setLayout();

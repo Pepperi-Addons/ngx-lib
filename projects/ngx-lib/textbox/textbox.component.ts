@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepTextboxFieldType, PepTextboxField } from '@pepperi-addons/ngx-lib';
+    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepTextboxFieldType, PepTextboxField, PepFieldBase } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-textbox',
@@ -58,25 +58,30 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         private element: ElementRef
     ) { }
 
+    private getField(): PepFieldBase {
+        const pepField = new PepTextboxField({
+            key: this.key,
+            value: this.value,
+            required: this.required,
+            readonly: this.readonly,
+            disabled: this.disabled,
+            maxFieldCharacters: this.maxFieldCharacters,
+            type: this.type,
+            minValue: this.minValue,
+            maxValue: this.maxValue
+        });
+
+        return pepField;
+    }
+
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
 
             this.minValue = isNaN(this.minValue) && !isNaN(this.maxValue) ? 0 : this.minValue;
             this.maxValue = isNaN(this.maxValue) && !isNaN(this.minValue) ? 99999 : this.maxValue;
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled,
-            //     this.maxFieldCharacters, this.type, false, true, this.minValue, this.maxValue);
-            const pepField = new PepTextboxField({
-                key: this.key,
-                value: this.value,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled,
-                maxFieldCharacters: this.maxFieldCharacters,
-                type: this.type,
-                minValue: this.minValue,
-                maxValue: this.maxValue
-            });
+            
+            const pepField = this.getField();
             this.form = this.customizationService.getDefaultFromGroup(pepField, this.renderError);
 
             this.formattedValue = this.formattedValue || this.value;
@@ -90,6 +95,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     ngOnChanges(changes: any): void {
         if (this.standAlone) {
             this.formattedValue = this.formattedValue || this.value;
+
+            const pepField = this.getField();
+            this.customizationService.updateFormField(this.form, pepField, this.formattedValue);
         }
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field

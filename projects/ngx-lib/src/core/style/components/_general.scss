@@ -543,8 +543,9 @@ $sorting-width: 1rem;
 //  Card view & Line view
 // ------------------------
 .cards-body {
-    margin: 0 (calc(#{$content-margin} * -1) / 2); // -0.5rem;
     position: relative;
+    margin: 0 (calc(#{$content-margin} * -1) / 2); // -0.5rem;
+    padding-bottom: $content-padding;
 }
 
 .line-view,

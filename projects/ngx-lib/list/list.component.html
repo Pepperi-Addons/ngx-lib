@@ -7,10 +7,12 @@
         <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
         <ng-container *ngTemplateOutlet="listBody"></ng-container>
         <ng-container *ngTemplateOutlet="tableTotal"></ng-container>
+        <ng-container *ngTemplateOutlet="listPager"></ng-container>
     </ng-template>
 
     <ng-template #cardsBlock>
         <ng-container *ngTemplateOutlet="listBody"></ng-container>
+        <ng-container *ngTemplateOutlet="listPager"></ng-container>
     </ng-template>
 
     <ng-template #listBody>
@@ -25,15 +27,19 @@
         </ng-template>
 
         <ng-template #noVirtualScrollBlock>
-            <div #noVirtualScrollContnainer [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }"
-                style="height: auto;">
+            <div #noVirtualScrollContnainer class="no-virtual-scroll-container"
+                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
                 <ng-container *ngTemplateOutlet="listData"></ng-container>
             </div>
-            <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [length]="totalRows" [pageSize]="pageSize"
-                (pagerChange)="onPagerChange($event)">
-            </pep-list-pager>
         </ng-template>
     </ng-template>
+
+    <ng-template #listPager>
+        <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="lockEvents" [length]="totalRows"
+            [pageSize]="pageSize" (pagerChange)="onPagerChange($event)">
+        </pep-list-pager>
+    </ng-template>
+
 </ng-container>
 
 <ng-template #listData>

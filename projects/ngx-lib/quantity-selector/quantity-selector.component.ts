@@ -11,7 +11,7 @@ import {
     ChangeDetectorRef,
     ChangeDetectionStrategy,
     Renderer2,
-    AfterViewChecked
+    AfterViewInit
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -54,7 +54,7 @@ import { debounceTime } from 'rxjs/operators';
         ])
     ]
 })
-export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterViewChecked, OnDestroy {
+export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     public static ENTER_CHILDREN = '[EnterChildren]';
     public static ENTER_PACKAGE = '[EnterPackage]';
     public static PLUS = '[+]';
@@ -136,20 +136,23 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             );
         }
 
-        this.setQsView();
         this.resize = fromEvent(window, 'resize').pipe(
-            debounceTime(100)
+            debounceTime(250)
         ).subscribe((event) => {
             this.setQsView();
         });
     }
 
-    // TODO:
-    ngAfterViewChecked(): void {
-        setTimeout(() => {
-            this.setQsView();
-        }, 125);
+    ngAfterViewInit() {
+        this.setQsView();
     }
+
+    // TODO: Don't un comment this cause a lot of memory usage.
+    // ngAfterViewChecked(): void {
+    //     setTimeout(() => {
+    //         this.setQsView();
+    //     }, 125);
+    // }
 
     ngOnChanges(changes: any): void {
         if (this.standAlone) {
