@@ -26,9 +26,6 @@
                     <div *ngIf="supportResizing" class="resize-box pull-right flip"
                         (mousedown)="onListResizeStart($event, field.ApiName)">
                         <div class="splitter"></div>
-                        <!-- <mat-icon>
-                            <pep-icon name="resize" class="asc"></pep-icon>
-                        </mat-icon> -->
                     </div>
                 </div>
             </fieldset>
@@ -44,19 +41,19 @@
 <ng-template #listData>
     <ng-container *ngFor="let item of scrollItems; let i = index; let isFirst = first; trackBy: trackByFunc">
         <ng-container *ngIf="isTable">
-            <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.Data?.UID, item?.Data?.Type)"
-                (mouseleave)="onTableRowMouseLeave($event, item?.Data?.UID, item?.Data?.Type)" [ngClass]="{
-                        highlighted: item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId
+            <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)"
+                (mouseleave)="onTableRowMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
+                        highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId
                     }"
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
-                <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.Data?.BackgroundColor }">
+                <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
+                    <!-- [canEditObject]="!disabled && item?.IsEditable" -->
                     <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl"
-                        [firstFieldAsLink]="firstFieldAsLink" [data]="item?.Data"
-                        [canEditObject]="!disabled && item?.IsEditable" [objectId]="objectId" [parentId]="parentId"
-                        [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="'table'"
-                        [listType]="listType" [isActive]="
-                                (item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId ||
-                                item?.Data?.UID + SEPARATOR + item?.Data?.Type === hoveredItemId) && deviceHasMouse
+                        [firstFieldAsLink]="firstFieldAsLink" [data]="item" [canEditObject]="!disabled"
+                        [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
+                        [lockEvents]="disableSelectionItems" [layoutType]="'table'" [listType]="listType" [isActive]="
+                                (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
+                                item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                             " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
                         (click)="itemClicked($event, item)" [pageType]="pageType">
                     </pep-form>
@@ -65,19 +62,20 @@
         </ng-container>
 
         <ng-container *ngIf="!isTable">
-            <div [class]="itemClass" (mouseenter)="onCardMouseEnter($event, item?.Data?.UID, item?.Data?.Type)"
-                (mouseleave)="onCardMouseLeave($event, item?.Data?.UID, item?.Data?.Type)" [ngClass]="{
-                        highlighted: item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId,
+            <div [class]="itemClass" (mouseenter)="onCardMouseEnter($event, item?.UID, item?.Type)"
+                (mouseleave)="onCardMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
+                        highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId,
                         'card-view': viewType === 'cards',
                         'line-view': viewType === 'lines'
                     }" class="pull-left flip"
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
-                <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item?.Data"
-                    [canEditObject]="!disabled && item?.IsEditable" [objectId]="objectId" [parentId]="parentId"
-                    [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="getThumbnailsLayout()"
-                    [listType]="listType" [isActive]="
-                            (item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId ||
-                            item?.Data?.UID + SEPARATOR + item?.Data?.Type === hoveredItemId) && deviceHasMouse
+                <!-- [canEditObject]="!disabled && item?.IsEditable" -->
+                <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item"
+                    [canEditObject]="!disabled" [objectId]=" objectId" [parentId]="parentId" [searchCode]="searchCode"
+                    [lockEvents]="disableSelectionItems" [layoutType]="getThumbnailsLayout()" [listType]="listType"
+                    [isActive]="
+                            (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
+                            item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
                     (click)="itemClicked($event, item)" [pageType]="pageType">
                 </pep-form>

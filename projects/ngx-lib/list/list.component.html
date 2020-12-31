@@ -45,34 +45,34 @@
 <ng-template #listData>
     <ng-container *ngFor="let item of scrollItems; let index; let isFirst = first;">
         <ng-container *ngIf="isTable">
-            <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.Data?.UID, item?.Data?.Type)"
-                (mouseleave)="onTableRowMouseLeave($event, item?.Data?.UID, item?.Data?.Type)" [ngClass]="{
-                        selected: isItemSelected(item?.Data?.UID, item?.Data?.Type),
-                        highlighted: item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId
+            <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)"
+                (mouseleave)="onTableRowMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
+                        selected: isItemSelected(item?.UID, item?.Type),
+                        highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId
                     }"
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
-                <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.Data?.BackgroundColor }">
+                <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
                     <mat-checkbox
                         *ngIf="selectionTypeForActions == 'multi' || selectionTypeForActions == 'single-action'"
                         type="checkbox" class="pull-left flip row-selection" [disabled]="getIsDisabled(item)" [ngStyle]="{
                                 visibility: !deviceHasMouse ||
-                                item?.Data?.UID + SEPARATOR + item?.Data?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
-                            }"
-                        [checked]="getIsSelectedForActions(item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)"
-                        (change)="selectItemForActions($event, item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)">
+                                item?.UID + SEPARATOR + item?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
+                            }" [checked]="getIsSelectedForActions(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                        (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                     </mat-checkbox>
                     <mat-radio-button *ngIf="selectionTypeForActions == 'single'" name="selection"
                         class="pull-left flip row-selection pep-radio-button" [disabled]="getIsDisabled(item)"
-                        [checked]="getIsSelectedForActions(item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)"
-                        (change)="selectItemForActions($event, item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)">
+                        [checked]="getIsSelectedForActions(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                        (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                     </mat-radio-button>
-                    <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl"
-                        [firstFieldAsLink]="firstFieldAsLink" [data]="item?.Data"
-                        [canEditObject]="!disabled && item?.IsEditable" [objectId]="objectId" [parentId]="parentId"
-                        [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [isReport]="isReport"
-                        [layoutType]="'table'" [listType]="listType" [isActive]="
-                                (item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId ||
-                                item?.Data?.UID + SEPARATOR + item?.Data?.Type === hoveredItemId) && deviceHasMouse
+                    <!-- [canEditObject]="!disabled && item?.IsEditable"  -->
+                    <pep-form [checkForChanges]="checkForChanges" [layout]="layout"
+                        [firstFieldAsLink]="firstFieldAsLink" [data]="item" [canEditObject]="!disabled"
+                        [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
+                        [lockEvents]="disableSelectionItems" [isReport]="isReport" [layoutType]="'table'"
+                        [listType]="listType" [isActive]="
+                                (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
+                                item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                             " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
                         (click)="itemClicked($event, item)" [pageType]="pageType">
                     </pep-form>
@@ -81,25 +81,26 @@
         </ng-container>
 
         <ng-container *ngIf="!isTable">
-            <div [class]="itemClass" (mouseenter)="onCardMouseEnter($event, item?.Data?.UID, item?.Data?.Type)"
-                (mouseleave)="onCardMouseLeave($event, item?.Data?.UID, item?.Data?.Type)" [ngClass]="{
-                        selected: isItemSelected(item?.Data?.UID, item?.Data?.Type),
-                        highlighted: item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId,
+            <div [class]="itemClass" (mouseenter)="onCardMouseEnter($event, item?.UID, item?.Type)"
+                (mouseleave)="onCardMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
+                        selected: isItemSelected(item?.UID, item?.Type),
+                        highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId,
                         'card-view': viewType === 'cards',
                         'line-view': viewType === 'lines'
                     }" class="pull-left flip"
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
                 <mat-checkbox *ngIf="showSelection" class="pull-left flip card-selection"
                     [disabled]="getIsDisabled(item)"
-                    [checked]="getIsSelectedForActions(item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)"
-                    (change)="selectItemForActions($event, item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)">
+                    [checked]="getIsSelectedForActions(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                    (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                 </mat-checkbox>
-                <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges" [layout]="uiControl"
-                    [data]="item?.Data" [canEditObject]="!disabled && item?.IsEditable" [objectId]="objectId"
-                    [parentId]="parentId" [searchCode]="searchCode" [lockEvents]="disableSelectionItems"
-                    [layoutType]="getThumbnailsLayout()" [listType]="listType" [isActive]="
-                            (item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId ||
-                            item?.Data?.UID + SEPARATOR + item?.Data?.Type === hoveredItemId) && deviceHasMouse
+                <!-- [canEditObject]="!disabled && item?.IsEditable" -->
+                <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges" [layout]="layout"
+                    [data]="item" [canEditObject]="!disabled" [objectId]="objectId" [parentId]="parentId"
+                    [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="getThumbnailsLayout()"
+                    [listType]="listType" [isActive]="
+                            (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
+                            item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
                     (click)="itemClicked($event, item)" [pageType]="pageType">
                 </pep-form>
@@ -125,13 +126,13 @@
                 [disabled]="disabled || selectionTypeForActions === 'single'" [checked]="getIsAllSelectedForActions()"
                 (change)="selectAllItemsForActions($event)"></mat-checkbox>
             <fieldset>
-                <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="header-column pull-left flip"
+                <div *ngFor="let field of layout?.ControlFields; let j = index" class="header-column pull-left flip"
                     [ngStyle]="{ width: field.calcTitleColumnWidthString }" [ngClass]="{
                             'support-sorting': supportSorting,
                             'has-sorting': field.ApiName === sortBy,
                             'is-resizing': field.ApiName === pressedColumn,
                             'is-first': j === 0 && selectionTypeForActions !== 'multi',
-                            'is-last': j === uiControl?.ControlFields?.length - 1
+                            'is-last': j === layout?.ControlFields?.length - 1
                         }"
                     (click)="supportSorting ? (onListSortingChange(field.ApiName, sortBy !== null && sortBy != field.ApiName ? true : !isAsc, $event)) : false">
 
@@ -174,9 +175,9 @@
 </ng-template>
 
 <ng-template #tableTotal>
-    <div *ngIf="totalsRow?.length > 0 && totalsRow.length <= uiControl?.ControlFields.length" class="table-total">
+    <div *ngIf="totalsRow?.length > 0 && totalsRow.length <= layout?.ControlFields.length" class="table-total">
         <fieldset class="table-header-fieldset">
-            <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="total-column pull-left flip"
+            <div *ngFor="let field of layout?.ControlFields; let j = index" class="total-column pull-left flip"
                 [ngStyle]="{ width: field.calcTitleColumnWidthString }">
                 <label class="total-label body-sm text-align-{{ field.Layout.XAlignment }}">
                     {{ totalsRow[j] }}

@@ -62,29 +62,15 @@ export class CarouselExampleComponent implements OnInit {
     }
 
     loadlist() {
-        // if (this.customList) {
-            
-            const loadLines = true;
-            const uiControl = loadLines ? this.getLinesUiControl() : this.getCardsUiControl();
-            const rows = loadLines ? this.getLinesData() : this.getCardsData();
+        const loadLines = true;
+        const uiControl = loadLines ? this.getLinesUiControl() : this.getCardsUiControl();
+        const rows = loadLines ? this.getLinesData() : this.getCardsData();
 
-            const buffer = [];
-            if (rows) {
-                rows.forEach((row: ObjectsDataRow) => {
-                    const osd = new ObjectSingleData(uiControl, row);
-                    osd.IsEditable = true;
-                    buffer.push(osd);
-                });
-            }
-
-            // this.customList.initListData(uiControl, buffer.length, buffer, loadLines ? 'lines' : 'cards', '');
-
-            this.uiControl = uiControl;
-            this.items = buffer;
-        // }
+        this.uiControl = uiControl;
+        this.items = rows;
     }
 
-    getLinesUiControl(): UIControl {
+    private getLinesUiControl(): UIControl {
         return JSON.parse(
             `{
                 "Columns": 9,
@@ -255,7 +241,7 @@ export class CarouselExampleComponent implements OnInit {
         );
     }
 
-    getLinesData(): Array<ObjectsDataRow> {
+    private getLinesData(): Array<ObjectsDataRow> {
         return JSON.parse(
             `[{
                 "AdditionalData": null,
@@ -1780,7 +1766,7 @@ export class CarouselExampleComponent implements OnInit {
         );
     }
 
-    getCardsUiControl(): UIControl {
+    private getCardsUiControl(): UIControl {
         return JSON.parse(
             `{
                 "Columns": 9,
@@ -1951,7 +1937,7 @@ export class CarouselExampleComponent implements OnInit {
         );
     }
 
-    getCardsData(): Array<ObjectsDataRow> {
+    private getCardsData(): Array<ObjectsDataRow> {
         return this.getLinesData();
     }
 

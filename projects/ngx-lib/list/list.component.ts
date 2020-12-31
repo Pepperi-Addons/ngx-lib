@@ -18,7 +18,6 @@ import {
     PepWindowScrollingService,
     PepScreenSizeType,
     PepSessionService,
-    ObjectSingleData,
     UIControl,
     UIControlField,
     FIELD_TYPE,
@@ -99,18 +98,23 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('noVirtualScrollContnainer') noVirtualScrollContnainer: ElementRef;
     @ViewChild('selectAllCB') selectAllCB: any;
 
-    public uiControl: UIControl = null;
+    public layout: UIControl = null;
     public totalRows = -1;
     itemClass: string;
     isTable = false;
     private hasColumnWidthOfTypePercentage = true;
-    public items: Array<ObjectSingleData> = null;
+    
+    private _items: Array<ObjectsDataRow> = null;
+    get items(): Array<ObjectsDataRow> {
+        return this._items;
+    }
+    
     public showSelection = false;
     // isCardView = false;
     private itemsCounter = 0;
     showItems = true;
     viewType: PepListViewType;
-    scrollItems: Array<ObjectSingleData>;
+    scrollItems: Array<ObjectsDataRow>;
 
     public SEPARATOR = ',';
     public isAllSelected = false;
@@ -255,7 +259,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     removeTable(): void {
         this.cleanItems();
-        this.uiControl = null;
+        this.layout = null;
     }
 
     private getTopItems(): number {
@@ -360,13 +364,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     setLayout(): void {
         if (this.totalRows === 0 ||
-            !this.uiControl ||
-            !this.uiControl.ControlFields ||
-            this.uiControl.ControlFields.length === 0) {
+            !this.layout ||
+            !this.layout.ControlFields ||
+            this.layout.ControlFields.length === 0) {
             return;
         }
 
-        this.uiControl.ControlFields.forEach(cf => {
+        this.layout.ControlFields.forEach(cf => {
             if (cf.ColumnWidth === 0) {
                 cf.ColumnWidth = 10;
             }
@@ -401,14 +405,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     private calcColumnsWidth(): void {
         const fixedMultiple = 3.78; // for converting em to pixel.
-        const length = this.uiControl.ControlFields.length;
+        const length = this.layout.ControlFields.length;
         const selectionCheckBoxWidth = this.selectionTypeForActions === 'multi' ? 44 : 0;
 
         // Is table AND there is at least one column of width type of percentage.
         if (this.isTable) {
-            if (this.uiControl && this.uiControl.ControlFields) {
+            if (this.layout && this.layout.ControlFields) {
                 this.hasColumnWidthOfTypePercentage =
-                    this.uiControl.ControlFields.filter(
+                    this.layout.ControlFields.filter(
                         cf => cf.ColumnWidthType === 1
                     ).length === 0;
             }
@@ -416,7 +420,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         // If the columns size is fixed and the total is small then the container change it to percentage.
         if (!this.hasColumnWidthOfTypePercentage) {
-            const totalFixedColsWidth = this.uiControl.ControlFields.map(
+            const totalFixedColsWidth = this.layout.ControlFields.map(
                 cf => cf.ColumnWidth * fixedMultiple
             ).reduce((sum, current) => sum + current);
 
@@ -429,12 +433,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         // Calc by percentage
         if (this.hasColumnWidthOfTypePercentage) {
-            const totalColsWidth: number = this.uiControl.ControlFields.map(
+            const totalColsWidth: number = this.layout.ControlFields.map(
                 cf => cf.ColumnWidth
             ).reduce((sum, current) => sum + current);
 
             for (let index = 0; index < length; index++) {
-                const uiControlField: UIControlField = this.uiControl
+                const uiControlField: UIControlField = this.layout
                     .ControlFields[index];
                 const calcColumnWidthPercentage =
                     (100 / totalColsWidth) * uiControlField.ColumnWidth;
@@ -460,7 +464,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             );
         } else {
             for (let index = 0; index < length; index++) {
-                const uiControlField: UIControlField = this.uiControl
+                const uiControlField: UIControlField = this.layout
                     .ControlFields[index];
                 const currentFixedWidth = Math.floor(
                     uiControlField.ColumnWidth * fixedMultiple
@@ -518,11 +522,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     PepListComponent.MINIMUM_COLUMN_WIDTH ||
                 widthToAdd > 0
             ) {
-                const length = this.uiControl.ControlFields.length;
+                const length = this.layout.ControlFields.length;
                 let totalCalcColsWidth = 0;
 
                 for (let index = 0; index < length; index++) {
-                    const uiControlField: UIControlField = this.uiControl
+                    const uiControlField: UIControlField = this.layout
                         .ControlFields[index];
 
                     if (index === length - 1) {
@@ -747,14 +751,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.fieldClick.emit(customizeFieldClickedData);
     }
 
-    getIsDisabled(item: ObjectSingleData): boolean {
+    getIsDisabled(item: ObjectsDataRow): boolean {
         if (this.disableSelectionItems) {
             return true;
         } else {
-            const IsNotSelectableForActions =
-            item?.Data &&
-                !item.Data.IsSelectableForActions;
-            return IsNotSelectableForActions;
+            return item && !item.IsSelectableForActions;
         }
     }
 
@@ -770,7 +771,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 res = this.getIsAllSelected(this.scrollItems);
             } else if (this.selectedItems.size < this.totalRows) {
                 for (const item of this.scrollItems) {
-                    res = item && item.Data && this.selectedItems.has(item.Data.UID.toString());
+                    res = item && this.selectedItems.has(item.UID.toString());
 
                     if (!res) {
                         break;
@@ -817,9 +818,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     this.selectedItemsChange.emit(0);
                     this.selectedItemId = '';
                 } else {
-                    const filteredItems = this.items.filter(
-                        item => item.Data && item.Data.IsSelectableForActions
-                    );
+                    const filteredItems = this.items.filter(item => item && item.IsSelectableForActions);
                     this.selectedItemsChange.emit(filteredItems.length);
                 }
             }
@@ -877,17 +876,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
 
-    itemClicked(e: any, objectSingleData: ObjectSingleData): void {
+    itemClicked(e: any, item: ObjectsDataRow): void {
         // Set seleted item
-        const itemId = objectSingleData.Data.UID.toString();
-        const itemType = objectSingleData.Data.Type.toString();
+        const itemId = item.UID.toString();
+        const itemType = item.Type.toString();
         let isChecked = false;
 
-        if (
-            objectSingleData &&
-            objectSingleData.Data &&
-            objectSingleData.Data.IsSelectableForActions
-        ) {
+        if (item && item.IsSelectableForActions) {
             this.selectedItemId = this.getUniqItemId(itemId, itemType);
             isChecked = true;
         }
@@ -896,7 +891,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             if (this.selectionTypeForActions === 'single') {
                 this.setItemClicked(
                     itemId,
-                    objectSingleData.Data.IsSelectableForActions,
+                    item.IsSelectableForActions,
                     itemType,
                     isChecked
                 );
@@ -904,7 +899,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 // Just mark the row as highlighted
                 this.setItemClicked(
                     itemId,
-                    objectSingleData.Data.IsSelectableForActions,
+                    item.IsSelectableForActions,
                     itemType,
                     true
                 );
@@ -916,7 +911,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         }
 
-        this.itemClick.emit({ source: objectSingleData, viewType: this.viewType });
+        this.itemClick.emit({ source: item, viewType: this.viewType });
     }
 
     setItemClicked(
@@ -1002,12 +997,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.setLayout();
     }
 
-    // trackByFunc(index: number, item: ObjectSingleData): any {
-    //     return item && item.Data && item.Data.UID ? item.Data.UID : index;
+    // trackByFunc(index: number, item: ObjectsDataRow): any {
+    //     return item && item.UID ? item.UID : index;
     //     // let res: string = "";
 
-    //     // if (item && item.Data && item.Data.UID) {
-    //     //    res = item.Data.UID + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
+    //     // if (item && item.UID) {
+    //     //    res = item.UID + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
     //     // }
     //     // else {
     //     //    res = index + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
@@ -1018,17 +1013,16 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     cleanItems(): void {
         this.itemsCounter = 0;
-        this.items =
-            this.totalRows > 0 ? Array<ObjectSingleData>(this.totalRows) : [];
+        this._items = this.totalRows > 0 ? Array<ObjectsDataRow>(this.totalRows) : [];
         this.scrollItems = [];
         this.calculatedObjectHeight = '';
     }
 
     getUIControl(): UIControl {
-        return this.uiControl;
+        return this.layout;
     }
 
-    initVariablesFromSession(items: ObjectSingleData[]): void {
+    initVariablesFromSession(items: ObjectsDataRow[]): void {
         const selectedItemsObject: Array<any> = this.sessionService.getObject<Array<any>>(PepListComponent.SELECTED_ITEMS_STATE_KEY);
         const selectedItemsFromMap: Map<string, string> =
             selectedItemsObject && selectedItemsObject.length > 0 ? new Map(selectedItemsObject) : null;
@@ -1077,9 +1071,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     initListData(
-        uiControl: UIControl,
+        layout: UIControl,
         totalRows: number,
-        items: ObjectSingleData[],
+        items: ObjectsDataRow[],
         viewType: PepListViewType = '',
         itemClass: string = '',
         showSelection: boolean = false
@@ -1098,7 +1092,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.isTable = viewType === 'table';
         // this.isCardView = viewType === 'cards' || viewType === 'lines';
         this.showSelection = showSelection;
-        this.uiControl = uiControl;
+        this.layout = layout;
         this.itemClass = itemClass;
         this.selectedItemId = '';
         this.totalRows = totalRows;
@@ -1145,12 +1139,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.setLayout();
     }
 
-    getIsAllSelected(items: Array<ObjectSingleData>): boolean {
+    getIsAllSelected(items: Array<ObjectsDataRow>): boolean {
         let result = true;
 
         if (this.selectedItems?.size > 0 && items?.length > 0) {
             for (const item of items) {
-                if (!(item && item.Data && this.selectedItems.has(item.Data.UID.toString()))) {
+                if (!(item && this.selectedItems.has(item.UID.toString()))) {
                     result = false;
                     break;
                 }
@@ -1222,7 +1216,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.sessionService.setObject(PepListComponent.ALL_SELECTED_STATE_KEY, this.isAllSelected);
     }
 
-    updateItems(items: ObjectSingleData[], event: IPepListLoadItemsEvent = null): void {
+    updateItems(items: ObjectsDataRow[], event: IPepListLoadItemsEvent = null): void {
         if (this.useVirtualScroll) {
             if (!event) {
                 // Event isn't supplied.
@@ -1246,12 +1240,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.updateScrollItems(event.start, event.end);
             this.toggleItems(true);
         } else {
-            this.scrollItems = this.items = items;
+            this.scrollItems = this._items = items;
             this.itemsCounter = items.length;
         }
     }
 
-    updatePage(items: ObjectSingleData[], event: IPepListLoadPageEvent): void {
+    updatePage(items: ObjectsDataRow[], event: IPepListLoadPageEvent): void {
         if (!event) {
             // Event isn't supplied.
             return;
@@ -1279,18 +1273,15 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         let index = 0;
 
         // Update items list
-        index = this.items.findIndex(
-            i => i && i.Data && i.Data.UID === data.UID
-        );
+        index = this.items.findIndex(i => i && i.UID === data.UID);
         if (index >= 0 && index < this.items.length) {
-            this.items[index].Data = data;
+            this.items[index] = data;
         }
+
         // Update scrollItems list
-        index = this.scrollItems.findIndex(
-            i => i && i.Data && i.Data.UID === data.UID
-        );
+        index = this.scrollItems.findIndex(i => i && i.UID === data.UID);
         if (index >= 0 && index < this.scrollItems.length) {
-            this.scrollItems[index].Data = data;
+            this.scrollItems[index] = data;
             this.checkForChanges = new Date().getTime();
         }
     }
@@ -1323,16 +1314,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 } else {
                     // Get the id's of the items that not founded in unSelectedItems.
                     this.items.forEach(item => {
-                        if (
-                            item &&
-                            !this.unSelectedItems.has(item.Data.UID.toString())
-                        ) {
-                            currentList.push(
-                                this.getUniqItemId(
-                                    item.Data.UID.toString(),
-                                    item.Data.Type.toString()
-                                )
-                            );
+                        if (item && !this.unSelectedItems.has(item.UID.toString())) {
+                            currentList.push(this.getUniqItemId(item.UID.toString(), item.Type.toString()));
                         }
                     });
                 }
@@ -1372,22 +1355,15 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getIsItemEditable(uid: string): boolean {
-        const item = this.items.filter(x => x.Data.UID.toString() === uid);
+        const item = this.items.filter(x => x.UID.toString() === uid);
         if (item.length > 0) {
-            return item[0].Data.IsEditable;
+            return item[0].IsEditable;
         } else {
             return false;
         }
     }
 
     getItemDataByID(uid: string): ObjectsDataRow {
-        return this.items.find(item => item.Data.UID.toString() === uid)?.Data;
-
-        // const item = this.items.filter(x => x.Data.UID.toString() === uid);
-        // if (item.length > 0) {
-        //     return item[0].Data;
-        // } else {
-        //     return null;
-        // }
+        return this.items.find(item => item.UID.toString() === uid);
     }
 }

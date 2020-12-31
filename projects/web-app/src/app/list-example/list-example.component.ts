@@ -122,15 +122,15 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
                 tableData.push(this.convertToPepRowData(rowData, displayedColumns));
             });
             const pepperiListObj = this.dataConvertorService.convertListData(tableData);
-            const buffer = [];
-            if (pepperiListObj.Rows) {
-                pepperiListObj.Rows.forEach( row => {
-                    const osd = new ObjectSingleData(pepperiListObj.UIControl, row);
-                    osd.IsEditable = true;
-                    buffer.push(osd);
-                });
-            }
-
+            // const buffer = [];
+            // if (pepperiListObj.Rows) {
+            //     pepperiListObj.Rows.forEach( row => {
+            //         const osd = new ObjectSingleData(pepperiListObj.UIControl, row);
+            //         osd.IsEditable = true;
+            //         buffer.push(osd);
+            //     });
+            // }
+            const buffer = pepperiListObj.Rows;
             this.customList.initListData(pepperiListObj.UIControl, buffer.length, buffer, 'table', '', true);
         }
     }

@@ -15,7 +15,6 @@ import { delay } from 'rxjs/operators';
 import {
     PepLayoutType,
     PepLayoutService,
-    ObjectSingleData,
     UIControl,
     UIControlField,
     FIELD_TYPE,
@@ -67,12 +66,17 @@ export class PepInternalListComponent
     itemClass: string;
     isTable = false;
     private hasColumnWidthOfTypePercentage = true;
-    public items: Array<ObjectSingleData> = null;
+    
+    private _items: Array<ObjectsDataRow> = null;
+    get items(): Array<ObjectsDataRow> {
+        return this._items;
+    }
+
     // isCardView = false;
     private itemsCounter = 0;
     showItems = true;
     viewType: PepListViewType;
-    scrollItems: Array<ObjectSingleData>;
+    scrollItems: Array<ObjectsDataRow>;
 
     public SEPARATOR = ',';
 
@@ -461,26 +465,22 @@ export class PepInternalListComponent
         this.fieldClick.emit(customizeFieldClickedData);
     }
 
-    getIsDisabled(item: ObjectSingleData): boolean {
+    getIsDisabled(item: ObjectsDataRow): boolean {
         if (this.disableSelectionItems) {
             return true;
         } else {
-            const IsNotSelectableForActions = item?.Data && !item.Data.IsSelectableForActions;
+            const IsNotSelectableForActions = item && !item.IsSelectableForActions;
             return IsNotSelectableForActions;
         }
     }
 
-    itemClicked(e: any, objectSingleData: ObjectSingleData): void {
+    itemClicked(e: any, item: ObjectsDataRow): void {
         // Set seleted item
-        const itemId = objectSingleData.Data.UID.toString();
-        const itemType = objectSingleData.Data.Type.toString();
+        const itemId = item.UID.toString();
+        const itemType = item.Type.toString();
         let isChecked = false;
 
-        if (
-            objectSingleData &&
-            objectSingleData.Data &&
-            objectSingleData.Data.IsSelectableForActions
-        ) {
+        if (item && item.IsSelectableForActions) {
             this.selectedItemId = this.getUniqItemId(itemId, itemType);
             isChecked = true;
         }
@@ -530,14 +530,13 @@ export class PepInternalListComponent
         this.setLayout();
     }
 
-    trackByFunc(index: number, item: ObjectSingleData): any {
-        return item && item.Data && item.Data.UID ? item.Data.UID : index;
+    trackByFunc(index: number, item: ObjectsDataRow): any {
+        return item && item.UID ? item.UID : index;
     }
 
     cleanItems(): void {
         this.itemsCounter = 0;
-        this.items =
-            this.totalRows > 0 ? Array<ObjectSingleData>(this.totalRows) : [];
+        this._items = this.totalRows > 0 ? Array<ObjectsDataRow>(this.totalRows) : [];
         this.scrollItems = [];
         this.calculatedObjectHeight = '';
     }
@@ -549,7 +548,7 @@ export class PepInternalListComponent
     initListData(
         uiControl: UIControl,
         totalRows: number,
-        items: ObjectSingleData[],
+        items: ObjectsDataRow[],
         viewType: PepListViewType = 'table',
         itemClass: string = ''
         ): void {
@@ -573,8 +572,8 @@ export class PepInternalListComponent
         this.setLayout();
     }
 
-    private updateItems(items: ObjectSingleData[]): void {
-        this.scrollItems = this.items = items;
+    private updateItems(items: ObjectsDataRow[]): void {
+        this.scrollItems = this._items = items;
         this.itemsCounter = items.length;
     }
 
@@ -582,32 +581,30 @@ export class PepInternalListComponent
         let index = 0;
 
         // Update items list
-        index = this.items.findIndex(
-            i => i && i.Data && i.Data.UID === data.UID
-        );
+        index = this.items.findIndex(i => i && i.UID === data.UID);
         if (index >= 0 && index < this.items.length) {
-            this.items[index].Data = data;
+            this.items[index] = data;
         }
+        
         // Update scrollItems list
-        index = this.scrollItems.findIndex(
-            i => i && i.Data && i.Data.UID === data.UID
-        );
+        index = this.scrollItems.findIndex(i => i && i.UID === data.UID);
+        
         if (index >= 0 && index < this.scrollItems.length) {
-            this.scrollItems[index].Data = data;
+            this.scrollItems[index] = data;
             this.checkForChanges = new Date().getTime();
         }
     }
 
     getIsItemEditable(uid: string): boolean {
-        const item = this.items.filter(x => x.Data.UID.toString() === uid);
+        const item = this.items.filter(x => x.UID.toString() === uid);
         if (item.length > 0) {
-            return item[0].Data.IsEditable;
+            return item[0].IsEditable;
         } else {
             return false;
         }
     }
 
     getItemDataByID(uid: string): ObjectsDataRow {
-        return this.items.find(item => item.Data.UID.toString() === uid)?.Data;
+        return this.items.find(item => item.UID.toString() === uid);
     }
 }

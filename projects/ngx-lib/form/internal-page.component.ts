@@ -112,22 +112,22 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         }
 
         setTimeout(() => {
-            const buffer = [];
+            // const buffer = [];
 
-            if (this.childData.Rows) {
-                // for (let i = 0; i < this.childData.Rows.length; i++) {
-                for (const childDataRow of this.childData.Rows) {
-                    const osd = new ObjectSingleData(
-                        this.uiControl,
-                        childDataRow
-                    );
-                    osd.IsEditable = true;
-                    buffer.push(osd);
-                }
-            }
+            // if (this.childData.Rows) {
+            //     // for (let i = 0; i < this.childData.Rows.length; i++) {
+            //     for (const childDataRow of this.childData.Rows) {
+            //         const osd = new ObjectSingleData(
+            //             this.uiControl,
+            //             childDataRow
+            //         );
+            //         osd.IsEditable = true;
+            //         buffer.push(osd);
+            //     }
+            // }
 
             const viewType: PepListViewType = this.isTableView() ? 'table' : 'lines';
-            this.customList.initListData(this.uiControl, this.childData.TotalRows, buffer, viewType);
+            this.customList.initListData(this.uiControl, this.childData.TotalRows, this.childData.Rows, viewType);
             this.setTotalsRow();
 
             // if (!this.childModal.isShown) {
@@ -396,13 +396,14 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         if (this.isMatrixView() || this.isFlatMatrixView()) {
             let totalCol = 0;
 
-            if (this.customList.items) {
+            const items = this.customList.items;
+            if (items) {
                 for (
                     let col = 0;
-                    col < this.customList.items[0].Data.Fields.length;
+                    col < items[0].Fields.length;
                     col++
                 ) {
-                    const field = this.customList.items[0].Data.Fields[col];
+                    const field = items[0].Fields[col];
                     if (
                         field.FieldType === FIELD_TYPE.NumberIntegerForMatrix ||
                         field.FieldType ===
@@ -416,14 +417,13 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                         field.FieldType === FIELD_TYPE.NumberReal
                     ) {
                         totalCol = 0;
-                        // for (var i = 0; i < this.customList.items.length; i++) {
-                        for (const listItem of this.customList.items) {
+                        for (const listItem of items) {
                             if (
-                                listItem.Data.Fields[col] &&
-                                listItem.Data.Fields[col].Value
+                                listItem.Fields[col] &&
+                                listItem.Fields[col].Value
                             ) {
                                 const num = parseFloat(
-                                    listItem.Data.Fields[col].Value
+                                    listItem.Fields[col].Value
                                 );
                                 totalCol += isNaN(num) ? 0 : num;
                             }

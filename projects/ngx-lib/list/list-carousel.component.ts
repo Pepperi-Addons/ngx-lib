@@ -3,6 +3,8 @@ import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild,
 import { ObjectsDataRow, UIControl } from '@pepperi-addons/ngx-lib';
 import { PepCarouselComponent } from '@pepperi-addons/ngx-lib/carousel';
 
+export type PepListCarouselSizeType = 'xs' | 'sm' | 'md';
+
 export interface IPepListCarouselItemClickEvent {
     source: ObjectsDataRow;
 }
@@ -16,8 +18,27 @@ export interface IPepListCarouselItemClickEvent {
 export class PepListCarouselComponent implements OnInit, OnDestroy {
     @Input() duration: number = 500;
     @Input() layout: UIControl = null;
-    @Input() items: Array<ObjectsDataRow> = null; 
-    @Input() itemSize: 'xs' | 'sm' | 'md' = 'xs';
+    @Input() itemsToMove: number = 3;
+    
+    private _items: Array<ObjectsDataRow> = null; 
+    @Input()
+    set items(value: Array<ObjectsDataRow>) {
+        this._items = value;
+        this.moveTo(0);
+    }
+    get items() {
+        return this._items;
+    }
+
+    private _itemSize: PepListCarouselSizeType = 'xs';
+    @Input()
+    set itemSize(value: PepListCarouselSizeType) {
+        this._itemSize = value;
+        this.moveTo(0);
+    }
+    get itemSize() {
+        return this._itemSize;
+    }
 
     @Output() itemClick: EventEmitter<IPepListCarouselItemClickEvent> = new EventEmitter<IPepListCarouselItemClickEvent>();
     
@@ -47,16 +68,20 @@ export class PepListCarouselComponent implements OnInit, OnDestroy {
 
     moveLeft() {
         // this.carousel.moveLeft();
-        this.carousel.moveTo(this.carousel.currIndex - 3);
+        const indexToMove = Math.max(this.carousel.currIndex - this.itemsToMove, 0);
+        this.moveTo(indexToMove);
     }
     
     moveRight() {
         // this.carousel.moveRight();
-        this.carousel.moveTo(this.carousel.currIndex + 3);
+        const indexToMove = Math.min(this.carousel.currIndex + this.itemsToMove, this.items.length);
+        this.moveTo(indexToMove);
     }
     
     moveTo(index) {
-        this.carousel.moveTo(index);
+        if (this.carousel) {
+            this.carousel.moveTo(index);
+        }
     }
 
     onReachesLeftBound(event) {

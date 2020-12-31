@@ -1,4 +1,4 @@
-import { ObjectSingleData } from '@pepperi-addons/ngx-lib';
+import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
 
 export type PepListSelectionType = 'none' | 'single' | 'single-action' | 'multi';
 
@@ -7,7 +7,7 @@ export type PepListPagerType = 'pages' | 'scroll' ;
 export type PepListViewType = '' | 'cards' | 'lines' | 'table' | 'map';
 
 export interface IPepListItemClickEvent {
-    source: ObjectSingleData,
+    source: ObjectsDataRow,
     viewType: PepListViewType
 }
 
