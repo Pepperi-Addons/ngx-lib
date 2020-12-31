@@ -14,7 +14,7 @@ import {
     PepCustomizationService,
     UIControl,
     UIControlField,
-    ObjectSingleData,
+    ObjectsDataRow,
     ObjectsDataRowCell,
     PepFieldBase,
     PepTextboxField,
@@ -70,10 +70,10 @@ export interface IPepFormFieldClickEvent {
 })
 export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() isReport = false;
-    @Input() uiControlHeader: UIControl;
+    @Input() layout: UIControl;
     @Input() lockEvents = false;
     @Input() canEditObject = true;
-    @Input() singleData: ObjectSingleData;
+    @Input() data: ObjectsDataRow;
     @Input() isActive = false;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() listType = '';
@@ -674,7 +674,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     ngDoCheck(): void {
-        const changes = this.differ.diff(this.singleData); // check for changes
+        const changes = this.differ.diff(this.data); // check for changes
 
         if (changes) {
             this.updateForm(true);
@@ -682,10 +682,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes): void {
-        if (changes.singleData && changes.singleData.currentValue) {
+        if (changes.data && changes.data.currentValue) {
             // Load changes
-            if (!this.shouldReloadForm && changes.singleData.previousValue) {
-                this.singleData = changes.singleData.currentValue;
+            if (!this.shouldReloadForm && changes.data.previousValue) {
+                this.data = changes.data.currentValue;
                 this.updateForm();
             } else {
                 this.shouldReloadForm = false;
@@ -709,9 +709,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     getUiControlFields(): Array<UIControlField> {
-        return this.uiControlHeader ?
-            this.uiControlHeader.ControlFields :
-            this.singleData.UIControl.ControlFields;
+        return this.layout ? this.layout.ControlFields : [];
     }
 
     initFieldsStructure(fields: PepFieldBase[], maxRow: number): void {
@@ -890,9 +888,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     initForm(changes): void {
-        if (this.singleData.Data && this.singleData.Data.Fields) {
+        if (this.data && this.data.Fields) {
             const fields: PepFieldBase[] = this.convertCustomFields(
-                this.getUiControlFields(), this.singleData.Data.Fields);
+                this.getUiControlFields(), this.data.Fields);
 
             const maxRow = Math.max.apply(
                 Math,
@@ -935,10 +933,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     updateForm(cleanLastFocusedField: boolean = false): void {
-        if (this.singleData.Data && this.singleData.Data.Fields) {
-            // for (let i = 0; i < this.singleData.Data.Fields.length; i++) {
-            // let currentField = this.singleData.Data.Fields[i];
-            for (const currentField of this.singleData.Data.Fields) {
+        if (this.data && this.data.Fields) {
+            for (const currentField of this.data.Fields) {
                 const customField = this.fields.filter(f => f.key === currentField.ApiName)[0];
                 // Update all fields except 'internalPage' type (for children).
                 if (customField && customField.controlType !== 'internalPage') {
@@ -1122,12 +1118,11 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 dataField.Value = this.getInternalLinkHref();
             } else if (dataField.Value.length > 0 &&
                 (field.FieldType === FIELD_TYPE.ReferenceType || field.FieldType === FIELD_TYPE.GuidReferenceType)) {
-                const transactionUrl = this.singleData.Data.MainAction === '2' ? 'transactions/scope_items/' : 'transactions/cart/';
+                const transactionUrl = this.data.MainAction === '2' ? 'transactions/scope_items/' : 'transactions/cart/';
                 dataField.Value = transactionUrl + dataField.Value;
             }
 
             if (field.ApiName === 'ObjectMenu') {
-                const data: any = this.singleData.Data;
                 dataField.Enabled = true;
                 // HACK : Until "Enabled" returns from the server, we set PepMenu to be
                 //        Disabled in cart on regular items and not campign items.
@@ -1175,7 +1170,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
             this.lastFocusedField = event.lastFocusedField;
             this.valueChange.emit({
-                id: this.singleData.Data.UID.toString(),
+                id: this.data.UID.toString(),
                 key: event.key,
                 value: event.value,
                 controlType: event.controlType
@@ -1198,13 +1193,13 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     onClick(fieldClickEvent: IPepFieldClickEvent): void {
-        const clickedUiControlField = this.singleData.Data.Fields.filter(f => f.ApiName === fieldClickEvent.key)[0];
-        const idType = this.singleData.Data.Type ? this.singleData.Data.Type.toString() : '';
+        const clickedUiControlField = this.data.Fields.filter(f => f.ApiName === fieldClickEvent.key)[0];
+        const idType = this.data.Type ? this.data.Type.toString() : '';
 
         if (clickedUiControlField) {
             if (clickedUiControlField.FieldType === FIELD_TYPE.GuidReferenceType) {
                 this.fieldClick.emit({
-                    id: this.singleData.Data.UID.toString(),
+                    id: this.data.UID.toString(),
                     key: fieldClickEvent.key,
                     idType,
                     which: fieldClickEvent.eventWhich,
@@ -1215,7 +1210,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 });
             } else if (clickedUiControlField.FieldType === FIELD_TYPE.ListOfObjects) {
                 this.fieldClick.emit({
-                    id: this.singleData.Data.UID.toString(),
+                    id: this.data.UID.toString(),
                     key: fieldClickEvent.key,
                     idType,
                     which: fieldClickEvent.eventWhich,
@@ -1226,7 +1221,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 });
             } else {
                 this.fieldClick.emit({
-                    id: this.singleData.Data.UID.toString(),
+                    id: this.data.UID.toString(),
                     key: fieldClickEvent.key,
                     idType,
                     which: fieldClickEvent.eventWhich,
@@ -1239,7 +1234,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         } else {
             // For other api names (like enter children etc).
             this.fieldClick.emit({
-                id: this.singleData.Data.UID.toString(),
+                id: this.data.UID.toString(),
                 key: fieldClickEvent.key,
                 idType,
                 which: fieldClickEvent.eventWhich,
@@ -1252,12 +1247,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
     getInternalLinkHref(): string {
         let hrefStr = '';
-        const uid = this.singleData.Data.UID;
-        const transactionUrl = this.singleData.Data.MainAction === '2' ? 'transactions/scope_items/' : 'transactions/cart/';
+        const uid = this.data.UID;
+        const transactionUrl = this.data.MainAction === '2' ? 'transactions/scope_items/' : 'transactions/cart/';
         // let isBuyer = sessionStorage.getItem('userRole') == 'Buyer' ? true : false;
 
         if (this.listType === 'all_activities') {
-            hrefStr = this.singleData.Data.Type === 0 ? transactionUrl + uid : 'activities/details/' + uid;
+            hrefStr = this.data.Type === 0 ? transactionUrl + uid : 'activities/details/' + uid;
         } else if (this.listType === 'accounts') {
             hrefStr = 'accounts/home_page/' + uid;
         }

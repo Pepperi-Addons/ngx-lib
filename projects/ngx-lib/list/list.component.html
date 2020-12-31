@@ -43,70 +43,65 @@
 </ng-container>
 
 <ng-template #listData>
-    <ng-container *ngFor="let singleData of scrollItems; let index; let isFirst = first;">
+    <ng-container *ngFor="let item of scrollItems; let index; let isFirst = first;">
         <ng-container *ngIf="isTable">
-            <div class="table-row"
-                (mouseenter)="onTableRowMouseEnter($event, singleData?.Data?.UID, singleData?.Data?.Type)"
-                (mouseleave)="onTableRowMouseLeave($event, singleData?.Data?.UID, singleData?.Data?.Type)" [ngClass]="{
-                        selected: isItemSelected(singleData?.Data?.UID, singleData?.Data?.Type),
-                        highlighted: singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId
+            <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.Data?.UID, item?.Data?.Type)"
+                (mouseleave)="onTableRowMouseLeave($event, item?.Data?.UID, item?.Data?.Type)" [ngClass]="{
+                        selected: isItemSelected(item?.Data?.UID, item?.Data?.Type),
+                        highlighted: item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId
                     }"
-                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || singleData ? 'visible' : 'hidden' }">
-                <fieldset class="table-row-fieldset"
-                    [ngStyle]="{ 'background-color': singleData?.Data?.BackgroundColor }">
+                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
+                <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.Data?.BackgroundColor }">
                     <mat-checkbox
                         *ngIf="selectionTypeForActions == 'multi' || selectionTypeForActions == 'single-action'"
-                        type="checkbox" class="pull-left flip row-selection" [disabled]="getIsDisabled(singleData)"
-                        [ngStyle]="{
+                        type="checkbox" class="pull-left flip row-selection" [disabled]="getIsDisabled(item)" [ngStyle]="{
                                 visibility: !deviceHasMouse ||
-                                singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
+                                item?.Data?.UID + SEPARATOR + item?.Data?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
                             }"
-                        [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
-                        (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
+                        [checked]="getIsSelectedForActions(item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)"
+                        (change)="selectItemForActions($event, item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)">
                     </mat-checkbox>
                     <mat-radio-button *ngIf="selectionTypeForActions == 'single'" name="selection"
-                        class="pull-left flip row-selection pep-radio-button" [disabled]="getIsDisabled(singleData)"
-                        [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
-                        (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
+                        class="pull-left flip row-selection pep-radio-button" [disabled]="getIsDisabled(item)"
+                        [checked]="getIsSelectedForActions(item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)"
+                        (change)="selectItemForActions($event, item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)">
                     </mat-radio-button>
-                    <pep-form [checkForChanges]="checkForChanges" [uiControlHeader]="uiControl"
-                        [firstFieldAsLink]="firstFieldAsLink" [singleData]="singleData"
-                        [canEditObject]="!disabled && singleData?.IsEditable" [objectId]="objectId"
-                        [parentId]="parentId" [searchCode]="searchCode" [lockEvents]="disableSelectionItems"
-                        [isReport]="isReport" [layoutType]="'table'" [listType]="listType" [isActive]="
-                                (singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId ||
-                                singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId) && deviceHasMouse
+                    <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl"
+                        [firstFieldAsLink]="firstFieldAsLink" [data]="item?.Data"
+                        [canEditObject]="!disabled && item?.IsEditable" [objectId]="objectId" [parentId]="parentId"
+                        [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [isReport]="isReport"
+                        [layoutType]="'table'" [listType]="listType" [isActive]="
+                                (item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId ||
+                                item?.Data?.UID + SEPARATOR + item?.Data?.Type === hoveredItemId) && deviceHasMouse
                             " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
-                        (click)="itemClicked($event, singleData)" [pageType]="pageType">
+                        (click)="itemClicked($event, item)" [pageType]="pageType">
                     </pep-form>
                 </fieldset>
             </div>
         </ng-container>
 
         <ng-container *ngIf="!isTable">
-            <div [class]="itemClass"
-                (mouseenter)="onCardMouseEnter($event, singleData?.Data?.UID, singleData?.Data?.Type)"
-                (mouseleave)="onCardMouseLeave($event, singleData?.Data?.UID, singleData?.Data?.Type)" [ngClass]="{
-                        selected: isItemSelected(singleData?.Data?.UID, singleData?.Data?.Type),
-                        highlighted: singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId,
+            <div [class]="itemClass" (mouseenter)="onCardMouseEnter($event, item?.Data?.UID, item?.Data?.Type)"
+                (mouseleave)="onCardMouseLeave($event, item?.Data?.UID, item?.Data?.Type)" [ngClass]="{
+                        selected: isItemSelected(item?.Data?.UID, item?.Data?.Type),
+                        highlighted: item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId,
                         'card-view': viewType === 'cards',
                         'line-view': viewType === 'lines'
                     }" class="pull-left flip"
-                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || singleData ? 'visible' : 'hidden' }">
+                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
                 <mat-checkbox *ngIf="showSelection" class="pull-left flip card-selection"
-                    [disabled]="getIsDisabled(singleData)"
-                    [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
-                    (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
+                    [disabled]="getIsDisabled(item)"
+                    [checked]="getIsSelectedForActions(item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)"
+                    (change)="selectItemForActions($event, item?.Data?.UID, item?.Data?.IsSelectableForActions, item?.Data?.Type)">
                 </mat-checkbox>
-                <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges"
-                    [uiControlHeader]="uiControl" [singleData]="singleData"
-                    [canEditObject]="!disabled && singleData?.IsEditable" [objectId]="objectId" [parentId]="parentId"
-                    [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="getThumbnailsLayout()"
-                    [listType]="listType" [isActive]="
-                            (singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId ||
-                            singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId) && deviceHasMouse
+                <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges" [layout]="uiControl"
+                    [data]="item?.Data" [canEditObject]="!disabled && item?.IsEditable" [objectId]="objectId"
+                    [parentId]="parentId" [searchCode]="searchCode" [lockEvents]="disableSelectionItems"
+                    [layoutType]="getThumbnailsLayout()" [listType]="listType" [isActive]="
+                            (item?.Data?.UID + SEPARATOR + item?.Data?.Type === selectedItemId ||
+                            item?.Data?.UID + SEPARATOR + item?.Data?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
-                    (click)="itemClicked($event, singleData)" [pageType]="pageType">
+                    (click)="itemClicked($event, item)" [pageType]="pageType">
                 </pep-form>
             </div>
         </ng-container>

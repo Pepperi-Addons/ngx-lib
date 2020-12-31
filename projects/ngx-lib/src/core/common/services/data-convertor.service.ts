@@ -130,7 +130,7 @@ export class PepDataConvertorService {
         dataField.TextColor = '';
         dataField.Value = field.Value.toString();
         dataField.Visible = true;
-        dataField.Type = '0';
+        // dataField.Type = '0';
         return dataField;
     }
 

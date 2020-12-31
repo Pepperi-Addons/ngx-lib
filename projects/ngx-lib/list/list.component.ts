@@ -747,13 +747,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.fieldClick.emit(customizeFieldClickedData);
     }
 
-    getIsDisabled(singleData: ObjectSingleData): boolean {
+    getIsDisabled(item: ObjectSingleData): boolean {
         if (this.disableSelectionItems) {
             return true;
         } else {
             const IsNotSelectableForActions =
-            singleData?.Data &&
-                !singleData.Data.IsSelectableForActions;
+            item?.Data &&
+                !item.Data.IsSelectableForActions;
             return IsNotSelectableForActions;
         }
     }
@@ -769,15 +769,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             if (this.selectedItems.size === this.totalRows) {
                 res = this.getIsAllSelected(this.scrollItems);
             } else if (this.selectedItems.size < this.totalRows) {
-                // for (let index = 0; index < this.scrollItems.length; index++) {
-                //     const singleData = this.scrollItems[index];
-                for (const singleData of this.scrollItems) {
-                    res =
-                    singleData &&
-                    singleData.Data &&
-                        this.selectedItems.has(
-                            singleData.Data.UID.toString()
-                        );
+                for (const item of this.scrollItems) {
+                    res = item && item.Data && this.selectedItems.has(item.Data.UID.toString());
 
                     if (!res) {
                         break;
@@ -1156,18 +1149,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         let result = true;
 
         if (this.selectedItems?.size > 0 && items?.length > 0) {
-            // for (let index = 0; index < items.length; index++) {
-            // const singleData = items[index];
-            for (const singleData of items) {
-                if (
-                    !(
-                        singleData &&
-                        singleData.Data &&
-                        this.selectedItems.has(
-                            singleData.Data.UID.toString()
-                        )
-                    )
-                ) {
+            for (const item of items) {
+                if (!(item && item.Data && this.selectedItems.has(item.Data.UID.toString()))) {
                     result = false;
                     break;
                 }

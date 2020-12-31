@@ -461,11 +461,11 @@ export class PepInternalListComponent
         this.fieldClick.emit(customizeFieldClickedData);
     }
 
-    getIsDisabled(singleData: ObjectSingleData): boolean {
+    getIsDisabled(item: ObjectSingleData): boolean {
         if (this.disableSelectionItems) {
             return true;
         } else {
-            const IsNotSelectableForActions = singleData?.Data && !singleData.Data.IsSelectableForActions;
+            const IsNotSelectableForActions = item?.Data && !item.Data.IsSelectableForActions;
             return IsNotSelectableForActions;
         }
     }

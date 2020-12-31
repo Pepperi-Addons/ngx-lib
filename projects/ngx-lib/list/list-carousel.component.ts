@@ -1,10 +1,10 @@
 import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild,
     ElementRef, Renderer2, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { ObjectSingleData, UIControl } from '@pepperi-addons/ngx-lib';
+import { ObjectsDataRow, UIControl } from '@pepperi-addons/ngx-lib';
 import { PepCarouselComponent } from '@pepperi-addons/ngx-lib/carousel';
 
 export interface IPepListCarouselItemClickEvent {
-    source: ObjectSingleData;
+    source: ObjectsDataRow;
 }
 
 @Component({
@@ -15,8 +15,8 @@ export interface IPepListCarouselItemClickEvent {
 @Injectable()
 export class PepListCarouselComponent implements OnInit, OnDestroy {
     @Input() duration: number = 500;
-    @Input() uiControl: UIControl = null;
-    @Input() items: Array<ObjectSingleData> = null; 
+    @Input() layout: UIControl = null;
+    @Input() items: Array<ObjectsDataRow> = null; 
     @Input() itemSize: 'xs' | 'sm' | 'md' = 'xs';
 
     @Output() itemClick: EventEmitter<IPepListCarouselItemClickEvent> = new EventEmitter<IPepListCarouselItemClickEvent>();
@@ -41,8 +41,8 @@ export class PepListCarouselComponent implements OnInit, OnDestroy {
         }
     }
 
-    itemClicked(objectSingleData: ObjectSingleData): void {
-        this.itemClick.emit({ source: objectSingleData });
+    itemClicked(item: ObjectsDataRow): void {
+        this.itemClick.emit({ source: item });
     }
 
     moveLeft() {

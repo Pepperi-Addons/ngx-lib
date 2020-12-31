@@ -10,7 +10,7 @@
         <pep-carousel #carousel [xWheelEnabled]="true" [scrollbarHidden]="true" [snapDuration]="duration"
             (reachesLeftBound)="onReachesLeftBound($event)" (reachesRightBound)="onReachesRightBound($event)">
             <ng-container *ngFor="let item of items">
-                <pep-form pepCarouselItem [uiControlHeader]="uiControl" [singleData]="item" [layoutType]="'card'"
+                <pep-form pepCarouselItem [layout]="layout" [data]="item" [layoutType]="'card'"
                     (click)="itemClicked(item)" class="card-view "
                     [ngClass]="{ 'x-small-card': itemSize === 'xs', 'small-card': itemSize === 'sm'}">
                 </pep-form>

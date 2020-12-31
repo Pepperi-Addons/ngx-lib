@@ -136,6 +136,11 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             );
         }
 
+        // Get state class from theme.
+        this.styleClass = document.documentElement.style.getPropertyValue(
+            PepCustomizationService.STYLE_QS_KEY
+        ) as PepStyleType;
+        
         this.resize = fromEvent(window, 'resize').pipe(
             debounceTime(250)
         ).subscribe((event) => {
@@ -144,7 +149,9 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
     }
 
     ngAfterViewInit() {
-        this.setQsView();
+        setTimeout(() => {
+            this.setQsView();
+        }, 0);
     }
 
     // TODO: Don't un comment this cause a lot of memory usage.
@@ -444,12 +451,6 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
                 this.showQsBtn = this.QSCont.nativeElement.clientWidth > 140;
             }
         }
-
-        // Get state class from theme.
-        // this.styleClass = this.customizationService.getThemeVariable(PepCustomizationService.STYLE_QS_KEY);
-        this.styleClass = document.documentElement.style.getPropertyValue(
-            PepCustomizationService.STYLE_QS_KEY
-        ) as PepStyleType;
 
         if (!this.cd['destroyed']) {
             this.cd.detectChanges();
