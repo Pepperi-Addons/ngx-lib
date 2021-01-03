@@ -1,8 +1,17 @@
+.addon-page-container {
+    display: flex !important;
+    flex-direction: row;
+
+    .main-layout {
+        padding: 0;
+    }
+    // .content {
+    //     width: 100%;
+    // }
+}
+
 .list-wrapper {
     // overflow: auto;
     // height: 250px;
 }
 
-.inline-top-bar-container {
-    margin-top: 1rem;
-}

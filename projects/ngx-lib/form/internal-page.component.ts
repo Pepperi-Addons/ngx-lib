@@ -20,7 +20,6 @@ import {
     UIControl,
     KeyValuePair,
     PepCustomizationService,
-    ObjectSingleData,
     UIControlField,
     ObjectsData,
     FIELD_TYPE

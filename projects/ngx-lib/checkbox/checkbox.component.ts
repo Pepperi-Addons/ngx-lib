@@ -82,9 +82,9 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         }
     }
 
-    onMaterialChange(e: any): void {
-        this.changeValue(e.checked);
-    }
+    // onMaterialChange(e: any): void {
+    //     this.changeValue(e.checked);
+    // }
 
     toggleChecked(event: any): void {
         if (!this.disabled) {

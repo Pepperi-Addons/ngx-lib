@@ -9,10 +9,10 @@ import { PepFooterStateType, IPepFooterStateChangeEvent } from '@pepperi-addons/
 import { FakeData } from './fake-data';
 
 @Component({
-    templateUrl: './list-example.component.html',
-    styleUrls: ['./list-example.component.scss']
+    templateUrl: './inline-list-example.component.html',
+    styleUrls: ['./inline-list-example.component.scss']
 })
-export class ListExampleComponent implements OnInit, AfterViewInit {
+export class InlineListExampleComponent implements OnInit, AfterViewInit {
     @ViewChild(PepListComponent) customList: PepListComponent;
     dataSource = FakeData.Addons;
 

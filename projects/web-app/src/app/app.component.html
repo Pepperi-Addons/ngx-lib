@@ -32,6 +32,11 @@
                     mat-button>
                     components
                 </button>
+                <button [routerLink]="['inline-list-example']"
+                    class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
+                    mat-button>
+                    inline list
+                </button>
                 <button [routerLink]="['list-example']" class="spacing-element pep-button sm strong pull-right flip "
                     [ngClass]="getButtonClassName()" mat-button>
                     list

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-    FieldLayout, ObjectSingleData, ObjectsDataRow, UIControl,
-    ObjectsData, UIControlField, ObjectsDataRowCell, FIELD_TYPE, X_ALIGNMENT_TYPE
+    FieldLayout, ObjectsDataRow, UIControl, UIControlField, ObjectsDataRowCell, FIELD_TYPE, X_ALIGNMENT_TYPE
 } from '../model/wapi.model';
 import { PepGuid } from '../model/utilities.model';
 
@@ -56,34 +55,32 @@ export class PepDataConvertorService {
     constructor() {
     }
 
-    convertFormData(formData: PepRowData): ObjectSingleData {
-        const objectsData = new ObjectSingleData();
-        const rowData = new ObjectsDataRow();
-        const uiRow = formData.Fields;
+    getUiControl(formData: PepRowData): UIControl {
         const uiControl = new UIControl();
-        uiControl.ControlFields = [];
-        uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
+        
+        if (formData?.Fields?.length > 0) {
+            const uiRow = formData.Fields;
+            uiControl.ControlFields = [];
+            uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
+        }
+
+        return uiControl;
+    }
+
+    convertFormData(formData: PepRowData): ObjectsDataRow {
+        const rowData = new ObjectsDataRow();
         rowData.Fields = [];
         rowData.Type = 0;
         rowData.UID = PepGuid.newGuid();
         formData.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
-        objectsData.Data = rowData;
-        objectsData.UIControl = uiControl;
-
-        return objectsData;
+        
+        return rowData;
     }
 
-    convertListData(tableData: PepRowData[], rowUUID = ''): ObjectsData {
-        const objectsData = new ObjectsData();
-        const uiControl = new UIControl();
+    convertListData(tableData: PepRowData[], rowUUID = ''): Array<ObjectsDataRow> {
         const rows = new Array<ObjectsDataRow>();
 
         if (tableData.length > 0) {
-            const uiRow = tableData[0].Fields;
-
-            uiControl.ControlFields = [];
-            uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
-
             tableData.forEach(row => {
                 const rowData = new ObjectsDataRow();
                 rowData.Fields = [];
@@ -94,21 +91,18 @@ export class PepDataConvertorService {
             });
         }
 
-        objectsData.Rows = rows;
-        objectsData.UIControl = uiControl;
-
-        return objectsData;
+        return rows;
     }
 
     setUIControlField(field: PepFieldData): UIControlField {
         const controlField = new UIControlField();
         controlField.ApiName = field.ApiName;
         controlField.FieldType = field.FieldType;
-        // { X: 1, Width: 1, XAlignment: field.XAlignment, Y: 1, Height: 1, YAlignment: 1 };
-        // controlField.Layout = new FieldLayout(1, 1, field.XAlignment, 1, 1, 1);
+
         controlField.Layout = new FieldLayout(
             { X: 1, Width: 1, XAlignment: field.XAlignment, Y: 1, Height: 1, YAlignment: 1 }
         );
+
         controlField.Title = field.Title;
         controlField.ReadOnly = field.ReadOnly === true ? true : false;
         controlField.ColumnWidth = field.ColumnWidth;
@@ -130,7 +124,6 @@ export class PepDataConvertorService {
         dataField.TextColor = '';
         dataField.Value = field.Value.toString();
         dataField.Visible = true;
-        // dataField.Type = '0';
         return dataField;
     }
 

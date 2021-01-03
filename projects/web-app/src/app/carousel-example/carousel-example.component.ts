@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PepLayoutService, ObjectsDataRow, ObjectSingleData, PepScreenSizeType, UIControl } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService, ObjectsDataRow, PepScreenSizeType, UIControl } from '@pepperi-addons/ngx-lib';
 import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
 import { IPepSearchStateChangeEvent } from '@pepperi-addons/ngx-lib/search';
 import { pepIconSystemBin, pepIconSystemSettings } from '@pepperi-addons/ngx-lib/icon';

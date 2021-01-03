@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarouselExampleComponent } from './carousel-example/carousel-example.component';
 import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component';
+import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
 import { PepUIModule } from './modules/pepperi.module';
@@ -17,6 +18,7 @@ import { MaterialModule } from './modules/material.module';
         AppComponent,
         CarouselExampleComponent,
         FormFieldsExampleComponent,
+        InlineListExampleComponent,
         ListExampleComponent,
         TopBarExampleComponent
     ],
