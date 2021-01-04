@@ -1,10 +1,30 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy, Renderer2, ElementRef, OnDestroy } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    OnChanges,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectionStrategy,
+    Renderer2,
+    ElementRef,
+    OnDestroy,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, IPepFieldClickEvent,
+import {
+    PepLayoutType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    IPepFieldClickEvent,
     PepInternalButtonFieldType,
-    PepInternalButtonField} from '@pepperi-addons/ngx-lib';
-import { PepButton, IPepButtonClickEvent } from '@pepperi-addons/ngx-lib/button';
+    PepInternalButtonField,
+} from '@pepperi-addons/ngx-lib';
+import {
+    PepButton,
+    IPepButtonClickEvent,
+} from '@pepperi-addons/ngx-lib/button';
 import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
@@ -13,7 +33,8 @@ import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
     styleUrls: ['./internal-button.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy {
+export class PepInternalButtonComponent
+    implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() formattedValue = '';
@@ -32,20 +53,32 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     standAlone = false;
     createNewReference = false;
     referenceButtons: Array<PepButton> = [
-        { key: 'action', callback: (action: IPepButtonClickEvent) => this.onButtonClicked(action.event) },
-        { key: 'delete', callback: (action: IPepButtonClickEvent) => this.remove(), class: 'caution', icon: pepIconSystemBin.name }
+        {
+            key: 'action',
+            callback: (action: IPepButtonClickEvent) =>
+                this.onButtonClicked(action.event),
+        },
+        {
+            key: 'delete',
+            callback: (action: IPepButtonClickEvent) => this.remove(),
+            class: 'caution',
+            icon: pepIconSystemBin.name,
+        },
     ];
 
     constructor(
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
-        private element: ElementRef) { }
+        private element: ElementRef
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -56,12 +89,15 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
                 value: this.value,
                 required: this.required,
                 readonly: this.readonly,
-                disabled: this.disabled
+                disabled: this.disabled,
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
             this.formattedValue = this.formattedValue || this.value;
-            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
     }
 
@@ -104,12 +140,11 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
                 controlType: this.controlType,
                 eventWhich: event.which,
             });
-        }
-        else {
+        } else {
             this.elementClick.emit({
                 key: this.key,
                 controlType: this.controlType,
-                eventWhich: event.which
+                eventWhich: event.which,
             });
         }
     }
@@ -126,7 +161,7 @@ export class PepInternalButtonComponent implements OnInit, OnChanges, OnDestroy 
             value: this.value,
             controlType: this.controlType,
             eventWhich: event.which,
-            otherData: this.referenceObjectInternalType
+            otherData: this.referenceObjectInternalType,
         });
     }
 

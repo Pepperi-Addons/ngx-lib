@@ -14,7 +14,7 @@ import {
     QueryList,
     Inject,
     HostBinding,
-    HostListener
+    HostListener,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
@@ -27,19 +27,22 @@ import { PepCarouselItemDirective } from './carousel-item.directive';
             <ng-content></ng-content>
         </div>
     `,
-    styles: [`
-        :host {
-            overflow: hidden;
-            display: block;
-        }
-        .carousel-content {
-            height: 100%;
-            overflow: auto;
-            white-space: nowrap;
-        }
-    `]
+    styles: [
+        `
+            :host {
+                overflow: hidden;
+                display: block;
+            }
+            .carousel-content {
+                height: 100%;
+                overflow: auto;
+                white-space: nowrap;
+            }
+        `,
+    ],
 })
-export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges, AfterViewChecked {
+export class PepCarouselComponent
+    implements OnDestroy, AfterViewInit, OnChanges, AfterViewChecked {
     private _index = 0;
 
     private _scrollbarHidden = false;
@@ -82,9 +85,9 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
      */
     isScrolling = false;
 
-    scrollTimer: number;// | NodeJS.Timer = -1;
+    scrollTimer: number; // | NodeJS.Timer = -1;
 
-    scrollToTimer: number;// | NodeJS.Timer = -1;
+    scrollToTimer: number; // | NodeJS.Timer = -1;
 
     /**
      * Is the user currently dragging the element
@@ -120,7 +123,8 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
 
     @ViewChild('contentRef', { static: true }) _contentRef: ElementRef;
 
-    @ContentChildren(PepCarouselItemDirective, { descendants: true }) _children: QueryList<PepCarouselItemDirective>;
+    @ContentChildren(PepCarouselItemDirective, { descendants: true })
+    _children: QueryList<PepCarouselItemDirective>;
 
     @HostBinding('style.pointer-events') _pointerEvents = 'auto';
 
@@ -128,7 +132,9 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
 
     scrollbarWidth: string | null = null;
 
-    get currIndex() { return this._index; }
+    get currIndex() {
+        return this._index;
+    }
     set currIndex(value) {
         if (value !== this._index) {
             this._index = value;
@@ -160,57 +166,93 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
      * Whether the scrollbar is hidden
      */
     @Input('scrollbarHidden')
-    get scrollbarHidden() { return this._scrollbarHidden; }
-    set scrollbarHidden(value: boolean) { this._scrollbarHidden = value; }
+    get scrollbarHidden() {
+        return this._scrollbarHidden;
+    }
+    set scrollbarHidden(value: boolean) {
+        this._scrollbarHidden = value;
+    }
 
     /**
      * Whether horizontally and vertically draging and scrolling is be disabled
      */
     @Input('disabled')
-    get disabled() { return this._disabled; }
-    set disabled(value: boolean) { this._disabled = value; }
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value: boolean) {
+        this._disabled = value;
+    }
 
     /**
      * Whether horizontally dragging and scrolling is be disabled
      */
     @Input('xDisabled')
-    get xDisabled() { return this._xDisabled; }
-    set xDisabled(value: boolean) { this._xDisabled = value; }
+    get xDisabled() {
+        return this._xDisabled;
+    }
+    set xDisabled(value: boolean) {
+        this._xDisabled = value;
+    }
 
     /**
      * Whether vertically dragging and scrolling events is disabled
      */
     @Input('yDisabled')
-    get yDisabled() { return this._yDisabled; }
-    set yDisabled(value: boolean) { this._yDisabled = value; }
+    get yDisabled() {
+        return this._yDisabled;
+    }
+    set yDisabled(value: boolean) {
+        this._yDisabled = value;
+    }
 
     /**
      * Whether scrolling horizontally with mouse wheel is enabled
      */
     @Input('xWheelEnabled')
-    get xWheelEnabled() { return this._xWheelEnabled; }
-    set xWheelEnabled(value: boolean) { this._xWheelEnabled = value; }
+    get xWheelEnabled() {
+        return this._xWheelEnabled;
+    }
+    set xWheelEnabled(value: boolean) {
+        this._xWheelEnabled = value;
+    }
 
     @Input('dragDisabled')
-    get dragDisabled() { return this._dragDisabled; }
-    set dragDisabled(value: boolean) { this._dragDisabled = value; }
+    get dragDisabled() {
+        return this._dragDisabled;
+    }
+    set dragDisabled(value: boolean) {
+        this._dragDisabled = value;
+    }
 
     @Input('snapDisabled')
-    get snapDisabled() { return this._snapDisabled; }
-    set snapDisabled(value: boolean) { this._snapDisabled = value; }
+    get snapDisabled() {
+        return this._snapDisabled;
+    }
+    set snapDisabled(value: boolean) {
+        this._snapDisabled = value;
+    }
 
     @Input('snapOffset')
-    get snapOffset() { return this._snapOffset; }
-    set snapOffset(value: number) { this._snapOffset = value; }
+    get snapOffset() {
+        return this._snapOffset;
+    }
+    set snapOffset(value: number) {
+        this._snapOffset = value;
+    }
 
     @Input('snapDuration')
-    get snapDuration() { return this._snapDuration; }
-    set snapDuration(value: number) { this._snapDuration = value; }
+    get snapDuration() {
+        return this._snapDuration;
+    }
+    set snapDuration(value: number) {
+        this._snapDuration = value;
+    }
 
     constructor(
-      @Inject(ElementRef) private _elementRef: ElementRef,
-      @Inject(Renderer2) private _renderer: Renderer2,
-      @Inject(DOCUMENT) private _document: any
+        @Inject(ElementRef) private _elementRef: ElementRef,
+        @Inject(Renderer2) private _renderer: Renderer2,
+        @Inject(DOCUMENT) private _document: any
     ) {
         this.scrollbarWidth = `${this.getScrollbarWidth()}px`;
     }
@@ -233,29 +275,65 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
 
     ngAfterViewInit() {
         // auto assign computed css
-        this._renderer.setAttribute(this._contentRef.nativeElement, 'drag-scroll', 'true');
+        this._renderer.setAttribute(
+            this._contentRef.nativeElement,
+            'drag-scroll',
+            'true'
+        );
 
-        this.displayType = typeof window !== 'undefined' ? window.getComputedStyle(this._elementRef.nativeElement).display : 'block';
+        this.displayType =
+            typeof window !== 'undefined'
+                ? window.getComputedStyle(this._elementRef.nativeElement)
+                      .display
+                : 'block';
 
-        this._renderer.setStyle(this._contentRef.nativeElement, 'display', this.displayType);
-        this._renderer.setStyle(this._contentRef.nativeElement, 'whiteSpace', 'noWrap');
+        this._renderer.setStyle(
+            this._contentRef.nativeElement,
+            'display',
+            this.displayType
+        );
+        this._renderer.setStyle(
+            this._contentRef.nativeElement,
+            'whiteSpace',
+            'noWrap'
+        );
 
         // store ele width height for later user
         this.markElDimension();
 
-        this._renderer.setStyle(this._contentRef.nativeElement, 'width', this.elWidth);
-        this._renderer.setStyle(this._contentRef.nativeElement, 'height', this.elHeight);
+        this._renderer.setStyle(
+            this._contentRef.nativeElement,
+            'width',
+            this.elWidth
+        );
+        this._renderer.setStyle(
+            this._contentRef.nativeElement,
+            'height',
+            this.elHeight
+        );
 
         if (this.wrapper) {
             this.checkScrollbar();
         }
 
-        this._onMouseDownListener = this._renderer.listen(this._contentRef.nativeElement, 'mousedown', this.onMouseDownHandler.bind(this));
-        this._onScrollListener = this._renderer.listen(this._contentRef.nativeElement, 'scroll', this.onScrollHandler.bind(this));
+        this._onMouseDownListener = this._renderer.listen(
+            this._contentRef.nativeElement,
+            'mousedown',
+            this.onMouseDownHandler.bind(this)
+        );
+        this._onScrollListener = this._renderer.listen(
+            this._contentRef.nativeElement,
+            'scroll',
+            this.onScrollHandler.bind(this)
+        );
         // prevent Firefox from dragging images
-        this._onDragStartListener = this._renderer.listen('document', 'dragstart', (e) => {
-            e.preventDefault();
-        });
+        this._onDragStartListener = this._renderer.listen(
+            'document',
+            'dragstart',
+            (e) => {
+                e.preventDefault();
+            }
+        );
         this.checkNavStatus();
         this.dsInitialized.emit();
         this.adjustMarginToLastChild();
@@ -272,7 +350,11 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
     }
 
     ngOnDestroy() {
-        this._renderer.setAttribute(this._contentRef.nativeElement, 'drag-scroll', 'false');
+        this._renderer.setAttribute(
+            this._contentRef.nativeElement,
+            'drag-scroll',
+            'false'
+        );
         if (this._onMouseDownListener) {
             this._onMouseDownListener = this._onMouseDownListener();
         }
@@ -304,7 +386,9 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
             if (!this.xDisabled && !this.dragDisabled) {
                 const clientX = (event as MouseEvent).clientX;
                 this._contentRef.nativeElement.scrollLeft =
-                    this._contentRef.nativeElement.scrollLeft - clientX + this.downX;
+                    this._contentRef.nativeElement.scrollLeft -
+                    clientX +
+                    this.downX;
                 this.downX = clientX;
             }
 
@@ -312,14 +396,18 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
             if (!this.yDisabled && !this.dragDisabled) {
                 const clientY = (event as MouseEvent).clientY;
                 this._contentRef.nativeElement.scrollTop =
-                    this._contentRef.nativeElement.scrollTop - clientY + this.downY;
+                    this._contentRef.nativeElement.scrollTop -
+                    clientY +
+                    this.downY;
                 this.downY = clientY;
             }
         }
     }
 
     onMouseDownHandler(event: MouseEvent) {
-        const carouselItem: PepCarouselItemDirective | null = this.locateCarouselItem(event.target as Element);
+        const carouselItem: PepCarouselItemDirective | null = this.locateCarouselItem(
+            event.target as Element
+        );
         if (carouselItem && carouselItem.dragDisabled) {
             return;
         }
@@ -365,13 +453,17 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
     }
 
     /*
-    * Nav button
-    */
+     * Nav button
+     */
     moveLeft() {
-        if ((this.currIndex !== 0 || this.snapDisabled)) {
+        if (this.currIndex !== 0 || this.snapDisabled) {
             this.currIndex--;
             clearTimeout(this.scrollToTimer as number);
-            this.scrollTo(this._contentRef.nativeElement, this.toChildrenLocation(), this.snapDuration);
+            this.scrollTo(
+                this._contentRef.nativeElement,
+                this.toChildrenLocation(),
+                this.snapDuration
+            );
         }
     }
 
@@ -379,10 +471,18 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
         const container = this.wrapper || this.parentNode;
         const containerWidth = container ? container.clientWidth : 0;
 
-        if (!this.isScrollReachesRightEnd() && this.currIndex < this.maximumIndex(containerWidth, this._children.toArray())) {
+        if (
+            !this.isScrollReachesRightEnd() &&
+            this.currIndex <
+                this.maximumIndex(containerWidth, this._children.toArray())
+        ) {
             this.currIndex++;
             clearTimeout(this.scrollToTimer as number);
-            this.scrollTo(this._contentRef.nativeElement, this.toChildrenLocation(), this.snapDuration);
+            this.scrollTo(
+                this._contentRef.nativeElement,
+                this.toChildrenLocation(),
+                this.snapDuration
+            );
         }
     }
 
@@ -392,19 +492,29 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
         if (
             index >= 0 &&
             index !== this.currIndex &&
-            this.currIndex <= this.maximumIndex(containerWidth, this._children.toArray())
+            this.currIndex <=
+                this.maximumIndex(containerWidth, this._children.toArray())
         ) {
-            this.currIndex = Math.min(index, this.maximumIndex(containerWidth, this._children.toArray()));
+            this.currIndex = Math.min(
+                index,
+                this.maximumIndex(containerWidth, this._children.toArray())
+            );
             clearTimeout(this.scrollToTimer as number);
-            this.scrollTo(this._contentRef.nativeElement, this.toChildrenLocation(), this.snapDuration);
+            this.scrollTo(
+                this._contentRef.nativeElement,
+                this.toChildrenLocation(),
+                this.snapDuration
+            );
         }
     }
 
     checkNavStatus() {
         setTimeout(() => {
             const onlyOneItem = Boolean(this._children.length <= 1);
-            const containerIsLargerThanContent = Boolean(this._contentRef.nativeElement.scrollWidth <=
-                this._contentRef.nativeElement.clientWidth);
+            const containerIsLargerThanContent = Boolean(
+                this._contentRef.nativeElement.scrollWidth <=
+                    this._contentRef.nativeElement.clientWidth
+            );
             if (onlyOneItem || containerIsLargerThanContent) {
                 // only one element
                 this.reachesLeftBound.emit(true);
@@ -413,8 +523,11 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
                 // reached right end
                 this.reachesLeftBound.emit(false);
                 this.reachesRightBound.emit(true);
-            } else if (this._contentRef.nativeElement.scrollLeft === 0 &&
-                this._contentRef.nativeElement.scrollWidth > this._contentRef.nativeElement.clientWidth) {
+            } else if (
+                this._contentRef.nativeElement.scrollLeft === 0 &&
+                this._contentRef.nativeElement.scrollWidth >
+                    this._contentRef.nativeElement.clientWidth
+            ) {
                 // reached left end
                 this.reachesLeftBound.emit(true);
                 this.reachesRightBound.emit(false);
@@ -461,12 +574,20 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
     private _startGlobalListening(isTouchEvent: boolean) {
         if (!this._onMouseMoveListener) {
             const eventName = isTouchEvent ? 'touchmove' : 'mousemove';
-            this._onMouseMoveListener = this._renderer.listen('document', eventName, this.onMouseMoveHandler.bind(this));
+            this._onMouseMoveListener = this._renderer.listen(
+                'document',
+                eventName,
+                this.onMouseMoveHandler.bind(this)
+            );
         }
 
         if (!this._onMouseUpListener) {
             const eventName = isTouchEvent ? 'touchend' : 'mouseup';
-            this._onMouseUpListener = this._renderer.listen('document', eventName, this.onMouseUpHandler.bind(this));
+            this._onMouseUpListener = this._renderer.listen(
+                'document',
+                eventName,
+                this.onMouseUpHandler.bind(this)
+            );
         }
     }
 
@@ -481,15 +602,26 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
     }
 
     private disableScroll(axis: string): void {
-        this._renderer.setStyle(this._contentRef.nativeElement, `overflow-${axis}`, 'hidden');
+        this._renderer.setStyle(
+            this._contentRef.nativeElement,
+            `overflow-${axis}`,
+            'hidden'
+        );
     }
 
     private enableScroll(axis: string): void {
-        this._renderer.setStyle(this._contentRef.nativeElement, `overflow-${axis}`, 'auto');
+        this._renderer.setStyle(
+            this._contentRef.nativeElement,
+            `overflow-${axis}`,
+            'auto'
+        );
     }
 
     private hideScrollbar(): void {
-        if (this._contentRef.nativeElement.style.display !== 'none' && !this.wrapper) {
+        if (
+            this._contentRef.nativeElement.style.display !== 'none' &&
+            !this.wrapper
+        ) {
             this.parentNode = this._contentRef.nativeElement.parentNode;
 
             // create container element
@@ -502,14 +634,28 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
 
             this._renderer.setStyle(this.wrapper, 'overflow', 'hidden');
 
-            this._renderer.setStyle(this._contentRef.nativeElement, 'width', `calc(100% + ${this.scrollbarWidth})`);
-            this._renderer.setStyle(this._contentRef.nativeElement, 'height', `calc(100% + ${this.scrollbarWidth})`);
+            this._renderer.setStyle(
+                this._contentRef.nativeElement,
+                'width',
+                `calc(100% + ${this.scrollbarWidth})`
+            );
+            this._renderer.setStyle(
+                this._contentRef.nativeElement,
+                'height',
+                `calc(100% + ${this.scrollbarWidth})`
+            );
 
             // Append container element to component element.
-            this._renderer.appendChild(this._elementRef.nativeElement, this.wrapper);
+            this._renderer.appendChild(
+                this._elementRef.nativeElement,
+                this.wrapper
+            );
 
             // Append content element to container element.
-            this._renderer.appendChild(this.wrapper, this._contentRef.nativeElement);
+            this._renderer.appendChild(
+                this.wrapper,
+                this._contentRef.nativeElement
+            );
 
             this.adjustMarginToLastChild();
         }
@@ -517,8 +663,16 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
 
     private showScrollbar(): void {
         if (this.wrapper) {
-            this._renderer.setStyle(this._contentRef.nativeElement, 'width', '100%');
-            this._renderer.setStyle(this._contentRef.nativeElement, 'height', this.wrapper.style.height);
+            this._renderer.setStyle(
+                this._contentRef.nativeElement,
+                'width',
+                '100%'
+            );
+            this._renderer.setStyle(
+                this._contentRef.nativeElement,
+                'height',
+                this.wrapper.style.height
+            );
             if (this.parentNode !== null) {
                 this.parentNode.removeChild(this.wrapper);
                 this.parentNode.appendChild(this._contentRef.nativeElement);
@@ -530,15 +684,37 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
     }
 
     private checkScrollbar() {
-        if (this._contentRef.nativeElement.scrollWidth <= this._contentRef.nativeElement.clientWidth) {
-            this._renderer.setStyle(this._contentRef.nativeElement, 'height', '100%');
+        if (
+            this._contentRef.nativeElement.scrollWidth <=
+            this._contentRef.nativeElement.clientWidth
+        ) {
+            this._renderer.setStyle(
+                this._contentRef.nativeElement,
+                'height',
+                '100%'
+            );
         } else {
-            this._renderer.setStyle(this._contentRef.nativeElement, 'height', `calc(100% + ${this.scrollbarWidth})`);
+            this._renderer.setStyle(
+                this._contentRef.nativeElement,
+                'height',
+                `calc(100% + ${this.scrollbarWidth})`
+            );
         }
-        if (this._contentRef.nativeElement.scrollHeight <= this._contentRef.nativeElement.clientHeight) {
-            this._renderer.setStyle(this._contentRef.nativeElement, 'width', '100%');
+        if (
+            this._contentRef.nativeElement.scrollHeight <=
+            this._contentRef.nativeElement.clientHeight
+        ) {
+            this._renderer.setStyle(
+                this._contentRef.nativeElement,
+                'width',
+                '100%'
+            );
         } else {
-            this._renderer.setStyle(this._contentRef.nativeElement, 'width', `calc(100% + ${this.scrollbarWidth})`);
+            this._renderer.setStyle(
+                this._contentRef.nativeElement,
+                'width',
+                `calc(100% + ${this.scrollbarWidth})`
+            );
         }
     }
 
@@ -563,7 +739,7 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
         const outer = this._renderer.createElement('div');
         this._renderer.setStyle(outer, 'visibility', 'hidden');
         this._renderer.setStyle(outer, 'width', '100px');
-        this._renderer.setStyle(outer, 'msOverflowStyle', 'scrollbar');  // needed for WinJS apps
+        this._renderer.setStyle(outer, 'msOverflowStyle', 'scrollbar'); // needed for WinJS apps
         // document.body.appendChild(outer);
         this._renderer.appendChild(this._document.body, outer);
         // this._renderer.appendChild(this._renderer.selectRootElement('body'), outer);
@@ -591,18 +767,23 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
 
     private refreshWrapperDimensions() {
         if (this.wrapper) {
-
-            const height = this._elementRef.nativeElement.style.height || this._elementRef.nativeElement.offsetHeight;
+            const height =
+                this._elementRef.nativeElement.style.height ||
+                this._elementRef.nativeElement.offsetHeight;
 
             this._renderer.setStyle(this.wrapper, 'width', '100%');
-            this._renderer.setStyle(this.wrapper, 'height', height === 0 ? 'auto' : height + 'px');
+            this._renderer.setStyle(
+                this.wrapper,
+                'height',
+                height === 0 ? 'auto' : height + 'px'
+            );
         }
     }
 
     /*
-    * The below solution is heavily inspired from
-    * https://gist.github.com/andjosh/6764939
-    */
+     * The below solution is heavily inspired from
+     * https://gist.github.com/andjosh/6764939
+     */
     private scrollTo(element: Element, to: number, duration: number) {
         this.isAnimating = true;
         const start = element.scrollLeft,
@@ -617,22 +798,27 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
         const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
             t /= d / 2;
             if (t < 1) {
-              return c / 2 * t * t + b;
+                return (c / 2) * t * t + b;
             }
             t--;
-            return -c / 2 * (t * (t - 2) - 1) + b;
+            return (-c / 2) * (t * (t - 2) - 1) + b;
         };
 
         const animateScroll = () => {
             currentTime += increment;
-            element.scrollLeft = easeInOutQuad(currentTime, start, change, duration);
+            element.scrollLeft = easeInOutQuad(
+                currentTime,
+                start,
+                change,
+                duration
+            );
             if (currentTime < duration) {
                 this.scrollToTimer = setTimeout(animateScroll, increment);
             } else {
                 // run one more frame to make sure the animation is fully finished
                 setTimeout(() => {
-                  this.isAnimating = false;
-                  this.snapAnimationFinished.emit(this.currIndex);
+                    this.isAnimating = false;
+                    this.snapAnimationFinished.emit(this.currIndex);
                 }, increment);
             }
         };
@@ -640,44 +826,72 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
     }
 
     private locateCurrentIndex(snap?: boolean) {
-        this.currentChildWidth((currentChildWidth, nextChildrenWidth, childrenWidth, idx: number, stop) => {
-            if ((this._contentRef.nativeElement.scrollLeft >= childrenWidth &&
-                this._contentRef.nativeElement.scrollLeft <= nextChildrenWidth)
-            ) {
-                if (nextChildrenWidth - this._contentRef.nativeElement.scrollLeft > currentChildWidth / 2 && !this.isScrollReachesRightEnd()) {
-                    // roll back scrolling
-                    if (!this.isAnimating) {
-                        this.currIndex = idx;
+        this.currentChildWidth(
+            (
+                currentChildWidth,
+                nextChildrenWidth,
+                childrenWidth,
+                idx: number,
+                stop
+            ) => {
+                if (
+                    this._contentRef.nativeElement.scrollLeft >=
+                        childrenWidth &&
+                    this._contentRef.nativeElement.scrollLeft <=
+                        nextChildrenWidth
+                ) {
+                    if (
+                        nextChildrenWidth -
+                            this._contentRef.nativeElement.scrollLeft >
+                            currentChildWidth / 2 &&
+                        !this.isScrollReachesRightEnd()
+                    ) {
+                        // roll back scrolling
+                        if (!this.isAnimating) {
+                            this.currIndex = idx;
+                        }
+                        if (snap) {
+                            this.scrollTo(
+                                this._contentRef.nativeElement,
+                                childrenWidth,
+                                this.snapDuration
+                            );
+                        }
+                    } else if (
+                        this._contentRef.nativeElement.scrollLeft !== 0
+                    ) {
+                        // forward scrolling
+                        if (!this.isAnimating) {
+                            this.currIndex = idx + 1;
+                        }
+                        if (snap) {
+                            this.scrollTo(
+                                this._contentRef.nativeElement,
+                                childrenWidth + currentChildWidth,
+                                this.snapDuration
+                            );
+                        }
                     }
-                    if (snap) {
-                        this.scrollTo(this._contentRef.nativeElement, childrenWidth, this.snapDuration);
-                    }
-                } else if (this._contentRef.nativeElement.scrollLeft !== 0) {
-                    // forward scrolling
+                    stop();
+                } else if (idx + 1 === this._children.length - 1) {
+                    // reaches last index
                     if (!this.isAnimating) {
                         this.currIndex = idx + 1;
                     }
-                    if (snap) {
-                        this.scrollTo(this._contentRef.nativeElement, childrenWidth + currentChildWidth, this.snapDuration);
-                    }
+                    stop();
                 }
-                stop();
-            } else if ((idx + 1) === (this._children.length - 1)) {
-                // reaches last index
-                if (!this.isAnimating) {
-                    this.currIndex = idx + 1;
-                }
-                stop();
             }
-        });
+        );
     }
 
-    private currentChildWidth(cb: (
-        currentClildWidth: number,
-        nextChildrenWidth: number,
-        childrenWidth: number,
-        index: number,
-        breakFunc: () => void) => void
+    private currentChildWidth(
+        cb: (
+            currentClildWidth: number,
+            nextChildrenWidth: number,
+            childrenWidth: number,
+            index: number,
+            breakFunc: () => void
+        ) => void
     ) {
         let childrenWidth = 0;
         let shouldBreak = false;
@@ -694,9 +908,18 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
                 break;
             }
 
-            const nextChildrenWidth = childrenWidth + childrenArr[i + 1]._elementRef.nativeElement.clientWidth;
-            const currentClildWidth = childrenArr[i]._elementRef.nativeElement.clientWidth;
-            cb(currentClildWidth, nextChildrenWidth, childrenWidth, i, breakFunc);
+            const nextChildrenWidth =
+                childrenWidth +
+                childrenArr[i + 1]._elementRef.nativeElement.clientWidth;
+            const currentClildWidth =
+                childrenArr[i]._elementRef.nativeElement.clientWidth;
+            cb(
+                currentClildWidth,
+                nextChildrenWidth,
+                childrenWidth,
+                i,
+                breakFunc
+            );
 
             childrenWidth += currentClildWidth;
         }
@@ -711,7 +934,9 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
         return to;
     }
 
-    private locateCarouselItem(element: Element): PepCarouselItemDirective | null {
+    private locateCarouselItem(
+        element: Element
+    ): PepCarouselItemDirective | null {
         let item: PepCarouselItemDirective | null = null;
         const childrenArr = this._children.toArray();
         for (let i = 0; i < childrenArr.length; i++) {
@@ -727,29 +952,43 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
             this.elWidth = this.wrapper.style.width;
             this.elHeight = this.wrapper.style.height;
         } else {
-            this.elWidth = this._elementRef.nativeElement.style.width || (this._elementRef.nativeElement.offsetWidth + 'px');
-            this.elHeight = this._elementRef.nativeElement.style.height || (this._elementRef.nativeElement.offsetHeight + 'px');
+            this.elWidth =
+                this._elementRef.nativeElement.style.width ||
+                this._elementRef.nativeElement.offsetWidth + 'px';
+            this.elHeight =
+                this._elementRef.nativeElement.style.height ||
+                this._elementRef.nativeElement.offsetHeight + 'px';
         }
         const container = this.wrapper || this.parentNode;
         const containerWidth = container ? container.clientWidth : 0;
         if (this._children.length > 1) {
-            this.indexBound = this.maximumIndex(containerWidth, this._children.toArray());
+            this.indexBound = this.maximumIndex(
+                containerWidth,
+                this._children.toArray()
+            );
         }
     }
 
-    private maximumIndex(containerWidth: number, childrenElements: PepCarouselItemDirective[]): number {
+    private maximumIndex(
+        containerWidth: number,
+        childrenElements: PepCarouselItemDirective[]
+    ): number {
         let count = 0;
         let childrenWidth = 0;
         for (let i = 0; i <= childrenElements.length; i++) {
             // last N element
-            const carouselItemDirective: PepCarouselItemDirective = childrenElements[childrenElements.length - 1 - i];
+            const carouselItemDirective: PepCarouselItemDirective =
+                childrenElements[childrenElements.length - 1 - i];
             if (!carouselItemDirective) {
                 break;
             } else {
-                const nativeElement = carouselItemDirective._elementRef.nativeElement;
+                const nativeElement =
+                    carouselItemDirective._elementRef.nativeElement;
                 let itemWidth = nativeElement.clientWidth;
                 if (itemWidth === 0 && nativeElement.firstElementChild) {
-                    itemWidth = carouselItemDirective._elementRef.nativeElement.firstElementChild.clientWidth;
+                    itemWidth =
+                        carouselItemDirective._elementRef.nativeElement
+                            .firstElementChild.clientWidth;
                 }
                 childrenWidth += itemWidth;
                 if (childrenWidth < containerWidth) {
@@ -763,7 +1002,9 @@ export class PepCarouselComponent implements OnDestroy, AfterViewInit, OnChanges
     }
 
     private isScrollReachesRightEnd(): boolean {
-        const scrollLeftPos = this._contentRef.nativeElement.scrollLeft + this._contentRef.nativeElement.offsetWidth;
+        const scrollLeftPos =
+            this._contentRef.nativeElement.scrollLeft +
+            this._contentRef.nativeElement.offsetWidth;
         return scrollLeftPos >= this._contentRef.nativeElement.scrollWidth;
     }
 

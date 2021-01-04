@@ -1,4 +1,4 @@
-import {Directive, Renderer2, ElementRef, OnInit} from '@angular/core';
+import { Directive, Renderer2, ElementRef, OnInit } from '@angular/core';
 import { PepLayoutService } from './layout.service';
 
 @Directive({
@@ -33,6 +33,10 @@ export class PepRtlDirectionDirective implements OnInit {
     ngOnInit(): void {
         const isRtl = this.layoutService.isRtl();
 
-        this.renderer.setAttribute(this.element.nativeElement, 'dir', isRtl ? 'rtl' : 'ltr');
+        this.renderer.setAttribute(
+            this.element.nativeElement,
+            'dir',
+            isRtl ? 'rtl' : 'ltr'
+        );
     }
 }

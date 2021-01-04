@@ -16,7 +16,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
+import {
+    MatDatetimepickerModule,
+    MatNativeDatetimeModule,
+} from '@mat-datetimepicker/core';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -83,7 +86,7 @@ const matComponentsModules = [
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    MatFormFieldModule
+    MatFormFieldModule,
 ];
 
 @NgModule({
@@ -95,7 +98,7 @@ const matComponentsModules = [
         DragDropModule,
         ScrollingModule,
         BidiModule,
-        matComponentsModules
+        matComponentsModules,
     ],
     declarations: [],
     exports: [
@@ -106,12 +109,13 @@ const matComponentsModules = [
         DragDropModule,
         ScrollingModule,
         BidiModule,
-        matComponentsModules
+        matComponentsModules,
     ],
-    providers: [{provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'never'}}],
+    providers: [
+        { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' } },
+    ],
 })
 export class MaterialModule {}
-
 
 /**  Copyright 2018 Google Inc. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that

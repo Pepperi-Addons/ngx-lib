@@ -9,15 +9,13 @@ import { Observable, Subject } from 'rxjs';
 import { httpInterceptorProviders } from './core/http/interceptors/index';
 
 import { PepClipboardDirective } from './core/clipboard/clipboard.directive';
-const clipboardList = [
-    PepClipboardDirective,
-];
+const clipboardList = [PepClipboardDirective];
 
-import { PepRtlClassDirective, PepRtlDirectionDirective } from './core/layout/rtl.directive';
-const layoutList = [
+import {
     PepRtlClassDirective,
     PepRtlDirectionDirective,
-];
+} from './core/layout/rtl.directive';
+const layoutList = [PepRtlClassDirective, PepRtlDirectionDirective];
 
 import {
     PepCapitalizePipe,
@@ -29,7 +27,7 @@ import {
     PepSafeHtmlPipe,
     PepSafePipe,
     PepSplitUppercasePipe,
-    PepToNumberPipe
+    PepToNumberPipe,
 } from './core/common/pipes/common-pipes';
 const pipeList = [
     PepCapitalizePipe,
@@ -41,7 +39,7 @@ const pipeList = [
     PepSafeHtmlPipe,
     PepSafePipe,
     PepSplitUppercasePipe,
-    PepToNumberPipe
+    PepToNumberPipe,
 ];
 
 import { PepInputAutoWidthDirective } from './core/common/directives/auto-width.directive';
@@ -65,10 +63,7 @@ const utilitiesList = [
 import { PepAttachDirective } from './core/portal/attach.directive';
 import { PepTargetDirective } from './core/portal/target.directive';
 
-const portalList = [
-    PepAttachDirective,
-    PepTargetDirective
-];
+const portalList = [PepAttachDirective, PepTargetDirective];
 
 import {
     TranslateModule,
@@ -83,7 +78,7 @@ import {
         utilitiesList,
         clipboardList,
         layoutList,
-        portalList
+        portalList,
     ],
     providers: [
         httpInterceptorProviders,
@@ -103,7 +98,7 @@ import {
         clipboardList,
         layoutList,
         portalList,
-        TranslateModule
+        TranslateModule,
     ],
 })
 export class PepNgxLibModule {
@@ -113,7 +108,6 @@ export class PepNgxLibModule {
     //         providers: [PepCustomizationService]
     //     };
     // }
-
     // static forRoot() {
     //     return {
     //       ngModule: PepNgxLibModule,

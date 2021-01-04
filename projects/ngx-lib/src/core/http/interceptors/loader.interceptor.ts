@@ -4,7 +4,7 @@ import {
     HttpRequest,
     HttpHandler,
     HttpInterceptor,
-    HttpResponse
+    HttpResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { finalize, delay, map, catchError } from 'rxjs/operators';
@@ -12,10 +12,12 @@ import { PepLoaderService } from '../services/loader.service';
 
 @Injectable()
 export class PepLoaderInterceptor implements HttpInterceptor {
-
     constructor(private injector: Injector) {}
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
         // console.warn('LoaderInterceptor');
 
         const loaderService = this.injector.get(PepLoaderService);

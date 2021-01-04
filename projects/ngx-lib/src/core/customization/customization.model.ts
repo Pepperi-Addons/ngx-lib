@@ -178,7 +178,16 @@ export class PepIndicatorsField extends PepFieldBase {
     }
 }
 
-export type PepTextboxFieldType = 'text' | 'link' | 'email' | 'phone' | 'duration' | 'int' | 'percentage' | 'currency' | 'real';
+export type PepTextboxFieldType =
+    | 'text'
+    | 'link'
+    | 'email'
+    | 'phone'
+    | 'duration'
+    | 'int'
+    | 'percentage'
+    | 'currency'
+    | 'real';
 interface IPepTextboxFieldOptions extends IPepFieldBaseOptions {
     type?: PepTextboxFieldType;
 }
@@ -199,7 +208,10 @@ export class PepTextboxField extends PepFieldBase {
 
         if (this.type === 'link') {
             // DI-11292 - add changes for link field for the "Read Only display value" prop
-            this.formattedValue = this.disabled && this.formattedValue && this.value ? this.formattedValue : this.value;
+            this.formattedValue =
+                this.disabled && this.formattedValue && this.value
+                    ? this.formattedValue
+                    : this.value;
         }
     }
 
@@ -299,7 +311,11 @@ export class PepImagesField extends PepFieldBase {
     }
 }
 
-export type PepQuantitySelectorFieldType = 'button' | 'packageButton' | 'qs' | 'qsForMatrix';
+export type PepQuantitySelectorFieldType =
+    | 'button'
+    | 'packageButton'
+    | 'qs'
+    | 'qsForMatrix';
 interface IPepQuantitySelectorFieldOptions extends IPepFieldBaseOptions {
     alowDecimal?: boolean;
     notificationInfo?: any;
@@ -402,7 +418,10 @@ export class PepAddressField extends PepFieldBase {
     }
 }
 
-export type PepInternalButtonFieldType = 'button' | 'reference' | 'listofobjects';
+export type PepInternalButtonFieldType =
+    | 'button'
+    | 'reference'
+    | 'listofobjects';
 interface IPepInternalButtonFieldOptions extends IPepFieldBaseOptions {
     referenceObjectType?: any;
     referenceObjectSubType?: string;
@@ -421,7 +440,8 @@ export class PepInternalButtonField extends PepFieldBase {
 
         this.referenceObjectType = options.referenceObjectType || null;
         this.referenceObjectSubType = options.referenceObjectSubType || null;
-        this.referenceObjectInternalType = options.referenceObjectInternalType || null;
+        this.referenceObjectInternalType =
+            options.referenceObjectInternalType || null;
 
         this.type = options.type || 'button';
     }

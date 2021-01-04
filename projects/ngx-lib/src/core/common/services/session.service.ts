@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PepJwtHelperService } from './jwt-helper.service';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class PepSessionService {
     private readonly WAPI_BASE_URL_KEY = 'serverHostURL'; // pepperi.webapibaseurl
     // private readonly PEPPERI_CONSUMER_TOKEN: 'YY2pAwx6Exo2LWXrUllF9xzSfWF53wqc';
 
-    constructor(private jwtHelper: PepJwtHelperService) { }
+    constructor(private jwtHelper: PepJwtHelperService) {}
 
     // TODO: Maybe need to move this parse into the c'tor.
     private getParseToken(): any {
@@ -29,7 +29,9 @@ export class PepSessionService {
 
     setObject<T>(key: string, object: T): void {
         const stringifiedObject =
-            (typeof object === 'string' || object instanceof String) ? object : JSON.stringify(object);
+            typeof object === 'string' || object instanceof String
+                ? object
+                : JSON.stringify(object);
 
         sessionStorage.setItem(key, stringifiedObject.toString());
     }
@@ -39,9 +41,8 @@ export class PepSessionService {
         const item = sessionStorage.getItem(key);
 
         try {
-            result = item ? JSON.parse(item) as T : item;
-        }
-        catch {
+            result = item ? (JSON.parse(item) as T) : item;
+        } catch {
             result = item;
         }
 

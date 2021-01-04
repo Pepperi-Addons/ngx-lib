@@ -4,14 +4,17 @@ import {
     HttpRequest,
     HttpHandler,
     HttpInterceptor,
-    HttpResponse
+    HttpResponse,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 
 @Injectable()
 export class PepProfilerInterceptor implements HttpInterceptor {
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
         // console.warn('ProfilerInterceptor');
 
         const started = Date.now();
@@ -26,7 +29,7 @@ export class PepProfilerInterceptor implements HttpInterceptor {
                     }
                 },
                 // Operation failed; error is an HttpErrorResponse
-                error => (ok = 'failed')
+                (error) => (ok = 'failed')
             ),
             // Log when response observable either completes or errors
             finalize(() => {

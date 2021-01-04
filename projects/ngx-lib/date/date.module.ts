@@ -9,10 +9,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
-import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
+import {
+    MatDatetimepickerModule,
+    MatNativeDatetimeModule,
+} from '@mat-datetimepicker/core';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-import { PepIconModule, PepIconRegistry, pepIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemEdit,
+} from '@pepperi-addons/ngx-lib/icon';
 import { PepTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
@@ -39,13 +46,11 @@ import { PepDateComponent } from './date.component';
         PepFieldTitleModule,
         PepTextboxIconModule,
     ],
-    exports: [ PepDateComponent ],
-    declarations: [ PepDateComponent ],
+    exports: [PepDateComponent],
+    declarations: [PepDateComponent],
 })
 export class PepDateModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
-        this.pepIconRegistry.registerIcons([
-            pepIconSystemEdit
-        ]);
+        this.pepIconRegistry.registerIcons([pepIconSystemEdit]);
     }
 }

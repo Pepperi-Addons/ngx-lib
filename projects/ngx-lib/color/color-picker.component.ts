@@ -1,11 +1,19 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { hex2hsl, hslString2hsl, rgbString2hsl, IPepHslColor, findClosestAccessibleColor, hsl2hex, convertHslToStringHsl } from './color-utils';
+import {
+    hex2hsl,
+    hslString2hsl,
+    rgbString2hsl,
+    IPepHslColor,
+    findClosestAccessibleColor,
+    hsl2hex,
+    convertHslToStringHsl,
+} from './color-utils';
 import { PepColorType } from './color.model';
 
 enum PepContrastRatioType {
     AA = 4.5,
-    AAA = 7
+    AAA = 7,
 }
 
 interface IPepColorPickerDialogData {
@@ -18,10 +26,9 @@ interface IPepColorPickerDialogData {
 
 @Component({
     templateUrl: './color-picker.component.html',
-    styleUrls: ['./color-picker.component.scss']
+    styleUrls: ['./color-picker.component.scss'],
 })
 export class PepColorPickerComponent implements OnInit {
-
     static CURRENT_HUE = '--pep-color-picker-current-hue';
 
     checkAAComplient = true;
@@ -31,9 +38,14 @@ export class PepColorPickerComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: IPepColorPickerDialogData
     ) {
         this.data.type = data ? data.type : 'any';
-        this.data.showAAComplient = !data ? false : data.showAAComplient ?? true;
+        this.data.showAAComplient = !data
+            ? false
+            : data.showAAComplient ?? true;
         this.data.textColor = data && data.textColor ? data.textColor : '#fff';
-        this.data.contrastRatio = data && data.contrastRatio ? data.contrastRatio : PepContrastRatioType.AA;
+        this.data.contrastRatio =
+            data && data.contrastRatio
+                ? data.contrastRatio
+                : PepContrastRatioType.AA;
     }
 
     currentHue = 100;
@@ -89,7 +101,10 @@ export class PepColorPickerComponent implements OnInit {
     }
 
     setCurrentHueInCss(): void {
-        document.documentElement.style.setProperty(PepColorPickerComponent.CURRENT_HUE, this.currentHue.toString());
+        document.documentElement.style.setProperty(
+            PepColorPickerComponent.CURRENT_HUE,
+            this.currentHue.toString()
+        );
     }
 
     convertValueStringToColor(color): void {
@@ -111,35 +126,55 @@ export class PepColorPickerComponent implements OnInit {
 
     convertColorToValueString(hslColor: IPepHslColor): void {
         // Regular hue
-        if (hslColor.h >= this.currentHueMin && hslColor.h <= this.currentHueMax) {
+        if (
+            hslColor.h >= this.currentHueMin &&
+            hslColor.h <= this.currentHueMax
+        ) {
             this.currentHue = hslColor.h;
-        } else if (this.currentHueMin < 0 && hslColor.h >= 0 && hslColor.h <= 360) {
+        } else if (
+            this.currentHueMin < 0 &&
+            hslColor.h >= 0 &&
+            hslColor.h <= 360
+        ) {
             // For min with - (change to the other side of the circle)
             hslColor.h = hslColor.h - 360;
 
-            if (hslColor.h >= this.currentHueMin && hslColor.h <= this.currentHueMax) {
+            if (
+                hslColor.h >= this.currentHueMin &&
+                hslColor.h <= this.currentHueMax
+            ) {
                 this.currentHue = hslColor.h;
             }
         }
 
         this.currentSaturation =
-            (hslColor.s >= this.currentSaturationMin &&
-             hslColor.s <= this.currentSaturationMax) ?
-                hslColor.s : this.currentSaturation;
+            hslColor.s >= this.currentSaturationMin &&
+            hslColor.s <= this.currentSaturationMax
+                ? hslColor.s
+                : this.currentSaturation;
 
         this.currentLightness =
-            (hslColor.l >= this.currentLightnessMin &&
-             hslColor.l <= this.currentLightnessMax) ?
-                hslColor.l : this.currentLightness;
+            hslColor.l >= this.currentLightnessMin &&
+            hslColor.l <= this.currentLightnessMax
+                ? hslColor.l
+                : this.currentLightness;
 
         // Write the value (if hue is changed to the other side of the circle return it back).
-        const hsl = { h: this.currentHue, s: this.currentSaturation, l: this.currentLightness };
+        const hsl = {
+            h: this.currentHue,
+            s: this.currentSaturation,
+            l: this.currentLightness,
+        };
         this.data.value = convertHslToStringHsl(hsl);
 
         // Check the contrast ratio - set the closest accessible color to complientColor
         // and update isUserChooseAAComplientColor.
         const adjustableColor = hsl2hex(hsl);
-        const closestHex = findClosestAccessibleColor(adjustableColor, this.data.textColor, this.data.contrastRatio);
+        const closestHex = findClosestAccessibleColor(
+            adjustableColor,
+            this.data.textColor,
+            this.data.contrastRatio
+        );
 
         this.isUserChooseAAComplientColor = adjustableColor === closestHex;
         this.complientColor = convertHslToStringHsl(hex2hsl(closestHex));
@@ -157,7 +192,12 @@ export class PepColorPickerComponent implements OnInit {
 
     onLightnessChange(event): void {
         // this.currentLightness = event.value;
-        this.convertColorToValueString({ l: this.currentLightnessMax - event.value + this.currentLightnessMin });
+        this.convertColorToValueString({
+            l:
+                this.currentLightnessMax -
+                event.value +
+                this.currentLightnessMin,
+        });
     }
 
     onColorValueChange(event): void {
@@ -165,10 +205,11 @@ export class PepColorPickerComponent implements OnInit {
     }
 
     onSave(event): void {
-        const color = this.checkAAComplient ? this.complientColor : this.data.value;
+        const color = this.checkAAComplient
+            ? this.complientColor
+            : this.data.value;
 
         // this.notify.emit({ key: this.key, value: color });
         this.dialogRef.close(color);
     }
-
 }

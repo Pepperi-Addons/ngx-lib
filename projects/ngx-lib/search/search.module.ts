@@ -16,7 +16,7 @@ import {
     PepIconModule,
     PepIconRegistry,
     pepIconSystemClose,
-    pepIconSystemSearch
+    pepIconSystemSearch,
 } from '@pepperi-addons/ngx-lib/icon';
 
 import { PepSearchComponent } from './search.component';
@@ -37,16 +37,16 @@ import { PepSearchComponent } from './search.component';
         // ngx-lib modules
         PepNgxLibModule,
         PepIconModule,
-        MatInputModule
+        MatInputModule,
     ],
-    exports: [ PepSearchComponent ],
-    declarations: [ PepSearchComponent ],
+    exports: [PepSearchComponent],
+    declarations: [PepSearchComponent],
 })
 export class PepSearchModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemClose,
-            pepIconSystemSearch
+            pepIconSystemSearch,
         ]);
     }
 }

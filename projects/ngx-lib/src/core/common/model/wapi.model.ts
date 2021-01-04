@@ -1,4 +1,3 @@
-
 export enum FIELD_TYPE {
     // specify text field
     'Default' = 0,
@@ -73,7 +72,7 @@ export enum FIELD_TYPE {
     'ListOfObjects' = 52,
     'Package' = 53, // Package Quantity Selector
     'BooleanText' = 55, // Boolean that return a string defined by the user in case of true/false
-    'RichTextHTML' = 56 // Html Text
+    'RichTextHTML' = 56, // Html Text
 }
 
 export enum X_ALIGNMENT_TYPE {
@@ -182,7 +181,7 @@ export class ObjectsDataRowCell {
 export class ObjectsDataRow {
     AdditionalData?: any;
     BackgroundColor?: string;
-    ExtraInfo?: Array<{ Key: string, Value: string }>;
+    ExtraInfo?: Array<{ Key: string; Value: string }>;
     Fields: Array<ObjectsDataRowCell>;
     IsEditable = true;
     IsSelectableForActions = true;

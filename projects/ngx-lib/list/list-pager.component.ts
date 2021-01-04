@@ -1,5 +1,12 @@
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { ChangeDetectorRef, Component, EventEmitter, Injectable, Input, Output } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Injectable,
+    Input,
+    Output,
+} from '@angular/core';
 import { IPepFieldValueChangeEvent } from '@pepperi-addons/ngx-lib';
 import { DEFAULT_PAGE_SIZE } from './list.model';
 
@@ -9,28 +16,28 @@ export class IPepListPagerChangeEvent {
     pageSize: number;
     length: number;
 }
-    
+
 @Component({
     selector: 'pep-list-pager',
     templateUrl: './list-pager.component.html',
-    styleUrls: ['./list-pager.component.scss']
+    styleUrls: ['./list-pager.component.scss'],
 })
 @Injectable()
 export class PepListPagerComponent {
-    @Input() disabled: boolean = false;
+    @Input() disabled = false;
     @Input() pageIndex = 0;
     @Input() length = 0;
     @Input() pageSize = DEFAULT_PAGE_SIZE;
-    
-    @Output() pagerChange: EventEmitter<IPepListPagerChangeEvent> = new EventEmitter<IPepListPagerChangeEvent>();
-    
-    constructor(private _changeDetectorRef: ChangeDetectorRef) { 
 
-        
-    }
+    @Output()
+    pagerChange: EventEmitter<IPepListPagerChangeEvent> = new EventEmitter<IPepListPagerChangeEvent>();
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {}
 
     nextPage(): void {
-        if (!this.hasNextPage()) { return; }
+        if (!this.hasNextPage()) {
+            return;
+        }
 
         const previousPageIndex = this.pageIndex;
         this.pageIndex++;
@@ -38,7 +45,9 @@ export class PepListPagerComponent {
     }
 
     previousPage(): void {
-        if (!this.hasPreviousPage()) { return; }
+        if (!this.hasPreviousPage()) {
+            return;
+        }
 
         const previousPageIndex = this.pageIndex;
         this.pageIndex--;
@@ -46,7 +55,9 @@ export class PepListPagerComponent {
     }
 
     firstPage(): void {
-        if (!this.hasPreviousPage()) { return; }
+        if (!this.hasPreviousPage()) {
+            return;
+        }
 
         const previousPageIndex = this.pageIndex;
         this.pageIndex = 0;
@@ -54,7 +65,9 @@ export class PepListPagerComponent {
     }
 
     lastPage(): void {
-        if (!this.hasNextPage()) { return; }
+        if (!this.hasNextPage()) {
+            return;
+        }
 
         const previousPageIndex = this.pageIndex;
         this.pageIndex = this.getNumberOfPages() - 1;
@@ -111,8 +124,7 @@ export class PepListPagerComponent {
             previousPageIndex,
             pageIndex: this.pageIndex,
             pageSize: this.pageSize,
-            length: this.length
+            length: this.length,
         });
     }
-
 }

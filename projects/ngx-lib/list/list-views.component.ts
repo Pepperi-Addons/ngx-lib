@@ -1,6 +1,17 @@
-import { Component, OnInit, Injectable, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Injectable,
+    Input,
+    Output,
+    EventEmitter,
+    OnChanges,
+} from '@angular/core';
 import { PepSizeType, PepStyleType } from '@pepperi-addons/ngx-lib';
-import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
+import {
+    PepMenuItem,
+    IPepMenuItemClickEvent,
+} from '@pepperi-addons/ngx-lib/menu';
 
 export type PepListViewDisplayType = 'menu' | 'buttons';
 
@@ -17,7 +28,7 @@ export interface IListViewChangeEvent {
 @Component({
     selector: 'pep-list-views',
     templateUrl: './list-views.component.html',
-    styleUrls: ['./list-views.component.scss']
+    styleUrls: ['./list-views.component.scss'],
 })
 @Injectable()
 export class PepListViewsComponent implements OnInit {
@@ -25,7 +36,7 @@ export class PepListViewsComponent implements OnInit {
     @Input()
     set views(value: Array<IPepListView>) {
         this._views = value;
-        
+
         this.menuItems = value.map((opt) => {
             return { key: opt.key, text: opt.title, iconName: opt.iconName };
         });
@@ -33,18 +44,19 @@ export class PepListViewsComponent implements OnInit {
     get views(): Array<IPepListView> {
         return this._views;
     }
-    
+
     @Input() currentView: IPepListView = null;
     @Input() displayType: PepListViewDisplayType = 'buttons';
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
     @Input() classNames = '';
 
-    @Output() change: EventEmitter<IListViewChangeEvent> = new EventEmitter<IListViewChangeEvent>();
+    @Output()
+    change: EventEmitter<IListViewChangeEvent> = new EventEmitter<IListViewChangeEvent>();
 
     menuItems: Array<PepMenuItem> = null;
 
-    constructor() { }
+    constructor() {}
 
     ngOnInit(): void {
         if (this.currentView === null && this.views && this.views.length > 0) {
@@ -53,7 +65,9 @@ export class PepListViewsComponent implements OnInit {
     }
 
     onMenuItemClicked(menuItemClickEvent: IPepMenuItemClickEvent): void {
-        this.currentView = this.views.find(list => list.key === menuItemClickEvent.source.key);
+        this.currentView = this.views.find(
+            (list) => list.key === menuItemClickEvent.source.key
+        );
         this.change.emit({ source: this.currentView });
     }
 

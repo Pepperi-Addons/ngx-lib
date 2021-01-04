@@ -13,7 +13,7 @@ export class PepMenuItem {
     type?: PepMenuItemType = 'regular';
     children?: Array<PepMenuItem> = null;
 
-    constructor(data: Partial<PepMenuItem>){
+    constructor(data: Partial<PepMenuItem>) {
         Object.assign(this, data);
     }
 }

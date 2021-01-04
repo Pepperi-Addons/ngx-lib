@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 export type PepFileType = 'script' | 'style';
 
@@ -7,18 +7,18 @@ export interface IPepExternalFileModel {
     type: PepFileType;
 }
 
-declare var document: any;
+declare let document: any;
 
 @Injectable({
     providedIn: 'root',
 })
 export class PepFileService {
-    private scripts: Map<string, {loaded: boolean; src: string}>;
-    private styles: Map<string, {loaded: boolean; src: string}>;
+    private scripts: Map<string, { loaded: boolean; src: string }>;
+    private styles: Map<string, { loaded: boolean; src: string }>;
 
     constructor() {
-        this.scripts = new Map<string, {loaded: boolean; src: string}>();
-        this.styles = new Map<string, {loaded: boolean; src: string}>();
+        this.scripts = new Map<string, { loaded: boolean; src: string }>();
+        this.styles = new Map<string, { loaded: boolean; src: string }>();
     }
 
     loadFiles(files: IPepExternalFileModel[]): Promise<any[]> {
@@ -34,7 +34,13 @@ export class PepFileService {
     }
 
     removeFiles(files: IPepExternalFileModel[]): void {
-        for (let index = 0; index < files.length && files[index].path && files[index].path.trim() !== ''; index++) {
+        for (
+            let index = 0;
+            index < files.length &&
+            files[index].path &&
+            files[index].path.trim() !== '';
+            index++
+        ) {
             const name = this.getFileName(files[index].path, true);
             const element = document.getElementById(name);
             element.parentNode.removeChild(element);
@@ -53,14 +59,18 @@ export class PepFileService {
 
             // If the script isn't exist add it.
             if (!this.scripts.has(name)) {
-                this.scripts.set(name, {loaded: false, src: path});
+                this.scripts.set(name, { loaded: false, src: path });
             }
 
             const scriptItem = this.scripts.get(name);
 
             // Resolve if already loaded
             if (scriptItem.loaded) {
-                resolve({script: name, loaded: true, status: 'Already Loaded'});
+                resolve({
+                    script: name,
+                    loaded: true,
+                    status: 'Already Loaded',
+                });
             } else {
                 // Load script
                 const script = document.createElement('script');
@@ -72,20 +82,39 @@ export class PepFileService {
                 if (script.readyState) {
                     // IE
                     script.onreadystatechange = () => {
-                        if (script.readyState === 'loaded' || script.readyState === 'complete') {
+                        if (
+                            script.readyState === 'loaded' ||
+                            script.readyState === 'complete'
+                        ) {
                             script.onreadystatechange = null;
                             scriptItem.loaded = true;
-                            resolve({path, type: 'script', loaded: true, status: 'Loaded'});
+                            resolve({
+                                path,
+                                type: 'script',
+                                loaded: true,
+                                status: 'Loaded',
+                            });
                         }
                     };
                 } else {
                     // Others
                     script.onload = () => {
                         scriptItem.loaded = true;
-                        resolve({path, type: 'script', loaded: true, status: 'Loaded'});
+                        resolve({
+                            path,
+                            type: 'script',
+                            loaded: true,
+                            status: 'Loaded',
+                        });
                     };
                 }
-                script.onerror = (error: any) => resolve({path, type: 'script', loaded: false, status: 'Loaded'});
+                script.onerror = (error: any) =>
+                    resolve({
+                        path,
+                        type: 'script',
+                        loaded: false,
+                        status: 'Loaded',
+                    });
                 document.getElementsByTagName('head')[0].appendChild(script);
             }
         });
@@ -97,14 +126,19 @@ export class PepFileService {
 
             // If the style isn't exist add it.
             if (!this.styles.has(name)) {
-                this.styles.set(name, {loaded: false, src: path});
+                this.styles.set(name, { loaded: false, src: path });
             }
 
             const styleItem = this.styles.get(name);
 
             // Resolve if already loaded
             if (styleItem.loaded) {
-                resolve({path, type: 'style', loaded: true, status: 'Already Loaded'});
+                resolve({
+                    path,
+                    type: 'style',
+                    loaded: true,
+                    status: 'Already Loaded',
+                });
             } else {
                 // Load style
                 const style = document.createElement('link');
@@ -115,7 +149,12 @@ export class PepFileService {
                 style.setAttribute('id', name);
 
                 styleItem.loaded = true;
-                resolve({path, type: 'style', loaded: true, status: 'Loaded'});
+                resolve({
+                    path,
+                    type: 'style',
+                    loaded: true,
+                    status: 'Loaded',
+                });
 
                 document.getElementsByTagName('head')[0].appendChild(style);
             }
@@ -125,7 +164,9 @@ export class PepFileService {
     loadFontStyle(styleId: string, href: string): void {
         const head = document.getElementsByTagName('head')[0];
 
-        const styleElement = document.getElementById(styleId) as HTMLLinkElement;
+        const styleElement = document.getElementById(
+            styleId
+        ) as HTMLLinkElement;
 
         if (styleElement) {
             styleElement.href = href;
@@ -139,9 +180,10 @@ export class PepFileService {
         }
     }
 
-
-    getFileName(filePath: string, withExtenstion: boolean = false): string {
-        const lastIndex = withExtenstion ? filePath.length - 1 : filePath.lastIndexOf('.');
+    getFileName(filePath: string, withExtenstion = false): string {
+        const lastIndex = withExtenstion
+            ? filePath.length - 1
+            : filePath.lastIndexOf('.');
 
         return filePath.substr(filePath.lastIndexOf('/') + 1, lastIndex);
     }
@@ -166,11 +208,19 @@ export class PepFileService {
         }
     }
 
-    convertFromb64toBlob(b64Data: any, contentType = '', sliceSize = 512): Blob {
+    convertFromb64toBlob(
+        b64Data: any,
+        contentType = '',
+        sliceSize = 512
+    ): Blob {
         const byteCharacters = atob(b64Data);
         const byteArrays = [];
 
-        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        for (
+            let offset = 0;
+            offset < byteCharacters.length;
+            offset += sliceSize
+        ) {
             const slice = byteCharacters.slice(offset, offset + sliceSize);
 
             const byteNumbers = new Array(slice.length);
@@ -182,12 +232,13 @@ export class PepFileService {
             byteArrays.push(byteArray);
         }
 
-        const blob = new Blob(byteArrays, {type: contentType});
+        const blob = new Blob(byteArrays, { type: contentType });
         return blob;
     }
 
-    getAssetsPath(assetsDomain: string = ''): string {
-        const concatChar = (assetsDomain === '' || assetsDomain.endsWith('/')) ? '' : '/';
+    getAssetsPath(assetsDomain = ''): string {
+        const concatChar =
+            assetsDomain === '' || assetsDomain.endsWith('/') ? '' : '/';
         return `${assetsDomain}${concatChar}assets/ngx-lib/`;
     }
 
@@ -195,16 +246,16 @@ export class PepFileService {
         return '.ngx-lib.json';
     }
 
-    getAssetsTranslationsPath(assetsDomain: string = ''): string {
+    getAssetsTranslationsPath(assetsDomain = ''): string {
         return `${this.getAssetsPath(assetsDomain)}i18n/`;
     }
 
-    getAssetsImagesPath(assetsDomain: string = '', image: string = ''): string {
+    getAssetsImagesPath(assetsDomain = '', image = ''): string {
         return `${this.getAssetsPath(assetsDomain)}images/${image}`;
     }
 
     getSvgAsImageSrc(svg: string): string {
-        const blob = new Blob([svg], {type: 'image/svg+xml'});
+        const blob = new Blob([svg], { type: 'image/svg+xml' });
         const url = URL.createObjectURL(blob);
         return url;
     }

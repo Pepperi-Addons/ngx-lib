@@ -7,25 +7,25 @@ import { TranslateService } from '@ngx-translate/core';
 // BIDI_RTL_LANGS ref: http://en.wikipedia.org/wiki/Right-to-left
 // Table of scripts in Unicode: https://en.wikipedia.org/wiki/Script_(Unicode)
 const _BIDI_RTL_LANGS = [
-    'ae',	/* Avestan */
-    'ar',   /* 'العربية', Arabic */
-    'arc',  /* Aramaic */
-    'bcc',  /* 'بلوچی مکرانی', Southern Balochi */
-    'bqi',  /* 'بختياري', Bakthiari */
-    'ckb',  /* 'Soranî / کوردی', Sorani */
-    'dv',   /* Dhivehi */
-    'fa',   /* 'فارسی', Persian */
-    'glk',  /* 'گیلکی', Gilaki */
-    'he',   /* 'עברית', Hebrew */
-    'ku',   /* 'Kurdî / كوردی', Kurdish */
-    'mzn',  /* 'مازِرونی', Mazanderani */
-    'nqo',  /* N'Ko */
-    'pnb',  /* 'پنجابی', Western Punjabi */
-    'ps',   /* 'پښتو', Pashto, */
-    'sd',   /* 'سنڌي', Sindhi */
-    'ug',   /* 'Uyghurche / ئۇيغۇرچە', Uyghur */
-    'ur',   /* 'اردو', Urdu */
-    'yi'    /* 'ייִדיש', Yiddish */
+    'ae' /* Avestan */,
+    'ar' /* 'العربية', Arabic */,
+    'arc' /* Aramaic */,
+    'bcc' /* 'بلوچی مکرانی', Southern Balochi */,
+    'bqi' /* 'بختياري', Bakthiari */,
+    'ckb' /* 'Soranî / کوردی', Sorani */,
+    'dv' /* Dhivehi */,
+    'fa' /* 'فارسی', Persian */,
+    'glk' /* 'گیلکی', Gilaki */,
+    'he' /* 'עברית', Hebrew */,
+    'ku' /* 'Kurdî / كوردی', Kurdish */,
+    'mzn' /* 'مازِرونی', Mazanderani */,
+    'nqo' /* N'Ko */,
+    'pnb' /* 'پنجابی', Western Punjabi */,
+    'ps' /* 'پښتو', Pashto, */,
+    'sd' /* 'سنڌي', Sindhi */,
+    'ug' /* 'Uyghurche / ئۇيغۇرچە', Uyghur */,
+    'ur' /* 'اردو', Urdu */,
+    'yi' /* 'ייִדיש', Yiddish */,
 ];
 
 export type PepOrientationType = 'landscape' | 'portrait';
@@ -51,22 +51,32 @@ export class PepLayoutService {
     }
 
     get onMouseOver$(): Observable<boolean> {
-        return this.deviceHasMouseSubject.asObservable().pipe(distinctUntilChanged());
+        return this.deviceHasMouseSubject
+            .asObservable()
+            .pipe(distinctUntilChanged());
     }
 
     constructor() {
         this.resizeSubject = new BehaviorSubject(PepScreenSizeType.LG);
 
         this.deviceHasMouseSubject = new BehaviorSubject(false);
-        document.addEventListener('mouseover', this.documentMouseoverListener, false);
+        document.addEventListener(
+            'mouseover',
+            this.documentMouseoverListener,
+            false
+        );
         // document.addEventListener('touchstart', this._documentTouchstartListener, false);
     }
 
     private documentMouseoverListener = (event: MouseEvent) => {
         this.deviceHasMouseSubject.next(true);
         this.deviceHasMouseSubject.complete();
-        document.removeEventListener('mouseover', this.documentMouseoverListener, false);
-    }
+        document.removeEventListener(
+            'mouseover',
+            this.documentMouseoverListener,
+            false
+        );
+    };
 
     // private _documentTouchstartListener = (event: TouchEvent) => {
     //     debugger;
@@ -137,11 +147,19 @@ export class PepLayoutService {
     }
 
     getScreenHeightPx(): number {
-        return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        return (
+            window.innerHeight ||
+            document.documentElement.clientHeight ||
+            document.body.clientHeight
+        );
     }
 
     getScreenWidthPx(): number {
-        return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        return (
+            window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth
+        );
     }
 
     getCurrentLanguage(translate: TranslateService = null): string {

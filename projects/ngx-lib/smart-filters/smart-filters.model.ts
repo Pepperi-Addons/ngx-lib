@@ -1,4 +1,9 @@
-export type PepSmartFilterType = 'string' | 'boolean' | 'number' | 'date' | 'date-time';
+export type PepSmartFilterType =
+    | 'string'
+    | 'boolean'
+    | 'number'
+    | 'date'
+    | 'date-time';
 
 export class PepSmartFilterData {
     id: string;

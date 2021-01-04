@@ -3,8 +3,7 @@ import { PepIconComponent } from './icon.component';
 
 @NgModule({
     declarations: [PepIconComponent],
-    imports: [
-    ],
-    exports: [PepIconComponent]
+    imports: [],
+    exports: [PepIconComponent],
 })
-export class PepIconModule { }
+export class PepIconModule {}

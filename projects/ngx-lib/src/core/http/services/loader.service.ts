@@ -3,14 +3,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PepLoaderService {
     counter = 0;
-    private showLoaderSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private showLoaderSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+        false
+    );
 
     get onChanged$(): Observable<boolean> {
-        return this.showLoaderSubject.asObservable().pipe(distinctUntilChanged());
+        return this.showLoaderSubject
+            .asObservable()
+            .pipe(distinctUntilChanged());
     }
 
     constructor() {
@@ -23,8 +27,8 @@ export class PepLoaderService {
     private showLoaderChanged(show: boolean): void {
         const eventData = {
             detail: {
-                showLoader: show
-            }
+                showLoader: show,
+            },
         };
 
         const event = new CustomEvent('toggleLoader', eventData);
@@ -47,5 +51,4 @@ export class PepLoaderService {
             this.showLoaderSubject.next(false);
         }
     }
-
 }

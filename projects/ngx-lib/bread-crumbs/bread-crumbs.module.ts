@@ -4,11 +4,8 @@ import { CommonModule } from '@angular/common';
 import { PepBreadCrumbsComponent } from './bread-crumbs.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-    ],
+    imports: [CommonModule],
     exports: [PepBreadCrumbsComponent],
     declarations: [PepBreadCrumbsComponent],
 })
-export class PepBreadCrumbsModule {
-}
+export class PepBreadCrumbsModule {}

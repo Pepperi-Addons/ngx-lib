@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -10,11 +9,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-import { PepIconModule, PepIconRegistry, pepIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemEdit,
+} from '@pepperi-addons/ngx-lib/icon';
 import { PepTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
-import { PepTextboxComponent} from './textbox.component';
+import { PepTextboxComponent } from './textbox.component';
 
 @NgModule({
     imports: [
@@ -31,15 +34,13 @@ import { PepTextboxComponent} from './textbox.component';
         PepNgxLibModule,
         PepIconModule,
         PepFieldTitleModule,
-        PepTextboxIconModule
+        PepTextboxIconModule,
     ],
-    exports: [PepTextboxComponent, ],
+    exports: [PepTextboxComponent],
     declarations: [PepTextboxComponent],
 })
 export class PepTextboxModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
-        this.pepIconRegistry.registerIcons([
-            pepIconSystemEdit
-        ]);
+        this.pepIconRegistry.registerIcons([pepIconSystemEdit]);
     }
 }

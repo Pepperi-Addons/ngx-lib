@@ -1,6 +1,16 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    OnDestroy,
+    Input,
+    Output,
+    EventEmitter,
+} from '@angular/core';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
-import { PepButton, IPepButtonClickEvent } from '@pepperi-addons/ngx-lib/button';
+import {
+    PepButton,
+    IPepButtonClickEvent,
+} from '@pepperi-addons/ngx-lib/button';
 import { delay } from 'rxjs/operators';
 
 export type PepGroupButtonsViewType = 'regular' | 'dropdown' | 'split';
@@ -18,16 +28,16 @@ export class PepGroupButtonsComponent implements OnInit, OnDestroy {
     @Input() buttonsClass: string;
     @Input() buttonsDisabled: string;
 
-    @Output() buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
+    @Output()
+    buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
 
     constructor(public layoutService: PepLayoutService) {
-        this.layoutService.onResize$
-            .subscribe(size => {
-                this.screenSize = size;
-            });
+        this.layoutService.onResize$.subscribe((size) => {
+            this.screenSize = size;
+        });
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {}
 
     ngOnDestroy(): void {
         if (this.buttonClick) {
@@ -36,9 +46,9 @@ export class PepGroupButtonsComponent implements OnInit, OnDestroy {
     }
 
     onButtonClicked(event: Event, button: PepButton): void {
-        const buttonClick = { 
+        const buttonClick = {
             source: button,
-            event
+            event,
         };
 
         if (button?.callback) {

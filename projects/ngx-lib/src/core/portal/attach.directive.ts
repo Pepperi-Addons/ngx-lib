@@ -1,5 +1,11 @@
-import {Directive, OnInit, OnDestroy, Input, TemplateRef} from '@angular/core';
-import {PepPortalService} from './portal.service';
+import {
+    Directive,
+    OnInit,
+    OnDestroy,
+    Input,
+    TemplateRef,
+} from '@angular/core';
+import { PepPortalService } from './portal.service';
 
 @Directive({
     selector: '[pepAttach]',

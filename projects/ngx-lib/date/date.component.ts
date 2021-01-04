@@ -1,12 +1,36 @@
-import { Component, ElementRef, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, Renderer2, OnDestroy, OnChanges, Optional } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectionStrategy,
+    ViewChild,
+    Renderer2,
+    OnDestroy,
+    OnChanges,
+    Optional,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
+import {
+    DatetimeAdapter,
+    MAT_DATETIME_FORMATS,
+} from '@mat-datetimepicker/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
 import { TranslateService } from '@ngx-translate/core';
-import { PepUtilitiesService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepDateFieldType, PepDateField } from '@pepperi-addons/ngx-lib';
+import {
+    PepUtilitiesService,
+    PepLayoutType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    PepDateFieldType,
+    PepDateField,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-date',
@@ -93,7 +117,8 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @ViewChild('datetimePicker') datetimePicker: any;
 
     @ViewChild('input') input: ElementRef;
@@ -113,7 +138,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         private adapter: DateAdapter<any>,
         private translate: TranslateService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -124,13 +149,16 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
                 value: this.value,
                 required: this.required,
                 readonly: this.readonly,
-                disabled: this.disabled
+                disabled: this.disabled,
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
             this.formattedValue = this.formattedValue || this.value;
 
-            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
 
         this.showTime = this.type === 'datetime';
@@ -151,7 +179,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             this.formattedValue = this.formattedValue || this.value;
         }
     }
-    
+
     ngOnDestroy(): void {
         if (this.valueChange) {
             this.valueChange.unsubscribe();
@@ -162,15 +190,20 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         const culture = this.translate.getBrowserCultureLang() || 'en-US'; // this.userLang,
         this.adapter.setLocale(culture);
 
-        if (this.value.indexOf('1900-1-1') >= 0 ||
+        if (
+            this.value.indexOf('1900-1-1') >= 0 ||
             this.value.indexOf('1900-01-01') >= 0 ||
             this.value.indexOf('1970-1-1') >= 0 ||
-            this.value.indexOf('1970-01-01') >= 0) {
+            this.value.indexOf('1970-01-01') >= 0
+        ) {
             this.value = '';
             this.formattedValue = '';
             this.dateModel = null;
         } else {
-            this.dateModel = this.utilitiesService.parseDate(this.value, this.showTime);
+            this.dateModel = this.utilitiesService.parseDate(
+                this.value,
+                this.showTime
+            );
         }
     }
 
@@ -188,10 +221,17 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     onDateChange(event: any): void {
         let value = '';
         if (event.value != null) {
-            value = this.utilitiesService.stringifyDateWithOffset(event.value.toDate(), this.showTime);
+            value = this.utilitiesService.stringifyDateWithOffset(
+                event.value.toDate(),
+                this.showTime
+            );
         }
 
-        this.customizationService.updateFormFieldValue(this.form, this.key, value);
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            value
+        );
         this.valueChange.emit({ key: this.key, value });
 
         if (this.isInEditMode) {

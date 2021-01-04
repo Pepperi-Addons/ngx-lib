@@ -20,21 +20,16 @@ import { MaterialModule } from './modules/material.module';
         FormFieldsExampleComponent,
         InlineListExampleComponent,
         ListExampleComponent,
-        TopBarExampleComponent
+        TopBarExampleComponent,
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
         PepUIModule,
-        MaterialModule
+        MaterialModule,
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule {
-}
-
-
-
-
+export class AppModule {}

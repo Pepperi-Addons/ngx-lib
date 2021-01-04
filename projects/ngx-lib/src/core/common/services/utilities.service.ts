@@ -1,13 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PepUtilitiesService {
-
     constructor() {}
 
-    parseDate(dateStr: string, showTime: boolean = false): any {
+    parseDate(dateStr: string, showTime = false): any {
         let retVal = null;
         if (dateStr !== '') {
             retVal = new Date(dateStr);
@@ -25,10 +24,16 @@ export class PepUtilitiesService {
         return retVal;
     }
 
-    stringifyDate(date: Date, showTime: boolean = false): string {
+    stringifyDate(date: Date, showTime = false): string {
         if (date) {
             const dateText = [];
-            dateText.push(date.getFullYear(), '-', date.getMonth() + 1, '-', date.getDate());
+            dateText.push(
+                date.getFullYear(),
+                '-',
+                date.getMonth() + 1,
+                '-',
+                date.getDate()
+            );
 
             if (showTime) {
                 dateText.push(
@@ -48,7 +53,7 @@ export class PepUtilitiesService {
         }
     }
 
-    stringifyDateWithOffset(date: Date, showTime: boolean = false): string {
+    stringifyDateWithOffset(date: Date, showTime = false): string {
         if (showTime) {
             const offsetMinutes = new Date().getTimezoneOffset() * -1;
             date.setMinutes(date.getMinutes() - offsetMinutes);
@@ -77,6 +82,9 @@ export class PepUtilitiesService {
     getSvgElementFromString(document, svgContent: string): SVGElement {
         const div = document.createElement('DIV');
         div.innerHTML = svgContent;
-        return div.querySelector('svg') || document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        return (
+            div.querySelector('svg') ||
+            document.createElementNS('http://www.w3.org/2000/svg', 'path')
+        );
     }
 }

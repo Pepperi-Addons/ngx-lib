@@ -1,10 +1,10 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
 
 @Directive({
-    selector: '[pepButtonBlur]'
+    selector: '[pepButtonBlur]',
 })
 export class PepButtonBlurDirective {
-    constructor(private element: ElementRef) { }
+    constructor(private element: ElementRef) {}
 
     @HostListener('click')
     onClick(): void {

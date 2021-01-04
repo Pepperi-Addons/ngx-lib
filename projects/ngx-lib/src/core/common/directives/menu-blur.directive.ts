@@ -1,11 +1,10 @@
-
 import { Directive, HostListener, ElementRef } from '@angular/core';
 
 @Directive({
-    selector: '[pepMenuBlur]'
+    selector: '[pepMenuBlur]',
 })
 export class PepMenuBlurDirective {
-    constructor(private element: ElementRef) { }
+    constructor(private element: ElementRef) {}
 
     @HostListener('menuClosed')
     menuClosedEvent(): void {

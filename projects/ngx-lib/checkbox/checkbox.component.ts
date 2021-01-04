@@ -1,8 +1,26 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, Renderer2, ElementRef, Optional } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectionStrategy,
+    OnDestroy,
+    Renderer2,
+    ElementRef,
+    Optional,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { PepCustomizationService, PepLayoutType, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepCheckboxFieldType, PepCheckboxField } from '@pepperi-addons/ngx-lib';
+import {
+    PepCustomizationService,
+    PepLayoutType,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    PepCheckboxFieldType,
+    PepCheckboxField,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-checkbox',
@@ -29,7 +47,8 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     standAlone = false;
 
@@ -41,7 +60,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private element: ElementRef,
         private translate: TranslateService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -53,24 +72,29 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
                 value: this.value,
                 required: this.required,
                 readonly: this.readonly,
-                disabled: this.disabled
+                disabled: this.disabled,
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
 
         if (this.type === 'booleanText') {
             try {
                 if (typeof this.additionalValue === 'string') {
-                    this.additionalValueObject = JSON.parse(this.additionalValue);
+                    this.additionalValueObject = JSON.parse(
+                        this.additionalValue
+                    );
                 } else {
                     this.additionalValueObject = this.additionalValue;
                 }
             } catch {
                 this.additionalValueObject = {
                     CheckedText: this.translate.instant('CHECKBOX.TRUE'),
-                    UncheckedText: this.translate.instant('CHECKBOX.FALSE')
+                    UncheckedText: this.translate.instant('CHECKBOX.FALSE'),
                 };
             }
         }
@@ -88,14 +112,19 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
 
     toggleChecked(event: any): void {
         if (!this.disabled) {
-            const isChecked: boolean = this.value === 'true' || this.value === '1' ? true : false;
+            const isChecked: boolean =
+                this.value === 'true' || this.value === '1' ? true : false;
             this.value = (!isChecked).toString();
             this.changeValue(this.value);
         }
     }
 
     changeValue(value: any): void {
-        this.customizationService.updateFormFieldValue(this.form, this.key, value);
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            value
+        );
         this.valueChange.emit({ key: this.key, value });
     }
 }

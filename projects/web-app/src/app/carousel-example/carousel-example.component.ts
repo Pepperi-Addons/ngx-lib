@@ -1,20 +1,30 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PepLayoutService, ObjectsDataRow, PepScreenSizeType, UIControl } from '@pepperi-addons/ngx-lib';
-import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
+import {
+    PepLayoutService,
+    ObjectsDataRow,
+    PepScreenSizeType,
+    UIControl,
+} from '@pepperi-addons/ngx-lib';
+import {
+    PepMenuItem,
+    IPepMenuItemClickEvent,
+} from '@pepperi-addons/ngx-lib/menu';
 import { IPepSearchStateChangeEvent } from '@pepperi-addons/ngx-lib/search';
-import { pepIconSystemBin, pepIconSystemSettings } from '@pepperi-addons/ngx-lib/icon';
+import {
+    pepIconSystemBin,
+    pepIconSystemSettings,
+} from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     templateUrl: './carousel-example.component.html',
-    styleUrls: ['./carousel-example.component.scss']
+    styleUrls: ['./carousel-example.component.scss'],
 })
 export class CarouselExampleComponent implements OnInit {
-    
     uiControl;
     items;
 
     title = 'client-side';
-    
+
     PepScreenSizeType = PepScreenSizeType;
     screenSize: PepScreenSizeType;
 
@@ -23,13 +33,10 @@ export class CarouselExampleComponent implements OnInit {
 
     menuItems: Array<PepMenuItem>;
 
-    constructor(
-        public layoutService: PepLayoutService
-    ) { 
-        this.layoutService.onResize$.pipe().subscribe(size => {
+    constructor(public layoutService: PepLayoutService) {
+        this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
         });
-
     }
 
     ngOnInit(): void {
@@ -39,22 +46,35 @@ export class CarouselExampleComponent implements OnInit {
 
     getMenuItems(withChildren = true, index = 0): Array<PepMenuItem> {
         let menuItems: Array<PepMenuItem>;
-        
+
         index++;
 
         if (withChildren) {
             menuItems = [
-                { key: 'test1', text: 'test 1', iconName: pepIconSystemBin.name},
-                { key: 'test2', text: 'test 2', iconName: pepIconSystemSettings.name },
+                {
+                    key: 'test1',
+                    text: 'test 1',
+                    iconName: pepIconSystemBin.name,
+                },
+                {
+                    key: 'test2',
+                    text: 'test 2',
+                    iconName: pepIconSystemSettings.name,
+                },
                 { key: 'sep', type: 'splitter' },
-                { key: 'test3', text: 'test 3', iconName: pepIconSystemBin.name, children: this.getMenuItems(index <= 3, index)}
+                {
+                    key: 'test3',
+                    text: 'test 3',
+                    iconName: pepIconSystemBin.name,
+                    children: this.getMenuItems(index <= 3, index),
+                },
             ];
         } else {
             menuItems = [
-                { key: 'test1', text: 'test 1'},
+                { key: 'test1', text: 'test 1' },
                 { key: 'test2', text: 'test 2', disabled: true },
                 { key: 'sep', type: 'splitter' },
-                { key: 'test3', text: 'test 3'}
+                { key: 'test3', text: 'test 3' },
             ];
         }
 
@@ -63,7 +83,9 @@ export class CarouselExampleComponent implements OnInit {
 
     loadlist() {
         const loadLines = true;
-        const uiControl = loadLines ? this.getLinesUiControl() : this.getCardsUiControl();
+        const uiControl = loadLines
+            ? this.getLinesUiControl()
+            : this.getCardsUiControl();
         const rows = loadLines ? this.getLinesData() : this.getCardsData();
 
         this.uiControl = uiControl;
@@ -1941,9 +1963,7 @@ export class CarouselExampleComponent implements OnInit {
         return this.getLinesData();
     }
 
-    onItemClicked(item: ObjectsDataRow): void {
-        
-    }
+    onItemClicked(item: ObjectsDataRow): void {}
 
     onMenuItemClicked(action: IPepMenuItemClickEvent): void {
         alert(action.source.key);
@@ -1952,7 +1972,7 @@ export class CarouselExampleComponent implements OnInit {
     menuClicked(event): void {
         alert('menu clicked');
     }
-    
+
     onSearchStateChanged(searchStateChangeEvent: IPepSearchStateChangeEvent) {
         // debugger;
     }
@@ -1963,6 +1983,5 @@ export class CarouselExampleComponent implements OnInit {
 
     onSearchAutocompleteChanged(value) {
         // debugger;
-        
     }
 }

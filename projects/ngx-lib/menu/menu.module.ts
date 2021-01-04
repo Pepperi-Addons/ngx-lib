@@ -13,7 +13,7 @@ import {
     PepIconModule,
     PepIconRegistry,
     pepIconSystemMenu,
-    pepIconArrowRight
+    pepIconArrowRight,
 } from '@pepperi-addons/ngx-lib/icon';
 
 import { PepMenuComponent } from './menu.component';
@@ -31,16 +31,16 @@ import { PepMenuItemComponent } from './menu-item.component';
         MatIconModule,
         // ngx-lib modules
         PepNgxLibModule,
-        PepIconModule
+        PepIconModule,
     ],
-    exports: [ PepMenuComponent ],
-    declarations: [ PepMenuComponent, PepMenuItemComponent ],
+    exports: [PepMenuComponent],
+    declarations: [PepMenuComponent, PepMenuItemComponent],
 })
 export class PepMenuModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemMenu,
-            pepIconArrowRight
+            pepIconArrowRight,
         ]);
     }
 }
