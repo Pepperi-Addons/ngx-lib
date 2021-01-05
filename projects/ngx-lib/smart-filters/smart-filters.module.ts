@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+// import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule} from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -19,7 +20,8 @@ import { PepSmartFiltersComponent} from './smart-filters.component';
         FormsModule,
         // Material modules
         MatCommonModule,
-        MatCheckboxModule,
+        // MatCheckboxModule,
+        MatChipsModule,
         MatExpansionModule,
         MatIconModule,
         // ngx-lib modules

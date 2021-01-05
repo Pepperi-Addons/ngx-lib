@@ -40,7 +40,7 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     @Input() sizeType: PepSizeType = 'md';
     @Input() classNames = '';
     @Input() xPosition: 'before' | 'after' = 'after';
-    @Input() showAnimation = false;
+    @Input() hideOnEmptyItems = false;
     @Input() items: Array<PepMenuItem> = null;
     @Input() selectedItem: PepMenuItem = null;
     @Input() disabled = false;
@@ -54,6 +54,8 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     PepScreenSizeType = PepScreenSizeType;
     screenSize: PepScreenSizeType;
 
+    displayText: string = null;
+
     constructor(
         public layoutService: PepLayoutService
     ) {
@@ -63,11 +65,15 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     }
 
     private updateText(): void {
-        this.text = this.selectedItem != null ? this.selectedItem.text : '';
+        if (this.type === 'select' || this.type === 'action-select') {
+            this.displayText = this.selectedItem != null ? this.selectedItem.text : null;
+        } else {
+            this.displayText = this.text;
+        }
     }
 
     ngOnChanges(changes): void {
-        if (this.showAnimation) {
+        if (this.hideOnEmptyItems) {
             this.state = (!this.disabled && this.items && this.items.filter(item => !item.disabled).length > 0) ? 'visible' : 'hidden';
         } else {
             this.state = 'visible';
@@ -93,11 +99,9 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     }
 
     onMenuItemClicked(click: IPepMenuItemClickEvent): void {
-        if (this.type === 'select') {
-            this.selectedItem = click.source;
-            this.updateText();
-        }
-
+        this.selectedItem = click.source;
+        this.updateText();
+        
         this.menuItemClick.emit(click);
     }
 

@@ -2,18 +2,26 @@
     <span class="title body-md bold">{{ "SMART_FILTERS.TITLE" | translate}}</span>
 
     <mat-accordion [displayMode]="'flat'" [multi]="true" class="pep-accordion2">
-        <mat-expansion-panel *ngFor="let filter of data; let i = index" hideToggle="true"
+        <mat-expansion-panel *ngFor="let filter of filters; let i = index" hideToggle="true"
             (opened)="toggleFilter(i, true)" (closed)="toggleFilter(i, false)">
             <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeaderHeight"
                 [expandedHeight]="expansionPanelHeaderHeight">
-                <mat-panel-title>
-                    <mat-icon *ngIf="!filters[i].isOpen" class="spacing-element">
-                        <pep-icon name="number_plus"></pep-icon>
+                <mat-panel-title class="spacing-element-negative">
+                    <mat-icon class="spacing-element">
+                        <pep-icon [name]="filter.isOpen ? 'number_minus' : 'number_plus'"></pep-icon>
                     </mat-icon>
-                    <mat-icon *ngIf="filters[i].isOpen" class="spacing-element">
-                        <pep-icon name="number_minus"></pep-icon>
-                    </mat-icon>
-                    <span class="spacing-element ellipsis body-sm">{{ filter.title }}</span>
+
+                    <div class="test">
+                        <span class=" ellipsis body-sm spacing-element" [title]="filter.title">{{ filter.title }}</span>
+
+                        <mat-chip [selectable]="false" [removable]="true" class="clear-filter pep-button chip xs weak">
+                            <span class="body-xs ellipsis ">1</span>
+
+                            <mat-icon class="" (click)="clearFilter(filter)">
+                                <pep-icon name="system_close"></pep-icon>
+                            </mat-icon>
+                        </mat-chip>
+                    </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="expansion-content filter-content">

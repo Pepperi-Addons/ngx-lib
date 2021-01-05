@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
@@ -24,7 +23,6 @@ import { PepRichHtmlTextareaComponent } from './rich-html-textarea.component';
 @NgModule({
     imports: [
         CommonModule,
-        BrowserModule,
         ReactiveFormsModule,
         FormsModule,
         // Material modules,

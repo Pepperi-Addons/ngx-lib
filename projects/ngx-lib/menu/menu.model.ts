@@ -1,4 +1,4 @@
-export type PepMenuType = 'action' | 'select';
+export type PepMenuType = 'action' | 'action-select' | 'select';
 
 export type PepMenuItemType = 'regular' | 'splitter';
 

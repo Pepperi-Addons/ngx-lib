@@ -1,16 +1,16 @@
 import { Component, OnInit, AfterViewInit, HostListener, ElementRef, Input, ChangeDetectionStrategy } from '@angular/core';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
-import { PepSmartFilterType, PepSmartFilterData } from './smart-filters.model';
+import { PepSmartFilterType, PepSmartFilter } from './smart-filters.model';
 
-export class PepSmartFilterBase extends PepSmartFilterData {
-    isOpen = false;
-    hasFilter = false;
+// export class PepSmartFilterBase extends PepSmartFilterData {
+//     isOpen = false;
+//     hasFilter = false;
 
-    constructor(filter: Partial<PepSmartFilterData>) {
-        super();
-        Object.assign(this, filter);
-    }
-}
+//     constructor(filter: Partial<PepSmartFilterData>) {
+//         super();
+//         Object.assign(this, filter);
+//     }
+// }
 
 
 // enum PepDatePeriodType {
@@ -39,19 +39,14 @@ export class PepSmartFilterBase extends PepSmartFilterData {
 })
 export class PepSmartFiltersComponent  {
 
-    private _data: Array<PepSmartFilterData> = [];
+    private _filters: Array<PepSmartFilter> = [];
     @Input()
-    set data(value: Array<PepSmartFilterData>) {
-        this._data = value;
-        this._data?.forEach((filter: PepSmartFilterData) => {
-            this.filters.push(new PepSmartFilterBase(filter));
-        });
+    set filters(value: Array<PepSmartFilter>) {
+        this._filters = value;
     }
-    get data(): Array<PepSmartFilterData> {
-        return this._data;
+    get filters(): Array<PepSmartFilter> {
+        return this._filters;
     }
-
-    filters: Array<PepSmartFilterBase> = [];
 
     expansionPanelHeaderHeight = '*';
 
@@ -62,5 +57,9 @@ export class PepSmartFiltersComponent  {
 
     toggleFilter(index: number, isOpen: boolean): void {
         this.filters[index].isOpen = isOpen;
+    }
+
+    clearFilter(filter: PepSmartFilter) {
+
     }
 }

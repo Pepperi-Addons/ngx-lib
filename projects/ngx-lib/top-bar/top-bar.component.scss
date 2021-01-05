@@ -1,16 +1,9 @@
 @import '../src/core/style/abstracts/variables';
 @import '../src/core/style/abstracts/mixins';
 
-:host {
-    display: flex;
-    top: 64px;
-    position: sticky;
-    z-index: $z-index-medium + 1;
-}
-
 .top-bar-container {
     height: $top-bar-height;
-    // position: fixed;
+    position: fixed;
     // width: 100%;
     // width: calc(100% - ((#{$content-padding} * 2)));
     z-index: $z-index-medium + 1;
