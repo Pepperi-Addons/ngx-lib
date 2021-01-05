@@ -1,4 +1,4 @@
 ﻿<pep-menu [xPosition]="xPosition" [styleType]="'strong'" [sizeType]="sizeType" [items]="!hidden ? actions : null"
-    [showAnimation]="true" [iconName]="'system_edit'" (menuItemClick)="onActionClicked($event)"
+    [hideOnEmptyItems]="true" [iconName]="'system_edit'" (menuItemClick)="onActionClicked($event)"
     (stateChange)="onStateChanged($event)">
 </pep-menu>

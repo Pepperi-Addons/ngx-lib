@@ -32,7 +32,9 @@ import {
     PepFooterStateType,
     IPepFooterStateChangeEvent,
 } from '@pepperi-addons/ngx-lib/top-bar';
+import { PepSmartFilter } from '@pepperi-addons/ngx-lib/smart-filters';
 import { FakeData } from './fake-data';
+import { PepSideBarComponent } from 'ngx-lib/side-bar/public-api';
 
 @Component({
     templateUrl: './list-example.component.html',
@@ -46,6 +48,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     listOptions: Array<PepMenuItem>;
     sortingOptions: Array<IPepListSortingOption>;
     views: Array<IPepListView>;
+    filters: Array<PepSmartFilter>;
 
     footerState: PepFooterStateType;
 
@@ -83,6 +86,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         this.loadListChooser();
         this.loadListSorting();
         this.loadViews();
+        this.loadFilters();
     }
 
     ngAfterViewInit(): void {
@@ -133,12 +137,30 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         ];
     }
 
+    private loadFilters(): void {
+        this.filters = [
+            {
+                id: 'filter1',
+                title: 'Transaction Action Time',
+                type: 'date-time',
+            },
+            { id: 'filter2', title: 'Price', type: 'number' },
+            { id: 'filter3', title: 'Delivery Date', type: 'date' },
+            { id: 'filter3', title: 'Brand', type: 'string' },
+            { id: 'filter3', title: 'Discout', type: 'boolean' },
+        ];
+    }
+
     toggleMenu(): void {
         this.menuActions =
             this.menuActions === null ? this.getMenuActions() : null;
     }
 
-    onAnimationStateChange(state): void {}
+    toggleFilters(sideNav: PepSideBarComponent): void {
+        if (sideNav) {
+            sideNav.toggle();
+        }
+    }
 
     loadlist(dataSource) {
         if (this.customList && dataSource) {
@@ -228,6 +250,9 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     onFooterStateChange(footerStateType: IPepFooterStateChangeEvent) {
         this.footerState = footerStateType.state;
     }
+
+    
+    onAnimationStateChange(state): void {}
 
     onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) {}
 

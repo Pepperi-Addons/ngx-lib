@@ -1131,15 +1131,13 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 this.data.Fields
             );
 
-            const maxRow = Math.max.apply(
-                Math,
-                fields.map((f) => {
+            const maxRow = Math.max(
+                ...fields.map((f) => {
                     return f.row + f.rowSpan;
                 })
             );
-            this.columns = Math.max.apply(
-                Math,
-                fields.map((f) => {
+            this.columns = Math.max(
+                ...fields.map((f) => {
                     return f.col + f.colSpan;
                 })
             );

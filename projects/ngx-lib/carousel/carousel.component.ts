@@ -65,15 +65,15 @@ export class PepCarouselComponent
 
     private _isDragging = false;
 
-    private _onMouseMoveListener: Function;
+    private _onMouseMoveListener: () => any;
 
-    private _onMouseUpListener: Function;
+    private _onMouseUpListener: () => any;
 
-    private _onMouseDownListener: Function;
+    private _onMouseDownListener: () => any;
 
-    private _onScrollListener: Function;
+    private _onScrollListener: () => any;
 
-    private _onDragStartListener: Function;
+    private _onDragStartListener: () => any;
 
     /**
      * Is the user currently pressing the element

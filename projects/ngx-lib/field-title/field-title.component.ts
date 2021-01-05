@@ -18,6 +18,4 @@ export class PepFieldTitleComponent {
 
     @Input() showTitle = true;
     @Input() inputLength = 0;
-
-    constructor() {}
 }

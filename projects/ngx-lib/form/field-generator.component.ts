@@ -64,8 +64,6 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         return formControl ? formControl.dirty : false;
     }
 
-    constructor() {}
-
     ngOnDestroy(): void {
         if (this.valueChange) {
             this.valueChange.unsubscribe();

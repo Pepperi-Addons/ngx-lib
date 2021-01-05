@@ -1,6 +1,5 @@
 import {
     Component,
-    OnInit,
     Injectable,
     Input,
     Output,
@@ -28,7 +27,7 @@ export interface IPepListChooserOptionChangeEvent {
     styleUrls: ['./list-chooser.component.scss'],
 })
 @Injectable()
-export class PepListChooserComponent implements OnInit {
+export class PepListChooserComponent {
     private _options: Array<IPepListChooserOption> = null;
     @Input()
     set options(value: Array<IPepListChooserOption>) {
@@ -56,10 +55,6 @@ export class PepListChooserComponent implements OnInit {
 
     breadCrumbs: Array<PepBreadCrumbItem> = null;
     menuItems: Array<PepMenuItem> = null;
-
-    constructor() {}
-
-    ngOnInit(): void {}
 
     onMenuItemClicked(menuItemClickEvent: IPepMenuItemClickEvent): void {
         const currentList = this.options.find(

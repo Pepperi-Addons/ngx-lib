@@ -5,8 +5,10 @@ export type PepSmartFilterType =
     | 'date'
     | 'date-time';
 
-export class PepSmartFilterData {
+export class PepSmartFilter {
     id: string;
     title: string;
     type: PepSmartFilterType;
+    isOpen?: boolean = false;
+    hasFilter?: boolean = true;
 }

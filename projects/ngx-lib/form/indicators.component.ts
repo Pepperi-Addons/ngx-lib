@@ -14,6 +14,4 @@ export class PepIndicatorsComponent {
     controlType = 'indicators';
 
     @Input() layoutType: PepLayoutType = 'table';
-
-    constructor() {}
 }

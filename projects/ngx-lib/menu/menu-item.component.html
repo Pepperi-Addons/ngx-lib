@@ -7,7 +7,8 @@
             </ng-template>
 
             <ng-template #buttonBlock>
-                <ng-container *ngIf="menuItem.children?.length > 0; then childrenBlock; else regularBlock">
+                <ng-container
+                    *ngIf="type !== 'select' && menuItem.children?.length > 0; then childrenBlock; else regularBlock">
                 </ng-container>
                 <ng-template #childrenBlock>
                     <button mat-menu-item [matMenuTriggerFor]="menu.childMenu" title="{{ menuItem.text }}"
@@ -26,7 +27,7 @@
                 <ng-template #regularBlock>
                     <button mat-menu-item (click)="onMenuItemClicked(menuItem)" title="{{ menuItem.text }}"
                         pepRtlDirection [disabled]="menuItem.disabled"
-                        [ngClass]="{ selected: selectedItem?.key == menuItem?.key, disabled: menuItem.disabled }">
+                        [ngClass]="{ selected: type === 'select' && selectedItem?.key == menuItem?.key, disabled: menuItem.disabled }">
                         <ng-container *ngTemplateOutlet="itemTemplate; context: {
                             itemIconName: menuItem.iconName,
                             itemText: menuItem.text,

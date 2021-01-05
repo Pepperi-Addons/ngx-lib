@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class PepUtilitiesService {
-    constructor() {}
-
     parseDate(dateStr: string, showTime = false): any {
         let retVal = null;
         if (dateStr !== '') {

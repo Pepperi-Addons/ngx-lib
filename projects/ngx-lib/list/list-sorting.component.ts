@@ -1,6 +1,5 @@
 import {
     Component,
-    OnInit,
     Injectable,
     Input,
     Output,
@@ -31,7 +30,7 @@ export interface IPepListSortingOptionChangeEvent {
     styleUrls: ['./list-sorting.component.scss'],
 })
 @Injectable()
-export class PepListSortingComponent implements OnInit {
+export class PepListSortingComponent {
     private _options: Array<IPepListSortingOption> = null;
     @Input()
     set options(value: Array<IPepListSortingOption>) {
@@ -50,10 +49,6 @@ export class PepListSortingComponent implements OnInit {
     change: EventEmitter<IPepListSortingOptionChangeEvent> = new EventEmitter<IPepListSortingOptionChangeEvent>();
 
     menuItems: Array<PepMenuItem> = null;
-
-    constructor() {}
-
-    ngOnInit(): void {}
 
     onMenuItemClicked(menuItemClickEvent: IPepMenuItemClickEvent): void {
         const currentSorting = this.options.find(

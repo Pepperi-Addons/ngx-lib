@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,8 +19,6 @@ import { PepDialogComponent } from './dialog.component';
 @NgModule({
     imports: [
         CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         // Material modules,
         MatCommonModule,
         MatButtonModule,

@@ -22,6 +22,7 @@ import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-tex
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepSeparatorModule } from '@pepperi-addons/ngx-lib/separator';
+import { PepSideBarModule } from '@pepperi-addons/ngx-lib/side-bar';
 import { PepSignatureModule } from '@pepperi-addons/ngx-lib/signature';
 import { PepSizeDetectorModule } from '@pepperi-addons/ngx-lib/size-detector';
 import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
@@ -124,6 +125,7 @@ const pepperiComponentsModules = [
     PepSearchModule,
     PepSelectModule,
     PepSeparatorModule,
+    PepSideBarModule,
     PepSignatureModule,
     PepSizeDetectorModule,
     PepTextareaModule,

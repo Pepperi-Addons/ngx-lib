@@ -5,8 +5,6 @@ import { Injectable, Inject } from '@angular/core';
     providedIn: 'root',
 })
 export class PepJwtHelperService {
-    constructor() {}
-
     public urlBase64Decode(str: string): string {
         let output = str.replace(/-/g, '+').replace(/_/g, '/');
         switch (output.length % 4) {
@@ -96,8 +94,7 @@ export class PepJwtHelperService {
     }
 
     public getTokenExpirationDate(token: string): Date | null {
-        let decoded: any;
-        decoded = this.decodeToken(token);
+        const decoded = this.decodeToken(token);
 
         if (!decoded || !decoded.hasOwnProperty('exp')) {
             return null;
@@ -124,7 +121,7 @@ export class PepJwtHelperService {
     }
 
     public getAuthScheme(
-        authScheme: Function | string | undefined,
+        authScheme: (request: HttpRequest<any>) => any | string | undefined,
         request: HttpRequest<any>
     ): string {
         if (typeof authScheme === 'function') {

@@ -184,9 +184,8 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
             } else {
                 // For line view Add the height of the line (form height).
                 if (this.currentViewType.Key === 'OrderCenterFlatMatrixLine') {
-                    const maxRow = Math.max.apply(
-                        Math,
-                        this.uiControl.ControlFields.map((f) => {
+                    const maxRow = Math.max(
+                        ...this.uiControl.ControlFields.map((f) => {
                             return f.Layout.Y + f.Layout.Height;
                         })
                     );

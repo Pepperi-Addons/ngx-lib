@@ -10,6 +10,4 @@ export class PepDialogComponent {
     @Input() showClose = true;
     @Input() showHeader = true;
     @Input() showFooter = true;
-
-    constructor() {}
 }

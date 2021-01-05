@@ -39,9 +39,9 @@ export class PepInternalPageService {
         this.httpService.postWapiApiCall(url, body).subscribe(
             (res) => {
                 callbackFunc(res);
-            },
-            (error) => {},
-            () => {}
+            }
+            // (error) => {},
+            // () => {}
         );
     }
 
@@ -64,9 +64,9 @@ export class PepInternalPageService {
             .subscribe(
                 (res) => {
                     callbackFunc(res);
-                },
-                (error) => {},
-                () => {}
+                }
+                // (error) => {},
+                // () => {}
             );
     }
 
@@ -102,9 +102,9 @@ export class PepInternalPageService {
             .subscribe(
                 (res) => {
                     callbackFunc(res);
-                },
-                (error) => {},
-                () => {}
+                }
+                // (error) => {},
+                // () => {}
             );
     }
 
@@ -127,9 +127,9 @@ export class PepInternalPageService {
             .subscribe(
                 (res) => {
                     callbackFunc(res);
-                },
-                (error) => {},
-                () => {}
+                }
+                // (error) => {},
+                // () => {}
             );
     }
 
@@ -154,9 +154,9 @@ export class PepInternalPageService {
             .subscribe(
                 (res) => {
                     callbackFunc(res);
-                },
-                (error) => {},
-                () => {}
+                }
+                // (error) => {},
+                // () => {}
             );
     }
 }

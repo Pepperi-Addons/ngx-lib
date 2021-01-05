@@ -1,6 +1,5 @@
 import {
     Component,
-    OnInit,
     Injectable,
     Input,
     Output,
@@ -19,7 +18,7 @@ import {
     styleUrls: ['./list-actions.component.scss'],
 })
 @Injectable()
-export class PepListActionsComponent implements OnInit {
+export class PepListActionsComponent {
     @Input() actions: Array<PepMenuItem> = null;
     @Input() sizeType: PepSizeType = 'md';
     @Input() xPosition: 'before' | 'after' = 'before';
@@ -29,10 +28,6 @@ export class PepListActionsComponent implements OnInit {
     actionClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
     @Output()
     stateChange: EventEmitter<IPepMenuStateChangeEvent> = new EventEmitter<IPepMenuStateChangeEvent>();
-
-    constructor() {}
-
-    ngOnInit(): void {}
 
     onActionClicked(action): void {
         this.actionClick.emit(action);

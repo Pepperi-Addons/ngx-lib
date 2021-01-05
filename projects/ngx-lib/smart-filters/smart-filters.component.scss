@@ -6,8 +6,6 @@
     //     padding: 0 !important;
     // }
     
-    width: $side-layout-width;
-
     .title {
         height: $top-bar-height-with-no-top;
         display: flex;
@@ -17,5 +15,25 @@
         // height: calc(var(--pep-top-bar-spacing-bottom, 0.5rem) + var(--pep-top-bar-field-height, 2.5rem));
         // padding: $spacing-md $spacing-sm;
         // width: 100%;
+    }
+
+    .test {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .clear-filter {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0 $spacing-sm;
+        padding:0 $spacing-xs;
+        padding-inline-start: $spacing-sm;
+        
+        &:after {
+            background-color: transparent;
+        }
     }
 }

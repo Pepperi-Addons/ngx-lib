@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
@@ -22,8 +20,6 @@ import { PepTopBarComponent } from './top-bar.component';
 @NgModule({
     imports: [
         CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         // Material modules,
         MatCommonModule,
         MatMenuModule,

@@ -56,8 +56,6 @@ export class PepListViewsComponent implements OnInit {
 
     menuItems: Array<PepMenuItem> = null;
 
-    constructor() {}
-
     ngOnInit(): void {
         if (this.currentView === null && this.views && this.views.length > 0) {
             this.currentView = this.views[0];

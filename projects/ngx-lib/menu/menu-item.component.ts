@@ -26,8 +26,6 @@ export class PepMenuItemComponent implements OnDestroy {
     @Output()
     menuItemClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
 
-    constructor() { }
-
     ngOnDestroy(): void {
         if (this.menuItemClick) {
             this.menuItemClick.unsubscribe();

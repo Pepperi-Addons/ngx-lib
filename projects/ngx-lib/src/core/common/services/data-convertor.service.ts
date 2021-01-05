@@ -58,8 +58,6 @@ export class PepRowData {
     providedIn: 'root',
 })
 export class PepDataConvertorService {
-    constructor() {}
-
     getUiControl(formData: PepRowData): UIControl {
         const uiControl = new UIControl();
 

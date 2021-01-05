@@ -15,7 +15,7 @@ export class PepCookieService {
 
     constructor(
         @Optional() @Inject(DOCUMENT) private document: any,
-        @Inject(PLATFORM_ID) private platformId: InjectionToken<object>
+        @Inject(PLATFORM_ID) private platformId: InjectionToken<any>
     ) {
         this.documentIsAccessible = isPlatformBrowser(this.platformId);
     }

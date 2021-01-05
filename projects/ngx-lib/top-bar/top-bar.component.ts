@@ -10,7 +10,6 @@ import {
     Component,
     EventEmitter,
     Input,
-    OnChanges,
     Output,
 } from '@angular/core';
 import {
@@ -41,8 +40,7 @@ import {
     templateUrl: './top-bar.component.html',
     styleUrls: ['./top-bar.component.scss'],
 })
-export class PepTopBarComponent
-    implements AfterViewInit, AfterContentInit, OnChanges {
+export class PepTopBarComponent implements AfterViewInit, AfterContentInit {
     @Input() inline = false;
     @Input() title: string = null;
 
@@ -109,8 +107,6 @@ export class PepTopBarComponent
                 .unsubscribe();
         }
     }
-
-    ngOnChanges(changes): void {}
 
     private setSearchIsOpenAndSmallDevice(): void {
         // check if search is open and the device size is small or extra small

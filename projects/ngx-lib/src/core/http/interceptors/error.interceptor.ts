@@ -12,7 +12,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 @Injectable()
 export class PepErrorInterceptor implements HttpInterceptor {
-    constructor() {} // private toastr: ToastrService
+    // constructor() {} // private toastr: ToastrService
 
     intercept(
         req: HttpRequest<any>,

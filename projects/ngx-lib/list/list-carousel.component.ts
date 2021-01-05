@@ -1,6 +1,5 @@
 import {
     Component,
-    OnInit,
     Injectable,
     Input,
     Output,
@@ -26,7 +25,7 @@ export interface IPepListCarouselItemClickEvent {
     styleUrls: ['./list-carousel.component.scss'],
 })
 @Injectable()
-export class PepListCarouselComponent implements OnInit, OnDestroy {
+export class PepListCarouselComponent implements OnDestroy {
     @Input() duration = 500;
     @Input() layout: UIControl = null;
     @Input() itemsToMove = 3;
@@ -59,10 +58,6 @@ export class PepListCarouselComponent implements OnInit, OnDestroy {
 
     prevDisabled = false;
     nextDisabled = false;
-
-    constructor(private cd: ChangeDetectorRef, private renderer: Renderer2) {}
-
-    ngOnInit(): void {}
 
     ngOnDestroy(): void {
         if (this.itemClick) {

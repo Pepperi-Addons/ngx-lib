@@ -1,6 +1,5 @@
 import {
     Component,
-    OnInit,
     OnDestroy,
     Input,
     Output,
@@ -11,7 +10,6 @@ import {
     PepButton,
     IPepButtonClickEvent,
 } from '@pepperi-addons/ngx-lib/button';
-import { delay } from 'rxjs/operators';
 
 export type PepGroupButtonsViewType = 'regular' | 'dropdown' | 'split';
 @Component({
@@ -19,7 +17,7 @@ export type PepGroupButtonsViewType = 'regular' | 'dropdown' | 'split';
     templateUrl: './group-buttons.component.html',
     styleUrls: ['./group-buttons.component.scss'],
 })
-export class PepGroupButtonsComponent implements OnInit, OnDestroy {
+export class PepGroupButtonsComponent implements OnDestroy {
     PepScreenSizeType = PepScreenSizeType;
     screenSize: PepScreenSizeType;
 
@@ -36,8 +34,6 @@ export class PepGroupButtonsComponent implements OnInit, OnDestroy {
             this.screenSize = size;
         });
     }
-
-    ngOnInit(): void {}
 
     ngOnDestroy(): void {
         if (this.buttonClick) {

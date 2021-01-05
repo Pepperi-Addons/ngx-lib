@@ -294,7 +294,7 @@ export function findClosestAccessibleDarkerColor(
     otherColor: string,
     contrastRatio: number
 ): IPepClosestColor {
-    let { h, s, l } = hex2hsl(adjustableColor);
+    const { h, s, l } = hex2hsl(adjustableColor);
 
     if (contrast(adjustableColor, otherColor) >= contrastRatio) {
         return {
@@ -314,20 +314,21 @@ export function findClosestAccessibleDarkerColor(
     let maxColor = hsl2hex({ h, s, l });
     let lastMinColor;
     let lastMaxColor;
+    let lTemp;
 
     while (minColor !== lastMinColor || maxColor !== lastMaxColor) {
         lastMinColor = minColor;
         lastMaxColor = maxColor;
 
-        l = (min + max) / 2;
-        adjustableColor = hsl2hex({ h, s, l });
+        lTemp = (min + max) / 2;
+        adjustableColor = hsl2hex({ h, s, l: lTemp });
 
         if (contrast(adjustableColor, otherColor) < contrastRatio) {
-            max = l;
-            maxColor = hsl2hex({ h, s, l });
+            max = lTemp;
+            maxColor = hsl2hex({ h, s, l: lTemp });
         } else {
-            min = l;
-            minColor = hsl2hex({ h, s, l });
+            min = lTemp;
+            minColor = hsl2hex({ h, s, l: lTemp });
         }
     }
 
@@ -342,7 +343,7 @@ export function findClosestAccessibleLighterColor(
     otherColor: string,
     contrastRatio: number
 ): IPepClosestColor {
-    let { h, s, l } = hex2hsl(adjustableColor);
+    const { h, s, l } = hex2hsl(adjustableColor);
 
     if (contrast(adjustableColor, otherColor) >= contrastRatio) {
         return {
@@ -362,20 +363,21 @@ export function findClosestAccessibleLighterColor(
     let minColor = hsl2hex({ h, s, l });
     let lastMinColor;
     let lastMaxColor;
+    let lTemp;
 
     while (minColor !== lastMinColor || maxColor !== lastMaxColor) {
         lastMinColor = minColor;
         lastMaxColor = maxColor;
 
-        l = (min + max) / 2;
-        adjustableColor = hsl2hex({ h, s, l });
+        lTemp = (min + max) / 2;
+        adjustableColor = hsl2hex({ h, s, l: lTemp });
 
         if (contrast(adjustableColor, otherColor) < contrastRatio) {
-            min = l;
-            minColor = hsl2hex({ h, s, l });
+            min = lTemp;
+            minColor = hsl2hex({ h, s, l: lTemp });
         } else {
-            max = l;
-            maxColor = hsl2hex({ h, s, l });
+            max = lTemp;
+            maxColor = hsl2hex({ h, s, l: lTemp });
         }
     }
 

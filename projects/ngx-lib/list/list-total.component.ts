@@ -10,6 +10,4 @@ export class PepListTotalComponent {
     @Input() totalRows = -1;
     @Input() totalAmount = -1;
     @Input() isMapView = false;
-
-    constructor() {}
 }
