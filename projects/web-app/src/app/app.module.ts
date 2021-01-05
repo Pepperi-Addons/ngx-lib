@@ -13,6 +13,7 @@ import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
 import { PepUIModule } from './modules/pepperi.module';
 import { MaterialModule } from './modules/material.module';
+import { RemoteLoaderExampleComponent } from './remote-loader-example/remote-loader-example.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { MaterialModule } from './modules/material.module';
         FormFieldsExampleComponent,
         InlineListExampleComponent,
         ListExampleComponent,
-        TopBarExampleComponent
+        TopBarExampleComponent,
+        RemoteLoaderExampleComponent
     ],
     imports: [
         CommonModule,

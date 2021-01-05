@@ -1,3 +1,4 @@
+import { RemoteLoaderExampleComponent } from './remote-loader-example/remote-loader-example.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CarouselExampleComponent } from './carousel-example/carousel-example.component';
@@ -23,9 +24,13 @@ const routes: Routes = [
     {
         path: `inline-list-example`,
         component: InlineListExampleComponent
-    },{
+    }, {
         path: `top-bar-example`,
         component: TopBarExampleComponent
+    },
+    {
+        path: `remote-loader-example`,
+        component: RemoteLoaderExampleComponent
     },
     {
         path: '**',

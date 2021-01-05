@@ -25,6 +25,7 @@ import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { PepListModule } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
+import { PepRemoteLoaderModule } from '@pepperi-addons/ngx-lib/remote-loader';
 
 import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 
@@ -129,7 +130,8 @@ const pepperiComponentsModules = [
     PepMenuModule,
     PepTopBarModule,
     PepSmartFiltersModule,
-    PepFormModule
+    PepFormModule,
+    PepRemoteLoaderModule
 ];
 
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
@@ -146,8 +148,8 @@ export function createTranslateLoader(http: HttpClient, fileService: PepFileServ
     const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
 
     return new MultiTranslateHttpLoader(http, [
-        {prefix: addonStaticFolder.length > 0 ? addonStaticFolder : translationsPath, suffix: translationsSuffix},
-        {prefix: addonStaticFolder.length > 0 ? addonStaticFolder : '/assets/i18n/', suffix: '.json'},
+        { prefix: addonStaticFolder.length > 0 ? addonStaticFolder : translationsPath, suffix: translationsSuffix },
+        { prefix: addonStaticFolder.length > 0 ? addonStaticFolder : '/assets/i18n/', suffix: '.json' },
     ]);
 }
 
@@ -173,9 +175,9 @@ export function createTranslateLoader(http: HttpClient, fileService: PepFileServ
 export class PepUIModule {
 
     constructor(
-          translate: TranslateService,
-          private pepperiIconRegistry: PepIconRegistry
-      ) {
+        translate: TranslateService,
+        private pepperiIconRegistry: PepIconRegistry
+    ) {
         this.pepperiIconRegistry.registerIcons(pepIcons);
 
         let userLang = 'en';
