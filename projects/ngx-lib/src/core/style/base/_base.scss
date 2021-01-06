@@ -610,7 +610,8 @@ main {
         }    
     }
 
-    &.pep-action-menu {
+    &.pep-action-menu,
+    &.pep-action-select-menu {
         .mat-menu-content {
             padding: $spacing-sm !important;
             
