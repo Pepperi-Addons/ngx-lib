@@ -91,7 +91,7 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     private updateText(): void {
         if (this.type === 'select' || this.type === 'action-select') {
             this.displayText =
-                this.selectedItem != null ? this.selectedItem.text : null;
+                this.selectedItem != null ? this.selectedItem.text : this.text;
         } else {
             this.displayText = this.text;
         }
@@ -110,7 +110,7 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         }
 
         if (this.type === 'select') {
-            if (this.selectedItem === null && this.items.length > 0) {
+            if (this.selectedItem === null && this.items && this.items.length > 0) {
                 this.selectedItem = this.items[0];
             }
 

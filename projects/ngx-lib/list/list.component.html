@@ -47,7 +47,7 @@
         <ng-container *ngIf="isTable">
             <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)"
                 (mouseleave)="onTableRowMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
-                        selected: isItemSelected(item?.UID, item?.Type),
+                        selected: getIsItemSelected(item?.UID, item?.Type),
                         highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId
                     }"
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
@@ -83,7 +83,7 @@
         <ng-container *ngIf="!isTable">
             <div [class]="itemClass" (mouseenter)="onCardMouseEnter($event, item?.UID, item?.Type)"
                 (mouseleave)="onCardMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
-                        selected: isItemSelected(item?.UID, item?.Type),
+                        selected: getIsItemSelected(item?.UID, item?.Type),
                         highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId,
                         'card-view': viewType === 'cards',
                         'line-view': viewType === 'lines'

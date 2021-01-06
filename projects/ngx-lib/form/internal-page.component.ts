@@ -109,7 +109,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     private fillData(isInDialog = false): void {
         const view = this.matrixTemplate.createEmbeddedView(null);
 
-        this.customList?.removeTable();
+        this.customList?.clear();
         this.orgCont?.clear();
 
         if (isInDialog) {
@@ -474,7 +474,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     }
 
     updateChanges(elementToUpdate: any): void {
-        this.customList.updateListItem(elementToUpdate);
+        this.customList.updateItem(elementToUpdate);
 
         // Update memory data
         for (let index = 0; index < this.childData.Rows.length; index++) {
