@@ -8,7 +8,7 @@
 </ng-template>
 <ng-template #buttonsTemplate>
     <div class="buttons-wrapper spacing-element-negative">
-        <button *ngFor="let view of views" mat-button [title]="view.title" [disabled]="view.key === currentView.key"
+        <button *ngFor="let view of views" mat-button [title]="view.title" [disabled]="view.key === currentView?.key"
             class="pep-button icon-button spacing-element {{ sizeType }} {{ styleType }} {{ classNames }}"
             pepRtlDirection pepMenuBlur (click)="onViewChanged(view)">
             <mat-icon>

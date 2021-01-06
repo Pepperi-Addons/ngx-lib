@@ -85,13 +85,12 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     constructor(public layoutService: PepLayoutService) {
         this.layoutService.onResize$.subscribe((size) => {
             this.screenSize = size;
-        });
+        }); 
     }
 
     private updateText(): void {
         if (this.type === 'select' || this.type === 'action-select') {
-            this.displayText =
-                this.selectedItem != null ? this.selectedItem.text : this.text;
+            this.displayText = this.selectedItem ? this.selectedItem.text : this.text;
         } else {
             this.displayText = this.text;
         }
@@ -113,9 +112,9 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
             if (this.selectedItem === null && this.items && this.items.length > 0) {
                 this.selectedItem = this.items[0];
             }
-
-            this.updateText();
         }
+        
+        this.updateText();
     }
 
     ngOnDestroy(): void {
