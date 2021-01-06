@@ -21,7 +21,7 @@ import { MaterialModule } from './modules/material.module';
         FormFieldsExampleComponent,
         InlineListExampleComponent,
         ListExampleComponent,
-        TopBarExampleComponent,
+        TopBarExampleComponent
     ],
     imports: [
         CommonModule,
@@ -34,4 +34,4 @@ import { MaterialModule } from './modules/material.module';
     providers: [],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

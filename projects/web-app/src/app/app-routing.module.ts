@@ -22,9 +22,8 @@ const routes: Routes = [
     },
     {
         path: `inline-list-example`,
-        component: InlineListExampleComponent,
-    },
-    {
+        component: InlineListExampleComponent
+    }, {
         path: `top-bar-example`,
         component: TopBarExampleComponent,
     },
@@ -38,4 +37,4 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

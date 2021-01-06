@@ -134,7 +134,7 @@ const pepperiComponentsModules = [
     PepMenuModule,
     PepTopBarModule,
     PepSmartFiltersModule,
-    PepFormModule,
+    PepFormModule
 ];
 
 import {
