@@ -51,7 +51,7 @@ import { IPepListPagerChangeEvent } from './list-pager.component';
     host: {
         // '[style.width]': "'inherit'",
         '(document:mousedown)': 'onMouseDown($event)',
-        '(window:resize)': 'winResize($event)',
+        '(window:resize)': 'onWinResize($event)',
         // '(window:mouseup)': 'onListResizeEnd($event)',
         // '(window:mousemove)': 'onListResize($event)'
     },
@@ -81,7 +81,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() objectId = '0';
     @Input() parentId = '0';
     @Input() searchCode = '0';
-    // @Input() showTopBorder = false;
     @Input() firstFieldAsLink = false;
     @Input() supportSorting = true;
     @Input() supportResizing = true;
@@ -94,7 +93,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pageType = '';
     @Input() totalsRow = [];
     @Input() pagerType: PepListPagerType = 'scroll';
-    useVirtualScroll = true;
     @Input() pageSize: number = DEFAULT_PAGE_SIZE;
 
     @Output()
@@ -123,8 +121,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     noVirtualScrollContnainer: ElementRef;
     @ViewChild('selectAllCB') selectAllCB: any;
 
-    public layout: UIControl = null;
-    public totalRows = -1;
+    private _layout: UIControl = null;
+    get layout(): UIControl {
+        return this._layout;
+    }
+
+    totalRows = -1;
     itemClass: string;
     isTable = false;
     private hasColumnWidthOfTypePercentage = true;
@@ -134,19 +136,22 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         return this._items;
     }
 
-    public showSelection = false;
-    // isCardView = false;
+    private _useVirtualScroll = true;
+    get useVirtualScroll(): boolean {
+        return this._useVirtualScroll;
+    }
+
     private itemsCounter = 0;
+    showSelection = false;
     showItems = true;
     viewType: PepListViewType;
     scrollItems: Array<ObjectsDataRow>;
 
-    public SEPARATOR = ',';
-    public isAllSelected = false;
-    public selectedItems = new Map<string, string>();
-    public unSelectedItems = new Map<string, string>();
+    SEPARATOR = ',';
+    isAllSelected = false;
+    selectedItems = new Map<string, string>();
+    unSelectedItems = new Map<string, string>();
 
-    // public tableHeaderWidth: string;
     nativeWindow: any = null;
 
     selectedItemId = '';
@@ -177,24 +182,26 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     calculatedObjectHeight: string;
 
     constructor(
-        private element: ElementRef,
+        private hostElement: ElementRef,
         private layoutService: PepLayoutService,
         private sessionService: PepSessionService,
         private windowScrollingService: PepWindowScrollingService,
         private cd: ChangeDetectorRef,
         private renderer: Renderer2
     ) {
-        this.layoutService.onResize$.subscribe((size) => {
+        this.exportFunctionsOnHostElement();
+        
+        this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
 
         this.nativeWindow = window;
         this.deviceHasMouse = this.layoutService.getDeviceHasMouse();
-        this.layoutService.onMouseOver$.subscribe((deviceHasMouse) => {
+        this.layoutService.onMouseOver$.subscribe((deviceHasMouse: boolean) => {
             this.deviceHasMouse = deviceHasMouse;
         });
     }
-
+    
     ngOnInit(): void {
         this.containerWidth = 0;
     }
@@ -237,22 +244,22 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.saveSortingToSession();
     }
 
-    setContainerWidth(): void {
+    private setContainerWidth(): void {
         const selectionCheckBoxWidth =
             this.selectionTypeForActions === 'multi' ? 44 : 0;
 
         const rowHeight = 40; // the table row height (2.5rem * 16font-size).
         const style = window.getComputedStyle(
-            this.element.nativeElement.parentElement
+            this.hostElement.nativeElement.parentElement
         );
         // The container-fluid class padding left + right + border
         const containerFluidSpacing =
             parseInt(style.paddingLeft, 10) + parseInt(style.paddingRight, 10);
 
         const parentContainer =
-            this.element.nativeElement.parentElement.parentElement > 0
-                ? this.element.nativeElement.parentElement.parentElement
-                : this.element.nativeElement.parentElement;
+            this.hostElement.nativeElement.parentElement.parentElement > 0
+                ? this.hostElement.nativeElement.parentElement.parentElement
+                : this.hostElement.nativeElement.parentElement;
 
         // Calculate if vertical scroll should appear, if so set the scroll width. (this.totalRows + 1) + 1 is for the header row.
         const scrollWidth =
@@ -266,7 +273,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.containerWidth = parentContainer.offsetWidth - rowHeaderWidthToSub;
     }
 
-    saveSortingToSession(): void {
+    private saveSortingToSession(): void {
         this.sessionService.setObject(
             PepListComponent.SORT_BY_STATE_KEY,
             this.sortBy
@@ -275,22 +282,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             PepListComponent.ASCENDING_STATE_KEY,
             this.isAsc
         );
-    }
-
-    onMouseDown(event): void {
-        // if (!this.element.nativeElement.contains(event.target) || event.target.className === 'scrollable-content') {
-        //     setTimeout(() => {
-        //         if (this.selectionTypeForActions === 'multi' || this.selectionTypeForActions === 'single-action') {
-        //         }
-        //         // this.selectedItemId = '';
-        //         // this.hoveredItemId = '';
-        //     }, 500);
-        // }
-    }
-
-    removeTable(): void {
-        this.cleanItems();
-        this.layout = null;
     }
 
     private getTopItems(): number {
@@ -304,7 +295,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this._lockEvents = !isVisible;
 
         // TODO: Maybe we need to check the disable scrolling just on the container.
-        if (this.useVirtualScroll) {
+        if (this._useVirtualScroll) {
             // if (isVisible) {
             //     this.windowScrollingService.disable();
             // } else {
@@ -377,38 +368,21 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    getUniqItemId(itemId: string, itemType = ''): string {
+    private getUniqItemId(itemId: string, itemType = ''): string {
         return itemId + this.SEPARATOR + itemType;
     }
 
-    isItemSelected(itemId: string, itemType = ''): boolean {
-        let isSelected = false;
-        if (
-            this.selectionTypeForActions === 'single-action' ||
-            this.selectionTypeForActions === 'multi'
-        ) {
-            isSelected =
-                this.selectedItems.has(itemId) ||
-                (this.isAllSelected && !this.unSelectedItems.has(itemId));
-        } else if (this.selectionTypeForActions === 'single') {
-            const uniqItemId = this.getUniqItemId(itemId, itemType);
-            isSelected = uniqItemId === this.selectedItemId;
-        }
-
-        return isSelected;
-    }
-
-    setLayout(): void {
+    private setLayout(): void {
         if (
             this.totalRows === 0 ||
-            !this.layout ||
-            !this.layout.ControlFields ||
-            this.layout.ControlFields.length === 0
+            !this._layout ||
+            !this._layout.ControlFields ||
+            this._layout.ControlFields.length === 0
         ) {
             return;
         }
 
-        this.layout.ControlFields.forEach((cf) => {
+        this._layout.ControlFields.forEach((cf) => {
             if (cf.ColumnWidth === 0) {
                 cf.ColumnWidth = 10;
             }
@@ -445,15 +419,15 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     private calcColumnsWidth(): void {
         const fixedMultiple = 3.78; // for converting em to pixel.
-        const length = this.layout.ControlFields.length;
+        const length = this._layout.ControlFields.length;
         const selectionCheckBoxWidth =
             this.selectionTypeForActions === 'multi' ? 44 : 0;
 
         // Is table AND there is at least one column of width type of percentage.
         if (this.isTable) {
-            if (this.layout && this.layout.ControlFields) {
+            if (this._layout && this._layout.ControlFields) {
                 this.hasColumnWidthOfTypePercentage =
-                    this.layout.ControlFields.filter(
+                    this._layout.ControlFields.filter(
                         (cf) => cf.ColumnWidthType === 1
                     ).length === 0;
             }
@@ -461,7 +435,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         // If the columns size is fixed and the total is small then the container change it to percentage.
         if (!this.hasColumnWidthOfTypePercentage) {
-            const totalFixedColsWidth = this.layout.ControlFields.map(
+            const totalFixedColsWidth = this._layout.ControlFields.map(
                 (cf) => cf.ColumnWidth * fixedMultiple
             ).reduce((sum, current) => sum + current);
 
@@ -474,12 +448,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         // Calc by percentage
         if (this.hasColumnWidthOfTypePercentage) {
-            const totalColsWidth: number = this.layout.ControlFields.map(
+            const totalColsWidth: number = this._layout.ControlFields.map(
                 (cf) => cf.ColumnWidth
             ).reduce((sum, current) => sum + current);
 
             for (let index = 0; index < length; index++) {
-                const uiControlField: UIControlField = this.layout
+                const uiControlField: UIControlField = this._layout
                     .ControlFields[index];
                 const calcColumnWidthPercentage =
                     (100 / totalColsWidth) * uiControlField.ColumnWidth;
@@ -499,13 +473,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             this.renderer.setStyle(
-                this.element.nativeElement,
+                this.hostElement.nativeElement,
                 'width',
                 'inherit'
             );
         } else {
             for (let index = 0; index < length; index++) {
-                const uiControlField: UIControlField = this.layout
+                const uiControlField: UIControlField = this._layout
                     .ControlFields[index];
                 const currentFixedWidth = Math.floor(
                     uiControlField.ColumnWidth * fixedMultiple
@@ -525,7 +499,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             this.renderer.setStyle(
-                this.element.nativeElement,
+                this.hostElement.nativeElement,
                 'width',
                 totalCalcColsWidth + selectionCheckBoxWidth + 'px'
             );
@@ -539,11 +513,758 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.pressedColumn = '';
     }
 
+    private getParent(el, parentSelector): any {
+        // If no parentSelector defined will bubble up all the way to *document*
+        if (parentSelector === undefined) {
+            parentSelector = document;
+        }
+        const parent = [];
+        let p = el.parentNode;
+
+        while (
+            p &&
+            p.className !== '' &&
+            p.className.indexOf(parentSelector) === -1 &&
+            parentSelector !== document
+        ) {
+            const o = p;
+            p = o.parentNode;
+        }
+        if (p.className.indexOf(parentSelector) > -1) {
+            parent.push(p); // Push that parentSelector you wanted to stop at
+        }
+        return parent;
+    }
+
+    private getParentContainer(): Element | Window {
+        return this.parentScroll ? this.parentScroll : window;
+    }
+    
+    private cleanItems(): void {
+        this.itemsCounter = 0;
+        this._items =
+            this.totalRows > 0 ? Array<ObjectsDataRow>(this.totalRows) : [];
+        this.scrollItems = [];
+        this.calculatedObjectHeight = '';
+    }
+
+    private initVariablesFromSession(items: ObjectsDataRow[]): void {
+        const selectedItemsObject: Array<any> = this.sessionService.getObject<
+            Array<any>
+        >(PepListComponent.SELECTED_ITEMS_STATE_KEY);
+        const selectedItemsFromMap: Map<string, string> =
+            selectedItemsObject && selectedItemsObject.length > 0
+                ? new Map(selectedItemsObject)
+                : null;
+        if (
+            selectedItemsFromMap != null &&
+            typeof selectedItemsFromMap.size !== 'undefined' &&
+            selectedItemsFromMap.size > 0
+        ) {
+            this.selectedItems = selectedItemsFromMap;
+            this.sessionService.removeObject(
+                PepListComponent.SELECTED_ITEMS_STATE_KEY
+            );
+        } else {
+            this.selectedItems.clear();
+        }
+
+        const unSelectedItemsObject: Array<any> = this.sessionService.getObject<
+            Array<any>
+        >(PepListComponent.UN_SELECTED_ITEMS_STATE_KEY);
+        const unSelectedItemsMap: Map<string, string> =
+            unSelectedItemsObject && unSelectedItemsObject.length > 0
+                ? new Map(unSelectedItemsObject)
+                : null;
+        if (
+            unSelectedItemsMap != null &&
+            typeof unSelectedItemsMap.size !== 'undefined' &&
+            unSelectedItemsMap.size > 0
+        ) {
+            this.unSelectedItems = unSelectedItemsMap;
+            this.sessionService.removeObject(
+                PepListComponent.UN_SELECTED_ITEMS_STATE_KEY
+            );
+        } else {
+            this.unSelectedItems.clear();
+        }
+
+        const isAllSelected = this.sessionService.getObject(
+            PepListComponent.ALL_SELECTED_STATE_KEY
+        );
+        if (isAllSelected != null) {
+            this.isAllSelected = isAllSelected && this.getIsAllSelected(items);
+            this.sessionService.removeObject(
+                PepListComponent.ALL_SELECTED_STATE_KEY
+            );
+        } else {
+            this.isAllSelected = false;
+        }
+
+        const sortBy = this.sessionService.getObject(
+            PepListComponent.SORT_BY_STATE_KEY
+        );
+        if (sortBy && sortBy !== '') {
+            this.sortBy = sortBy;
+            this.sessionService.removeObject(
+                PepListComponent.SORT_BY_STATE_KEY
+            );
+        } else {
+            this.sortBy = '';
+        }
+
+        const isAsc = this.sessionService.getObject(
+            PepListComponent.ASCENDING_STATE_KEY
+        );
+        if (isAsc != null) {
+            this.isAsc = isAsc;
+            this.sessionService.removeObject(
+                PepListComponent.ASCENDING_STATE_KEY
+            );
+        } else {
+            this.isAsc = true;
+        }
+    }
+
+    private getIsAllSelected(items: Array<ObjectsDataRow>): boolean {
+        let result = true;
+
+        if (this.selectedItems?.size > 0 && items?.length > 0) {
+            for (const item of items) {
+                if (!(item && this.selectedItems.has(item.UID.toString()))) {
+                    result = false;
+                    break;
+                }
+            }
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
+
+    private getNumberOfStartItems(): number {
+        let numberOfStartItems = 20;
+
+        if (
+            this.screenSize === PepScreenSizeType.XL ||
+            this.screenSize === PepScreenSizeType.LG
+        ) {
+            numberOfStartItems = this.isTable ? 50 : 40;
+        } else if (this.screenSize === PepScreenSizeType.MD) {
+            numberOfStartItems = this.isTable ? 30 : 20;
+        } else if (this.screenSize === PepScreenSizeType.SM) {
+            numberOfStartItems = this.isTable ? 20 : 10;
+        } else if (this.screenSize === PepScreenSizeType.XS) {
+            numberOfStartItems = this.isTable ? 15 : 5;
+        }
+
+        return numberOfStartItems;
+    }
+
+    private setItemClicked(
+        itemId,
+        isSelectableForActions: boolean,
+        itemType: string,
+        isChecked: boolean
+    ): void {
+        const uniqItemId = this.getUniqItemId(itemId, itemType);
+
+        // select the selected item.
+        if (isChecked) {
+            // Set seleted item
+            this.selectedItemId = uniqItemId;
+        } else {
+            if (this.selectedItemId === uniqItemId) {
+                this.selectedItemId = '';
+            }
+        }
+
+        if (this.selectionTypeForActions === 'single') {
+            this.selectedItemsChange.emit(
+                this.selectedItemId.length === 0 ? 0 : 1
+            );
+        } else if (this.selectionTypeForActions === 'single-action') {
+            this.setSelectionItems(itemId, uniqItemId, isChecked);
+            this.singleActionClick.emit({
+                id: itemId,
+                selected: isChecked,
+            });
+        } else if (this.selectionTypeForActions === 'multi') {
+            if (isSelectableForActions) {
+                this.setSelectionItems(itemId, uniqItemId, isChecked);
+
+                const currentList = this.isAllSelected
+                    ? this.unSelectedItems
+                    : this.selectedItems;
+                const currentListCount = this.isAllSelected
+                    ? this.totalRows - currentList.size
+                    : currentList.size;
+                this.selectedItemsChange.emit(currentListCount);
+            }
+        }
+    }
+    
+    private exportFunctionsOnHostElement() {
+        // This is for web component usage for use those functions.
+        this.hostElement.nativeElement.clear = this.clear.bind(this);
+        this.hostElement.nativeElement.initListData = this.initListData.bind(this);
+        this.hostElement.nativeElement.updateItems = this.updateItems.bind(this);
+        this.hostElement.nativeElement.updatePage = this.updatePage.bind(this);
+        this.hostElement.nativeElement.updateItem = this.updateItem.bind(this);
+    }
+
+    getIsDisabled(item: ObjectsDataRow): boolean {
+        if (this.disableSelectionItems) {
+            return true;
+        } else {
+            return item && !item.IsSelectableForActions;
+        }
+    }
+    
+    getIsItemSelected(itemId: string, itemType = ''): boolean {
+        let isSelected = false;
+        if (
+            this.selectionTypeForActions === 'single-action' ||
+            this.selectionTypeForActions === 'multi'
+        ) {
+            isSelected =
+                this.selectedItems.has(itemId) ||
+                (this.isAllSelected && !this.unSelectedItems.has(itemId));
+        } else if (this.selectionTypeForActions === 'single') {
+            const uniqItemId = this.getUniqItemId(itemId, itemType);
+            isSelected = uniqItemId === this.selectedItemId;
+        }
+
+        return isSelected;
+    }
+
+    getIsAllSelectedForActions(): boolean {
+        let res = false;
+
+        if (this.isAllSelected) {
+            if (this.unSelectedItems.size === 0) {
+                res = true;
+            }
+        } else {
+            if (this.selectedItems.size === this.totalRows) {
+                res = this.getIsAllSelected(this.scrollItems);
+            } else if (this.selectedItems.size < this.totalRows) {
+                for (const item of this.scrollItems) {
+                    res = item && this.selectedItems.has(item.UID.toString());
+
+                    if (!res) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
+
+    setIsAllSelected(isChecked: boolean): void {
+        if (
+            this.selectionTypeForActions === 'multi' ||
+            this.selectionTypeForActions === 'single-action'
+        ) {
+            this.selectAllCB.checked = isChecked;
+            this.isAllSelected = isChecked;
+        }
+    }
+
+    selectAllItemsForActions(e: any): void {
+        // For material checkbox || radio.
+        const isChecked = e.source.checked;
+
+        // Indeterminate mode
+        let isIndeterminate = false;
+        const currentList = this.isAllSelected
+            ? this.unSelectedItems
+            : this.selectedItems;
+        if (currentList.size > 0) {
+            isIndeterminate = true;
+            this.isAllSelected = false;
+            this.selectedItemsChange.emit(0);
+            e.source.checked = false;
+        }
+
+        this.selectedItems.clear();
+        this.unSelectedItems.clear();
+
+        if (!isIndeterminate) {
+            this.isAllSelected = isChecked;
+            this.selectAllClick.emit(isChecked);
+
+            if (this.selectionTypeForActions === 'multi') {
+                if (!isChecked) {
+                    this.selectedItemsChange.emit(0);
+                    this.selectedItemId = '';
+                } else {
+                    const filteredItems = this.items.filter(
+                        (item) => item && item.IsSelectableForActions
+                    );
+                    this.selectedItemsChange.emit(filteredItems.length);
+                }
+            }
+        } else {
+            if (this.selectionTypeForActions === 'single-action') {
+                // Remove all
+                this.selectAllClick.emit(false);
+            }
+        }
+    }
+
+    getIsSelectedForActions(
+        itemId: string,
+        isSelectableForActions: boolean,
+        itemType = ''
+    ): boolean {
+        if (this.selectionTypeForActions === 'single') {
+            return this.selectedItemId === this.getUniqItemId(itemId, itemType);
+        } else if (this.selectionTypeForActions === 'single-action') {
+            let res = this.isAllSelected || this.selectedItems.has(itemId);
+
+            if (this.unSelectedItems.has(itemId)) {
+                res = false;
+            }
+
+            return res;
+        } else if (this.selectionTypeForActions === 'multi') {
+            if (!isSelectableForActions) {
+                return false;
+            } else {
+                let res = this.isAllSelected || this.selectedItems.has(itemId);
+
+                if (this.unSelectedItems.has(itemId)) {
+                    res = false;
+                }
+
+                return res;
+            }
+        }
+    }
+
+    selectItemForActions(
+        e: any,
+        itemId: string,
+        isSelectableForActions: boolean,
+        itemType = ''
+    ): void {
+        // For material checkbox || radio.
+        const isChecked = e.source.checked;
+        this.setItemClicked(
+            itemId,
+            isSelectableForActions,
+            itemType,
+            isChecked
+        );
+    }
+
+    itemClicked(e: any, item: ObjectsDataRow): void {
+        // Set seleted item
+        const itemId = item.UID.toString();
+        const itemType = item.Type.toString();
+        let isChecked = false;
+
+        if (item && item.IsSelectableForActions) {
+            this.selectedItemId = this.getUniqItemId(itemId, itemType);
+            isChecked = true;
+        }
+
+        if (this.isTable) {
+            if (this.selectionTypeForActions === 'single') {
+                this.setItemClicked(
+                    itemId,
+                    item.IsSelectableForActions,
+                    itemType,
+                    isChecked
+                );
+            } else if (this.selectionTypeForActions === 'none') {
+                // Just mark the row as highlighted
+                this.setItemClicked(
+                    itemId,
+                    item.IsSelectableForActions,
+                    itemType,
+                    true
+                );
+            }
+        } else {
+            if (this.disabled) {
+                return;
+            }
+        }
+
+        this.itemClick.emit({ source: item, viewType: this.viewType });
+    }
+
+    onTableRowMouseEnter(event: any, itemId: string, itemType: string): void {
+        if (!this.deviceHasMouse) {
+            return;
+        }
+
+        const uniqItemId = this.getUniqItemId(itemId, itemType);
+        this.hoveredItemId = uniqItemId;
+    }
+
+    onTableRowMouseLeave(event: any, itemId: string, itemType: string): void {
+        this.hoveredItemId = '';
+    }
+
+    onCardMouseEnter(event: any, itemId: string, itemType: string): void {
+        if (!this.deviceHasMouse) {
+            return;
+        }
+
+        const uniqItemId = this.getUniqItemId(itemId, itemType);
+        this.hoveredItemId = uniqItemId;
+    }
+
+    onCardMouseLeave(event: any, itemId: string, itemType: string): void {
+        this.hoveredItemId = '';
+    }
+
+    getThumbnailsLayout(): PepLayoutType {
+        return this.layoutType ?? 'card';
+    }
+
+    // trackByFunc(index: number, item: ObjectsDataRow): any {
+    //     return item && item.UID ? item.UID : index;
+    //     // let res: string = "";
+
+    //     // if (item && item.UID) {
+    //     //    res = item.UID + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
+    //     // }
+    //     // else {
+    //     //    res = index + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
+    //     // }
+
+    //     // return res;
+    // }
+
+    clear(): void {
+        this.cleanItems();
+        this._layout = null;
+    }
+    
+    setSelectedIds(selectedIds: string[], items = null): void {
+        this.selectedItems.clear();
+        this.isAllSelected = false;
+
+        if (selectedIds) {
+            // for (let i = 0; i < selected.length; i++) {
+            for (const selectedId of selectedIds) {
+                const tmp = selectedId.split(this.SEPARATOR);
+
+                if (tmp && tmp.length > 0) {
+                    const itemId = tmp[0];
+                    const itemType = tmp.length > 1 ? tmp[1] : '';
+
+                    this.selectedItems.set(
+                        itemId,
+                        this.getUniqItemId(itemId, itemType)
+                    );
+                }
+            }
+
+            this.isAllSelected = this.getIsAllSelected(
+                items ? items : this.scrollItems
+            );
+            this.setSelectionDataInSession();
+        }
+
+        if (typeof this.virtualScroll !== 'undefined') {
+            this.virtualScroll.refresh();
+        }
+    }
+
+    setSelectionDataInSession(): void {
+        if (this.selectedItems.size > 0) {
+            this.sessionService.setObject(
+                PepListComponent.SELECTED_ITEMS_STATE_KEY,
+                JSON.stringify([...this.selectedItems])
+            );
+        }
+
+        if (this.unSelectedItems.size > 0) {
+            this.sessionService.setObject(
+                PepListComponent.UN_SELECTED_ITEMS_STATE_KEY,
+                JSON.stringify([...this.unSelectedItems])
+            );
+        }
+
+        this.sessionService.setObject(
+            PepListComponent.ALL_SELECTED_STATE_KEY,
+            this.isAllSelected
+        );
+    }
+    
+    initListData(
+        layout: UIControl,
+        totalRows: number,
+        items: ObjectsDataRow[],
+        viewType: PepListViewType = '',
+        itemClass = '',
+        showSelection = false
+    ): void {
+        this.initVariablesFromSession(items);
+
+        const currentList = this.isAllSelected
+            ? this.unSelectedItems
+            : this.selectedItems;
+        const currentListCount = this.isAllSelected
+            ? this.totalRows - currentList.size
+            : currentList.size;
+        this.selectedItemsChange.emit(currentListCount);
+
+        this.viewType = viewType;
+        this.isTable = viewType === 'table';
+        // this.isCardView = viewType === 'cards' || viewType === 'lines';
+        this.showSelection = showSelection;
+        this._layout = layout;
+        this.itemClass = itemClass;
+        this.selectedItemId = '';
+        this.totalRows = totalRows;
+
+        // fix bug for the scrollTo that doesn't work on edge div , not window
+        const scrollingElement = this.getParentContainer();
+        if (scrollingElement === window) {
+            scrollingElement.scrollTo(0, 0);
+        } else {
+            this.focusOnAnItem(0);
+        }
+
+        this.cleanItems();
+
+        if (this.pagerType === 'pages') {
+            this._useVirtualScroll = false;
+            this.updatePage(items, { pageIndex: 0, pageSize: this.pageSize });
+        } else {
+            if (this.totalRows === items.length) {
+                this._useVirtualScroll = false;
+                this.updateItems(items);
+            } else {
+                this._useVirtualScroll = true;
+                const numberOfStartItems = this.getNumberOfStartItems();
+                const event = {
+                    start: 0,
+                    end: numberOfStartItems,
+                    fromIndex: 0,
+                    toIndex: numberOfStartItems,
+                };
+                this.updateItems(items, event);
+
+                if (typeof this.virtualScroll !== 'undefined') {
+                    this.virtualScroll.refresh();
+                }
+            }
+        }
+
+        // Raise list load event immediately, else will be raised from the scroller load event.
+        if (!this._useVirtualScroll) {
+            this.onListLoad();
+        }
+
+        this.setLayout();
+    }
+
+    updateItems(
+        items: ObjectsDataRow[],
+        event: IPepListLoadItemsEvent = null
+    ): void {
+        if (this._useVirtualScroll) {
+            if (!event) {
+                // Event isn't supplied.
+                return;
+            }
+
+            // Clean array
+            if (
+                this.itemsCounter + items.length >
+                PepListComponent.TOP_ITEMS_ARRAY
+            ) {
+                this.cleanItems();
+            }
+
+            const startIndex = event.fromIndex ? event.fromIndex : event.start;
+
+            for (let i = 0; i < items.length; i++) {
+                if (!this.items[i + startIndex]) {
+                    this.items[i + startIndex] = items[i];
+                    this.itemsCounter += 1;
+                }
+            }
+
+            this.updateScrollItems(event.start, event.end);
+            this.toggleItems(true);
+        } else {
+            this.scrollItems = this._items = items;
+            this.itemsCounter = items.length;
+        }
+    }
+
+    updatePage(items: ObjectsDataRow[], event: IPepListLoadPageEvent): void {
+        if (!event) {
+            // Event isn't supplied.
+            return;
+        }
+
+        // Clean array
+        if (
+            this.itemsCounter + items.length >
+            PepListComponent.TOP_ITEMS_ARRAY
+        ) {
+            this.cleanItems();
+        }
+
+        const startIndex = event.pageIndex * event.pageSize;
+
+        for (let i = 0; i < items.length; i++) {
+            if (!this.items[i + startIndex]) {
+                this.items[i + startIndex] = items[i];
+                this.itemsCounter += 1;
+            }
+        }
+
+        this.updateScrollItems(startIndex, startIndex + event.pageSize);
+        this.toggleItems(true);
+    }
+
+    updateItem(data: ObjectsDataRow): void {
+        let index = 0;
+
+        // Update items list
+        index = this.items.findIndex((i) => i && i.UID === data.UID);
+        if (index >= 0 && index < this.items.length) {
+            this.items[index] = data;
+        }
+
+        // Update scrollItems list
+        index = this.scrollItems.findIndex((i) => i && i.UID === data.UID);
+        if (index >= 0 && index < this.scrollItems.length) {
+            this.scrollItems[index] = data;
+            this.checkForChanges = new Date().getTime();
+        }
+    }
+
+    focusOnAnItem(itemIndex): void {
+        if (typeof this.virtualScroll !== 'undefined') {
+            this.virtualScroll.scrollInto(itemIndex);
+        }
+    }
+
+    getSelectedItemsData(isForEdit = false): PepSelectionData {
+        const res = new PepSelectionData();
+
+        if (this.selectionTypeForActions === 'single') {
+            const tmp = this.selectedItemId.split(this.SEPARATOR);
+
+            res.selectionType = 1;
+            res.rows = [tmp[0]];
+            res.rowTypes = [tmp[1]];
+        } else if (this.selectionTypeForActions === 'multi') {
+            const items = [];
+            const itemTypes = [];
+            let selectionType = 1;
+            let currentList = [];
+
+            // For edit - only the selected items.
+            if (isForEdit) {
+                if (!this.isAllSelected) {
+                    currentList = Array.from(this.selectedItems.values());
+                } else {
+                    // Get the id's of the items that not founded in unSelectedItems.
+                    this.items.forEach((item) => {
+                        if (
+                            item &&
+                            !this.unSelectedItems.has(item.UID.toString())
+                        ) {
+                            currentList.push(
+                                this.getUniqItemId(
+                                    item.UID.toString(),
+                                    item.Type.toString()
+                                )
+                            );
+                        }
+                    });
+                }
+            } else {
+                // For delete - can be the unselected with select_all functionality.
+                currentList = Array.from(
+                    this.isAllSelected
+                        ? this.unSelectedItems.values()
+                        : this.selectedItems.values()
+                );
+                selectionType = this.isAllSelected ? 0 : 1;
+            }
+
+            currentList.forEach((item) => {
+                const tmp = item.split(this.SEPARATOR);
+
+                if (tmp.length === 2) {
+                    items.push(tmp[0]);
+                    itemTypes.push(tmp[1]);
+                }
+            });
+
+            res.selectionType = selectionType;
+            res.rows = items;
+            res.rowTypes = itemTypes;
+        }
+
+        return res;
+    }
+
+    // If not in use remove this function.
+    // private initCollectionFromState(collectionType, collection: string[]): void {
+    //     if (collectionType === 'Selected') {
+    //         collection.forEach((x) => this.selectedItems.set(x, x));
+    //     } else {
+    //         collection.forEach((x) => this.unSelectedItems.set(x, x));
+    //     }
+    // }
+
+    getIsItemEditable(uid: string): boolean {
+        const item = this.items.filter((x) => x.UID.toString() === uid);
+        if (item.length > 0) {
+            return item[0].IsEditable;
+        } else {
+            return false;
+        }
+    }
+
+    getItemDataByID(uid: string): ObjectsDataRow {
+        return this.items.find((item) => item.UID.toString() === uid);
+    }
+
+    // ---------------------------------------------------------------
+    //              Events handlers.
+    // ---------------------------------------------------------------
+    onMouseDown(event): void {
+        // if (!this.hostElement.nativeElement.contains(event.target) || event.target.className === 'scrollable-content') {
+        //     setTimeout(() => {
+        //         if (this.selectionTypeForActions === 'multi' || this.selectionTypeForActions === 'single-action') {
+        //         }
+        //         // this.selectedItemId = '';
+        //         // this.hoveredItemId = '';
+        //     }, 500);
+        // }
+    }
+
+    onWinResize(e): void {
+        if (typeof this.virtualScroll !== 'undefined') {
+            this.virtualScroll.refresh();
+        }
+
+        this.containerWidth = 0;
+        this.setLayout();
+    }
+
     onListResizeStart(event, columnKey): void {
         this.pressedColumn = columnKey;
         this.startX = event.x;
         this.startWidth = event.target.closest('.header-column').offsetWidth;
-        if (this.useVirtualScroll) {
+        if (this._useVirtualScroll) {
             this.tableStartWidth = this.virtualScroll.contentElementRef.nativeElement.offsetWidth;
         } else {
             // Set the tableStartWidth to the container offsetWidth
@@ -563,11 +1284,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     PepListComponent.MINIMUM_COLUMN_WIDTH ||
                 widthToAdd > 0
             ) {
-                const length = this.layout.ControlFields.length;
+                const length = this._layout.ControlFields.length;
                 let totalCalcColsWidth = 0;
 
                 for (let index = 0; index < length; index++) {
-                    const uiControlField: UIControlField = this.layout
+                    const uiControlField: UIControlField = this._layout
                         .ControlFields[index];
 
                     if (index === length - 1) {
@@ -596,7 +1317,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
 
                 this.renderer.setStyle(
-                    this.element.nativeElement,
+                    this.hostElement.nativeElement,
                     'width',
                     this.tableStartWidth + widthToAdd + 'px'
                 );
@@ -604,29 +1325,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
             this.checkForChanges = new Date().getTime();
         }
-    }
-
-    getParent(el, parentSelector): any {
-        // If no parentSelector defined will bubble up all the way to *document*
-        if (parentSelector === undefined) {
-            parentSelector = document;
-        }
-        const parent = [];
-        let p = el.parentNode;
-
-        while (
-            p &&
-            p.className !== '' &&
-            p.className.indexOf(parentSelector) === -1 &&
-            parentSelector !== document
-        ) {
-            const o = p;
-            p = o.parentNode;
-        }
-        if (p.className.indexOf(parentSelector) > -1) {
-            parent.push(p); // Push that parentSelector you wanted to stop at
-        }
-        return parent;
     }
 
     onListResizeEnd(event): void {
@@ -777,10 +1475,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.listLoad.emit();
     }
 
-    getParentContainer(): Element | Window {
-        return this.parentScroll ? this.parentScroll : window;
-    }
-
     onValueChanged(valueChange: IPepFormFieldValueChangeEvent): void {
         if (this.disabled) {
             return;
@@ -799,682 +1493,4 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.fieldClick.emit(customizeFieldClickedData);
     }
 
-    getIsDisabled(item: ObjectsDataRow): boolean {
-        if (this.disableSelectionItems) {
-            return true;
-        } else {
-            return item && !item.IsSelectableForActions;
-        }
-    }
-
-    public getIsAllSelectedForActions(): boolean {
-        let res = false;
-
-        if (this.isAllSelected) {
-            if (this.unSelectedItems.size === 0) {
-                res = true;
-            }
-        } else {
-            if (this.selectedItems.size === this.totalRows) {
-                res = this.getIsAllSelected(this.scrollItems);
-            } else if (this.selectedItems.size < this.totalRows) {
-                for (const item of this.scrollItems) {
-                    res = item && this.selectedItems.has(item.UID.toString());
-
-                    if (!res) {
-                        break;
-                    }
-                }
-            }
-        }
-
-        return res;
-    }
-
-    public setIsAllSelected(isChecked: boolean): void {
-        if (
-            this.selectionTypeForActions === 'multi' ||
-            this.selectionTypeForActions === 'single-action'
-        ) {
-            this.selectAllCB.checked = isChecked;
-            this.isAllSelected = isChecked;
-        }
-    }
-
-    selectAllItemsForActions(e: any): void {
-        // For material checkbox || radio.
-        const isChecked = e.source.checked;
-
-        // Indeterminate mode
-        let isIndeterminate = false;
-        const currentList = this.isAllSelected
-            ? this.unSelectedItems
-            : this.selectedItems;
-        if (currentList.size > 0) {
-            isIndeterminate = true;
-            this.isAllSelected = false;
-            this.selectedItemsChange.emit(0);
-            e.source.checked = false;
-        }
-
-        this.selectedItems.clear();
-        this.unSelectedItems.clear();
-
-        if (!isIndeterminate) {
-            this.isAllSelected = isChecked;
-            this.selectAllClick.emit(isChecked);
-
-            if (this.selectionTypeForActions === 'multi') {
-                if (!isChecked) {
-                    this.selectedItemsChange.emit(0);
-                    this.selectedItemId = '';
-                } else {
-                    const filteredItems = this.items.filter(
-                        (item) => item && item.IsSelectableForActions
-                    );
-                    this.selectedItemsChange.emit(filteredItems.length);
-                }
-            }
-        } else {
-            if (this.selectionTypeForActions === 'single-action') {
-                // Remove all
-                this.selectAllClick.emit(false);
-            }
-        }
-    }
-
-    getIsSelectedForActions(
-        itemId: string,
-        isSelectableForActions: boolean,
-        itemType = ''
-    ): boolean {
-        if (this.selectionTypeForActions === 'single') {
-            return this.selectedItemId === this.getUniqItemId(itemId, itemType);
-        } else if (this.selectionTypeForActions === 'single-action') {
-            let res = this.isAllSelected || this.selectedItems.has(itemId);
-
-            if (this.unSelectedItems.has(itemId)) {
-                res = false;
-            }
-
-            return res;
-        } else if (this.selectionTypeForActions === 'multi') {
-            if (!isSelectableForActions) {
-                return false;
-            } else {
-                let res = this.isAllSelected || this.selectedItems.has(itemId);
-
-                if (this.unSelectedItems.has(itemId)) {
-                    res = false;
-                }
-
-                return res;
-            }
-        }
-    }
-
-    selectItemForActions(
-        e: any,
-        itemId: string,
-        isSelectableForActions: boolean,
-        itemType = ''
-    ): void {
-        // For material checkbox || radio.
-        const isChecked = e.source.checked;
-        this.setItemClicked(
-            itemId,
-            isSelectableForActions,
-            itemType,
-            isChecked
-        );
-    }
-
-    itemClicked(e: any, item: ObjectsDataRow): void {
-        // Set seleted item
-        const itemId = item.UID.toString();
-        const itemType = item.Type.toString();
-        let isChecked = false;
-
-        if (item && item.IsSelectableForActions) {
-            this.selectedItemId = this.getUniqItemId(itemId, itemType);
-            isChecked = true;
-        }
-
-        if (this.isTable) {
-            if (this.selectionTypeForActions === 'single') {
-                this.setItemClicked(
-                    itemId,
-                    item.IsSelectableForActions,
-                    itemType,
-                    isChecked
-                );
-            } else if (this.selectionTypeForActions === 'none') {
-                // Just mark the row as highlighted
-                this.setItemClicked(
-                    itemId,
-                    item.IsSelectableForActions,
-                    itemType,
-                    true
-                );
-            }
-        } else {
-            if (this.disabled) {
-                return;
-            }
-        }
-
-        this.itemClick.emit({ source: item, viewType: this.viewType });
-    }
-
-    setItemClicked(
-        itemId,
-        isSelectableForActions: boolean,
-        itemType: string,
-        isChecked: boolean
-    ): void {
-        const uniqItemId = this.getUniqItemId(itemId, itemType);
-
-        // select the selected item.
-        if (isChecked) {
-            // Set seleted item
-            this.selectedItemId = uniqItemId;
-        } else {
-            if (this.selectedItemId === uniqItemId) {
-                this.selectedItemId = '';
-            }
-        }
-
-        if (this.selectionTypeForActions === 'single') {
-            this.selectedItemsChange.emit(
-                this.selectedItemId.length === 0 ? 0 : 1
-            );
-        } else if (this.selectionTypeForActions === 'single-action') {
-            this.setSelectionItems(itemId, uniqItemId, isChecked);
-            this.singleActionClick.emit({
-                id: itemId,
-                selected: isChecked,
-            });
-        } else if (this.selectionTypeForActions === 'multi') {
-            if (isSelectableForActions) {
-                this.setSelectionItems(itemId, uniqItemId, isChecked);
-
-                const currentList = this.isAllSelected
-                    ? this.unSelectedItems
-                    : this.selectedItems;
-                const currentListCount = this.isAllSelected
-                    ? this.totalRows - currentList.size
-                    : currentList.size;
-                this.selectedItemsChange.emit(currentListCount);
-            }
-        }
-    }
-
-    onTableRowMouseEnter(event: any, itemId: string, itemType: string): void {
-        if (!this.deviceHasMouse) {
-            return;
-        }
-
-        const uniqItemId = this.getUniqItemId(itemId, itemType);
-        this.hoveredItemId = uniqItemId;
-    }
-
-    onTableRowMouseLeave(event: any, itemId: string, itemType: string): void {
-        this.hoveredItemId = '';
-    }
-
-    onCardMouseEnter(event: any, itemId: string, itemType: string): void {
-        if (!this.deviceHasMouse) {
-            return;
-        }
-
-        const uniqItemId = this.getUniqItemId(itemId, itemType);
-        this.hoveredItemId = uniqItemId;
-    }
-
-    onCardMouseLeave(event: any, itemId: string, itemType: string): void {
-        this.hoveredItemId = '';
-    }
-
-    getThumbnailsLayout(): PepLayoutType {
-        return this.layoutType ?? 'card';
-    }
-
-    // call this function after resize + animation end
-    winResize(e): void {
-        if (typeof this.virtualScroll !== 'undefined') {
-            this.virtualScroll.refresh();
-        }
-
-        this.containerWidth = 0;
-        this.setLayout();
-    }
-
-    // trackByFunc(index: number, item: ObjectsDataRow): any {
-    //     return item && item.UID ? item.UID : index;
-    //     // let res: string = "";
-
-    //     // if (item && item.UID) {
-    //     //    res = item.UID + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
-    //     // }
-    //     // else {
-    //     //    res = index + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
-    //     // }
-
-    //     // return res;
-    // }
-
-    cleanItems(): void {
-        this.itemsCounter = 0;
-        this._items =
-            this.totalRows > 0 ? Array<ObjectsDataRow>(this.totalRows) : [];
-        this.scrollItems = [];
-        this.calculatedObjectHeight = '';
-    }
-
-    getUIControl(): UIControl {
-        return this.layout;
-    }
-
-    initVariablesFromSession(items: ObjectsDataRow[]): void {
-        const selectedItemsObject: Array<any> = this.sessionService.getObject<
-            Array<any>
-        >(PepListComponent.SELECTED_ITEMS_STATE_KEY);
-        const selectedItemsFromMap: Map<string, string> =
-            selectedItemsObject && selectedItemsObject.length > 0
-                ? new Map(selectedItemsObject)
-                : null;
-        if (
-            selectedItemsFromMap != null &&
-            typeof selectedItemsFromMap.size !== 'undefined' &&
-            selectedItemsFromMap.size > 0
-        ) {
-            this.selectedItems = selectedItemsFromMap;
-            this.sessionService.removeObject(
-                PepListComponent.SELECTED_ITEMS_STATE_KEY
-            );
-        } else {
-            this.selectedItems.clear();
-        }
-
-        const unSelectedItemsObject: Array<any> = this.sessionService.getObject<
-            Array<any>
-        >(PepListComponent.UN_SELECTED_ITEMS_STATE_KEY);
-        const unSelectedItemsMap: Map<string, string> =
-            unSelectedItemsObject && unSelectedItemsObject.length > 0
-                ? new Map(unSelectedItemsObject)
-                : null;
-        if (
-            unSelectedItemsMap != null &&
-            typeof unSelectedItemsMap.size !== 'undefined' &&
-            unSelectedItemsMap.size > 0
-        ) {
-            this.unSelectedItems = unSelectedItemsMap;
-            this.sessionService.removeObject(
-                PepListComponent.UN_SELECTED_ITEMS_STATE_KEY
-            );
-        } else {
-            this.unSelectedItems.clear();
-        }
-
-        const isAllSelected = this.sessionService.getObject(
-            PepListComponent.ALL_SELECTED_STATE_KEY
-        );
-        if (isAllSelected != null) {
-            this.isAllSelected = isAllSelected && this.getIsAllSelected(items);
-            this.sessionService.removeObject(
-                PepListComponent.ALL_SELECTED_STATE_KEY
-            );
-        } else {
-            this.isAllSelected = false;
-        }
-
-        const sortBy = this.sessionService.getObject(
-            PepListComponent.SORT_BY_STATE_KEY
-        );
-        if (sortBy && sortBy !== '') {
-            this.sortBy = sortBy;
-            this.sessionService.removeObject(
-                PepListComponent.SORT_BY_STATE_KEY
-            );
-        } else {
-            this.sortBy = '';
-        }
-
-        const isAsc = this.sessionService.getObject(
-            PepListComponent.ASCENDING_STATE_KEY
-        );
-        if (isAsc != null) {
-            this.isAsc = isAsc;
-            this.sessionService.removeObject(
-                PepListComponent.ASCENDING_STATE_KEY
-            );
-        } else {
-            this.isAsc = true;
-        }
-    }
-
-    initListData(
-        layout: UIControl,
-        totalRows: number,
-        items: ObjectsDataRow[],
-        viewType: PepListViewType = '',
-        itemClass = '',
-        showSelection = false
-    ): void {
-        this.initVariablesFromSession(items);
-
-        const currentList = this.isAllSelected
-            ? this.unSelectedItems
-            : this.selectedItems;
-        const currentListCount = this.isAllSelected
-            ? this.totalRows - currentList.size
-            : currentList.size;
-        this.selectedItemsChange.emit(currentListCount);
-
-        this.viewType = viewType;
-        this.isTable = viewType === 'table';
-        // this.isCardView = viewType === 'cards' || viewType === 'lines';
-        this.showSelection = showSelection;
-        this.layout = layout;
-        this.itemClass = itemClass;
-        this.selectedItemId = '';
-        this.totalRows = totalRows;
-
-        // fix bug for the scrollTo that doesn't work on edge div , not window
-        const scrollingElement = this.getParentContainer();
-        if (scrollingElement === window) {
-            scrollingElement.scrollTo(0, 0);
-        } else {
-            this.focusOnAnItem(0);
-        }
-
-        this.cleanItems();
-
-        if (this.pagerType === 'pages') {
-            this.useVirtualScroll = false;
-            this.updatePage(items, { pageIndex: 0, pageSize: this.pageSize });
-        } else {
-            if (this.totalRows === items.length) {
-                this.useVirtualScroll = false;
-                this.updateItems(items);
-            } else {
-                this.useVirtualScroll = true;
-                const numberOfStartItems = this.getNumberOfStartItems();
-                const event = {
-                    start: 0,
-                    end: numberOfStartItems,
-                    fromIndex: 0,
-                    toIndex: numberOfStartItems,
-                };
-                this.updateItems(items, event);
-
-                if (typeof this.virtualScroll !== 'undefined') {
-                    this.virtualScroll.refresh();
-                }
-            }
-        }
-
-        // Raise list load event immediately, else will be raised from the scroller load event.
-        if (!this.useVirtualScroll) {
-            this.onListLoad();
-        }
-
-        this.setLayout();
-    }
-
-    getIsAllSelected(items: Array<ObjectsDataRow>): boolean {
-        let result = true;
-
-        if (this.selectedItems?.size > 0 && items?.length > 0) {
-            for (const item of items) {
-                if (!(item && this.selectedItems.has(item.UID.toString()))) {
-                    result = false;
-                    break;
-                }
-            }
-        } else {
-            result = false;
-        }
-
-        return result;
-    }
-
-    getNumberOfStartItems(): number {
-        let numberOfStartItems = 20;
-
-        if (
-            this.screenSize === PepScreenSizeType.XL ||
-            this.screenSize === PepScreenSizeType.LG
-        ) {
-            numberOfStartItems = this.isTable ? 50 : 40;
-        } else if (this.screenSize === PepScreenSizeType.MD) {
-            numberOfStartItems = this.isTable ? 30 : 20;
-        } else if (this.screenSize === PepScreenSizeType.SM) {
-            numberOfStartItems = this.isTable ? 20 : 10;
-        } else if (this.screenSize === PepScreenSizeType.XS) {
-            numberOfStartItems = this.isTable ? 15 : 5;
-        }
-
-        return numberOfStartItems;
-    }
-
-    setSelectedIds(selectedIds: string[], items = null): void {
-        this.selectedItems.clear();
-        this.isAllSelected = false;
-
-        if (selectedIds) {
-            // for (let i = 0; i < selected.length; i++) {
-            for (const selectedId of selectedIds) {
-                const tmp = selectedId.split(this.SEPARATOR);
-
-                if (tmp && tmp.length > 0) {
-                    const itemId = tmp[0];
-                    const itemType = tmp.length > 1 ? tmp[1] : '';
-
-                    this.selectedItems.set(
-                        itemId,
-                        this.getUniqItemId(itemId, itemType)
-                    );
-                }
-            }
-
-            this.isAllSelected = this.getIsAllSelected(
-                items ? items : this.scrollItems
-            );
-            this.setSelectionDataInSession();
-        }
-
-        if (typeof this.virtualScroll !== 'undefined') {
-            this.virtualScroll.refresh();
-        }
-    }
-
-    setSelectionDataInSession(): void {
-        if (this.selectedItems.size > 0) {
-            this.sessionService.setObject(
-                PepListComponent.SELECTED_ITEMS_STATE_KEY,
-                JSON.stringify([...this.selectedItems])
-            );
-        }
-
-        if (this.unSelectedItems.size > 0) {
-            this.sessionService.setObject(
-                PepListComponent.UN_SELECTED_ITEMS_STATE_KEY,
-                JSON.stringify([...this.unSelectedItems])
-            );
-        }
-
-        this.sessionService.setObject(
-            PepListComponent.ALL_SELECTED_STATE_KEY,
-            this.isAllSelected
-        );
-    }
-
-    updateItems(
-        items: ObjectsDataRow[],
-        event: IPepListLoadItemsEvent = null
-    ): void {
-        if (this.useVirtualScroll) {
-            if (!event) {
-                // Event isn't supplied.
-                return;
-            }
-
-            // Clean array
-            if (
-                this.itemsCounter + items.length >
-                PepListComponent.TOP_ITEMS_ARRAY
-            ) {
-                this.cleanItems();
-            }
-
-            const startIndex = event.fromIndex ? event.fromIndex : event.start;
-
-            for (let i = 0; i < items.length; i++) {
-                if (!this.items[i + startIndex]) {
-                    this.items[i + startIndex] = items[i];
-                    this.itemsCounter += 1;
-                }
-            }
-
-            this.updateScrollItems(event.start, event.end);
-            this.toggleItems(true);
-        } else {
-            this.scrollItems = this._items = items;
-            this.itemsCounter = items.length;
-        }
-    }
-
-    updatePage(items: ObjectsDataRow[], event: IPepListLoadPageEvent): void {
-        if (!event) {
-            // Event isn't supplied.
-            return;
-        }
-
-        // Clean array
-        if (
-            this.itemsCounter + items.length >
-            PepListComponent.TOP_ITEMS_ARRAY
-        ) {
-            this.cleanItems();
-        }
-
-        const startIndex = event.pageIndex * event.pageSize;
-
-        for (let i = 0; i < items.length; i++) {
-            if (!this.items[i + startIndex]) {
-                this.items[i + startIndex] = items[i];
-                this.itemsCounter += 1;
-            }
-        }
-
-        this.updateScrollItems(startIndex, startIndex + event.pageSize);
-        this.toggleItems(true);
-    }
-
-    updateListItem(data: any): void {
-        let index = 0;
-
-        // Update items list
-        index = this.items.findIndex((i) => i && i.UID === data.UID);
-        if (index >= 0 && index < this.items.length) {
-            this.items[index] = data;
-        }
-
-        // Update scrollItems list
-        index = this.scrollItems.findIndex((i) => i && i.UID === data.UID);
-        if (index >= 0 && index < this.scrollItems.length) {
-            this.scrollItems[index] = data;
-            this.checkForChanges = new Date().getTime();
-        }
-    }
-
-    focusOnAnItem(itemIndex): void {
-        if (typeof this.virtualScroll !== 'undefined') {
-            this.virtualScroll.scrollInto(itemIndex);
-        }
-    }
-
-    getSelectedItemsData(isForEdit = false): PepSelectionData {
-        const res = new PepSelectionData();
-
-        if (this.selectionTypeForActions === 'single') {
-            const tmp = this.selectedItemId.split(this.SEPARATOR);
-
-            res.selectionType = 1;
-            res.rows = [tmp[0]];
-            res.rowTypes = [tmp[1]];
-        } else if (this.selectionTypeForActions === 'multi') {
-            const items = [];
-            const itemTypes = [];
-            let selectionType = 1;
-            let currentList = [];
-
-            // For edit - only the selected items.
-            if (isForEdit) {
-                if (!this.isAllSelected) {
-                    currentList = Array.from(this.selectedItems.values());
-                } else {
-                    // Get the id's of the items that not founded in unSelectedItems.
-                    this.items.forEach((item) => {
-                        if (
-                            item &&
-                            !this.unSelectedItems.has(item.UID.toString())
-                        ) {
-                            currentList.push(
-                                this.getUniqItemId(
-                                    item.UID.toString(),
-                                    item.Type.toString()
-                                )
-                            );
-                        }
-                    });
-                }
-            } else {
-                // For delete - can be the unselected with select_all functionality.
-                currentList = Array.from(
-                    this.isAllSelected
-                        ? this.unSelectedItems.values()
-                        : this.selectedItems.values()
-                );
-                selectionType = this.isAllSelected ? 0 : 1;
-            }
-
-            currentList.forEach((item) => {
-                const tmp = item.split(this.SEPARATOR);
-
-                if (tmp.length === 2) {
-                    items.push(tmp[0]);
-                    itemTypes.push(tmp[1]);
-                }
-            });
-
-            res.selectionType = selectionType;
-            res.rows = items;
-            res.rowTypes = itemTypes;
-        }
-
-        return res;
-    }
-
-    initCollectionFromState(collectionType, collection: string[]): void {
-        if (collectionType === 'Selected') {
-            collection.forEach((x) => this.selectedItems.set(x, x));
-        } else {
-            collection.forEach((x) => this.unSelectedItems.set(x, x));
-        }
-    }
-
-    getIsItemEditable(uid: string): boolean {
-        const item = this.items.filter((x) => x.UID.toString() === uid);
-        if (item.length > 0) {
-            return item[0].IsEditable;
-        } else {
-            return false;
-        }
-    }
-
-    getItemDataByID(uid: string): ObjectsDataRow {
-        return this.items.find((item) => item.UID.toString() === uid);
-    }
 }

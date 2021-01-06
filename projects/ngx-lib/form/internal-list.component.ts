@@ -168,7 +168,7 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
         this.containerWidth = parentContainer.offsetWidth - rowHeaderWidthToSub;
     }
 
-    removeTable(): void {
+    clear(): void {
         this.cleanItems();
         this.uiControl = null;
     }
@@ -588,7 +588,7 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
         this.itemsCounter = items.length;
     }
 
-    updateListItem(data: any): void {
+    updateItem(data: any): void {
         let index = 0;
 
         // Update items list

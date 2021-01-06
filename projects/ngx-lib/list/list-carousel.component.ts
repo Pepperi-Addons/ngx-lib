@@ -87,17 +87,17 @@ export class PepListCarouselComponent implements OnDestroy {
         this.moveTo(indexToMove);
     }
 
-    moveTo(index) {
+    moveTo(index: number) {
         if (this.carousel) {
             this.carousel.moveTo(index);
         }
     }
-
-    onReachesLeftBound(event) {
+    
+    onReachesLeftBound(event: boolean) {
         this.prevDisabled = event;
     }
 
-    onReachesRightBound(event) {
+    onReachesRightBound(event: boolean) {
         this.nextDisabled = event;
     }
 }
