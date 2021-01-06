@@ -17,7 +17,7 @@ import {
     pepIconSystemBin,
     pepIconSystemAttach,
     pepIconSystemFileUploadCloud,
-    pepIconSystemProcessing
+    pepIconSystemProcessing,
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
@@ -39,7 +39,7 @@ import { PepFilesUploaderComponent } from './files-uploader.component';
         // ngx-lib modules
         PepNgxLibModule,
         PepIconModule,
-        PepDialogModule
+        PepDialogModule,
     ],
     exports: [PepFilesUploaderComponent],
     declarations: [PepFilesUploaderComponent],
@@ -50,7 +50,7 @@ export class PepFilesUploaderModule {
             pepIconSystemBin,
             pepIconSystemAttach,
             pepIconSystemFileUploadCloud,
-            pepIconSystemProcessing
+            pepIconSystemProcessing,
         ]);
     }
 }

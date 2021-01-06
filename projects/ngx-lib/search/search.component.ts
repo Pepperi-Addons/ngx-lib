@@ -1,13 +1,34 @@
 import {
-    Component, OnInit, ViewEncapsulation, Injectable, Input, OnChanges, OnDestroy,
-    SimpleChange, Output, EventEmitter, ViewChild, ElementRef, Renderer2
+    Component,
+    OnInit,
+    ViewEncapsulation,
+    Injectable,
+    Input,
+    OnChanges,
+    OnDestroy,
+    SimpleChange,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    Renderer2,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+    trigger,
+    state,
+    style,
+    transition,
+    animate,
+} from '@angular/animations';
 import { FormControl } from '@angular/forms';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { debounceTime } from 'rxjs/operators';
-import { IPepSearchClickEvent, IPepSearchValueChangeEvent, IPepSearchStateChangeEvent } from './search.model';
+import {
+    IPepSearchClickEvent,
+    IPepSearchValueChangeEvent,
+    IPepSearchStateChangeEvent,
+} from './search.model';
 
 @Component({
     selector: 'pep-search',
@@ -20,50 +41,59 @@ import { IPepSearchClickEvent, IPepSearchValueChangeEvent, IPepSearchStateChange
                 style({
                     width: '0',
                     padding: '0',
-                    border: 'none'
+                    border: 'none',
                 })
             ),
             state(
                 'open',
                 style({
-                    width: 'inherit'
+                    width: 'inherit',
                 })
             ),
             transition('close => open', animate('500ms ease-in-out')),
-            transition('open => close', animate('500ms ease-in-out'))
+            transition('open => close', animate('500ms ease-in-out')),
         ]),
         trigger('fadeInOut', [
             state(
                 'fadeOut',
                 style({
                     opacity: 0,
-                    width: '1px'
+                    width: '1px',
                 })
             ),
             state(
                 'fadeIn',
                 style({
                     opacity: 1,
-                    width: '100%'
+                    width: '100%',
                 })
             ),
-            transition('fadeOut => fadeIn', animate(300, style({ opacity: 1, width: '100%' }))),
-            transition('fadeIn => fadeOut', animate(350, style({ opacity: 0, width: '1px' })))
-        ])
-    ]
+            transition(
+                'fadeOut => fadeIn',
+                animate(300, style({ opacity: 1, width: '100%' }))
+            ),
+            transition(
+                'fadeIn => fadeOut',
+                animate(350, style({ opacity: 0, width: '1px' }))
+            ),
+        ]),
+    ],
 })
 @Injectable()
 export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
     @Input() value = '';
     @Input() autoCompleteValues = [];
     @Input() autoCompleteTop = 20;
-    
-    @Output() search: EventEmitter<IPepSearchClickEvent> = new EventEmitter<IPepSearchClickEvent>();
-    @Output() valueChange: EventEmitter<IPepSearchValueChangeEvent> = new EventEmitter<IPepSearchValueChangeEvent>();
-    @Output() stateChange: EventEmitter<IPepSearchStateChangeEvent> = new EventEmitter<IPepSearchStateChangeEvent>();
-    
+
+    @Output()
+    search: EventEmitter<IPepSearchClickEvent> = new EventEmitter<IPepSearchClickEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepSearchValueChangeEvent> = new EventEmitter<IPepSearchValueChangeEvent>();
+    @Output()
+    stateChange: EventEmitter<IPepSearchStateChangeEvent> = new EventEmitter<IPepSearchStateChangeEvent>();
+
     @ViewChild('searchInput') searchInput: ElementRef;
-    
+
     lastValue = null;
     showFloatSrcBtn = true;
     fadeState: 'fadeOut' | 'fadeIn';
@@ -75,14 +105,14 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
     screenSize: PepScreenSizeType;
 
     constructor(private layoutService: PepLayoutService) {
-        this.layoutService.onResize$.pipe().subscribe(size => {
+        this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
             this.isFloating = this.screenSize > PepScreenSizeType.SM;
 
             // Just for the smoote animation
             if (this.isFloating) {
                 this.showFloatSrcBtn = false;
-                
+
                 this.showFloatingButton();
             } else {
                 this.fadeState = 'fadeIn';
@@ -95,12 +125,16 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
 
         this.searchCtrlSub = this.searchControl.valueChanges
             .pipe(debounceTime(1000))
-            .subscribe(newValue => {
+            .subscribe((newValue) => {
                 this.autoCompleteValues = [];
-                if (newValue && newValue.length > 2 && newValue !== this.lastValue) {
+                if (
+                    newValue &&
+                    newValue.length > 2 &&
+                    newValue !== this.lastValue
+                ) {
                     this.valueChange.emit({
                         value: newValue,
-                        top: this.autoCompleteTop
+                        top: this.autoCompleteTop,
                     });
                 }
             });
@@ -160,7 +194,7 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
     }
-    
+
     onEnterSearchClicked(event) {
         if (event.key === 'Enter') {
             this.triggerSearch();
@@ -175,7 +209,8 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
 
     animateSearch() {
         if (this.state === 'open') {
-            this.fadeState = this.fadeState === 'fadeOut' ? 'fadeIn' : 'fadeOut';
+            this.fadeState =
+                this.fadeState === 'fadeOut' ? 'fadeIn' : 'fadeOut';
             if (this.fadeState === 'fadeIn') {
                 this.stateChange.emit({ state: 'open' });
                 this.showFloatSrcBtn = false;
@@ -207,5 +242,4 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
             this.search.emit({ value });
         }
     }
-
 }

@@ -53,7 +53,7 @@
                             "node_modules/systemjs/dist/extras/dynamic-import-maps.min.js",
                             "node_modules/systemjs/dist/extras/named-exports.min.js",
                             "node_modules/systemjs/dist/extras/named-register.min.js",
-                            "node_modules/systemjs/dist/extras/use-default.min.js",
+                            "node_modules/systemjs/dist/extras/use-default.min.js"
                         ]
                     },
                     "configurations": {

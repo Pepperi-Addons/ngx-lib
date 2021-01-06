@@ -1,19 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
-import { IPepButtonClickEvent, PepButton } from '@pepperi-addons/ngx-lib/button';
+import {
+    IPepButtonClickEvent,
+    PepButton,
+} from '@pepperi-addons/ngx-lib/button';
 import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
-import { PepMenuItem, IPepMenuItemClickEvent } from '@pepperi-addons/ngx-lib/menu';
+import {
+    PepMenuItem,
+    IPepMenuItemClickEvent,
+} from '@pepperi-addons/ngx-lib/menu';
 import { IPepSearchStateChangeEvent } from '@pepperi-addons/ngx-lib/search';
 
 @Component({
     templateUrl: './top-bar-example.component.html',
-    styleUrls: ['./top-bar-example.component.scss']
+    styleUrls: ['./top-bar-example.component.scss'],
 })
 export class TopBarExampleComponent implements OnInit {
-
     title = 'client-side';
     groupButtons: Array<PepButton>;
-    
+
     menuItems: Array<PepMenuItem>;
 
     PepScreenSizeType = PepScreenSizeType;
@@ -22,8 +27,8 @@ export class TopBarExampleComponent implements OnInit {
     searchString = '';
     searchAutoCompleteValues = [];
 
-    constructor(public layoutService: PepLayoutService) { 
-        this.layoutService.onResize$.pipe().subscribe(size => {
+    constructor(public layoutService: PepLayoutService) {
+        this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
         });
 
@@ -31,14 +36,16 @@ export class TopBarExampleComponent implements OnInit {
             {
                 key: 'action',
                 value: 'test for check the size of the button',
-                callback: (event: IPepButtonClickEvent) => this.onGroupButtonClicked(event)
+                callback: (event: IPepButtonClickEvent) =>
+                    this.onGroupButtonClicked(event),
             },
             {
                 key: 'del',
                 class: 'caution',
-                callback: (event: IPepButtonClickEvent) => this.onGroupButtonClicked(event),
-                icon: pepIconSystemBin.name 
-            }
+                callback: (event: IPepButtonClickEvent) =>
+                    this.onGroupButtonClicked(event),
+                icon: pepIconSystemBin.name,
+            },
         ];
     }
 
@@ -48,22 +55,35 @@ export class TopBarExampleComponent implements OnInit {
 
     getMenuItems(withChildren = true, index = 0): Array<PepMenuItem> {
         let menuItems: Array<PepMenuItem>;
-        
+
         index++;
 
         if (withChildren) {
             menuItems = [
-                { key: 'test1', text: 'test 1', iconName: pepIconSystemBin.name},
-                { key: 'test2', text: 'test 2', iconName: pepIconSystemBin.name },
+                {
+                    key: 'test1',
+                    text: 'test 1',
+                    iconName: pepIconSystemBin.name,
+                },
+                {
+                    key: 'test2',
+                    text: 'test 2',
+                    iconName: pepIconSystemBin.name,
+                },
                 { key: 'sep', type: 'splitter' },
-                { key: 'test3', text: 'test 3', iconName: pepIconSystemBin.name, children: this.getMenuItems(index <= 3, index)}
+                {
+                    key: 'test3',
+                    text: 'test 3',
+                    iconName: pepIconSystemBin.name,
+                    children: this.getMenuItems(index <= 3, index),
+                },
             ];
         } else {
             menuItems = [
-                { key: 'test1', text: 'test 1'},
+                { key: 'test1', text: 'test 1' },
                 { key: 'test2', text: 'test 2', disabled: true },
                 { key: 'sep', type: 'splitter' },
-                { key: 'test3', text: 'test 3'}
+                { key: 'test3', text: 'test 3' },
             ];
         }
 
@@ -100,6 +120,5 @@ export class TopBarExampleComponent implements OnInit {
 
     onSearchAutocompleteChanged(value) {
         // debugger;
-        
     }
 }

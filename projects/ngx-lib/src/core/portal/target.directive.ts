@@ -1,5 +1,5 @@
-import {Directive, OnInit, Input, ViewContainerRef} from '@angular/core';
-import {PepPortalService} from './portal.service';
+import { Directive, OnInit, Input, ViewContainerRef } from '@angular/core';
+import { PepPortalService } from './portal.service';
 
 @Directive({
     selector: '[pepTarget]',

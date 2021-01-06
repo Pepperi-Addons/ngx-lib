@@ -1,21 +1,33 @@
-import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Injectable,
+    Input,
+    Output,
+    EventEmitter,
+    ViewChild,
+} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { PepCustomizationService, PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import {
+    PepCustomizationService,
+    PepLayoutService,
+    PepScreenSizeType,
+} from '@pepperi-addons/ngx-lib';
 import { IPepSideBarStateChangeEvent } from './side-bar.model';
 // import { pepIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'pep-side-bar',
     templateUrl: './side-bar.component.html',
-    styleUrls: ['./side-bar.component.scss']
+    styleUrls: ['./side-bar.component.scss'],
 })
 @Injectable()
 export class PepSideBarComponent implements OnInit {
-    
     // @Input() showOnLargeScreens = true;
     // @Input() sideBarButtons: Array<SideBarButton> = [];
 
-    @Output() stateChange: EventEmitter<IPepSideBarStateChangeEvent> = new EventEmitter<IPepSideBarStateChangeEvent>();
+    @Output()
+    stateChange: EventEmitter<IPepSideBarStateChangeEvent> = new EventEmitter<IPepSideBarStateChangeEvent>();
 
     @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -25,7 +37,7 @@ export class PepSideBarComponent implements OnInit {
     screenSize: PepScreenSizeType;
     PepScreenSizeType = PepScreenSizeType;
 
-    constructor(private layoutService: PepLayoutService) { 
+    constructor(private layoutService: PepLayoutService) {
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
@@ -36,7 +48,9 @@ export class PepSideBarComponent implements OnInit {
     }
 
     setSideBarHeight(event) {
-        const from = event.relatedTarget ? event.relatedTarget : event.fromElement;
+        const from = event.relatedTarget
+            ? event.relatedTarget
+            : event.fromElement;
         const to = event.target ? event.target : event.toElement;
 
         if (typeof from === 'undefined' || typeof to === 'undefined') {
@@ -48,7 +62,9 @@ export class PepSideBarComponent implements OnInit {
     }
 
     mouseLeaveSideBar(event) {
-        const from = event.relatedTarget ? event.relatedTarget : event.fromElement;
+        const from = event.relatedTarget
+            ? event.relatedTarget
+            : event.fromElement;
         const to = event.target ? event.target : event.toElement;
 
         if (typeof from === 'undefined' || typeof to === 'undefined') {
@@ -79,5 +95,4 @@ export class PepSideBarComponent implements OnInit {
             this.stateChange.emit({ state: isOpen ? 'close' : 'open' });
         }
     }
-
 }

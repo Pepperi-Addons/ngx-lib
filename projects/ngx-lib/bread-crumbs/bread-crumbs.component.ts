@@ -6,7 +6,11 @@ export class PepBreadCrumbItem {
     onClick: () => void;
     clickParams: any;
 
-    constructor(text: string, onClick: () => void = null, clickParams: any = null) {
+    constructor(
+        text: string,
+        onClick: () => void = null,
+        clickParams: any = null
+    ) {
         this.text = text;
         this.onClick = onClick;
         this.clickParams = clickParams;
@@ -16,17 +20,16 @@ export class PepBreadCrumbItem {
 @Component({
     selector: 'pep-bread-crumbs',
     templateUrl: './bread-crumbs.component.html',
-    styleUrls: ['./bread-crumbs.component.scss']
+    styleUrls: ['./bread-crumbs.component.scss'],
 })
 @Injectable()
 export class PepBreadCrumbsComponent implements OnInit {
-
     @Input() breadCrumbs: Array<PepBreadCrumbItem> = [];
     @Input() addSpacing = false;
 
     breadCrumbSeparator = ' / ';
 
-    constructor(private layoutService: PepLayoutService) { }
+    constructor(private layoutService: PepLayoutService) {}
 
     ngOnInit(): void {
         if (this.layoutService.isRtl()) {
@@ -51,5 +54,4 @@ export class PepBreadCrumbsComponent implements OnInit {
 
         return breadCrumbTitle;
     }
-
 }

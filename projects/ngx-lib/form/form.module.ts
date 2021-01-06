@@ -19,7 +19,8 @@ import {
     pepIconSystemMenu,
     pepIconNumberPlus,
     pepIconSystemBin,
-    pepIconIndicatorDotPlaceholder } from '@pepperi-addons/ngx-lib/icon';
+    pepIconIndicatorDotPlaceholder,
+} from '@pepperi-addons/ngx-lib/icon';
 
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
@@ -86,7 +87,7 @@ import { PepInternalPageComponent } from './internal-page.component';
         PepIconModule,
         pepComponentsModules,
         PepFieldTitleModule,
-        PepGroupButtonsModule
+        PepGroupButtonsModule,
     ],
     exports: [PepFormComponent],
     declarations: [
@@ -106,7 +107,7 @@ export class PepFormModule {
             pepIconSystemMenu,
             pepIconNumberPlus,
             pepIconSystemBin,
-            pepIconIndicatorDotPlaceholder
+            pepIconIndicatorDotPlaceholder,
         ]);
     }
 }

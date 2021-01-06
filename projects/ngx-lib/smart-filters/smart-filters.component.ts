@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit, HostListener, ElementRef, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    AfterViewInit,
+    HostListener,
+    ElementRef,
+    Input,
+    ChangeDetectionStrategy,
+} from '@angular/core';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { PepSmartFilterType, PepSmartFilter } from './smart-filters.model';
 
@@ -11,7 +19,6 @@ import { PepSmartFilterType, PepSmartFilter } from './smart-filters.model';
 //         Object.assign(this, filter);
 //     }
 // }
-
 
 // enum PepDatePeriodType {
 //     Days,
@@ -35,10 +42,9 @@ import { PepSmartFilterType, PepSmartFilter } from './smart-filters.model';
     selector: 'pep-smart-filters',
     templateUrl: './smart-filters.component.html',
     styleUrls: ['./smart-filters.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepSmartFiltersComponent  {
-
+export class PepSmartFiltersComponent {
     private _filters: Array<PepSmartFilter> = [];
     @Input()
     set filters(value: Array<PepSmartFilter>) {
@@ -50,9 +56,11 @@ export class PepSmartFiltersComponent  {
 
     expansionPanelHeaderHeight = '*';
 
-    constructor(private element: ElementRef, private layoutService: PepLayoutService) {
-
-
+    constructor(
+        private element: ElementRef,
+        private layoutService: PepLayoutService
+    ) {
+        const index = 0;
     }
 
     toggleFilter(index: number, isOpen: boolean): void {
@@ -60,6 +68,6 @@ export class PepSmartFiltersComponent  {
     }
 
     clearFilter(filter: PepSmartFilter) {
-
+        const a = 0;
     }
 }

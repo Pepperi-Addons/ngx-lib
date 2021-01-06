@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
-    FieldLayout, ObjectsDataRow, UIControl, UIControlField, ObjectsDataRowCell, FIELD_TYPE, X_ALIGNMENT_TYPE
+    FieldLayout,
+    ObjectsDataRow,
+    UIControl,
+    UIControlField,
+    ObjectsDataRowCell,
+    FIELD_TYPE,
+    X_ALIGNMENT_TYPE,
 } from '../model/wapi.model';
 import { PepGuid } from '../model/utilities.model';
 
@@ -49,19 +55,18 @@ export class PepRowData {
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PepDataConvertorService {
-    constructor() {
-    }
-
     getUiControl(formData: PepRowData): UIControl {
         const uiControl = new UIControl();
-        
+
         if (formData?.Fields?.length > 0) {
             const uiRow = formData.Fields;
             uiControl.ControlFields = [];
-            uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
+            uiRow.forEach((field) =>
+                uiControl.ControlFields.push(this.setUIControlField(field))
+            );
         }
 
         return uiControl;
@@ -72,21 +77,28 @@ export class PepDataConvertorService {
         rowData.Fields = [];
         rowData.Type = 0;
         rowData.UID = PepGuid.newGuid();
-        formData.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
-        
+        formData.Fields.forEach((field) =>
+            rowData.Fields.push(this.setDataField(field))
+        );
+
         return rowData;
     }
 
-    convertListData(tableData: PepRowData[], rowUUID = ''): Array<ObjectsDataRow> {
+    convertListData(
+        tableData: PepRowData[],
+        rowUUID = ''
+    ): Array<ObjectsDataRow> {
         const rows = new Array<ObjectsDataRow>();
 
         if (tableData.length > 0) {
-            tableData.forEach(row => {
+            tableData.forEach((row) => {
                 const rowData = new ObjectsDataRow();
                 rowData.Fields = [];
                 rowData.Type = 0;
                 rowData.UID = rowUUID ? rowUUID : PepGuid.newGuid();
-                row.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
+                row.Fields.forEach((field) =>
+                    rowData.Fields.push(this.setDataField(field))
+                );
                 rows.push(rowData);
             });
         }
@@ -99,9 +111,14 @@ export class PepDataConvertorService {
         controlField.ApiName = field.ApiName;
         controlField.FieldType = field.FieldType;
 
-        controlField.Layout = new FieldLayout(
-            { X: 1, Width: 1, XAlignment: field.XAlignment, Y: 1, Height: 1, YAlignment: 1 }
-        );
+        controlField.Layout = new FieldLayout({
+            X: 1,
+            Width: 1,
+            XAlignment: field.XAlignment,
+            Y: 1,
+            Height: 1,
+            YAlignment: 1,
+        });
 
         controlField.Title = field.Title;
         controlField.ReadOnly = field.ReadOnly === true ? true : false;
@@ -116,7 +133,8 @@ export class PepDataConvertorService {
         dataField.ApiName = field.ApiName;
         dataField.Enabled = field.Enabled === false ? false : true;
         dataField.FieldType = field.FieldType;
-        dataField.FormattedValue = field.FormattedValue || field.Value.toString();
+        dataField.FormattedValue =
+            field.FormattedValue || field.Value.toString();
         dataField.GroupFields = null;
         dataField.NotificationInfo = '';
         dataField.OptionalValues = field.OptionalValues;
@@ -127,8 +145,15 @@ export class PepDataConvertorService {
         return dataField;
     }
 
-    setFieldLayout(x: number, width: number, xAlignment: number,
-        y: number, height: number, yAlignment: number, lineNumber: number): FieldLayout {
+    setFieldLayout(
+        x: number,
+        width: number,
+        xAlignment: number,
+        y: number,
+        height: number,
+        yAlignment: number,
+        lineNumber: number
+    ): FieldLayout {
         const layout = new FieldLayout({
             X: x,
             Width: width,
@@ -136,7 +161,7 @@ export class PepDataConvertorService {
             Y: y,
             Height: height,
             YAlignment: yAlignment,
-            LineNumber: lineNumber
+            LineNumber: lineNumber,
         });
 
         return layout;

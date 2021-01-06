@@ -22,9 +22,9 @@ import { PepAttachmentComponent } from './attachment.component';
         // ngx-lib modules
         PepNgxLibModule,
         PepFieldTitleModule,
-        PepFilesUploaderModule
+        PepFilesUploaderModule,
     ],
-    exports: [ PepAttachmentComponent ],
-    declarations: [ PepAttachmentComponent ],
+    exports: [PepAttachmentComponent],
+    declarations: [PepAttachmentComponent],
 })
 export class PepAttachmentModule {}

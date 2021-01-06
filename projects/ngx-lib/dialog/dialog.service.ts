@@ -1,5 +1,9 @@
 import { Injectable, TemplateRef } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import {
+    MatDialog,
+    MatDialogConfig,
+    MatDialogRef,
+} from '@angular/material/dialog';
 import { PepLayoutService } from '@pepperi-addons/ngx-lib';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentType } from '@angular/cdk/portal';
@@ -7,27 +11,26 @@ import { PepDialogSizeType, PepDialogData } from './dialog.model';
 import { PepDefaultDialogComponent } from './default-dialog.component';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PepDialogService {
-
     constructor(
         private dialog: MatDialog,
         private layoutService: PepLayoutService,
-        private overlay: Overlay) { }
+        private overlay: Overlay
+    ) {}
 
     getDialogConfig(
         options: {
-            disableClose?: boolean,
-            height?: string,
-            minWidth?: string,
-            maxWidth?: string,
-            maxHeight?: string,
-            panelClass?: string,
+            disableClose?: boolean;
+            height?: string;
+            minWidth?: string;
+            maxWidth?: string;
+            maxHeight?: string;
+            panelClass?: string;
         } = {},
         size: PepDialogSizeType = 'regular'
     ): MatDialogConfig {
-
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.autoFocus = false;
@@ -50,7 +53,10 @@ export class PepDialogService {
         return dialogConfig;
     }
 
-    openDefaultDialog(data: PepDialogData, config: MatDialogConfig = null): MatDialogRef<any> {
+    openDefaultDialog(
+        data: PepDialogData,
+        config: MatDialogConfig = null
+    ): MatDialogRef<any> {
         if (!config) {
             config = this.getDialogConfig();
         }
@@ -63,8 +69,8 @@ export class PepDialogService {
     openDialog<T>(
         componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
         data: any = {},
-        config: MatDialogConfig = null): MatDialogRef<T> {
-
+        config: MatDialogConfig = null
+    ): MatDialogRef<T> {
         if (!config) {
             config = this.getDialogConfig();
         }

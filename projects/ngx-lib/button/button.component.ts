@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    OnDestroy,
+    Input,
+    Output,
+    EventEmitter,
+} from '@angular/core';
 import { PepStyleType, PepSizeType } from '@pepperi-addons/ngx-lib';
 import { PepIconType } from '@pepperi-addons/ngx-lib/icon';
 import { PepButton, IPepButtonClickEvent } from './button.model';
@@ -8,7 +14,7 @@ import { PepButton, IPepButtonClickEvent } from './button.model';
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
 })
-export class PepButtonComponent implements OnInit, OnDestroy {
+export class PepButtonComponent implements OnDestroy {
     @Input() key: string;
     @Input() value: string;
     @Input() styleType: PepStyleType = 'weak';
@@ -17,13 +23,9 @@ export class PepButtonComponent implements OnInit, OnDestroy {
     @Input() disabled = false;
     @Input() iconName: PepIconType;
     @Input() iconPosition: 'start' | 'end' = 'end';
-    
-    @Output() buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
 
-    constructor() {
-    }
-
-    ngOnInit(): void { }
+    @Output()
+    buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
 
     ngOnDestroy(): void {
         if (this.buttonClick) {
@@ -38,15 +40,15 @@ export class PepButtonComponent implements OnInit, OnDestroy {
             // callback: this.callback
         });
 
-        const buttonClick = { 
+        const buttonClick = {
             source: button,
-            event
+            event,
         };
 
         // if (this.callback) {
         //     this.callback(buttonClick);
         // } else {
-            this.buttonClick.emit(buttonClick);
+        this.buttonClick.emit(buttonClick);
         // }
     }
 }

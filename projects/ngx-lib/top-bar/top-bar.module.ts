@@ -7,7 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
-import { PepIconModule, PepIconRegistry, pepIconSystemMenu, pepIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemMenu,
+    pepIconSystemEdit,
+} from '@pepperi-addons/ngx-lib/icon';
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 
 import { PepTopBarComponent } from './top-bar.component';
@@ -23,16 +28,16 @@ import { PepTopBarComponent } from './top-bar.component';
         PepNgxLibModule,
         PepMenuModule,
         PepIconModule,
-        PepSearchModule
+        PepSearchModule,
     ],
-    exports: [ PepTopBarComponent ],
-    declarations: [ PepTopBarComponent ],
+    exports: [PepTopBarComponent],
+    declarations: [PepTopBarComponent],
 })
 export class PepTopBarModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemMenu,
-            pepIconSystemEdit
+            pepIconSystemEdit,
         ]);
     }
 }

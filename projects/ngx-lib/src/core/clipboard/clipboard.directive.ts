@@ -11,38 +11,28 @@ import { PepClipboardService } from './clipboard.service';
 @Directive({
     selector: '[pepClipboard]',
     inputs: ['value: clipboard'],
-    outputs: [
-        'copyEvent: clipboardCopy',
-        'errorEvent: clipboardError'
-    ],
+    outputs: ['copyEvent: clipboardCopy', 'errorEvent: clipboardError'],
     host: {
-        '(click)': 'copyToClipboard()'
-    }
+        '(click)': 'copyToClipboard()',
+    },
 })
 export class PepClipboardDirective {
-
     // public copyEvent: EventEmitter<string>;
     // public errorEvent: EventEmitter<Error>;
     // public value: string;
-
     // private clipboardService: ClipboardService;
-
-
     // // I initialize the clipboard directive.
     // constructor(clipboardService: ClipboardService) {
-
     //     this.clipboardService = clipboardService;
     //     this.copyEvent = new EventEmitter();
     //     this.errorEvent = new EventEmitter();
     //     this.value = '';
     // }
-
     // // ---
     // // PUBLIC METODS.
     // // ---
     // // I copy the value-input to the Clipboard. Emits success or error event.
     // public copyToClipboard(): void {
-
     //     this.clipboardService
     //         .copy(this.value)
     //         .then((value: string): void => {

@@ -2,7 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
-import { PepNgxLibModule, PepAddonService, PepCustomizationService, PepFileService } from '@pepperi-addons/ngx-lib';
+import {
+    PepNgxLibModule,
+    PepAddonService,
+    PepCustomizationService,
+    PepFileService,
+} from '@pepperi-addons/ngx-lib';
 import { PepAttachmentModule } from '@pepperi-addons/ngx-lib/attachment';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { PepCarouselModule } from '@pepperi-addons/ngx-lib/carousel';
@@ -66,7 +71,7 @@ import {
     pepIconViewCardSm,
     pepIconViewTable,
     pepIconViewMatrix,
-    pepIconViewLine
+    pepIconViewLine,
 } from '@pepperi-addons/ngx-lib/icon';
 const pepIcons = [
     pepIconSystemBolt,
@@ -101,7 +106,7 @@ const pepIcons = [
     pepIconViewCardSm,
     pepIconViewTable,
     pepIconViewMatrix,
-    pepIconViewLine
+    pepIconViewLine,
 ];
 
 const pepperiComponentsModules = [
@@ -134,7 +139,11 @@ const pepperiComponentsModules = [
     PepRemoteLoaderModule
 ];
 
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import {
+    TranslateModule,
+    TranslateLoader,
+    TranslateService,
+} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
@@ -142,14 +151,30 @@ import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 //    return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 // }
 
-export function createTranslateLoader(http: HttpClient, fileService: PepFileService, addonService: PepAddonService) {
+export function createTranslateLoader(
+    http: HttpClient,
+    fileService: PepFileService,
+    addonService: PepAddonService
+) {
     const addonStaticFolder = addonService.getAddonStaticFolder();
     const translationsPath: string = fileService.getAssetsTranslationsPath();
     const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
 
     return new MultiTranslateHttpLoader(http, [
-        { prefix: addonStaticFolder.length > 0 ? addonStaticFolder : translationsPath, suffix: translationsSuffix },
-        { prefix: addonStaticFolder.length > 0 ? addonStaticFolder : '/assets/i18n/', suffix: '.json' },
+        {
+            prefix:
+                addonStaticFolder.length > 0
+                    ? addonStaticFolder
+                    : translationsPath,
+            suffix: translationsSuffix,
+        },
+        {
+            prefix:
+                addonStaticFolder.length > 0
+                    ? addonStaticFolder
+                    : '/assets/i18n/',
+            suffix: '.json',
+        },
     ]);
 }
 
@@ -163,17 +188,13 @@ export function createTranslateLoader(http: HttpClient, fileService: PepFileServ
             loader: {
                 provide: TranslateLoader,
                 useFactory: createTranslateLoader,
-                deps: [HttpClient, PepFileService, PepAddonService]
-            }
-        })
+                deps: [HttpClient, PepFileService, PepAddonService],
+            },
+        }),
     ],
-    exports: [
-        PepNgxLibModule,
-        pepperiComponentsModules
-    ]
+    exports: [PepNgxLibModule, pepperiComponentsModules],
 })
 export class PepUIModule {
-
     constructor(
         translate: TranslateService,
         private pepperiIconRegistry: PepIconRegistry

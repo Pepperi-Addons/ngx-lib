@@ -18,9 +18,9 @@ import { PepButtonComponent } from './button.component';
         MatIconModule,
         // ngx-lib modules
         PepNgxLibModule,
-        PepIconModule
+        PepIconModule,
     ],
-    exports: [ PepButtonComponent ],
-    declarations: [ PepButtonComponent ],
+    exports: [PepButtonComponent],
+    declarations: [PepButtonComponent],
 })
 export class PepButtonModule {}

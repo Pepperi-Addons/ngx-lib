@@ -1,4 +1,4 @@
-import {Injectable, TemplateRef, ViewContainerRef} from '@angular/core';
+import { Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Injectable({
     providedIn: 'root',
@@ -31,6 +31,8 @@ export class PepPortalService {
     }
 
     private getTarget(targetName: string): ViewContainerRef {
-        return this.targets.has(targetName) ? this.targets.get(targetName) : null;
+        return this.targets.has(targetName)
+            ? this.targets.get(targetName)
+            : null;
     }
 }

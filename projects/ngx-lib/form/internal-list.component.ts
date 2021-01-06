@@ -9,7 +9,7 @@ import {
     ElementRef,
     ChangeDetectorRef,
     OnDestroy,
-    OnChanges
+    OnChanges,
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import {
@@ -18,9 +18,12 @@ import {
     UIControl,
     UIControlField,
     FIELD_TYPE,
-    ObjectsDataRow
+    ObjectsDataRow,
 } from '@pepperi-addons/ngx-lib';
-import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.component';
+import {
+    IPepFormFieldClickEvent,
+    IPepFormFieldValueChangeEvent,
+} from './form.component';
 
 export type PepListViewType = 'cards' | 'lines' | 'table';
 
@@ -29,11 +32,10 @@ export type PepListViewType = 'cards' | 'lines' | 'table';
     templateUrl: './internal-list.component.html',
     styleUrls: ['./internal-list.component.scss'],
     host: {
-        '(window:resize)': 'winResize($event)'
-    }
+        '(window:resize)': 'winResize($event)',
+    },
 })
-export class PepInternalListComponent
-    implements OnInit, OnChanges, OnDestroy {
+export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() currentListTypeTranslation = '';
     @Input() noDataFoundMsg = 'Items not found';
     @Input() hideAllSelectionInMulti = false;
@@ -54,8 +56,10 @@ export class PepInternalListComponent
     @Input() pageType = '';
     @Input() totalsRow = [];
 
-    @Output() fieldClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
-    @Output() valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
+    @Output()
+    fieldClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
 
     @ViewChild('noVirtualScrollCont') noVirtualScrollCont: ElementRef;
     @ViewChild('tableHeader') tableHeader: ElementRef;
@@ -66,7 +70,7 @@ export class PepInternalListComponent
     itemClass: string;
     isTable = false;
     private hasColumnWidthOfTypePercentage = true;
-    
+
     private _items: Array<ObjectsDataRow> = null;
     get items(): Array<ObjectsDataRow> {
         return this._items;
@@ -111,7 +115,7 @@ export class PepInternalListComponent
     ) {
         this.nativeWindow = window;
         this.deviceHasMouse = this.layoutService.getDeviceHasMouse();
-        this.layoutService.onMouseOver$.subscribe(deviceHasMouse => {
+        this.layoutService.onMouseOver$.subscribe((deviceHasMouse) => {
             this.deviceHasMouse = deviceHasMouse;
         });
     }
@@ -178,24 +182,27 @@ export class PepInternalListComponent
         this.scrollItems = this.items.slice(startIndex, endIndex);
     }
 
-    getUniqItemId(itemId: string, itemType: string = ''): string {
+    getUniqItemId(itemId: string, itemType = ''): string {
         return itemId + this.SEPARATOR + itemType;
     }
 
     setLayout(): void {
-        if (this.totalRows === 0 ||
+        if (
+            this.totalRows === 0 ||
             !this.uiControl ||
             !this.uiControl.ControlFields ||
-            this.uiControl.ControlFields.length === 0) {
+            this.uiControl.ControlFields.length === 0
+        ) {
             return;
         }
 
-        this.uiControl.ControlFields.forEach(cf => {
+        this.uiControl.ControlFields.forEach((cf) => {
             if (cf.ColumnWidth === 0) {
                 cf.ColumnWidth = 10;
             }
 
-            if (this.isTable &&
+            if (
+                this.isTable &&
                 (cf.FieldType === FIELD_TYPE.Image ||
                     // cf.FieldType === FIELD_TYPE.Indicators || ???
                     cf.FieldType === FIELD_TYPE.Signature ||
@@ -205,7 +212,8 @@ export class PepInternalListComponent
                     cf.FieldType === FIELD_TYPE.NumberRealForMatrix ||
                     cf.FieldType === FIELD_TYPE.Package ||
                     cf.ApiName === 'UnitsQuantity' ||
-                    cf.ApiName === 'QuantitySelector')) {
+                    cf.ApiName === 'QuantitySelector')
+            ) {
                 cf.Layout.XAlignment = 3;
             }
         });
@@ -233,7 +241,7 @@ export class PepInternalListComponent
             if (this.uiControl && this.uiControl.ControlFields) {
                 this.hasColumnWidthOfTypePercentage =
                     this.uiControl.ControlFields.filter(
-                        cf => cf.ColumnWidthType === 1
+                        (cf) => cf.ColumnWidthType === 1
                     ).length === 0;
             }
         }
@@ -241,7 +249,7 @@ export class PepInternalListComponent
         // If the columns size is fixed and the total is small then the container change it to percentage.
         if (!this.hasColumnWidthOfTypePercentage) {
             const totalFixedColsWidth = this.uiControl.ControlFields.map(
-                cf => cf.ColumnWidth * fixedMultiple
+                (cf) => cf.ColumnWidth * fixedMultiple
             ).reduce((sum, current) => sum + current);
 
             if (window.innerWidth > totalFixedColsWidth) {
@@ -254,7 +262,7 @@ export class PepInternalListComponent
         // Calc by percentage
         if (this.hasColumnWidthOfTypePercentage) {
             const totalColsWidth: number = this.uiControl.ControlFields.map(
-                cf => cf.ColumnWidth
+                (cf) => cf.ColumnWidth
             ).reduce((sum, current) => sum + current);
 
             for (let index = 0; index < length; index++) {
@@ -402,8 +410,10 @@ export class PepInternalListComponent
 
     onListResizeEnd(event): void {
         if (this.pressedColumn.length > 0) {
-            if (event &&
-                this.getParent(event.srcElement, 'resize-box').length > 0) {
+            if (
+                event &&
+                this.getParent(event.srcElement, 'resize-box').length > 0
+            ) {
                 this.initResizeData();
             } else {
                 setTimeout(() => {
@@ -457,7 +467,9 @@ export class PepInternalListComponent
         this.valueChange.emit(valueChange);
     }
 
-    onCustomizeFieldClick(customizeFieldClickedData: IPepFormFieldClickEvent): void {
+    onCustomizeFieldClick(
+        customizeFieldClickedData: IPepFormFieldClickEvent
+    ): void {
         if (this.disabled) {
             return;
         }
@@ -469,7 +481,8 @@ export class PepInternalListComponent
         if (this.disableSelectionItems) {
             return true;
         } else {
-            const IsNotSelectableForActions = item && !item.IsSelectableForActions;
+            const IsNotSelectableForActions =
+                item && !item.IsSelectableForActions;
             return IsNotSelectableForActions;
         }
     }
@@ -519,9 +532,7 @@ export class PepInternalListComponent
     }
 
     getThumbnailsLayout(): PepLayoutType {
-        return this.layoutType == null
-            ? 'card'
-            : this.layoutType;
+        return this.layoutType == null ? 'card' : this.layoutType;
     }
 
     // call this function after resize + animation end
@@ -536,7 +547,8 @@ export class PepInternalListComponent
 
     cleanItems(): void {
         this.itemsCounter = 0;
-        this._items = this.totalRows > 0 ? Array<ObjectsDataRow>(this.totalRows) : [];
+        this._items =
+            this.totalRows > 0 ? Array<ObjectsDataRow>(this.totalRows) : [];
         this.scrollItems = [];
         this.calculatedObjectHeight = '';
     }
@@ -550,9 +562,8 @@ export class PepInternalListComponent
         totalRows: number,
         items: ObjectsDataRow[],
         viewType: PepListViewType = 'table',
-        itemClass: string = ''
-        ): void {
-
+        itemClass = ''
+    ): void {
         this.viewType = viewType;
         this.isTable = viewType === 'table';
         // this.isCardView = viewType === 'cards';
@@ -568,7 +579,7 @@ export class PepInternalListComponent
         this.cleanItems();
 
         this.updateItems(items);
-        
+
         this.setLayout();
     }
 
@@ -581,14 +592,14 @@ export class PepInternalListComponent
         let index = 0;
 
         // Update items list
-        index = this.items.findIndex(i => i && i.UID === data.UID);
+        index = this.items.findIndex((i) => i && i.UID === data.UID);
         if (index >= 0 && index < this.items.length) {
             this.items[index] = data;
         }
-        
+
         // Update scrollItems list
-        index = this.scrollItems.findIndex(i => i && i.UID === data.UID);
-        
+        index = this.scrollItems.findIndex((i) => i && i.UID === data.UID);
+
         if (index >= 0 && index < this.scrollItems.length) {
             this.scrollItems[index] = data;
             this.checkForChanges = new Date().getTime();
@@ -596,7 +607,7 @@ export class PepInternalListComponent
     }
 
     getIsItemEditable(uid: string): boolean {
-        const item = this.items.filter(x => x.UID.toString() === uid);
+        const item = this.items.filter((x) => x.UID.toString() === uid);
         if (item.length > 0) {
             return item[0].IsEditable;
         } else {
@@ -605,6 +616,6 @@ export class PepInternalListComponent
     }
 
     getItemDataByID(uid: string): ObjectsDataRow {
-        return this.items.find(item => item.UID.toString() === uid);
+        return this.items.find((item) => item.UID.toString() === uid);
     }
 }

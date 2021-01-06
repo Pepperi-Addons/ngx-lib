@@ -1,14 +1,46 @@
 import {
-    Component, ViewChild, OnInit, OnDestroy, AfterViewInit, ElementRef, Input,
-    TemplateRef, Renderer2, ChangeDetectorRef, Inject, Optional, ViewContainerRef
+    Component,
+    ViewChild,
+    OnInit,
+    OnDestroy,
+    AfterViewInit,
+    ElementRef,
+    Input,
+    TemplateRef,
+    Renderer2,
+    ChangeDetectorRef,
+    Inject,
+    Optional,
+    ViewContainerRef,
 } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+    trigger,
+    state,
+    style,
+    transition,
+    animate,
+} from '@angular/animations';
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Gallery, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsPosition, GalleryItem, ImageItem, GalleryRef } from 'ng-gallery';
-import { PepCustomizationService, PepLayoutType, PepLayoutService, PepFileService,
-    PepHorizontalAlignment, DEFAULT_HORIZONTAL_ALIGNMENT, PepImagesField
+import {
+    Gallery,
+    GalleryConfig,
+    LoadingStrategy,
+    SlidingDirection,
+    ThumbnailsPosition,
+    GalleryItem,
+    ImageItem,
+    GalleryRef,
+} from 'ng-gallery';
+import {
+    PepCustomizationService,
+    PepLayoutType,
+    PepLayoutService,
+    PepFileService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    PepImagesField,
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconArrowRightAlt } from '@pepperi-addons/ngx-lib/icon';
@@ -36,10 +68,15 @@ interface IPepImagesFilmstripDialogData {
 //     ])
 // ]);
 
-import { IMAGEVIEWER_CONFIG, ImageViewerConfig, createButtonConfig } from '@hallysonh/ngx-imageviewer';
+import {
+    IMAGEVIEWER_CONFIG,
+    ImageViewerConfig,
+    createButtonConfig,
+} from '@hallysonh/ngx-imageviewer';
 
-
-export function createViewerConfig(translate: TranslateService, ): ImageViewerConfig {
+export function createViewerConfig(
+    translate: TranslateService
+): ImageViewerConfig {
     return {
         // width: 850,
         // height: 150,
@@ -66,12 +103,32 @@ export function createViewerConfig(translate: TranslateService, ): ImageViewerCo
         //     radius: 20, // tooltip border radius
         // },
         // shorter button configuration style
-        nextPageButton: createButtonConfig('navigate_next', 'Next page', 0, false),
-        beforePageButton: createButtonConfig('navigate_before', 'Previous page', 1, false),
+        nextPageButton: createButtonConfig(
+            'navigate_next',
+            'Next page',
+            0,
+            false
+        ),
+        beforePageButton: createButtonConfig(
+            'navigate_before',
+            'Previous page',
+            1,
+            false
+        ),
         zoomOutButton: createButtonConfig('zoom_out', 'Zoom out', 0, false),
         zoomInButton: createButtonConfig('zoom_in', 'Zoom in', 1, false),
-        rotateLeftButton: createButtonConfig('rotate_left', 'Rotate left', 2, false),
-        rotateRightButton: createButtonConfig('rotate_right', 'Rotate right', 3, false),
+        rotateLeftButton: createButtonConfig(
+            'rotate_left',
+            'Rotate left',
+            2,
+            false
+        ),
+        rotateRightButton: createButtonConfig(
+            'rotate_right',
+            'Rotate right',
+            3,
+            false
+        ),
         resetButton: createButtonConfig('autorenew', 'Reset', 4, false),
     };
 }
@@ -86,11 +143,12 @@ export function createViewerConfig(translate: TranslateService, ): ImageViewerCo
             provide: IMAGEVIEWER_CONFIG,
             // useValue: IMAGEVIEWER_CONFIG_DEFAULT,
             useFactory: createViewerConfig,
-            deps: [TranslateService]
-        }
-    ]
+            deps: [TranslateService],
+        },
+    ],
 })
-export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PepImagesFilmstripComponent
+    implements OnInit, AfterViewInit, OnDestroy {
     // @ViewChild('ngxViewerImage') ngxViewerImage: any; // TODO: Check if we need to use this??
     @Input() value = '';
     @Input() key = '';
@@ -108,7 +166,8 @@ export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDes
     @Input() showThumbnails = false;
 
     @ViewChild('galleryCont') galleryCont: ElementRef;
-    @ViewChild('galleryDialogTemplate', { read: TemplateRef }) galleryDialogTemplate: TemplateRef<any>;
+    @ViewChild('galleryDialogTemplate', { read: TemplateRef })
+    galleryDialogTemplate: TemplateRef<any>;
     @ViewChild('galleryDialogCont') galleryDialogCont: ElementRef;
 
     config: GalleryConfig;
@@ -136,14 +195,17 @@ export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDes
         private renderer: Renderer2,
         private element: ElementRef,
         private cd: ChangeDetectorRef,
-        @Optional() private dialogRef: MatDialogRef<PepImagesFilmstripComponent>,
-        @Optional() @Inject(MAT_DIALOG_DATA) private data: IPepImagesFilmstripDialogData
+        @Optional()
+        private dialogRef: MatDialogRef<PepImagesFilmstripComponent>,
+        @Optional()
+        @Inject(MAT_DIALOG_DATA)
+        private data: IPepImagesFilmstripDialogData
     ) {
         // If data exist copy all data properties into this.
         if (dialogRef && data) {
             this.inDialog = true;
 
-            Object.keys(data).forEach(key => {
+            Object.keys(data).forEach((key) => {
                 if (key in this) {
                     this[key] = data[key];
                 }
@@ -186,54 +248,77 @@ export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDes
                     value: this.value,
                     required: this.required,
                     readonly: this.readonly,
-                    disabled: this.disabled
+                    disabled: this.disabled,
                 });
-                this.form = this.customizationService.getDefaultFromGroup(pepField);
+                this.form = this.customizationService.getDefaultFromGroup(
+                    pepField
+                );
 
-                this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+                this.renderer.addClass(
+                    this.element.nativeElement,
+                    PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+                );
             }
-            this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
+            this.fieldHeight = this.customizationService.calculateFieldHeight(
+                this.layoutType,
+                this.rowSpan,
+                this.standAlone
+            );
         }
 
         if (this.items === null) {
             const imgArr = this.value ? this.value.split(';') : [];
             // add No image image when there is no images
             if (imgArr.length === 0) {
-                const noImageSrc = this.fileService.getSvgAsImageSrc(pepIconNoImage.data);
+                const noImageSrc = this.fileService.getSvgAsImageSrc(
+                    pepIconNoImage.data
+                );
                 imgArr.push(noImageSrc);
             }
 
-            this.items = imgArr.map(img => new ImageItem({ src: img, thumb: img }));
+            this.items = imgArr.map(
+                (img) => new ImageItem({ src: img, thumb: img })
+            );
         }
 
         this.config.dots = this.config.nav = this.items.length > 1;
-        this.config.thumb = (this.key === 'ItemFilmstripImages' || this.showThumbnails) && this.items.length > 1 ? true : false;
+        this.config.thumb =
+            (this.key === 'ItemFilmstripImages' || this.showThumbnails) &&
+            this.items.length > 1
+                ? true
+                : false;
         this.currIndex =
             this.key === 'ItemFilmstripImages' &&
-                this.currIndex === 0 &&
-                this.items.length > 1 ?
-                Math.floor(this.items.length / 2) - 1 : this.currIndex;
-
+            this.currIndex === 0 &&
+            this.items.length > 1
+                ? Math.floor(this.items.length / 2) - 1
+                : this.currIndex;
     }
 
     ngAfterViewInit(): void {
         if (this.inDialog) {
             this.afterDialogOpened();
         } else {
-            this.galleryRef = this.gallery.ref(this.key + '-' + this.objectId + '-gallery');
+            this.galleryRef = this.gallery.ref(
+                this.key + '-' + this.objectId + '-gallery'
+            );
             this.initGalleryStyle(this.galleryCont, this.galleryRef);
         }
     }
 
     ngOnDestroy(): void {
-        if (this.galleryRef) { this.galleryRef.destroy(); }
-        if (this.dialogGalleryRef) { this.dialogGalleryRef.destroy(); }
+        if (this.galleryRef) {
+            this.galleryRef.destroy();
+        }
+        if (this.dialogGalleryRef) {
+            this.dialogGalleryRef.destroy();
+        }
         // if (this.myPinch) { this.myPinch.destroy(); }
     }
 
     initGalleryStyle(galleryContainer, galleryRef): void {
         setTimeout(() => {
-        // Set thumbnails position and sliding direction
+            // Set thumbnails position and sliding direction
             this.setThumbnailDimension(galleryContainer);
             galleryRef.setConfig(this.config);
         }, 0);
@@ -243,16 +328,17 @@ export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDes
             setTimeout(() => {
                 galleryRef.load(this.items);
                 galleryRef.set(currentIndex);
-              }, 0);
-           // galleryRef.set(currentIndex);
-        }
-        else{
+            }, 0);
+            // galleryRef.set(currentIndex);
+        } else {
             galleryRef.load(this.items);
         }
     }
 
     onError(e): void {
-        const noImageSrc = this.fileService.getSvgAsImageSrc(pepIconNoImage.data);
+        const noImageSrc = this.fileService.getSvgAsImageSrc(
+            pepIconNoImage.data
+        );
         const noimg = new ImageItem({ src: noImageSrc, thumb: noImageSrc });
         this.items.splice(e.itemIndex, 1, noimg);
     }
@@ -266,9 +352,9 @@ export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDes
             this.galleryDialogTemplate,
             {
                 currIndex: this.currIndex,
-            }
-            ,
-            config);
+            },
+            config
+        );
 
         dialogRef.afterOpened().subscribe(() => {
             this.afterDialogOpened();
@@ -281,39 +367,52 @@ export class PepImagesFilmstripComponent implements OnInit, AfterViewInit, OnDes
     }
 
     afterDialogOpened(): void {
-        this.dialogGalleryRef = this.gallery.ref(this.key + '-' + this.objectId + '-dlgGallery');
+        this.dialogGalleryRef = this.gallery.ref(
+            this.key + '-' + this.objectId + '-dlgGallery'
+        );
         this.initGalleryStyle(this.galleryDialogCont, this.dialogGalleryRef);
     }
 
     setThumbnailDimension(galleryContainer): void {
         this.galleryWidth = galleryContainer.nativeElement.clientWidth;
         // this.galleryHeight = galleryContainer.nativeElement.clientHeight - 32; // TODO - TALK WITH TOMER
-        this.galleryHeight = this.inDialog ? galleryContainer.nativeElement.clientHeight - 32 : galleryContainer.nativeElement.clientHeight;
+        this.galleryHeight = this.inDialog
+            ? galleryContainer.nativeElement.clientHeight - 32
+            : galleryContainer.nativeElement.clientHeight;
         // this.galleryHeight = galleryContainer.nativeElement.clientHeight - 32;
         this.cd.detectChanges();
 
         this.isVertical = this.galleryWidth < this.galleryHeight;
         this.cd.detectChanges();
         if (this.isVertical) {
-            let width = (this.galleryWidth - ((this.items.length - 1) * 16)) / this.items.length;
+            let width =
+                (this.galleryWidth - (this.items.length - 1) * 16) /
+                this.items.length;
             width = Math.min(Math.max(width, 24), 96);
 
             this.config.thumbHeight = width;
-            this.config.thumbWidth = (width + 16);
+            this.config.thumbWidth = width + 16;
         } else {
-            let height = (this.galleryHeight - ((this.items.length - 1) * 16)) / this.items.length;
+            let height =
+                (this.galleryHeight - (this.items.length - 1) * 16) /
+                this.items.length;
             height = Math.min(Math.max(height, 24), 96);
 
-            this.config.thumbHeight = (height + 16);
+            this.config.thumbHeight = height + 16;
             this.config.thumbWidth = height;
         }
 
-        this.config.thumbPosition = this.isVertical ?
-            ThumbnailsPosition.Bottom : this.layoutService.isRtl() ?
-                ThumbnailsPosition.Right : ThumbnailsPosition.Left;
-        this.config.slidingDirection = this.key !== 'ItemFilmstripImages' ?
-            SlidingDirection.Horizontal : this.isVertical ?
-                SlidingDirection.Horizontal : SlidingDirection.Vertical;
+        this.config.thumbPosition = this.isVertical
+            ? ThumbnailsPosition.Bottom
+            : this.layoutService.isRtl()
+            ? ThumbnailsPosition.Right
+            : ThumbnailsPosition.Left;
+        this.config.slidingDirection =
+            this.key !== 'ItemFilmstripImages'
+                ? SlidingDirection.Horizontal
+                : this.isVertical
+                ? SlidingDirection.Horizontal
+                : SlidingDirection.Vertical;
 
         this.config.imageSize = 'contain';
     }

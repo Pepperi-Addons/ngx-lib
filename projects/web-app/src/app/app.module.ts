@@ -31,14 +31,9 @@ import { RemoteLoaderExampleComponent } from './remote-loader-example/remote-loa
         BrowserAnimationsModule,
         AppRoutingModule,
         PepUIModule,
-        MaterialModule
+        MaterialModule,
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule {
-}
-
-
-
-
+export class AppModule { }

@@ -11,35 +11,31 @@ import { TopBarExampleComponent } from './top-bar-example/top-bar-example.compon
 const routes: Routes = [
     {
         path: `carousel-example`,
-        component: CarouselExampleComponent
+        component: CarouselExampleComponent,
     },
     {
         path: `form-fields-example`,
-        component: FormFieldsExampleComponent
+        component: FormFieldsExampleComponent,
     },
     {
         path: `list-example`,
-        component: ListExampleComponent
+        component: ListExampleComponent,
     },
     {
         path: `inline-list-example`,
         component: InlineListExampleComponent
     }, {
         path: `top-bar-example`,
-        component: TopBarExampleComponent
-    },
-    {
-        path: `remote-loader-example`,
-        component: RemoteLoaderExampleComponent
+        component: TopBarExampleComponent,
     },
     {
         path: '**',
-        component: FormFieldsExampleComponent
+        component: FormFieldsExampleComponent,
     },
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class AppRoutingModule { }

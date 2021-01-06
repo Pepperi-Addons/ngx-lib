@@ -16,7 +16,7 @@ import {
     pepIconSystemEdit,
     pepIconSystemClose,
     pepIconArrowRightAlt,
-    pepIconArrowLeftAlt
+    pepIconArrowLeftAlt,
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
@@ -60,10 +60,10 @@ import { PepImagesFilmstripComponent } from './images-filmstrip.component';
         PepNgxLibModule,
         PepIconModule,
         PepFieldTitleModule,
-        PepDialogModule
+        PepDialogModule,
     ],
-    exports: [ PepImagesFilmstripComponent ],
-    declarations: [ PepImagesFilmstripComponent ],
+    exports: [PepImagesFilmstripComponent],
+    declarations: [PepImagesFilmstripComponent],
 })
 export class PepImagesFilmstripModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
@@ -71,7 +71,7 @@ export class PepImagesFilmstripModule {
             pepIconSystemEdit,
             pepIconSystemClose,
             pepIconArrowRightAlt,
-            pepIconArrowLeftAlt
+            pepIconArrowLeftAlt,
         ]);
     }
 }

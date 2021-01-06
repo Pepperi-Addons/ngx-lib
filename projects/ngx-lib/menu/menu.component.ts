@@ -1,8 +1,32 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { PepLayoutService, PepStyleType, PepSizeType, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnChanges,
+    OnDestroy,
+} from '@angular/core';
+import {
+    trigger,
+    state,
+    style,
+    transition,
+    animate,
+} from '@angular/animations';
+import {
+    PepLayoutService,
+    PepStyleType,
+    PepSizeType,
+    PepScreenSizeType,
+} from '@pepperi-addons/ngx-lib';
 import { pepIconSystemMenu } from '@pepperi-addons/ngx-lib/icon';
-import { PepMenuItem, IPepMenuItemClickEvent, IPepMenuStateChangeEvent, PepMenuStateType, PepMenuType } from './menu.model';
+import {
+    PepMenuItem,
+    IPepMenuItemClickEvent,
+    IPepMenuStateChangeEvent,
+    PepMenuStateType,
+    PepMenuType,
+} from './menu.model';
 
 @Component({
     selector: 'pep-menu',
@@ -17,20 +41,20 @@ import { PepMenuItem, IPepMenuItemClickEvent, IPepMenuStateChangeEvent, PepMenuS
                     padding: '0',
                     margin: '0',
                     minWidth: '0px',
-                    opacity: 0
+                    opacity: 0,
                 })
             ),
             state(
                 'visible',
                 style({
                     width: 'inherit',
-                    opacity: 1
+                    opacity: 1,
                 })
             ),
             transition('close => open', animate('500ms ease-in')),
-            transition('open => close', animate('500ms ease-out'))
-        ])
-    ]
+            transition('open => close', animate('500ms ease-out')),
+        ]),
+    ],
 })
 export class PepMenuComponent implements OnChanges, OnDestroy {
     @Input() text: string = null;
@@ -44,9 +68,11 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     @Input() items: Array<PepMenuItem> = null;
     @Input() selectedItem: PepMenuItem = null;
     @Input() disabled = false;
-    
-    @Output() stateChange: EventEmitter<IPepMenuStateChangeEvent> = new EventEmitter<IPepMenuStateChangeEvent>();
-    @Output() menuItemClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
+
+    @Output()
+    stateChange: EventEmitter<IPepMenuStateChangeEvent> = new EventEmitter<IPepMenuStateChangeEvent>();
+    @Output()
+    menuItemClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
     @Output() menuClick: EventEmitter<void> = new EventEmitter<void>();
 
     state: PepMenuStateType = 'hidden';
@@ -56,17 +82,16 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
 
     displayText: string = null;
 
-    constructor(
-        public layoutService: PepLayoutService
-    ) {
-        this.layoutService.onResize$.subscribe(size => {
+    constructor(public layoutService: PepLayoutService) {
+        this.layoutService.onResize$.subscribe((size) => {
             this.screenSize = size;
         });
     }
 
     private updateText(): void {
         if (this.type === 'select' || this.type === 'action-select') {
-            this.displayText = this.selectedItem != null ? this.selectedItem.text : null;
+            this.displayText =
+                this.selectedItem != null ? this.selectedItem.text : null;
         } else {
             this.displayText = this.text;
         }
@@ -74,7 +99,12 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
 
     ngOnChanges(changes): void {
         if (this.hideOnEmptyItems) {
-            this.state = (!this.disabled && this.items && this.items.filter(item => !item.disabled).length > 0) ? 'visible' : 'hidden';
+            this.state =
+                !this.disabled &&
+                this.items &&
+                this.items.filter((item) => !item.disabled).length > 0
+                    ? 'visible'
+                    : 'hidden';
         } else {
             this.state = 'visible';
         }
@@ -101,7 +131,7 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     onMenuItemClicked(click: IPepMenuItemClickEvent): void {
         this.selectedItem = click.source;
         this.updateText();
-        
+
         this.menuItemClick.emit(click);
     }
 

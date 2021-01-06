@@ -17,7 +17,7 @@ import {
     PepIconRegistry,
     pepIconSystemBin,
     pepIconSystemSignature,
-    pepIconSystemClose
+    pepIconSystemClose,
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
@@ -44,17 +44,17 @@ import { PepSignatureComponent } from './signature.component';
         PepIconModule,
         PepFieldTitleModule,
         PepFilesUploaderModule,
-        PepDialogModule
+        PepDialogModule,
     ],
-    exports: [ PepSignatureComponent ],
-    declarations: [ PepSignatureComponent ],
+    exports: [PepSignatureComponent],
+    declarations: [PepSignatureComponent],
 })
 export class PepSignatureModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemBin,
             pepIconSystemSignature,
-            pepIconSystemClose
+            pepIconSystemClose,
         ]);
     }
 }

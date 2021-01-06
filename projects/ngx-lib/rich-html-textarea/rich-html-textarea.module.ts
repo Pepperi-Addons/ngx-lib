@@ -11,7 +11,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-import { PepIconModule, PepIconRegistry, pepIconSystemEdit, pepIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemEdit,
+    pepIconSystemClose,
+} from '@pepperi-addons/ngx-lib/icon';
 import { PepTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
@@ -40,16 +45,16 @@ import { PepRichHtmlTextareaComponent } from './rich-html-textarea.component';
         PepIconModule,
         PepFieldTitleModule,
         PepTextboxIconModule,
-        PepDialogModule
+        PepDialogModule,
     ],
-    exports: [ PepRichHtmlTextareaComponent ],
-    declarations: [ PepRichHtmlTextareaComponent ],
+    exports: [PepRichHtmlTextareaComponent],
+    declarations: [PepRichHtmlTextareaComponent],
 })
 export class PepRichHtmlTextareaModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemEdit,
-            pepIconSystemClose
+            pepIconSystemClose,
         ]);
     }
 }

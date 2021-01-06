@@ -4,7 +4,7 @@ import {
     HttpRequest,
     HttpHandler,
     HttpInterceptor,
-    HttpResponse
+    HttpResponse,
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -13,7 +13,10 @@ import { tap } from 'rxjs/operators';
 export class PepCacheInterceptor implements HttpInterceptor {
     private cache = new Map<string, any>();
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(
+        req: HttpRequest<any>,
+        next: HttpHandler
+    ): Observable<HttpEvent<any>> {
         if (req.method !== 'GET') {
             return next.handle(req);
         }
@@ -26,7 +29,7 @@ export class PepCacheInterceptor implements HttpInterceptor {
         }
 
         return next.handle(req).pipe(
-            tap(event => {
+            tap((event) => {
                 if (event instanceof HttpResponse) {
                     this.cache.set(req.url, event);
                 }

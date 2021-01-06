@@ -10,7 +10,12 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-import { PepIconModule, PepIconRegistry, pepIconNumberMinus, pepIconNumberPlus } from '@pepperi-addons/ngx-lib/icon';
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconNumberMinus,
+    pepIconNumberPlus,
+} from '@pepperi-addons/ngx-lib/icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
 import { PepQuantitySelectorComponent } from './quantity-selector.component';
@@ -31,16 +36,16 @@ import { PepQuantitySelectorNumberPipe } from './quantity-selector.pipes';
         // ngx-lib modules
         PepNgxLibModule,
         PepIconModule,
-        PepFieldTitleModule
+        PepFieldTitleModule,
     ],
-    exports: [ PepQuantitySelectorComponent ],
-    declarations: [ PepQuantitySelectorComponent, PepQuantitySelectorNumberPipe ],
+    exports: [PepQuantitySelectorComponent],
+    declarations: [PepQuantitySelectorComponent, PepQuantitySelectorNumberPipe],
 })
 export class PepQuantitySelectorModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconNumberMinus,
-            pepIconNumberPlus
+            pepIconNumberPlus,
         ]);
     }
 }

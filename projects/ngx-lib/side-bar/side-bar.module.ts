@@ -6,7 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-import { PepIconModule, PepIconRegistry, pepIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemClose,
+} from '@pepperi-addons/ngx-lib/icon';
 
 import { PepSideBarComponent } from './side-bar.component';
 
@@ -19,15 +23,13 @@ import { PepSideBarComponent } from './side-bar.component';
         MatSidenavModule,
         // ngx-lib modules
         PepNgxLibModule,
-        PepIconModule
+        PepIconModule,
     ],
-    exports: [ PepSideBarComponent ],
-    declarations: [ PepSideBarComponent ],
+    exports: [PepSideBarComponent],
+    declarations: [PepSideBarComponent],
 })
 export class PepSideBarModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
-        this.pepIconRegistry.registerIcons([
-            pepIconSystemClose
-        ]);
+        this.pepIconRegistry.registerIcons([pepIconSystemClose]);
     }
 }
