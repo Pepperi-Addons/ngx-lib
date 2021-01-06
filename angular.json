@@ -45,16 +45,7 @@
                             "projects/web-app/src/theme.scss",
                             "projects/web-app/src/styles.scss"
                         ],
-                        "scripts": [
-                            "node_modules/systemjs/dist/system.min.js",
-                            "node_modules/systemjs/dist/extras/amd.min.js",
-                            "node_modules/systemjs/dist/extras/global.min.js",
-                            "node_modules/systemjs/dist/extras/module-types.min.js",
-                            "node_modules/systemjs/dist/extras/dynamic-import-maps.min.js",
-                            "node_modules/systemjs/dist/extras/named-exports.min.js",
-                            "node_modules/systemjs/dist/extras/named-register.min.js",
-                            "node_modules/systemjs/dist/extras/use-default.min.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {

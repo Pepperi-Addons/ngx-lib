@@ -30,7 +30,6 @@ import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { PepListModule } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
-import { PepRemoteLoaderModule } from '@pepperi-addons/ngx-lib/remote-loader';
 
 import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 
@@ -135,8 +134,7 @@ const pepperiComponentsModules = [
     PepMenuModule,
     PepTopBarModule,
     PepSmartFiltersModule,
-    PepFormModule,
-    PepRemoteLoaderModule
+    PepFormModule
 ];
 
 import {
