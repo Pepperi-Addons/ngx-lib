@@ -27,8 +27,8 @@
         </ng-template>
 
         <ng-template #noVirtualScrollBlock>
-            <div #noVirtualScrollContnainer class="no-virtual-scroll-container"
-                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
+            <div #noVirtualScrollContnainer
+                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable, 'no-virtual-scroll-container': pagerType === 'pages' }">
                 <ng-container *ngTemplateOutlet="listData"></ng-container>
             </div>
         </ng-template>

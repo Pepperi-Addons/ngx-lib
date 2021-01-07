@@ -56,6 +56,8 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pageType = '';
     @Input() totalsRow = [];
 
+    // @Output()
+    // itemClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
     @Output()
     fieldClick: EventEmitter<any> = new EventEmitter<IPepFormFieldClickEvent>();
     @Output()
@@ -134,6 +136,10 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
         if (this.valueChange) {
             this.valueChange.unsubscribe();
         }
+
+        // if (this.itemClick) {
+        //     this.itemClick.unsubscribe();
+        // }
 
         if (this.fieldClick) {
             this.fieldClick.unsubscribe();
@@ -486,7 +492,43 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
             return IsNotSelectableForActions;
         }
     }
+    
+    getIsItemSelected(itemId: string, itemType = ''): boolean {
+        let isSelected = false;
+        // if (
+        //     this.selectionTypeForActions === 'single-action' ||
+        //     this.selectionTypeForActions === 'multi'
+        // ) {
+        //     isSelected =
+        //         this.selectedItems.has(itemId) ||
+        //         (this.isAllSelected && !this.unSelectedItems.has(itemId));
+        // } else if (this.selectionTypeForActions === 'single') {
+            const uniqItemId = this.getUniqItemId(itemId, itemType);
+            isSelected = uniqItemId === this.selectedItemId;
+        // }
 
+        return isSelected;
+    }
+
+    private setItemClicked(
+        itemId,
+        isSelectableForActions: boolean,
+        itemType: string,
+        isChecked: boolean
+    ): void {
+        const uniqItemId = this.getUniqItemId(itemId, itemType);
+
+        // select the selected item.
+        if (isChecked) {
+            // Set seleted item
+            this.selectedItemId = uniqItemId;
+        } else {
+            if (this.selectedItemId === uniqItemId) {
+                this.selectedItemId = '';
+            }
+        }
+    }
+    
     itemClicked(e: any, item: ObjectsDataRow): void {
         // Set seleted item
         const itemId = item.UID.toString();
@@ -498,11 +540,20 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
             isChecked = true;
         }
 
-        if (!this.isTable) {
+        if (this.isTable) {
+            this.setItemClicked(
+                itemId,
+                item.IsSelectableForActions,
+                itemType,
+                true
+            );
+        } else {
             if (this.disabled) {
                 return;
             }
         }
+
+        // this.itemClick.emit({ source: item, viewType: this.viewType });
     }
 
     onTableRowMouseEnter(event: any, itemId: string, itemType: string): void {

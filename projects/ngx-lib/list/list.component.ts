@@ -1110,10 +1110,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // Clean array
-        if (
-            this.itemsCounter + items.length >
-            PepListComponent.TOP_ITEMS_ARRAY
-        ) {
+        if (this.itemsCounter + items.length > PepListComponent.TOP_ITEMS_ARRAY) {
             this.cleanItems();
         }
 
