@@ -190,7 +190,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2
     ) {
         this.exportFunctionsOnHostElement();
-        
+
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
@@ -201,7 +201,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.deviceHasMouse = deviceHasMouse;
         });
     }
-    
+
     ngOnInit(): void {
         this.containerWidth = 0;
     }
@@ -539,7 +539,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     private getParentContainer(): Element | Window {
         return this.parentScroll ? this.parentScroll : window;
     }
-    
+
     private cleanItems(): void {
         this.itemsCounter = 0;
         this._items =
@@ -704,12 +704,16 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
     }
-    
+
     private exportFunctionsOnHostElement() {
         // This is for web component usage for use those functions.
         this.hostElement.nativeElement.clear = this.clear.bind(this);
-        this.hostElement.nativeElement.initListData = this.initListData.bind(this);
-        this.hostElement.nativeElement.updateItems = this.updateItems.bind(this);
+        this.hostElement.nativeElement.initListData = this.initListData.bind(
+            this
+        );
+        this.hostElement.nativeElement.updateItems = this.updateItems.bind(
+            this
+        );
         this.hostElement.nativeElement.updatePage = this.updatePage.bind(this);
         this.hostElement.nativeElement.updateItem = this.updateItem.bind(this);
     }
@@ -721,7 +725,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             return item && !item.IsSelectableForActions;
         }
     }
-    
+
     getIsItemSelected(itemId: string, itemType = ''): boolean {
         let isSelected = false;
         if (
@@ -946,7 +950,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.cleanItems();
         this._layout = null;
     }
-    
+
     setSelectedIds(selectedIds: string[], items = null): void {
         this.selectedItems.clear();
         this.isAllSelected = false;
@@ -998,7 +1002,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.isAllSelected
         );
     }
-    
+
     initListData(
         layout: UIControl,
         totalRows: number,
@@ -1110,7 +1114,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // Clean array
-        if (this.itemsCounter + items.length > PepListComponent.TOP_ITEMS_ARRAY) {
+        if (
+            this.itemsCounter + items.length >
+            PepListComponent.TOP_ITEMS_ARRAY
+        ) {
             this.cleanItems();
         }
 
@@ -1489,5 +1496,4 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         this.fieldClick.emit(customizeFieldClickedData);
     }
-
 }

@@ -492,20 +492,12 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
             return IsNotSelectableForActions;
         }
     }
-    
+
     getIsItemSelected(itemId: string, itemType = ''): boolean {
         let isSelected = false;
-        // if (
-        //     this.selectionTypeForActions === 'single-action' ||
-        //     this.selectionTypeForActions === 'multi'
-        // ) {
-        //     isSelected =
-        //         this.selectedItems.has(itemId) ||
-        //         (this.isAllSelected && !this.unSelectedItems.has(itemId));
-        // } else if (this.selectionTypeForActions === 'single') {
-            const uniqItemId = this.getUniqItemId(itemId, itemType);
-            isSelected = uniqItemId === this.selectedItemId;
-        // }
+
+        const uniqItemId = this.getUniqItemId(itemId, itemType);
+        isSelected = uniqItemId === this.selectedItemId;
 
         return isSelected;
     }
@@ -528,7 +520,7 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
     }
-    
+
     itemClicked(e: any, item: ObjectsDataRow): void {
         // Set seleted item
         const itemId = item.UID.toString();
