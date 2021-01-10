@@ -143,6 +143,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
                 id: 'filter1',
                 title: 'Transaction Action Time',
                 type: 'date-time',
+                hasFilter: true
             },
             { id: 'filter2', title: 'Price', type: 'number' },
             { id: 'filter3', title: 'Delivery Date', type: 'date' },
@@ -264,5 +265,6 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
 
     onViewChanged(viewChangeEvent: IListViewChangeEvent) {
         // debugger;
+        this.loadlist(this.dataSource);
     }
 }

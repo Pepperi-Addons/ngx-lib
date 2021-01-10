@@ -3,7 +3,7 @@
     <ng-template #pepTemplate let-showIcon="showIcon">
         <mat-form-field appearance="outline">
             <input #input [id]="key" title="{{ formattedValue }}" matInput class="body-sm" autocomplete="false"
-                [ngStyle]="{color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left'}"
+                [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left'}"
                 [(ngModel)]="dateModel" [ngModelOptions]="{standalone: true}" [matDatetimepicker]="datetimePicker"
                 [min]="minDate" [max]="maxDate" [required]="required" [disabled]="disabled"
                 (dateChange)="onDateChange($event)" (click)="openDatetimePicker(datetimePicker)"
@@ -40,7 +40,8 @@
         <ng-template #readOnlyBlock>
             <div class="pep-card-input card-flex-container"
                 [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled}"
-                [class]="'text-align-' + xAlignment" (click)="!disabled ? cardTemplateClicked($event) : ''">
+                [ngStyle]="{ color: textColor }" [class]="'text-align-' + xAlignment"
+                (click)="!disabled ? cardTemplateClicked($event) : ''">
                 <span *ngIf="showTitle && label != ''" class="body-xs title" title="{{ label }}">{{ label
                     }}&nbsp;</span>
                 <span [id]="key" title="{{ formattedValue }}" class="body-sm value">{{ formattedValue }}</span>
@@ -64,8 +65,8 @@
             <ng-template #notEmptyBlock>
                 <ng-container [ngSwitch]="type">
                     <ng-container *ngSwitchDefault>
-                        <span [id]="key" class="body-sm pep-report-input" [ngClass]="{readonly: disabled}"
-                            title="{{ formattedValue }}">{{ formattedValue }}</span>
+                        <span [id]="key" class="body-sm pep-report-input" [ngStyle]="{ color: textColor }"
+                            [ngClass]="{readonly: disabled}" title="{{ formattedValue }}">{{ formattedValue }}</span>
                     </ng-container>
                 </ng-container>
             </ng-template>

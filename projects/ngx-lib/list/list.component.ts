@@ -42,7 +42,10 @@ import {
     IPepListLoadPageEvent,
     DEFAULT_PAGE_SIZE,
 } from './list.model';
-import { IPepListPagerChangeEvent } from './list-pager.component';
+import {
+    IPepListPagerChangeEvent,
+    PepListPagerComponent,
+} from './list-pager.component';
 
 @Component({
     selector: 'pep-list',
@@ -117,6 +120,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild(PepVirtualScrollComponent)
     virtualScroll: PepVirtualScrollComponent;
+    @ViewChild(PepListPagerComponent) listPager: PepListPagerComponent;
     @ViewChild('noVirtualScrollContnainer')
     noVirtualScrollContnainer: ElementRef;
     @ViewChild('selectAllCB') selectAllCB: any;
@@ -1042,6 +1046,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.pagerType === 'pages') {
             this._useVirtualScroll = false;
+            if (typeof this.listPager !== 'undefined') {
+                this.listPager.pageIndex = 0;
+            }
             this.updatePage(items, { pageIndex: 0, pageSize: this.pageSize });
         } else {
             if (this.totalRows === items.length) {

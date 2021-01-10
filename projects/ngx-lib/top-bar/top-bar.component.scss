@@ -8,7 +8,8 @@
     // width: calc(100% - ((#{$content-padding} * 2)));
     z-index: $z-index-medium + 1;
     width: calc(100% - (#{$settings-bar-width}));
-
+    top: $header-height;
+    
     .title {
         @include align-center();
     }

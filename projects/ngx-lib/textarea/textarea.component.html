@@ -12,11 +12,11 @@
                 <textarea #input [hidden]="readonly" [id]="key" class="body-sm" matInput (blur)="onBlur($event)"
                     title="{{ value }}" [value]="value"
                     maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
-                    [ngStyle]="{ color: 'textColor', 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
+                    [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
                     [formControlName]="key" [style.height]="fieldHeight" [disabled]="disabled">
                 </textarea>
                 <div *ngIf="readonly" class="body-sm disable-text-div" title="{{ value }}"
-                    [ngStyle]="{ color: 'textColor', 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
+                    [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
                     [innerHtml]="value | pepSafeHtml" [style.height]="fieldHeight">
                 </div>
                 <!-- <pep-textbox-icon *ngIf="xAlignment == 'right'" matPrefix [value]="value" [label]="label" [type]="controlType" [disabled]="disabled"
@@ -48,7 +48,7 @@
         <ng-template #readOnlyBlock>
             <div class="pep-textarea-card-container card-flex-container"
                 [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled }"
-                [ngStyle]="{ '-webkit-line-clamp': rowSpan }" [class]="'text-align-' + xAlignment"
+                [ngStyle]="{ color: textColor, '-webkit-line-clamp': rowSpan }" [class]="'text-align-' + xAlignment"
                 (click)="!disabled ? cardTemplateClicked($event) : ''" [style.height]="fieldHeight">
                 <span *ngIf=" showTitle && label !=''" class=" body-xs title no-shrink" title="{{ label }}">{{ label
                     }}&nbsp;</span>
