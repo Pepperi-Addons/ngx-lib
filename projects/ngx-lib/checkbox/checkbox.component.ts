@@ -114,8 +114,9 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         if (!this.disabled) {
             const isChecked: boolean =
                 this.value === 'true' || this.value === '1' ? true : false;
-            this.value = (!isChecked).toString();
-            this.changeValue(this.value);
+            const newValue = !isChecked;
+            this.value = (!newValue).toString();
+            this.changeValue(newValue);
         }
     }
 
@@ -125,6 +126,6 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
             this.key,
             value
         );
-        this.valueChange.emit({ key: this.key, value });
+        this.valueChange.emit({ key: this.key, value: value.toString() });
     }
 }
