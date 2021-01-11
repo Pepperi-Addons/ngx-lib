@@ -1,0 +1,91 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+:host {
+    display: grid;
+    width: inherit;
+    height: inherit;
+}
+
+.matrix-title-container {
+    //width: 100%;
+    padding: 0;
+    height: $form-field-height;
+    display: flex;
+    align-items: flex-end;
+
+    .block-with-text {
+        width: 100%;
+        max-height: inherit;
+        font-weight: $font-weight-bold;
+        display: block;
+        @include ellipsis();
+    }
+
+    .buttons-container {
+        display: flex;
+        align-self: center;
+
+        .pepperi-button, .pep-button {
+            width: max-content;
+        }
+    }
+}
+
+#mainViewCont {
+    width: 100%;
+    height: inherit;
+    overflow: hidden;
+    padding: 0 $spacing-xs;
+    // margin-bottom: 1.5rem;
+
+    .table-cover {
+        background-color: #fff;
+        z-index: $z-index-medium - 2;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        // height: calc(100% + #{$form-field-height});
+        height: inherit;
+        opacity: 0.5;
+        //cursor: pointer;
+    }
+
+    .table-cover-button {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        top: calc(50% + #{$form-field-height});
+        z-index: $z-index-medium - 1;
+
+        &.lineview-btn{
+            top: calc(2 * #{$form-field-height});
+            transform: translate(-50%, 0);
+        }
+    }
+
+    .underCover {
+        max-height: inherit;
+        overflow: hidden;
+    }
+
+    ::ng-deep.table-header {
+        top: unset !important;
+    }
+}
+
+// .modal-dialog {
+//     position: relative;
+//     margin: 0.5rem 0;
+
+//     .matrix-dialog-body {
+//         height: 100%;
+//         padding: 0.5rem;
+//         overflow: auto;
+
+//         ::ng-deep.table-header {
+//             top: unset !important;
+//         }
+//     }
+// }
+

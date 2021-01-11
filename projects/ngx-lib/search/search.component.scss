@@ -1,0 +1,39 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.search-container {
+    .search-input {
+        .mat-form-field {
+            display: inherit;
+        }
+
+        .v-separator {
+            padding: $spacing-xs $spacing-sm;
+            height: 100%;
+        }
+
+        .text-icon {
+            cursor: pointer;
+        }
+    }
+
+    &.floating-search {
+        display: inline-flex; // flex;
+        // justify-content: flex-start;
+
+        &.is-action-button-visable {
+            @include calc(width, '100% -' calc(#{$spacing-sm} * 2 + #{$spacing-xl})); // content spacing in both sides + 1.5 rem is the action-button width.
+        }
+    }
+
+    @media (max-width: $screen-max-size-xs) {
+        ::ng-deep .mat-button-wrapper {
+            max-width: 3.125rem;
+        }
+    }
+}
+
+.pep-button {
+    // display: flex;
+    // justify-content: flex-end;
+}

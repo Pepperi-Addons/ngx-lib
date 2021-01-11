@@ -1,0 +1,22 @@
+﻿<div class="total-items-container">
+    <ng-container *ngIf="isMapView; then mapTemplate; else notMapTemplate"></ng-container>
+
+    <ng-template #notMapTemplate>
+        <ng-container *ngIf="totalRows >= 0">
+            <div class="body-md total-items"
+                [innerHtml]="(totalRows === 1 ? 'LIST.TOTAL_RESULT' : 'LIST.TOTAL_RESULTS') | translate: { totalRows: totalRows }">
+            </div>
+        </ng-container>
+        <ng-container *ngIf="totalAmount > 0"> {{ 'LIST.TOTAL_OF' | translate }} {{ totalAmount }} </ng-container>
+    </ng-template>
+
+    <ng-template #mapTemplate>
+        <ng-container *ngIf="totalAmount >= 0">
+        </ng-container>
+        <ng-container *ngIf="totalRows >= 0">
+            <div class="body-md total-items"
+                [innerHtml]="(totalRows === 1 ? 'LIST.TOTAL_RESULT_OUT_OF_RESULT' : 'LIST.TOTAL_RESULTS_OUT_OF') | translate: { xRows: totalAmount, totalRows: totalRows }">
+            </div>
+        </ng-container>
+    </ng-template>
+</div>

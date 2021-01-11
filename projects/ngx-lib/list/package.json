@@ -1,0 +1,15 @@
+{
+    "ngPackage": {
+        "lib": {
+            "entryFile": "public-api.ts",
+            "umdModuleIds": {
+                "@ngx-translate/core": "translate",
+                "@tweenjs/tween.js": "tween"
+            }
+        }
+    },
+    "peerDependencies": {
+        "@ngx-translate/core": "^13.0.0",
+        "@tweenjs/tween.js": "^17.1.1"
+    }
+}

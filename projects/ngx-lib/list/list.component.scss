@@ -1,0 +1,31 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+:host {
+    height: inherit;
+    // /* get the height from the parent div minus header size */
+    // pep-virtual-scroll {
+    //     @include calc(min-height, '100% - 34px');
+    // }
+
+    display: flex;
+    flex-direction: column;
+}
+
+.no-data {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.no-virtual-scroll-container {
+    height: inherit;
+    overflow: auto;
+}
+
+.table-header {
+    top:0;
+
+    &.below-header-and-top-bar {
+        top: calc(#{$header-height} + #{$top-bar-height});
+    }
+}

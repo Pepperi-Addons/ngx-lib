@@ -1,0 +1,48 @@
+<ng-container [formGroup]="form">
+    <ng-container *ngIf="layoutType === 'form'">
+        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" class="header">
+        </pep-field-title>
+        <div [formGroupName]="key" [id]="key" class="pep-address-container"
+            dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
+            <div [ngSwitch]="groupField.controlType" *ngFor="let groupField of groupFields; let i = index"
+                class="pep-address-field columns-{{ groupField.colSpan }}">
+                <pep-textbox *ngSwitchCase="'textbox'" [layoutType]="layoutType" title="{{ groupField.formattedValue }}"
+                    [form]="form" [key]="groupField.key" [value]="groupField.value"
+                    [formattedValue]="groupField.formattedValue" [label]="groupField.label"
+                    [placeholder]="groupField.placeholder" [type]="groupField.type" [required]="groupField.required"
+                    [disabled]="groupField.disabled" [readonly]="groupField.readonly"
+                    [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan" [parentFieldKey]="key"
+                    (valueChange)="onValueChange($event, groupField.key)">
+                </pep-textbox>
+
+                <pep-select *ngSwitchCase="'select'" [layoutType]="layoutType" title="{{ groupField.formattedValue }}"
+                    [form]="form" [key]="groupField.key" [value]="groupField.value" [label]="groupField.label"
+                    [type]="groupField.type" [required]="groupField.required" [disabled]="groupField.disabled"
+                    [readonly]="groupField.readonly" [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan"
+                    [options]="groupField.options" [parentFieldKey]="key"
+                    (valueChange)="onValueChange($event, groupField.key)">
+                </pep-select>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === 'card'">
+        <div class="pep-card-input " title="{{ label }}&nbsp;{{ formattedValue }}"
+            [ngClass]="['text-align-' + xAlignment]">
+            <span *ngIf="label != ''" class="body-xs title">{{ label }}&nbsp;</span>
+            <ng-container *ngFor="let groupField of groupFields; let i = index">
+                <span *ngIf="groupField?.formattedValue != ''" class="body-sm">{{ groupField.formattedValue
+                    }},&nbsp;</span>
+            </ng-container>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === 'table'">
+        <div class="pep-card-input " title="{{ formattedValue }}" [ngClass]="['text-align-' + xAlignment]">
+            <ng-container *ngFor="let groupField of groupFields; let i = index">
+                <span *ngIf="groupField?.formattedValue != ''" class="body-sm">{{ groupField.formattedValue
+                    }},&nbsp;</span>
+            </ng-container>
+        </div>
+    </ng-container>
+</ng-container>

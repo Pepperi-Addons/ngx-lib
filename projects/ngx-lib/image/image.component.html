@@ -1,0 +1,85 @@
+<ng-container [formGroup]="form">
+    <ng-container>
+        <!-- New code -->
+        <ng-container *ngIf="layoutType === 'form'">
+            <div class="pep-file-container image-container" [ngClass]="{ 'one-row': rowSpan == 1}">
+                <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+                    [showTitle]="showTitle">
+                </pep-field-title>
+                <pep-files-uploader [id]="key" [key]="key" [layoutType]="layoutType" [standAlone]="standAlone"
+                    [src]="srcLarge || src" [label]="label" [required]="required" [disabled]="disabled"
+                    [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
+                    [acceptedExtensions]="acceptImagesType" (fileChange)="onFileChanged($event)"
+                    (elementClick)="onFileClicked($event)" [sizeLimitMB]="sizeLimitMB">
+                </pep-files-uploader>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="layoutType === 'card'">
+            <div class="img-wrapper "
+                [ngClass]="{ 'left-alignment': xAlignment == 'left', 'right-alignment': xAlignment == 'right', 'center-alignment': xAlignment == 'center' }">
+                <img [id]="key" [style.max-height]="fieldHeight" class="pep-report-file" [alt]="label" [src]="src"
+                    (click)="itemImageClick($event)" (error)="errorHandler($event)" />
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="layoutType === 'table'">
+            <div class="img-wrapper" [ngClass]="{
+                    'left-alignment': xAlignment == 'left',
+                    'right-alignment': xAlignment == 'right',
+                    'center-alignment': xAlignment == 'center'
+                }">
+                <img [id]="key" [style.max-height]="fieldHeight" class="pep-report-file pep-report-img"
+                    [ngClass]="['text-align-' + xAlignment]" [alt]="label" [src]="src" (click)="itemImageClick($event)"
+                    (error)="errorHandler($event)" (load)="setTitle($event)" />
+            </div>
+        </ng-container>
+    </ng-container>
+
+    <!-- Menu -->
+    <ng-container *ngIf="menuField">
+        <button [id]="key" (click)="onMenuClick($event)" class="floating-field pep-button icon-button weak invert"
+            [ngClass]="{
+                bottom: menuField?.Layout?.YAlignment == '2',
+                top: menuField?.Layout?.YAlignment == '1',
+                left: menuField?.Layout?.XAlignment == '1',
+                right: menuField?.Layout?.XAlignment == '2'
+            }">
+            <mat-icon>
+                <pep-icon name="system_menu"></pep-icon>
+            </mat-icon>
+        </button>
+    </ng-container>
+    <!-- Campaign -->
+    <ng-container *ngIf="hasCampaignField && hasCampaignField?.FormattedValue">
+        <span [id]="key" class="campaign floating-field" title="{{ hasCampaignField?.FormattedValue }}" [ngClass]="{
+                bottom: hasCampaignField?.Layout?.YAlignment == '2',
+                top: hasCampaignField?.Layout?.YAlignment == '1',
+                left: hasCampaignField?.Layout?.XAlignment == '1',
+                right: hasCampaignField?.Layout?.XAlignment == '2'
+            }">
+            <mat-icon class="has-active-campaign">
+                <pep-icon name="system_bolt"></pep-icon>
+            </mat-icon>
+        </span>
+    </ng-container>
+
+    <!-- Indicators -->
+    <ng-container *ngIf="indicatorsField && indicatorsField?.FormattedValue != ''">
+        <span [id]="key" class="indicators-container floating-field" [ngClass]="{
+                bottom: indicatorsField?.Layout?.YAlignment == '2',
+                top: indicatorsField?.Layout?.YAlignment == '1',
+                left: indicatorsField?.Layout?.XAlignment == '1',
+                right: indicatorsField?.Layout?.XAlignment == '2'
+            }">
+            <mat-icon>
+                <ng-container *ngFor="let value of indicatorsField?.FormattedValue?.split(';')">
+                    <pep-icon class="pull-left flip" name="indicator_dot_placeholder" [fill]="value"></pep-icon>
+                </ng-container>
+                <ng-container *ngIf="indicatorsField?.FormattedValue?.split(';').length < 4">
+                    <pep-icon class="pull-left flip" name="indicator_dot_placeholder"></pep-icon>
+                </ng-container>
+            </mat-icon>
+        </span>
+    </ng-container>
+</ng-container>

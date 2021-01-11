@@ -1,0 +1,34 @@
+<div class="smart-filters-container">
+    <span class="title body-md bold">{{ "SMART_FILTERS.TITLE" | translate}}</span>
+
+    <mat-accordion [displayMode]="'flat'" [multi]="true" class="pep-accordion2">
+        <mat-expansion-panel *ngFor="let filter of filters; let i = index" hideToggle="true"
+            (opened)="toggleFilter(i, true)" (closed)="toggleFilter(i, false)">
+            <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeaderHeight"
+                [expandedHeight]="expansionPanelHeaderHeight">
+                <mat-panel-title class="spacing-element-negative">
+                    <mat-icon class="spacing-element">
+                        <pep-icon [name]="filter.isOpen ? 'number_minus' : 'number_plus'"></pep-icon>
+                    </mat-icon>
+
+                    <div class="test">
+                        <span class=" ellipsis body-sm spacing-element" [title]="filter.title">{{ filter.title }}</span>
+
+                        <mat-chip [selectable]="false" [removable]="true" class="clear-filter pep-button chip xs weak">
+                            <span class="body-xs ellipsis ">1</span>
+
+                            <mat-icon class="" (click)="clearFilter(filter)">
+                                <pep-icon name="system_close"></pep-icon>
+                            </mat-icon>
+                        </mat-chip>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="expansion-content filter-content">
+                <div>
+                    Filters
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,65 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.mat-menu-item-submenu-trigger::after {
+    display: none;
+}
+
+.mat-menu-item {
+    
+    .title {
+        margin: 0 $spacing-xs;
+
+        &.spacing-from-icon {
+            margin: 0 $spacing-sm;
+        }
+
+        &.spacing-from-submenu-trigger {
+            padding-right: $spacing-lg;
+        }
+    }
+
+    .mat-icon {
+        margin: 0;
+    }
+
+    .submenu-trigger {
+        position: absolute;
+        right: $spacing-sm;
+        width: 1rem;
+    
+        &.rotate {
+            @include rotate(180deg);
+        }
+    }
+
+    &.splitter {
+        height: 1px !important;
+        margin: $spacing-sm 0;
+    }
+
+    &[dir='rtl'] {
+        .title {
+            &.spacing-from-submenu-trigger {
+                padding-right: unset;
+                padding-left: $spacing-lg;
+            }
+        }
+
+        .submenu-trigger {
+            right: unset;
+            left: $spacing-sm;
+            @include rotate(180deg);
+
+            &.rotate {
+                @include rotate(0deg);
+            }
+        }
+    }
+}
+
+.mat-menu-item-submenu-trigger::after {
+    width: unset;
+    height: unset;
+    transform: unset;
+}

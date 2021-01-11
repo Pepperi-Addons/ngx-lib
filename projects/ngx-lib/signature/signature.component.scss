@@ -1,0 +1,13 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+:host {
+    display: block;
+    // height: inherit;
+}
+
+signature-pad {
+    display: grid;
+    width: inherit;
+    height: inherit;
+}

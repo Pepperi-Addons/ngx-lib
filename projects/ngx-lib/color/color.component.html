@@ -1,0 +1,14 @@
+<pep-field-title [label]="label" [disabled]="disabled" [xAlignment]="xAlignment" [showTitle]="showTitle">
+</pep-field-title>
+<div [id]="key" class="pep-color-container" [ngClass]="{ 'right-alignment': xAlignment == 'right' }">
+    <div pepRtlDirection (click)="chooseColor()" class="pep-color pep-input"
+        [ngClass]="{disable: disabled, 'one-row': rowSpan === 1}"
+        [ngStyle]="{ 'background':  value ? value : 'transparent' }">
+        <button *ngIf="!disabled" class="pep-button icon-button xs weak invert mat-button btn-edit" tabindex="-1"
+            pepButtonBlur mat-button>
+            <mat-icon>
+                <pep-icon name="system_edit"></pep-icon>
+            </mat-icon>
+        </button>
+    </div>
+</div>

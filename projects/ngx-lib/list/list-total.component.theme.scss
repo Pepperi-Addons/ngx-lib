@@ -1,0 +1,10 @@
+@mixin pep-list-total-component-theme($pepperi-theme) {
+    .total-items {
+        color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+
+        .number {
+            color: get-pep-color($pepperi-theme, color-text, color-main);
+        }
+
+    }
+}

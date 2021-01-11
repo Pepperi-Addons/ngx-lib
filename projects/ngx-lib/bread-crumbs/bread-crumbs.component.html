@@ -1,0 +1,11 @@
+<div *ngIf="breadCrumbs?.length > 0" class="bread-crumbs ellipsis" [ngClass]="{ 'spacing-element': addSpacing }" [title]="getBreadCrumbTitle()">
+    <div class="body-xs ellipsis">
+        <ng-container *ngFor="let breadCrumb of breadCrumbs; let isFirst = first; let isLast = last">
+            <span *ngIf="!isFirst && !isLast">&nbsp;{{ breadCrumbSeparator }}&nbsp;</span>
+            <span *ngIf="!isLast">{{ breadCrumb.text }}</span>
+        </ng-container>
+    </div>
+    <div class=" title-md ellipsis current full-screen" title="{{ breadCrumbs[breadCrumbs.length - 1]?.text }}">
+        <span>{{ breadCrumbs[breadCrumbs.length - 1]?.text }}</span>
+    </div>
+</div>

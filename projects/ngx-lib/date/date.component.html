@@ -1,0 +1,78 @@
+<ng-container [formGroup]="form">
+    <!-- New code -->
+    <ng-template #pepTemplate let-showIcon="showIcon">
+        <mat-form-field appearance="outline">
+            <input #input [id]="key" title="{{ formattedValue }}" matInput class="body-sm" autocomplete="false"
+                [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left'}"
+                [(ngModel)]="dateModel" [ngModelOptions]="{standalone: true}" [matDatetimepicker]="datetimePicker"
+                [min]="minDate" [max]="maxDate" [required]="required" [disabled]="disabled"
+                (dateChange)="onDateChange($event)" (click)="openDatetimePicker(datetimePicker)"
+                (blur)="onBlur($event)" />
+            <mat-error><span class="body-xs"
+                    [title]="required && formattedValue.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"
+                    [innerText]="required && formattedValue.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"></span>
+            </mat-error>
+            <pep-textbox-icon *ngIf="showIcon && xAlignment == 'right'" matPrefix [value]="value" [label]="label"
+                [type]="type" [disabled]="disabled" (iconClick)="openDatetimePicker(datetimePicker)">
+            </pep-textbox-icon>
+            <pep-textbox-icon *ngIf="(showIcon && xAlignment == 'left')" matSuffix [value]="value" [label]="label"
+                [type]="type" [disabled]="disabled" (iconClick)="openDatetimePicker(datetimePicker)">
+            </pep-textbox-icon>
+            <mat-datetimepicker #datetimePicker [type]="showTime ? 'datetime' : 'date'" openOnFocus="false"
+                touchUi="true" timeInterval="1"></mat-datetimepicker>
+        </mat-form-field>
+    </ng-template>
+
+    <ng-container *ngIf="layoutType === 'form'">
+        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+            [showTitle]="showTitle">
+        </pep-field-title>
+        <ng-container *ngTemplateOutlet="pepTemplate; context: {showIcon: true}"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === 'card'">
+        <ng-container *ngIf="isInEditMode; then editBlock; else readOnlyBlock"></ng-container>
+        <ng-template #editBlock>
+            <div [ngClass]="{'one-row': rowSpan === 1}">
+                <ng-container *ngTemplateOutlet="pepTemplate; context: {showIcon: false}"></ng-container>
+            </div>
+        </ng-template>
+        <ng-template #readOnlyBlock>
+            <div class="pep-card-input card-flex-container"
+                [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled}"
+                [ngStyle]="{ color: textColor }" [class]="'text-align-' + xAlignment"
+                (click)="!disabled ? cardTemplateClicked($event) : ''">
+                <span *ngIf="showTitle && label != ''" class="body-xs title" title="{{ label }}">{{ label
+                    }}&nbsp;</span>
+                <span [id]="key" title="{{ formattedValue }}" class="body-sm value">{{ formattedValue }}</span>
+                <button *ngIf="isActive && !disabled" class="pep-button weak card-edit-button" mat-button>
+                    <mat-icon>
+                        <pep-icon name="system_edit">
+                        </pep-icon>
+                    </mat-icon>
+                </button>
+            </div>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === 'table'">
+        <ng-container *ngIf="isActive && !disabled; then selectedBlock; else notSelectedBlock"></ng-container>
+        <ng-template #selectedBlock>
+            <ng-container *ngTemplateOutlet="pepTemplate; context: {showIcon: true}"></ng-container>
+        </ng-template>
+        <ng-template #notSelectedBlock>
+            <ng-container *ngIf="formattedValue?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
+            <ng-template #notEmptyBlock>
+                <ng-container [ngSwitch]="type">
+                    <ng-container *ngSwitchDefault>
+                        <span [id]="key" class="body-sm pep-report-input" [ngStyle]="{ color: textColor }"
+                            [ngClass]="{readonly: disabled}" title="{{ formattedValue }}">{{ formattedValue }}</span>
+                    </ng-container>
+                </ng-container>
+            </ng-template>
+            <ng-template #emptyBlock>
+                <span [id]="key">&nbsp;</span>
+            </ng-template>
+        </ng-template>
+    </ng-container>
+</ng-container>

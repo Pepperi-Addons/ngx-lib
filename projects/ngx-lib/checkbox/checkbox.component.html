@@ -1,0 +1,68 @@
+<ng-container [formGroup]="form">
+    <!-- New code -->
+    <ng-template #pepTemplate>
+        <div class="pep-checkbox-container pep-input" [ngClass]="{
+                'disable': disabled,
+                'pep-report-checkbox': layoutType === 'table' && !isActive,
+                'pep-card-checkbox': layoutType === 'card',
+                'one-row': rowSpan === 1,
+                'no-title': label.length == 0,
+                'right-alignment pull-right flip': xAlignment == 'right',
+                'center-alignment': xAlignment == 'center'
+            }" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}" (click)="toggleChecked($event)">
+            <ng-container *ngIf="type == 'booleanText'; then booleanTextTemplate; else regularTemplate"></ng-container>
+            <ng-template #booleanTextTemplate>
+                <!-- (click)="toggleChecked($event)" -->
+                <div class="mat-checkbox-layout body-sm"
+                    [title]="(label.length > 0 ? label + ': ' : '') + ((value | lowercase) == 'true' || value == '1' ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))">
+                    <button [id]="key" class="mat-icon-button emoji-icon pull-left flip">
+                        {{ value.toLowerCase() == 'true' || value == '1' ? additionalValueObject.CheckedText :
+                        additionalValueObject.UncheckedText }}
+                    </button>
+                    <span *ngIf="label.length > 0 && layoutType !== 'table'" class="mat-checkbox-label emoji-title">{{
+                        label }}</span>
+                </div>
+            </ng-template>
+            <ng-template #regularTemplate>
+                <!-- (change)="onMaterialChange($event)" -->
+                <mat-checkbox [name]="key" class="body-sm ellipsis" type="checkbox"
+                    [title]="(label.length > 0 ? label + ': ' : '') + ((value | lowercase) == 'true' || value == '1' ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))"
+                    [checked]="(value | lowercase) == 'true' || value == '1' ? true : false" [disabled]="disabled">
+                    <span *ngIf="label.length > 0 && layoutType !== 'table'">{{ label }}</span>
+                </mat-checkbox>
+            </ng-template>
+        </div>
+    </ng-template>
+
+    <ng-container *ngIf="layoutType === 'form'">
+        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+            [showTitle]="false">
+        </pep-field-title>
+        <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === 'card'">
+        <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === 'table'">
+        <ng-container *ngIf="key === 'ItemHasActiveCampaign'; then itemCampaignBlock; else checkboxBlock">
+        </ng-container>
+        <ng-template #itemCampaignBlock>
+            <ng-container *ngIf="(value | lowercase) == 'true' || value == '1'; then trueTemplate; else falseTemplate">
+            </ng-container>
+            <ng-template #trueTemplate>
+                <mat-icon class="has-active-campaign" title="{{ 'CHECKBOX.TRUE' | translate }}">
+                    <pep-icon name="system_bolt">
+                    </pep-icon>
+                </mat-icon>
+            </ng-template>
+            <ng-template #falseTemplate>
+                <span>&nbsp;</span>
+            </ng-template>
+        </ng-template>
+        <ng-template #checkboxBlock>
+            <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+        </ng-template>
+    </ng-container>
+</ng-container>

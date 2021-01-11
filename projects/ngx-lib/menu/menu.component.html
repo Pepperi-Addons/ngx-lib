@@ -1,0 +1,50 @@
+<div class="menu-container" dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
+
+    <ng-container *ngIf="hideOnEmptyItems then animationTemplate else regularTemplate">
+    </ng-container>
+    <ng-template #animationTemplate>
+        <button mat-button class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+            [ngClass]="{ 'icon-button': !displayText || screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS  }"
+            pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [@slideInOut]="state"
+            (@slideInOut.done)="animationDone()" (@slideInOut.start)="animationStart()"
+            [matMenuTriggerFor]="menu.childMenu">
+            <ng-container *ngTemplateOutlet="triggerTemplate">
+            </ng-container>
+        </button>
+        <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem"
+            (menuItemClick)="onMenuItemClicked($event)">
+        </pep-menu-item>
+    </ng-template>
+    <ng-template #regularTemplate>
+        <ng-container *ngIf="items then menuTemplate else buttonTemplate"></ng-container>
+        <ng-template #menuTemplate>
+            <button mat-button class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+                [ngClass]="{ 'icon-button': !displayText || screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS, disabled: disabled }"
+                pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
+                [matMenuTriggerFor]="menu.childMenu">
+                <ng-container *ngTemplateOutlet="triggerTemplate">
+                </ng-container>
+            </button>
+            <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem"
+                (menuItemClick)="onMenuItemClicked($event)"></pep-menu-item>
+        </ng-template>
+        <ng-template #buttonTemplate>
+            <button mat-button class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+                [ngClass]="{ 'icon-button': !displayText || screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS, disabled: disabled }"
+                pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled">
+                <ng-container *ngTemplateOutlet="triggerTemplate">
+                </ng-container>
+            </button>
+        </ng-template>
+    </ng-template>
+</div>
+
+<ng-template #triggerTemplate>
+    <span *ngIf="displayText && screenSize <= PepScreenSizeType.SM" class="ellipsis"
+        [ngClass]="{ 'button-title-with-icon': iconName }" [title]="displayText">
+        {{ displayText }}
+    </span>
+    <mat-icon *ngIf="iconName">
+        <pep-icon name="{{ iconName }}"></pep-icon>
+    </mat-icon>
+</ng-template>

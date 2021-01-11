@@ -1,0 +1,143 @@
+<ng-container [formGroup]="form">
+    <!-- New code -->
+    <ng-container>
+        <ng-template #pepTemplate>
+            <mat-form-field [formGroup]="form" appearance="outline">
+                <div class="pep-file-wrapper">
+                    <div class="pep-file body-sm" [ngClass]="{ disable: disabled }" [style.height]="fieldHeight">
+                        <ng-container *ngIf="src != ''; then withImg; else noImg"></ng-container>
+                        <ng-template #withImg>
+                            <button *ngIf="!disabled" mat-button (click)="deleteSignature($event)"
+                                class="pep-button icon-button weak md delete" tabindex="-1"
+                                [ngClass]="{ 'right-alignment': xAlignment == 'right' }">
+                                <mat-icon>
+                                    <pep-icon name="system_bin">
+                                    </pep-icon>
+                                </mat-icon>
+                            </button>
+                            <div class="pep-file-preview" (click)="openSignModal()">
+                                <img [src]="src" [style.max-height]="fieldHeight" class="pep-file-preview-img"
+                                    (error)="errorHandler($event)" [alt]="label"
+                                    [ngClass]="['text-align-' + xAlignment]" />
+                            </div>
+                        </ng-template>
+                        <ng-template #noImg>
+                            <div class="ellipsis pep-file-message">
+                                <pep-icon name="system_signature">
+                                </pep-icon>
+                                <span class="body-sm ellipsis">
+                                    {{ (disabled ? 'MESSAGES.INFO_MISSING_SIGNATURE' : 'SIGNATURE.HINT') | translate }}
+                                </span>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <input [id]="key" matInput [formControlName]="key" class="hidden-input signature" type="text"
+                        [value]="src" [disabled]="disabled" (click)="openSignModal()"
+                        (keypress)="onKeyPress_OpenSignModal($event)" autocomplete="off" readonly />
+                </div>
+
+                <mat-error><span class="body-xs"
+                        [title]="required && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
+                        [innerText]="required && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
+                </mat-error>
+            </mat-form-field>
+        </ng-template>
+
+        <ng-container *ngIf="layoutType === 'form'">
+            <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone}">
+                <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+                    [showTitle]="showTitle">
+                </pep-field-title>
+                <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="layoutType === 'card'">
+            <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock">
+            </ng-container>
+            <ng-template #selectedBlock>
+                <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1}">
+                    <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+                </div>
+            </ng-template>
+            <ng-template #notSelectedBlock>
+                <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1 }">
+                    <ng-container *ngTemplateOutlet="pepReadonlyTemplate; context: { isTableView: false}">
+                    </ng-container>
+                </div>
+            </ng-template>
+        </ng-container>
+
+        <ng-container *ngIf="layoutType === 'table'">
+            <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock">
+            </ng-container>
+            <ng-template #selectedBlock>
+                <div class="pep-file-container one-row">
+                    <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+                </div>
+            </ng-template>
+            <ng-template #notSelectedBlock>
+                <div class="pep-file-container one-row">
+                    <ng-container *ngTemplateOutlet="pepReadonlyTemplate; context: { isTableView: true}">
+                    </ng-container>
+                </div>
+            </ng-template>
+        </ng-container>
+    </ng-container>
+
+    <!-- <ng-container *ngIf="inDialog === true">
+        <ng-container *ngTemplateOutlet="signaturePopupPad"></ng-container>
+    </ng-container> -->
+
+    <!-- <div *ngIf="inDialog === false" class="signature-backdrop modal" [ngClass]="{ fade: !isVisibleModal }" tabindex="-1"
+        role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true"
+        [ngStyle]="{ display: isVisibleModal ? 'block' : 'none' }">
+        <div class="signature-modal modal-dialog" role="document">
+            <div class="modal-content">
+                <ng-container *ngTemplateOutlet="signaturePopupPad"></ng-container>
+            </div>
+        </div>
+    </div> -->
+
+    <ng-template #pepReadonlyTemplate let-isTableView="isTableView">
+        <div class="pep-file-container">
+            <div class="pep-file-wrapper">
+                <div class="pep-file body-sm disable">
+                    <ng-container *ngIf="src != ''; then withImg; else noImg"></ng-container>
+                    <ng-template #withImg>
+                        <div class="pep-file-preview" (click)="openSignModal()">
+                            <img *ngIf="!isTableView" [src]="src" [style.max-height]="fieldHeight"
+                                class="pep-file-preview-img" (error)="errorHandler($event)" [alt]="label"
+                                [ngClass]="['text-align-' + xAlignment]" />
+                            <img *ngIf="isTableView" [src]="src" [style.max-height]="fieldHeight"
+                                class="pep-report-file pep-file-preview-img" (error)="errorHandler($event)"
+                                [alt]="label" [ngClass]="['text-align-' + xAlignment]" />
+                        </div>
+                    </ng-template>
+                    <ng-template #noImg></ng-template>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #signaturePopupPad>
+        <pep-dialog [title]="'SIGNATURE.DIALOG_TITLE' | translate" [showFooter]="showActionBtn">
+            <ng-container pep-dialog-content>
+                <signature-pad #signaturePad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
+                    (onEndEvent)="drawComplete()">
+                </signature-pad>
+            </ng-container>
+            <div pep-dialog-actions class="spacing-element-negative">
+                <button mat-button class="spacing-element pep-button md weak" [disabled]="readonly || disabled"
+                    (click)="clearSignModal()">
+                    {{ 'ACTIONS.CLEAR' | translate }}
+                </button>
+                <button mat-button class="spacing-element pep-button md strong" [disabled]="readonly || disabled"
+                    (click)="saveSignModal($event)">
+                    {{ 'ACTIONS.DONE' | translate }}
+                </button>
+            </div>
+        </pep-dialog>
+    </ng-template>
+
+</ng-container>

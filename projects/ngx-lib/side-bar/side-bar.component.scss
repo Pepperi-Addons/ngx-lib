@@ -1,0 +1,118 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.side-bar-container {
+    .side-layout {
+        position: fixed;
+        z-index: $z-index-medium + 1;
+        // padding: 0 0 0 $double-content-padding;
+        padding: 0 $content-padding;
+        top: inherit;
+        height: stretch;
+        overflow: auto;
+
+        .content {
+            margin: 0;
+            height: inherit;
+            // width: inherit;
+            overflow: auto;
+        }
+
+        @media (min-width: $screen-max-size-sm + 1) {
+            overflow: hidden;
+        }
+    }
+
+    .sidenav-container {
+        position: fixed;
+        top: $header-height;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: $z-index-high;
+        visibility: hidden;
+        
+        &.mat-drawer-opened {
+            visibility: unset;
+        }
+    
+        .sidenav {
+
+            $side-nav-width: calc(#{$side-bar-width} + #{$double-content-padding});
+            $side-nav-content-width: $side-bar-width;
+            
+            width: $side-nav-width;
+            height: 100%;
+            padding-top: $top-bar-height;
+            padding-bottom: $footer-bar-height;
+            padding-left: $double-content-padding;
+            padding-right: $double-content-padding;
+            overflow: visible;
+
+            .sidenav-header {
+                position: absolute;
+                width: auto;
+                top: 0;
+                height: $top-bar-height;
+                left: $double-content-padding;
+                right: $double-content-padding;
+                justify-content: unset;
+                padding: 0;
+                display: block;
+                padding-top: $top-bar-spacing-top;
+                max-width: $side-nav-content-width;
+            }
+            
+            .sidenav-main {
+                max-width: $side-nav-content-width;
+            }
+
+            .sidenav-footer {
+                position: absolute;
+                width: auto;
+                max-width: $side-nav-content-width;
+                bottom: 0;
+                height: $footer-bar-height;
+                left: $double-content-padding;
+                right: $double-content-padding;
+                justify-content: unset;
+                padding: 0;
+                display: block;
+                padding-top: $footer-bar-spacing-top;
+
+                .pep-button {
+                    @include pep-top-bar-button();
+                }
+            }
+        }
+
+        @media (max-width: $screen-max-size-xs) {
+            .sidenav {
+                $side-nav-width: $side-bar-width;
+                $side-nav-content-width: calc(#{$side-bar-width} - #{$double-content-padding});
+
+                width: $side-nav-width;
+                padding-left: $content-padding;
+                padding-right: $content-padding;
+            
+                .sidenav-main {
+                    max-width: $side-nav-content-width;
+                }
+
+                .sidenav-header,
+                .sidenav-footer {
+                    left: $content-padding;
+                    right: $content-padding;
+                    max-width: $side-nav-content-width;
+                }
+            }
+        }
+
+    }
+}
+
+// [dir='rtl'] {
+//     .side-layout {
+//         padding: 0 $double-content-padding 0 0;
+//     }
+// }

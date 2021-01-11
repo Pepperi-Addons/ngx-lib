@@ -1,0 +1,28 @@
+// -----------------------------------------------------
+//  Override material style
+// -----------------------------------------------------
+.pepperi-signature-container, .pep-signature-container {
+    .mat-form-field-flex {
+        padding: 0 !important;
+    }
+}
+
+@mixin pep-signature-component-theme($pepperi-theme) {
+    // .signature-backdrop {
+    //     background-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-60);
+    // }
+
+    // .signature-modal {
+    //     &.modal-dialog {
+    //         .modal-content {
+    //             box-shadow: get-pep-shadow($pepperi-theme, shadow-md, regular);
+
+    //             .modal-header {
+    //                 h3 {
+    //                     color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}

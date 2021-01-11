@@ -1,0 +1,134 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+:host {
+    width: 100%;
+    height: inherit;
+    display: block;
+    // align-items: center;
+}
+:host > * {
+    align-self: center; // instead of  align-items: center; in the :host
+}
+
+.gallery-dialog {
+    // display: grid;
+    // grid-template-rows: $dialog-header-height auto;
+    height: inherit;
+}
+
+.images-filmstrip-container {
+    height: 100%;
+
+    .img-wrapper {
+        height: 100%;
+        // @include calc(height, '100% - 1.5rem');
+    }
+}
+
+gallery {
+   // Don't remove the direction - the gallery don't work on RTL cultures
+    direction: ltr;
+    height: 100%;
+    min-height: 100%;
+
+}
+
+.gallery-dialog-content {
+    // min-height: 80vh;
+    // max-height: 100% !important;
+    // height: 100% !important;
+    // padding-bottom: 0 !important;
+
+    gallery {
+        // @include calc(min-height, '100% - 50px' );
+        min-width:  65vw;
+        // height: 427px;
+    }
+
+    ::ng-deep gallery-item {
+        gallery-image {
+            .g-image-item {
+                background-size: content !important;
+                // background-image: unset !important;
+            }
+        }
+
+        .g-item-template {
+            ngx-imageviewer {
+                canvas{
+                    max-width: 100% !important;
+                    max-height: 100% !important;
+                }
+            }
+
+        }
+    }
+}
+
+::ng-deep gallery-thumbs {
+    margin: 0 $spacing-lg 0 $spacing-sm;
+
+    gallery-thumb {
+        padding: 0 !important;
+        border-radius: $border-radius-md;
+        margin: $spacing-sm 0;
+
+        .g-image-item {
+            background-size: cover !important;
+        }
+    }
+}
+
+::ng-deep gallery-item {
+    gallery-image {
+        .g-image-item {
+            border-radius: $border-radius-lg;
+        }
+    }
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+::ng-deep gallery-dots {
+    position: absolute !important;
+    border-radius: $border-radius-md;
+
+    &.pepperi-button, &.pep-button {
+        display: flex !important;
+    }
+}
+
+::ng-deep .img-container {
+    display: flex;
+    align-items: center;
+}
+
+::ng-deep .g-nav-prev,
+::ng-deep .g-nav-next {
+    width: 2rem !important;
+    height: 2rem !important;
+    padding: 0.25rem;
+    border-radius: $border-radius-md;
+
+    .mat-icon {
+        display: inline-block !important;
+    }
+}
+
+::ng-deep .g-nav-prev {
+    -webkit-transform: translateY(-50%) perspective(1px) scale(-1,1) !important;
+    transform: translateY(-50%) perspective(1px) scale(-1,1) !important;
+}
+
+.vertical-gallery {
+    ::ng-deep gallery-thumbs {
+        margin: $spacing-lg 0 $spacing-sm 0; /* todo set on horizental mode */
+
+        gallery-thumb {
+            margin: 0 $spacing-sm;
+        }
+    }
+}

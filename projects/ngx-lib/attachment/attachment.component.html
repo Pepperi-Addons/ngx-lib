@@ -1,0 +1,55 @@
+<!-- New code -->
+<ng-template #pepTemplate>
+    <pep-files-uploader [key]="key" [src]="src" [label]="label" [required]="required" [disabled]="disabled"
+        [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
+        [layoutType]="layoutType" [standAlone]="standAlone" (fileChange)="onFileChanged($event)"
+        (elementClick)="onFileClicked($event)" [acceptedExtensions]="acceptAttachmentType">
+    </pep-files-uploader>
+</ng-template>
+
+<ng-template #pepReadonlyTemplate>
+    <ng-container *ngIf="src?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
+    <ng-template #notEmptyBlock>
+        <div class="pep-file-container">
+            <a [id]="key" class="color-link body-sm pep-card-input " *ngIf="src != null" title="{{ src }}"
+                target="_blank" href="{{ src }}">{{ src }}</a>
+        </div>
+    </ng-template>
+    <ng-template #emptyBlock>
+        <span>&nbsp;</span>
+    </ng-template>
+</ng-template>
+
+<ng-container *ngIf="layoutType === 'form'">
+    <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone }">
+        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+            [showTitle]="showTitle">
+        </pep-field-title>
+        <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="layoutType === 'card'">
+    <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock"></ng-container>
+    <ng-template #selectedBlock>
+        <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone}">
+            <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+        </div>
+    </ng-template>
+    <ng-template #notSelectedBlock>
+        <ng-container *ngTemplateOutlet="pepReadonlyTemplate"></ng-container>
+    </ng-template>
+</ng-container>
+
+
+<ng-container *ngIf="layoutType === 'table'">
+    <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock"></ng-container>
+    <ng-template #selectedBlock>
+        <div class="pep-file-container one-row">
+            <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+        </div>
+    </ng-template>
+    <ng-template #notSelectedBlock>
+        <ng-container *ngTemplateOutlet="pepReadonlyTemplate"></ng-container>
+    </ng-template>
+</ng-container>

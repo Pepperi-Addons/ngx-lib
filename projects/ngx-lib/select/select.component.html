@@ -1,0 +1,82 @@
+<ng-container [formGroup]="form">
+    <!-- New code -->
+    <ng-template #pepTemplate>
+        <ng-container *ngIf="type == 'multi'; then multiSelectBlock; else regularSelectBlock"></ng-container>
+        <ng-template #regularSelectBlock>
+            <mat-form-field appearance="outline" dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
+                <mat-select #select [required]="required ? required : undefined" matInput disableOptionCentering
+                    class="body-sm text-align-{{ xAlignment }}" [id]="key"
+                    [ngClass]="{'right-alignment': xAlignment === 'right'}"
+                    [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
+                    [(ngModel)]="selectedValueModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
+                    (selectionChange)="selectionChange($event)" (openedChange)="openedChange($event)"
+                    title="{{ fieldFormattedValue }}">
+                    <mat-option *ngIf="emptyOption" value="">{{ 'LIST.NONE' | translate }}</mat-option>
+                    <mat-option *ngFor="let option of options" [value]="option.Key">{{ option.Value }}</mat-option>
+                </mat-select>
+                <mat-error>
+                    <span class="body-xs" [title]="'MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}"
+                        [innerText]="'MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}"></span>
+                </mat-error>
+            </mat-form-field>
+        </ng-template>
+        <ng-template #multiSelectBlock>
+            <mat-form-field appearance="outline" dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
+                <mat-select #select multiple [required]="required ? required : undefined" matInput
+                    disableOptionCentering class="body-sm text-align-{{ xAlignment }}" [id]="key"
+                    [ngClass]="{'right-alignment': xAlignment === 'right'}"
+                    [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
+                    [(ngModel)]="selectedValuesModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
+                    (openedChange)="openedChange($event)" title="{{ fieldFormattedValue }}">
+                    <mat-option *ngFor="let option of options" [value]="option.Key">{{ option.Value }}</mat-option>
+                </mat-select>
+                <mat-error><span class="body-xs" [title]="'MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}"
+                        [innerText]="'MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}"> </span>
+                </mat-error>
+            </mat-form-field>
+        </ng-template>
+    </ng-template>
+
+    <ng-container *ngIf="layoutType === 'form'">
+        <pep-field-title *ngIf="!parentFieldKey" [label]="label" [required]="required" [disabled]="disabled"
+            [xAlignment]="xAlignment" [showTitle]="showTitle">
+        </pep-field-title>
+        <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === 'card'">
+        <ng-container *ngIf="isInEditMode; then editBlock; else readOnlyBlock"></ng-container>
+        <ng-template #editBlock>
+            <div [ngClass]="{'one-row': rowSpan === 1}">
+                <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+            </div>
+        </ng-template>
+        <ng-template #readOnlyBlock>
+            <div class="pep-card-input card-flex-container"
+                [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled}"
+                [class]="'text-align-' + xAlignment" (click)="!disabled ? cardTemplateClicked($event) : ''">
+                <span *ngIf="showTitle && label != ''" class="body-xs title" title="{{ label }}">{{ label
+                    }}&nbsp;</span>
+                <span [id]="key" title="{{ fieldFormattedValue }}" class="body-sm value">{{ fieldFormattedValue
+                    }}</span>
+                <button *ngIf="isActive && !disabled" class="pep-button weak card-edit-button" mat-button>
+                    <mat-icon>
+                        <pep-icon name="system_edit">
+                        </pep-icon>
+                    </mat-icon>
+                </button>
+            </div>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="layoutType === 'table'">
+        <ng-container *ngIf="isActive && !disabled; then selectedBlock; else notSelectedBlock"></ng-container>
+        <ng-template #selectedBlock>
+            <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+        </ng-template>
+        <ng-template #notSelectedBlock>
+            <span [id]="key" class="body-sm pep-report-input" [ngClass]="{readonly: disabled}"
+                title="{{ fieldFormattedValue }}">{{ fieldFormattedValue }}</span>
+        </ng-template>
+    </ng-container>
+</ng-container>

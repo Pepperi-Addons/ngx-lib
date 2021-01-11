@@ -1,0 +1,7 @@
+﻿<ng-container *ngIf="menuItems?.length > 1">
+    <pep-menu [type]="'select'" [sizeType]="sizeType" [items]="menuItems" [iconName]="'arrow_down'"
+        (menuItemClick)="onMenuItemClicked($event)"></pep-menu>
+</ng-container>
+<ng-container *ngIf="menuItems?.length == 1">
+    <pep-bread-crumbs [breadCrumbs]="breadCrumbs" [addSpacing]="true"></pep-bread-crumbs>
+</ng-container>

@@ -1,0 +1,8 @@
+<div class="indicators-container" [ngClass]="{ 'is-inside-table': layoutType === 'table' }">
+    <ng-container *ngFor="let value of value?.split(';')">
+        <pep-icon name="indicator_dot_placeholder" class="pull-left flip" [fill]="value"></pep-icon>
+    </ng-container>
+    <ng-container *ngIf="key != 'ItemIndicatorsWithoutCampaign' && value?.split(';').length < 4">
+        <pep-icon name="indicator_dot_placeholder" class="pull-left flip"></pep-icon>
+    </ng-container>
+</div>

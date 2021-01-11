@@ -1,0 +1,6 @@
+$material-nature-primary: mat-palette($mat-brown, 700, 300, 900);
+$material-nature-accent: mat-palette($mat-deep-purple, 300);
+$material-nature-warn: mat-palette($mat-red, 600);
+
+$material-nature-theme: mat-light-theme($material-nature-primary, $material-nature-accent, $material-nature-warn);
+$user-nature-theme-color: #650ec9;

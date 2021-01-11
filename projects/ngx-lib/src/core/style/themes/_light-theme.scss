@@ -1,0 +1,6 @@
+$material-light-primary: mat-palette($mat-grey, 200, 500, 300);
+$material-light-accent: mat-palette($mat-brown, 200);
+$material-light-warn: mat-palette($mat-deep-orange, 200);
+
+$material-light-theme: mat-light-theme($material-light-primary, $material-light-accent, $material-light-warn);
+$user-light-theme-color: #a8a4df;

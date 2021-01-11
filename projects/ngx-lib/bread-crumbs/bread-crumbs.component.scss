@@ -1,0 +1,9 @@
+@import '../src/core/style/abstracts/variables';
+
+.bread-crumbs {
+    // line-height: 1rem;
+    height: $top-bar-height-with-no-top;
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+}

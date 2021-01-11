@@ -1,0 +1,237 @@
+@mixin pep-rich-html-textarea-component-theme($pepperi-theme) {
+    .mat-form-field {
+        // Disabled - remove the default disabled
+        &.mat-form-field-disabled .mat-form-field-flex {
+            color: get-pep-color($pepperi-theme, color-text, color-main);
+        }
+    }
+    
+    $add-width-for-hide-scroll: 1rem;
+
+    .right-alignment {
+        quill-editor {
+            &.inline-quill {
+                .ql-container {
+                    .ql-editor {
+                        padding-right: unset;
+                        padding-left: calc(#{$spacing-sm} + #{$add-width-for-hide-scroll});
+                    }
+                }
+            }
+        }    
+    }
+
+    quill-editor {
+        &.inline-quill {
+            .ql-container {
+                .ql-editor {
+                    width: calc(100% + #{$add-width-for-hide-scroll});
+                    padding-right: calc(#{$spacing-sm} + #{$add-width-for-hide-scroll});
+                }
+            }
+        }
+
+        .ql-toolbar {
+            display: flex;
+            padding: 0px !important;
+            // height: 3rem;
+            // border-top: unset;
+            // border-right: unset;
+            // border-left: unset;
+            border: unset;
+            
+            .ql-transparent {
+                opacity: 0.9;
+            }
+            
+            .ql-formats {
+                margin-right: 0 !important;
+                margin-bottom: 0.5rem;
+
+                button { 
+                    height: 2.5rem;
+
+                    svg {
+                        width: 1.25rem !important;  
+                        float: unset !important;
+                    }
+
+                    &.ql-active {
+                        @include state-weak-active($pepperi-theme, color-weak);
+                    }
+
+                    &:focus {
+                        @include state-weak-active($pepperi-theme, color-weak);
+                    }
+                    &:active {
+                        @include state-weak-active($pepperi-theme, color-weak);
+                    }
+                }
+                
+                .ql-stroke {
+                    stroke: get-pep-color($pepperi-theme, color-weak, color-tran-80);
+                }
+                .ql-fill {
+                    fill: get-pep-color($pepperi-theme, color-weak, color-tran-80);
+                }
+
+                .ql-picker:not(.ql-color-picker) {
+                    .ql-picker-options {
+                        .ql-picker-item {
+                            outline: unset !important;
+                            width: 100%;
+                            height: auto;
+                            padding: $spacing-xs $spacing-sm;
+                            display: grid;
+                            // background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+                
+                            &:hover {
+                                @include state-weak-hover($pepperi-theme);
+                            }
+                            &:active {
+                                @include state-weak-active($pepperi-theme, color-weak, false);
+                                background: get-pep-color($pepperi-theme, color-weak, color-tran-50) !important;
+                            }
+                            &:disabled {
+                                @include state-weak-disable($pepperi-theme);
+                            }
+                        }
+                    }
+                }
+                
+                .ql-picker {
+                    &.ql-color-picker,
+                    &.ql-icon-picker {
+                        width: unset;
+                    }
+
+                    .ql-picker-label {
+                        // display: flex;
+                        // justify-content: center;
+                        outline: none;
+                        display: grid;
+                        grid-auto-flow: column;
+                        align-items: center;
+                        line-height: 1rem;
+                        border: unset;
+
+                        svg {
+                            width: 1.5rem;
+                        }
+
+                        &:after {
+                            @include select-arrow();
+                            cursor: pointer;
+                            display: grid;
+                            height: inherit;
+                            justify-content: center;
+                            align-content: center;
+                        }
+
+                    }
+
+                    &.select-arrow {
+                        .ql-picker-label {
+                            &::before {
+                                line-height: unset;
+                            }
+
+                            svg {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    .ql-picker-options {
+                        border-radius: $border-radius-md;
+                        box-sizing: content-box;
+                        padding: unset;
+                        box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
+                        border: 1px solid get-pep-color($pepperi-theme, color-system-primary, color-base);
+                    }
+                
+                    &.ql-color-picker {
+                        .ql-picker-options {
+                            padding: $spacing-xs $spacing-sm;
+                            width: 140px;
+
+                            &:focus {
+                                outline: unset !important;
+                            }
+
+                            .ql-picker-item {
+                                &:focus {
+                                    outline: unset !important;
+                                }
+                            }
+                        }
+                    }
+
+                    &.ql-expanded {
+                        @include state-weak-active($pepperi-theme, color-weak);
+                        
+                        .ql-picker-label {
+                            .ql-stroke {
+                                stroke: get-pep-color($pepperi-theme, color-text, color-link);
+                            }
+                            .ql-fill {
+                                fill: get-pep-color($pepperi-theme, color-text, color-link);
+                            }
+                        }
+
+                        .ql-picker-label {
+                            border: unset;
+                        }
+                    }
+
+                }
+            }
+
+            .vertical-separator {
+                border-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-50);
+            }
+
+            @media (max-width: 568px) { // Hack - only for iphone5 - don't put inside medium size cause of bigger iphone devices - avner
+                .ql-list{
+                    display:none;
+                }
+            }
+            @media (max-width: $screen-max-size-xs) {
+                .ql-italic,
+                .ql-underline {
+                    display: none;
+                }
+            }
+            @media (max-width: $screen-max-size-2xs) {
+                .ql-italic,
+                .ql-image,
+                .ql-underline,
+                .ql-list,
+                // .ql-link,
+                .ql-header {
+                    display: none;
+                }
+            }
+        }
+
+        .ql-container {
+            height: 16rem;
+            border: unset;
+            @include pep-border(border-top, $pepperi-theme, solid, true);
+
+            .ql-editor {
+                $side-padding: 0; // $spacing-sm;
+                padding: $spacing-sm $side-padding;
+
+                &.ql-blank::before {
+                    right: $side-padding;
+                    left: $side-padding;
+                }
+            }
+
+            .ql-tooltip.ql-flip {
+                left: 0 !important;
+            }
+        }
+    }
+}
