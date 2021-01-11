@@ -101,7 +101,7 @@ export class PepInputAutoWidthDirective implements AfterViewInit, OnDestroy {
             fontSize +
             ' ' +
             fontFamily;
-        return ctx!.measureText(value).width;
+        return ctx ? ctx.measureText(value).width : 0;
     }
 
     // private resize() {
