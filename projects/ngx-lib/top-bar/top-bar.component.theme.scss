@@ -1,9 +1,0 @@
-@mixin pep-top-bar-component-theme($pepperi-theme) {
-    .top-bar-container {
-        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
-
-        .footer {
-            background-color: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
-        }
-    }
-}

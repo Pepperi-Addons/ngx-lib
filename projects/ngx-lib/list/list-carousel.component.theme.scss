@@ -1,9 +1,0 @@
-@mixin pep-list-carousel-component-theme($pepperi-theme) {
-    .carousel-container {
-        .carousel-arrow {
-            .pep-button {
-                // @include inline(get-pep-color($pepperi-theme, color-weak, color-base), 1px, solid, false);
-            }
-        }
-    }
-}

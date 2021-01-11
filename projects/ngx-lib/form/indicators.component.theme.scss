@@ -1,7 +1,0 @@
-@mixin pep-indicators-component-theme($pepperi-theme) {
-    .indicators-container {
-        .svg-icon {
-            fill: get-pep-color($pepperi-theme, color-system-primary-invert, color-tran-70);
-        }
-    }
-}
