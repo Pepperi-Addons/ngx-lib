@@ -11,4 +11,5 @@ export class PepSmartFilter {
     type: PepSmartFilterType;
     isOpen?: boolean = false;
     hasFilter?: boolean = true;
+    value?: string = '';
 }

@@ -6,6 +6,8 @@ import {
     ElementRef,
     Input,
     ChangeDetectionStrategy,
+    Output,
+    EventEmitter,
 } from '@angular/core';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { PepSmartFilterType, PepSmartFilter } from './smart-filters.model';
@@ -54,6 +56,11 @@ export class PepSmartFiltersComponent {
         return this._filters;
     }
 
+    @Output()
+    filterClear: EventEmitter<PepSmartFilter> = new EventEmitter<PepSmartFilter>();
+    @Output()
+    filterChange: EventEmitter<PepSmartFilter> = new EventEmitter<PepSmartFilter>();
+
     expansionPanelHeaderHeight = '*';
 
     constructor(
@@ -68,6 +75,19 @@ export class PepSmartFiltersComponent {
     }
 
     clearFilter(filter: PepSmartFilter) {
-        const a = 0;
+        // Clear the filter and raise event that filter has cleared.
+        filter.hasFilter = false;
+        filter.value = '';
+        this.filterClear.emit(filter);
+    }
+
+    onFilterClear(filter: PepSmartFilter) {
+        this.clearFilter(filter);
+    }
+
+    onFilterChange(filter: PepSmartFilter, value) {
+        // Set the filter and raise event that filter has changed.
+        filter.value = value;
+        filter.hasFilter = true;
     }
 }

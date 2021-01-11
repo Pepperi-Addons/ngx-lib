@@ -7,27 +7,46 @@
             <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeaderHeight"
                 [expandedHeight]="expansionPanelHeaderHeight">
                 <mat-panel-title class="spacing-element-negative">
-                    <mat-icon class="spacing-element">
-                        <pep-icon [name]="filter.isOpen ? 'number_minus' : 'number_plus'"></pep-icon>
-                    </mat-icon>
-
-                    <div class="test">
+                    <div class="smart-filter-title-container">
+                        <mat-icon class="spacing-element">
+                            <pep-icon [name]="filter.isOpen ? 'number_minus' : 'number_plus'"></pep-icon>
+                        </mat-icon>
                         <span class=" ellipsis body-sm spacing-element" [title]="filter.title">{{ filter.title }}</span>
 
-                        <mat-chip [selectable]="false" [removable]="true" class="clear-filter pep-button chip xs weak">
+                        <mat-chip *ngIf="filter.hasFilter" [selectable]="false" [removable]="true"
+                            (click)="clearFilter(filter)" class="clear-filter pep-button chip xs weak">
                             <span class="body-xs ellipsis ">1</span>
 
-                            <mat-icon class="" (click)="clearFilter(filter)">
+                            <mat-icon class="">
                                 <pep-icon name="system_close"></pep-icon>
                             </mat-icon>
                         </mat-chip>
                     </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="expansion-content filter-content">
-                <div>
-                    Filters
-                </div>
+            <div class="expansion-content smart-filter-content">
+                <ng-container [ngSwitch]="filter.type">
+                    <ng-container *ngSwitchCase="'boolean'">
+                        <pep-smart-filter-boolean [id]="filter.id" [value]="filter.value"
+                            (filterChange)="onFilterChange(filter, $event)" (filterClear)="onFilterClear(filter)">
+                        </pep-smart-filter-boolean>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'date'">
+                        <pep-smart-filter-date></pep-smart-filter-date>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'date-time'">
+                        <pep-smart-filter-date [showTime]="true"></pep-smart-filter-date>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'string'">
+                        <pep-smart-filter-distinct-values></pep-smart-filter-distinct-values>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'number'">
+                        <pep-smart-filter-number></pep-smart-filter-number>
+                    </ng-container>
+
+                    <!-- <div *ngSwitchDefault>
+                    </div> -->
+                </ng-container>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
