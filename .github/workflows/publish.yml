@@ -38,7 +38,7 @@ jobs:
     # Publish package to npm
     - name: Publish
       run: npm publish
-      working-directory: dist/ngx-lib 
+      working-directory: projects/ngx-lib 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
