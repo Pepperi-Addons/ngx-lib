@@ -17,23 +17,31 @@
         // width: 100%;
     }
 
-    .test {
+    .smart-filter-title-container {
         display: grid;
         grid-auto-flow: column;
-        justify-content: space-between;
+        grid-template-columns: auto 1fr auto;
         width: 100%;
+    
+        .clear-filter {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0 $spacing-sm;
+            padding:0 $spacing-xs;
+            padding-inline-start: $spacing-sm;
+            
+            &:after {
+                background-color: transparent;
+            }
+        }
     }
 
-    .clear-filter {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 0 $spacing-sm;
-        padding:0 $spacing-xs;
-        padding-inline-start: $spacing-sm;
-        
-        &:after {
-            background-color: transparent;
+    .smart-filter-content {
+        ::ng-deep.filter-actions {
+            margin: $spacing-md 0;
+            display: flex;
+            justify-content: flex-end;
         }
     }
 }
