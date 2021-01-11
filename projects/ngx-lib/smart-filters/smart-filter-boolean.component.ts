@@ -6,12 +6,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
     styleUrls: ['./smart-filter-boolean.component.scss'],
 })
 export class PepSmartFilterBooleanComponent {
-    @Input() id: string = '';
-    @Input() value: boolean = false;
+    @Input() id = '';
+    @Input() value = false;
 
     @Output() filterClear: EventEmitter<void> = new EventEmitter<void>();
     @Output() filterChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    
+
     toggleChecked() {
         this.value = !this.value;
     }

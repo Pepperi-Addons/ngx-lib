@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PepSmartFilterDateComponent implements OnInit {
     @Input() showTime = false;
-    
+
     constructor() {
         const i = 0;
     }

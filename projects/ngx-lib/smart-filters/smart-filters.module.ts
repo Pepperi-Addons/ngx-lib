@@ -43,7 +43,7 @@ import { PepSmartFilterNumberComponent } from './smart-filter-number.component';
         PepSmartFilterBooleanComponent,
         PepSmartFilterDateComponent,
         PepSmartFilterDistinctValuesComponent,
-        PepSmartFilterNumberComponent
+        PepSmartFilterNumberComponent,
     ],
 })
 export class PepSmartFiltersModule {

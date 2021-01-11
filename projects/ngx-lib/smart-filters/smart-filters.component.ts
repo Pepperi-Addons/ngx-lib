@@ -56,9 +56,11 @@ export class PepSmartFiltersComponent {
         return this._filters;
     }
 
-    @Output() filterClear: EventEmitter<PepSmartFilter> = new EventEmitter<PepSmartFilter>();
-    @Output() filterChange: EventEmitter<PepSmartFilter> = new EventEmitter<PepSmartFilter>();
-    
+    @Output()
+    filterClear: EventEmitter<PepSmartFilter> = new EventEmitter<PepSmartFilter>();
+    @Output()
+    filterChange: EventEmitter<PepSmartFilter> = new EventEmitter<PepSmartFilter>();
+
     expansionPanelHeaderHeight = '*';
 
     constructor(
