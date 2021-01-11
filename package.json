@@ -25,7 +25,9 @@
         "build:ngx-lib-elements": "ng build --project ngx-lib-elements --output-hashing none --sourceMap=false && cd dist && cd ngx-lib-elements && npm run bundle:ngx-lib-elements",
         "delete:ngx-lib-elements": "rimraf ./dist/ngx-lib-elements/main.js ./dist/ngx-lib-elements/vendor.js ./dist/ngx-lib-elements/styles.js ./dist/ngx-lib-elements/polyfills.js ./dist/ngx-lib-elements/runtime.js ./dist/ngx-lib-elements/scripts.js ./dist/ngx-lib-elements/4.js ./dist/ngx-lib-elements/3rdpartylicenses.txt",
         "serve:ngx-lib-elements": "cd dist/ngx-lib-elements &&  http-server  -p 4333 -d --cors",
-        "build+serve:ngx-lib-elements": "npm run build:ngx-lib-elements && npm run delete:ngx-lib-elements && npm run serve:ngx-lib-elements"
+        "build+serve:ngx-lib-elements": "npm run build:ngx-lib-elements && npm run delete:ngx-lib-elements && npm run serve:ngx-lib-elements",
+        "compile": "npm run build-lib-prod && ng build",
+        "prepare": "npm run compile && npm run lint"
     },
     "svg-to-ts": {
         "conversionType": "constants",
@@ -90,6 +92,7 @@
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^12.11.1",
         "@typescript-eslint/eslint-plugin": "^4.11.1",
+        "angular-cli-ghpages": "^1.0.0-rc.1",
         "codelyzer": "^6.0.0-next.1",
         "eslint": "^7.17.0",
         "eslint-config-prettier": "^7.1.0",

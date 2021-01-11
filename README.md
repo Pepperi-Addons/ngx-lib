@@ -43,3 +43,38 @@ Use these steps to clone from SourceTree, our client for using the repository co
 4. Open the directory you just created to see your repository’s files.
 
 Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+
+## Versioning
+This repo follows sematic versioning. See https://semver.org/.
+
+Given a version number **MAJOR**.**MINOR**.**PATCH**, increment the:
+
+**MAJOR** version when you make incompatible API changes
+
+**MINOR** version when you add functionality in a backwards compatible manner
+
+**PATCH** version when you make backwards compatible bug fixes.
+
+## Contributing
+Contributions to this package are encouraged strongly.
+
+To contribute commit your changes to a seperate branch, and then create a PR at https://github.com/pepperi-addons/ngx-lib.
+
+Before submitting your PR make sure:
+- That your branch compiles `npm run compile`
+- That your branch follows this repo's linting guides `npm run lint`
+  You can fix most linting issues by running `npm run fix-lint`. Make sure that these scripts do not return an error or warning.
+- That you increment the version number for your changes to be published, according to the specfications above.
+
+To increment the package version:
+
+Run `npm version patch` to increment a patch.
+
+Run `npm version minor` to increment a minor.
+
+Run `npm version major` to increment a major. You probably shouldn't do this if you are not sure.
+
+Every PR must be approved by at least one other person before it can be merged in to the master.
+When you create or update a PR, there are GitHub Actions that will verify that your PR complies to the above.
+Once the PR is merged into master, a GitHub Action will publish the new version to the npm registry.
+If you do not increment the version number. This script will fail.
