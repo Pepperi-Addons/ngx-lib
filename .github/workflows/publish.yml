@@ -20,6 +20,8 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+      with:
+        credentials: ${{secrets.GIT_CREDENTIALS}}
 
     # Install node modules
     - name: Installation
@@ -27,7 +29,7 @@ jobs:
 
     # Set up git
     - name: Setup GIT
-      run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
+      run: git config --global user.email "roi.a@pepperi.com" && git config --global user.name "roiaharon-pepperi"
 
     # Set up npm
     - name: Create .npmrc
