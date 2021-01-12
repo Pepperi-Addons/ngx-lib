@@ -48,7 +48,6 @@ jobs:
 
     # Deploy examples project to Github Pages
     - name: Deploy
-      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="Pepperi-Addons" --email=roi.a@pepperi.com --no-silent
       env:
         GH_TOKEN: ${{ secrets.ROI_GH_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="roiaharon-pepperi" --email=roi.a@pepperi.com --no-silent
