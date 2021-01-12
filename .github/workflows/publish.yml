@@ -42,6 +42,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # Compile lib before deploying
+    - name: Build
+      run: npm run build-lib-prod
+
     # Deploy examples project to Github Pages
     - name: Deploy
       run: npm run ng -- deploy --base-href=/ngx-lib/ --name="Pepperi-Addons" --email=roi.a@pepperi.com 
