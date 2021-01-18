@@ -21,7 +21,7 @@ import {
     IPepFieldValueChangeEvent,
     PepSelectFieldType,
     PepSelectField,
-    PepOption,
+    IPepOption,
 } from '@pepperi-addons/ngx-lib';
 
 @Component({
@@ -40,7 +40,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() options: Array<PepOption> = [];
+    @Input() options: Array<IPepOption> = [];
 
     controlType = 'select';
 
@@ -82,7 +82,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
 
                 if (
                     this.options &&
-                    !this.options.find((opt) => opt.Key === selectedValue)
+                    !this.options.find((opt) => opt.key === selectedValue)
                 ) {
                     valueNotExist = true;
                 }
@@ -90,8 +90,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
                 // Add it to options.
                 if (valueNotExist) {
                     this.options.push({
-                        Key: selectedValue,
-                        Value: selectedValue,
+                        key: selectedValue,
+                        value: selectedValue,
                     });
                 }
             }
@@ -100,9 +100,9 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
                 this.value &&
                 this.value !== '' &&
                 this.options &&
-                !this.options.find((opt) => opt.Key === this.value)
+                !this.options.find((opt) => opt.key === this.value)
             ) {
-                this.options.push({ Key: this.value, Value: this.value });
+                this.options.push({ key: this.value, value: this.value });
             }
         }
     }
@@ -112,8 +112,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
             if (this.selectedValuesModel.length > 0) {
                 this.fieldFormattedValue = this.selectedValuesModel
                     .map((value) => {
-                        return this.options.find((opt) => opt.Key === value)
-                            ?.Value;
+                        return this.options.find((opt) => opt.key === value)
+                            ?.value;
                     })
                     .join(', ');
             } else {
@@ -122,10 +122,10 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
 
             // this.fieldFormattedValue = typeof value === 'string' ? value.replace(new RegExp(';', 'g'), ', ') : '';
         } else {
-            const selectedOpt = this.options.find((opt) => opt.Key === value);
+            const selectedOpt = this.options.find((opt) => opt.key === value);
 
             if (selectedOpt) {
-                this.fieldFormattedValue = selectedOpt.Value;
+                this.fieldFormattedValue = selectedOpt.value;
             }
         }
     }

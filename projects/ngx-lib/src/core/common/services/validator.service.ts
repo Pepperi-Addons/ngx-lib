@@ -1,3 +1,4 @@
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { Injectable } from '@angular/core';
 import {
     AbstractControl,
@@ -28,6 +29,13 @@ export class ValidatorService {
                 return target.value > control.value
                     ? { greater: { value: true } }
                     : null;
+            } else if (control.value && typeof target.value === 'string') {
+                const controlValueNumer = coerceNumberProperty(control.value);
+                const targetValueNumer = coerceNumberProperty(target.value);
+
+                return targetValueNumer > controlValueNumer
+                    ? { greater: { value: true } }
+                    : null;
             } else {
                 return null;
             }
@@ -38,6 +46,13 @@ export class ValidatorService {
         return (control: AbstractControl): { [key: string]: any } | null => {
             if (control.value && typeof target.value === 'number') {
                 return target.value < control.value
+                    ? { less: { value: true } }
+                    : null;
+            } else if (control.value && typeof target.value === 'string') {
+                const controlValueNumer = coerceNumberProperty(control.value);
+                const targetValueNumer = coerceNumberProperty(target.value);
+
+                return targetValueNumer < controlValueNumer
                     ? { less: { value: true } }
                     : null;
             } else {

@@ -103,34 +103,4 @@ export class PepInputAutoWidthDirective implements AfterViewInit, OnDestroy {
             fontFamily;
         return ctx ? ctx.measureText(value).width : 0;
     }
-
-    // private resize() {
-    //     if (this.input) {
-    //         debugger;
-    //         var fontSize = parseFloat(window.getComputedStyle(this.input, null).getPropertyValue('font-size'));
-    //         this.input.setAttribute('size', this.input.value?.length || 1);
-    //         this.renderer.setStyle(this.input, 'width', (this.input.value?.length || 1) * fontSize + 'px');
-    //     }
-    // }
-
-    // ngAfterViewInit() {
-    // 	if (this.ngModel) {
-    // 		this.ngModel.valueChanges.pipe(
-    // 			tap(() => this.updateWidth()),
-    // 			takeUntil(this.destroy$),
-    // 		).subscribe();
-    // 	} else {
-    // 		this.updateWidth();
-    // 	}
-    // }
-
-    // ngOnDestroy(): void {
-    // 	this.destroy$.next();
-    // 	this.destroy$.complete();
-    // }
-
-    // @HostListener('input', ['$event.target'])
-    // public onInput(event: Event): void {
-    // 	if (!this.ngModel) this.updateWidth();
-    // }
 }

@@ -8,15 +8,15 @@
                 [min]="minDate" [max]="maxDate" [required]="required" [disabled]="disabled"
                 (dateChange)="onDateChange($event)" (click)="openDatetimePicker(datetimePicker)"
                 (blur)="onBlur($event)" />
-            <mat-error><span class="body-xs"
+            <mat-error *ngIf="renderError"><span class="body-xs"
                     [title]="required && formattedValue.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"
                     [innerText]="required && formattedValue.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"></span>
             </mat-error>
-            <pep-textbox-icon *ngIf="showIcon && xAlignment == 'right'" matPrefix [value]="value" [label]="label"
-                [type]="type" [disabled]="disabled" (iconClick)="openDatetimePicker(datetimePicker)">
+            <pep-textbox-icon *ngIf="renderSymbol && showIcon && xAlignment == 'right'" matPrefix [value]="value"
+                [label]="label" [type]="type" [disabled]="disabled" (iconClick)="openDatetimePicker(datetimePicker)">
             </pep-textbox-icon>
-            <pep-textbox-icon *ngIf="(showIcon && xAlignment == 'left')" matSuffix [value]="value" [label]="label"
-                [type]="type" [disabled]="disabled" (iconClick)="openDatetimePicker(datetimePicker)">
+            <pep-textbox-icon *ngIf="renderSymbol && showIcon && xAlignment == 'left'" matSuffix [value]="value"
+                [label]="label" [type]="type" [disabled]="disabled" (iconClick)="openDatetimePicker(datetimePicker)">
             </pep-textbox-icon>
             <mat-datetimepicker #datetimePicker [type]="showTime ? 'datetime' : 'date'" openOnFocus="false"
                 touchUi="true" timeInterval="1"></mat-datetimepicker>
@@ -24,8 +24,8 @@
     </ng-template>
 
     <ng-container *ngIf="layoutType === 'form'">
-        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
-            [showTitle]="showTitle">
+        <pep-field-title *ngIf="renderTitle" [label]="label" [required]="required" [disabled]="disabled"
+            [xAlignment]="xAlignment" [showTitle]="showTitle">
         </pep-field-title>
         <ng-container *ngTemplateOutlet="pepTemplate; context: {showIcon: true}"></ng-container>
     </ng-container>

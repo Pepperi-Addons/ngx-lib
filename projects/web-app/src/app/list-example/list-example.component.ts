@@ -32,9 +32,18 @@ import {
     PepFooterStateType,
     IPepFooterStateChangeEvent,
 } from '@pepperi-addons/ngx-lib/top-bar';
-import { PepSmartFilter } from '@pepperi-addons/ngx-lib/smart-filters';
+import { 
+    IPepSmartFilterField,
+    DateFilter,
+    NumberFilter,
+    BooleanFilter,
+    MultiSelectFilter,
+    IPepSmartFilterData
+    // PepSmartFilterWorker,
+    // Field
+} from '@pepperi-addons/ngx-lib/smart-filters';
 import { FakeData } from './fake-data';
-import { PepSideBarComponent } from 'ngx-lib/side-bar/public-api';
+import { PepSideBarComponent } from '@pepperi-addons/ngx-lib/side-bar';
 
 @Component({
     templateUrl: './list-example.component.html',
@@ -48,8 +57,8 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     listOptions: Array<PepMenuItem>;
     sortingOptions: Array<IPepListSortingOption>;
     views: Array<IPepListView>;
-    filters: Array<PepSmartFilter>;
-
+    fields: Array<IPepSmartFilterField>;
+    
     footerState: PepFooterStateType;
 
     PepScreenSizeType = PepScreenSizeType;
@@ -86,7 +95,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         this.loadListChooser();
         this.loadListSorting();
         this.loadViews();
-        this.loadFilters();
+        this.loadSmartFilters();
     }
 
     ngAfterViewInit(): void {
@@ -137,21 +146,17 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         ];
     }
 
-    private loadFilters(): void {
-        this.filters = [
-            {
-                id: 'filter1',
-                title: 'Transaction Action Time',
-                type: 'date-time',
-                hasFilter: true
-            },
-            { id: 'filter2', title: 'Price', type: 'number' },
-            { id: 'filter3', title: 'Delivery Date', type: 'date' },
-            { id: 'filter3', title: 'Brand', type: 'string' },
-            { id: 'filter3', title: 'Discout', type: 'boolean' },
+    private loadSmartFilters(): void {
+        
+        this.fields = [
+            new DateFilter({ id: 'filter1', name: 'Transaction Action Time' }),
+            new NumberFilter({ id: 'filter2', name: 'Price' }),
+            new DateFilter({ id: 'filter3', name: 'Delivery Date' }),
+            new MultiSelectFilter({ id: 'filter4', name: 'Brand' }),
+            new BooleanFilter({ id: 'filter5', name: 'Discout' }),
         ];
     }
-
+    
     toggleMenu(): void {
         this.menuActions =
             this.menuActions === null ? this.getMenuActions() : null;
@@ -251,7 +256,6 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     onFooterStateChange(footerStateType: IPepFooterStateChangeEvent) {
         this.footerState = footerStateType.state;
     }
-
     
     onAnimationStateChange(state): void {}
 
@@ -266,5 +270,10 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     onViewChanged(viewChangeEvent: IListViewChangeEvent) {
         // debugger;
         this.loadlist(this.dataSource);
+    }
+    
+    onFiltersChange(filtersData: IPepSmartFilterData[]) {
+        // debugger;
+        console.log(JSON.stringify(filtersData))
     }
 }

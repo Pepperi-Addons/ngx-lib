@@ -2,19 +2,24 @@
 @import '../src/core/style/abstracts/variables';
 
 .smart-filters-container {
-    // &.with-no-padding {
-    //     padding: 0 !important;
-    // }
-    
     .title {
         height: $top-bar-height-with-no-top;
         display: flex;
         flex-flow: wrap;
         align-items: center;
-        
-        // height: calc(var(--pep-top-bar-spacing-bottom, 0.5rem) + var(--pep-top-bar-field-height, 2.5rem));
-        // padding: $spacing-md $spacing-sm;
-        // width: 100%;
+        justify-content: space-between;
+
+        .clear-filter {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0 $spacing-xs;
+            padding:0 $spacing-md;
+
+            &:after {
+                background-color: transparent;
+            }
+        }
     }
 
     .smart-filter-title-container {
@@ -29,19 +34,25 @@
             align-items: center;
             margin: 0 $spacing-sm;
             padding:0 $spacing-xs;
-            padding-inline-start: $spacing-sm;
+            padding-inline-start: $spacing-md;
             
             &:after {
                 background-color: transparent;
             }
+
+            .mat-icon {
+                // pep-icon {
+                //     height: 0.75rem;
+                //     width: 0.75rem;
+                //     // margin: 0.05rem;
+                // }
+
+                ::ng-deep.svg-icon {
+                    height: 0.75rem;
+                    width: 0.75rem;
+                }
+            }
         }
     }
 
-    // .smart-filter-content {
-    //     ::ng-deep.filter-actions {
-    //         margin: $spacing-md 0;
-    //         display: flex;
-    //         justify-content: flex-end;
-    //     }
-    // }
 }

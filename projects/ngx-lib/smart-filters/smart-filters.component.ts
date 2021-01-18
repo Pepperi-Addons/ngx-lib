@@ -1,44 +1,12 @@
 import {
     Component,
-    OnInit,
-    AfterViewInit,
-    HostListener,
-    ElementRef,
     Input,
     ChangeDetectionStrategy,
     Output,
     EventEmitter,
 } from '@angular/core';
-import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
-import { PepSmartFilterType, PepSmartFilter } from './smart-filters.model';
-
-// export class PepSmartFilterBase extends PepSmartFilterData {
-//     isOpen = false;
-//     hasFilter = false;
-
-//     constructor(filter: Partial<PepSmartFilterData>) {
-//         super();
-//         Object.assign(this, filter);
-//     }
-// }
-
-// enum PepDatePeriodType {
-//     Days,
-//     Weeks,
-//     Months,
-//     Years
-// }
-
-// enum PepDateQueryType {
-//     InTheLast,
-//     Today,
-//     ThisWeek,
-//     ThisMonth,
-//     Between,
-//     DueIn,
-//     On,
-//     NotInTheLast
-// }
+import { IPepSmartFilterField } from './common/model/field';
+import { IPepSmartFilterData } from './common/model/filter';
 
 @Component({
     selector: 'pep-smart-filters',
@@ -47,47 +15,71 @@ import { PepSmartFilterType, PepSmartFilter } from './smart-filters.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepSmartFiltersComponent {
-    private _filters: Array<PepSmartFilter> = [];
+    filtersDataMap: Map<string, IPepSmartFilterData> = new Map<
+        string,
+        IPepSmartFilterData
+    >();
+
     @Input()
-    set filters(value: Array<PepSmartFilter>) {
-        this._filters = value;
-    }
-    get filters(): Array<PepSmartFilter> {
-        return this._filters;
+    set filters(value: IPepSmartFilterData[]) {
+        this.filtersDataMap.clear();
+        value.forEach((filter) => {
+            this.filtersDataMap.set(filter.key, filter);
+        });
     }
 
+    private _fields: Array<IPepSmartFilterField> = [];
+    @Input()
+    set fields(value: Array<IPepSmartFilterField>) {
+        this._fields = value;
+    }
+    get fields(): Array<IPepSmartFilterField> {
+        return this._fields;
+    }
+
+    // @Output()
+    // filtersClear: EventEmitter<void> = new EventEmitter<void>();
     @Output()
-    filterClear: EventEmitter<PepSmartFilter> = new EventEmitter<PepSmartFilter>();
-    @Output()
-    filterChange: EventEmitter<PepSmartFilter> = new EventEmitter<PepSmartFilter>();
+    filtersChange: EventEmitter<IPepSmartFilterData[]> = new EventEmitter<
+        IPepSmartFilterData[]
+    >();
 
     expansionPanelHeaderHeight = '*';
 
-    constructor(
-        private element: ElementRef,
-        private layoutService: PepLayoutService
-    ) {
-        const index = 0;
+    private raiseFiltersChange(): void {
+        const filteredFields = [...this.filtersDataMap.keys()]
+            .filter((key) => this.filtersDataMap.get(key) !== null)
+            .map((key) => {
+                return this.filtersDataMap.get(key);
+            });
+
+        this.filtersChange.emit(filteredFields);
     }
 
     toggleFilter(index: number, isOpen: boolean): void {
-        this.filters[index].isOpen = isOpen;
+        this.fields[index].isOpen = isOpen;
     }
 
-    clearFilter(filter: PepSmartFilter) {
-        // Clear the filter and raise event that filter has cleared.
-        filter.hasFilter = false;
-        filter.value = '';
-        this.filterClear.emit(filter);
+    clearFilters() {
+        this.filtersDataMap.clear();
+        this.raiseFiltersChange();
+        // this.filtersClear.emit();
     }
 
-    onFilterClear(filter: PepSmartFilter) {
-        this.clearFilter(filter);
+    // Clear the filter and raise event that filters has change.
+    onFilterClear(field: IPepSmartFilterField) {
+        this.filtersDataMap.delete(field.id);
+        // this.filtersDataMap.set(field.id, null);
+        this.raiseFiltersChange();
     }
 
-    onFilterChange(filter: PepSmartFilter, value) {
-        // Set the filter and raise event that filter has changed.
-        filter.value = value;
-        filter.hasFilter = true;
+    // Set the filter and raise event that filters has change.
+    onFilterChange(
+        field: IPepSmartFilterField,
+        filterData: IPepSmartFilterData
+    ) {
+        this.filtersDataMap.delete(field.id);
+        this.filtersDataMap.set(field.id, filterData);
+        this.raiseFiltersChange();
     }
 }

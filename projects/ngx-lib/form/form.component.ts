@@ -58,6 +58,8 @@ import {
     Y_ALIGNMENT_TYPE,
     DEFAULT_VERTICAL_ALIGNMENT,
     DEFAULT_HORIZONTAL_ALIGNMENT,
+    KeyValuePair,
+    IPepOption,
 } from '@pepperi-addons/ngx-lib';
 
 export interface IPepFormFieldValueChangeEvent {
@@ -177,6 +179,14 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         return res;
     }
 
+    convertOptionalValues(
+        optionalValues: Array<KeyValuePair<string>>
+    ): IPepOption[] {
+        return optionalValues.map((ov) => {
+            return { key: ov.Key, value: ov.Value };
+        });
+    }
+
     convertAddressFields(
         controlField: UIControlField,
         addressFields: Array<ObjectsDataRowCell>,
@@ -241,7 +251,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     key: field.ApiName,
                     label: field.ApiName,
                     placeholder,
-                    options: field.OptionalValues,
+                    options: this.convertOptionalValues(field.OptionalValues),
                     readonly: !canEditObject,
                     disabled: !field.Enabled || !canEditObject,
                     hidden: false,
@@ -289,7 +299,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     key: field.ApiName,
                     label: field.ApiName,
                     placeholder,
-                    options: field.OptionalValues,
+                    options: this.convertOptionalValues(field.OptionalValues),
                     readonly: !canEditObject,
                     disabled: !field.Enabled || !canEditObject,
                     hidden: false,
@@ -375,7 +385,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             yAlignment: this.convertYAlignToVerticalAlign(
                 controlField.Layout.YAlignment
             ),
-            options: dataField.OptionalValues,
+            options: this.convertOptionalValues(dataField.OptionalValues),
             groupFields: undefined,
             maxFieldCharacters: controlField.MaxFieldCharacters,
             minValue: controlField.MinValue,
@@ -1168,7 +1178,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             const notificationInfo = updatedField.NotificationInfo;
             options.notificationInfo = notificationInfo;
         } else if (customField instanceof PepSelectField) {
-            options.options = updatedField.OptionalValues;
+            options.options = this.convertOptionalValues(
+                updatedField.OptionalValues
+            );
         }
 
         customField.update(options);
