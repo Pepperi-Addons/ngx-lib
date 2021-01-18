@@ -182,9 +182,13 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     convertOptionalValues(
         optionalValues: Array<KeyValuePair<string>>
     ): IPepOption[] {
-        return optionalValues.map((ov) => {
-            return { key: ov.Key, value: ov.Value };
-        });
+        if (optionalValues && optionalValues.length > 0) {
+            return optionalValues.map((ov) => {
+                return { key: ov.Key, value: ov.Value };
+            });
+        } else {
+            return [];
+        }
     }
 
     convertAddressFields(
