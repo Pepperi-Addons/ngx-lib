@@ -244,7 +244,7 @@ export abstract class BaseFilterComponent
     onTouched: () => void = () => {
         /* Do nothing */
     };
-    
+
     registerOnTouched(fn: any): void {
         this.onTouched = fn;
     }
