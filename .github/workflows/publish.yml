@@ -20,14 +20,16 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+      with:
+        credentials: ${{secrets.GIT_CREDENTIALS}}
 
     # Install node modules
     - name: Installation
-      run: npm install --ignore-scripts
+      run: npm ci --ignore-scripts
 
     # Set up git
     - name: Setup GIT
-      run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
+      run: git config --global user.email "roi.a@pepperi.com" && git config --global user.name "roiaharon-pepperi"
 
     # Set up npm
     - name: Create .npmrc
@@ -38,11 +40,16 @@ jobs:
     # Publish package to npm
     - name: Publish
       run: npm publish
+      working-directory: projects/ngx-lib 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # Compile lib before deploying
+    - name: Build
+      run: npm run build-lib-prod
+
     # Deploy examples project to Github Pages
     - name: Deploy
-      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="Pepperi-Addons" --email=roi.a@pepperi.com 
       env:
         GH_TOKEN: ${{ secrets.ROI_GH_TOKEN }}
+      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="roiaharon-pepperi" --email=roi.a@pepperi.com --no-silent
