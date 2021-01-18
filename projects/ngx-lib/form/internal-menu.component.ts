@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {
     PepLayoutType,
-    PepOption,
+    IPepOption,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
     IPepFieldClickEvent,
@@ -27,7 +27,7 @@ export class PepInternalMenuComponent implements OnDestroy {
     @Input() disabled = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     // @Input() hasSubMenu = false;
-    @Input() options: PepOption[] = [];
+    @Input() options: IPepOption[] = [];
     @Input() invertClass = true;
 
     controlType = 'menu';

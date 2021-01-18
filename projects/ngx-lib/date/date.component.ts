@@ -100,21 +100,59 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input() value = '';
     @Input() formattedValue = '';
     @Input() label = '';
-    @Input() type: PepDateFieldType = 'date';
+
+    private _type: PepDateFieldType = 'date';
+    @Input()
+    set type(type: PepDateFieldType) {
+        this._type = type;
+    }
+    get type(): PepDateFieldType {
+        return this._type;
+    }
+
     @Input() required = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() minValue = 0;
-    @Input() maxValue = 0;
+
+    // Minimum in thicks
+    @Input()
+    set minValue(value: number) {
+        if (value > 0) {
+            this.minDate = new Date(value * 1000 * 60 * 60 * 24);
+        }
+    }
+
+    // Maximum in thicks
+    @Input()
+    set maxValue(value: number) {
+        if (value > 0) {
+            this.maxDate = new Date(value * 1000 * 60 * 60 * 24);
+        }
+    }
+
+    // Minimum in date
+    @Input()
+    set minDateValue(date: string) {
+        this.minDate = date ? new Date(date) : null;
+    }
+
+    // Maximum in date
+    @Input()
+    set maxDateValue(date: string) {
+        this.maxDate = date ? new Date(date) : null;
+    }
 
     controlType = 'date';
 
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
+    @Input() renderTitle = true;
+    @Input() renderError = true;
+    @Input() renderSymbol = true;
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output()
@@ -163,20 +201,16 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
 
         this.showTime = this.type === 'datetime';
 
-        if (this.minValue > 0) {
-            this.minDate = new Date(this.minValue * 1000 * 60 * 60 * 24);
-        }
-
-        if (this.maxValue > 0) {
-            this.maxDate = new Date(this.maxValue * 1000 * 60 * 60 * 24);
-        }
-
         this.initDate();
     }
 
     ngOnChanges(changes: any): void {
         if (this.standAlone) {
             this.formattedValue = this.formattedValue || this.value;
+        }
+
+        if (changes.value) {
+            this.setDateModel();
         }
     }
 
@@ -186,11 +220,16 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    initDate(): void {
+    private initDate(): void {
         const culture = this.translate.getBrowserCultureLang() || 'en-US'; // this.userLang,
         this.adapter.setLocale(culture);
 
+        this.setDateModel();
+    }
+
+    private setDateModel(): void {
         if (
+            this.value === null ||
             this.value.indexOf('1900-1-1') >= 0 ||
             this.value.indexOf('1900-01-01') >= 0 ||
             this.value.indexOf('1970-1-1') >= 0 ||
@@ -221,10 +260,19 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     onDateChange(event: any): void {
         let value = '';
         if (event.value != null) {
+            const date = event.value.toDate();
+
             value = this.utilitiesService.stringifyDateWithOffset(
-                event.value.toDate(),
+                date,
                 this.showTime
             );
+
+            // Update the formatted value.
+            // if (this.formattedValue === '') {
+            this.formattedValue = this.showTime
+                ? date.toLocaleString()
+                : date.toLocaleDateString();
+            // }
         }
 
         this.customizationService.updateFormFieldValue(

@@ -35,8 +35,8 @@
     </ng-template>
 
     <ng-container *ngIf="layoutType === 'form'">
-        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
-            [showTitle]="false">
+        <pep-field-title *ngIf="renderTitle" [label]="label" [required]="required" [disabled]="disabled"
+            [xAlignment]="xAlignment" [showTitle]="false">
         </pep-field-title>
         <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
     </ng-container>

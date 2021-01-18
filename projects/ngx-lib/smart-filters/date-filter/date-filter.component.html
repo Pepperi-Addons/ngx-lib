@@ -1,0 +1,44 @@
+<div [formGroup]="form">
+    <ng-container>
+        <pep-select [key]="'timeOperator'" [value]="operator.id" [label]="'SMART_FILTERS.CHOOSE_TIME' | translate"
+            [emptyOption]="false" [options]="chooseTimeOptions" (valueChange)="onOperatorChanged($event)">
+        </pep-select>
+    </ng-container>
+
+    <div *ngIf="operator === PepSmartFilterOperators.InTheLast ||
+                operator === PepSmartFilterOperators.NotInTheLast ||
+                operator === PepSmartFilterOperators.DueIn ||
+                operator === PepSmartFilterOperators.NotDueIn" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1rem">
+        <!-- Amount -->
+        <pep-textbox [form]="form" [key]="'first'" [label]="'SMART_FILTERS.AMOUNT' | translate" [renderError]="false"
+            fxFlex="50%" [type]="'int'" [formattedValue]="form?.get('first').value" [value]="form?.get('first').value">
+        </pep-textbox>
+        <!-- Time unit -->
+        <pep-select [form]="form" [key]="'timeUnit'" [value]="operatorUnit.id"
+            [label]="'SMART_FILTERS.TIME_UNIT' | translate" fxFlex="50%" [emptyOption]="false"
+            [options]="chooseTimeUnitOptions" (valueChange)="onTimeUnitChanged($event)">
+        </pep-select>
+    </div>
+    <div *ngIf="operator === PepSmartFilterOperators.DateRange" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1rem">
+        <!-- Start date -->
+        <pep-date [form]="form" [key]="'first'" [label]="'SMART_FILTERS.START_DATE' | translate" [renderError]="false"
+            fxFlex="50%" [type]="'date'" [value]="form?.get('first').value" [maxDateValue]="form?.get('second').value">
+        </pep-date>
+        <!-- End date -->
+        <pep-date [form]="form" [key]="'second'" [label]="'SMART_FILTERS.END_DATE' | translate" [renderError]="false"
+            fxFlex="50%" [type]="'date'" [value]="form?.get('second').value" [minDateValue]="form?.get('first').value">
+        </pep-date>
+    </div>
+    <ng-container *ngIf="operator === PepSmartFilterOperators.On">
+        <!-- Choose a date -->
+        <pep-date [form]="form" [key]="'first'" [label]="'SMART_FILTERS.CHOOSE_DATE' | translate" [renderError]="false"
+            [type]="'date'" [value]="form?.get('first').value">
+        </pep-date>
+    </ng-container>
+    <!-- <ng-container *ngIf="operator !== PepSmartFilterOperators.DateRange && operator !== PepSmartFilterOperators.On">
+        <div>
+            Number
+        </div>
+    </ng-container> -->
+</div>
+<pep-filter-actions [form]="form" (applyClick)="apply()" (clearClick)="clear()"></pep-filter-actions>

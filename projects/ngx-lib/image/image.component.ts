@@ -22,7 +22,7 @@ import {
     DEFAULT_HORIZONTAL_ALIGNMENT,
     IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
-    PepOption,
+    IPepOption,
     PepImageField,
 } from '@pepperi-addons/ngx-lib';
 
@@ -42,7 +42,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() srcLarge = '';
     @Input() src = '';
-    @Input() options: PepOption[] = null;
+    @Input() options: IPepOption[] = null;
     @Input() label = '';
     // @Input() type = 'image';
     @Input() required = false;
@@ -224,9 +224,8 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
                 win.location.href = url;
             }
         } else {
-            // this.options.forEach((img: any) => this.srcLarge += ';' + img.Value);
             const arr = [this.srcLarge || this.src].concat(
-                this.options.map((opt) => opt.Value)
+                this.options.map((opt) => opt.value)
             );
             const imagesValue = arr.join(';');
 

@@ -126,7 +126,7 @@ export class UIControlField {
     CustomField: any;
     ApiName: string;
     FieldType: FIELD_TYPE;
-    OptionalValues: any;
+    OptionalValues: Array<KeyValuePair<string>>;
     MinValue: number;
     MaxValue: number;
     MaxCharacters: number;
@@ -167,7 +167,7 @@ export class ObjectsDataRowCell {
     GroupFields?: Array<ObjectsDataRowCell>;
     Highlighted?: boolean;
     NotificationInfo?: string;
-    OptionalValues?: any;
+    OptionalValues?: Array<KeyValuePair<string>>;
     ReferenceObjectInternalType?: string;
     ReferenceObjectSubType?: string;
     ReferenceObjectType?: string;

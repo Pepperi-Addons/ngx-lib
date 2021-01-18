@@ -45,6 +45,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
+    @Input() renderTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output()

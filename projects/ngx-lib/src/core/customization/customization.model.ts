@@ -18,10 +18,9 @@ export const DEFAULT_HORIZONTAL_ALIGNMENT: PepHorizontalAlignment = 'left';
 export type PepVerticalAlignment = 'top' | 'middle' | 'bottom';
 /** Default horizontal alignment. */
 export const DEFAULT_VERTICAL_ALIGNMENT: PepVerticalAlignment = 'top';
-
-export class PepOption {
-    Key: string;
-    Value: string;
+export interface IPepOption {
+    key: string;
+    value: string;
 }
 
 // export type PepFieldBaseType = '' | PepInternalButtonFieldType | PepTextboxFieldType |
@@ -80,7 +79,6 @@ export class PepFieldBase {
     maxValue: number;
     textColor: string;
     lastFocusField: any;
-    // options: PepOption[];
 
     constructor(options: IPepFieldBaseOptions = {}) {
         this.key = options.key || '';
@@ -261,11 +259,11 @@ export class PepRichHtmlTextareaField extends PepFieldBase {
 }
 
 interface IPepSignatureFieldOptions extends IPepFieldBaseOptions {
-    options?: PepOption[];
+    options?: IPepOption[];
 }
 export class PepSignatureField extends PepFieldBase {
     controlType = 'signature';
-    options: PepOption[] = [];
+    options: IPepOption[] = [];
 
     constructor(options: IPepSignatureFieldOptions = {}) {
         super(options);
@@ -277,7 +275,7 @@ interface IPepImageFieldOptions extends IPepFieldBaseOptions {
     hasCampaignField?: any;
     indicatorsField?: any;
     menuField?: any;
-    options?: PepOption[];
+    options?: IPepOption[];
     sizeLimitMB?: number;
 }
 export class PepImageField extends PepFieldBase {
@@ -285,7 +283,7 @@ export class PepImageField extends PepFieldBase {
     hasCampaignField = null;
     indicatorsField = null;
     menuField = null;
-    options: PepOption[] = [];
+    options: IPepOption[] = [];
     sizeLimitMB = 5;
 
     constructor(options: IPepImageFieldOptions = {}) {
@@ -299,11 +297,11 @@ export class PepImageField extends PepFieldBase {
 }
 
 interface IPepImagesFieldOptions extends IPepFieldBaseOptions {
-    options?: PepOption[];
+    options?: IPepOption[];
 }
 export class PepImagesField extends PepFieldBase {
     controlType = 'images';
-    options: PepOption[] = [];
+    options: IPepOption[] = [];
 
     constructor(options: IPepImagesFieldOptions = {}) {
         super(options);
@@ -383,12 +381,12 @@ export class PepCheckboxField extends PepFieldBase {
 
 export type PepSelectFieldType = 'select' | 'multi';
 interface IPepSelectFieldOptions extends IPepFieldBaseOptions {
-    options?: PepOption[];
+    options?: IPepOption[];
     type?: PepSelectFieldType;
 }
 export class PepSelectField extends PepFieldBase {
     controlType = 'select';
-    options: PepOption[] = [];
+    options: IPepOption[] = [];
     type: PepSelectFieldType;
 
     constructor(options: IPepSelectFieldOptions = {}) {
@@ -467,11 +465,11 @@ export class PepInternalPageField extends PepFieldBase {
 }
 
 interface IPepInternalMenuFieldOptions extends IPepFieldBaseOptions {
-    options?: PepOption[];
+    options?: IPepOption[];
 }
 export class PepInternalMenuField extends PepFieldBase {
     controlType = 'menu';
-    options: PepOption[] = [];
+    options: IPepOption[] = [];
     // hasSubMenu: boolean = false;
 
     constructor(options: IPepInternalMenuFieldOptions = {}) {

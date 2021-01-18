@@ -1,0 +1,8 @@
+@import '../../src/core/style/abstracts/variables';
+@import '../../src/core/style/abstracts/mixins';
+
+.filter-actions {
+    margin: $spacing-md 0;
+    display: flex;
+    justify-content: flex-end;
+}
