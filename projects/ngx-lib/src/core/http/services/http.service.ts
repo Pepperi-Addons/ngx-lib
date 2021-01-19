@@ -39,22 +39,22 @@ export class PepHttpService {
     }
 
     private getServerErrorMessage(response: HttpErrorResponse): string {
-        switch (response.status) {
-            case 404: {
-                return `Not Found: ${response.message}`;
-            }
-            case 403: {
-                return `Access Denied: ${response.message}`;
-            }
-            case 500: {
-                if (response?.error?.fault?.faultstring) {
-                    return `Internal Server Error: ${response.error.fault.faultstring}`;
-                } else {
+        if (response?.error?.fault?.faultstring) {
+            return `${response.error.fault.faultstring}`;
+        } else {
+            switch (response.status) {
+                case 404: {
+                    return `Not Found: ${response.message}`;
+                }
+                case 403: {
+                    return `Access Denied: ${response.message}`;
+                }
+                case 500: {
                     return `Internal Server Error: ${response.message}`;
                 }
-            }
-            default: {
-                return `Unknown Server Error\nError Code: ${response.status}\nMessage: ${response.message}`;
+                default: {
+                    return `Unknown Server Error\nError Code: ${response.status}\nMessage: ${response.message}`;
+                }
             }
         }
     }

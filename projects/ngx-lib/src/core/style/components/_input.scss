@@ -70,6 +70,10 @@
         }
 
         @include state-weak-default($pepperi-theme);
+        &.no-default-background {
+            background: unset;
+        }
+
         &:hover:not(.disable) {
             @include state-weak-hover($pepperi-theme);
         }

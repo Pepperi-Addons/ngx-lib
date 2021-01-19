@@ -117,13 +117,13 @@
 
                 <!-- Select Example -->
                 <pep-select [key]="'select1'" [label]="'Pepperi Select'" [value]="'val2'" [xAlignment]="'right'"
-                    [options]='[{ "Key": "val1", "Value": "Option 1" }, { "Key": "val2", "Value": "Option 2" }]'
+                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }]'
                     (valueChanged)="onValueChanged($event)">
                 </pep-select>
 
                 <pep-select [key]="'multi1'" [label]="'Pepperi Multi Select'" [type]="'multi'" [value]="'val1;val2'"
                     [xAlignment]="'right'"
-                    [options]='[{ "Key": "val1", "Value": "Option 1" }, { "Key": "val2", "Value": "Option 2" }, { "Key": "val3", "Value": "Option 3" }, { "Key": "val4", "Value": "Option 4" }]'
+                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
                     (valueChanged)="onValueChanged($event)">
                 </pep-select>
 

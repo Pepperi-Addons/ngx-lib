@@ -19,13 +19,13 @@
                         <mat-icon class="spacing-element">
                             <pep-icon [name]="field.isOpen ? 'number_minus' : 'number_plus'"></pep-icon>
                         </mat-icon>
-                        <span class=" ellipsis body-sm spacing-element" [title]="field.name">
+                        <span class="body-sm ellipsis" [title]="field.name">
                             {{ field.name }}
                         </span>
 
                         <mat-chip *ngIf="filtersDataMap.get(field.id)" [selectable]="false" [removable]="true"
                             (click)="onFilterClear(field)" class="clear-filter pep-button chip xs weak">
-                            <span class="body-xs ellipsis ">
+                            <span class="body-xs spacing-element">
                                 {{
                                 field.type === 'multi-select' ?
                                 filtersDataMap.get(field.id).value?.first?.length : 1
