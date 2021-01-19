@@ -26,33 +26,30 @@
         display: grid;
         grid-auto-flow: column;
         grid-template-columns: auto 1fr auto;
+        align-items: center;
         width: 100%;
     
         .clear-filter {
             display: flex;
             flex-direction: row;
             align-items: center;
-            margin: 0 $spacing-sm;
+            margin-inline-end: $spacing-sm;
             padding:0 $spacing-xs;
-            padding-inline-start: $spacing-md;
+            padding-inline-start: $spacing-sm;
             
             &:after {
                 background-color: transparent;
             }
+        }
 
-            .mat-icon {
-                // pep-icon {
-                //     height: 0.75rem;
-                //     width: 0.75rem;
-                //     // margin: 0.05rem;
-                // }
-
-                ::ng-deep.svg-icon {
-                    height: 0.75rem;
-                    width: 0.75rem;
-                }
+        .mat-icon {
+            width: 1rem;
+            height: 1rem;
+            
+            ::ng-deep.svg-icon {
+                height: 0.75rem;
+                width: 0.75rem;
             }
         }
     }
-
 }

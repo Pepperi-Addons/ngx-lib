@@ -7,6 +7,8 @@ import {
     OnDestroy,
     OnInit,
     Output,
+    ChangeDetectorRef,
+    Renderer2,
 } from '@angular/core';
 import {
     AbstractControl,
@@ -106,7 +108,8 @@ export abstract class BaseFilterComponent
     constructor(
         private builder: FormBuilder,
         protected translate: TranslateService,
-        protected validator: ValidatorService
+        protected validator: ValidatorService,
+        protected renderer: Renderer2
     ) {
         this.destroyer = new Subject();
         this.initForm();

@@ -1,17 +1,22 @@
 import { PepSmartFilterType } from './type';
 
+export interface IPepSmartFilterOption {
+    value: string;
+    count: number;
+}
+
 export interface IPepSmartFilterField {
     id: string;
     name: string;
     isOpen?: boolean;
-    options?: { value: string; count: number }[];
+    options?: IPepSmartFilterOption[];
 }
 
 export abstract class PepSmartFilterBaseField implements IPepSmartFilterField {
     id: string;
     name: string;
     isOpen?: boolean;
-    options?: { value: string; count: number }[];
+    options?: IPepSmartFilterOption[];
 
     protected _type: PepSmartFilterType;
     get type(): PepSmartFilterType {

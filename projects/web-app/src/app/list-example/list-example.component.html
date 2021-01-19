@@ -12,8 +12,8 @@
             </pep-button>
         </div>
         <div footer-start-content>
-            <pep-button [value]="'filters'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'spacing-element '">
-                <!-- (click)="toggleFilters(sideNav)" -->
+            <pep-button [value]="'filters'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'spacing-element '"
+                (click)="toggleFilters(sideNav)">
             </pep-button>
             <pep-button [sizeType]="'sm'" [classNames]="'spacing-element '" [value]="'Tomer test'"
                 [iconName]="'system_bolt'">
@@ -34,9 +34,9 @@
     </pep-top-bar>
     <div class="main-content ">
 
-        <!-- <pep-side-bar #sideNav>
+        <pep-side-bar #sideNav>
             <pep-smart-filters [fields]="fields" (filtersChange)="onFiltersChange($event)"></pep-smart-filters>
-        </pep-side-bar> -->
+        </pep-side-bar>
 
         <!-- <div class=" side-bar-container">
                 <div class="side-layout ">

@@ -8,21 +8,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-import {
-    MatDatetimepickerModule,
-    MatNativeDatetimeModule,
-} from '@mat-datetimepicker/core';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { PepDateModule } from '@pepperi-addons/ngx-lib/date';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
-import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 import {
     PepIconModule,
     PepIconRegistry,
@@ -49,18 +45,17 @@ import { PepNumberFilterComponent } from './number-filter/number-filter.componen
         MatChipsModule,
         MatExpansionModule,
         MatIconModule,
-        MatDatepickerModule,
         MatFormFieldModule,
         MatInputModule,
-        MatDatetimepickerModule,
-        MatNativeDatetimeModule,
+        // External modules
+        VirtualScrollerModule,
         // ngx-lib modules
         PepNgxLibModule,
         PepCheckboxModule,
         PepDateModule,
         PepSelectModule,
         PepTextboxModule,
-        PepFieldTitleModule,
+        PepSearchModule,
         PepIconModule,
     ],
     exports: [PepSmartFiltersComponent],

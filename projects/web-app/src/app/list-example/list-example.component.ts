@@ -38,7 +38,8 @@ import {
     NumberFilter,
     BooleanFilter,
     MultiSelectFilter,
-    IPepSmartFilterData
+    IPepSmartFilterData,
+    IPepSmartFilterOption
     // PepSmartFilterWorker,
     // Field
 } from '@pepperi-addons/ngx-lib/smart-filters';
@@ -147,12 +148,16 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     }
 
     private loadSmartFilters(): void {
-        
+        const brandOptions: IPepSmartFilterOption[] = [];
+        for (let index = 1; index <= 1000; index++) {
+            brandOptions.push({ value: `value ${index}`, count: index });
+        }
+
         this.fields = [
             new DateFilter({ id: 'filter1', name: 'Transaction Action Time' }),
             new NumberFilter({ id: 'filter2', name: 'Price' }),
             new DateFilter({ id: 'filter3', name: 'Delivery Date' }),
-            new MultiSelectFilter({ id: 'filter4', name: 'Brand' }),
+            new MultiSelectFilter({ id: 'filter4', name: 'Brand', options: brandOptions }),
             new BooleanFilter({ id: 'filter5', name: 'Discout' }),
         ];
     }

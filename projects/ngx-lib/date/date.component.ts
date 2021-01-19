@@ -252,9 +252,11 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onBlur(event: any): void {
-        if (this.isInEditMode && !this.datetimePicker.opened) {
-            this.isInEditMode = false;
-        }
+        setTimeout(() => {
+            if (this.isInEditMode && !this.datetimePicker.opened) {
+                this.isInEditMode = false;
+            }
+        }, 0);
     }
 
     onDateChange(event: any): void {

@@ -79,6 +79,7 @@
     align-items: center;
 
     .mat-checkbox {
+        @include fix-inline-z-index();
         height: inherit;
         display: flex;
         align-items: center;
@@ -240,6 +241,7 @@
 }
 
 .mat-checkbox-layout {
+    @include fix-inline-z-index();
     // height: inherit;
     margin-bottom: unset; // Cancel bootstrap defaults for Label.
     width: fit-content;
