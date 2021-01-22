@@ -7,21 +7,20 @@
     <div *ngIf="operator !== PepSmartFilterOperators.NumberRange">
         <!-- Amount -->
         <pep-textbox [form]="form" [key]="'first'" [label]="'SMART_FILTERS.AMOUNT' | translate" [renderError]="false"
-            [type]="'int'" [formattedValue]="form?.get('first').value" [value]="form?.get('first').value">
+            [type]="field.type" [formattedValue]="form?.get('first').value" [value]="form?.get('first').value">
         </pep-textbox>
     </div>
     <div *ngIf="operator === PepSmartFilterOperators.NumberRange" fxLayout="row" fxLayout.xs="column"
         fxLayoutGap="1rem">
         <!-- Min number -->
         <pep-textbox [form]="form" [key]="'first'" [label]="'SMART_FILTERS.MIN' | translate" [renderError]="false"
-            fxFlex="50%" [type]="'int'" [formattedValue]="form?.get('first').value" [value]="form?.get('first').value"
-            [maxValue]="form?.get('second').value" (valueChange)="onValueChange($event)">
+            fxFlex="50%" [type]="field.type" [formattedValue]="form?.get('first').value"
+            [value]="form?.get('first').value" [maxValue]="form?.get('second').value">
         </pep-textbox>
         <!-- Max number -->
         <pep-textbox [form]="form" [key]="'second'" [label]="'SMART_FILTERS.MAX' | translate" [renderError]="false"
-            fxFlex="50%" [type]="'int'" [value]="form?.get('second').value" [minValue]="form?.get('first').value"
-            (valueChange)="onValueChange($event)">
+            fxFlex="50%" [type]="field.type" [formattedValue]="form?.get('second').value"
+            [value]="form?.get('second').value" [minValue]="form?.get('first').value">
         </pep-textbox>
     </div>
 </div>
-<pep-filter-actions [form]="form" (applyClick)="apply()" (clearClick)="clear()"></pep-filter-actions>

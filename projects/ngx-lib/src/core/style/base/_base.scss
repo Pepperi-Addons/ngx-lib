@@ -221,6 +221,10 @@ main {
                     margin-left: 0;
                 }
             }
+
+            &.limit-max-width {
+                max-width: 896px;
+            }
         }
 
         //  Tabs.

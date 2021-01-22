@@ -66,14 +66,15 @@
             "NOT_IN_THE_LAST": "Not in the last",
             "NOT_DUE_IN": "Not due in",
             "IS_EMPTY": "Is empty",
-            "IS_NOT_EMPTY": "Not is empty",
+            "IS_NOT_EMPTY": "Is not empty",
             "NOT_EQUAL": "Not equal",
             "LESS_THEN_OR_EQUAL": "Less than or equal to",
             "LESS_THEN": "Less than",
             "EQUAL": "Equal",
             "GREATER_THEN": "Greater than",
             "GREATER_THEN_OR_EQUAL": "Greater than or equal to",
-            "NUMBER_RANGE": "Between"
+            "NUMBER_RANGE": "Between",
+            "In": "In"
         },
         "OPERATOR_UNITS": {
             "DAYS": "Days",

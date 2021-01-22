@@ -32,19 +32,20 @@ import {
     PepFooterStateType,
     IPepFooterStateChangeEvent,
 } from '@pepperi-addons/ngx-lib/top-bar';
-import { 
+import {
     IPepSmartFilterField,
-    DateFilter,
-    NumberFilter,
-    BooleanFilter,
-    MultiSelectFilter,
+    // DateFilter,
+    // NumberFilter,
+    // BooleanFilter,
+    // MultiSelectFilter,
     IPepSmartFilterData,
-    IPepSmartFilterOption
+    IPepSmartFilterFieldOption
     // PepSmartFilterWorker,
     // Field
 } from '@pepperi-addons/ngx-lib/smart-filters';
 import { FakeData } from './fake-data';
 import { PepSideBarComponent } from '@pepperi-addons/ngx-lib/side-bar';
+import { createSmartFilterField } from 'projects/ngx-lib/smart-filters/common/model/creator';
 
 @Component({
     templateUrl: './list-example.component.html',
@@ -59,7 +60,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     sortingOptions: Array<IPepListSortingOption>;
     views: Array<IPepListView>;
     fields: Array<IPepSmartFilterField>;
-    
+
     footerState: PepFooterStateType;
 
     PepScreenSizeType = PepScreenSizeType;
@@ -148,20 +149,21 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     }
 
     private loadSmartFilters(): void {
-        const brandOptions: IPepSmartFilterOption[] = [];
-        for (let index = 1; index <= 1000; index++) {
+        const brandOptions: IPepSmartFilterFieldOption[] = [];
+        for (let index = 1; index <= 10000; index++) {
             brandOptions.push({ value: `value ${index}`, count: index });
         }
 
         this.fields = [
-            new DateFilter({ id: 'filter1', name: 'Transaction Action Time' }),
-            new NumberFilter({ id: 'filter2', name: 'Price' }),
-            new DateFilter({ id: 'filter3', name: 'Delivery Date' }),
-            new MultiSelectFilter({ id: 'filter4', name: 'Brand', options: brandOptions }),
-            new BooleanFilter({ id: 'filter5', name: 'Discout' }),
+            createSmartFilterField({ id: 'filter1', name: 'Transaction Action Time' }, 'date-time'),
+            createSmartFilterField({ id: 'filter2', name: 'stock' }, 'int'),
+            createSmartFilterField({ id: 'filter3', name: 'Delivery Date' }, 'date'),
+            createSmartFilterField({ id: 'filter4', name: 'Brand', options: brandOptions }, 'multi-select'),
+            createSmartFilterField({ id: 'filter5', name: 'Discout' }, 'boolean'),
+            createSmartFilterField({ id: 'filter6', name: 'Price' }, 'currency')
         ];
     }
-    
+
     toggleMenu(): void {
         this.menuActions =
             this.menuActions === null ? this.getMenuActions() : null;
@@ -261,22 +263,22 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     onFooterStateChange(footerStateType: IPepFooterStateChangeEvent) {
         this.footerState = footerStateType.state;
     }
-    
-    onAnimationStateChange(state): void {}
 
-    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) {}
+    onAnimationStateChange(state): void { }
 
-    selectedRowsChanged(selectedRowsCount: number) {}
+    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) { }
 
-    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) {}
+    selectedRowsChanged(selectedRowsCount: number) { }
 
-    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) {}
+    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) { }
+
+    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) { }
 
     onViewChanged(viewChangeEvent: IListViewChangeEvent) {
         // debugger;
         this.loadlist(this.dataSource);
     }
-    
+
     onFiltersChange(filtersData: IPepSmartFilterData[]) {
         // debugger;
         console.log(JSON.stringify(filtersData))

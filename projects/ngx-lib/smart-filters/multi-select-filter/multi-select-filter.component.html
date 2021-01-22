@@ -1,38 +1,27 @@
 <div [formGroup]="form">
-    <!-- <pep-search [key]="'search'" [label]="'SMART_FILTERS.SEARCH' | translate">
-    </pep-search> -->
-    <pep-search [value]="searchString" (search)="onSearchChanged($event)">
-    </pep-search>
+    <pep-search [searchControl]="searchControl" [triggerOn]="'keydown'" [shrinkInSmallScreen]="false"></pep-search>
     <div pepRtlClass class="multi-select-options pep-border-top pep-border-bottom">
-        <ng-container *ngIf="field.options.length === 0">
+        <!-- <ng-container *ngIf="options.length === 0">
             <span class="no-options body-sm ellipsis" [title]="field.name">
                 {{ "SMART_FILTERS.NO_SEARCH_RESULTS" | translate}}
             </span>
-        </ng-container>
-        <div #optionsContainer *ngIf="field.options.length > 0" class="flip-scroll">
-            <virtual-scroller #scroll [items]="field.options" [parentScroll]="optionsContainer">
+        </ng-container> -->
+        <div #optionsContainer *ngIf="options.length > 0" class="flip-scroll">
+            <virtual-scroller #scroll [items]="filteredOptions$ | async" [parentScroll]="optionsContainer">
                 <mat-checkbox *ngFor="let opt of scroll.viewPortItems"
-                    class="pep-checkbox-container pep-input no-default-background md" type="checkbox"
-                    [title]="opt.value">
+                    class="pep-checkbox-container pep-input no-default-background md" [title]="opt.value"
+                    [checked]="opt.selected" (change)="onOptionChange(opt, $event)">
                     <div class="title">
                         <span class="body-sm ellipsis">{{ opt.value }}</span>
-                        <span class="color-dimmed body-xs ellipsis">({{opt.count}})</span>
+                        <span *ngIf="opt.count" class="color-dimmed body-xs ellipsis">({{opt.count}})</span>
                     </div>
                 </mat-checkbox>
-                <!-- <div *ngFor="let item of scroll.viewPortItems"
-                    class="pep-checkbox-container pep-input no-default-background md">
-                    {{item?.value}}
-                </div> -->
+                <ng-container *ngIf="scroll.viewPortItems?.length === 0">
+                    <span class="no-options body-sm ellipsis" [title]="field.name">
+                        {{ "SMART_FILTERS.NO_SEARCH_RESULTS" | translate}}
+                    </span>
+                </ng-container>
             </virtual-scroller>
         </div>
-
-        <!-- <mat-checkbox *ngFor="let opt of field.options"
-            class="pep-checkbox-container pep-input no-default-background md" type="checkbox" [title]="opt.value">
-            <div class="title">
-                <span class="body-sm ellipsis">{{ opt.value }}</span>
-                <span class="color-dimmed body-xs ellipsis">({{opt.count}})</span>
-            </div>
-        </mat-checkbox> -->
     </div>
-    <pep-filter-actions [form]="form" (applyClick)="apply()" (clearClick)="clear()"></pep-filter-actions>
 </div>

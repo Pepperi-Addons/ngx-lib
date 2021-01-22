@@ -5,7 +5,7 @@ import {
     PepSmartFilterOperators,
 } from '../common/model/operator';
 import { IPepSmartFilterDataValue } from '../common/model/filter';
-import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { IPepFieldValueChangeEvent, IPepOption } from '@pepperi-addons/ngx-lib';
 
 @Component({
@@ -14,39 +14,16 @@ import { IPepFieldValueChangeEvent, IPepOption } from '@pepperi-addons/ngx-lib';
     styleUrls: ['./number-filter.component.scss'],
 })
 export class PepNumberFilterComponent
-    extends BaseFilterComponent
-    implements OnInit, OnChanges {
+    extends BaseFilterComponent {
     PepSmartFilterOperators = PepSmartFilterOperators;
     chooseTypeOptions: Array<IPepOption> = [];
 
-    ngOnInit() {
-        // this.form.valueChanges
-        // .pipe(
-        //     this.getDestroyer()
-        // ).subscribe((res) => {
-        //     this.setFieldsValidators();
-        // });
-        // this.form.get('first').valueChanges.subscribe((res) => {
-        //     this.form.get('first').setValidators([Validators.required, this.validator.isLessThan(this.form.get('second'))]);
-        //     this.form.get('second').setValidators([Validators.required, this.validator.isGreaterThan(this.form.get('first'))]);
-        // })
-        // this.form.get('second').valueChanges.subscribe((res) => {
-        //     this.form.get('first').setValidators([Validators.required, this.validator.isLessThan(this.form.get('second'))]);
-        //     this.form.get('second').setValidators([Validators.required, this.validator.isGreaterThan(this.form.get('first'))]);
-        // })
-    }
-
-    ngOnChanges() {
-        // debugger;
-        // if (this.form) {
-        //     this.updateValidator();
-        // }
-    }
-
+    // Override
     getDefaultOperator(): IPepSmartFilterOperator {
         return PepSmartFilterOperators.Equals;
     }
 
+    // Override
     getFilterValue(): IPepSmartFilterDataValue {
         const filterValue = {
             first: this.form.get('first').value,
@@ -72,7 +49,7 @@ export class PepNumberFilterComponent
     }
 
     // Override
-    setFieldsValidators(): void {
+    setFieldsStateAndValidators(): void {
         if (this.operator === PepSmartFilterOperators.NumberRange) {
             this.form
                 .get('first')
@@ -88,7 +65,7 @@ export class PepNumberFilterComponent
                     this.validator.isGreaterThan(this.form.get('first')),
                 ]);
         } else {
-            super.setFieldsValidators();
+            super.setFieldsStateAndValidators();
         }
     }
 
@@ -97,20 +74,5 @@ export class PepNumberFilterComponent
             (operator) => operator.id === event.value
         );
         this.operator = operator;
-    }
-
-    onValueChange(event: IPepFieldValueChangeEvent) {
-        //     // debugger;
-        //     try {
-        //         const numberValue = parseInt(event.value);
-        //         this.form.get(event.key).setValue(numberValue);
-        //         super.updateValidator();
-        //     }
-        //     catch {
-        //     }
-        //     // this.form.get('first').setValidators([Validators.required, this.validator.isLessThan(this.form.get('second'))]);
-        //     // this.form.get('second').setValidators([Validators.required, this.validator.isGreaterThan(this.form.get('first'))]);
-        //     // this.form.get('first').updateValueAndValidity();
-        //     // this.form.get('second').updateValueAndValidity();
     }
 }

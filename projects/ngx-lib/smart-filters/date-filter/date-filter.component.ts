@@ -1,10 +1,5 @@
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewChild,
+    Component
 } from '@angular/core';
 import { BaseFilterComponent } from '../common/model/base-filter-component';
 import {
@@ -27,14 +22,17 @@ export class PepDateFilterComponent extends BaseFilterComponent {
     chooseTimeOptions: Array<IPepOption> = [];
     chooseTimeUnitOptions: Array<IPepOption> = [];
 
+    // Override
     getDefaultOperator(): IPepSmartFilterOperator {
         return PepSmartFilterOperators.InTheLast;
     }
 
+    // Override
     getDefaultOperatorUnit(): IPepSmartFilterOperatorUnit {
         return PepSmartFilterOperatorUnits.Months;
     }
 
+    // Override
     getFilterValue(): IPepSmartFilterDataValue {
         const filterValue = {
             first: this.form.get('first').value,
@@ -69,7 +67,7 @@ export class PepDateFilterComponent extends BaseFilterComponent {
     }
 
     // Override
-    setFieldsValidators(): void {
+    setFieldsStateAndValidators(): void {
         this.form.get('first').enable();
 
         if (this.operator === PepSmartFilterOperators.DateRange) {
@@ -102,7 +100,7 @@ export class PepDateFilterComponent extends BaseFilterComponent {
             }
 
             // Default disable 'second' field.
-            super.setFieldsValidators();
+            super.setFieldsStateAndValidators();
         }
     }
 

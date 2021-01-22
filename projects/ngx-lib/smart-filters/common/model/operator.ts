@@ -1,16 +1,16 @@
-import { PepSmartFilterType } from './type';
+import { PepSmartFilterComponentType } from './type';
 export class IPepSmartFilterOperator {
     id: string;
     name: string;
     short: string;
-    type: PepSmartFilterType[];
+    componentType: PepSmartFilterComponentType[];
 }
 
 const Equals: IPepSmartFilterOperator = {
     id: 'eq',
     name: 'EQUAL',
     short: '=',
-    type: [
+    componentType: [
         'number',
         'multi-select',
         // 'date',
@@ -24,7 +24,7 @@ const NotEqual: IPepSmartFilterOperator = {
     id: 'neq',
     name: 'NOT_EQUAL',
     short: '<>',
-    type: [
+    componentType: [
         'number',
         'multi-select',
         // 'date',
@@ -38,7 +38,7 @@ const LessThan: IPepSmartFilterOperator = {
     id: 'lt',
     name: 'LESS_THEN',
     short: '<',
-    type: ['number'],
+    componentType: ['number'],
 };
 
 // const LessThanOrEquals: IPepSmartFilterOperator = {
@@ -52,7 +52,7 @@ const GreaterThan: IPepSmartFilterOperator = {
     id: 'gt',
     name: 'GREATER_THEN',
     short: '>',
-    type: ['number'],
+    componentType: ['number'],
 };
 
 // const GreaterThanOrEquals: IPepSmartFilterOperator = {
@@ -66,7 +66,7 @@ const NumberRange: IPepSmartFilterOperator = {
     id: 'numberRange',
     name: 'NUMBER_RANGE',
     short: 'Range',
-    type: ['number'],
+    componentType: ['number'],
 };
 
 // const Contains: Operator = {
@@ -108,77 +108,84 @@ const InTheLast: IPepSmartFilterOperator = {
     id: 'inTheLast',
     name: 'IN_THE_LAST',
     short: 'In the last',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const Today: IPepSmartFilterOperator = {
     id: 'today',
     name: 'TODAY',
     short: 'Today',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const ThisWeek: IPepSmartFilterOperator = {
     id: 'thisWeek',
     name: 'THIS_WEEK',
     short: 'This week',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const ThisMonth: IPepSmartFilterOperator = {
     id: 'thisMonth',
     name: 'THIS_MONTH',
     short: 'This month',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const DateRange: IPepSmartFilterOperator = {
     id: 'dateRange',
     name: 'DATE_RANGE',
     short: 'Range',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const DueIn: IPepSmartFilterOperator = {
     id: 'dueIn',
     name: 'DUE_IN',
     short: 'Due in',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const On: IPepSmartFilterOperator = {
     id: 'on',
     name: 'ON',
     short: 'On',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const NotInTheLast: IPepSmartFilterOperator = {
     id: 'notInTheLast',
     name: 'NOT_IN_THE_LAST',
     short: 'Not in the last',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const NotDueIn: IPepSmartFilterOperator = {
     id: 'notDueIn',
     name: 'NOT_DUE_IN',
     short: 'Not due in',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const IsEmpty: IPepSmartFilterOperator = {
     id: 'isEmpty',
     name: 'IS_EMPTY',
     short: 'Is empty',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const IsNotEmpty: IPepSmartFilterOperator = {
     id: 'isNotEmpty',
     name: 'IS_NOT_EMPTY',
     short: 'Is not empty',
-    type: ['date'],
+    componentType: ['date'],
+};
+
+const In: IPepSmartFilterOperator = {
+    id: 'in',
+    name: 'IN',
+    short: 'In',
+    componentType: ['multi-select'],
 };
 
 export const PepSmartFilterOperators = {
@@ -205,36 +212,37 @@ export const PepSmartFilterOperators = {
     NotDueIn: NotDueIn,
     IsEmpty: IsEmpty,
     IsNotEmpty: IsNotEmpty,
+    In: In,
 };
 
 export class IPepSmartFilterOperatorUnit {
     id: string;
     name: string;
-    type: PepSmartFilterType[];
+    componentType: PepSmartFilterComponentType[];
 }
 
 const Days: IPepSmartFilterOperatorUnit = {
     id: 'days',
     name: 'DAYS',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const Weeks: IPepSmartFilterOperatorUnit = {
     id: 'weeks',
     name: 'WEEKS',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const Months: IPepSmartFilterOperatorUnit = {
     id: 'months',
     name: 'MONTHS',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 const Years: IPepSmartFilterOperatorUnit = {
     id: 'years',
     name: 'YEARS',
-    type: ['date'],
+    componentType: ['date'],
 };
 
 export const PepSmartFilterOperatorUnits = {

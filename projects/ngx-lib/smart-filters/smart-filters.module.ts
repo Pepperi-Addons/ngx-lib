@@ -26,12 +26,14 @@ import {
     pepIconNumberPlus,
 } from '@pepperi-addons/ngx-lib/icon';
 
+// import { BaseFilterComponent } from './common/model/base-filter-component';
 import { PepSmartFiltersComponent } from './smart-filters.component';
 import { PepFilterActionsComponent } from './common/filter-actions.component';
 import { PepBooleanFilterComponent } from './boolean-filter/boolean-filter.component';
 import { PepDateFilterComponent } from './date-filter/date-filter.component';
 import { PepMultiSelectFilterComponent } from './multi-select-filter/multi-select-filter.component';
 import { PepNumberFilterComponent } from './number-filter/number-filter.component';
+
 
 @NgModule({
     imports: [
@@ -60,6 +62,7 @@ import { PepNumberFilterComponent } from './number-filter/number-filter.componen
     ],
     exports: [PepSmartFiltersComponent],
     declarations: [
+        // BaseFilterComponent,
         PepSmartFiltersComponent,
         PepFilterActionsComponent,
         PepBooleanFilterComponent,
