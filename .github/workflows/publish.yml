@@ -37,16 +37,16 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
-    # Publish package to npm
-    - name: Publish
-      run: npm publish
-      working-directory: projects/ngx-lib 
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     # Compile lib before deploying
     - name: Build
       run: npm run build-lib-prod
+
+    # Publish package to npm
+    - name: Publish
+      run: npm publish
+      working-directory: dist/ngx-lib 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # Deploy examples project to Github Pages
     - name: Deploy
