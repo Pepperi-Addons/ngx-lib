@@ -6,21 +6,22 @@
     </ng-container>
     <div *ngIf="operator !== PepSmartFilterOperators.NumberRange">
         <!-- Amount -->
-        <pep-textbox [form]="form" [key]="'first'" [label]="'SMART_FILTERS.AMOUNT' | translate" [renderError]="false"
-            [type]="field.type" [formattedValue]="form?.get('first').value" [value]="form?.get('first').value">
+        <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
+            [renderError]="false" [type]="field.type" [formattedValue]="firstControl.value"
+            [value]="firstControl.value">
         </pep-textbox>
     </div>
     <div *ngIf="operator === PepSmartFilterOperators.NumberRange" fxLayout="row" fxLayout.xs="column"
         fxLayoutGap="1rem">
         <!-- Min number -->
-        <pep-textbox [form]="form" [key]="'first'" [label]="'SMART_FILTERS.MIN' | translate" [renderError]="false"
-            fxFlex="50%" [type]="field.type" [formattedValue]="form?.get('first').value"
-            [value]="form?.get('first').value" [maxValue]="form?.get('second').value">
+        <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.MIN' | translate"
+            [renderError]="false" fxFlex="50%" [type]="field.type" [formattedValue]="firstControl.value"
+            [value]="firstControl.value" [maxValue]="secondControl.value">
         </pep-textbox>
         <!-- Max number -->
-        <pep-textbox [form]="form" [key]="'second'" [label]="'SMART_FILTERS.MAX' | translate" [renderError]="false"
-            fxFlex="50%" [type]="field.type" [formattedValue]="form?.get('second').value"
-            [value]="form?.get('second').value" [minValue]="form?.get('first').value">
+        <pep-textbox [form]="form" [key]="secondControlKey" [label]="'SMART_FILTERS.MAX' | translate"
+            [renderError]="false" fxFlex="50%" [type]="field.type" [formattedValue]="secondControl.value"
+            [value]="secondControl.value" [minValue]="firstControl.value">
         </pep-textbox>
     </div>
 </div>

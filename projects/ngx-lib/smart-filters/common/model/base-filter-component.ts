@@ -59,7 +59,7 @@ import { PepFilterActionsComponent } from '../filter-actions.component';
     // ],
 })
 export abstract class BaseFilterComponent
-    implements OnChanges, OnDestroy {
+    implements OnInit, OnChanges, OnDestroy {
 
     private readonly _destroyed: Subject<void>;
     private actionsContainerRef: ComponentRef<PepFilterActionsComponent>;
@@ -68,7 +68,7 @@ export abstract class BaseFilterComponent
     @Input()
     set field(value: PepSmartFilterBaseField) {
         this._field = value;
-        this.setupOperators();
+        this.setupForm();
     }
     get field(): PepSmartFilterBaseField {
         return this._field;
@@ -108,6 +108,19 @@ export abstract class BaseFilterComponent
         return this._operatorUnit;
     }
 
+    get firstControlKey() {
+        return this.field ? `${this.field.id}_first` : 'first';
+    }
+    get firstControl(): AbstractControl {
+        return this.form.get(this.firstControlKey);
+    }
+    get secondControlKey() {
+        return this.field ? `${this.field.id}_second` : 'second';
+    }
+    get secondControl(): AbstractControl {
+        return this.form.get(this.secondControlKey);
+    }
+
     protected operators: IPepSmartFilterOperator[];
     protected operatorUnits: IPepSmartFilterOperatorUnit[];
 
@@ -127,12 +140,6 @@ export abstract class BaseFilterComponent
         protected renderer: Renderer2
     ) {
         this._destroyed = new Subject();
-        this.form = this.builder.group({
-            first: [],
-            second: [],
-        });
-
-        this.createActionsComponent();
     }
 
     private createActionsComponent() {
@@ -147,11 +154,19 @@ export abstract class BaseFilterComponent
         this.viewContainerRef.insert(this.actionsContainerRef.hostView);
     }
 
-    private updateValidity() {
-        this.setFieldsStateAndValidators();
+    private setupForm() {
+        const formValue = {};
+        formValue[this.firstControlKey] = [];
+        formValue[this.secondControlKey] = [];
+        // this.form.patchValue(formValue);
 
-        this.form.get('first').updateValueAndValidity();
-        this.form.get('second').updateValueAndValidity();
+        this.form = this.builder.group(formValue);
+        // this.form[this.firstControlKey] = [];
+        // this.form[this.secondControlKey] = [];
+
+        this.setupOperators();
+
+        this.createActionsComponent();
     }
 
     private setupOperators() {
@@ -184,17 +199,15 @@ export abstract class BaseFilterComponent
             this.operator = this.filter.operator;
             this.operatorUnit = this.filter.operatorUnit;
             const value = this.filter.value;
-            this.form.patchValue({
-                first: value.first,
-                second: value.second,
-            });
-
-            // const formValue = {};
-            // formValue[this.field.id] = {
+            // this.form.patchValue({
             //     first: value.first,
             //     second: value.second,
-            // };
-            // this.form.patchValue(formValue);
+            // });
+
+            const formValue = {};
+            formValue[this.firstControlKey] = value.first;
+            formValue[this.secondControlKey] = value.second;
+            this.form.patchValue(formValue);
 
         } else {
             this.operator = this.getDefaultOperator();
@@ -207,6 +220,12 @@ export abstract class BaseFilterComponent
         return takeUntil(this._destroyed);
     }
 
+    private updateValidity() {
+        this.setFieldsStateAndValidators();
+
+        this.firstControl.updateValueAndValidity();
+        this.secondControl.updateValueAndValidity();
+    }
     // Load the operators options from the translation.
     protected loadOperatorsOptions(): void {
         // Not implemented in the base
@@ -214,9 +233,9 @@ export abstract class BaseFilterComponent
 
     // Set default validators - some childs override this.
     protected setFieldsStateAndValidators(): void {
-        this.form.get('first').setValidators(Validators.required);
-        this.form.get('second').setValidators(Validators.required);
-        this.form.get('second').disable();
+        this.firstControl.setValidators(Validators.required);
+        this.secondControl.setValidators(Validators.required);
+        this.secondControl.disable();
     }
 
     // Return undefined - some childs override this.
@@ -247,7 +266,7 @@ export abstract class BaseFilterComponent
         // If the filter is not null declare it, else - clear it.
         if (filterValue) {
             const filter = {
-                key: this.field.id,
+                fieldId: this.field.id,
                 operator: this.operator,
                 operatorUnit: this.operatorUnit,
                 value: filterValue,
@@ -259,13 +278,19 @@ export abstract class BaseFilterComponent
         }
     }
 
-    ngOnChanges() {
+    ngOnInit(): void {
         if (this.form) {
             this.updateValidity();
         }
     }
 
-    ngOnDestroy() {
+    ngOnChanges(): void {
+        // if (this.form) {
+        //     this.updateValidity();
+        // }
+    }
+
+    ngOnDestroy(): void {
         this._destroyed.next();
         this._destroyed.complete();
 

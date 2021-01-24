@@ -47,24 +47,25 @@ export class PepMultiSelectFilterComponent
     private virtualScroller: VirtualScrollerComponent;
 
     ngOnInit() {
+        super.ngOnInit;
+
         this.options = this.field.options.map((opt) => { return { value: opt.value, count: opt.count, selected: false } });
 
-        const firstControl = this.form.get('first');
+        // Init the selected values from first value.
+        const firstControl = this.firstControl;
+        if (firstControl.value) {
+            this.initOptionsSelectedValues(firstControl.value);
+        }
+
+        // Add subscription for the first value change to set the selected options.
         firstControl.valueChanges.pipe(
             this.getDestroyer(),
             distinctUntilChanged()
         ).subscribe((selectedValues: string[]) => {
-            this.options.forEach(opt => {
-                const isValueSelected = selectedValues && selectedValues.includes(opt.value);
-                opt.selected = isValueSelected;
-
-                // TODO: Maybe we need to support in values that not come over here from the api (with count 0).
-                // if (isValueSelected) {
-                //     opt.selected === true;
-                // }
-            });
+            this.initOptionsSelectedValues(selectedValues);
         });
 
+        // Filter the options by the search control.
         this.filteredOptions$ = this.searchControl.valueChanges.pipe(
             this.getDestroyer(),
             startWith<any>(''),
@@ -86,9 +87,21 @@ export class PepMultiSelectFilterComponent
         });
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         // Calc for the first time.
         this.calcOptionsHeight(this.options.length);
+    }
+
+    initOptionsSelectedValues(selectedValues: string[]): void {
+        this.options.forEach(opt => {
+            const isValueSelected = selectedValues && selectedValues.includes(opt.value);
+            opt.selected = isValueSelected;
+
+            // TODO: Maybe we need to support in values that not come over here from the api (with count 0).
+            // if (isValueSelected) {
+            //     opt.selected === true;
+            // }
+        });
     }
 
     private calcOptionsHeight(optionsCount: number) {
@@ -140,7 +153,7 @@ export class PepMultiSelectFilterComponent
 
     onOptionChange(option: PepMultiSelectFilterOption, event: MatCheckboxChange) {
         option.selected = event.checked;
-        this.form.get('first').setValue(
+        this.firstControl.setValue(
             this.options.filter(opt => opt.selected).map(opt => opt.value),
             { emitEvent: false }
         );

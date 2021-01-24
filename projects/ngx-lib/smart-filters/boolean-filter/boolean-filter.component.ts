@@ -19,12 +19,12 @@ export class PepBooleanFilterComponent extends BaseFilterComponent {
 
     // Override
     getFilterValue(): IPepSmartFilterDataValue {
-        const filterValue = { first: this.form.get('first').value || false };
+        const filterValue = { first: this.firstControl.value || false };
         return filterValue;
     }
 
     // Override
     setFieldsStateAndValidators(): void {
-        this.form.get('second').disable();
+        this.secondControl.disable();
     }
 }

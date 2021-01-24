@@ -26,11 +26,11 @@ export class PepNumberFilterComponent
     // Override
     getFilterValue(): IPepSmartFilterDataValue {
         const filterValue = {
-            first: this.form.get('first').value,
+            first: this.firstControl.value,
         };
 
         if (this.operator === PepSmartFilterOperators.NumberRange) {
-            filterValue['second'] = this.form.get('second').value;
+            filterValue['second'] = this.secondControl.value;
         }
 
         return filterValue;
@@ -51,18 +51,16 @@ export class PepNumberFilterComponent
     // Override
     setFieldsStateAndValidators(): void {
         if (this.operator === PepSmartFilterOperators.NumberRange) {
-            this.form
-                .get('first')
+            this.firstControl
                 .setValidators([
                     Validators.required,
-                    this.validator.isLessThan(this.form.get('second')),
+                    this.validator.isLessThan(this.secondControl),
                 ]);
-            this.form.get('second').enable();
-            this.form
-                .get('second')
+            this.secondControl.enable();
+            this.secondControl
                 .setValidators([
                     Validators.required,
-                    this.validator.isGreaterThan(this.form.get('first')),
+                    this.validator.isGreaterThan(this.firstControl),
                 ]);
         } else {
             super.setFieldsStateAndValidators();

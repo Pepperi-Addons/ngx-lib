@@ -7,16 +7,16 @@
         <div *ngIf="footerState === 'hidden'" header-end-content>
             <pep-button [value]="'toggle menu'" [classNames]="'spacing-element'" (click)="toggleMenu()">
             </pep-button>
-            <pep-button [sizeType]="'sm'" [classNames]="'spacing-element '" [value]="'Tomer test'"
-                [iconName]="'system_bolt'">
+            <pep-button [sizeType]="'sm'" [classNames]="'spacing-element '" [value]="'Add filters'"
+                [iconName]="'system_bolt'" (click)="addFilters()">
             </pep-button>
         </div>
         <div footer-start-content>
             <pep-button [value]="'filters'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'spacing-element '"
                 (click)="toggleFilters(sideNav)">
             </pep-button>
-            <pep-button [sizeType]="'sm'" [classNames]="'spacing-element '" [value]="'Tomer test'"
-                [iconName]="'system_bolt'">
+            <pep-button [sizeType]="'sm'" [classNames]="'spacing-element '" [value]="'Add filters'"
+                [iconName]="'system_bolt'" (click)="addFilters()">
             </pep-button>
             <pep-button [value]="'toggle menu'" [classNames]="'spacing-element'" (click)="toggleMenu()">
             </pep-button>
@@ -35,7 +35,8 @@
     <div class="main-content ">
 
         <pep-side-bar #sideNav>
-            <pep-smart-filters [fields]="fields" (filtersChange)="onFiltersChange($event)"></pep-smart-filters>
+            <pep-smart-filters [fields]="fields" [filters]="filters" (filtersChange)="onFiltersChange($event)">
+            </pep-smart-filters>
         </pep-side-bar>
 
         <!-- <div class=" side-bar-container">

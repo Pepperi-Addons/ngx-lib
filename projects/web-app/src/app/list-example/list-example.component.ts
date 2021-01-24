@@ -39,7 +39,8 @@ import {
     // BooleanFilter,
     // MultiSelectFilter,
     IPepSmartFilterData,
-    IPepSmartFilterFieldOption
+    IPepSmartFilterFieldOption,
+    PepSmartFilterOperators
     // PepSmartFilterWorker,
     // Field
 } from '@pepperi-addons/ngx-lib/smart-filters';
@@ -60,6 +61,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     sortingOptions: Array<IPepListSortingOption>;
     views: Array<IPepListView>;
     fields: Array<IPepSmartFilterField>;
+    filters: Array<IPepSmartFilterData>;
 
     footerState: PepFooterStateType;
 
@@ -161,6 +163,14 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
             createSmartFilterField({ id: 'filter4', name: 'Brand', options: brandOptions }, 'multi-select'),
             createSmartFilterField({ id: 'filter5', name: 'Discout' }, 'boolean'),
             createSmartFilterField({ id: 'filter6', name: 'Price' }, 'currency')
+        ];
+    }
+
+    addFilters(): void {
+        const selectedValues = ['value 1', 'value 5', 'value 10', 'value 11'];
+        this.filters = [
+            { fieldId: 'filter3', operator: PepSmartFilterOperators.DateRange, value: { first: '2020-1-1', second: '2021-1-1' } },
+            { fieldId: 'filter4', operator: PepSmartFilterOperators.In, value: { first: selectedValues } },
         ];
     }
 
