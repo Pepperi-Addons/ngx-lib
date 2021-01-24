@@ -16,6 +16,7 @@ import { FormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     DatetimeAdapter,
+    MatDatetimepickerInputEvent,
     MAT_DATETIME_FORMATS,
 } from '@mat-datetimepicker/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -31,6 +32,8 @@ import {
     PepDateFieldType,
     PepDateField,
 } from '@pepperi-addons/ngx-lib';
+// import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
     selector: 'pep-date',
@@ -163,7 +166,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
 
     standAlone = false;
     isInEditMode = false;
-    dateModel: Date;
+    dateModel: moment.Moment;
     minDate: Date;
     maxDate: Date;
     showDatepicker = false;
@@ -176,7 +179,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         private adapter: DateAdapter<any>,
         private translate: TranslateService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -191,7 +194,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.formattedValue = this.formattedValue || this.value;
+            // this.formattedValue = this.formattedValue || this.value;
 
             this.renderer.addClass(
                 this.element.nativeElement,
@@ -205,9 +208,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
-        if (this.standAlone) {
-            this.formattedValue = this.formattedValue || this.value;
-        }
+        // if (this.standAlone) {
+        //     this.formattedValue = this.formattedValue || this.value;
+        // }
 
         if (changes.value) {
             this.setDateModel();
@@ -227,6 +230,16 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         this.setDateModel();
     }
 
+    private setFormattedValueFromModel(): void {
+        if (this.dateModel === null) {
+            this.formattedValue = '';
+        } else {
+            this.formattedValue = this.showTime
+                ? this.dateModel.toDate().toLocaleString()
+                : this.dateModel.toDate().toLocaleDateString();
+        }
+    }
+
     private setDateModel(): void {
         if (
             this.value === null ||
@@ -236,14 +249,15 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             this.value.indexOf('1970-01-01') >= 0
         ) {
             this.value = '';
-            this.formattedValue = '';
             this.dateModel = null;
         } else {
-            this.dateModel = this.utilitiesService.parseDate(
+            this.dateModel = moment(this.utilitiesService.parseDate(
                 this.value,
                 this.showTime
-            );
+            ));
         }
+
+        this.setFormattedValueFromModel();
     }
 
     openDatetimePicker(datetimePicker): void {
@@ -259,22 +273,18 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         }, 0);
     }
 
-    onDateChange(event: any): void {
+    onDateChange(event: MatDatetimepickerInputEvent<moment.Moment>): void {
         let value = '';
         if (event.value != null) {
-            const date = event.value.toDate();
+            const date: Date = event.value.toDate();
 
-            value = this.utilitiesService.stringifyDateWithOffset(
+            value = this.utilitiesService.stringifyDate(
                 date,
                 this.showTime
             );
 
             // Update the formatted value.
-            // if (this.formattedValue === '') {
-            this.formattedValue = this.showTime
-                ? date.toLocaleString()
-                : date.toLocaleDateString();
-            // }
+            this.setFormattedValueFromModel();
         }
 
         this.customizationService.updateFormFieldValue(
