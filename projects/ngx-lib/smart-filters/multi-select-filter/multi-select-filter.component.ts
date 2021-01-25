@@ -23,7 +23,7 @@ import { VirtualScrollerComponent } from 'ngx-virtual-scroller';
 class PepMultiSelectFilterOption implements IPepSmartFilterFieldOption {
     value: string;
     count?: number;
-    selected: boolean = false;
+    selected = false;
 }
 
 @Component({
@@ -34,7 +34,6 @@ class PepMultiSelectFilterOption implements IPepSmartFilterFieldOption {
 export class PepMultiSelectFilterComponent
     extends BaseFilterComponent
     implements OnInit, AfterViewInit {
-
     options: PepMultiSelectFilterOption[] = [];
     filteredOptions$: Observable<any>;
     searchControl = new FormControl();
@@ -49,7 +48,9 @@ export class PepMultiSelectFilterComponent
     ngOnInit() {
         super.ngOnInit;
 
-        this.options = this.field.options.map((opt) => { return { value: opt.value, count: opt.count, selected: false } });
+        this.options = this.field.options.map((opt) => {
+            return { value: opt.value, count: opt.count, selected: false };
+        });
 
         // Init the selected values from first value.
         const firstControl = this.firstControl;
@@ -58,12 +59,11 @@ export class PepMultiSelectFilterComponent
         }
 
         // Add subscription for the first value change to set the selected options.
-        firstControl.valueChanges.pipe(
-            this.getDestroyer(),
-            distinctUntilChanged()
-        ).subscribe((selectedValues: string[]) => {
-            this.initOptionsSelectedValues(selectedValues);
-        });
+        firstControl.valueChanges
+            .pipe(this.getDestroyer(), distinctUntilChanged())
+            .subscribe((selectedValues: string[]) => {
+                this.initOptionsSelectedValues(selectedValues);
+            });
 
         // Filter the options by the search control.
         this.filteredOptions$ = this.searchControl.valueChanges.pipe(
@@ -72,19 +72,19 @@ export class PepMultiSelectFilterComponent
             map((option) =>
                 typeof option === 'string' ? option : option && option.value
             ),
-            map((value) =>
-                value ? this.filterOptions(value) : this.options
-            )
+            map((value) => (value ? this.filterOptions(value) : this.options))
         );
 
         // Each time the filter change.
-        this.filteredOptions$.subscribe((filterdOptions: PepMultiSelectFilterOption[]) => {
-            this.calcOptionsHeight(filterdOptions.length);
-            setTimeout(() => {
-                // 8 is the padding top of the multi-select-options
-                this.virtualScroller.scrollToPosition(-8);
-            }, 125);
-        });
+        this.filteredOptions$.subscribe(
+            (filterdOptions: PepMultiSelectFilterOption[]) => {
+                this.calcOptionsHeight(filterdOptions.length);
+                setTimeout(() => {
+                    // 8 is the padding top of the multi-select-options
+                    this.virtualScroller.scrollToPosition(-8);
+                }, 125);
+            }
+        );
     }
 
     ngAfterViewInit(): void {
@@ -93,8 +93,9 @@ export class PepMultiSelectFilterComponent
     }
 
     initOptionsSelectedValues(selectedValues: string[]): void {
-        this.options.forEach(opt => {
-            const isValueSelected = selectedValues && selectedValues.includes(opt.value);
+        this.options.forEach((opt) => {
+            const isValueSelected =
+                selectedValues && selectedValues.includes(opt.value);
             opt.selected = isValueSelected;
 
             // TODO: Maybe we need to support in values that not come over here from the api (with count 0).
@@ -137,7 +138,9 @@ export class PepMultiSelectFilterComponent
 
     // Override
     getFilterValue(): IPepSmartFilterDataValue {
-        const selectedValues = this.options.filter(opt => opt.selected).map(opt => opt.value);
+        const selectedValues = this.options
+            .filter((opt) => opt.selected)
+            .map((opt) => opt.value);
         const filterValue = {
             first: selectedValues,
         };
@@ -147,14 +150,17 @@ export class PepMultiSelectFilterComponent
 
     // Override
     initFilter() {
-        this.options.forEach(opt => opt.selected = false);
+        this.options.forEach((opt) => (opt.selected = false));
         this.searchControl.setValue('');
     }
 
-    onOptionChange(option: PepMultiSelectFilterOption, event: MatCheckboxChange) {
+    onOptionChange(
+        option: PepMultiSelectFilterOption,
+        event: MatCheckboxChange
+    ) {
         option.selected = event.checked;
         this.firstControl.setValue(
-            this.options.filter(opt => opt.selected).map(opt => opt.value),
+            this.options.filter((opt) => opt.selected).map((opt) => opt.value),
             { emitEvent: false }
         );
     }

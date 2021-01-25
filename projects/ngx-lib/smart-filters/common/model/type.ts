@@ -3,11 +3,11 @@ export type PepSmartFilterComponentType =
     'number' | 'date' | 'multi-select' | 'boolean';
 
 export type PepSmartFilterType =
-    'boolean' |
-    'currency' |
-    'date' |
-    'date-time' |
-    'int' |
-    'multi-select' |
-    'percentage' |
-    'real';
+    | 'boolean'
+    | 'currency'
+    | 'date'
+    | 'date-time'
+    | 'int'
+    | 'multi-select'
+    | 'percentage'
+    | 'real';

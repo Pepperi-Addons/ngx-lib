@@ -13,8 +13,7 @@ import { IPepFieldValueChangeEvent, IPepOption } from '@pepperi-addons/ngx-lib';
     templateUrl: './number-filter.component.html',
     styleUrls: ['./number-filter.component.scss'],
 })
-export class PepNumberFilterComponent
-    extends BaseFilterComponent {
+export class PepNumberFilterComponent extends BaseFilterComponent {
     PepSmartFilterOperators = PepSmartFilterOperators;
     chooseTypeOptions: Array<IPepOption> = [];
 
@@ -51,17 +50,15 @@ export class PepNumberFilterComponent
     // Override
     setFieldsStateAndValidators(): void {
         if (this.operator === PepSmartFilterOperators.NumberRange) {
-            this.firstControl
-                .setValidators([
-                    Validators.required,
-                    this.validator.isLessThan(this.secondControl),
-                ]);
+            this.firstControl.setValidators([
+                Validators.required,
+                this.validator.isLessThan(this.secondControl),
+            ]);
             this.secondControl.enable();
-            this.secondControl
-                .setValidators([
-                    Validators.required,
-                    this.validator.isGreaterThan(this.firstControl),
-                ]);
+            this.secondControl.setValidators([
+                Validators.required,
+                this.validator.isGreaterThan(this.firstControl),
+            ]);
         } else {
             super.setFieldsStateAndValidators();
         }

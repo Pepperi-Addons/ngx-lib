@@ -95,7 +95,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         return this._autoCompleteValues;
     }
 
-    @Input() shrinkInSmallScreen: boolean = true;
+    @Input() shrinkInSmallScreen = true;
 
     @Input()
     set value(val: string) {
@@ -158,11 +158,8 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         this.createSearchControlIfNotExist();
 
         this.searchControl.valueChanges
-            .pipe(
-                debounceTime(1000),
-                takeUntil(this._destroyed)
-            ).subscribe((newValue) => {
-
+            .pipe(debounceTime(1000), takeUntil(this._destroyed))
+            .subscribe((newValue) => {
                 if (this.type === 'auto-complete') {
                     this.autoCompleteValues = [];
                     if (

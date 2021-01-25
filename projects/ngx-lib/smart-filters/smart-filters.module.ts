@@ -34,7 +34,6 @@ import { PepDateFilterComponent } from './date-filter/date-filter.component';
 import { PepMultiSelectFilterComponent } from './multi-select-filter/multi-select-filter.component';
 import { PepNumberFilterComponent } from './number-filter/number-filter.component';
 
-
 @NgModule({
     imports: [
         CommonModule,

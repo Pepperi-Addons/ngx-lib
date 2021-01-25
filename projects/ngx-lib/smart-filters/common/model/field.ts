@@ -51,7 +51,7 @@ export class PepSmartFilterBooleanField extends PepSmartFilterBaseField {
     }
 
     getType(): PepSmartFilterType {
-        return 'boolean'
+        return 'boolean';
     }
 }
 
@@ -69,7 +69,7 @@ export class PepSmartFilterDateField extends PepSmartFilterDateBaseField {
     }
 
     getType(): PepSmartFilterType {
-        return 'date'
+        return 'date';
     }
 }
 export class PepSmartFilterDateTimeField extends PepSmartFilterDateBaseField {
@@ -78,7 +78,7 @@ export class PepSmartFilterDateTimeField extends PepSmartFilterDateBaseField {
     }
 
     getType(): PepSmartFilterType {
-        return 'date-time'
+        return 'date-time';
     }
 }
 
@@ -91,7 +91,7 @@ export class PepSmartFilterMultiSelectField extends PepSmartFilterBaseField {
     }
 
     getType(): PepSmartFilterType {
-        return 'multi-select'
+        return 'multi-select';
     }
 }
 
@@ -109,7 +109,7 @@ export class PepSmartFilterIntField extends PepSmartFilterNumberBaseField {
     }
 
     getType(): PepSmartFilterType {
-        return 'int'
+        return 'int';
     }
 }
 export class PepSmartFilterRealField extends PepSmartFilterNumberBaseField {
@@ -118,7 +118,7 @@ export class PepSmartFilterRealField extends PepSmartFilterNumberBaseField {
     }
 
     getType(): PepSmartFilterType {
-        return 'real'
+        return 'real';
     }
 }
 export class PepSmartFilterCurrencyField extends PepSmartFilterNumberBaseField {
@@ -127,7 +127,7 @@ export class PepSmartFilterCurrencyField extends PepSmartFilterNumberBaseField {
     }
 
     getType(): PepSmartFilterType {
-        return 'currency'
+        return 'currency';
     }
 }
 export class PepSmartFilterPercentageField extends PepSmartFilterNumberBaseField {
@@ -136,6 +136,6 @@ export class PepSmartFilterPercentageField extends PepSmartFilterNumberBaseField
     }
 
     getType(): PepSmartFilterType {
-        return 'percentage'
+        return 'percentage';
     }
 }

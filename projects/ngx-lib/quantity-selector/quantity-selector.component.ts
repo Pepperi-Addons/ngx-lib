@@ -92,7 +92,8 @@ export class PepQuantitySelectorComponent
     @Input() isActive = false;
 
     // Get default style from theme.
-    @Input() styleClass: PepStyleType = document.documentElement.style.getPropertyValue(
+    @Input()
+    styleClass: PepStyleType = document.documentElement.style.getPropertyValue(
         PepCustomizationService.STYLE_QS_KEY
     ) as PepStyleType; //'strong';
 
@@ -124,7 +125,7 @@ export class PepQuantitySelectorComponent
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     setForm() {
         const pepField = new PepQuantitySelectorField({
@@ -514,7 +515,7 @@ export class PepQuantitySelectorComponent
             // Allow: Ctrl+X
             (keyboardEvent.keyCode === 88 &&
                 keyboardEvent.ctrlKey ===
-                true) /*||
+                    true) /*||
             // Allow: home, end, left, right
             (keyboardEvent.keyCode >= 35 && keyboardEvent.keyCode <= 39)*/
         ) {

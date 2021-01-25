@@ -60,7 +60,6 @@ import { PepFilterActionsComponent } from '../filter-actions.component';
 })
 export abstract class BaseFilterComponent
     implements OnInit, OnChanges, OnDestroy {
-
     private readonly _destroyed: Subject<void>;
     private actionsContainerRef: ComponentRef<PepFilterActionsComponent>;
 
@@ -143,13 +142,18 @@ export abstract class BaseFilterComponent
     }
 
     private createActionsComponent() {
-        const factory: ComponentFactory<PepFilterActionsComponent> =
-            this.resolver.resolveComponentFactory(PepFilterActionsComponent);
+        const factory: ComponentFactory<PepFilterActionsComponent> = this.resolver.resolveComponentFactory(
+            PepFilterActionsComponent
+        );
 
-        this.actionsContainerRef = factory.create(this.injector)
+        this.actionsContainerRef = factory.create(this.injector);
         this.actionsContainerRef.instance.form = this.form;
-        this.actionsContainerRef.instance.applyClick.subscribe(() => this.applyFilter());
-        this.actionsContainerRef.instance.clearClick.subscribe(() => this.clearFilter());
+        this.actionsContainerRef.instance.applyClick.subscribe(() =>
+            this.applyFilter()
+        );
+        this.actionsContainerRef.instance.clearClick.subscribe(() =>
+            this.clearFilter()
+        );
 
         this.viewContainerRef.insert(this.actionsContainerRef.hostView);
     }
@@ -208,7 +212,6 @@ export abstract class BaseFilterComponent
             formValue[this.firstControlKey] = value.first;
             formValue[this.secondControlKey] = value.second;
             this.form.patchValue(formValue);
-
         } else {
             this.operator = this.getDefaultOperator();
             this.operatorUnit = this.getDefaultOperatorUnit();
@@ -253,7 +256,7 @@ export abstract class BaseFilterComponent
     clearFilter(emitEvent = true) {
         this._filter = null;
         this.form.reset();
-        this.initFilter()
+        this.initFilter();
 
         if (emitEvent) {
             this.filterClear.emit();

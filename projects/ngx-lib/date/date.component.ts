@@ -32,8 +32,7 @@ import {
     PepDateFieldType,
     PepDateField,
 } from '@pepperi-addons/ngx-lib';
-// import { Moment } from 'moment';
-import * as moment from 'moment';
+import moment, { Moment } from 'moment';
 
 @Component({
     selector: 'pep-date',
@@ -179,7 +178,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         private adapter: DateAdapter<any>,
         private translate: TranslateService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -251,10 +250,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             this.value = '';
             this.dateModel = null;
         } else {
-            this.dateModel = moment(this.utilitiesService.parseDate(
-                this.value,
-                this.showTime
-            ));
+            this.dateModel = moment(
+                this.utilitiesService.parseDate(this.value, this.showTime)
+            );
         }
 
         this.setFormattedValueFromModel();
@@ -278,10 +276,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         if (event.value != null) {
             const date: Date = event.value.toDate();
 
-            value = this.utilitiesService.stringifyDate(
-                date,
-                this.showTime
-            );
+            value = this.utilitiesService.stringifyDate(date, this.showTime);
 
             // Update the formatted value.
             this.setFormattedValueFromModel();

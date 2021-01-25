@@ -62,7 +62,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private element: ElementRef,
         private translate: TranslateService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -117,7 +117,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
             const isChecked: boolean =
                 this.value === 'true' || this.value === '1' ? true : false;
             const newValue = !isChecked;
-            this.value = (newValue).toString();
+            this.value = newValue.toString();
             this.changeValue(newValue);
         }
     }

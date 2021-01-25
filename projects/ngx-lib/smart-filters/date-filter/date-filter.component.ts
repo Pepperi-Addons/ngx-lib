@@ -1,6 +1,4 @@
-import {
-    Component
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseFilterComponent } from '../common/model/base-filter-component';
 import {
     IPepSmartFilterOperator,
@@ -80,11 +78,10 @@ export class PepDateFilterComponent extends BaseFilterComponent {
             this.operator === PepSmartFilterOperators.DueIn ||
             this.operator === PepSmartFilterOperators.NotDueIn
         ) {
-            this.firstControl
-                .setValidators([
-                    Validators.required,
-                    this.validator.numberValidator(),
-                ]);
+            this.firstControl.setValidators([
+                Validators.required,
+                this.validator.numberValidator(),
+            ]);
             this.secondControl.disable();
         } else {
             // Disable 'first' field.

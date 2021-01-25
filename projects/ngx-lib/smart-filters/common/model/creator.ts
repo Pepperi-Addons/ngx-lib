@@ -8,9 +8,9 @@ import {
     PepSmartFilterDateTimeField,
     PepSmartFilterPercentageField,
     PepSmartFilterCurrencyField,
-    PepSmartFilterRealField
-} from "./field";
-import { PepSmartFilterType } from "./type";
+    PepSmartFilterRealField,
+} from './field';
+import { PepSmartFilterType } from './type';
 
 export function createBooleanSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterBooleanField(data);
@@ -44,8 +44,10 @@ export function createPercentageSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterPercentageField(data);
 }
 
-
-export function createSmartFilterField(data: IPepSmartFilterField, type: PepSmartFilterType): PepSmartFilterBaseField {
+export function createSmartFilterField(
+    data: IPepSmartFilterField,
+    type: PepSmartFilterType
+): PepSmartFilterBaseField {
     let field: PepSmartFilterBaseField;
 
     switch (type) {

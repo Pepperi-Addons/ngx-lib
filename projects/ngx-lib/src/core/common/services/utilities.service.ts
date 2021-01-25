@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class PepUtilitiesService {
-    parseDate(dateStr: string, showTime = false): any {
+    parseDate(dateStr: string, showTime = false): Date {
         let retVal = null;
         if (dateStr !== '') {
             const dateText = dateStr.split('-');

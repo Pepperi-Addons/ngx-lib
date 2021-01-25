@@ -89,7 +89,7 @@ export class PepIconComponent {
         private utilitiesService: PepUtilitiesService,
         private iconRegistry: PepIconRegistry,
         @Optional() @Inject(DOCUMENT) private document: any
-    ) { }
+    ) {}
 
     private setFill(): void {
         if (this.svgIcon && this._fill) {
