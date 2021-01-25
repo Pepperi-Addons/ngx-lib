@@ -4,7 +4,7 @@ import {
 } from './operator';
 
 export interface IPepSmartFilterData {
-    key: string;
+    fieldId: string;
     operator: IPepSmartFilterOperator;
     operatorUnit?: IPepSmartFilterOperatorUnit;
     value: IPepSmartFilterDataValue;

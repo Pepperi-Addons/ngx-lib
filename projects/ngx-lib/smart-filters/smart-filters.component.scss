@@ -26,9 +26,14 @@
         display: grid;
         grid-auto-flow: column;
         grid-template-columns: auto 1fr auto;
-        align-items: center;
         width: 100%;
-    
+        
+        // To cancel the warning of this add > * instead
+        // align-items: center;
+        > * { 
+            align-self: center 
+        }
+
         .clear-filter {
             display: flex;
             flex-direction: row;

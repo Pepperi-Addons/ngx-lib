@@ -11,6 +11,7 @@ import {
     Optional,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TranslateService } from '@ngx-translate/core';
 import {
     PepCustomizationService,
@@ -107,16 +108,16 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         }
     }
 
-    // onMaterialChange(e: any): void {
-    //     this.changeValue(e.checked);
-    // }
+    onMaterialChange(e: MatCheckboxChange): void {
+        this.changeValue(e.checked);
+    }
 
-    toggleChecked(event: any): void {
+    toggleChecked(event: Event): void {
         if (!this.disabled) {
             const isChecked: boolean =
                 this.value === 'true' || this.value === '1' ? true : false;
             const newValue = !isChecked;
-            this.value = (!newValue).toString();
+            this.value = newValue.toString();
             this.changeValue(newValue);
         }
     }

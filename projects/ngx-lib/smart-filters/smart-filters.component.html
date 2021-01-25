@@ -10,7 +10,7 @@
     </div>
 
     <mat-accordion [displayMode]="'flat'" [multi]="true" class="pep-accordion2">
-        <mat-expansion-panel *ngFor="let field of fields; let i = index" hideToggle="true"
+        <mat-expansion-panel *ngFor="let field of fields; let i = index" hideToggle="true" [expanded]="field.isOpen"
             (opened)="toggleFilter(i, true)" (closed)="toggleFilter(i, false)">
             <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeaderHeight"
                 [expandedHeight]="expansionPanelHeaderHeight">
@@ -22,16 +22,14 @@
                         <span class="body-sm ellipsis" [title]="field.name">
                             {{ field.name }}
                         </span>
-
                         <mat-chip *ngIf="filtersDataMap.get(field.id)" [selectable]="false" [removable]="true"
                             (click)="onFilterClear(field)" class="clear-filter pep-button chip xs weak">
                             <span class="body-xs spacing-element">
                                 {{
-                                field.type === 'multi-select' ?
+                                field.componentType === 'multi-select' ?
                                 filtersDataMap.get(field.id).value?.first?.length : 1
                                 }}
                             </span>
-
                             <mat-icon>
                                 <pep-icon name="system_close"></pep-icon>
                             </mat-icon>
@@ -40,7 +38,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="expansion-content smart-filter-content">
-                <ng-container [ngSwitch]="field.type">
+                <ng-container [ngSwitch]="field.componentType">
                     <ng-container *ngSwitchCase="'boolean'">
                         <pep-boolean-filter [field]="field" [filter]="filtersDataMap.get(field.id)"
                             (filterChange)="onFilterChange(field, $event)" (filterClear)="onFilterClear(field)">
@@ -61,7 +59,6 @@
                             (filterChange)="onFilterChange(field, $event)" (filterClear)="onFilterClear(field)">
                         </pep-number-filter>
                     </ng-container>
-
                     <!-- <div *ngSwitchDefault>
                     </div> -->
                 </ng-container>

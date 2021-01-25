@@ -9,11 +9,15 @@
                 'no-title': label.length == 0,
                 'right-alignment pull-right flip': xAlignment == 'right',
                 'center-alignment': xAlignment == 'center'
-            }" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}" (click)="toggleChecked($event)">
+            }" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}">
+            <!--
+                This is cause a bug that when click on the pep-input area and after on the checkbox
+                the value is updated only for the second time.
+                (click)="toggleChecked($event)" 
+            -->
             <ng-container *ngIf="type == 'booleanText'; then booleanTextTemplate; else regularTemplate"></ng-container>
             <ng-template #booleanTextTemplate>
-                <!-- (click)="toggleChecked($event)" -->
-                <div class="mat-checkbox-layout body-sm"
+                <div class="mat-checkbox-layout body-sm" (click)="toggleChecked($event)"
                     [title]="(label.length > 0 ? label + ': ' : '') + ((value | lowercase) == 'true' || value == '1' ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))">
                     <button [id]="key" class="mat-icon-button emoji-icon pull-left flip">
                         {{ value.toLowerCase() == 'true' || value == '1' ? additionalValueObject.CheckedText :
@@ -24,8 +28,7 @@
                 </div>
             </ng-template>
             <ng-template #regularTemplate>
-                <!-- (change)="onMaterialChange($event)" -->
-                <mat-checkbox [name]="key" class="body-sm ellipsis" type="checkbox"
+                <mat-checkbox [name]="key" class="body-sm ellipsis" type="checkbox" (change)="onMaterialChange($event)"
                     [title]="(label.length > 0 ? label + ': ' : '') + ((value | lowercase) == 'true' || value == '1' ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))"
                     [checked]="(value | lowercase) == 'true' || value == '1' ? true : false" [disabled]="disabled">
                     <span *ngIf="label.length > 0 && layoutType !== 'table'">{{ label }}</span>

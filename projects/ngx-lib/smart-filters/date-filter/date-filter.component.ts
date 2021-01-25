@@ -1,11 +1,4 @@
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewChild,
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseFilterComponent } from '../common/model/base-filter-component';
 import {
     IPepSmartFilterOperator,
@@ -27,21 +20,24 @@ export class PepDateFilterComponent extends BaseFilterComponent {
     chooseTimeOptions: Array<IPepOption> = [];
     chooseTimeUnitOptions: Array<IPepOption> = [];
 
+    // Override
     getDefaultOperator(): IPepSmartFilterOperator {
         return PepSmartFilterOperators.InTheLast;
     }
 
+    // Override
     getDefaultOperatorUnit(): IPepSmartFilterOperatorUnit {
         return PepSmartFilterOperatorUnits.Months;
     }
 
+    // Override
     getFilterValue(): IPepSmartFilterDataValue {
         const filterValue = {
-            first: this.form.get('first').value,
+            first: this.firstControl.value,
         };
 
         if (this.operator === PepSmartFilterOperators.DateRange) {
-            filterValue['second'] = this.form.get('second').value;
+            filterValue['second'] = this.secondControl.value;
         }
 
         return filterValue;
@@ -69,26 +65,24 @@ export class PepDateFilterComponent extends BaseFilterComponent {
     }
 
     // Override
-    setFieldsValidators(): void {
-        this.form.get('first').enable();
+    setFieldsStateAndValidators(): void {
+        this.firstControl.enable();
 
         if (this.operator === PepSmartFilterOperators.DateRange) {
-            this.form.get('first').setValidators(Validators.required);
-            this.form.get('second').enable();
-            this.form.get('second').setValidators(Validators.required);
+            this.firstControl.setValidators(Validators.required);
+            this.secondControl.enable();
+            this.secondControl.setValidators(Validators.required);
         } else if (
             this.operator === PepSmartFilterOperators.InTheLast ||
             this.operator === PepSmartFilterOperators.NotInTheLast ||
             this.operator === PepSmartFilterOperators.DueIn ||
             this.operator === PepSmartFilterOperators.NotDueIn
         ) {
-            this.form
-                .get('first')
-                .setValidators([
-                    Validators.required,
-                    this.validator.numberValidator(),
-                ]);
-            this.form.get('second').disable();
+            this.firstControl.setValidators([
+                Validators.required,
+                this.validator.numberValidator(),
+            ]);
+            this.secondControl.disable();
         } else {
             // Disable 'first' field.
             if (
@@ -98,11 +92,11 @@ export class PepDateFilterComponent extends BaseFilterComponent {
                 this.operator === PepSmartFilterOperators.IsEmpty ||
                 this.operator === PepSmartFilterOperators.IsNotEmpty
             ) {
-                this.form.get('first').disable();
+                this.firstControl.disable();
             }
 
             // Default disable 'second' field.
-            super.setFieldsValidators();
+            super.setFieldsStateAndValidators();
         }
     }
 

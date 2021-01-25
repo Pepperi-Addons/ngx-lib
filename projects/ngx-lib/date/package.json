@@ -5,7 +5,8 @@
             "umdModuleIds": {
                 "@mat-datetimepicker/core": "datetimepicker-core",
                 "@mat-datetimepicker/moment": "datetimepicker-moment",
-                "@ngx-translate/core": "translate"
+                "@ngx-translate/core": "translate",
+                "moment": "moment"
             }
         }
     },

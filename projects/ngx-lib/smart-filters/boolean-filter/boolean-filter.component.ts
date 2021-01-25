@@ -12,17 +12,19 @@ import { IPepSmartFilterDataValue } from '../common/model/filter';
     styleUrls: ['./boolean-filter.component.scss'],
 })
 export class PepBooleanFilterComponent extends BaseFilterComponent {
+    // Override
     getDefaultOperator(): IPepSmartFilterOperator {
         return PepSmartFilterOperators.Equals;
     }
 
+    // Override
     getFilterValue(): IPepSmartFilterDataValue {
-        const filterValue = { first: this.form.get('first').value || false };
+        const filterValue = { first: this.firstControl.value || false };
         return filterValue;
     }
 
     // Override
-    setFieldsValidators(): void {
-        this.form.get('second').disable();
+    setFieldsStateAndValidators(): void {
+        this.secondControl.disable();
     }
 }

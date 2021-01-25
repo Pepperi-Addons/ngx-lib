@@ -91,6 +91,12 @@ export class PepQuantitySelectorComponent
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
+    // Get default style from theme.
+    @Input()
+    styleClass: PepStyleType = document.documentElement.style.getPropertyValue(
+        PepCustomizationService.STYLE_QS_KEY
+    ) as PepStyleType; //'strong';
+
     @Output()
     valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @Output()
@@ -99,17 +105,19 @@ export class PepQuantitySelectorComponent
     @ViewChild('QSCont') QSCont: ElementRef;
     @ViewChild('QSInput') QSInput: ElementRef;
 
+    lastQsContClientWidth = 0;
+    showQsBtn = true;
+
     standAlone = false;
     isFocus = false;
     isMatrixFocus = false;
 
     isCaution = false;
     messages: Array<any> = null;
-    showQsBtn = false;
-    resize: any;
+    // resize: any;
 
     sameElementInTheWantedRow = null;
-    styleClass: PepStyleType = 'strong';
+
     isEmptyKey = false;
 
     constructor(
@@ -147,29 +155,29 @@ export class PepQuantitySelectorComponent
         }
 
         // Get state class from theme.
-        this.styleClass = document.documentElement.style.getPropertyValue(
-            PepCustomizationService.STYLE_QS_KEY
-        ) as PepStyleType;
+        // this.styleClass = document.documentElement.style.getPropertyValue(
+        //     PepCustomizationService.STYLE_QS_KEY
+        // ) as PepStyleType;
 
-        this.resize = fromEvent(window, 'resize')
-            .pipe(debounceTime(250))
-            .subscribe((event) => {
-                this.setQsView();
-            });
+        // this.resize = fromEvent(window, 'resize')
+        //     .pipe(debounceTime(250))
+        //     .subscribe((event) => {
+        //         this.setQsView();
+        //     });
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {
-            this.setQsView();
-        }, 0);
+        // setTimeout(() => {
+        // this.setQsView();
+        // }, 0);
     }
 
     // TODO: Don't un comment this cause a lot of memory usage.
-    // ngAfterViewChecked(): void {
-    //     setTimeout(() => {
-    //         this.setQsView();
-    //     }, 125);
-    // }
+    ngAfterViewChecked(): void {
+        // setTimeout(() => {
+        this.setQsView();
+        // }, 125);
+    }
 
     ngOnChanges(changes: any): void {
         if (this.standAlone) {
@@ -225,9 +233,9 @@ export class PepQuantitySelectorComponent
     }
 
     ngOnDestroy(): void {
-        if (this.resize) {
-            this.resize.unsubscribe();
-        }
+        // if (this.resize) {
+        //     this.resize.unsubscribe();
+        // }
 
         if (this.valueChange) {
             this.valueChange.unsubscribe();
@@ -469,16 +477,17 @@ export class PepQuantitySelectorComponent
     }
 
     setQsView(): void {
-        if (this.layoutType === 'card' && this.rowSpan <= 1) {
-            this.showQsBtn = false;
-        } else {
-            if (this.QSCont && this.QSCont.nativeElement) {
-                this.showQsBtn = this.QSCont.nativeElement.clientWidth > 140;
-            }
-        }
+        if (this.QSCont && this.QSCont.nativeElement) {
+            const qsContClientWidth = this.QSCont.nativeElement.clientWidth;
 
-        if (!this.cd['destroyed']) {
-            this.cd.detectChanges();
+            if (qsContClientWidth != this.lastQsContClientWidth) {
+                this.showQsBtn = qsContClientWidth > 180;
+
+                if (!this.cd['destroyed']) {
+                    this.cd.detectChanges();
+                    this.lastQsContClientWidth = qsContClientWidth;
+                }
+            }
         }
     }
 

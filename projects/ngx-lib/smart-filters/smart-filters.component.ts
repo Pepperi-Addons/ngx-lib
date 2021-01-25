@@ -23,9 +23,11 @@ export class PepSmartFiltersComponent {
     @Input()
     set filters(value: IPepSmartFilterData[]) {
         this.filtersDataMap.clear();
-        value.forEach((filter) => {
-            this.filtersDataMap.set(filter.key, filter);
-        });
+        if (value) {
+            value.forEach((filter) => {
+                this.filtersDataMap.set(filter.fieldId, filter);
+            });
+        }
     }
 
     private _fields: Array<IPepSmartFilterField> = [];

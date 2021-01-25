@@ -20,11 +20,13 @@ import { PepIconType } from './icon-generated.model';
     styles: [
         `
             :host {
-                display: inline-grid;
+                display: flex;
                 align-items: center;
                 justify-items: center;
                 width: inherit;
                 height: inherit;
+                align-content: center;
+                justify-content: center;
             }
 
             :host::ng-deep svg {

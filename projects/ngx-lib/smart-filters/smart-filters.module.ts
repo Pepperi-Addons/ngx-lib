@@ -26,6 +26,7 @@ import {
     pepIconNumberPlus,
 } from '@pepperi-addons/ngx-lib/icon';
 
+// import { BaseFilterComponent } from './common/model/base-filter-component';
 import { PepSmartFiltersComponent } from './smart-filters.component';
 import { PepFilterActionsComponent } from './common/filter-actions.component';
 import { PepBooleanFilterComponent } from './boolean-filter/boolean-filter.component';
@@ -60,6 +61,7 @@ import { PepNumberFilterComponent } from './number-filter/number-filter.componen
     ],
     exports: [PepSmartFiltersComponent],
     declarations: [
+        // BaseFilterComponent,
         PepSmartFiltersComponent,
         PepFilterActionsComponent,
         PepBooleanFilterComponent,

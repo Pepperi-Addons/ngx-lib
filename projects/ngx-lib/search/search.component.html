@@ -1,39 +1,102 @@
-﻿<div pepRtlClass class="search-container" [ngClass]="{ 'floating-search': isFloating}" [@fadeInOut]="fadeState">
-
-    <div class="search-input">
-        <mat-form-field class="search-field" appearance="outline">
-            <input id="searchInput" #searchInput class="body-sm search-input" matInput autocomplete="off"
-                [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" [@slideInOut]="state"
-                (keyup)="onEnterSearchClicked($event)" (@slideInOut.done)="animateSearchDone()" type="search"
-                results="5" [formControl]="searchControl" placeholder="{{ 'SEARCH.HINT' | translate }}..."
-                [matAutocomplete]="auto" />
-            <mat-autocomplete #auto="matAutocomplete" class="pep-select">
-                <mat-option *ngFor="let value of autoCompleteValues" [value]="value" (click)="triggerSearch()">
-                    {{value}}
-                </mat-option>
-                <mat-option *ngIf="autoCompleteValues?.length > autoCompleteTop - 1" [value]="value"
-                    (click)="triggerSearch()">{{ 'SEARCH.MORE_RESULTS' | translate }}</mat-option>
-            </mat-autocomplete>
-            <div matSuffix class="flex">
-                <mat-icon
-                    *ngIf="(state == 'open' && searchInput?.value?.length > 0) || (isFloating && fadeState == 'fadeIn')"
-                    class="text-icon " (click)="onClearClicked($event)">
-                    <pep-icon name="system_close"></pep-icon>
-                </mat-icon>
-                <span
-                    *ngIf="(state == 'open' && searchInput?.value?.length > 0) || (isFloating && fadeState == 'fadeIn')"
-                    class="text-icon v-separator">|</span>
-                <mat-icon class="text-icon " (click)="onSearchClicked()">
-                    <pep-icon name="system_search"></pep-icon>
-                </mat-icon>
-            </div>
-        </mat-form-field>
+﻿<!-- <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: false, hasParent: false }">
+</ng-container> -->
+<ng-container *ngIf="shrinkInSmallScreen; then shrinkBlock; else staticBlock"></ng-container>
+<ng-template #shrinkBlock>
+    <div pepRtlClass class="search-container" [ngClass]="{ 'floating-search': isFloating}" [@fadeInOut]="fadeState">
+        <div class="search-input">
+            <ng-container *ngIf="type === 'auto-complete'">
+                <ng-container *ngTemplateOutlet="autoCompleteBlock"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="type === 'regular'">
+                <ng-container *ngTemplateOutlet="regularBlock"></ng-container>
+            </ng-container>
+        </div>
     </div>
-</div>
+    <button *ngIf="isFloating && fadeState !='fadeIn' && showFloatSrcBtn" class="pep-button icon-button md weak"
+        mat-button (click)="animateSearch()">
+        <mat-icon>
+            <pep-icon name="system_search"></pep-icon>
+        </mat-icon>
+    </button>
+</ng-template>
+<ng-template #staticBlock>
+    <div pepRtlClass class="search-container">
+        <div class="search-input">
+            <ng-container *ngIf="type === 'auto-complete'">
+                <ng-container *ngTemplateOutlet="autoCompleteBlock"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="type === 'regular'">
+                <ng-container *ngTemplateOutlet="regularBlock"></ng-container>
+            </ng-container>
+        </div>
+    </div>
+</ng-template>
 
-<button *ngIf="isFloating && fadeState !='fadeIn' && showFloatSrcBtn" class="pep-button icon-button md weak" mat-button
-    (click)="animateSearch()">
-    <mat-icon>
+<ng-template #autoCompleteBlock>
+    <mat-form-field class="search-field" appearance="outline">
+        <!-- (@slideInOut.done)="animateSearchDone()" [@slideInOut]="state" -->
+        <input #searchInput class="body-sm search-input" matInput autocomplete="off"
+            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" (keyup)="onKeyup($event)" type="search" results="5"
+            [formControl]="searchControl" placeholder="{{ 'SEARCH.HINT' | translate }}..." [matAutocomplete]="auto" />
+        <mat-autocomplete #auto="matAutocomplete" class="pep-select">
+            <mat-option *ngFor="let value of autoCompleteValues" [value]="value" (click)="triggerSearch()">
+                {{value}}
+            </mat-option>
+            <mat-option *ngIf="autoCompleteValues?.length > autoCompleteTop - 1" [value]="value"
+                (click)="triggerSearch()">{{ 'SEARCH.MORE_RESULTS' | translate }}</mat-option>
+        </mat-autocomplete>
+        <div matSuffix class="flex">
+            <ng-container *ngIf="triggerOn === 'click'">
+                <ng-container *ngTemplateOutlet="triggerOnClickBlock"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="triggerOn === 'keydown'">
+                <ng-container *ngTemplateOutlet="triggerOnKeydownBlock"></ng-container>
+            </ng-container>
+        </div>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #regularBlock>
+    <mat-form-field class="search-field" appearance="outline">
+        <input #searchInput class="body-sm search-input" matInput autocomplete="off"
+            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="search" [formControl]="searchControl"
+            placeholder="{{ 'SEARCH.HINT' | translate }}..." />
+        <div matSuffix class="flex">
+            <ng-container *ngIf="triggerOn === 'click'">
+                <ng-container *ngTemplateOutlet="triggerOnClickBlock"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="triggerOn === 'keydown'">
+                <ng-container *ngTemplateOutlet="triggerOnKeydownBlock"></ng-container>
+            </ng-container>
+        </div>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #triggerOnClickBlock>
+    <!-- || (isFloating && fadeState == 'fadeIn') -->
+    <ng-container *ngIf="(state == 'open' && searchControl.value?.length > 0)">
+        <mat-icon class="text-icon pointer" (click)="onClearClicked($event)">
+            <pep-icon name="system_close"></pep-icon>
+        </mat-icon>
+        <span class="text-icon v-separator">|</span>
+    </ng-container>
+    <mat-icon class="text-icon pointer" (click)="onSearchClicked()">
         <pep-icon name="system_search"></pep-icon>
     </mat-icon>
-</button>
+</ng-template>
+
+<ng-template #triggerOnKeydownBlock>
+    <ng-container *ngIf="searchControl.value?.length > 0; then clearBlock; else searchBlock"></ng-container>
+    <ng-template #clearBlock>
+        <button class="pep-button md regular" mat-button (click)="onClearClicked($event)">
+            <mat-icon>
+                <pep-icon name="system_close"></pep-icon>
+            </mat-icon>
+        </button>
+    </ng-template>
+    <ng-template #searchBlock>
+        <mat-icon class="text-icon">
+            <pep-icon name="system_search"></pep-icon>
+        </mat-icon>
+    </ng-template>
+</ng-template>

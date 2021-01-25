@@ -2,6 +2,7 @@
     <!-- New code -->
     <ng-template #pepTemplate>
         <div #QSCont class="pep-quantity-selector-container {{ styleClass }}" [ngClass]="{
+                'hide-qs-actions' : layoutType === 'card' && rowSpan <= 1,
                 'pep-table-quantity-selector': layoutType === 'table',
                 'one-row': rowSpan === 1,
                 caution: isCaution,
@@ -36,7 +37,6 @@
                             <mat-icon>
                                 <pep-icon name="number_minus">
                                 </pep-icon>
-                                <!-- <svg [pepSvgIcon]="'number-minus'"></svg> -->
                             </mat-icon>
                         </button>
                         <button *ngIf="showQsBtn" mat-button matSuffix (click)="increment($event)"
@@ -45,7 +45,6 @@
                             <mat-icon>
                                 <pep-icon name="number_plus">
                                 </pep-icon>
-                                <!-- <svg [pepSvgIcon]="'number-plus'"></svg> -->
                             </mat-icon>
                         </button>
                         <mat-error *ngIf="messages?.length > 0">
@@ -65,9 +64,6 @@
                     </button>
                 </ng-template>
                 <ng-template #editableQSBlock>
-                    <!-- <span class="body-sm additional-value pull-left flip" [ngClass]="xAlignment == 'right' ? 'prefix' : 'suffix'" matBadge="{{ additionalValue }}" matBadgePosition="before"
-                        matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span> -->
-
                     <span *ngIf="xAlignment == 'right'" class="body-sm additional-value prefix"
                         matBadge="{{ additionalValue }}" matBadgePosition="before"
                         matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
@@ -81,11 +77,6 @@
                             (click)="onMatrixClick($event); $event.target.setSelectionRange(0, 999)"
                             (blur)="onMatrixBlur($event)" (focus)="onMatrixMouseEnter($event); onFocus($event)"
                             (mouseenter)="onMatrixMouseEnter($event)" />
-
-                        <!-- <span matPrefix *ngIf="xAlignment == 'right'" class="body-sm additional-value prefix" matBadge="{{ additionalValue }}" matBadgePosition="before"
-                            matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
-                        <span matSuffix *ngIf="xAlignment != 'right'" class="body-sm additional-value suffix" matBadge="{{ additionalValue }}" matBadgePosition="before"
-                            matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span> -->
 
                         <mat-error *ngIf="messages?.length > 0">
                             <span class="qs-error body-xs" *ngFor="let msg of messages"> {{ msg.Key | translate }} :

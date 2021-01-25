@@ -55,6 +55,27 @@
     }
 }
 
+@mixin pep-field-icon($inside-button: false) {
+    .mat-icon {
+        height: calc(#{$form-field-button-size});
+        width: calc(#{$form-field-button-size});
+
+        .svg-icon {
+            height: $form-field-button-icon-size; // 1rem;
+            width: $form-field-button-icon-size; // 1rem;
+        }
+    }
+
+    @if ($inside-button) {
+        &.regular {
+            .mat-icon {
+                height: calc(#{$form-field-button-size} - 2px); // - 2px is the border size of the regular
+                width: calc(#{$form-field-button-size} - 2px); // - 2px is the border size of the regular
+            }
+        }
+    }
+}
+
 .mat-form-field {
     @include fix-inline-z-index();
     display: flow-root !important;
@@ -83,6 +104,8 @@
                 align-self: center;
                 z-index: $z-index-lowest + 1;
                 
+                @include pep-field-icon();
+
                 .mat-button {
                     min-width: unset;
                     line-height: unset;
@@ -91,30 +114,7 @@
                     height: $form-field-button-size; // 1.5rem;
                     width: $form-field-button-size; // 1.5rem;
 
-                    .mat-icon {
-                        // height: calc(#{$form-field-button-size} - 2px); // - 2px is the border size
-                        // width: calc(#{$form-field-button-size} - 2px); // - 2px is the border size
-                        height: calc(#{$form-field-button-size});
-                        width: calc(#{$form-field-button-size} );
-
-                        .svg-icon {
-                            height: $form-field-button-icon-size; // 1rem;
-                            width: $form-field-button-icon-size; // 1rem;
-                        }
-                    }
-                }
-
-                .mat-icon {
-                    font-size: unset; // override material default (150%).
-                    // height: calc(#{$form-field-button-size} - 2px); // - 2px is the border size
-                    // width: calc(#{$form-field-button-size} - 2px); // - 2px is the border size
-                    height: calc(#{$form-field-button-size});
-                    width: calc(#{$form-field-button-size});
-
-                    .svg-icon {
-                        height: $form-field-button-size; // 1.5rem;
-                        width: $form-field-button-size; // 1.5rem;
-                    }
+                    @include pep-field-icon(true);
                 }
             }
 

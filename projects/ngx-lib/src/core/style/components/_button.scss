@@ -164,7 +164,8 @@
 
         .mat-button-wrapper {
             line-height: inherit;
-            height: inherit;
+            // height: inherit;
+            height: 100%;
             width: 100%;
 
             @include align-center();
