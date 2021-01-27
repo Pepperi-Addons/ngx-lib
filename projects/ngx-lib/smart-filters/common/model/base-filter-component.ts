@@ -202,15 +202,9 @@ export abstract class BaseFilterComponent
         if (this.filter) {
             this.operator = this.filter.operator;
             this.operatorUnit = this.filter.operatorUnit;
-            const value = this.filter.value;
-            // this.form.patchValue({
-            //     first: value.first,
-            //     second: value.second,
-            // });
-
             const formValue = {};
-            formValue[this.firstControlKey] = value.first;
-            formValue[this.secondControlKey] = value.second;
+            formValue[this.firstControlKey] = this.filter.value.first;
+            formValue[this.secondControlKey] = this.filter.value.second;
             this.form.patchValue(formValue);
         } else {
             this.operator = this.getDefaultOperator();

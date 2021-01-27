@@ -642,6 +642,7 @@
     @if ($color-map-name == null) {
         $color-map-name: color-strong;
     }
+    background: get-pep-color($pepperi-theme, $color-map-name, color-flat-l-20);
     box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, soft);
     @include focus($pepperi-theme);
 }

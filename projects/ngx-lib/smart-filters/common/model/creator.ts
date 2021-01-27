@@ -10,37 +10,39 @@ import {
     PepSmartFilterCurrencyField,
     PepSmartFilterRealField,
 } from './field';
+import { IPepSmartFilterData } from './filter';
+import { IPepSmartFilterOperator } from './operator';
 import { PepSmartFilterType } from './type';
 
-export function createBooleanSmartFilterField(data: IPepSmartFilterField) {
+function createBooleanSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterBooleanField(data);
 }
 
-export function createDateSmartFilterField(data: IPepSmartFilterField) {
+function createDateSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterDateField(data);
 }
 
-export function createDateTimeSmartFilterField(data: IPepSmartFilterField) {
+function createDateTimeSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterDateTimeField(data);
 }
 
-export function createMultiSelectSmartFilterField(data: IPepSmartFilterField) {
+function createMultiSelectSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterMultiSelectField(data);
 }
 
-export function createIntSmartFilterField(data: IPepSmartFilterField) {
+function createIntSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterIntField(data);
 }
 
-export function createRealSmartFilterField(data: IPepSmartFilterField) {
+function createRealSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterRealField(data);
 }
 
-export function createCurrencySmartFilterField(data: IPepSmartFilterField) {
+function createCurrencySmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterCurrencyField(data);
 }
 
-export function createPercentageSmartFilterField(data: IPepSmartFilterField) {
+function createPercentageSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterPercentageField(data);
 }
 
@@ -82,4 +84,20 @@ export function createSmartFilterField(
     }
 
     return field;
+}
+
+export function createSmartFilter(
+    fieldId: string,
+    operator: IPepSmartFilterOperator,
+    first: any,
+    second?: any
+): IPepSmartFilterData {
+    return {
+        fieldId: fieldId,
+        operator: operator,
+        value: {
+            first: first,
+            second: second,
+        },
+    };
 }

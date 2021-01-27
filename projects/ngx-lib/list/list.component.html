@@ -1,7 +1,7 @@
 <ng-container *ngIf="totalRows == 0">
     <div class="no-data body-xl">{{ noDataFoundMsg }}</div>
 </ng-container>
-<ng-container *ngIf="totalRows > 0">
+<div *ngIf="totalRows > 0" [ngClass]="{ 'lock-events': lockEvents }">
     <ng-container *ngIf="isTable; then tableBlock; else cardsBlock"></ng-container>
     <ng-template #tableBlock>
         <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
@@ -35,12 +35,11 @@
     </ng-template>
 
     <ng-template #listPager>
-        <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="lockEvents" [length]="totalRows"
+        <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="!showItems" [length]="totalRows"
             [pageSize]="pageSize" (pagerChange)="onPagerChange($event)">
         </pep-list-pager>
     </ng-template>
-
-</ng-container>
+</div>
 
 <ng-template #listData>
     <ng-container *ngFor="let item of scrollItems; let index; let isFirst = first;">
@@ -69,7 +68,7 @@
                     <pep-form [checkForChanges]="checkForChanges" [layout]="layout"
                         [firstFieldAsLink]="firstFieldAsLink" [data]="item" [canEditObject]="!disabled"
                         [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
-                        [lockEvents]="disableSelectionItems" [isReport]="isReport" [layoutType]="'table'"
+                        [lockEvents]="lockItemInnerEvents" [isReport]="isReport" [layoutType]="'table'"
                         [listType]="listType" [isActive]="
                                 (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                                 item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
@@ -89,7 +88,7 @@
                         'line-view': viewType === 'lines'
                     }" class="pull-left flip"
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
-                <mat-checkbox *ngIf="showSelection" class="pull-left flip card-selection"
+                <mat-checkbox *ngIf="showCardSelection" class="pull-left flip card-selection"
                     [disabled]="getIsDisabled(item)"
                     [checked]="getIsSelectedForActions(item?.UID, item?.IsSelectableForActions, item?.Type)"
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
@@ -97,7 +96,7 @@
                 <!-- [canEditObject]="!disabled && item?.IsEditable" -->
                 <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges" [layout]="layout"
                     [data]="item" [canEditObject]="!disabled" [objectId]="objectId" [parentId]="parentId"
-                    [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="getThumbnailsLayout()"
+                    [searchCode]="searchCode" [lockEvents]="lockItemInnerEvents" [layoutType]="getThumbnailsLayout()"
                     [listType]="listType" [isActive]="
                             (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse

@@ -46,8 +46,8 @@
 }
 
 @mixin pep-input-theme($pepperi-theme) {
-    .pepperi-input, .pep-input {
-        background: get-pep-color($pepperi-theme, color-system-primary, color-tran-30);
+    .pepperi-input:not(.pepperi-checkbox-container), .pep-input:not(.pep-checkbox-container) {
+        // background: get-pep-color($pepperi-theme, color-system-primary, color-tran-30);
         border: none;
 
         &::placeholder {

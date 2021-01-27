@@ -4,8 +4,12 @@ import {
     ChangeDetectionStrategy,
     Output,
     EventEmitter,
+    ElementRef,
 } from '@angular/core';
-import { IPepSmartFilterField } from './common/model/field';
+import {
+    IPepSmartFilterField,
+    PepSmartFilterBaseField,
+} from './common/model/field';
 import { IPepSmartFilterData } from './common/model/filter';
 
 @Component({
@@ -22,12 +26,7 @@ export class PepSmartFiltersComponent {
 
     @Input()
     set filters(value: IPepSmartFilterData[]) {
-        this.filtersDataMap.clear();
-        if (value) {
-            value.forEach((filter) => {
-                this.filtersDataMap.set(filter.fieldId, filter);
-            });
-        }
+        this.setupFilters(value);
     }
 
     private _fields: Array<IPepSmartFilterField> = [];
@@ -48,6 +47,44 @@ export class PepSmartFiltersComponent {
 
     expansionPanelHeaderHeight = '*';
 
+    private setupFilters(value: IPepSmartFilterData[]) {
+        this.filtersDataMap.clear();
+        if (value) {
+            value.forEach((filter) => {
+                // Validate before add the filter into the map.
+                const currentField = this.fields.find(
+                    (field) => field.id === filter.fieldId
+                ) as PepSmartFilterBaseField;
+
+                if (currentField) {
+                    // Only if the operator is from the same type
+                    if (
+                        filter.operator.componentType.includes(
+                            currentField.componentType
+                        )
+                    ) {
+                        let isOperatorUnitValid = true;
+                        if (filter.operatorUnit) {
+                            // Only if the operator unit is not from the same type
+                            if (
+                                !filter.operatorUnit.componentType.includes(
+                                    currentField.componentType
+                                )
+                            ) {
+                                isOperatorUnitValid = false;
+                            }
+                        }
+
+                        // Add the filter.
+                        if (isOperatorUnitValid) {
+                            this.filtersDataMap.set(filter.fieldId, filter);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
     private raiseFiltersChange(): void {
         const filteredFields = [...this.filtersDataMap.keys()]
             .filter((key) => this.filtersDataMap.get(key) !== null)
@@ -65,13 +102,11 @@ export class PepSmartFiltersComponent {
     clearFilters() {
         this.filtersDataMap.clear();
         this.raiseFiltersChange();
-        // this.filtersClear.emit();
     }
 
     // Clear the filter and raise event that filters has change.
     onFilterClear(field: IPepSmartFilterField) {
         this.filtersDataMap.delete(field.id);
-        // this.filtersDataMap.set(field.id, null);
         this.raiseFiltersChange();
     }
 

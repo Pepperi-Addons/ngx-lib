@@ -12,7 +12,7 @@ const Equals: IPepSmartFilterOperator = {
     short: '=',
     componentType: [
         'number',
-        'multi-select',
+        // 'multi-select',
         // 'date',
         // 'text',
         // 'auto-complete',
@@ -26,7 +26,7 @@ const NotEqual: IPepSmartFilterOperator = {
     short: '<>',
     componentType: [
         'number',
-        'multi-select',
+        // 'multi-select',
         // 'date',
         // 'text',
         // 'auto-complete',

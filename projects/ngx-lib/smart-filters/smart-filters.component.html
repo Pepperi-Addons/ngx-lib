@@ -24,11 +24,10 @@
                         </span>
                         <mat-chip *ngIf="filtersDataMap.get(field.id)" [selectable]="false" [removable]="true"
                             (click)="onFilterClear(field)" class="clear-filter pep-button chip xs weak">
-                            <span class="body-xs spacing-element">
-                                {{
-                                field.componentType === 'multi-select' ?
-                                filtersDataMap.get(field.id).value?.first?.length : 1
-                                }}
+                            <span *ngIf="field.componentType === 'multi-select'" class="body-xs spacing-element">
+                                {{ filtersDataMap.get(field.id).value?.first?.length }}
+                                <!-- {{ field.componentType === 'multi-select' ?
+                                filtersDataMap.get(field.id).value?.first?.length : 1 }} -->
                             </span>
                             <mat-icon>
                                 <pep-icon name="system_close"></pep-icon>

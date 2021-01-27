@@ -8,29 +8,25 @@
     $button-min-width: var(--pep-button-md-min-width);
     $button-height: var(--pep-button-md-height);
     $button-font-size: var(--pep-button-sm-font-size);
-    // $button-icon-horizontal-spacing: var(--pep-button-md-icon-horizontal-spacing);
-    $button-icon-height: 1.5rem; // var(--pep-button-md-icon-horizontal-spacing);
+    $button-icon-height: 1.5rem;
 
     @if $size == 'xl' {
         $button-horizontal-spacing: var(--pep-button-xl-horizontal-spacing);
         $button-min-width: var(--pep-button-xl-min-width);
         $button-height: var(--pep-button-xl-height);
         $button-font-size: var(--pep-button-xl-font-size);
-        // $button-icon-horizontal-spacing: var(--pep-button-xl-icon-horizontal-spacing);
     }
     @else if $size == 'lg' {
         $button-horizontal-spacing: var(--pep-button-lg-horizontal-spacing);
         $button-min-width: var(--pep-button-lg-min-width);
         $button-height: var(--pep-button-lg-height);
         $button-font-size: var(--pep-button-md-font-size);
-        // $button-icon-horizontal-spacing: var(--pep-button-lg-icon-horizontal-spacing);
     }
     @else if $size == 'sm' {
         $button-horizontal-spacing: var(--pep-button-sm-horizontal-spacing);
         $button-min-width: var(--pep-button-sm-min-width);
         $button-height: var(--pep-button-sm-height);
         $button-font-size: var(--pep-button-xs-font-size);
-        // $button-icon-horizontal-spacing: var(--pep-button-sm-icon-horizontal-spacing);
         $button-icon-height: 1.25rem;
     }
     @else if $size == 'xs' {
@@ -38,7 +34,6 @@
         $button-min-width: var(--pep-button-xs-min-width);
         $button-height: var(--pep-button-xs-height);
         $button-font-size: var(--pep-button-xs-font-size);
-        // $button-icon-horizontal-spacing: var(--pep-button-xs-icon-horizontal-spacing);
         $button-icon-height: 1rem;
     }
     @else if $size == '2xs' {
@@ -46,8 +41,7 @@
         $button-min-width: var(--pep-button-xxs-min-width);
         $button-height: var(--pep-button-xxs-height);
         $button-font-size: var(--pep-button-xxs-font-size);
-        border-radius: $border-radius-sm;
-        // $button-icon-horizontal-spacing: var(--pep-button-xxs-icon-horizontal-spacing);
+        $button-icon-height: 1rem;
     }
 
     padding-left: $button-horizontal-spacing;
@@ -58,6 +52,15 @@
     //line-height: inherit;
     line-height: $button-height;
 
+    // For icon with text
+    // .mat-icon {
+    //     .svg-icon {
+    //         height: 1.25rem !important;
+    //         width: 1.25rem !important;
+    //     }
+    // }
+
+    // For icon only
     &.icon-button {
         padding-left: 0;
         padding-right: 0;
