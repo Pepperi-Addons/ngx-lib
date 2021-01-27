@@ -1,14 +1,14 @@
 <ng-container [formGroup]="form">
-    <!-- New code -->
     <ng-template #pepTemplate let-isFormView="isFormView">
-        <div class="pep-textarea-container pep-report-textarea" [ngClass]="{ 'right-alignment': xAlignment == 'right', 'one-row': !isFormView && rowSpan === 1, 'stand-alone': standAlone,
+        <div class="pep-textarea-container pep-report-textarea" [ngClass]="{ 'stand-alone': standAlone,
+            'right-alignment': xAlignment == 'right', 'one-row': !isFormView && rowSpan === 1,
             'pep-textarea-card-container': layoutType === 'card'  }">
             <pep-field-title *ngIf="isFormView" [label]="label" [required]="required" [disabled]="disabled"
                 [maxFieldCharacters]="inlineMode && !disabled && !readonly ? maxFieldCharacters : 0"
                 [xAlignment]="xAlignment" [showTitle]="showTitle" [inputLength]="quillContent?.length">
             </pep-field-title>
             <mat-form-field appearance="outline" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}"
-                [ngClass]="{ 'pep-table-textarea': layoutType === 'table', 'active': active }">
+                [ngClass]="{ 'pep-table-textarea': layoutType === 'table', 'active': active, 'ignore-disabled': disabled }">
                 <textarea [hidden]="true" matInput [formControlName]="key"></textarea>
 
                 <ng-container *ngIf="inlineMode; then inlineBlock; else notInlineBlock"></ng-container>

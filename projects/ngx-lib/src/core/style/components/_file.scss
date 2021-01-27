@@ -153,12 +153,6 @@ $file-input-z-index: 1;
 .pepperi-report-file, .pep-report-file {
     cursor: pointer;
     border-radius: $border-radius-md;
-    // margin: 0.25rem;
-
-    &.pepperi-report-img, &.pep-report-img {
-        visibility: hidden;
-        // margin-top: 0.25rem;
-    }
 }
 
 // -----------------------------------------------------

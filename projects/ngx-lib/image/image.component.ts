@@ -42,7 +42,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() srcLarge = '';
     @Input() src = '';
-    @Input() options: IPepOption[] = null;
+    @Input() options: IPepOption[] = [];
     @Input() label = '';
     // @Input() type = 'image';
     @Input() required = false;
@@ -139,7 +139,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         event.target.title = this.translate.instant('IMAGE.NO_IMAGE');
     }
 
-    setTitle(event: any): void {
+    onImageLoad(event: any): void {
         event.target.style.visibility = 'visible';
         event.target.title =
             event.target.title.length === 0
@@ -225,7 +225,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             }
         } else {
             const arr = [this.srcLarge || this.src].concat(
-                this.options.map((opt) => opt.value)
+                (this.options || []).map((opt) => opt.value)
             );
             const imagesValue = arr.join(';');
 
