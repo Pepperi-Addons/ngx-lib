@@ -1,7 +1,7 @@
 <ng-container [formGroup]="form">
-    <!-- New code -->
     <ng-template #pepTemplate let-isFormView="isFormView">
-        <div class="pep-textarea-container" [ngClass]="{ 'right-alignment': xAlignment == 'right', 'one-row': rowSpan === 1, 'stand-alone': standAlone,
+        <div class="pep-textarea-container" [ngClass]="{ 'stand-alone': standAlone,
+            'right-alignment': xAlignment == 'right', 'one-row': rowSpan === 1,
             'pep-textarea-card-container': layoutType === 'card' }">
             <pep-field-title *ngIf="isFormView" [label]="label" [required]="required" [disabled]="disabled"
                 [maxFieldCharacters]="disabled || readonly ? 0 : maxFieldCharacters" [xAlignment]="xAlignment"

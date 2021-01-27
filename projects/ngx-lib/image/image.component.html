@@ -1,38 +1,62 @@
 <ng-container [formGroup]="form">
     <ng-container>
-        <!-- New code -->
-        <ng-container *ngIf="layoutType === 'form'">
-            <div class="pep-file-container image-container" [ngClass]="{ 'one-row': rowSpan == 1}">
-                <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
-                    [showTitle]="showTitle">
-                </pep-field-title>
-                <pep-files-uploader [id]="key" [key]="key" [layoutType]="layoutType" [standAlone]="standAlone"
-                    [src]="srcLarge || src" [label]="label" [required]="required" [disabled]="disabled"
-                    [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
-                    [acceptedExtensions]="acceptImagesType" (fileChange)="onFileChanged($event)"
-                    (elementClick)="onFileClicked($event)" [sizeLimitMB]="sizeLimitMB">
-                </pep-files-uploader>
+        <ng-template #readonlyTemplate>
+            <div class="img-wrapper" [ngClass]="{
+                'left-alignment': xAlignment == 'left',
+                'right-alignment': xAlignment == 'right',
+                'center-alignment': xAlignment == 'center'
+            }">
+                <img [id]="key" [style.max-height]="fieldHeight" class="pep-report-file" [alt]="label" [src]="src"
+                    (click)="itemImageClick($event)" (error)="errorHandler($event)" (load)="onImageLoad($event)" />
             </div>
+        </ng-template>
+
+        <ng-container *ngIf="layoutType === 'form'">
+            <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+                [showTitle]="showTitle">
+            </pep-field-title>
+            <ng-container *ngIf="disabled || readonly; then disabledTemplate; else editableTemplate"></ng-container>
+            <ng-template #disabledTemplate>
+                <div class="pep-file body-sm" [style.height]="fieldHeight" [ngClass]="{'one-row': rowSpan == 1}">
+                    <ng-container *ngTemplateOutlet="readonlyTemplate"></ng-container>
+                </div>
+            </ng-template>
+            <ng-template #editableTemplate>
+                <div class="pep-file-container image-container" [ngClass]="{ 'one-row': rowSpan == 1}">
+                    <pep-files-uploader [id]="key" [key]="key" [layoutType]="layoutType" [standAlone]="standAlone"
+                        [src]="srcLarge || src" [label]="label" [required]="required" [disabled]="disabled"
+                        [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
+                        [acceptedExtensions]="acceptImagesType" (fileChange)="onFileChanged($event)"
+                        (elementClick)="onFileClicked($event)" [sizeLimitMB]="sizeLimitMB">
+                    </pep-files-uploader>
+                </div>
+            </ng-template>
         </ng-container>
 
         <ng-container *ngIf="layoutType === 'card'">
-            <div class="img-wrapper "
-                [ngClass]="{ 'left-alignment': xAlignment == 'left', 'right-alignment': xAlignment == 'right', 'center-alignment': xAlignment == 'center' }">
+            <ng-container *ngTemplateOutlet="readonlyTemplate"></ng-container>
+            <!-- <div class="img-wrapper"
+                [ngClass]="{
+                    'left-alignment': xAlignment == 'left',
+                    'right-alignment': xAlignment == 'right',
+                    'center-alignment': xAlignment == 'center'
+                }">
                 <img [id]="key" [style.max-height]="fieldHeight" class="pep-report-file" [alt]="label" [src]="src"
                     (click)="itemImageClick($event)" (error)="errorHandler($event)" />
-            </div>
+            </div> -->
         </ng-container>
 
         <ng-container *ngIf="layoutType === 'table'">
-            <div class="img-wrapper" [ngClass]="{
+            <ng-container *ngTemplateOutlet="readonlyTemplate"></ng-container>
+            <!-- <div class="img-wrapper" [ngClass]="{
                     'left-alignment': xAlignment == 'left',
                     'right-alignment': xAlignment == 'right',
                     'center-alignment': xAlignment == 'center'
                 }">
                 <img [id]="key" [style.max-height]="fieldHeight" class="pep-report-file pep-report-img"
                     [ngClass]="['text-align-' + xAlignment]" [alt]="label" [src]="src" (click)="itemImageClick($event)"
-                    (error)="errorHandler($event)" (load)="setTitle($event)" />
-            </div>
+                    (error)="errorHandler($event)" (load)="onImageLoad($event)" />
+            </div> -->
         </ng-container>
     </ng-container>
 
@@ -50,6 +74,7 @@
             </mat-icon>
         </button>
     </ng-container>
+
     <!-- Campaign -->
     <ng-container *ngIf="hasCampaignField && hasCampaignField?.FormattedValue">
         <span [id]="key" class="campaign floating-field" title="{{ hasCampaignField?.FormattedValue }}" [ngClass]="{

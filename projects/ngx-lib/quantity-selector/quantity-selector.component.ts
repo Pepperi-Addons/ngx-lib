@@ -481,7 +481,7 @@ export class PepQuantitySelectorComponent
             const qsContClientWidth = this.QSCont.nativeElement.clientWidth;
 
             if (qsContClientWidth != this.lastQsContClientWidth) {
-                this.showQsBtn = qsContClientWidth > 180;
+                this.showQsBtn = qsContClientWidth > 120;
 
                 if (!this.cd['destroyed']) {
                     this.cd.detectChanges();

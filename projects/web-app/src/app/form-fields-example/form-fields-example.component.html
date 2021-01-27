@@ -91,7 +91,8 @@
                     [rowSpan]="6">
                 </pep-image> -->
 
-                <pep-image [key]="'Image'" [label]="'Pepperi Image'" [xAlignment]="'center'" [rowSpan]="3"
+                <pep-image [key]="'Image'" [label]="'Pepperi Image'" [xAlignment]="'center'" [rowSpan]="4"
+                    [disabled]="true"
                     [src]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'"
                     (elementClicked)="elementClicked($event)">
                 </pep-image>
@@ -134,7 +135,7 @@
 
                 <!-- Rich Html Textarea Example -->
                 <pep-rich-html-textarea [key]="'richText1'" [label]="'Pepperi Rich Html Textarea'" [value]="richHtml"
-                    [rowSpan]="3" [maxFieldCharacters]="300" [xAlignment]="'left'">
+                    [rowSpan]="3" [maxFieldCharacters]="300" [xAlignment]="'left'" [disabled]="true">
                 </pep-rich-html-textarea>
 
                 <!-- <pep-rich-html-textarea [key]="'richText2'" [label]="'richText2'" [value]="richTextValue" [rowSpan]="3"

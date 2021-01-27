@@ -1,5 +1,4 @@
-﻿<!-- New code -->
-<ng-template #pepTemplate>
+﻿<ng-template #pepTemplate>
     <mat-form-field [formGroup]="form" appearance="outline">
         <div class="pep-file-wrapper">
             <div class="pep-file body-sm" [style.height]="fieldHeight" [ngClass]="{
@@ -36,7 +35,8 @@
                         <pep-icon *ngIf="controlType === 'image'" name="system_file_upload_cloud">
                         </pep-icon>
                         <span class="body-sm ellipsis" *ngIf="progress == 0">
-                            {{ (disabled ? (controlType === 'image' ? 'MESSAGES.INFO_MISSING_IMAGE' : 'MESSAGES.INFO_MISSING_FILE') : 'FILE.HINT') | translate }}
+                            {{ (disabled ? (controlType === 'image' ? 'MESSAGES.INFO_MISSING_IMAGE' :
+                            'MESSAGES.INFO_MISSING_FILE') : 'FILE.HINT') | translate }}
                         </span>
                         <!-- <p *ngIf="progress != 0" class="pull-left flip"
                             [ngClass]="{ 'pull-left flip': rowSpan == 1, image: controlType == 'image', attachment: controlType == 'attachment' }">
