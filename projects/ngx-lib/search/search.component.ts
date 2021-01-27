@@ -173,7 +173,9 @@ export class PepSearchComponent implements OnInit, OnDestroy {
                         });
                     }
                 } else if (this.type === 'regular') {
-                    this.emitSearchClick();
+                    if (this.triggerOn === 'keydown') {
+                        this.emitSearchClick();
+                    }
                 }
             });
     }

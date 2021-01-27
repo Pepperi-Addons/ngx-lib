@@ -16,6 +16,12 @@
 
 .flex {
     display: flex;
+
+    &.align-center {
+        align-items: center;
+        justify-content: center;
+    }
+
 }
 
 /**

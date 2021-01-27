@@ -115,10 +115,12 @@ export class TopBarExampleComponent implements OnInit {
     }
 
     onSearchChanged(search: any) {
+        console.log(search);
         // debugger;
     }
 
     onSearchAutocompleteChanged(value) {
+        console.log(value);
         // debugger;
     }
 }

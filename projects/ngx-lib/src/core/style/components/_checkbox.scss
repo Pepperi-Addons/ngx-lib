@@ -309,6 +309,24 @@
 
 @mixin pep-checkbox-theme($pepperi-theme) {
     .pepperi-checkbox-container, .pep-checkbox-container {
+        @include state-weak-default($pepperi-theme);
+        &.no-default-background {
+            background: unset;
+        }
+        
+        &:hover:not(.disable) {
+            @include state-weak-hover($pepperi-theme);
+        }
+        &:focus:not(.disable) {
+            @include state-weak-focus($pepperi-theme);
+        }
+        // &:active {
+        //     @include state-weak-active($pepperi-theme);
+        // }
+        &.disable,
+        &:disabled {
+            @include state-weak-disable($pepperi-theme);
+        }
 
         &:not(.disable) {
             .emoji-icon {
@@ -334,14 +352,6 @@
             fill: get-pep-color($pepperi-theme, color-system-caution, color-base);
         }
     }
-
-    // &:hover {
-    //     //cursor: default;
-    //     @include state-weak-hover($pepperi-theme);
-    // }
-    // &:active {
-    //     @include state-weak-active($pepperi-theme);
-    // }
 
     // -----------------------------------------------------
     //  Override material style

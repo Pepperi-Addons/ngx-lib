@@ -46,7 +46,7 @@ import {
 } from '@pepperi-addons/ngx-lib/smart-filters';
 import { FakeData } from './fake-data';
 import { PepSideBarComponent } from '@pepperi-addons/ngx-lib/side-bar';
-import { createSmartFilterField } from 'projects/ngx-lib/smart-filters/common/model/creator';
+import { createSmartFilter, createSmartFilterField } from 'projects/ngx-lib/smart-filters/common/model/creator';
 
 @Component({
     templateUrl: './list-example.component.html',
@@ -169,8 +169,8 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     addFilters(): void {
         const selectedValues = ['value 1', 'value 5', 'value 10', 'value 11'];
         this.filters = [
-            { fieldId: 'filter3', operator: PepSmartFilterOperators.DateRange, value: { first: '2020-1-1', second: '2021-1-1' } },
-            { fieldId: 'filter4', operator: PepSmartFilterOperators.In, value: { first: selectedValues } },
+            createSmartFilter('filter3', PepSmartFilterOperators.DateRange, '2020-1-1', '2021-1-1'),
+            createSmartFilter('filter4', PepSmartFilterOperators.In, selectedValues)
         ];
     }
 

@@ -1,11 +1,6 @@
 <div [formGroup]="form">
     <pep-search [searchControl]="searchControl" [triggerOn]="'keydown'" [shrinkInSmallScreen]="false"></pep-search>
     <div pepRtlClass class="multi-select-options pep-border-top pep-border-bottom">
-        <!-- <ng-container *ngIf="options.length === 0">
-            <span class="no-options body-sm ellipsis" [title]="field.name">
-                {{ "SMART_FILTERS.NO_SEARCH_RESULTS" | translate}}
-            </span>
-        </ng-container> -->
         <div #optionsContainer *ngIf="options.length > 0" class="flip-scroll">
             <virtual-scroller #scroll [items]="filteredOptions$ | async" [parentScroll]="optionsContainer">
                 <mat-checkbox *ngFor="let opt of scroll.viewPortItems"

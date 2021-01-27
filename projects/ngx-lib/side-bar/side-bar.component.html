@@ -16,8 +16,7 @@
     </ng-template>
     <ng-template #notLargeScreensBlock>
         <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
-            <mat-sidenav #sidenav mode="over" class="sidenav" [fixedInViewport]="false">
-
+            <mat-sidenav #sidenav mode="over" autoFocus="false" class="sidenav" fixedInViewport="false">
                 <div class="sidenav-header pep-border-bottom">
                     <ng-content select="[header-content]"></ng-content>
                 </div>

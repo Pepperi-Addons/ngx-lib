@@ -45,7 +45,7 @@
             <mat-option *ngIf="autoCompleteValues?.length > autoCompleteTop - 1" [value]="value"
                 (click)="triggerSearch()">{{ 'SEARCH.MORE_RESULTS' | translate }}</mat-option>
         </mat-autocomplete>
-        <div matSuffix class="flex">
+        <div matSuffix class="flex align-center">
             <ng-container *ngIf="triggerOn === 'click'">
                 <ng-container *ngTemplateOutlet="triggerOnClickBlock"></ng-container>
             </ng-container>
@@ -61,7 +61,7 @@
         <input #searchInput class="body-sm search-input" matInput autocomplete="off"
             [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="search" [formControl]="searchControl"
             placeholder="{{ 'SEARCH.HINT' | translate }}..." />
-        <div matSuffix class="flex">
+        <div matSuffix class="flex align-center">
             <ng-container *ngIf="triggerOn === 'click'">
                 <ng-container *ngTemplateOutlet="triggerOnClickBlock"></ng-container>
             </ng-container>
