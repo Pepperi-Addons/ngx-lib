@@ -46,10 +46,7 @@
         }
 
         .mat-icon {
-            width: 1rem;
-            height: 1rem;
-            
-            ::ng-deep.svg-icon {
+            pep-icon {
                 height: 0.75rem;
                 width: 0.75rem;
             }

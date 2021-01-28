@@ -53,12 +53,10 @@
     line-height: $button-height;
 
     // For icon with text
-    // .mat-icon {
-    //     .svg-icon {
-    //         height: 1.25rem !important;
-    //         width: 1.25rem !important;
-    //     }
-    // }
+    .mat-icon {
+        height: 1rem !important;
+        width: 1rem !important;
+    }
 
     // For icon only
     &.icon-button {
@@ -66,14 +64,9 @@
         padding-right: 0;
 
         .mat-icon {
-            width: inherit;
-            height: inherit;
+            height: $button-icon-height !important;
+            width: $button-icon-height !important;
             @include align-center();
-
-            .svg-icon {
-                height: $button-icon-height !important;
-                width: $button-icon-height !important;
-            }
         }
     }
 }

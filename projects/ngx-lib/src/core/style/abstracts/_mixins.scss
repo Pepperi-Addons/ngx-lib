@@ -55,14 +55,6 @@
     #{$property}: calc(#{$expression});
 }
 
-@mixin flexbox {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-}
-
 @mixin spacing-element-negative($add-important: true, $spacing-size: $spacing-xs) {
     @if ($add-important) {
         margin-right: calc(#{$spacing-size} * -1) !important;
@@ -107,7 +99,7 @@
     -webkit-box-sizing: $box-model; // Safari <= 5
     -moz-box-sizing: $box-model; // Firefox <= 19
     box-sizing: $box-model;
-  }
+}
 
 @mixin ellipsis() {
     -ms-text-overflow: ellipsis;
@@ -701,12 +693,7 @@
 
     // Hover
     &:hover {
-        .ignore-disabled {
-            .mat-form-field-flex {
-                @include pep-state-hover($pepperi-theme, $style, $color-name);
-            }
-        }
-        
+        .ignore-disabled,
         &:not(.mat-form-field-disabled) {
             .mat-form-field-flex {
                 @include pep-state-hover($pepperi-theme, $style, $color-name);
@@ -716,12 +703,7 @@
 
     // Focused
     &.mat-focused {
-        .ignore-disabled {
-            .mat-form-field-flex {
-                @include pep-state-focus($pepperi-theme, $style, $color-name);
-            }
-        }
-        
+        .ignore-disabled,
         &:not(.mat-form-field-disabled) {
             .mat-form-field-flex {
                 @include pep-state-focus($pepperi-theme, $style, $color-name);
@@ -732,12 +714,7 @@
     // Active
     &.active,
     &:active {
-        .ignore-disabled {
-            .mat-form-field-flex {
-                @include pep-state-active($pepperi-theme, $style, $color-name);
-            }
-        }
-        
+        .ignore-disabled,
         &:not(.mat-form-field-disabled) {
             .mat-form-field-flex {
                 @include pep-state-active($pepperi-theme, $style, $color-name);

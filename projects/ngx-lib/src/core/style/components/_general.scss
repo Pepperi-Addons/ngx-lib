@@ -1,7 +1,3 @@
-.required {
-    padding: 0 0.25rem;
-}
-
 .pepperi-report-fields, .pep-report-fields {
     height: inherit;
 
@@ -23,14 +19,11 @@
     display: grid;
     grid-template-columns: auto 1fr auto;
 
-    span {
-        line-height: 0.875rem;
-        vertical-align: top;
-
-        .svg-icon {
-            height: 0.6875rem;
-            width: 0.6875rem;
-        }
+    .mat-icon {
+        // line-height: 0.875rem;
+        // vertical-align: top;
+        height: 0.75rem;
+        width: 0.75rem;
     }
 
     mat-label {
@@ -229,7 +222,6 @@ $sorting-width: 1rem;
                 .required {
                     height: 0.75rem;
                     width: 0.75rem;
-                    padding: 0;
                 }
             }
 
@@ -252,12 +244,6 @@ $sorting-width: 1rem;
                         display: flex;
                         height: inherit;
                         width: inherit;
-
-                        // .svg-icon {
-                        //     &.asc {
-                        //         @include rotate(180deg);
-                        //     }
-                        // }
 
                         &:hover {
                             cursor: pointer;

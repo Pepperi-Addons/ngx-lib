@@ -13,9 +13,9 @@
     </ng-template>
 
     <ng-template #requiredTemplate>
-        <span *ngIf="required" class="required">
+        <mat-icon *ngIf="required" class="spacing-element">
             <pep-icon name="system_must"></pep-icon>
-        </span>
+        </mat-icon>
         <!-- For the grid template () -->
         <span *ngIf="!required"></span>
     </ng-template>

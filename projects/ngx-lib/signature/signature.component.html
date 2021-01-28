@@ -10,8 +10,7 @@
                                 class="pep-button icon-button weak md delete" tabindex="-1"
                                 [ngClass]="{ 'right-alignment': xAlignment == 'right' }">
                                 <mat-icon>
-                                    <pep-icon name="system_bin">
-                                    </pep-icon>
+                                    <pep-icon name="system_bin"></pep-icon>
                                 </mat-icon>
                             </button>
                             <div class="pep-file-preview" (click)="openSignModal()">
@@ -22,8 +21,9 @@
                         </ng-template>
                         <ng-template #noImg>
                             <div class="ellipsis pep-file-message">
-                                <pep-icon name="system_signature">
-                                </pep-icon>
+                                <mat-icon class="spacing-element">
+                                    <pep-icon name="system_signature"></pep-icon>
+                                </mat-icon>
                                 <span class="body-sm ellipsis">
                                     {{ (disabled ? 'MESSAGES.INFO_MISSING_SIGNATURE' : 'SIGNATURE.HINT') | translate }}
                                 </span>
