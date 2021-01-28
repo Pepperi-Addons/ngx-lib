@@ -46,7 +46,7 @@
         <ng-container *ngIf="isTable">
             <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)"
                 (mouseleave)="onTableRowMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
-                        selected: getIsItemSelected(item?.UID, item?.Type),
+                        selected: getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type),
                         highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId
                     }"
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
@@ -56,12 +56,12 @@
                         type="checkbox" class="pull-left flip row-selection" [disabled]="getIsDisabled(item)" [ngStyle]="{
                                 visibility: !deviceHasMouse ||
                                 item?.UID + SEPARATOR + item?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
-                            }" [checked]="getIsSelectedForActions(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                            }" [checked]="getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type)"
                         (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                     </mat-checkbox>
                     <mat-radio-button *ngIf="selectionTypeForActions == 'single'" name="selection"
                         class="pull-left flip row-selection pep-radio-button" [disabled]="getIsDisabled(item)"
-                        [checked]="getIsSelectedForActions(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                        [checked]="getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type)"
                         (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                     </mat-radio-button>
                     <!-- [canEditObject]="!disabled && item?.IsEditable"  -->
@@ -82,7 +82,7 @@
         <ng-container *ngIf="!isTable">
             <div [class]="itemClass" (mouseenter)="onCardMouseEnter($event, item?.UID, item?.Type)"
                 (mouseleave)="onCardMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
-                        selected: getIsItemSelected(item?.UID, item?.Type),
+                        selected: getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type),
                         highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId,
                         'card-view': viewType === 'cards',
                         'line-view': viewType === 'lines'
@@ -90,7 +90,7 @@
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
                 <mat-checkbox *ngIf="showCardSelection" class="pull-left flip card-selection"
                     [disabled]="getIsDisabled(item)"
-                    [checked]="getIsSelectedForActions(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                    [checked]="getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type)"
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                 </mat-checkbox>
                 <!-- [canEditObject]="!disabled && item?.IsEditable" -->

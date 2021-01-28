@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatCommonModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import {
@@ -17,6 +18,7 @@ import { PepFieldTitleComponent } from './field-title.component';
         CommonModule,
         // Material modules,
         MatCommonModule,
+        MatIconModule,
         MatFormFieldModule,
         // ngx-lib modules
         PepIconModule,

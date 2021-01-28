@@ -723,28 +723,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getIsDisabled(item: ObjectsDataRow): boolean {
-        if (this.lockItemInnerEvents) {
-            return true;
-        } else {
-            return item && !item.IsSelectableForActions;
-        }
-    }
-
-    getIsItemSelected(itemId: string, itemType = ''): boolean {
-        let isSelected = false;
-        if (
-            this.selectionTypeForActions === 'single-action' ||
-            this.selectionTypeForActions === 'multi'
-        ) {
-            isSelected =
-                this.selectedItems.has(itemId) ||
-                (this.isAllSelected && !this.unSelectedItems.has(itemId));
-        } else if (this.selectionTypeForActions === 'single') {
-            const uniqItemId = this.getUniqItemId(itemId, itemType);
-            isSelected = uniqItemId === this.selectedItemId;
-        }
-
-        return isSelected;
+        return (
+            this.lockItemInnerEvents || (item && !item.IsSelectableForActions)
+        );
     }
 
     getIsAllSelectedForActions(): boolean {
@@ -823,34 +804,43 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    getIsSelectedForActions(
+    // getIsItemSelected(itemId: string, itemType = ''): boolean {
+    //     let isSelected = false;
+    //     if (this.selectionTypeForActions === 'single-action' ||
+    //         this.selectionTypeForActions === 'multi') {
+    //         isSelected = this.selectedItems.has(itemId) || (this.isAllSelected && !this.unSelectedItems.has(itemId));
+    //     } else if (this.selectionTypeForActions === 'single') {
+    //         const uniqItemId = this.getUniqItemId(itemId, itemType);
+    //         isSelected = uniqItemId === this.selectedItemId;
+    //     }
+
+    //     return isSelected;
+    // }
+
+    // Change the name from getIsSelectedForActions to getIsItemSelected
+    getIsItemSelected(
         itemId: string,
         isSelectableForActions: boolean,
         itemType = ''
     ): boolean {
+        let isSelected = false;
+
         if (this.selectionTypeForActions === 'single') {
-            return this.selectedItemId === this.getUniqItemId(itemId, itemType);
+            isSelected =
+                this.selectedItemId === this.getUniqItemId(itemId, itemType);
         } else if (this.selectionTypeForActions === 'single-action') {
-            let res = this.isAllSelected || this.selectedItems.has(itemId);
-
-            if (this.unSelectedItems.has(itemId)) {
-                res = false;
-            }
-
-            return res;
+            isSelected =
+                (this.isAllSelected && !this.unSelectedItems.has(itemId)) ||
+                this.selectedItems.has(itemId);
         } else if (this.selectionTypeForActions === 'multi') {
-            if (!isSelectableForActions) {
-                return false;
-            } else {
-                let res = this.isAllSelected || this.selectedItems.has(itemId);
-
-                if (this.unSelectedItems.has(itemId)) {
-                    res = false;
-                }
-
-                return res;
+            if (isSelectableForActions) {
+                isSelected =
+                    (this.isAllSelected && !this.unSelectedItems.has(itemId)) ||
+                    this.selectedItems.has(itemId);
             }
         }
+
+        return isSelected;
     }
 
     selectItemForActions(

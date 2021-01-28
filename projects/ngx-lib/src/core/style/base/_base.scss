@@ -473,12 +473,9 @@ main {
                 padding: $spacing-xs 0;
 
                 .mat-icon {
+                    height: 1rem;
+                    width: 1rem;
                     @include align-center();
-
-                    .svg-icon {
-                        height: 1rem;
-                        width: 1rem;
-                    }
                 }
             }
 
