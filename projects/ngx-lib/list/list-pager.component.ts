@@ -111,7 +111,7 @@ export class PepListPagerComponent {
             this.pageIndex = 0;
         }
 
-        this._changeDetectorRef.markForCheck();
+        // this._changeDetectorRef.markForCheck();
 
         if (this.pageIndex !== previousPageIndex) {
             this._emitChangeEvent(previousPageIndex);

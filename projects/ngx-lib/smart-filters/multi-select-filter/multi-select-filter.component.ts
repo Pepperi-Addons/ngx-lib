@@ -48,9 +48,13 @@ export class PepMultiSelectFilterComponent
     ngOnInit() {
         super.ngOnInit;
 
-        this.options = this.field.options.map((opt) => {
-            return { value: opt.value, count: opt.count, selected: false };
-        });
+        if (this.field.options?.length > 0) {
+            this.options = this.field.options.map((opt) => {
+                return { value: opt.value, count: opt.count, selected: false };
+            });
+        } else {
+            this.searchControl.disable();
+        }
 
         // Init the selected values from first value.
         const firstControl = this.firstControl;
