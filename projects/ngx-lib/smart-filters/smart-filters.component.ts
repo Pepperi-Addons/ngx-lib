@@ -47,6 +47,19 @@ export class PepSmartFiltersComponent {
 
     expansionPanelHeaderHeight = '*';
 
+    constructor(
+        private hostElement: ElementRef
+    ) {
+        this.exportFunctionsOnHostElement();
+    }
+
+    private exportFunctionsOnHostElement() {
+        // This is for web component usage for use those functions.
+        this.hostElement.nativeElement.clearFilters = this.clearFilters.bind(this);
+        this.hostElement.nativeElement.clearFilter = this.clearFilter.bind(this);
+        this.hostElement.nativeElement.toggleField = this.toggleField.bind(this);
+    }
+
     private setupFilters(value: IPepSmartFilterData[]) {
         this.filtersDataMap.clear();
         if (value) {
@@ -95,7 +108,7 @@ export class PepSmartFiltersComponent {
         this.filtersChange.emit(filteredFields);
     }
 
-    toggleFilter(index: number, isOpen: boolean): void {
+    toggleField(index: number, isOpen: boolean): void {
         this.fields[index].isOpen = isOpen;
     }
 
@@ -104,9 +117,13 @@ export class PepSmartFiltersComponent {
         this.raiseFiltersChange();
     }
 
+    clearFilter(fieldId: string) {
+        this.filtersDataMap.delete(fieldId);
+    }
+
     // Clear the filter and raise event that filters has change.
     onFilterClear(field: IPepSmartFilterField) {
-        this.filtersDataMap.delete(field.id);
+        this.clearFilter(field.id);
         this.raiseFiltersChange();
     }
 
@@ -115,7 +132,7 @@ export class PepSmartFiltersComponent {
         field: IPepSmartFilterField,
         filterData: IPepSmartFilterData
     ) {
-        this.filtersDataMap.delete(field.id);
+        this.clearFilter(field.id);
         this.filtersDataMap.set(field.id, filterData);
         this.raiseFiltersChange();
     }

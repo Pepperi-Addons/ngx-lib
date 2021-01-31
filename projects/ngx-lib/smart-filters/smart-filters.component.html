@@ -11,7 +11,7 @@
 
     <mat-accordion [displayMode]="'flat'" [multi]="true" class="pep-accordion2">
         <mat-expansion-panel *ngFor="let field of fields; let i = index" hideToggle="true" [expanded]="field.isOpen"
-            (opened)="toggleFilter(i, true)" (closed)="toggleFilter(i, false)">
+            (opened)="toggleField(i, true)" (closed)="toggleField(i, false)">
             <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeaderHeight"
                 [expandedHeight]="expansionPanelHeaderHeight">
                 <mat-panel-title class="spacing-element-negative">
