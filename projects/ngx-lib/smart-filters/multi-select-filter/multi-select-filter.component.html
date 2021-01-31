@@ -1,7 +1,7 @@
 <div [formGroup]="form">
     <pep-search [searchControl]="searchControl" [triggerOn]="'keydown'" [shrinkInSmallScreen]="false"></pep-search>
     <div pepRtlClass class="multi-select-options pep-border-top pep-border-bottom">
-        <div #optionsContainer *ngIf="options.length > 0" class="flip-scroll">
+        <div #optionsContainer class="flip-scroll">
             <virtual-scroller #scroll [items]="filteredOptions$ | async" [parentScroll]="optionsContainer">
                 <mat-checkbox *ngFor="let opt of scroll.viewPortItems"
                     class="pep-checkbox-container pep-input no-default-background md" [title]="opt.value"
@@ -13,7 +13,9 @@
                 </mat-checkbox>
                 <ng-container *ngIf="scroll.viewPortItems?.length === 0">
                     <span class="no-options body-sm ellipsis" [title]="field.name">
-                        {{ "SMART_FILTERS.NO_SEARCH_RESULTS" | translate}}
+                        {{ options.length > 0 ?
+                        "SMART_FILTERS.NO_SEARCH_RESULTS" :
+                        "SMART_FILTERS.NO_OPTIONS" | translate}}
                     </span>
                 </ng-container>
             </virtual-scroller>

@@ -55,6 +55,7 @@
         "MAX": "Max",
         "SEARCH": "Search",
         "NO_SEARCH_RESULTS": "No search results :-(",
+        "NO_OPTIONS": "No options",
         "OPERATORS": {
             "IN_THE_LAST": "In the last",
             "TODAY": "Today",
