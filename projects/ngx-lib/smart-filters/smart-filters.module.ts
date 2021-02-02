@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatCommonModule } from '@angular/material/core';
@@ -38,7 +38,6 @@ import { PepNumberFilterComponent } from './number-filter/number-filter.componen
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        FormsModule,
         FlexLayoutModule,
         // Material modules
         MatCommonModule,

@@ -9,8 +9,14 @@ import {
     Renderer2,
     ChangeDetectorRef,
     OnDestroy,
+    AfterViewInit,
 } from '@angular/core';
-import { ObjectsDataRow, UIControl } from '@pepperi-addons/ngx-lib';
+import {
+    ObjectsDataRow,
+    UIControl,
+    PepLayoutService,
+    PepScreenSizeType,
+} from '@pepperi-addons/ngx-lib';
 import { PepCarouselComponent } from '@pepperi-addons/ngx-lib/carousel';
 
 export type PepListCarouselSizeType = 'xs' | 'sm' | 'md';
@@ -25,10 +31,12 @@ export interface IPepListCarouselItemClickEvent {
     styleUrls: ['./list-carousel.component.scss'],
 })
 @Injectable()
-export class PepListCarouselComponent implements OnDestroy {
+export class PepListCarouselComponent implements AfterViewInit, OnDestroy {
     @Input() duration = 500;
     @Input() layout: UIControl = null;
     @Input() itemsToMove = 3;
+    @Input() lockItemInnerEvents = true;
+    @Input() hideArrowsInSmallScreen = true;
 
     private _items: Array<ObjectsDataRow> = null;
     @Input()
@@ -58,6 +66,16 @@ export class PepListCarouselComponent implements OnDestroy {
 
     prevDisabled = false;
     nextDisabled = false;
+    screenSize: PepScreenSizeType;
+    PepScreenSizeType = PepScreenSizeType;
+
+    constructor(public layoutService: PepLayoutService) {}
+
+    ngAfterViewInit(): void {
+        this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
+            this.screenSize = size;
+        });
+    }
 
     ngOnDestroy(): void {
         if (this.itemClick) {

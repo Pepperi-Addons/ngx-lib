@@ -1,7 +1,7 @@
 <div class="smart-filters-container">
     <div class="title">
         <span class="body-md bold">{{ "SMART_FILTERS.TITLE" | translate}}</span>
-        <mat-chip *ngIf="filtersDataMap.size > 0" [selectable]="false" [removable]="true" (click)="clearFilters()"
+        <mat-chip *ngIf="filtersDataMap.size > 0" [selectable]="false" [removable]="true" (click)="onFiltersClear()"
             class="clear-filter pep-button chip xs weak">
             <span class="body-xs ellipsis ">
                 {{ "ACTIONS.CLEAR" | translate}}

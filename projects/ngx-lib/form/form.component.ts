@@ -141,6 +141,17 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
     public jsonLib = JSON;
 
+    constructor(
+        private dialogService: PepDialogService,
+        private customizationService: PepCustomizationService,
+        public fb: FormBuilder,
+        differs: KeyValueDiffers,
+        private translate: TranslateService
+    ) {
+        // store the initial value to compare with
+        this.differ = differs.find({}).create();
+    }
+
     convertXAlignToHorizontalAlign(
         xAlign: X_ALIGNMENT_TYPE
     ): PepHorizontalAlignment {
@@ -713,11 +724,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         return fieldFormattedValue;
     }
 
-    private toControlGroup(
-        fields: PepFieldBase[],
-        fb: FormBuilder,
-        customizationService: PepCustomizationService
-    ): FormGroup {
+    private toControlGroup(fields: PepFieldBase[]): FormGroup {
         const group = {};
         if (fields && fields.length > 0) {
             fields.forEach((field) => {
@@ -754,7 +761,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                         }
                     });
 
-                    group[field.key] = fb.group(subGroup);
+                    group[field.key] = this.fb.group(subGroup);
                 } else {
                     const validators = field.getValidators();
                     const fieldFormattedValue = this.getFieldFormattedValue(
@@ -772,18 +779,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             });
         }
 
-        return fb.group(group);
-    }
-
-    constructor(
-        private dialogService: PepDialogService,
-        private customizationService: PepCustomizationService,
-        public fb: FormBuilder,
-        differs: KeyValueDiffers,
-        private translate: TranslateService
-    ) {
-        // store the initial value to compare with
-        this.differ = differs.find({}).create();
+        return this.fb.group(group);
     }
 
     public showFormValidationMessage(): void {
@@ -1078,11 +1074,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 }
             }
 
-            this.form = this.toControlGroup(
-                fields,
-                this.fb,
-                this.customizationService
-            );
+            this.form = this.toControlGroup(fields);
         } else {
             // Update form values if changed by calculated fields.
             // for (let i = 0; i < this.fields.length; i++) {
@@ -1460,10 +1452,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         );
     }
 
-    onValueChanged(
-        event: IPepFieldValueChangeEvent,
-        isEditModal = false
-    ): void {
+    onValueChanged(event: IPepFieldValueChangeEvent): void {
         this.onFormValidationChanged(this.form.valid);
 
         const formControl = this.getFormControlById(event.key);

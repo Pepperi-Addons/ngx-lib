@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,6 @@ import { PepColorPickerComponent } from './color-picker.component';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        FormsModule,
         // Material modules
         MatCommonModule,
         MatButtonModule,

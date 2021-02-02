@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 
 import { httpInterceptorProviders } from './core/http/interceptors/index';
@@ -82,7 +82,7 @@ import {
         httpInterceptorProviders,
         // TranslateService
     ],
-    imports: [CommonModule, HttpClientModule, ReactiveFormsModule, FormsModule],
+    imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
     exports: [
         pipeList,
         utilitiesList,

@@ -242,6 +242,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     private setDateModel(): void {
         if (
             this.value === null ||
+            this.value === '' ||
             this.value.indexOf('1900-1-1') >= 0 ||
             this.value.indexOf('1900-01-01') >= 0 ||
             this.value.indexOf('1970-1-1') >= 0 ||
@@ -264,11 +265,11 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onBlur(event: any): void {
-        setTimeout(() => {
-            if (this.isInEditMode && !this.datetimePicker.opened) {
-                this.isInEditMode = false;
-            }
-        }, 0);
+        // setTimeout(() => {
+        if (this.isInEditMode && !this.datetimePicker.opened) {
+            this.isInEditMode = false;
+        }
+        // }, 0);
     }
 
     onDateChange(event: MatDatetimepickerInputEvent<moment.Moment>): void {
@@ -287,13 +288,14 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             this.key,
             value
         );
+
         this.valueChange.emit({ key: this.key, value });
 
-        if (this.isInEditMode) {
-            setTimeout(() => {
+        setTimeout(() => {
+            if (this.isInEditMode) {
                 this.isInEditMode = false;
-            }, 0);
-        }
+            }
+        }, 0);
     }
 
     cardTemplateClicked(event): void {

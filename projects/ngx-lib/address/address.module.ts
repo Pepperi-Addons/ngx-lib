@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +16,6 @@ import { PepAddressComponent } from './address.component';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        FormsModule,
         // Material modules
         MatCommonModule,
         MatFormFieldModule,
