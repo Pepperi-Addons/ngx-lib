@@ -1066,7 +1066,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.onListLoad();
         }
 
-        this.setLayout();
+        setTimeout(() => {
+            this.setLayout();
+        }, 0);
     }
 
     updateItems(
@@ -1373,13 +1375,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     onPagerChange(event: IPepListPagerChangeEvent): void {
         if (this.showItems) {
+            this.parentScroll.scrollTo({ top: 0 });
+
             this.toggleItems(false);
             const startIndex = event.pageIndex * event.pageSize;
             const endIndex = Math.min(
                 startIndex + event.pageSize,
                 this.totalRows
             );
-            // this.updateScrollItems(startIndex, endIndex, false);
 
             let getItemsFromApi = false;
             let index: number = startIndex;

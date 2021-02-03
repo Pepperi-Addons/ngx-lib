@@ -70,7 +70,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
 
     constructor(
         private dataConvertorService: PepDataConvertorService,
-        public layoutService: PepLayoutService,
+        private layoutService: PepLayoutService,
         // private httpService: PepHttpService,
         private translate: TranslateService
     ) {
@@ -162,7 +162,8 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
             createSmartFilterField({ id: 'filter3', name: 'Delivery Date' }, 'date'),
             createSmartFilterField({ id: 'filter4', name: 'Brand', options: brandOptions }, 'multi-select'),
             createSmartFilterField({ id: 'filter5', name: 'Discout' }, 'boolean'),
-            createSmartFilterField({ id: 'filter6', name: 'Price' }, 'currency')
+            createSmartFilterField({ id: 'filter6', name: 'Price' }, 'currency'),
+            createSmartFilterField({ id: 'filter7', name: 'Brand2', options: brandOptions }, 'multi-select'),
         ];
     }
 

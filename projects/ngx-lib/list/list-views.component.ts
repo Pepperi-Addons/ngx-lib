@@ -45,7 +45,20 @@ export class PepListViewsComponent implements OnInit {
         return this._views;
     }
 
-    @Input() currentView: IPepListView = null;
+    private _currentView: IPepListView = null;
+    @Input()
+    set currentView(value: IPepListView) {
+        this._currentView = value;
+        this.currentItem = {
+            key: value.key,
+            text: value.title,
+            iconName: value.iconName,
+        };
+    }
+    get currentView(): IPepListView {
+        return this._currentView;
+    }
+
     @Input() displayType: PepListViewDisplayType = 'buttons';
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
@@ -55,6 +68,7 @@ export class PepListViewsComponent implements OnInit {
     change: EventEmitter<IListViewChangeEvent> = new EventEmitter<IListViewChangeEvent>();
 
     menuItems: Array<PepMenuItem> = null;
+    currentItem: PepMenuItem = null;
 
     ngOnInit(): void {
         if (this.currentView === null && this.views && this.views.length > 0) {
@@ -66,11 +80,15 @@ export class PepListViewsComponent implements OnInit {
         this.currentView = this.views.find(
             (list) => list.key === menuItemClickEvent.source.key
         );
-        this.change.emit({ source: this.currentView });
+        this.raiseChangeEvent();
     }
 
     onViewChanged(view: IPepListView): void {
         this.currentView = view;
+        this.raiseChangeEvent();
+    }
+
+    private raiseChangeEvent(): void {
         this.change.emit({ source: this.currentView });
     }
 }

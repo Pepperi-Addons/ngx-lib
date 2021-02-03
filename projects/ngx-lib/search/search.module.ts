@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -23,7 +23,6 @@ import { PepSearchComponent } from './search.component';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        FormsModule,
         // Material modules,
         MatCommonModule,
         MatAutocompleteModule,

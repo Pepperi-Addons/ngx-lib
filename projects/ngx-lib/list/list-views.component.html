@@ -2,8 +2,8 @@
 </ng-container>
 <ng-template #menuTemplate>
     <pep-menu [type]="'select'" [styleType]="styleType" [sizeType]="sizeType" [classNames]="classNames"
-        [items]="menuItems" [selectedItem]="currentView"
-        [iconName]="currentView?.iconName ? currentView?.iconName : 'arrow_down'"
+        [items]="menuItems" [selectedItem]="currentItem"
+        [iconName]="currentItem?.iconName ? currentItem?.iconName : 'arrow_down'"
         (menuItemClick)="onMenuItemClicked($event)"></pep-menu>
 </ng-template>
 <ng-template #buttonsTemplate>

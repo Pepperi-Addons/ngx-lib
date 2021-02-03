@@ -31,11 +31,20 @@
                     [maxFieldCharacters]="15" [required]="true" [xAlignment]="'left'" [rowSpan]="2"
                     [value]="'Pepperi Textbox'" (valueChanged)="onValueChanged($event)">
                 </pep-textbox>
-                <pep-textbox [key]="'Number'" [label]="'Pepperi Number'" [type]="'real'" [xAlignment]="'left'"
-                    [value]="'9399371'" [required]="true" [formattedValue]="'9,399,371'">
+                <pep-textbox [key]="'float'" [label]="'Pepperi float'" [type]="'real'" [xAlignment]="'left'"
+                    [value]="'9399371'" [required]="true" [formattedValue]="'9,399,371'" [disabled]="false">
+                </pep-textbox>
+                <pep-textbox [key]="'currency'" [label]="'Pepperi currency'" [type]="'currency'" [xAlignment]="'left'"
+                    [value]="'1092.50'" [required]="true">
+                </pep-textbox>
+                <pep-textbox [key]="'int'" [label]="'Pepperi int'" [type]="'int'" [xAlignment]="'left'"
+                    [value]="'20302'" [required]="true">
                 </pep-textbox>
                 <pep-textbox [key]="'Email'" [label]="'Pepperi Email'" [type]="'email'" [xAlignment]="'left'"
-                    [value]="'email@pepperi.com'">
+                    [value]="'email@pepperi.com'" [formattedValue]="'email@pepperi.com'" [disabled]="true">
+                </pep-textbox>
+                <pep-textbox [key]="'phone'" [label]="'Pepperi phone'" [type]="'phone'" [xAlignment]="'left'"
+                    [value]="'+972-54-3653-445'">
                 </pep-textbox>
 
                 <!-- Separator Example -->

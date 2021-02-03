@@ -5,6 +5,7 @@ import {
     Output,
     EventEmitter,
     OnChanges,
+    OnInit,
 } from '@angular/core';
 import { PepSizeType } from '@pepperi-addons/ngx-lib';
 import {
@@ -30,7 +31,7 @@ export interface IPepListSortingOptionChangeEvent {
     styleUrls: ['./list-sorting.component.scss'],
 })
 @Injectable()
-export class PepListSortingComponent {
+export class PepListSortingComponent implements OnInit {
     private _options: Array<IPepListSortingOption> = null;
     @Input()
     set options(value: Array<IPepListSortingOption>) {
@@ -44,16 +45,41 @@ export class PepListSortingComponent {
         return this._options;
     }
 
+    private _currentSorting: IPepListSortingOption = null;
+    @Input()
+    set currentSorting(value: IPepListSortingOption) {
+        this._currentSorting = value;
+        this.currentItem = {
+            key: value.sortBy,
+            text: value.title,
+            iconName: value.iconName,
+        };
+    }
+    get currentSorting(): IPepListSortingOption {
+        return this._currentSorting;
+    }
+
     @Input() sizeType: PepSizeType = 'md';
     @Output()
     change: EventEmitter<IPepListSortingOptionChangeEvent> = new EventEmitter<IPepListSortingOptionChangeEvent>();
 
     menuItems: Array<PepMenuItem> = null;
+    currentItem: PepMenuItem = null;
+
+    ngOnInit(): void {
+        if (
+            this.currentSorting === null &&
+            this.options &&
+            this.options.length > 0
+        ) {
+            this.currentSorting = this.options[0];
+        }
+    }
 
     onMenuItemClicked(menuItemClickEvent: IPepMenuItemClickEvent): void {
-        const currentSorting = this.options.find(
+        this.currentSorting = this.options.find(
             (sorting) => sorting.sortBy === menuItemClickEvent.source.key
         );
-        this.change.emit({ source: currentSorting });
+        this.change.emit({ source: this.currentSorting });
     }
 }
