@@ -10,7 +10,7 @@ import {
     ViewContainerRef,
     TemplateRef,
     ChangeDetectionStrategy,
-    ChangeDetectorRef
+    ChangeDetectorRef,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PepInternalPageService } from './internal-page.service';
@@ -20,13 +20,18 @@ import {
     UIControl,
     KeyValuePair,
     PepCustomizationService,
-    ObjectSingleData,
     UIControlField,
     ObjectsData,
-    FIELD_TYPE
+    FIELD_TYPE,
 } from '@pepperi-addons/ngx-lib';
-import { PepInternalListComponent, PepListViewType } from './internal-list.component';
-import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.component';
+import {
+    PepInternalListComponent,
+    PepListViewType,
+} from './internal-list.component';
+import {
+    IPepFormFieldClickEvent,
+    IPepFormFieldValueChangeEvent,
+} from './form.component';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -37,7 +42,7 @@ import { PepQuantitySelectorComponent } from '@pepperi-addons/ngx-lib/quantity-s
     templateUrl: './internal-page.component.html',
     styleUrls: ['./internal-page.component.scss'],
     providers: [PepInternalPageService],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepInternalPageComponent implements OnInit, OnDestroy {
     static CURRENT_ADDITIONAL_API_NAME =
@@ -48,15 +53,18 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     @Input() field: any;
     @Input() layoutType: PepLayoutType = 'form';
     @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
-    @Output() childClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
+    @Output()
+    childClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
 
     @ViewChild('my1mm') my1mm: ElementRef;
     @ViewChild('mainViewCont') mainViewCont: ElementRef;
 
     @ViewChild('orgCont', { read: ViewContainerRef }) orgCont: ViewContainerRef;
-    @ViewChild('dialogCont', { read: ViewContainerRef }) dialogCont: ViewContainerRef;
+    @ViewChild('dialogCont', { read: ViewContainerRef })
+    dialogCont: ViewContainerRef;
     @ViewChild('matrixTemplate') matrixTemplate: TemplateRef<any>;
-    @ViewChild('matrixDialogTemplate', { read: TemplateRef }) matrixDialogTemplate: TemplateRef<any>;
+    @ViewChild('matrixDialogTemplate', { read: TemplateRef })
+    matrixDialogTemplate: TemplateRef<any>;
 
     @ViewChild(PepInternalListComponent)
     customList: PepInternalListComponent;
@@ -101,7 +109,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     private fillData(isInDialog = false): void {
         const view = this.matrixTemplate.createEmbeddedView(null);
 
-        this.customList?.removeTable();
+        this.customList?.clear();
         this.orgCont?.clear();
 
         if (isInDialog) {
@@ -112,31 +120,46 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         }
 
         setTimeout(() => {
-            const buffer = [];
+            // const buffer = [];
 
-            if (this.childData.Rows) {
-                // for (let i = 0; i < this.childData.Rows.length; i++) {
-                for (const childDataRow of this.childData.Rows) {
-                    const osd = new ObjectSingleData(
-                        this.uiControl,
-                        childDataRow
-                    );
-                    osd.IsEditable = true;
-                    buffer.push(osd);
-                }
-            }
+            // if (this.childData.Rows) {
+            //     // for (let i = 0; i < this.childData.Rows.length; i++) {
+            //     for (const childDataRow of this.childData.Rows) {
+            //         const osd = new ObjectSingleData(
+            //             this.uiControl,
+            //             childDataRow
+            //         );
+            //         osd.IsEditable = true;
+            //         buffer.push(osd);
+            //     }
+            // }
 
-            const viewType: PepListViewType = this.isTableView() ? 'table' : 'lines';
-            this.customList.initListData(this.uiControl, this.childData.TotalRows, buffer, viewType);
+            const viewType: PepListViewType = this.isTableView()
+                ? 'table'
+                : 'lines';
+            this.customList.initListData(
+                this.uiControl,
+                this.childData.TotalRows,
+                this.childData.Rows,
+                viewType
+            );
             this.setTotalsRow();
 
             // if (!this.childModal.isShown) {
-            const childrenCount = this.childData.Rows ? this.childData.Rows.length : 0;
+            const childrenCount = this.childData.Rows
+                ? this.childData.Rows.length
+                : 0;
             const isEven = childrenCount % 2 === 0;
             // 3 for matrix & flat matrix because the header + total is 2 more rows.
-            const rowsToAdd = this.isMatrixView() || this.isFlatMatrixView() ? (isEven ? 3 : 4) : 1;
+            const rowsToAdd =
+                this.isMatrixView() || this.isFlatMatrixView()
+                    ? isEven
+                        ? 3
+                        : 4
+                    : 1;
 
-            const formRowHeight = this.customizationService.calculateFormFieldHeight() * 16; // convert rem to pixel
+            const formRowHeight =
+                this.customizationService.calculateFormFieldHeight() * 16; // convert rem to pixel
 
             // Set the default only if not set yet.
             if (this.defaultRowSpan === -1) {
@@ -161,28 +184,41 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
             } else {
                 // For line view Add the height of the line (form height).
                 if (this.currentViewType.Key === 'OrderCenterFlatMatrixLine') {
-                    const maxRow = Math.max.apply(
-                        Math,
-                        this.uiControl.ControlFields.map(f => {
+                    const maxRow = Math.max(
+                        ...this.uiControl.ControlFields.map((f) => {
                             return f.Layout.Y + f.Layout.Height;
                         })
                     );
 
                     // * 16 convert rem to pixel
-                    const cardRowsHeight = this.customizationService.calculateCardRowsHeight(maxRow) * 16;
+                    const cardRowsHeight =
+                        this.customizationService.calculateCardRowsHeight(
+                            maxRow
+                        ) * 16;
 
                     // maxRow * 24 + 60 - 24 for each row in card + 60 for the padding of each card.
                     // const rowSpanToAdd = Math.floor(childrenCount * ((cardRowsHeight + 56) / formRowHeight) + rowsToAdd);
                     // + 16 is the 1rem margin outside card.
-                    const rowSpanToAdd = (childrenCount * (cardRowsHeight + 16)) / formRowHeight + rowsToAdd;
+                    const rowSpanToAdd =
+                        (childrenCount * (cardRowsHeight + 16)) /
+                            formRowHeight +
+                        rowsToAdd;
                     this.field.rowSpan = rowSpanToAdd;
                 } else {
                     // const tableRowsHeight = this.customizationService.calculateTableRowsHeight(childrenCount) * 16;
                     // this.field.rowSpan = Math.ceil((tableRowsHeight + (rowsToAdd * 40)) / formRowHeight);
                     // * 16 convert rem to pixel
-                    const rowsToAddHeight = this.customizationService.calculateTableRowsHeight(rowsToAdd, false) * 16;
-                    const tableRowsHeight = this.customizationService.calculateTableRowsHeight(childrenCount) * 16;
-                    this.field.rowSpan = (rowsToAddHeight + tableRowsHeight) / formRowHeight;
+                    const rowsToAddHeight =
+                        this.customizationService.calculateTableRowsHeight(
+                            rowsToAdd,
+                            false
+                        ) * 16;
+                    const tableRowsHeight =
+                        this.customizationService.calculateTableRowsHeight(
+                            childrenCount
+                        ) * 16;
+                    this.field.rowSpan =
+                        (rowsToAddHeight + tableRowsHeight) / formRowHeight;
                 }
             }
         }, 0);
@@ -281,23 +317,27 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     }
 
     showMatrixDialog(): void {
-        const config = this.dialogService.getDialogConfig({
-            disableClose: false
-            // minWidth: '50vw',
-            // maxWidth: '90vw',
-            // maxHeight: '90vh',
-        }, 'large');
+        const config = this.dialogService.getDialogConfig(
+            {
+                disableClose: false,
+                // minWidth: '50vw',
+                // maxWidth: '90vw',
+                // maxHeight: '90vh',
+            },
+            'large'
+        );
 
         const dialogRef = this.dialogService.openDialog(
             this.matrixDialogTemplate,
             {},
-            config);
+            config
+        );
 
         dialogRef.afterOpened().subscribe(() => {
             this.fillData(true);
         });
 
-        dialogRef.afterClosed().subscribe(value => {
+        dialogRef.afterClosed().subscribe((value) => {
             this.fillData(false);
         });
     }
@@ -312,7 +352,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
             (resViewTypes: any) => {
                 // my code DI-7134
                 resViewTypes.Rows = resViewTypes.Rows.filter(
-                    item => item.Key !== 'OrderCenterView1'
+                    (item) => item.Key !== 'OrderCenterView1'
                 );
 
                 if (resViewTypes.Rows && resViewTypes.Rows.length > 0) {
@@ -335,11 +375,11 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
             }
         );
 
-        this.resize = fromEvent(window, 'resize').pipe(
-            debounceTime(10)
-        ).subscribe((event) => {
-            this.setViewCover(this.rows);
-        });
+        this.resize = fromEvent(window, 'resize')
+            .pipe(debounceTime(10))
+            .subscribe((event) => {
+                this.setViewCover(this.rows);
+            });
     }
 
     loadLastAdditionalApiName(): void {
@@ -396,13 +436,10 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         if (this.isMatrixView() || this.isFlatMatrixView()) {
             let totalCol = 0;
 
-            if (this.customList.items) {
-                for (
-                    let col = 0;
-                    col < this.customList.items[0].Data.Fields.length;
-                    col++
-                ) {
-                    const field = this.customList.items[0].Data.Fields[col];
+            const items = this.customList.items;
+            if (items) {
+                for (let col = 0; col < items[0].Fields.length; col++) {
+                    const field = items[0].Fields[col];
                     if (
                         field.FieldType === FIELD_TYPE.NumberIntegerForMatrix ||
                         field.FieldType ===
@@ -416,14 +453,13 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                         field.FieldType === FIELD_TYPE.NumberReal
                     ) {
                         totalCol = 0;
-                        // for (var i = 0; i < this.customList.items.length; i++) {
-                        for (const listItem of this.customList.items) {
+                        for (const listItem of items) {
                             if (
-                                listItem.Data.Fields[col] &&
-                                listItem.Data.Fields[col].Value
+                                listItem.Fields[col] &&
+                                listItem.Fields[col].Value
                             ) {
                                 const num = parseFloat(
-                                    listItem.Data.Fields[col].Value
+                                    listItem.Fields[col].Value
                                 );
                                 totalCol += isNaN(num) ? 0 : num;
                             }
@@ -438,7 +474,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     }
 
     updateChanges(elementToUpdate: any): void {
-        this.customList.updateListItem(elementToUpdate);
+        this.customList.updateItem(elementToUpdate);
 
         // Update memory data
         for (let index = 0; index < this.childData.Rows.length; index++) {
@@ -462,7 +498,9 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         this.changeDetectorRef.markForCheck();
     }
 
-    onCustomizeObjectChanged(customizeObjectChangedData: IPepFormFieldValueChangeEvent): void {
+    onCustomizeObjectChanged(
+        customizeObjectChangedData: IPepFormFieldValueChangeEvent
+    ): void {
         this.internalPageService.childValueChanged(
             customizeObjectChangedData.id,
             customizeObjectChangedData.key,
@@ -530,7 +568,9 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                         this.setValueCallback(fieldClickEvent.id, res);
                     }
                 );
-            } else if (fieldClickEvent.value === PepQuantitySelectorComponent.MINUS) {
+            } else if (
+                fieldClickEvent.value === PepQuantitySelectorComponent.MINUS
+            ) {
                 handledEvent = true;
                 this.internalPageService.childMinusClick(
                     fieldClickEvent.id,

@@ -1,16 +1,26 @@
 import {
-    Component, OnChanges, Input, Output, EventEmitter,
-    ViewEncapsulation, ChangeDetectionStrategy, OnDestroy
+    Component,
+    OnChanges,
+    Input,
+    Output,
+    EventEmitter,
+    ViewEncapsulation,
+    ChangeDetectionStrategy,
+    OnDestroy,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepLayoutType, IPepFieldValueChangeEvent, IPepFieldClickEvent } from '@pepperi-addons/ngx-lib';
+import {
+    PepLayoutType,
+    IPepFieldValueChangeEvent,
+    IPepFieldClickEvent,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-field-generator',
     templateUrl: './field-generator.component.html',
     styleUrls: ['./field-generator.component.scss'],
     encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Input() field: any;
@@ -21,10 +31,13 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Input() showTitle = true;
 
     @Input() checkForChanges: any = null;
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
-    @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    @Output()
+    formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output()
+    elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
     @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
 
     get isValid(): boolean {
@@ -51,18 +64,26 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         return formControl ? formControl.dirty : false;
     }
 
-    constructor() { }
-
     ngOnDestroy(): void {
-        if (this.valueChange) { this.valueChange.unsubscribe(); }
+        if (this.valueChange) {
+            this.valueChange.unsubscribe();
+        }
 
-        if (this.formValidationChange) { this.formValidationChange.unsubscribe(); }
+        if (this.formValidationChange) {
+            this.formValidationChange.unsubscribe();
+        }
 
-        if (this.childChange) { this.childChange.unsubscribe(); }
+        if (this.childChange) {
+            this.childChange.unsubscribe();
+        }
 
-        if (this.elementClick) { this.elementClick.unsubscribe(); }
+        if (this.elementClick) {
+            this.elementClick.unsubscribe();
+        }
 
-        if (this.childClick) { this.childClick.unsubscribe(); }
+        if (this.childClick) {
+            this.childClick.unsubscribe();
+        }
     }
 
     onValueChanged(valueChange: IPepFieldValueChangeEvent): void {

@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
+import {
+    HttpClient,
+    HttpErrorResponse,
+    HttpParams,
+    HttpHeaders,
+} from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { retry, catchError, tap } from 'rxjs/operators';
 import { PepSessionService } from '../../common/services/session.service';
@@ -17,8 +22,8 @@ export class PepHttpService {
     constructor(
         private sessionService: PepSessionService,
         private cookieService: PepCookieService,
-        private http: HttpClient) {
-    }
+        private http: HttpClient
+    ) {}
 
     private handleError(response: HttpErrorResponse): Observable<never> {
         let errorMessage = 'Unknown error!';
@@ -34,23 +39,22 @@ export class PepHttpService {
     }
 
     private getServerErrorMessage(response: HttpErrorResponse): string {
-        switch (response.status) {
-            case 404: {
-                return `Not Found: ${response.message}`;
-            }
-            case 403: {
-                return `Access Denied: ${response.message}`;
-            }
-            case 500: {
-                if (response?.error?.fault?.faultstring) {
-                    return `Internal Server Error: ${response.error.fault.faultstring}`;
+        if (response?.error?.fault?.faultstring) {
+            return `${response.error.fault.faultstring}`;
+        } else {
+            switch (response.status) {
+                case 404: {
+                    return `Not Found: ${response.message}`;
                 }
-                else {
+                case 403: {
+                    return `Access Denied: ${response.message}`;
+                }
+                case 500: {
                     return `Internal Server Error: ${response.message}`;
                 }
-            }
-            default: {
-                return `Unknown Server Error\nError Code: ${response.status}\nMessage: ${response.message}`;
+                default: {
+                    return `Unknown Server Error\nError Code: ${response.status}\nMessage: ${response.message}`;
+                }
             }
         }
     }
@@ -61,7 +65,10 @@ export class PepHttpService {
             const idpToken = this.sessionService.getIdpToken();
 
             if (idpToken) {
-                httpOptions.headers = httpOptions.headers.set(this.AUTH_HEADER, `Bearer ${idpToken}`);
+                httpOptions.headers = httpOptions.headers.set(
+                    this.AUTH_HEADER,
+                    `Bearer ${idpToken}`
+                );
             }
         }
 
@@ -77,13 +84,18 @@ export class PepHttpService {
                 // TODO:
                 // const webApiToken = this.sessionService.getWapiToken();
                 try {
-                    const userSettingCookie = this.cookieService.get(this.PEPPERI_TOKEN_COOKIE);
-                    const webApiToken = JSON.parse(userSettingCookie).values.items[this.WAPI_TOKEN_KEY];
+                    const userSettingCookie = this.cookieService.get(
+                        this.PEPPERI_TOKEN_COOKIE
+                    );
+                    const webApiToken = JSON.parse(userSettingCookie).values
+                        .items[this.WAPI_TOKEN_KEY];
                     if (webApiToken) {
-                        httpOptions.headers = httpOptions.headers.set(this.PEPPERI_TOKEN_HEADER, webApiToken);
+                        httpOptions.headers = httpOptions.headers.set(
+                            this.PEPPERI_TOKEN_HEADER,
+                            webApiToken
+                        );
                     }
-                }
-                catch {
+                } catch {
                     // Do nothing.
                 }
             }
@@ -99,7 +111,10 @@ export class PepHttpService {
 
         // Add content type
         if (!httpOptions.headers.has('Content-Type')) {
-            httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
+            httpOptions.headers = httpOptions.headers.set(
+                'Content-Type',
+                'application/json'
+            );
         }
 
         httpOptions = this.addAuthorizationToken(httpOptions);
@@ -122,10 +137,10 @@ export class PepHttpService {
     // }
 
     getHttpCall(url: string, httpOptions: any = {}): Observable<any> {
-
         httpOptions = this.setDefaultHeaderOptions(url, httpOptions);
 
-        return this.http.get(url, httpOptions)
+        return this.http
+            .get(url, httpOptions)
             .pipe(catchError(this.handleError.bind(this)));
         //     .subscribe(
         //         (res) => console.log(''),
@@ -134,11 +149,15 @@ export class PepHttpService {
         // );
     }
 
-    postHttpCall(url: string, body: any | null, httpOptions: any = {}): Observable<any> {
-
+    postHttpCall(
+        url: string,
+        body: any | null,
+        httpOptions: any = {}
+    ): Observable<any> {
         httpOptions = this.setDefaultHeaderOptions(url, httpOptions);
 
-        return this.http.post(url, body, httpOptions)
+        return this.http
+            .post(url, body, httpOptions)
             .pipe(catchError(this.handleError.bind(this)));
         //     .subscribe(
         //         (res) => console.log(''),
@@ -152,7 +171,11 @@ export class PepHttpService {
         return this.getHttpCall(`${wapiBaseUrl}${url}`, httpOptions);
     }
 
-    postWapiApiCall(url: string, body: any | null, httpOptions: any = {}): Observable<any> {
+    postWapiApiCall(
+        url: string,
+        body: any | null,
+        httpOptions: any = {}
+    ): Observable<any> {
         const wapiBaseUrl = this.sessionService.getWapiBaseUrl();
         return this.postHttpCall(`${wapiBaseUrl}${url}`, body, httpOptions);
     }
@@ -162,7 +185,11 @@ export class PepHttpService {
         return this.getHttpCall(`${papiBaseUrl}${url}`, httpOptions);
     }
 
-    postPapiApiCall(url: string, body: any | null, httpOptions: any = {}): Observable<any> {
+    postPapiApiCall(
+        url: string,
+        body: any | null,
+        httpOptions: any = {}
+    ): Observable<any> {
         const papiBaseUrl = this.sessionService.getPapiBaseUrl();
         return this.postHttpCall(`${papiBaseUrl}${url}`, body, httpOptions);
     }

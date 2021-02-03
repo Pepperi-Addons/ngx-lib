@@ -1,12 +1,25 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { PepLayoutType, PepOption, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldClickEvent } from '@pepperi-addons/ngx-lib';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    OnDestroy,
+} from '@angular/core';
+import {
+    PepLayoutType,
+    IPepOption,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldClickEvent,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-internal-menu',
     templateUrl: './internal-menu.component.html',
     styleUrls: ['./internal-menu.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepInternalMenuComponent implements OnDestroy {
     @Input() key = '';
@@ -14,16 +27,15 @@ export class PepInternalMenuComponent implements OnDestroy {
     @Input() disabled = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     // @Input() hasSubMenu = false;
-    @Input() options: PepOption[] = [];
+    @Input() options: IPepOption[] = [];
     @Input() invertClass = true;
 
     controlType = 'menu';
 
     @Input() layoutType: PepLayoutType = 'form';
-    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    @Output()
+    elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
     // @Output() menuItemClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
-    
-    constructor() { }
 
     ngOnDestroy(): void {
         if (this.elementClick) {
@@ -39,7 +51,7 @@ export class PepInternalMenuComponent implements OnDestroy {
         this.elementClick.emit({
             key: this.key,
             controlType: this.controlType,
-            eventWhich: event.which
+            eventWhich: event.which,
         });
     }
 

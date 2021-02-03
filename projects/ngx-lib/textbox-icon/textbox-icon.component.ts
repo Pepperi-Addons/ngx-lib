@@ -14,8 +14,6 @@ export class PepTextboxIconComponent {
     test = true;
     @Output() iconClick: EventEmitter<void> = new EventEmitter<void>();
 
-    constructor() { }
-
     iconButtonClicked(): void {
         const currentValue = this.value;
         if (currentValue.toString().trim().length > 0) {

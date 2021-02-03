@@ -1,4 +1,3 @@
-
 export enum FIELD_TYPE {
     // specify text field
     'Default' = 0,
@@ -73,7 +72,7 @@ export enum FIELD_TYPE {
     'ListOfObjects' = 52,
     'Package' = 53, // Package Quantity Selector
     'BooleanText' = 55, // Boolean that return a string defined by the user in case of true/false
-    'RichTextHTML' = 56 // Html Text
+    'RichTextHTML' = 56, // Html Text
 }
 
 export enum X_ALIGNMENT_TYPE {
@@ -127,7 +126,7 @@ export class UIControlField {
     CustomField: any;
     ApiName: string;
     FieldType: FIELD_TYPE;
-    OptionalValues: any;
+    OptionalValues: Array<KeyValuePair<string>>;
     MinValue: number;
     MaxValue: number;
     MaxCharacters: number;
@@ -158,41 +157,48 @@ export class UIControl {
 }
 
 export class ObjectsDataRowCell {
+    Accessory?: string;
+    AdditionalValue?: string;
     ApiName: string;
-    Enabled: boolean;
-    Value: any;
-    FormattedValue: any;
-    GroupFields: Array<ObjectsDataRowCell>;
-    Type: string;
+    BackgroundColor?: string;
+    Enabled?: boolean;
     FieldType: number;
-    OptionalValues: any;
-    AdditionalValue: string;
-    NotificationInfo: string;
-    ReferenceObjectType: string;
-    ReferenceObjectSubType: string;
-    Visible: boolean;
-    TextColor: string;
+    FormattedValue: any;
+    GroupFields?: Array<ObjectsDataRowCell>;
+    Highlighted?: boolean;
+    NotificationInfo?: string;
+    OptionalValues?: Array<KeyValuePair<string>>;
+    ReferenceObjectInternalType?: string;
+    ReferenceObjectSubType?: string;
+    ReferenceObjectType?: string;
+    TextColor?: string;
+    UiPageKey?: string;
+    // Type?: string; // This is in the object??
+    Value: any;
+    Visible?: boolean;
 }
 
 export class ObjectsDataRow {
+    AdditionalData?: any;
+    BackgroundColor?: string;
+    ExtraInfo?: Array<{ Key: string; Value: string }>;
     Fields: Array<ObjectsDataRowCell>;
-    AdditionalData: any;
-    UID: any;
-    Type: number;
-    BackgroundColor: string;
-    IsSelectableForActions = true;
     IsEditable = true;
-    ExtraInfo: Array<{ Key: string, Value: string}>;
-    MainAction: string;
+    IsSelectableForActions = true;
+    MainAction?: string;
+    Profile?: any;
+    Type: number;
+    UID: any;
 }
 
 export class ObjectSingleData {
-    Success: boolean;
-    ErrorMessage: string;
     Data: ObjectsDataRow;
+    ErrorCode: string;
+    ErrorMessage: string;
+    IsEditable: boolean;
+    Success: boolean;
     Type: string;
     UIControl: UIControl;
-    IsEditable: boolean;
 
     constructor(uiControl: UIControl = null, data: ObjectsDataRow = null) {
         this.Success = true;
@@ -205,22 +211,25 @@ export class ObjectSingleData {
 }
 
 export class ObjectsData {
+    DateFilter?: string;
+    ErrorCode: string;
     ErrorMessage: string;
-    Success: boolean;
     Rows: Array<ObjectsDataRow>;
-    AllRows: Array<ObjectsDataRow>;
-    SearchCode: string;
+    SearchCode?: string;
+    SecSmartSearchList?: [];
+    SmartSearchList: Array<SmartSearchResponse>;
+    Success: boolean;
     TotalRows: number;
     UIControl: UIControl;
-    TotalAmount: any;
-    CurrencySymbol: any;
-    SmartSearchList: Array<SmartSearchResponse>;
+    // AllRows: Array<ObjectsDataRow>;
+    // TotalAmount: any;
+    // CurrencySymbol: any;
 
     constructor() {
         this.ErrorMessage = '';
         this.Success = true;
-        this.TotalAmount = '0';
-        this.CurrencySymbol = '$';
+        // this.TotalAmount = '0';
+        // this.CurrencySymbol = '$';
     }
 }
 

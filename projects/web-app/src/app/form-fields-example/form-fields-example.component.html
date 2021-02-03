@@ -17,7 +17,7 @@
             </div>
             <div class="right-container spacing-element-negative pull-right flip">
                 <pep-menu class="pull-right flip" [xPosition]="'before'" [sizeType]="'md'" [styleType]="'weak'"
-                    [items]="menuItems" [showAnimation]="false" (menuClick)="menuClicked($event)"
+                    [items]="menuItems" (menuClick)="menuClicked($event)"
                     (menuItemClick)="onMenuItemClicked($event)">
                 </pep-menu>
             </div>
@@ -50,8 +50,9 @@
                 </pep-checkbox>
 
                 <!-- Date Examples -->
-                <pep-date [key]="'date1'" [label]="'Pepperi Date'" [value]="'1-1-2020'" [minValue]="minDateValue"
-                    [maxValue]="maxDateValue" [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
+                <pep-date [key]="'date1'" [required]="true" [label]="'Pepperi Date'" [value]="'1-1-2020'"
+                    [minValue]="minDateValue" [maxValue]="maxDateValue" [xAlignment]="'left'"
+                    (valueChanged)="onValueChanged($event)">
                 </pep-date>
                 <pep-date [key]="'dateTime1'" [label]="'Pepperi Date Time'" [type]="'datetime'"
                     [value]="'1-1-2020 12:00'" [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
@@ -90,7 +91,7 @@
                     [rowSpan]="6">
                 </pep-image> -->
 
-                <pep-image [key]="'Image'" [label]="'Pepperi Image'" [xAlignment]="'center'" [rowSpan]="3"
+                <pep-image [key]="'Image'" [label]="'Pepperi Image'" [xAlignment]="'center'" [rowSpan]="4"
                     [src]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'"
                     (elementClicked)="elementClicked($event)">
                 </pep-image>
@@ -116,13 +117,13 @@
 
                 <!-- Select Example -->
                 <pep-select [key]="'select1'" [label]="'Pepperi Select'" [value]="'val2'" [xAlignment]="'right'"
-                    [options]='[{ "Key": "val1", "Value": "Option 1" }, { "Key": "val2", "Value": "Option 2" }]'
+                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }]'
                     (valueChanged)="onValueChanged($event)">
                 </pep-select>
 
                 <pep-select [key]="'multi1'" [label]="'Pepperi Multi Select'" [type]="'multi'" [value]="'val1;val2'"
                     [xAlignment]="'right'"
-                    [options]='[{ "Key": "val1", "Value": "Option 1" }, { "Key": "val2", "Value": "Option 2" }, { "Key": "val3", "Value": "Option 3" }, { "Key": "val4", "Value": "Option 4" }]'
+                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
                     (valueChanged)="onValueChanged($event)">
                 </pep-select>
 
@@ -133,7 +134,7 @@
 
                 <!-- Rich Html Textarea Example -->
                 <pep-rich-html-textarea [key]="'richText1'" [label]="'Pepperi Rich Html Textarea'" [value]="richHtml"
-                    [rowSpan]="3" [maxFieldCharacters]="300" [xAlignment]="'left'">
+                    [rowSpan]="3" [maxFieldCharacters]="300" [xAlignment]="'left'" [disabled]="true">
                 </pep-rich-html-textarea>
 
                 <!-- <pep-rich-html-textarea [key]="'richText2'" [label]="'richText2'" [value]="richTextValue" [rowSpan]="3"

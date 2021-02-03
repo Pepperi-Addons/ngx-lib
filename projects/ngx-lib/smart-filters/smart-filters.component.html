@@ -1,25 +1,66 @@
 <div class="smart-filters-container">
-    <span class="title body-md bold">{{ "SMART_FILTERS.TITLE" | translate}}</span>
+    <div class="title">
+        <span class="body-md bold">{{ "SMART_FILTERS.TITLE" | translate}}</span>
+        <mat-chip *ngIf="filtersDataMap.size > 0" [selectable]="false" [removable]="true" (click)="clearFilters()"
+            class="clear-filter pep-button chip xs weak">
+            <span class="body-xs ellipsis ">
+                {{ "ACTIONS.CLEAR" | translate}}
+            </span>
+        </mat-chip>
+    </div>
 
     <mat-accordion [displayMode]="'flat'" [multi]="true" class="pep-accordion2">
-        <mat-expansion-panel *ngFor="let filter of data; let i = index" hideToggle="true"
+        <mat-expansion-panel *ngFor="let field of fields; let i = index" hideToggle="true" [expanded]="field.isOpen"
             (opened)="toggleFilter(i, true)" (closed)="toggleFilter(i, false)">
             <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeaderHeight"
                 [expandedHeight]="expansionPanelHeaderHeight">
-                <mat-panel-title>
-                    <mat-icon *ngIf="!filters[i].isOpen" class="spacing-element">
-                        <pep-icon name="number_plus"></pep-icon>
-                    </mat-icon>
-                    <mat-icon *ngIf="filters[i].isOpen" class="spacing-element">
-                        <pep-icon name="number_minus"></pep-icon>
-                    </mat-icon>
-                    <span class="spacing-element ellipsis body-sm">{{ filter.title }}</span>
+                <mat-panel-title class="spacing-element-negative">
+                    <div class="smart-filter-title-container">
+                        <mat-icon class="spacing-element">
+                            <pep-icon [name]="field.isOpen ? 'number_minus' : 'number_plus'"></pep-icon>
+                        </mat-icon>
+                        <span class="body-sm ellipsis" [title]="field.name">
+                            {{ field.name }}
+                        </span>
+                        <mat-chip *ngIf="filtersDataMap.get(field.id)" [selectable]="false" [removable]="true"
+                            (click)="onFilterClear(field)" class="clear-filter pep-button chip xs weak">
+                            <span *ngIf="field.componentType === 'multi-select'" class="body-xs spacing-element">
+                                {{ filtersDataMap.get(field.id).value?.first?.length }}
+                                <!-- {{ field.componentType === 'multi-select' ?
+                                filtersDataMap.get(field.id).value?.first?.length : 1 }} -->
+                            </span>
+                            <mat-icon>
+                                <pep-icon name="system_close"></pep-icon>
+                            </mat-icon>
+                        </mat-chip>
+                    </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="expansion-content filter-content">
-                <div>
-                    Filters
-                </div>
+            <div class="expansion-content smart-filter-content">
+                <ng-container [ngSwitch]="field.componentType">
+                    <ng-container *ngSwitchCase="'boolean'">
+                        <pep-boolean-filter [field]="field" [filter]="filtersDataMap.get(field.id)"
+                            (filterChange)="onFilterChange(field, $event)" (filterClear)="onFilterClear(field)">
+                        </pep-boolean-filter>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'date'">
+                        <pep-date-filter [field]="field" [filter]="filtersDataMap.get(field.id)"
+                            (filterChange)="onFilterChange(field, $event)" (filterClear)="onFilterClear(field)">
+                        </pep-date-filter>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'multi-select'">
+                        <pep-multi-select-filter [field]="field" [filter]="filtersDataMap.get(field.id)"
+                            (filterChange)="onFilterChange(field, $event)" (filterClear)="onFilterClear(field)">
+                        </pep-multi-select-filter>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'number'">
+                        <pep-number-filter [field]="field" [filter]="filtersDataMap.get(field.id)"
+                            (filterChange)="onFilterChange(field, $event)" (filterClear)="onFilterClear(field)">
+                        </pep-number-filter>
+                    </ng-container>
+                    <!-- <div *ngSwitchDefault>
+                    </div> -->
+                </ng-container>
             </div>
         </mat-expansion-panel>
     </mat-accordion>

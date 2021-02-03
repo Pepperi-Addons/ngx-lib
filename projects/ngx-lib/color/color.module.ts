@@ -17,7 +17,8 @@ import {
     PepIconRegistry,
     pepIconSystemEdit,
     pepIconSystemOk,
-    pepIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
+    pepIconSystemClose,
+} from '@pepperi-addons/ngx-lib/icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 
@@ -44,15 +45,15 @@ import { PepColorPickerComponent } from './color-picker.component';
         PepFieldTitleModule,
         PepTextboxModule,
     ],
-    exports: [ PepColorComponent ],
-    declarations: [ PepColorComponent, PepColorPickerComponent ],
+    exports: [PepColorComponent],
+    declarations: [PepColorComponent, PepColorPickerComponent],
 })
 export class PepColorModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemEdit,
             pepIconSystemOk,
-            pepIconSystemClose
+            pepIconSystemClose,
         ]);
     }
 }

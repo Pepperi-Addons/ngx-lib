@@ -1,15 +1,21 @@
-import { Injectable, Inject, PLATFORM_ID, InjectionToken, Optional } from '@angular/core';
+import {
+    Injectable,
+    Inject,
+    PLATFORM_ID,
+    InjectionToken,
+    Optional,
+} from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class PepCookieService {
     private readonly documentIsAccessible: boolean;
 
     constructor(
         @Optional() @Inject(DOCUMENT) private document: any,
-        @Inject(PLATFORM_ID) private platformId: InjectionToken<object>
+        @Inject(PLATFORM_ID) private platformId: InjectionToken<any>
     ) {
         this.documentIsAccessible = isPlatformBrowser(this.platformId);
     }
@@ -62,7 +68,9 @@ export class PepCookieService {
         if (document.cookie && document.cookie !== '') {
             document.cookie.split(';').forEach((currentCookie) => {
                 const [cookieName, cookieValue] = currentCookie.split('=');
-                cookies[this.safeDecodeURIComponent(cookieName.replace(/^ /, ''))] = this.safeDecodeURIComponent(cookieValue);
+                cookies[
+                    this.safeDecodeURIComponent(cookieName.replace(/^ /, ''))
+                ] = this.safeDecodeURIComponent(cookieValue);
             });
         }
 
@@ -91,11 +99,14 @@ export class PepCookieService {
             return;
         }
 
-        let cookieString: string = encodeURIComponent(name) + '=' + encodeURIComponent(value) + ';';
+        let cookieString: string =
+            encodeURIComponent(name) + '=' + encodeURIComponent(value) + ';';
 
         if (expires) {
             if (typeof expires === 'number') {
-                const dateExpires: Date = new Date(new Date().getTime() + expires * 1000 * 60 * 60 * 24);
+                const dateExpires: Date = new Date(
+                    new Date().getTime() + expires * 1000 * 60 * 60 * 24
+                );
 
                 cookieString += 'expires=' + dateExpires.toUTCString() + ';';
             } else {
@@ -114,7 +125,7 @@ export class PepCookieService {
         if (secure === false && sameSite === 'None') {
             secure = true;
         }
-        
+
         if (secure) {
             cookieString += 'secure;';
         }
@@ -129,19 +140,38 @@ export class PepCookieService {
      * @param path   Cookie path
      * @param domain Cookie domain
      */
-    delete(name: string, path?: string, domain?: string, secure?: boolean, sameSite: 'Lax' | 'None' | 'Strict' = 'Lax'): void {
+    delete(
+        name: string,
+        path?: string,
+        domain?: string,
+        secure?: boolean,
+        sameSite: 'Lax' | 'None' | 'Strict' = 'Lax'
+    ): void {
         if (!this.documentIsAccessible) {
             return;
         }
 
-        this.set(name, '', new Date('Thu, 01 Jan 1970 00:00:01 GMT'), path, domain, secure, sameSite);
+        this.set(
+            name,
+            '',
+            new Date('Thu, 01 Jan 1970 00:00:01 GMT'),
+            path,
+            domain,
+            secure,
+            sameSite
+        );
     }
 
     /**
      * @param path   Cookie path
      * @param domain Cookie domain
      */
-    deleteAll(path?: string, domain?: string, secure?: boolean, sameSite: 'Lax' | 'None' | 'Strict' = 'Lax'): void {
+    deleteAll(
+        path?: string,
+        domain?: string,
+        secure?: boolean,
+        sameSite: 'Lax' | 'None' | 'Strict' = 'Lax'
+    ): void {
         if (!this.documentIsAccessible) {
             return;
         }
@@ -160,9 +190,15 @@ export class PepCookieService {
      * @returns property RegExp
      */
     private getCookieRegExp(name: string): RegExp {
-        const escapedName: string = name.replace(/([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi, '\\$1');
+        const escapedName: string = name.replace(
+            /([\[\]\{\}\(\)\|\=\;\+\?\,\.\*\^\$])/gi,
+            '\\$1'
+        );
 
-        return new RegExp('(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)', 'g');
+        return new RegExp(
+            '(?:^' + escapedName + '|;\\s*' + escapedName + ')=(.*?)(?:;|$)',
+            'g'
+        );
     }
 
     private safeDecodeURIComponent(encodedURIComponent: string): string {

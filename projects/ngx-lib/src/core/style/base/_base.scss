@@ -63,7 +63,7 @@ aside {
 
 main {
     .side-layout {
-        width: $side-layout-width;
+        width: $side-bar-width;
         height: inherit;
         padding: 0;
 
@@ -74,7 +74,7 @@ main {
     }
 
     .main-layout {
-        @include calc(width, '100% - ' $side-layout-width);
+        @include calc(width, '100% - ' $side-bar-width);
         height: inherit;
         padding: 0;
 
@@ -220,6 +220,10 @@ main {
                     margin-right: 0;
                     margin-left: 0;
                 }
+            }
+
+            &.limit-max-width {
+                max-width: 896px;
             }
         }
 
@@ -370,7 +374,7 @@ main {
             position: fixed;
             z-index: $tabs-z-index + 1;
 
-            @include mat-tabs-fixed-header-width($side-layout-width);
+            @include mat-tabs-fixed-header-width($side-bar-width);
         }
 
         .mat-tab-body-wrapper {
@@ -458,8 +462,9 @@ main {
 
         .mat-expansion-panel-header {
             flex-flow: row-reverse;
-            height: $spacing-5xl;
-            padding: $spacing-lg 0 $spacing-sm;
+            height: $spacing-4xl;
+            // padding: $spacing-lg 0 $spacing-sm;
+            padding: 0;
 
             .mat-expansion-panel-header-title {
                 display: flex;
@@ -468,25 +473,22 @@ main {
                 padding: $spacing-xs 0;
 
                 .mat-icon {
+                    height: 1rem;
+                    width: 1rem;
                     @include align-center();
-
-                    .svg-icon {
-                        height: 1rem;
-                        width: 1rem;
-                    }
                 }
             }
 
-            &.mat-expanded {
-                .mat-expansion-panel-header-title {
-                    font-weight: $font-weight-bold;
-                }
-            }
+            // &.mat-expanded {
+            //     .mat-expansion-panel-header-title {
+            //         font-weight: $font-weight-bold;
+            //     }
+            // }
         }
 
         .mat-expansion-panel-content {
             .mat-expansion-panel-body {
-                padding: $content-padding $spacing-sm;
+                padding: $spacing-sm $spacing-xs;
             }
         }
 
@@ -609,7 +611,8 @@ main {
         }    
     }
 
-    &.pep-action-menu {
+    &.pep-action-menu,
+    &.pep-action-select-menu {
         .mat-menu-content {
             padding: $spacing-sm !important;
             

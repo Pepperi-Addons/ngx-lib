@@ -1,18 +1,38 @@
 import { Observable } from 'rxjs';
-import { Component, OnInit, Injectable, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy, Optional } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Injectable,
+    Input,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    Optional,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FileUploader } from 'ng2-file-upload';
 import { FormGroup } from '@angular/forms';
-import { PepFileService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldClickEvent } from '@pepperi-addons/ngx-lib';
-import { PepDialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
+import {
+    PepFileService,
+    PepLayoutType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldClickEvent,
+} from '@pepperi-addons/ngx-lib';
+import {
+    PepDialogService,
+    PepDialogData,
+} from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'pep-files-uploader',
     templateUrl: './files-uploader.component.html',
     styleUrls: ['./files-uploader.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @Injectable()
 export class PepFilesUploaderComponent implements OnInit {
@@ -32,7 +52,8 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output() fileChange: EventEmitter<string> = new EventEmitter<string>();
-    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    @Output()
+    elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     @ViewChild('fileInput') fileInput: any;
     @ViewChild('imagePreview') imagePreview: any;
@@ -63,7 +84,12 @@ export class PepFilesUploaderComponent implements OnInit {
                 const fileExt = item._file.name.split('.').pop();
                 const target = event.target || event.srcElement;
                 const fileStr = target.result;
-                const errorMsg = this.isValidFile(fileStr, fileExt, this.acceptedExtensions, this.sizeLimitMB);
+                const errorMsg = this.isValidFile(
+                    fileStr,
+                    fileExt,
+                    this.acceptedExtensions,
+                    this.sizeLimitMB
+                );
                 if (errorMsg === '') {
                     this.src = fileStr;
                     this.setIntervalX(25, 75);
@@ -73,31 +99,41 @@ export class PepFilesUploaderComponent implements OnInit {
                             acceptedExtensions: this.acceptedExtensions,
                             fileStr,
                             fileExt,
-                        }));
-                }
-                else {
-                    const title = this.translate.instant('MESSAGES.TITLE_NOTICE');
+                        })
+                    );
+                } else {
+                    const title = this.translate.instant(
+                        'MESSAGES.TITLE_NOTICE'
+                    );
                     const data = new PepDialogData({
                         title,
-                        content: errorMsg
+                        content: errorMsg,
                     });
                     this.dialogService.openDefaultDialog(data);
                 }
-
             };
             reader.readAsDataURL(item._file);
         };
     }
 
     ngOnInit(): void {
-        this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
+        this.fieldHeight = this.customizationService.calculateFieldHeight(
+            this.layoutType,
+            this.rowSpan,
+            this.standAlone
+        );
 
         /*this.uploader.onCompleteAll = () => {
             this.fileInput.nativeElement.value = '';
         }*/
     }
 
-    isValidFile(fileStr, fileExtension, acceptedExtensions, sizeLimitMB = 5): string {
+    isValidFile(
+        fileStr,
+        fileExtension,
+        acceptedExtensions,
+        sizeLimitMB = 5
+    ): string {
         const file: any = fileStr;
         let fileSize = 0;
         let content = '';
@@ -108,14 +144,31 @@ export class PepFilesUploaderComponent implements OnInit {
             fileSize = file.size;
         }
         // check the size and the extension
-        const sizeOK: boolean = fileSize !== -1 && file != null && fileSize < sizeLimitMB * (1048576);
-        const extensionOK = acceptedExtensions === '' || acceptedExtensions.indexOf(fileExtension.toLowerCase()) !== -1;
+        const sizeOK: boolean =
+            fileSize !== -1 && file != null && fileSize < sizeLimitMB * 1048576;
+        const extensionOK =
+            acceptedExtensions === '' ||
+            acceptedExtensions.indexOf(fileExtension.toLowerCase()) !== -1;
         if (!extensionOK) {
-            content = this.translate.instant('MESSAGES.ERROR_FAILD_TO_LOAD_EXTENSION',
-                { fileExtension: '<label class=\'uppercase bold\'>' + fileExtension + '</label>' });
+            content = this.translate.instant(
+                'MESSAGES.ERROR_FAILD_TO_LOAD_EXTENSION',
+                {
+                    fileExtension:
+                        "<label class='uppercase bold'>" +
+                        fileExtension +
+                        '</label>',
+                }
+            );
         } else if (!sizeOK) {
-            content = this.translate.instant('MESSAGES.ERROR_FAILD_TO_LOAD_SIZE',
-                { fileSize: '<label class=\'uppercase bold\'>' + (sizeLimitMB).toString() + '</label>' });
+            content = this.translate.instant(
+                'MESSAGES.ERROR_FAILD_TO_LOAD_SIZE',
+                {
+                    fileSize:
+                        "<label class='uppercase bold'>" +
+                        sizeLimitMB.toString() +
+                        '</label>',
+                }
+            );
         }
         return content;
     }
@@ -144,7 +197,9 @@ export class PepFilesUploaderComponent implements OnInit {
     }
 
     errorHandler(event): void {
-        event.target.src = this.fileService.getSvgAsImageSrc(pepIconNoImage.data);
+        event.target.src = this.fileService.getSvgAsImageSrc(
+            pepIconNoImage.data
+        );
         event.target.title = this.translate.instant('IMAGE.NO_IMAGE');
     }
 
@@ -164,10 +219,10 @@ export class PepFilesUploaderComponent implements OnInit {
     }
 
     onElementClicked(event): void {
-        this.elementClick.emit({ 
+        this.elementClick.emit({
             key: this.key,
             controlType: this.controlType,
-            eventWhich: event.which
+            eventWhich: event.which,
         });
     }
 

@@ -1,9 +1,15 @@
-import {Pipe, PipeTransform} from "@angular/core";
-import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import { Pipe, PipeTransform } from '@angular/core';
+import {
+    DomSanitizer,
+    SafeHtml,
+    SafeStyle,
+    SafeScript,
+    SafeUrl,
+    SafeResourceUrl,
+} from '@angular/platform-browser';
 
 @Pipe({ name: 'pepCapitalize' })
 export class PepCapitalizePipe implements PipeTransform {
-
     transform(value: any) {
         if (value) {
             return value.charAt(0).toUpperCase() + value.slice(1);
@@ -14,7 +20,6 @@ export class PepCapitalizePipe implements PipeTransform {
 
 @Pipe({ name: 'pepEncode' })
 export class PepEncodePipe implements PipeTransform {
-
     transform(value: any) {
         if (value) {
             const v = btoa(value);
@@ -28,7 +33,6 @@ declare function escape(s: string): string;
 
 @Pipe({ name: 'pepEscape' })
 export class PepEscapePipe implements PipeTransform {
-
     transform(value: any) {
         if (value) {
             const v = escape(value);
@@ -48,13 +52,18 @@ export class PepReplaceLineBreaksPipe implements PipeTransform {
 
 @Pipe({ name: 'pepDateFormatter' })
 export class PepDateFormatterPipe implements PipeTransform {
-    transform(value: Date, culture: any, showTime: boolean = false): string {
+    transform(value: Date, culture: any, showTime = false): string {
         let res = '';
         value = new Date(value);
         if (value) {
             res = value.toLocaleDateString(culture || 'en-US');
             if (showTime) {
-                res += ' ' + value.toLocaleTimeString((culture || 'en-US'), { hour: '2-digit', minute: '2-digit' });
+                res +=
+                    ' ' +
+                    value.toLocaleTimeString(culture || 'en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    });
             }
         }
         return res;
@@ -63,7 +72,7 @@ export class PepDateFormatterPipe implements PipeTransform {
 
 @Pipe({ name: 'pepDateStringFormatter' })
 export class PepDateStringFormatterPipe implements PipeTransform {
-    transform(value: string, culture: any, showTime: boolean = false): string {
+    transform(value: string, culture: any, showTime = false): string {
         let res = '';
         const tmpDate = new Date(value);
         if (value) {
@@ -78,7 +87,7 @@ export class PepDateStringFormatterPipe implements PipeTransform {
 
 @Pipe({ name: 'pepSafeHtml' })
 export class PepSafeHtmlPipe implements PipeTransform {
-    constructor(private sanitizer: DomSanitizer) { }
+    constructor(private sanitizer: DomSanitizer) {}
 
     transform(html) {
         return this.sanitizer.bypassSecurityTrustHtml(html);
@@ -87,22 +96,30 @@ export class PepSafeHtmlPipe implements PipeTransform {
 
 @Pipe({ name: 'pepSafe' })
 export class PepSafePipe implements PipeTransform {
-    constructor(protected sanitizer: DomSanitizer) { }
+    constructor(protected sanitizer: DomSanitizer) {}
 
-    public transform(value: any, type: string): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
+    public transform(
+        value: any,
+        type: string
+    ): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
         switch (type) {
-            case 'html': return this.sanitizer.bypassSecurityTrustHtml(value);
+            case 'html':
+                return this.sanitizer.bypassSecurityTrustHtml(value);
 
-            case 'style': return this.sanitizer.bypassSecurityTrustStyle(value);
+            case 'style':
+                return this.sanitizer.bypassSecurityTrustStyle(value);
 
-            case 'script': return this.sanitizer.bypassSecurityTrustScript(value);
+            case 'script':
+                return this.sanitizer.bypassSecurityTrustScript(value);
 
-            case 'url': return this.sanitizer.bypassSecurityTrustUrl(value);
+            case 'url':
+                return this.sanitizer.bypassSecurityTrustUrl(value);
 
-            case 'resourceUrl': return this.sanitizer.bypassSecurityTrustResourceUrl(value);
+            case 'resourceUrl':
+                return this.sanitizer.bypassSecurityTrustResourceUrl(value);
 
-            default: throw new Error(`Invalid safe type specified: ${type}`);
-
+            default:
+                throw new Error(`Invalid safe type specified: ${type}`);
         }
     }
 }

@@ -1,5 +1,4 @@
 <ng-container [formGroup]="form">
-    <!-- New code -->
     <ng-template #pepTemplate>
         <div class="pep-checkbox-container pep-input" [ngClass]="{
                 'disable': disabled,
@@ -10,12 +9,16 @@
                 'right-alignment pull-right flip': xAlignment == 'right',
                 'center-alignment': xAlignment == 'center'
             }" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}">
-            <!-- (click)="toggleChecked($event)" -->
+            <!--
+                This is cause a bug that when click on the pep-input area and after on the checkbox
+                the value is updated only for the second time.
+                (click)="toggleChecked($event)" 
+            -->
             <ng-container *ngIf="type == 'booleanText'; then booleanTextTemplate; else regularTemplate"></ng-container>
             <ng-template #booleanTextTemplate>
-                <div (click)="toggleChecked($event)" class="mat-checkbox-layout body-sm"
+                <div class="mat-checkbox-layout body-sm" (click)="toggleChecked($event)"
                     [title]="(label.length > 0 ? label + ': ' : '') + ((value | lowercase) == 'true' || value == '1' ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))">
-                    <button [id]="key" class="mat-icon-button emoji-icon pull-left flip">
+                    <button [id]="key" class="emoji-icon pull-left flip">
                         {{ value.toLowerCase() == 'true' || value == '1' ? additionalValueObject.CheckedText :
                         additionalValueObject.UncheckedText }}
                     </button>
@@ -34,8 +37,8 @@
     </ng-template>
 
     <ng-container *ngIf="layoutType === 'form'">
-        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
-            [showTitle]="false">
+        <pep-field-title *ngIf="renderTitle" [label]="label" [required]="required" [disabled]="disabled"
+            [xAlignment]="xAlignment" [showTitle]="false">
         </pep-field-title>
         <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
     </ng-container>

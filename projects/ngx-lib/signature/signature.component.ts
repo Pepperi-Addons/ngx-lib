@@ -1,11 +1,29 @@
 import {
-    Component, OnInit, OnDestroy, ViewChild, Input, Output, EventEmitter, ChangeDetectorRef,
-    ChangeDetectionStrategy, OnChanges, ElementRef, Renderer2, TemplateRef
+    Component,
+    OnInit,
+    OnDestroy,
+    ViewChild,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    OnChanges,
+    ElementRef,
+    Renderer2,
+    TemplateRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SignaturePad } from 'ngx-signaturepad/signature-pad';
-import { PepFileService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepSignatureField } from '@pepperi-addons/ngx-lib';
+import {
+    PepFileService,
+    PepLayoutType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    PepSignatureField,
+} from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -13,7 +31,7 @@ import { MatDialogRef } from '@angular/material/dialog';
     selector: 'pep-signature',
     styleUrls: ['./signature.component.scss'],
     templateUrl: './signature.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
@@ -34,10 +52,12 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     @ViewChild('signaturePad') signaturePad: SignaturePad;
-    @ViewChild('signaturePopupPad', { read: TemplateRef }) signaturePopupPad: TemplateRef<any>;
+    @ViewChild('signaturePopupPad', { read: TemplateRef })
+    signaturePopupPad: TemplateRef<any>;
     dialogRef: MatDialogRef<any>;
 
     fieldHeight = '';
@@ -53,7 +73,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         minWidth: 2,
         canvasWidth: 500,
         canvasHeight: 300,
-        penColor: 'rgb(151, 151, 151)'
+        penColor: 'rgb(151, 151, 151)',
     };
 
     constructor(
@@ -62,9 +82,8 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         private fileService: PepFileService,
         private cd: ChangeDetectorRef,
         private renderer: Renderer2,
-        private element: ElementRef) {
-
-    }
+        private element: ElementRef
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -75,14 +94,21 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
                 value: this.src,
                 required: this.required,
                 readonly: this.readonly,
-                disabled: this.disabled
+                disabled: this.disabled,
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
 
-        this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
+        this.fieldHeight = this.customizationService.calculateFieldHeight(
+            this.layoutType,
+            this.rowSpan,
+            this.standAlone
+        );
     }
 
     ngOnChanges(changes: any): void {
@@ -118,7 +144,10 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
                 const win = window.open('', '_blank');
                 const contentType = fileStrArr[0].split(':')[1];
                 const base64 = fileStrArr[1].split(',')[1];
-                const blob = this.fileService.convertFromb64toBlob(base64, contentType);
+                const blob = this.fileService.convertFromb64toBlob(
+                    base64,
+                    contentType
+                );
                 const url = URL.createObjectURL(blob);
                 win.location.href = url;
             }
@@ -129,8 +158,9 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    openSignatoreDlg(src: string = ''): void {
-        this.showActionBtn = this.signatureURL && this.signatureURL !== '' ? false : true;
+    openSignatoreDlg(src = ''): void {
+        this.showActionBtn =
+            this.signatureURL && this.signatureURL !== '' ? false : true;
 
         this.dialogRef = this.dialogService.openDialog(this.signaturePopupPad);
         this.dialogRef.afterOpened().subscribe(() => {
@@ -163,7 +193,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
             const fileValue = JSON.stringify({
                 acceptedExtensions: this.acceptSignatureType,
                 fileStr: this.signatureURL,
-                fileExt: this.acceptSignatureType
+                fileExt: this.acceptSignatureType,
             });
             this.changeValue(fileValue);
         } else {
@@ -181,8 +211,17 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     changeValue(value: any, lastFocusedField: any = null): void {
         this.dataURI = value.length > 0 ? JSON.parse(value) : null;
         this.src = this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
-        this.customizationService.updateFormFieldValue(this.form, this.key, this.dataURI ? this.dataURI.fileExt : '');
-        this.valueChange.emit({ key: this.key, value, controlType: this.controlType, lastFocusedField });
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            this.dataURI ? this.dataURI.fileExt : ''
+        );
+        this.valueChange.emit({
+            key: this.key,
+            value,
+            controlType: this.controlType,
+            lastFocusedField,
+        });
     }
 
     onKeyPress_OpenSignModal(event: any): void {

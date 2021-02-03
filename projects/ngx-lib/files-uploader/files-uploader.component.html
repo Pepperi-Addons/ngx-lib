@@ -1,5 +1,4 @@
-﻿<!-- New code -->
-<ng-template #pepTemplate>
+﻿<ng-template #pepTemplate>
     <mat-form-field [formGroup]="form" appearance="outline">
         <div class="pep-file-wrapper">
             <div class="pep-file body-sm" [style.height]="fieldHeight" [ngClass]="{
@@ -12,8 +11,7 @@
                         class="pep-button icon-button weak md delete" tabindex="-1"
                         [ngClass]="{ 'right-alignment': xAlignment == 'right' }">
                         <mat-icon>
-                            <pep-icon name="system_bin">
-                            </pep-icon>
+                            <pep-icon name="system_bin"></pep-icon>
                         </mat-icon>
                     </button>
                     <div class="pep-file-preview" (click)="onElementClicked($event)">
@@ -22,8 +20,9 @@
                             [ngClass]="['text-align-' + xAlignment]" />
                         <div *ngIf="controlType === 'attachment'" class="ellipsis pep-file-message">
                             <a *ngIf="src != ''" href="javascript:void(0)">
-                                <pep-icon name="system_attach">
-                                </pep-icon>
+                                <mat-icon class="spacing-element">
+                                    <pep-icon name="system_attach"></pep-icon>
+                                </mat-icon>
                                 <span class="body-sm ellipsis">{{ 'FILE.SEE_ORIGINAL' | translate }}</span>
                             </a>
                         </div>
@@ -31,12 +30,15 @@
                 </ng-template>
                 <ng-template #noImg>
                     <div class="ellipsis pep-file-message">
-                        <pep-icon *ngIf="controlType === 'attachment'" name="system_attach">
-                        </pep-icon>
-                        <pep-icon *ngIf="controlType === 'image'" name="system_file_upload_cloud">
-                        </pep-icon>
+                        <mat-icon *ngIf="controlType === 'attachment'" class="spacing-element">
+                            <pep-icon name="system_attach"></pep-icon>
+                        </mat-icon>
+                        <mat-icon *ngIf="controlType === 'image'" class="spacing-element">
+                            <pep-icon name="system_file_upload_cloud"></pep-icon>
+                        </mat-icon>
                         <span class="body-sm ellipsis" *ngIf="progress == 0">
-                            {{ (disabled ? (controlType === 'image' ? 'MESSAGES.INFO_MISSING_IMAGE' : 'MESSAGES.INFO_MISSING_FILE') : 'FILE.HINT') | translate }}
+                            {{ (disabled ? (controlType === 'image' ? 'MESSAGES.INFO_MISSING_IMAGE' :
+                            'MESSAGES.INFO_MISSING_FILE') : 'FILE.HINT') | translate }}
                         </span>
                         <!-- <p *ngIf="progress != 0" class="pull-left flip"
                             [ngClass]="{ 'pull-left flip': rowSpan == 1, image: controlType == 'image', attachment: controlType == 'attachment' }">

@@ -89,7 +89,7 @@ export function hex2rgb(str: string): IPepRgbColor {
     return {
         r: parseInt(sixDigitHex.slice(1, 3), 16),
         g: parseInt(sixDigitHex.slice(3, 5), 16),
-        b: parseInt(sixDigitHex.slice(5, 7), 16)
+        b: parseInt(sixDigitHex.slice(5, 7), 16),
     };
 }
 
@@ -205,7 +205,7 @@ export function hsl2rgb({ h, s, l }: IPepHslColor): IPepRgbColor {
     s = Math.max(0, Math.min(1, s / 100));
     l = Math.max(0, Math.min(1, l / 100));
 
-    const c = (1 - Math.abs((2 * l) - 1)) * s;
+    const c = (1 - Math.abs(2 * l - 1)) * s;
     const x = c * (1 - Math.abs((h % 2) - 1));
 
     if (h < 1) {
@@ -265,7 +265,7 @@ export function hsl2hex(hsl: IPepHslColor): string {
 }
 
 export function relativeLuminance({ r, g, b }: IPepRgbColor): number {
-    [r, g, b] = [r, g, b].map(c => {
+    [r, g, b] = [r, g, b].map((c) => {
         c = c / 255;
 
         if (c <= 0.03928) {
@@ -290,13 +290,16 @@ export function contrast(str1: string, str2: string): number {
 }
 
 export function findClosestAccessibleDarkerColor(
-    adjustableColor: string, otherColor: string, contrastRatio: number): IPepClosestColor {
-    let { h, s, l } = hex2hsl(adjustableColor);
+    adjustableColor: string,
+    otherColor: string,
+    contrastRatio: number
+): IPepClosestColor {
+    const { h, s, l } = hex2hsl(adjustableColor);
 
     if (contrast(adjustableColor, otherColor) >= contrastRatio) {
         return {
             color: adjustableColor,
-            lightness: l
+            lightness: l,
         };
     }
 
@@ -311,37 +314,41 @@ export function findClosestAccessibleDarkerColor(
     let maxColor = hsl2hex({ h, s, l });
     let lastMinColor;
     let lastMaxColor;
+    let lTemp;
 
     while (minColor !== lastMinColor || maxColor !== lastMaxColor) {
         lastMinColor = minColor;
         lastMaxColor = maxColor;
 
-        l = (min + max) / 2;
-        adjustableColor = hsl2hex({ h, s, l });
+        lTemp = (min + max) / 2;
+        adjustableColor = hsl2hex({ h, s, l: lTemp });
 
         if (contrast(adjustableColor, otherColor) < contrastRatio) {
-            max = l;
-            maxColor = hsl2hex({ h, s, l });
+            max = lTemp;
+            maxColor = hsl2hex({ h, s, l: lTemp });
         } else {
-            min = l;
-            minColor = hsl2hex({ h, s, l });
+            min = lTemp;
+            minColor = hsl2hex({ h, s, l: lTemp });
         }
     }
 
     return {
         color: minColor,
-        lightness: min
+        lightness: min,
     };
 }
 
 export function findClosestAccessibleLighterColor(
-    adjustableColor: string, otherColor: string, contrastRatio: number): IPepClosestColor {
-    let { h, s, l } = hex2hsl(adjustableColor);
+    adjustableColor: string,
+    otherColor: string,
+    contrastRatio: number
+): IPepClosestColor {
+    const { h, s, l } = hex2hsl(adjustableColor);
 
     if (contrast(adjustableColor, otherColor) >= contrastRatio) {
         return {
             color: adjustableColor,
-            lightness: l
+            lightness: l,
         };
     }
 
@@ -356,35 +363,45 @@ export function findClosestAccessibleLighterColor(
     let minColor = hsl2hex({ h, s, l });
     let lastMinColor;
     let lastMaxColor;
+    let lTemp;
 
     while (minColor !== lastMinColor || maxColor !== lastMaxColor) {
         lastMinColor = minColor;
         lastMaxColor = maxColor;
 
-        l = (min + max) / 2;
-        adjustableColor = hsl2hex({ h, s, l });
+        lTemp = (min + max) / 2;
+        adjustableColor = hsl2hex({ h, s, l: lTemp });
 
         if (contrast(adjustableColor, otherColor) < contrastRatio) {
-            min = l;
-            minColor = hsl2hex({ h, s, l });
+            min = lTemp;
+            minColor = hsl2hex({ h, s, l: lTemp });
         } else {
-            max = l;
-            maxColor = hsl2hex({ h, s, l });
+            max = lTemp;
+            maxColor = hsl2hex({ h, s, l: lTemp });
         }
     }
 
     return {
         color: maxColor,
-        lightness: max
+        lightness: max,
     };
 }
 
 export function findClosestAccessibleColor(
-    adjustableColor: string, otherColor: string, contrastRatio: number): string {
-    const closestDarkerColor: IPepClosestColor =
-        findClosestAccessibleDarkerColor(adjustableColor, otherColor, contrastRatio);
-    const closestLighterColor: IPepClosestColor =
-        findClosestAccessibleLighterColor(adjustableColor, otherColor, contrastRatio);
+    adjustableColor: string,
+    otherColor: string,
+    contrastRatio: number
+): string {
+    const closestDarkerColor: IPepClosestColor = findClosestAccessibleDarkerColor(
+        adjustableColor,
+        otherColor,
+        contrastRatio
+    );
+    const closestLighterColor: IPepClosestColor = findClosestAccessibleLighterColor(
+        adjustableColor,
+        otherColor,
+        contrastRatio
+    );
 
     if (closestDarkerColor === null) {
         if (closestLighterColor === null) {
@@ -408,5 +425,13 @@ export function findClosestAccessibleColor(
 }
 
 export function convertHslToStringHsl(hsl: IPepHslColor): string {
-    return 'hsl(' + (hsl.h < 0 ? hsl.h + 360 : hsl.h) + ', ' + hsl.s + '%, ' + hsl.l + '%)';
+    return (
+        'hsl(' +
+        (hsl.h < 0 ? hsl.h + 360 : hsl.h) +
+        ', ' +
+        hsl.s +
+        '%, ' +
+        hsl.l +
+        '%)'
+    );
 }

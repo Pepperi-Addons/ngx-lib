@@ -63,6 +63,7 @@ $pep-typography: mat-typography-config(
 @import './search/search.component.theme';
 @import './select/select.component.theme';
 @import './separator/separator.component.theme';
+@import './side-bar/side-bar.component.theme';
 @import './signature/signature.component.theme';
 @import './smart-filters/smart-filters.component.theme';
 @import './textarea/textarea.component.theme';
@@ -154,13 +155,14 @@ $material-theme-for-pep: $material-default-theme;
         @include pep-search-component-theme($pepperi-theme);
         @include pep-select-component-theme($pepperi-theme);
         @include pep-separator-component-theme($pepperi-theme);
+        @include pep-side-bar-component-theme($pepperi-theme);
         @include pep-signature-component-theme($pepperi-theme);
         @include pep-smart-filters-component-theme($pepperi-theme);
         @include pep-textarea-component-theme($pepperi-theme);
         @include pep-textbox-component-theme($pepperi-theme);
         @include pep-textbox-icon-component-theme($pepperi-theme);
         @include pep-top-bar-component-theme($pepperi-theme);
-
+        
         @include pep-indicators-component-theme($pepperi-theme);
         // @include pep-internal-button-component-theme($pepperi-theme);
         // @include pep-internal-menu-component-theme($pepperi-theme);

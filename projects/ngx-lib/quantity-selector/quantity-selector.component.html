@@ -1,7 +1,7 @@
 <ng-container [formGroup]="form">
-    <!-- New code -->
     <ng-template #pepTemplate>
         <div #QSCont class="pep-quantity-selector-container {{ styleClass }}" [ngClass]="{
+                'hide-qs-actions' : layoutType === 'card' && rowSpan <= 1,
                 'pep-table-quantity-selector': layoutType === 'table',
                 'one-row': rowSpan === 1,
                 caution: isCaution,
@@ -15,7 +15,7 @@
             <ng-container *ngIf="type == 'qs'">
                 <ng-container *ngIf="readonly; then readonlyBlock; else editableQSBlock"></ng-container>
                 <ng-template #readonlyBlock>
-                    <button [id]="key" mat-button class="pep-button {{ styleClass }} disabled ellipsis"
+                    <button [id]="key" mat-button class="pep-button {{ styleClass }} disable ellipsis"
                         [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                         title="{{ formattedValue }}" disabled="true">
                         {{ formattedValue }}
@@ -31,21 +31,19 @@
                             (click)="$event.target.setSelectionRange(0, 999)" (blur)="onBlur($event)"
                             (focus)="onFocus($event)" />
                         <button *ngIf="showQsBtn" mat-button matPrefix (click)="decrement($event)"
-                            class="pep-button icon-button sm weak qs-action" [disabled]="disabled" [ngClass]="{ disabled: disabled, caution: isCaution && styleClass !== 'strong',
+                            class="pep-button icon-button sm weak qs-action" [disabled]="disabled" [ngClass]="{ disable: disabled, caution: isCaution && styleClass !== 'strong',
                                 'keep-background-on-focus': styleClass === 'strong'}">
                             <mat-icon>
                                 <pep-icon name="number_minus">
                                 </pep-icon>
-                                <!-- <svg [pepSvgIcon]="'number-minus'"></svg> -->
                             </mat-icon>
                         </button>
                         <button *ngIf="showQsBtn" mat-button matSuffix (click)="increment($event)"
-                            class="pep-button icon-button sm weak qs-action" [disabled]="disabled" [ngClass]="{ disabled: disabled, caution: isCaution && styleClass !== 'strong',
+                            class="pep-button icon-button sm weak qs-action" [disabled]="disabled" [ngClass]="{ disable: disabled, caution: isCaution && styleClass !== 'strong',
                                 'keep-background-on-focus': styleClass === 'strong'}">
                             <mat-icon>
                                 <pep-icon name="number_plus">
                                 </pep-icon>
-                                <!-- <svg [pepSvgIcon]="'number-plus'"></svg> -->
                             </mat-icon>
                         </button>
                         <mat-error *ngIf="messages?.length > 0">
@@ -59,15 +57,12 @@
             <ng-container *ngIf="type == 'qsForMatrix'">
                 <ng-container *ngIf="readonly; then readonlyBlock; else editableQSBlock"></ng-container>
                 <ng-template #readonlyBlock>
-                    <button [id]="key" mat-button class="pep-button {{ styleClass }} disabled" disabled="true"
+                    <button [id]="key" mat-button class="pep-button {{ styleClass }} disable" disabled="true"
                         [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}">
                         X
                     </button>
                 </ng-template>
                 <ng-template #editableQSBlock>
-                    <!-- <span class="body-sm additional-value pull-left flip" [ngClass]="xAlignment == 'right' ? 'prefix' : 'suffix'" matBadge="{{ additionalValue }}" matBadgePosition="before"
-                        matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span> -->
-
                     <span *ngIf="xAlignment == 'right'" class="body-sm additional-value prefix"
                         matBadge="{{ additionalValue }}" matBadgePosition="before"
                         matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
@@ -81,11 +76,6 @@
                             (click)="onMatrixClick($event); $event.target.setSelectionRange(0, 999)"
                             (blur)="onMatrixBlur($event)" (focus)="onMatrixMouseEnter($event); onFocus($event)"
                             (mouseenter)="onMatrixMouseEnter($event)" />
-
-                        <!-- <span matPrefix *ngIf="xAlignment == 'right'" class="body-sm additional-value prefix" matBadge="{{ additionalValue }}" matBadgePosition="before"
-                            matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
-                        <span matSuffix *ngIf="xAlignment != 'right'" class="body-sm additional-value suffix" matBadge="{{ additionalValue }}" matBadgePosition="before"
-                            matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span> -->
 
                         <mat-error *ngIf="messages?.length > 0">
                             <span class="qs-error body-xs" *ngFor="let msg of messages"> {{ msg.Key | translate }} :
@@ -105,7 +95,7 @@
                 <ng-template #regularBlock>
                     <button mat-button [disabled]="disabled" class="pep-button {{ styleClass }} ellipsis" [id]="key"
                         name="{{ key }}"
-                        [ngClass]="{ disabled: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                        [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                         [title]="'QS.ORDER' | translate" (click)="enterChildren($event)">
                         {{ 'QS.ORDER' | translate }}
                     </button>
@@ -114,7 +104,7 @@
                     <button mat-button matBadge="{{ formattedValue }}"
                         matBadgePosition="{{xAlignment == 'right' ? 'before' : 'after'}}"
                         [matBadgeSize]="layoutType === 'card' && rowSpan === 1 ? 'small' : 'medium'"
-                        class="pep-button {{ styleClass }} ellipsis" [id]="key" name="{{ key }}" [ngClass]="{ disabled: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1,
+                        class="pep-button {{ styleClass }} ellipsis" [id]="key" name="{{ key }}" [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1,
                             'right-alignment': xAlignment == 'right', 'left-alignment': xAlignment != 'right'}"
                         [title]="'QS.ORDER' | translate" (click)="enterChildren($event)" [disabled]="disabled">
                         {{ 'QS.ORDER' | translate }}
@@ -123,7 +113,7 @@
             </ng-container>
             <ng-container *ngIf="type == 'packageButton'">
                 <button mat-button class="pep-button {{ styleClass }} ellipsis" [id]="key" name="{{ key }}"
-                    [ngClass]="{ disabled: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                    [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                     [title]="'QS.ORDER' | translate" (click)="enterPackage($event)" [disabled]="disabled">
                     {{ 'QS.ORDER' | translate }} &#40;{{ formattedValue }}&#41;
                 </button>

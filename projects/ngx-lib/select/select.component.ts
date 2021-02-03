@@ -1,11 +1,28 @@
 import {
-    Component, OnInit, OnChanges, Input, Output, EventEmitter, ViewChild, ElementRef,
-    ChangeDetectionStrategy, OnDestroy, Renderer2
+    Component,
+    OnInit,
+    OnChanges,
+    Input,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    ChangeDetectionStrategy,
+    OnDestroy,
+    Renderer2,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
-import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepSelectFieldType, PepSelectField, PepOption } from '@pepperi-addons/ngx-lib';
+import {
+    PepLayoutType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    PepSelectFieldType,
+    PepSelectField,
+    IPepOption,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-select',
@@ -23,7 +40,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() options: Array<PepOption> = [];
+    @Input() options: Array<IPepOption> = [];
 
     controlType = 'select';
 
@@ -35,8 +52,10 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() showTitle = true;
     @Input() emptyOption = true;
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-    @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('select') select: MatSelect;
 
@@ -52,7 +71,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-        ) { }
+    ) {}
 
     private addOptionsIfNeeded(): void {
         if (this.isMulti) {
@@ -61,18 +80,29 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
             for (const selectedValue of this.selectedValuesModel) {
                 let valueNotExist = false;
 
-                if (this.options && !this.options.find((opt) => opt.Key === selectedValue)) {
+                if (
+                    this.options &&
+                    !this.options.find((opt) => opt.key === selectedValue)
+                ) {
                     valueNotExist = true;
                 }
 
                 // Add it to options.
                 if (valueNotExist) {
-                    this.options.push({ Key: selectedValue, Value: selectedValue });
+                    this.options.push({
+                        key: selectedValue,
+                        value: selectedValue,
+                    });
                 }
             }
         } else {
-            if (this.value && this.value !== '' && this.options && !this.options.find((opt) => opt.Key === this.value)) {
-                this.options.push({ Key: this.value, Value: this.value });
+            if (
+                this.value &&
+                this.value !== '' &&
+                this.options &&
+                !this.options.find((opt) => opt.key === this.value)
+            ) {
+                this.options.push({ key: this.value, value: this.value });
             }
         }
     }
@@ -80,19 +110,22 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     private setFieldFormattedValue(value: any): void {
         if (this.isMulti) {
             if (this.selectedValuesModel.length > 0) {
-                this.fieldFormattedValue = this.selectedValuesModel.map((value) => {
-                    return (this.options.find(opt => opt.Key === value))?.Value
-                }).join(', ');
+                this.fieldFormattedValue = this.selectedValuesModel
+                    .map((value) => {
+                        return this.options.find((opt) => opt.key === value)
+                            ?.value;
+                    })
+                    .join(', ');
             } else {
                 this.fieldFormattedValue = '';
             }
 
             // this.fieldFormattedValue = typeof value === 'string' ? value.replace(new RegExp(';', 'g'), ', ') : '';
         } else {
-            const selectedOpt = this.options.find(opt => opt.Key === value);
-            
+            const selectedOpt = this.options.find((opt) => opt.key === value);
+
             if (selectedOpt) {
-                this.fieldFormattedValue = selectedOpt.Value;
+                this.fieldFormattedValue = selectedOpt.value;
             }
         }
     }
@@ -106,18 +139,22 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
                 value: this.value,
                 required: this.required,
                 readonly: this.readonly,
-                disabled: this.disabled
+                disabled: this.disabled,
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
     }
 
     ngOnChanges(changes: any): void {
         this.isMulti = this.type === 'multi';
         if (this.isMulti) {
-            this.selectedValuesModel = this.value.length > 0 ? this.value.split(';') : [];
+            this.selectedValuesModel =
+                this.value.length > 0 ? this.value.split(';') : [];
         } else {
             this.selectedValueModel = this.value;
         }
@@ -159,7 +196,12 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
 
     changeValue(value: any): void {
         this.setFieldFormattedValue(value);
-        this.customizationService.updateFormFieldValue(this.form, this.key, value, this.parentFieldKey);
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            value,
+            this.parentFieldKey
+        );
 
         if (this.required) {
             const fieldControl = this.form.controls[this.key];

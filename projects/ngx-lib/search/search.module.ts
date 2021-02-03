@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -16,7 +14,7 @@ import {
     PepIconModule,
     PepIconRegistry,
     pepIconSystemClose,
-    pepIconSystemSearch
+    pepIconSystemSearch,
 } from '@pepperi-addons/ngx-lib/icon';
 
 import { PepSearchComponent } from './search.component';
@@ -26,8 +24,6 @@ import { PepSearchComponent } from './search.component';
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         // Material modules,
         MatCommonModule,
         MatAutocompleteModule,
@@ -37,16 +33,16 @@ import { PepSearchComponent } from './search.component';
         // ngx-lib modules
         PepNgxLibModule,
         PepIconModule,
-        MatInputModule
+        MatInputModule,
     ],
-    exports: [ PepSearchComponent ],
-    declarations: [ PepSearchComponent ],
+    exports: [PepSearchComponent],
+    declarations: [PepSearchComponent],
 })
 export class PepSearchModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemClose,
-            pepIconSystemSearch
+            pepIconSystemSearch,
         ]);
     }
 }

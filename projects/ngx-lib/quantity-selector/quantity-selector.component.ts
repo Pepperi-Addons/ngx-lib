@@ -11,7 +11,7 @@ import {
     ChangeDetectorRef,
     ChangeDetectionStrategy,
     Renderer2,
-    AfterViewInit
+    AfterViewInit,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -19,12 +19,19 @@ import {
     state,
     style,
     animate,
-    transition
+    transition,
 } from '@angular/animations';
-import { PepLayoutType, PepStyleType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, IPepFieldClickEvent,
-    PepQuantitySelectorFieldType, 
-    PepQuantitySelectorField} from '@pepperi-addons/ngx-lib';
+import {
+    PepLayoutType,
+    PepStyleType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    IPepFieldClickEvent,
+    PepQuantitySelectorFieldType,
+    PepQuantitySelectorField,
+} from '@pepperi-addons/ngx-lib';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -39,22 +46,23 @@ import { debounceTime } from 'rxjs/operators';
                 'show',
                 style({
                     opacity: 1,
-                    transform: 'scale(1)'
+                    transform: 'scale(1)',
                 })
             ),
             state(
                 'hide',
                 style({
                     opacity: 0,
-                    transform: 'scale(0)'
+                    transform: 'scale(0)',
                 })
             ),
             transition('show => hide', animate('250ms ease-out')),
-            transition('hide => show', animate('250ms ease-in'))
-        ])
-    ]
+            transition('hide => show', animate('250ms ease-in')),
+        ]),
+    ],
 })
-export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class PepQuantitySelectorComponent
+    implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     public static ENTER_CHILDREN = '[EnterChildren]';
     public static ENTER_PACKAGE = '[EnterPackage]';
     public static PLUS = '[+]';
@@ -83,11 +91,22 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    // Get default style from theme.
+    @Input()
+    styleClass: PepStyleType = document.documentElement.style.getPropertyValue(
+        PepCustomizationService.STYLE_QS_KEY
+    ) as PepStyleType; //'strong';
+
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     @ViewChild('QSCont') QSCont: ElementRef;
     @ViewChild('QSInput') QSInput: ElementRef;
+
+    lastQsContClientWidth = 0;
+    showQsBtn = true;
 
     standAlone = false;
     isFocus = false;
@@ -95,11 +114,10 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
 
     isCaution = false;
     messages: Array<any> = null;
-    showQsBtn = false;
-    resize: any;
+    // resize: any;
 
     sameElementInTheWantedRow = null;
-    styleClass: PepStyleType = 'strong';
+
     isEmptyKey = false;
 
     constructor(
@@ -115,7 +133,7 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             value: this.value,
             required: this.required,
             readonly: this.readonly,
-            disabled: this.disabled
+            disabled: this.disabled,
         });
         this.form = this.customizationService.getDefaultFromGroup(pepField);
     }
@@ -136,23 +154,30 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             );
         }
 
-        this.resize = fromEvent(window, 'resize').pipe(
-            debounceTime(250)
-        ).subscribe((event) => {
-            this.setQsView();
-        });
+        // Get state class from theme.
+        // this.styleClass = document.documentElement.style.getPropertyValue(
+        //     PepCustomizationService.STYLE_QS_KEY
+        // ) as PepStyleType;
+
+        // this.resize = fromEvent(window, 'resize')
+        //     .pipe(debounceTime(250))
+        //     .subscribe((event) => {
+        //         this.setQsView();
+        //     });
     }
 
     ngAfterViewInit() {
-        this.setQsView();
+        // setTimeout(() => {
+        // this.setQsView();
+        // }, 0);
     }
 
     // TODO: Don't un comment this cause a lot of memory usage.
-    // ngAfterViewChecked(): void {
-    //     setTimeout(() => {
-    //         this.setQsView();
-    //     }, 125);
-    // }
+    ngAfterViewChecked(): void {
+        // setTimeout(() => {
+        this.setQsView();
+        // }, 125);
+    }
 
     ngOnChanges(changes: any): void {
         if (this.standAlone) {
@@ -188,7 +213,7 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
 
             const fieldControl = this.form.controls[this.key];
             fieldControl.setErrors({
-                serverError: 'Error'
+                serverError: 'Error',
             });
             setTimeout(() => {
                 if (this.QSInput && this.QSInput.nativeElement) {
@@ -208,9 +233,9 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
     }
 
     ngOnDestroy(): void {
-        if (this.resize) {
-            this.resize.unsubscribe();
-        }
+        // if (this.resize) {
+        //     this.resize.unsubscribe();
+        // }
 
         if (this.valueChange) {
             this.valueChange.unsubscribe();
@@ -233,7 +258,11 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
 
         let p = el.parentNode;
 
-        while (p && !p?.classList?.contains(parentSelector) && parentSelector !== document) {
+        while (
+            p &&
+            !p?.classList?.contains(parentSelector) &&
+            parentSelector !== document
+        ) {
             const o = p;
             p = o?.parentNode || null;
         }
@@ -251,22 +280,34 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
         } else if (this.layoutType === 'card') {
             parentSelector = this.getParentByClass(eventTarget, 'card-view');
             if (!parentSelector) {
-                parentSelector = this.getParentByClass(eventTarget, 'line-view');
+                parentSelector = this.getParentByClass(
+                    eventTarget,
+                    'line-view'
+                );
             }
         }
 
         if (isNext) {
             if (parentSelector.nextElementSibling === null) {
-                sameElementInTheWantedRowByClassName = parentSelector.parentElement.querySelectorAll('[name=' + this.key + ']')[0];
+                sameElementInTheWantedRowByClassName = parentSelector.parentElement.querySelectorAll(
+                    '[name=' + this.key + ']'
+                )[0];
             } else {
-                sameElementInTheWantedRowByClassName = parentSelector.nextElementSibling.querySelectorAll('[name=' + this.key + ']')[0];
+                sameElementInTheWantedRowByClassName = parentSelector.nextElementSibling.querySelectorAll(
+                    '[name=' + this.key + ']'
+                )[0];
             }
         } else {
-                if (parentSelector.previousElementSibling === null) {
-                const elementsList = parentSelector.parentElement.querySelectorAll('[name=' + this.key + ']');
-                sameElementInTheWantedRowByClassName = elementsList[elementsList.length - 1];
+            if (parentSelector.previousElementSibling === null) {
+                const elementsList = parentSelector.parentElement.querySelectorAll(
+                    '[name=' + this.key + ']'
+                );
+                sameElementInTheWantedRowByClassName =
+                    elementsList[elementsList.length - 1];
             } else {
-                sameElementInTheWantedRowByClassName = parentSelector.previousElementSibling.querySelectorAll('[name=' + this.key + ']')[0];
+                sameElementInTheWantedRowByClassName = parentSelector.previousElementSibling.querySelectorAll(
+                    '[name=' + this.key + ']'
+                )[0];
             }
         }
 
@@ -286,7 +327,6 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
     }
 
     focusToTheSameElementInTheWantedRow(): void {
-
         if (this.sameElementInTheWantedRow) {
             const elem = this.sameElementInTheWantedRow;
             // If this is regular item (qs and not button) .
@@ -369,7 +409,7 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             key: this.key,
             value,
             controlType: this.controlType,
-            lastFocusedField
+            lastFocusedField,
         });
     }
 
@@ -390,7 +430,7 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             key: this.key,
             value: PepQuantitySelectorComponent.PLUS,
             controlType: this.controlType,
-            eventWhich: event.which
+            eventWhich: event.which,
         });
         event.stopPropagation();
     }
@@ -412,7 +452,7 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             key: this.key,
             value: PepQuantitySelectorComponent.MINUS,
             controlType: this.controlType,
-            eventWhich: event.which
+            eventWhich: event.which,
         });
         event.stopPropagation();
     }
@@ -422,7 +462,7 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             key: this.key,
             value: PepQuantitySelectorComponent.ENTER_CHILDREN,
             controlType: this.controlType,
-            eventWhich: event.which
+            eventWhich: event.which,
         });
     }
 
@@ -432,27 +472,22 @@ export class PepQuantitySelectorComponent implements OnChanges, OnInit, AfterVie
             value: PepQuantitySelectorComponent.ENTER_PACKAGE,
             controlType: this.controlType,
             eventWhich: event.which,
-            otherData: this.notificationInfo
+            otherData: this.notificationInfo,
         });
     }
 
     setQsView(): void {
-        if (this.layoutType === 'card' && this.rowSpan <= 1) {
-            this.showQsBtn = false;
-        } else {
-            if (this.QSCont && this.QSCont.nativeElement) {
-                this.showQsBtn = this.QSCont.nativeElement.clientWidth > 140;
+        if (this.QSCont && this.QSCont.nativeElement) {
+            const qsContClientWidth = this.QSCont.nativeElement.clientWidth;
+
+            if (qsContClientWidth != this.lastQsContClientWidth) {
+                this.showQsBtn = qsContClientWidth > 120;
+
+                if (!this.cd['destroyed']) {
+                    this.cd.detectChanges();
+                    this.lastQsContClientWidth = qsContClientWidth;
+                }
             }
-        }
-
-        // Get state class from theme.
-        // this.styleClass = this.customizationService.getThemeVariable(PepCustomizationService.STYLE_QS_KEY);
-        this.styleClass = document.documentElement.style.getPropertyValue(
-            PepCustomizationService.STYLE_QS_KEY
-        ) as PepStyleType;
-
-        if (!this.cd['destroyed']) {
-            this.cd.detectChanges();
         }
     }
 

@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
-    FieldLayout, ObjectSingleData, ObjectsDataRow, UIControl,
-    ObjectsData, UIControlField, ObjectsDataRowCell, FIELD_TYPE, X_ALIGNMENT_TYPE
+    FieldLayout,
+    ObjectsDataRow,
+    UIControl,
+    UIControlField,
+    ObjectsDataRowCell,
+    FIELD_TYPE,
+    X_ALIGNMENT_TYPE,
 } from '../model/wapi.model';
 import { PepGuid } from '../model/utilities.model';
 
@@ -50,65 +55,71 @@ export class PepRowData {
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PepDataConvertorService {
-    constructor() {
+    getUiControl(formData: PepRowData): UIControl {
+        const uiControl = new UIControl();
+
+        if (formData?.Fields?.length > 0) {
+            const uiRow = formData.Fields;
+            uiControl.ControlFields = [];
+            uiRow.forEach((field) =>
+                uiControl.ControlFields.push(this.setUIControlField(field))
+            );
+        }
+
+        return uiControl;
     }
 
-    convertFormData(formData: PepRowData): ObjectSingleData {
-        const objectsData = new ObjectSingleData();
+    convertFormData(formData: PepRowData): ObjectsDataRow {
         const rowData = new ObjectsDataRow();
-        const uiRow = formData.Fields;
-        const uiControl = new UIControl();
-        uiControl.ControlFields = [];
-        uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
         rowData.Fields = [];
         rowData.Type = 0;
         rowData.UID = PepGuid.newGuid();
-        formData.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
-        objectsData.Data = rowData;
-        objectsData.UIControl = uiControl;
+        formData.Fields.forEach((field) =>
+            rowData.Fields.push(this.setDataField(field))
+        );
 
-        return objectsData;
+        return rowData;
     }
 
-    convertListData(tableData: PepRowData[], rowUUID = ''): ObjectsData {
-        const objectsData = new ObjectsData();
-        const uiControl = new UIControl();
+    convertListData(
+        tableData: PepRowData[],
+        rowUUID = ''
+    ): Array<ObjectsDataRow> {
         const rows = new Array<ObjectsDataRow>();
 
         if (tableData.length > 0) {
-            const uiRow = tableData[0].Fields;
-
-            uiControl.ControlFields = [];
-            uiRow.forEach(field => uiControl.ControlFields.push(this.setUIControlField(field)));
-
-            tableData.forEach(row => {
+            tableData.forEach((row) => {
                 const rowData = new ObjectsDataRow();
                 rowData.Fields = [];
                 rowData.Type = 0;
                 rowData.UID = rowUUID ? rowUUID : PepGuid.newGuid();
-                row.Fields.forEach(field => rowData.Fields.push(this.setDataField(field)));
+                row.Fields.forEach((field) =>
+                    rowData.Fields.push(this.setDataField(field))
+                );
                 rows.push(rowData);
             });
         }
 
-        objectsData.Rows = rows;
-        objectsData.UIControl = uiControl;
-
-        return objectsData;
+        return rows;
     }
 
     setUIControlField(field: PepFieldData): UIControlField {
         const controlField = new UIControlField();
         controlField.ApiName = field.ApiName;
         controlField.FieldType = field.FieldType;
-        // { X: 1, Width: 1, XAlignment: field.XAlignment, Y: 1, Height: 1, YAlignment: 1 };
-        // controlField.Layout = new FieldLayout(1, 1, field.XAlignment, 1, 1, 1);
-        controlField.Layout = new FieldLayout(
-            { X: 1, Width: 1, XAlignment: field.XAlignment, Y: 1, Height: 1, YAlignment: 1 }
-        );
+
+        controlField.Layout = new FieldLayout({
+            X: 1,
+            Width: 1,
+            XAlignment: field.XAlignment,
+            Y: 1,
+            Height: 1,
+            YAlignment: 1,
+        });
+
         controlField.Title = field.Title;
         controlField.ReadOnly = field.ReadOnly === true ? true : false;
         controlField.ColumnWidth = field.ColumnWidth;
@@ -122,7 +133,8 @@ export class PepDataConvertorService {
         dataField.ApiName = field.ApiName;
         dataField.Enabled = field.Enabled === false ? false : true;
         dataField.FieldType = field.FieldType;
-        dataField.FormattedValue = field.FormattedValue || field.Value.toString();
+        dataField.FormattedValue =
+            field.FormattedValue || field.Value.toString();
         dataField.GroupFields = null;
         dataField.NotificationInfo = '';
         dataField.OptionalValues = field.OptionalValues;
@@ -130,12 +142,18 @@ export class PepDataConvertorService {
         dataField.TextColor = '';
         dataField.Value = field.Value.toString();
         dataField.Visible = true;
-        dataField.Type = '0';
         return dataField;
     }
 
-    setFieldLayout(x: number, width: number, xAlignment: number,
-        y: number, height: number, yAlignment: number, lineNumber: number): FieldLayout {
+    setFieldLayout(
+        x: number,
+        width: number,
+        xAlignment: number,
+        y: number,
+        height: number,
+        yAlignment: number,
+        lineNumber: number
+    ): FieldLayout {
         const layout = new FieldLayout({
             X: x,
             Width: width,
@@ -143,7 +161,7 @@ export class PepDataConvertorService {
             Y: y,
             Height: height,
             YAlignment: yAlignment,
-            LineNumber: lineNumber
+            LineNumber: lineNumber,
         });
 
         return layout;

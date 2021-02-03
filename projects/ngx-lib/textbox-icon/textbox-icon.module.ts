@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -21,10 +20,10 @@ import {
     pepIconSystemFullScreen,
     pepIconSystemEdit,
     pepIconTimeDatetime,
-    pepIconTimeCal
+    pepIconTimeCal,
 } from '@pepperi-addons/ngx-lib/icon';
 
-import { PepTextboxIconComponent} from './textbox-icon.component';
+import { PepTextboxIconComponent } from './textbox-icon.component';
 
 @NgModule({
     imports: [
@@ -35,13 +34,12 @@ import { PepTextboxIconComponent} from './textbox-icon.component';
         MatFormFieldModule,
         MatIconModule,
         // ngx-lib modules
-        PepIconModule
+        PepIconModule,
     ],
     exports: [PepTextboxIconComponent],
     declarations: [PepTextboxIconComponent],
 })
 export class PepTextboxIconModule {
-
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconNumberCoins,
@@ -54,7 +52,7 @@ export class PepTextboxIconModule {
             pepIconSystemFullScreen,
             pepIconSystemEdit,
             pepIconTimeDatetime,
-            pepIconTimeCal
+            pepIconTimeCal,
         ]);
     }
 }

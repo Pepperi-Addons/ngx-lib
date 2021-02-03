@@ -12,7 +12,7 @@ import {
     PepIconRegistry,
     pepIconSystemMenu,
     pepIconSystemBolt,
-    pepIconIndicatorDotPlaceholder
+    pepIconIndicatorDotPlaceholder,
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
@@ -34,15 +34,15 @@ import { PepImageComponent } from './image.component';
         PepFieldTitleModule,
         PepFilesUploaderModule,
     ],
-    exports: [ PepImageComponent ],
-    declarations: [ PepImageComponent ],
+    exports: [PepImageComponent],
+    declarations: [PepImageComponent],
 })
 export class PepImageModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemMenu,
             pepIconSystemBolt,
-            pepIconIndicatorDotPlaceholder
+            pepIconIndicatorDotPlaceholder,
         ]);
     }
 }

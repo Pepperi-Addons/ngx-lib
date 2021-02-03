@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
@@ -9,7 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
-import { PepIconModule, PepIconRegistry, pepIconSystemMenu, pepIconSystemEdit } from '@pepperi-addons/ngx-lib/icon';
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemMenu,
+    pepIconSystemEdit,
+} from '@pepperi-addons/ngx-lib/icon';
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 
 import { PepTopBarComponent } from './top-bar.component';
@@ -17,8 +20,6 @@ import { PepTopBarComponent } from './top-bar.component';
 @NgModule({
     imports: [
         CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         // Material modules,
         MatCommonModule,
         MatMenuModule,
@@ -27,16 +28,16 @@ import { PepTopBarComponent } from './top-bar.component';
         PepNgxLibModule,
         PepMenuModule,
         PepIconModule,
-        PepSearchModule
+        PepSearchModule,
     ],
-    exports: [ PepTopBarComponent ],
-    declarations: [ PepTopBarComponent ],
+    exports: [PepTopBarComponent],
+    declarations: [PepTopBarComponent],
 })
 export class PepTopBarModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemMenu,
-            pepIconSystemEdit
+            pepIconSystemEdit,
         ]);
     }
 }

@@ -1,4 +1,4 @@
-export type PepMenuType = 'action' | 'select';
+export type PepMenuType = 'action' | 'action-select' | 'select';
 
 export type PepMenuItemType = 'regular' | 'splitter';
 
@@ -13,7 +13,7 @@ export class PepMenuItem {
     type?: PepMenuItemType = 'regular';
     children?: Array<PepMenuItem> = null;
 
-    constructor(data: Partial<PepMenuItem>){
+    constructor(data: Partial<PepMenuItem>) {
         Object.assign(this, data);
     }
 }

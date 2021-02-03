@@ -1,7 +1,7 @@
 <ng-container *ngIf="totalRows == 0">
     <div class="no-data body-xl">{{ noDataFoundMsg }}</div>
 </ng-container>
-<ng-container *ngIf="totalRows > 0">
+<div *ngIf="totalRows > 0" [ngClass]="{ 'lock-events': lockEvents }">
     <ng-container *ngIf="isTable; then tableBlock; else cardsBlock"></ng-container>
     <ng-template #tableBlock>
         <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
@@ -27,86 +27,81 @@
         </ng-template>
 
         <ng-template #noVirtualScrollBlock>
-            <div #noVirtualScrollContnainer class="no-virtual-scroll-container"
-                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
+            <div #noVirtualScrollContnainer
+                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable, 'no-virtual-scroll-container': pagerType === 'pages' }">
                 <ng-container *ngTemplateOutlet="listData"></ng-container>
             </div>
         </ng-template>
     </ng-template>
 
     <ng-template #listPager>
-        <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="lockEvents" [length]="totalRows"
+        <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="!showItems" [length]="totalRows"
             [pageSize]="pageSize" (pagerChange)="onPagerChange($event)">
         </pep-list-pager>
     </ng-template>
-
-</ng-container>
+</div>
 
 <ng-template #listData>
-    <ng-container *ngFor="let singleData of scrollItems; let index; let isFirst = first;">
+    <ng-container *ngFor="let item of scrollItems; let index; let isFirst = first;">
         <ng-container *ngIf="isTable">
-            <div class="table-row"
-                (mouseenter)="onTableRowMouseEnter($event, singleData?.Data?.UID, singleData?.Data?.Type)"
-                (mouseleave)="onTableRowMouseLeave($event, singleData?.Data?.UID, singleData?.Data?.Type)" [ngClass]="{
-                        selected: isItemSelected(singleData?.Data?.UID, singleData?.Data?.Type),
-                        highlighted: singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId
+            <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)"
+                (mouseleave)="onTableRowMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
+                        selected: getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type),
+                        highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId
                     }"
-                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || singleData ? 'visible' : 'hidden' }">
-                <fieldset class="table-row-fieldset"
-                    [ngStyle]="{ 'background-color': singleData?.Data?.BackgroundColor }">
+                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
+                <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
                     <mat-checkbox
                         *ngIf="selectionTypeForActions == 'multi' || selectionTypeForActions == 'single-action'"
-                        type="checkbox" class="pull-left flip row-selection" [disabled]="getIsDisabled(singleData)"
-                        [ngStyle]="{
+                        type="checkbox" class="pull-left flip row-selection" [disabled]="getIsDisabled(item)" [ngStyle]="{
                                 visibility: !deviceHasMouse ||
-                                singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
-                            }"
-                        [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
-                        (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
+                                item?.UID + SEPARATOR + item?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
+                            }" [checked]="getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                        (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                     </mat-checkbox>
                     <mat-radio-button *ngIf="selectionTypeForActions == 'single'" name="selection"
-                        class="pull-left flip row-selection pep-radio-button" [disabled]="getIsDisabled(singleData)"
-                        [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
-                        (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
+                        class="pull-left flip row-selection pep-radio-button" [disabled]="getIsDisabled(item)"
+                        [checked]="getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                        (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                     </mat-radio-button>
-                    <pep-form [checkForChanges]="checkForChanges" [uiControlHeader]="uiControl"
-                        [firstFieldAsLink]="firstFieldAsLink" [singleData]="singleData"
-                        [canEditObject]="!disabled && singleData?.IsEditable" [objectId]="objectId"
-                        [parentId]="parentId" [searchCode]="searchCode" [lockEvents]="disableSelectionItems"
-                        [isReport]="isReport" [layoutType]="'table'" [listType]="listType" [isActive]="
-                                (singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId ||
-                                singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId) && deviceHasMouse
+                    <!-- [canEditObject]="!disabled && item?.IsEditable"  -->
+                    <pep-form [checkForChanges]="checkForChanges" [layout]="layout"
+                        [firstFieldAsLink]="firstFieldAsLink" [data]="item" [canEditObject]="!disabled"
+                        [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
+                        [lockEvents]="lockItemInnerEvents" [isReport]="isReport" [layoutType]="'table'"
+                        [listType]="listType" [isActive]="
+                                (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
+                                item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                             " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
-                        (click)="itemClicked($event, singleData)" [pageType]="pageType">
+                        (click)="itemClicked($event, item)" [pageType]="pageType">
                     </pep-form>
                 </fieldset>
             </div>
         </ng-container>
 
         <ng-container *ngIf="!isTable">
-            <div [class]="itemClass"
-                (mouseenter)="onCardMouseEnter($event, singleData?.Data?.UID, singleData?.Data?.Type)"
-                (mouseleave)="onCardMouseLeave($event, singleData?.Data?.UID, singleData?.Data?.Type)" [ngClass]="{
-                        selected: isItemSelected(singleData?.Data?.UID, singleData?.Data?.Type),
-                        highlighted: singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId,
+            <div [class]="itemClass" (mouseenter)="onCardMouseEnter($event, item?.UID, item?.Type)"
+                (mouseleave)="onCardMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
+                        selected: getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type),
+                        highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId,
                         'card-view': viewType === 'cards',
                         'line-view': viewType === 'lines'
                     }" class="pull-left flip"
-                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || singleData ? 'visible' : 'hidden' }">
-                <mat-checkbox *ngIf="showSelection" class="pull-left flip card-selection"
-                    [disabled]="getIsDisabled(singleData)"
-                    [checked]="getIsSelectedForActions(singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)"
-                    (change)="selectItemForActions($event, singleData?.Data?.UID, singleData?.Data?.IsSelectableForActions, singleData?.Data?.Type)">
+                [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
+                <mat-checkbox *ngIf="showCardSelection" class="pull-left flip card-selection"
+                    [disabled]="getIsDisabled(item)"
+                    [checked]="getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type)"
+                    (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                 </mat-checkbox>
-                <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges"
-                    [uiControlHeader]="uiControl" [singleData]="singleData"
-                    [canEditObject]="!disabled && singleData?.IsEditable" [objectId]="objectId" [parentId]="parentId"
-                    [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="getThumbnailsLayout()"
+                <!-- [canEditObject]="!disabled && item?.IsEditable" -->
+                <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges" [layout]="layout"
+                    [data]="item" [canEditObject]="!disabled" [objectId]="objectId" [parentId]="parentId"
+                    [searchCode]="searchCode" [lockEvents]="lockItemInnerEvents" [layoutType]="getThumbnailsLayout()"
                     [listType]="listType" [isActive]="
-                            (singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === selectedItemId ||
-                            singleData?.Data?.UID + SEPARATOR + singleData?.Data?.Type === hoveredItemId) && deviceHasMouse
+                            (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
+                            item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
-                    (click)="itemClicked($event, singleData)" [pageType]="pageType">
+                    (click)="itemClicked($event, item)" [pageType]="pageType">
                 </pep-form>
             </div>
         </ng-container>
@@ -130,13 +125,13 @@
                 [disabled]="disabled || selectionTypeForActions === 'single'" [checked]="getIsAllSelectedForActions()"
                 (change)="selectAllItemsForActions($event)"></mat-checkbox>
             <fieldset>
-                <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="header-column pull-left flip"
+                <div *ngFor="let field of layout?.ControlFields; let j = index" class="header-column pull-left flip"
                     [ngStyle]="{ width: field.calcTitleColumnWidthString }" [ngClass]="{
                             'support-sorting': supportSorting,
                             'has-sorting': field.ApiName === sortBy,
                             'is-resizing': field.ApiName === pressedColumn,
                             'is-first': j === 0 && selectionTypeForActions !== 'multi',
-                            'is-last': j === uiControl?.ControlFields?.length - 1
+                            'is-last': j === layout?.ControlFields?.length - 1
                         }"
                     (click)="supportSorting ? (onListSortingChange(field.ApiName, sortBy !== null && sortBy != field.ApiName ? true : !isAsc, $event)) : false">
 
@@ -179,9 +174,9 @@
 </ng-template>
 
 <ng-template #tableTotal>
-    <div *ngIf="totalsRow?.length > 0 && totalsRow.length <= uiControl?.ControlFields.length" class="table-total">
+    <div *ngIf="totalsRow?.length > 0 && totalsRow.length <= layout?.ControlFields.length" class="table-total">
         <fieldset class="table-header-fieldset">
-            <div *ngFor="let field of uiControl?.ControlFields; let j = index" class="total-column pull-left flip"
+            <div *ngFor="let field of layout?.ControlFields; let j = index" class="total-column pull-left flip"
                 [ngStyle]="{ width: field.calcTitleColumnWidthString }">
                 <label class="total-label body-sm text-align-{{ field.Layout.XAlignment }}">
                     {{ totalsRow[j] }}

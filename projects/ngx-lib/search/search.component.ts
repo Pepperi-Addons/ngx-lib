@@ -1,13 +1,36 @@
 import {
-    Component, OnInit, ViewEncapsulation, Injectable, Input, OnChanges, OnDestroy,
-    SimpleChange, Output, EventEmitter, ViewChild, ElementRef, Renderer2
+    Component,
+    OnInit,
+    ViewEncapsulation,
+    Injectable,
+    Input,
+    OnChanges,
+    OnDestroy,
+    SimpleChange,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    Renderer2,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Subject, Subscription } from 'rxjs';
+import {
+    trigger,
+    state,
+    style,
+    transition,
+    animate,
+} from '@angular/animations';
 import { FormControl } from '@angular/forms';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
-import { debounceTime } from 'rxjs/operators';
-import { IPepSearchClickEvent, IPepSearchValueChangeEvent, IPepSearchStateChangeEvent } from './search.model';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import {
+    IPepSearchClickEvent,
+    IPepSearchValueChangeEvent,
+    IPepSearchStateChangeEvent,
+    PepSearchType,
+    PepSearchTriggerType,
+} from './search.model';
 
 @Component({
     selector: 'pep-search',
@@ -20,69 +43,109 @@ import { IPepSearchClickEvent, IPepSearchValueChangeEvent, IPepSearchStateChange
                 style({
                     width: '0',
                     padding: '0',
-                    border: 'none'
+                    border: 'none',
                 })
             ),
             state(
                 'open',
                 style({
-                    width: 'inherit'
+                    width: 'inherit',
                 })
             ),
             transition('close => open', animate('500ms ease-in-out')),
-            transition('open => close', animate('500ms ease-in-out'))
+            transition('open => close', animate('500ms ease-in-out')),
         ]),
         trigger('fadeInOut', [
             state(
                 'fadeOut',
                 style({
                     opacity: 0,
-                    width: '1px'
+                    width: '1px',
                 })
             ),
             state(
                 'fadeIn',
                 style({
                     opacity: 1,
-                    width: '100%'
+                    width: '100%',
                 })
             ),
-            transition('fadeOut => fadeIn', animate(300, style({ opacity: 1, width: '100%' }))),
-            transition('fadeIn => fadeOut', animate(350, style({ opacity: 0, width: '1px' })))
-        ])
-    ]
+            transition(
+                'fadeOut => fadeIn',
+                animate(300, style({ opacity: 1, width: '100%' }))
+            ),
+            transition(
+                'fadeIn => fadeOut',
+                animate(350, style({ opacity: 0, width: '1px' }))
+            ),
+        ]),
+    ],
 })
 @Injectable()
-export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() value = '';
-    @Input() autoCompleteValues = [];
+export class PepSearchComponent implements OnInit, OnDestroy {
+    @Input() triggerOn: PepSearchTriggerType = 'click';
     @Input() autoCompleteTop = 20;
-    
-    @Output() search: EventEmitter<IPepSearchClickEvent> = new EventEmitter<IPepSearchClickEvent>();
-    @Output() valueChange: EventEmitter<IPepSearchValueChangeEvent> = new EventEmitter<IPepSearchValueChangeEvent>();
-    @Output() stateChange: EventEmitter<IPepSearchStateChangeEvent> = new EventEmitter<IPepSearchStateChangeEvent>();
-    
+    private _autoCompleteValues = [];
+    @Input()
+    set autoCompleteValues(val: any[]) {
+        this.type = 'auto-complete';
+        this._autoCompleteValues = val;
+    }
+    get autoCompleteValues(): any[] {
+        return this._autoCompleteValues;
+    }
+
+    @Input() shrinkInSmallScreen = true;
+
+    @Input()
+    set value(val: string) {
+        this.createSearchControlIfNotExist();
+        this.searchControl.setValue(val);
+    }
+    get value(): string {
+        return this.searchControl.value || '';
+    }
+
+    private _searchControl: FormControl = null;
+    @Input()
+    set searchControl(ctrl: FormControl) {
+        this._searchControl = ctrl;
+    }
+    get searchControl(): FormControl {
+        return this._searchControl;
+    }
+
+    @Output()
+    search: EventEmitter<IPepSearchClickEvent> = new EventEmitter<IPepSearchClickEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepSearchValueChangeEvent> = new EventEmitter<IPepSearchValueChangeEvent>();
+    @Output()
+    stateChange: EventEmitter<IPepSearchStateChangeEvent> = new EventEmitter<IPepSearchStateChangeEvent>();
+
     @ViewChild('searchInput') searchInput: ElementRef;
-    
-    lastValue = null;
-    showFloatSrcBtn = true;
+
+    private readonly _destroyed = new Subject<void>();
+    type: PepSearchType = 'regular';
     fadeState: 'fadeOut' | 'fadeIn';
     state: 'open' | 'close' = 'open';
-    searchControl = new FormControl();
-    searchCtrlSub: Subscription;
+    lastValue = null;
+    showFloatSrcBtn = true;
     isRtl = false;
     isFloating = false;
     screenSize: PepScreenSizeType;
 
     constructor(private layoutService: PepLayoutService) {
-        this.layoutService.onResize$.pipe().subscribe(size => {
+        this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
-            this.isFloating = this.screenSize > PepScreenSizeType.SM;
+
+            if (this.shrinkInSmallScreen) {
+                this.isFloating = this.screenSize > PepScreenSizeType.SM;
+            }
 
             // Just for the smoote animation
             if (this.isFloating) {
                 this.showFloatSrcBtn = false;
-                
+
                 this.showFloatingButton();
             } else {
                 this.fadeState = 'fadeIn';
@@ -92,29 +155,44 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit(): void {
         this.isRtl = this.layoutService.isRtl();
+        this.createSearchControlIfNotExist();
 
-        this.searchCtrlSub = this.searchControl.valueChanges
-            .pipe(debounceTime(1000))
-            .subscribe(newValue => {
-                this.autoCompleteValues = [];
-                if (newValue && newValue.length > 2 && newValue !== this.lastValue) {
-                    this.valueChange.emit({
-                        value: newValue,
-                        top: this.autoCompleteTop
-                    });
+        this.searchControl.valueChanges
+            .pipe(debounceTime(1000), takeUntil(this._destroyed))
+            .subscribe((newValue) => {
+                if (this.type === 'auto-complete') {
+                    this.autoCompleteValues = [];
+                    if (
+                        newValue &&
+                        newValue.length > 2 &&
+                        newValue !== this.lastValue
+                    ) {
+                        this.valueChange.emit({
+                            value: newValue,
+                            top: this.autoCompleteTop,
+                        });
+                    }
+                } else if (this.type === 'regular') {
+                    if (this.triggerOn === 'keydown') {
+                        this.emitSearchClick();
+                    }
                 }
             });
     }
 
-    ngOnChanges(changes) {
-        if (changes.value) {
-            this.searchControl.setValue(changes.value.currentValue);
-        }
+    ngOnDestroy(): void {
+        this._destroyed.next();
+        this._destroyed.complete();
     }
 
-    ngOnDestroy(): void {
-        if (this.searchCtrlSub) {
-            this.searchCtrlSub.unsubscribe();
+    private initSearch() {
+        this.lastValue = null;
+        this.searchControl.setValue('');
+    }
+
+    private createSearchControlIfNotExist(): void {
+        if (!this.searchControl) {
+            this.searchControl = new FormControl();
         }
     }
 
@@ -125,28 +203,30 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private showFloatingButton() {
-        if (this.isFloating) {
-            this.fadeState = 'fadeOut';
+        this.fadeState = 'fadeOut';
 
-            setTimeout(() => {
-                this.stateChange.emit({ state: 'close' });
-                this.showFloatSrcBtn = true;
-            }, 500);
+        setTimeout(() => {
+            this.stateChange.emit({ state: 'close' });
+            this.showFloatSrcBtn = true;
+        }, 500);
 
-            // close the phone keyboard
-            this.blur();
-        }
+        // close the phone keyboard
+        this.blur();
     }
 
     onClearClicked(event: any) {
-        this.autoCompleteValues = [];
-        this.lastValue = null;
-        this.searchInput.nativeElement.value = '';
+        if (this.type === 'auto-complete') {
+            this.autoCompleteValues = [];
+        }
+
+        this.initSearch();
         this.search.emit({ value: '' });
 
         event.preventDefault();
 
-        this.showFloatingButton();
+        if (this.isFloating) {
+            this.showFloatingButton();
+        }
     }
 
     onSearchClicked() {
@@ -160,22 +240,26 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
     }
-    
-    onEnterSearchClicked(event) {
+
+    onKeyup(event) {
         if (event.key === 'Enter') {
             this.triggerSearch();
         }
     }
 
     triggerSearch() {
-        this.autoCompleteValues = [];
+        if (this.type === 'auto-complete') {
+            this.autoCompleteValues = [];
+        }
+
         this.blur();
         this.emitSearchClick();
     }
 
     animateSearch() {
         if (this.state === 'open') {
-            this.fadeState = this.fadeState === 'fadeOut' ? 'fadeIn' : 'fadeOut';
+            this.fadeState =
+                this.fadeState === 'fadeOut' ? 'fadeIn' : 'fadeOut';
             if (this.fadeState === 'fadeIn') {
                 this.stateChange.emit({ state: 'open' });
                 this.showFloatSrcBtn = false;
@@ -184,11 +268,6 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.fadeState = 'fadeIn';
         }
-    }
-
-    initSearch() {
-        this.lastValue = null;
-        this.searchInput.nativeElement.value = '';
     }
 
     // do the emit just when done because of the line break when closing the search
@@ -200,12 +279,11 @@ export class PepSearchComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     emitSearchClick() {
-        const value = this.searchInput.nativeElement.value;
+        const value = this.searchControl.value;
 
         if (value !== this.lastValue) {
             this.lastValue = value;
             this.search.emit({ value });
         }
     }
-
 }

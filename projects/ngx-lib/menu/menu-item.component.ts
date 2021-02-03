@@ -1,11 +1,18 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, ViewChild } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnDestroy,
+    ViewChild,
+} from '@angular/core';
 import { pepIconArrowRight } from '@pepperi-addons/ngx-lib/icon';
 import { PepMenuItem, IPepMenuItemClickEvent, PepMenuType } from './menu.model';
 
 @Component({
     selector: 'pep-menu-item',
     templateUrl: './menu-item.component.html',
-    styleUrls: ['./menu-item.component.scss']
+    styleUrls: ['./menu-item.component.scss'],
 })
 export class PepMenuItemComponent implements OnDestroy {
     @Input() type: PepMenuType = 'action';
@@ -16,9 +23,8 @@ export class PepMenuItemComponent implements OnDestroy {
 
     @ViewChild('childMenu', { static: true }) public childMenu: any;
 
-    @Output() menuItemClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
-
-    constructor() { }
+    @Output()
+    menuItemClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
 
     ngOnDestroy(): void {
         if (this.menuItemClick) {

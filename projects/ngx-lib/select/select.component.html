@@ -1,5 +1,4 @@
 <ng-container [formGroup]="form">
-    <!-- New code -->
     <ng-template #pepTemplate>
         <ng-container *ngIf="type == 'multi'; then multiSelectBlock; else regularSelectBlock"></ng-container>
         <ng-template #regularSelectBlock>
@@ -11,8 +10,10 @@
                     [(ngModel)]="selectedValueModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
                     (selectionChange)="selectionChange($event)" (openedChange)="openedChange($event)"
                     title="{{ fieldFormattedValue }}">
-                    <mat-option *ngIf="emptyOption" value="">{{ 'LIST.NONE' | translate }}</mat-option>
-                    <mat-option *ngFor="let option of options" [value]="option.Key">{{ option.Value }}</mat-option>
+                    <mat-option *ngIf="emptyOption" value="" [title]="'LIST.NONE' | translate">{{ 'LIST.NONE' |
+                        translate }}</mat-option>
+                    <mat-option *ngFor="let option of options" [value]="option.key" [title]="option.value">{{
+                        option.value }}</mat-option>
                 </mat-select>
                 <mat-error>
                     <span class="body-xs" [title]="'MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}"
@@ -28,7 +29,8 @@
                     [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
                     [(ngModel)]="selectedValuesModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
                     (openedChange)="openedChange($event)" title="{{ fieldFormattedValue }}">
-                    <mat-option *ngFor="let option of options" [value]="option.Key">{{ option.Value }}</mat-option>
+                    <mat-option *ngFor="let option of options" [value]="option.key" [title]="option.value">{{
+                        option.value }}</mat-option>
                 </mat-select>
                 <mat-error><span class="body-xs" [title]="'MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}"
                         [innerText]="'MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}"> </span>

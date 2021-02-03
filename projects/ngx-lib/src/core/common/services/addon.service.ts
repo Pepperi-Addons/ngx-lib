@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
     This service is the webapp api for addon usege.
 */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class PepAddonService {
     private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
@@ -31,8 +31,12 @@ export class PepAddonService {
         addonUUID: string,
         fileName: string,
         functionName: string,
-        httpOptions = {}): Observable<any>{
-        return this.httpService.getPapiApiCall(`/addons/api/${addonUUID}/${fileName}/${functionName}`, httpOptions);
+        httpOptions = {}
+    ): Observable<any> {
+        return this.httpService.getPapiApiCall(
+            `/addons/api/${addonUUID}/${fileName}/${functionName}`,
+            httpOptions
+        );
     }
 
     postAddonApiCall(
@@ -40,7 +44,12 @@ export class PepAddonService {
         fileName: string,
         functionName: string,
         body = {},
-        httpOptions = {}): Observable<any>  {
-        return this.httpService.postPapiApiCall(`/addons/api/${addonUUID}/${fileName}/${functionName}`, body, httpOptions);
+        httpOptions = {}
+    ): Observable<any> {
+        return this.httpService.postPapiApiCall(
+            `/addons/api/${addonUUID}/${fileName}/${functionName}`,
+            body,
+            httpOptions
+        );
     }
 }

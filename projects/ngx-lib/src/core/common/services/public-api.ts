@@ -8,4 +8,5 @@ export * from './file.service';
 export * from './jwt-helper.service';
 export * from './session.service';
 export * from './utilities.service';
+export * from './validator.service';
 export * from './window-scrolling.service';

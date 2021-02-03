@@ -10,25 +10,31 @@ import {
     ElementRef,
     OnDestroy,
     Renderer2,
-    Optional
+    Optional,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { PepFileService, PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, IPepFieldClickEvent,
-    PepOption, PepImageField } from '@pepperi-addons/ngx-lib';
+import {
+    PepFileService,
+    PepLayoutType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    IPepFieldClickEvent,
+    IPepOption,
+    PepImageField,
+} from '@pepperi-addons/ngx-lib';
 
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
-import {
-    PepImagesFilmstripComponent
-} from '@pepperi-addons/ngx-lib/images-filmstrip';
+import { PepImagesFilmstripComponent } from '@pepperi-addons/ngx-lib/images-filmstrip';
 import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'pep-image',
     templateUrl: './image.component.html',
     styleUrls: ['./image.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     public static MENU_CLICKED = '[MenuClicked]';
@@ -36,7 +42,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() srcLarge = '';
     @Input() src = '';
-    @Input() options: PepOption[] = null;
+    @Input() options: IPepOption[] = [];
     @Input() label = '';
     // @Input() type = 'image';
     @Input() required = false;
@@ -58,8 +64,10 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() sizeLimitMB = 5;
     @Input() acceptImagesType = 'bmp,jpg,jpeg,png,gif'; // "image/bmp, image/jpg, image/jpeg, image/png, image/tif, image/tiff";
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     fieldHeight = '';
     standAlone = false;
@@ -90,7 +98,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
                 value: this.src,
                 required: this.required,
                 readonly: this.readonly,
-                disabled: this.disabled
+                disabled: this.disabled,
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
@@ -125,11 +133,13 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     errorHandler(event: any): void {
-        event.target.src = this.fileService.getSvgAsImageSrc(pepIconNoImage.data);
+        event.target.src = this.fileService.getSvgAsImageSrc(
+            pepIconNoImage.data
+        );
         event.target.title = this.translate.instant('IMAGE.NO_IMAGE');
     }
 
-    setTitle(event: any): void {
+    onImageLoad(event: any): void {
         event.target.style.visibility = 'visible';
         event.target.title =
             event.target.title.length === 0
@@ -142,7 +152,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             key: this.key,
             value: PepImageComponent.MENU_CLICKED,
             controlType: this.controlType,
-            eventWhich: event.which
+            eventWhich: event.which,
         });
     }
 
@@ -159,7 +169,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         this.valueChange.emit({
             key: this.key,
             value,
-            controlType: this.controlType
+            controlType: this.controlType,
         });
     }
 
@@ -214,9 +224,9 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
                 win.location.href = url;
             }
         } else {
-
-            // this.options.forEach((img: any) => this.srcLarge += ';' + img.Value);
-            const arr = [(this.srcLarge || this.src)].concat(this.options.map( opt => opt.Value ));
+            const arr = [this.srcLarge || this.src].concat(
+                (this.options || []).map((opt) => opt.value)
+            );
             const imagesValue = arr.join(';');
 
             // Show image in modal.
@@ -232,7 +242,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
                     value: imagesValue,
                     label: this.label,
                     objectId: this.objectId,
-                    showThumbnails: arr.length > 1
+                    showThumbnails: arr.length > 1,
                 },
                 config
             );

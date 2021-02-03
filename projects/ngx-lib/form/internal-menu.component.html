@@ -31,8 +31,8 @@
 
     <mat-menu #menu="matMenu" xPosition="{{xAlignment == 'right' ? 'after' : 'before'}}"
         [ngClass]="{ rtlMenu: xAlignment == 'right' }">
-        <button *ngFor="let option of options" mat-menu-item (click)="menuItemClicked(option.Key)">
-            <span>{{ option.Value | translate }}</span>
+        <button *ngFor="let option of options" mat-menu-item (click)="menuItemClicked(option.key)">
+            <span>{{ option.value | translate }}</span>
         </button>
     </mat-menu>
 

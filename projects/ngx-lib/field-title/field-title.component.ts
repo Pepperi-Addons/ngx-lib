@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { PepHorizontalAlignment, DEFAULT_HORIZONTAL_ALIGNMENT } from '@pepperi-addons/ngx-lib';
+import {
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-field-title',
@@ -15,7 +18,4 @@ export class PepFieldTitleComponent {
 
     @Input() showTitle = true;
     @Input() inputLength = 0;
-
-    constructor() { }
-
 }

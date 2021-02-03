@@ -1,6 +1,16 @@
-export type PepDialogSizeType = 'inline' | 'small' | 'regular' | 'large' | 'full-screen';
+export type PepDialogSizeType =
+    | 'inline'
+    | 'small'
+    | 'regular'
+    | 'large'
+    | 'full-screen';
 
-export type PepDialogActionsType = 'close' | 'cancel-continue' | 'cancel-ok' | 'cancel-delete' | 'custom';
+export type PepDialogActionsType =
+    | 'close'
+    | 'cancel-continue'
+    | 'cancel-ok'
+    | 'cancel-delete'
+    | 'custom';
 
 export class PepDialogActionButton {
     title = '';
@@ -23,18 +33,16 @@ export class PepDialogData {
     showFooter: boolean;
     actionButtons: Array<PepDialogActionButton>;
 
-    constructor(
-        options: {
-            title?: string,
-            type?: PepDialogActionsType,
-            content?: any,
-            contentDisabled?: boolean,
-            showClose?: boolean,
-            showHeader?: boolean,
-            showFooter?: boolean,
-            actionButtons?: Array<PepDialogActionButton>
-        }
-    ) {
+    constructor(options: {
+        title?: string;
+        type?: PepDialogActionsType;
+        content?: any;
+        contentDisabled?: boolean;
+        showClose?: boolean;
+        showHeader?: boolean;
+        showFooter?: boolean;
+        actionButtons?: Array<PepDialogActionButton>;
+    }) {
         this.title = options.title || '';
         this.type = options.type || 'close';
         this.content = options.content || '';

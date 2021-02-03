@@ -9,37 +9,49 @@
         <div id="header" pepRtlClass>
             <nav class="navbar {{ getTopBarStyle() }} navbar-light bg-faded menuCont"
                 [ngStyle]="{'background-color': customizationService.getBrandingMainColor() }">
-                <button id="btnMenuHome" (click)="navigateHome()"
-                    class="spacing-element pep-button icon-button sm weak pull-left flip "
-                    [ngClass]="getButtonClassName()" mat-button>
-                    <mat-icon>
-                        <pep-icon name="system_home"></pep-icon>
-                    </mat-icon>
-                </button>
-                <button id="btnToggleSettings" class="spacing-element pep-button icon-button sm weak pull-right flip "
-                    [ngClass]="getButtonClassName()" mat-button>
-                    <mat-icon>
-                        <pep-icon name="system_menu"></pep-icon>
-                    </mat-icon>
-                </button>
-                <button [routerLink]="['carousel-example']"
-                    class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
-                    mat-button>
-                    carousel
-                </button>
-                <button [routerLink]="['components-example']"
-                    class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
-                    mat-button>
-                    components
-                </button>
-                <button [routerLink]="['list-example']" class="spacing-element pep-button sm strong pull-right flip "
-                    [ngClass]="getButtonClassName()" mat-button>
-                    list
-                </button>
-                <button [routerLink]="['top-bar-example']" class="spacing-element pep-button sm strong pull-right flip "
-                    [ngClass]="getButtonClassName()" mat-button>
-                    top bar
-                </button>
+                <div class="spacing-element-negative">
+                    <button id="btnMenuHome" (click)="navigateHome()"
+                        class="spacing-element pep-button icon-button sm weak pull-left flip "
+                        [ngClass]="getButtonClassName()" mat-button>
+                        <mat-icon>
+                            <pep-icon name="system_home"></pep-icon>
+                        </mat-icon>
+                    </button>
+                </div>
+                <div class="spacing-element-negative">
+                    <button id="btnToggleSettings"
+                        class="spacing-element pep-button icon-button sm weak pull-right flip "
+                        [ngClass]="getButtonClassName()" mat-button>
+                        <mat-icon>
+                            <pep-icon name="system_menu"></pep-icon>
+                        </mat-icon>
+                    </button>
+                    <button [routerLink]="['carousel-example']"
+                        class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
+                        mat-button>
+                        carousel
+                    </button>
+                    <button [routerLink]="['components-example']"
+                        class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
+                        mat-button>
+                        components
+                    </button>
+                    <button [routerLink]="['inline-list-example']"
+                        class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
+                        mat-button>
+                        inline list
+                    </button>
+                    <button [routerLink]="['list-example']"
+                        class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
+                        mat-button>
+                        list
+                    </button>
+                    <button [routerLink]="['top-bar-example']"
+                        class="spacing-element pep-button sm strong pull-right flip " [ngClass]="getButtonClassName()"
+                        mat-button>
+                        top bar
+                    </button>
+                </div>
             </nav>
         </div>
     </header>

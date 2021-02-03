@@ -42,7 +42,47 @@
         "DIALOG_TITLE": "Add signature here"
     },
     "SMART_FILTERS": {
-        "TITLE": "Smart filters"
+        "TITLE": "Smart filters",
+        "IS_ON": "Is on",
+        "CHOOSE_TIME": "Choose time",
+        "AMOUNT": "Amount",
+        "TIME_UNIT": "Time unit",
+        "START_DATE": "Start date",
+        "END_DATE": "End date",
+        "CHOOSE_DATE": "Choose a date",
+        "TYPE": "Type",
+        "MIN": "Min",
+        "MAX": "Max",
+        "SEARCH": "Search",
+        "NO_SEARCH_RESULTS": "No search results :-(",
+        "NO_OPTIONS": "No options",
+        "OPERATORS": {
+            "IN_THE_LAST": "In the last",
+            "TODAY": "Today",
+            "THIS_WEEK": "This week",
+            "THIS_MONTH": "This month",
+            "DATE_RANGE": "Between",
+            "DUE_IN": "Due in",
+            "ON": "On",
+            "NOT_IN_THE_LAST": "Not in the last",
+            "NOT_DUE_IN": "Not due in",
+            "IS_EMPTY": "Is empty",
+            "IS_NOT_EMPTY": "Is not empty",
+            "NOT_EQUAL": "Not equal",
+            "LESS_THEN_OR_EQUAL": "Less than or equal to",
+            "LESS_THEN": "Less than",
+            "EQUAL": "Equal",
+            "GREATER_THEN": "Greater than",
+            "GREATER_THEN_OR_EQUAL": "Greater than or equal to",
+            "NUMBER_RANGE": "Between",
+            "In": "In"
+        },
+        "OPERATOR_UNITS": {
+            "DAYS": "Days",
+            "WEEKS": "Weeks",
+            "MONTHS": "Months",
+            "YEARS": "Years"
+        }
     },
     "ACTIONS": {
         "APPLY": "Apply",

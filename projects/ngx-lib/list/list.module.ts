@@ -69,13 +69,8 @@ import { PepVirtualScrollComponent } from './virtual-scroll.component';
         PepMenuModule,
         PepTextboxModule,
     ],
-    exports: [
-        listComponents
-    ],
-    declarations: [
-        PepVirtualScrollComponent,
-        listComponents
-    ],
+    exports: [listComponents],
+    declarations: [PepVirtualScrollComponent, listComponents],
 })
 export class PepListModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

@@ -115,7 +115,7 @@
 
     &.card-flex-container {
         height: inherit;
-        @include flexbox;
+        display: flex;
         @include ellipsis();
         white-space: unset;
         // padding: 0.5rem 1.5rem 0.5rem 0;
@@ -180,7 +180,6 @@
 }
 
 @mixin pep-textarea-theme($pepperi-theme) {
-
     .pepperi-report-textarea, .pep-report-textarea {
         .mat-form-field-flex {
             background: transparent !important;

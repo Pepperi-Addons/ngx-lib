@@ -1,6 +1,21 @@
-import { Component, OnInit, Input, Output, Renderer2, ElementRef, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
-import { PepCustomizationService, PepLayoutType, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent } from '@pepperi-addons/ngx-lib';
+import {
+    Component,
+    OnInit,
+    Input,
+    Output,
+    Renderer2,
+    ElementRef,
+    EventEmitter,
+    OnChanges,
+    OnDestroy,
+} from '@angular/core';
+import {
+    PepCustomizationService,
+    PepLayoutType,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+} from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepColorPickerComponent } from './color-picker.component';
 import { PepColorType } from './color.model';
@@ -8,7 +23,7 @@ import { PepColorType } from './color.model';
 @Component({
     selector: 'pep-color',
     templateUrl: './color.component.html',
-    styleUrls: ['./color.component.scss']
+    styleUrls: ['./color.component.scss'],
 })
 export class PepColorComponent implements OnInit, OnDestroy {
     @Input() key = '';
@@ -24,17 +39,20 @@ export class PepColorComponent implements OnInit, OnDestroy {
     @Input() showAAComplient = true;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     constructor(
         private dialogService: PepDialogService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {
-    }
+    ) {}
 
     ngOnInit(): void {
-        this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+        this.renderer.addClass(
+            this.element.nativeElement,
+            PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+        );
     }
 
     ngOnDestroy(): void {
@@ -51,14 +69,17 @@ export class PepColorComponent implements OnInit, OnDestroy {
     chooseColor(): void {
         const dialogRef = this.dialogService.openDialog(
             PepColorPickerComponent,
-            { value: this.value, type: this.type, showAAComplient: this.showAAComplient });
+            {
+                value: this.value,
+                type: this.type,
+                showAAComplient: this.showAAComplient,
+            }
+        );
 
-        dialogRef.afterClosed().subscribe(value => {
+        dialogRef.afterClosed().subscribe((value) => {
             if (value !== undefined && value !== null) {
                 this.changeColor(value);
             }
         });
     }
-
-
 }

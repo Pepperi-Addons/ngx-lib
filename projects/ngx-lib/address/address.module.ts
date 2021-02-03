@@ -24,9 +24,9 @@ import { PepAddressComponent } from './address.component';
         PepNgxLibModule,
         PepTextboxModule,
         PepSelectModule,
-        PepFieldTitleModule
+        PepFieldTitleModule,
     ],
-    exports: [ PepAddressComponent ],
-    declarations: [ PepAddressComponent ],
+    exports: [PepAddressComponent],
+    declarations: [PepAddressComponent],
 })
 export class PepAddressModule {}

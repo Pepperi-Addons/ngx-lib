@@ -1,14 +1,18 @@
-import { ObjectSingleData } from '@pepperi-addons/ngx-lib';
+import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
 
-export type PepListSelectionType = 'none' | 'single' | 'single-action' | 'multi';
+export type PepListSelectionType =
+    | 'none'
+    | 'single'
+    | 'single-action'
+    | 'multi';
 
-export type PepListPagerType = 'pages' | 'scroll' ;
+export type PepListPagerType = 'pages' | 'scroll';
 
 export type PepListViewType = '' | 'cards' | 'lines' | 'table' | 'map';
 
 export interface IPepListItemClickEvent {
-    source: ObjectSingleData,
-    viewType: PepListViewType
+    source: ObjectsDataRow;
+    viewType: PepListViewType;
 }
 
 export class PepSelectionData {
@@ -29,7 +33,7 @@ export interface IPepListLoadPageEvent {
     pageSize: number;
 }
 
-export const DEFAULT_PAGE_SIZE: number = 50;
+export const DEFAULT_PAGE_SIZE = 50;
 
 export interface IPepListSortingChangeEvent {
     sortBy: string;

@@ -1,12 +1,28 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, Renderer2, ElementRef } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    OnChanges,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectionStrategy,
+    OnDestroy,
+    Renderer2,
+    ElementRef,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepLayoutType, PepHorizontalAlignment, DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent } from '@pepperi-addons/ngx-lib';
+import {
+    PepLayoutType,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-address',
     templateUrl: './address.component.html',
     styleUrls: ['./address.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
@@ -23,12 +39,10 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
-    constructor(
-        private element: ElementRef,
-        private renderer: Renderer2
-    ) { }
+    constructor(private element: ElementRef, private renderer: Renderer2) {}
 
     ngOnInit(): void {
         this.renderer.addClass(this.element.nativeElement, 'pep-grouped-field');
@@ -36,7 +50,9 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnChanges(changes): void {
         setTimeout(() => {
-            const focusedFieldParent = this.groupFields.filter(groupField => groupField.lastFocusField)[0];
+            const focusedFieldParent = this.groupFields.filter(
+                (groupField) => groupField.lastFocusField
+            )[0];
             if (focusedFieldParent) {
                 focusedFieldParent.lastFocusField.focus();
             }
@@ -65,7 +81,9 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     changeValue(field: any, lastFocusedField: any = null): void {
-        const currentGroupField = this.groupFields.filter(groupField => groupField.key === field.key)[0];
+        const currentGroupField = this.groupFields.filter(
+            (groupField) => groupField.key === field.key
+        )[0];
 
         if (currentGroupField.value !== field.value) {
             // Set the value in the form controls
@@ -77,7 +95,11 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
                 }
             }
 
-            this.valueChange.emit({ key: field.key, value: field.value, lastFocusedField });
+            this.valueChange.emit({
+                key: field.key,
+                value: field.value,
+                lastFocusedField,
+            });
         }
     }
 }

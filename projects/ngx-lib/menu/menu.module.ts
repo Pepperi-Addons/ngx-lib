@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,7 +11,7 @@ import {
     PepIconModule,
     PepIconRegistry,
     pepIconSystemMenu,
-    pepIconArrowRight
+    pepIconArrowRight,
 } from '@pepperi-addons/ngx-lib/icon';
 
 import { PepMenuComponent } from './menu.component';
@@ -22,8 +20,6 @@ import { PepMenuItemComponent } from './menu-item.component';
 @NgModule({
     imports: [
         CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         // Material modules,
         MatCommonModule,
         MatFormFieldModule,
@@ -31,16 +27,16 @@ import { PepMenuItemComponent } from './menu-item.component';
         MatIconModule,
         // ngx-lib modules
         PepNgxLibModule,
-        PepIconModule
+        PepIconModule,
     ],
-    exports: [ PepMenuComponent ],
-    declarations: [ PepMenuComponent, PepMenuItemComponent ],
+    exports: [PepMenuComponent],
+    declarations: [PepMenuComponent, PepMenuItemComponent],
 })
 export class PepMenuModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([
             pepIconSystemMenu,
-            pepIconArrowRight
+            pepIconArrowRight,
         ]);
     }
 }

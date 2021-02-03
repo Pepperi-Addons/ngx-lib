@@ -52,6 +52,14 @@
         display: block;
     }
 
+    &.hide-qs-actions {
+        .pepperi-button, .pep-button {
+            &.qs-action {
+                display: none;
+            }
+        }
+    }
+
     &.matrix-qs {
         // margin: 0 0.125rem;
 
@@ -76,7 +84,7 @@
             }
         }
 
-        .disabled {
+        .disable {
             min-width: 0.5rem;
             padding: 0 0.25rem;
         }

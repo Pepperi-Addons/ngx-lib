@@ -3,11 +3,21 @@
         "lib": {
             "entryFile": "public-api.ts",
             "umdModuleIds": {
-                "@ngx-translate/core": "translate"
+                "@mat-datetimepicker/core": "datetimepicker-core",
+                "@mat-datetimepicker/moment": "datetimepicker-moment",
+                "@ngx-translate/core": "translate",
+                "ngx-virtual-scroller": "ngxVirtualScroller",
+                "moment": "moment"
             }
         }
     },
     "peerDependencies": {
-        "@ngx-translate/core": "^13.0.0"
+        "@angular/flex-layout": ">= 10.0.0-beta.32",
+        "@angular/material-moment-adapter": ">= 10.0.0",
+        "@mat-datetimepicker/core": ">= 5.0.1",
+        "@mat-datetimepicker/moment": ">= 5.0.0",
+        "@ngx-translate/core": "^13.0.0",
+        "ngx-virtual-scroller": "^4.0.3",
+        "moment": ">= 2.26.0"
     }
 }

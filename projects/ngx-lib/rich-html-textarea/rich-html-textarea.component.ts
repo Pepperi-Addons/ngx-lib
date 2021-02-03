@@ -1,11 +1,31 @@
 import {
-    Component, OnInit, Input, Output, EventEmitter,
-    ChangeDetectionStrategy, OnDestroy, ElementRef, Renderer2, TemplateRef, ViewChild, OnChanges, SimpleChanges
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectionStrategy,
+    OnDestroy,
+    ElementRef,
+    Renderer2,
+    TemplateRef,
+    ViewChild,
+    OnChanges,
+    SimpleChanges,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepRichHtmlTextareaField } from '@pepperi-addons/ngx-lib';
-import { PepDialogService, PepDialogData } from '@pepperi-addons/ngx-lib/dialog';
+import {
+    PepLayoutType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    PepRichHtmlTextareaField,
+} from '@pepperi-addons/ngx-lib';
+import {
+    PepDialogService,
+    PepDialogData,
+} from '@pepperi-addons/ngx-lib/dialog';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 export interface IPepRichHtmlTextareaToolbarOptions {
@@ -29,7 +49,7 @@ export interface IPepRichHtmlTextareaToolbarOptions {
     selector: 'pep-rich-html-textarea',
     templateUrl: './rich-html-textarea.component.html',
     styleUrls: ['./rich-html-textarea.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
     @Input() key = '';
@@ -52,16 +72,20 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
 
     protected _toolbarOptions: IPepRichHtmlTextareaToolbarOptions;
     @Input()
-    get toolbarOptions(): IPepRichHtmlTextareaToolbarOptions { return this._toolbarOptions; }
+    get toolbarOptions(): IPepRichHtmlTextareaToolbarOptions {
+        return this._toolbarOptions;
+    }
     set toolbarOptions(options: IPepRichHtmlTextareaToolbarOptions) {
         if (options) {
             this._toolbarOptions = options;
         }
     }
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
-    @ViewChild('richTextEditorDialogTemplate', { read: TemplateRef }) richTextEditorDialogTemplate: TemplateRef<any>;
+    @ViewChild('richTextEditorDialogTemplate', { read: TemplateRef })
+    richTextEditorDialogTemplate: TemplateRef<any>;
     quillContent = '';
     quillContentDialog = '';
 
@@ -90,14 +114,21 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
                 required: this.required,
                 readonly: this.readonly,
                 disabled: this.disabled,
-                maxFieldCharacters: this.maxFieldCharacters
+                maxFieldCharacters: this.maxFieldCharacters,
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
 
-        this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
+        this.fieldHeight = this.customizationService.calculateFieldHeight(
+            this.layoutType,
+            this.rowSpan,
+            this.standAlone
+        );
 
         this.quillContent = this.value;
     }
@@ -131,7 +162,11 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
         if (value !== this.value) {
             this.value = value;
             this.quillContent = value;
-            this.customizationService.updateFormFieldValue(this.form, this.key, value);
+            this.customizationService.updateFormFieldValue(
+                this.form,
+                this.key,
+                value
+            );
             this.valueChange.emit({ key: this.key, value, lastFocusedField });
         }
     }
@@ -141,18 +176,21 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
     }
 
     openDialog(): void {
-        const config = this.dialogService.getDialogConfig({
-            // minWidth: '50vw',
-            // maxWidth: '90vw',
-            // maxHeight: '90vh',
-        }, 'large');
+        const config = this.dialogService.getDialogConfig(
+            {
+                // minWidth: '50vw',
+                // maxWidth: '90vw',
+                // maxHeight: '90vh',
+            },
+            'large'
+        );
 
         // If disabled open regular modal as html mode.
         if (this.disabled || this.readonly) {
             const data = new PepDialogData({
                 title: this.label,
                 content: this.quillContent,
-                showFooter: false
+                showFooter: false,
             });
             this.dialogService.openDefaultDialog(data, config);
         } else {
@@ -160,9 +198,10 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
             const dialogRef = this.dialogService.openDialog(
                 this.richTextEditorDialogTemplate,
                 {},
-                config);
+                config
+            );
 
-            dialogRef.afterClosed().subscribe(value => {
+            dialogRef.afterClosed().subscribe((value) => {
                 if (value !== undefined && value !== null) {
                     this.changeValue(value);
                 }

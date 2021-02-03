@@ -1,8 +1,32 @@
-.list-wrapper {
-    // overflow: auto;
-    // height: 250px;
+@import 'ngx-lib/src/core/style/abstracts/mixins';
+@import 'ngx-lib/src/core/style/abstracts/variables';
+
+.addon-page-container {
+    // .side-layout {
+    //     position: fixed;
+    //     z-index: $z-index-medium + 1;
+    //     padding: 0 0 0 $content-padding;
+    //     top: inherit;
+    //     height: stretch;
+    //     overflow: auto;
+
+    //     .content {
+    //         margin: 0;
+    //         height: inherit;
+    //         // width: inherit;
+    //         overflow: auto;
+    //     }
+
+    //     @media (min-width: $screen-max-size-sm + 1) {
+    //         overflow: hidden;
+    //     }
+    // }
+
+    .main-layout {
+        .content{
+            margin: 0;
+        }
+    }
 }
 
-.inline-top-bar-container {
-    margin-top: 1rem;
-}
+

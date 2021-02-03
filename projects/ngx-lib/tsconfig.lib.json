@@ -1,6 +1,6 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-    "extends": "../../tsconfig.base.json",
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "outDir": "../../out-tsc/lib",
         "target": "es2015",
@@ -15,7 +15,9 @@
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
-        "enableResourceInlining": true
+        "enableResourceInlining": true,
+        // Needed for Moment.js since it doesn't have a default export.
+        "allowSyntheticDefaultImports": true
     },
     "exclude": [
         "src/test.ts",

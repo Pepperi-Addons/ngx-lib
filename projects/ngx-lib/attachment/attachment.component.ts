@@ -1,7 +1,26 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, Renderer2, OnDestroy } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    OnChanges,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectionStrategy,
+    ElementRef,
+    Renderer2,
+    OnDestroy,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PepFileService, PepCustomizationService, PepLayoutType, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, IPepFieldClickEvent, PepAttachmentField } from '@pepperi-addons/ngx-lib';
+import {
+    PepFileService,
+    PepCustomizationService,
+    PepLayoutType,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    IPepFieldClickEvent,
+    PepAttachmentField,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-attachment',
@@ -26,8 +45,10 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-    @Output() elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     fieldHeight = '';
     standAlone = false;
@@ -40,7 +61,8 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         public element: ElementRef,
-        private fileService: PepFileService) { }
+        private fileService: PepFileService
+    ) {}
 
     ngOnDestroy(): void {
         if (this.elementClick) {
@@ -62,14 +84,21 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
                 value: this.src,
                 required: this.required,
                 readonly: this.readonly,
-                disabled: this.disabled
+                disabled: this.disabled,
             });
             this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
 
-        this.fieldHeight = this.customizationService.calculateFieldHeight(this.layoutType, this.rowSpan, this.standAlone);
+        this.fieldHeight = this.customizationService.calculateFieldHeight(
+            this.layoutType,
+            this.rowSpan,
+            this.standAlone
+        );
     }
 
     ngOnChanges(changes: any): void {
@@ -82,8 +111,16 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     onFileChanged(value: any): void {
         this.dataURI = value.length > 0 ? JSON.parse(value) : null;
         this.src = this.dataURI ? this.dataURI.fileStr : '';
-        this.customizationService.updateFormFieldValue(this.form, this.key, this.dataURI ? this.dataURI.fileExt : '');
-        this.valueChange.emit({ key: this.key, value, controlType: this.controlType });
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            this.dataURI ? this.dataURI.fileExt : ''
+        );
+        this.valueChange.emit({
+            key: this.key,
+            value,
+            controlType: this.controlType,
+        });
     }
 
     onFileClicked(event: IPepFieldClickEvent): void {
@@ -93,7 +130,10 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
                 const win = window.open('', '_blank');
                 const contentType = fileStrArr[0].split(':')[1];
                 const base64 = fileStrArr[1].split(',')[1];
-                const blob = this.fileService.convertFromb64toBlob(base64, contentType);
+                const blob = this.fileService.convertFromb64toBlob(
+                    base64,
+                    contentType
+                );
                 const url = URL.createObjectURL(blob);
                 win.location.href = url;
             }

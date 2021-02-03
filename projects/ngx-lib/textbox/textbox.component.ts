@@ -1,17 +1,34 @@
 import { coerceNumberProperty, _isNumberValue } from '@angular/cdk/coercion';
 import {
-    Component, OnInit, OnChanges, Input, Output, EventEmitter,
-    ChangeDetectionStrategy, ElementRef, ViewChild, Renderer2, OnDestroy
+    Component,
+    OnInit,
+    OnChanges,
+    Input,
+    Output,
+    EventEmitter,
+    ChangeDetectionStrategy,
+    ElementRef,
+    ViewChild,
+    Renderer2,
+    OnDestroy,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { PepLayoutType, PepCustomizationService, PepHorizontalAlignment,
-    DEFAULT_HORIZONTAL_ALIGNMENT, IPepFieldValueChangeEvent, PepTextboxFieldType, PepTextboxField, PepFieldBase } from '@pepperi-addons/ngx-lib';
+import {
+    PepLayoutType,
+    PepCustomizationService,
+    PepHorizontalAlignment,
+    DEFAULT_HORIZONTAL_ALIGNMENT,
+    IPepFieldValueChangeEvent,
+    PepTextboxFieldType,
+    PepTextboxField,
+    PepFieldBase,
+} from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-textbox',
     templateUrl: './textbox.component.html',
     styleUrls: ['./textbox.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
@@ -42,8 +59,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
 
-    @Output() valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-    @Output() formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output()
+    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    @Output()
+    formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('input') input: ElementRef;
 
@@ -56,7 +75,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     private getField(): PepFieldBase {
         const pepField = new PepTextboxField({
@@ -68,7 +87,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             maxFieldCharacters: this.maxFieldCharacters,
             type: this.type,
             minValue: this.minValue,
-            maxValue: this.maxValue
+            maxValue: this.maxValue,
         });
 
         return pepField;
@@ -78,15 +97,27 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         if (this.form === null) {
             this.standAlone = true;
 
-            this.minValue = isNaN(this.minValue) && !isNaN(this.maxValue) ? 0 : this.minValue;
-            this.maxValue = isNaN(this.maxValue) && !isNaN(this.minValue) ? 99999 : this.maxValue;
-            
+            this.minValue =
+                isNaN(this.minValue) && !isNaN(this.maxValue)
+                    ? 0
+                    : this.minValue;
+            this.maxValue =
+                isNaN(this.maxValue) && !isNaN(this.minValue)
+                    ? 99999
+                    : this.maxValue;
+
             const pepField = this.getField();
-            this.form = this.customizationService.getDefaultFromGroup(pepField, this.renderError);
+            this.form = this.customizationService.getDefaultFromGroup(
+                pepField,
+                this.renderError
+            );
 
             this.formattedValue = this.formattedValue || this.value;
 
-            this.renderer.addClass(this.element.nativeElement, PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME);
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
@@ -97,7 +128,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             this.formattedValue = this.formattedValue || this.value;
 
             const pepField = this.getField();
-            this.customizationService.updateFormField(this.form, pepField, this.formattedValue);
+            this.customizationService.updateFormField(
+                this.form,
+                pepField,
+                this.formattedValue
+            );
         }
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
@@ -130,7 +165,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             this.type === 'percentage' ||
             this.type === 'currency' ||
             this.type === 'int' ||
-            this.type === 'real');
+            this.type === 'real'
+        );
     }
 
     isValueValid(value: string): boolean {
@@ -141,7 +177,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 res = this.required ? false : true;
             } else {
                 const numberValue = coerceNumberProperty(value);
-                res = numberValue >= this.minValue && numberValue <= this.maxValue;
+                res =
+                    numberValue >= this.minValue &&
+                    numberValue <= this.maxValue;
             }
         } else {
             // TODO: Maybe need to check other types.
@@ -150,7 +188,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         return res;
     }
-    
+
     isDifferentValue(value: string): boolean {
         let res = false;
 
@@ -160,7 +198,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             } else {
                 const currentValue = coerceNumberProperty(this.value);
                 const newValue = coerceNumberProperty(value);
-                
+
                 res = currentValue !== newValue;
             }
         } else {
@@ -177,7 +215,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         if (value !== this.value && this.isDifferentValue(value)) {
             // If renderError is false and the new value is not valid.
             if (!this.renderError && !this.isValueValid(value)) {
-                this.renderer.setProperty(this.input.nativeElement, 'value', this.value);
+                this.renderer.setProperty(
+                    this.input.nativeElement,
+                    'value',
+                    this.value
+                );
             } else {
                 this.formattedValue = this.value = value;
 
@@ -186,7 +228,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 this.valueChange.emit({
                     key: this.key,
                     value,
-                    lastFocusedField: e.relatedTarget
+                    lastFocusedField: e.relatedTarget,
                 });
             }
         }
@@ -198,7 +240,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     onKeyUp(event: any): void {
         const value = event.target ? event.target.value : event;
-        this.customizationService.updateFormFieldValue(this.form, this.key, value, this.parentFieldKey);
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            value,
+            this.parentFieldKey
+        );
         this.formValidationChange.emit(this.form.valid);
     }
 
@@ -215,7 +262,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             // Allow: Ctrl+V
             (e.which === 86 && e.ctrlKey === true) ||
             // Allow: Ctrl+X
-            (e.which === 88 && e.ctrlKey === true) /*||
+            (e.which === 88 &&
+                e.ctrlKey ===
+                    true) /*||
             // Allow: home, end, left, right
             (e.which >= 35 && e.which <= 39)*/
         ) {

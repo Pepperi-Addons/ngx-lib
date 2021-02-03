@@ -8,12 +8,15 @@
         }
 
         .v-separator {
-            padding: $spacing-xs $spacing-sm;
+            padding: $spacing-xs 0;
             height: 100%;
         }
 
         .text-icon {
-            cursor: pointer;
+
+            &.pointer {
+                cursor: pointer;
+            }
         }
     }
 
@@ -31,9 +34,4 @@
             max-width: 3.125rem;
         }
     }
-}
-
-.pep-button {
-    // display: flex;
-    // justify-content: flex-end;
 }

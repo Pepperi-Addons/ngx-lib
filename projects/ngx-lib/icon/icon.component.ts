@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Inject, Input, Optional, ViewEncapsulation, Renderer2 } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    HostBinding,
+    Inject,
+    Input,
+    Optional,
+    ViewEncapsulation,
+    Renderer2,
+} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { PepUtilitiesService } from '@pepperi-addons/ngx-lib';
 import { PepIconRegistry } from './icon-registry.service';
@@ -6,37 +16,39 @@ import { PepIconType } from './icon-generated.model';
 
 @Component({
     selector: 'pep-icon',
-    template: `
-        <ng-content></ng-content>
-    `,
-    styles: [`
-        :host {
-            display: inline-grid;
-            align-items: center;
-            justify-items: center;
-            width: inherit;
-            height: inherit;
-        }
-
-        :host::ng-deep svg {
-            width: inherit;
-            height: inherit;
-        }
-
-        :host::ng-deep svg.spin {
-            animation: rotation 2s infinite linear;
-        }
-
-        @keyframes rotation {
-            from {
-                transform: rotate(0deg);
+    template: ` <ng-content></ng-content> `,
+    styles: [
+        `
+            :host {
+                display: flex;
+                align-items: center;
+                justify-items: center;
+                width: inherit;
+                height: inherit;
+                align-content: center;
+                justify-content: center;
             }
-            to {
-                transform: rotate(359deg);
+
+            :host::ng-deep svg {
+                width: inherit;
+                height: inherit;
             }
-        }
-    `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+
+            :host::ng-deep svg.spin {
+                animation: rotation 2s infinite linear;
+            }
+
+            @keyframes rotation {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(359deg);
+                }
+            }
+        `,
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepIconComponent {
     private svgIcon: SVGElement;
@@ -54,7 +66,10 @@ export class PepIconComponent {
             this.element.nativeElement.removeChild(this.svgIcon);
         }
         const svgData = this.iconRegistry.getIcon(iconName);
-        this.svgIcon = this.utilitiesService.getSvgElementFromString(this.document, svgData);
+        this.svgIcon = this.utilitiesService.getSvgElementFromString(
+            this.document,
+            svgData
+        );
         this.element.nativeElement.appendChild(this.svgIcon);
         this.renderer.addClass(this.svgIcon, 'svg-icon');
 
@@ -73,8 +88,8 @@ export class PepIconComponent {
         private element: ElementRef,
         private utilitiesService: PepUtilitiesService,
         private iconRegistry: PepIconRegistry,
-        @Optional() @Inject(DOCUMENT) private document: any) {
-    }
+        @Optional() @Inject(DOCUMENT) private document: any
+    ) {}
 
     private setFill(): void {
         if (this.svgIcon && this._fill) {

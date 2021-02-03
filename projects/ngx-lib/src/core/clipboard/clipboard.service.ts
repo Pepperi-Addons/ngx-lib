@@ -7,7 +7,6 @@ import { DOCUMENT } from '@angular/common';
 })
 export class PepClipboardService {
     // private dom: Document;
-
     // // I initialize the Clipboard service.
     // // --
     // // CAUTION: This service is tightly couped to the browser DOM (Document Object Model).
@@ -16,19 +15,15 @@ export class PepClipboardService {
     // constructor(@Optional() @Inject(DOCUMENT)  dom: Document) {
     //     this.dom = dom;
     // }
-
     // // ---
     // // PUBLIC METHODS.
     // // ---
     // // I copy the given value to the user's system clipboard. Returns a promise that
     // // resolves to the given value on success or rejects with the raised Error.
     // public copy(value: string): Promise<any> {
-
     //     const promise = new Promise(
     //         (resolve, reject): void => {
-
     //             let textarea = null;
-
     //             try {
     //                 // In order to execute the "Copy" command, we actually have to have
     //                 // a "selection" in the currently rendered document. As such, we're
@@ -44,30 +39,20 @@ export class PepClipboardService {
     //                 textarea.style.top = '-100px';
     //                 textarea.style.width = '0px';
     //                 this.dom.body.appendChild(textarea);
-
     //                 // Set and select the value (creating an active Selection range).
     //                 textarea.value = value;
     //                 textarea.select();
-
     //                 // Ask the browser to copy the current selection to the clipboard.
     //                 this.dom.execCommand('copy');
-
     //                 resolve(value);
-
     //             } finally {
-
     //                 // Cleanup - remove the Textarea from the DOM if it was injected.
     //                 if (textarea && textarea.parentNode) {
-
     //                     textarea.parentNode.removeChild(textarea);
-
     //                 }
-
     //             }
-
     //         }
     //     );
-
     //     return (promise);
     // }
 }
