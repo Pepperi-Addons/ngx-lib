@@ -2,6 +2,6 @@
     <div class="body-xs sort-by">
         <span>{{ 'LIST.SORT_BY' | translate }}</span>
     </div>
-    <pep-menu [type]="'select'" [sizeType]="sizeType" [items]="menuItems" [iconName]="'arrow_down'"
-        (menuItemClick)="onMenuItemClicked($event)"></pep-menu>
+    <pep-menu [type]="'select'" [sizeType]="sizeType" [items]="menuItems" [selectedItem]="currentItem"
+        [iconName]="'arrow_down'" (menuItemClick)="onMenuItemClicked($event)"></pep-menu>
 </div>

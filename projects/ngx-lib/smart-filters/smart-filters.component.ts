@@ -24,9 +24,22 @@ export class PepSmartFiltersComponent {
         IPepSmartFilterData
     >();
 
+    private _filters: IPepSmartFilterData[] = [];
     @Input()
     set filters(value: IPepSmartFilterData[]) {
+        this._filters = value;
         this.setupFilters(value);
+    }
+    get filters(): IPepSmartFilterData[] {
+        this._filters = [...this.filtersDataMap.keys()]
+            // .filter((key) => this.filtersDataMap.get(key) !== null)
+            .map((key) => {
+                if (key) {
+                    return this.filtersDataMap.get(key);
+                }
+            });
+
+        return this._filters;
     }
 
     private _fields: Array<IPepSmartFilterField> = [];
@@ -103,13 +116,7 @@ export class PepSmartFiltersComponent {
     }
 
     private raiseFiltersChange(): void {
-        const filteredFields = [...this.filtersDataMap.keys()]
-            .filter((key) => this.filtersDataMap.get(key) !== null)
-            .map((key) => {
-                return this.filtersDataMap.get(key);
-            });
-
-        this.filtersChange.emit(filteredFields);
+        this.filtersChange.emit(this.filters);
     }
 
     toggleField(index: number, isOpen: boolean): void {

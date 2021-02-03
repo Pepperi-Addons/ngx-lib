@@ -53,7 +53,6 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         return this._value;
     }
 
-
     @Input() formattedValue = '';
     @Input() label = '';
 
@@ -130,7 +129,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -162,7 +161,6 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         // if (this.standAlone) {
         //     this.formattedValue = this.formattedValue || this.value;
         // }
-
         // if (changes.value) {
         //     this.setDateModel();
         // }
