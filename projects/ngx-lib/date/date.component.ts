@@ -19,8 +19,8 @@ import {
     MatDatetimepickerInputEvent,
     MAT_DATETIME_FORMATS,
 } from '@mat-datetimepicker/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
+// import { MomentDateAdapter } from '@angular/material-moment-adapter';
+// import { MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
 import { TranslateService } from '@ngx-translate/core';
 import {
     PepUtilitiesService,
@@ -38,68 +38,22 @@ import moment, { Moment } from 'moment';
     selector: 'pep-date',
     templateUrl: './date.component.html',
     styleUrls: ['./date.component.scss'],
-    providers: [
-        // CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,
-        // The locale would typically be provided on the root module of your application. We do it at
-        // the component level here, due to limitations of our example generation script.
-        // { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
-
-        // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
-        // `MatMomentDateModule` in your applications root module. We provide it at the component level
-        // here, due to limitations of our example generation script.
-        // { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        // { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        {
-            provide: MAT_DATE_FORMATS,
-            useValue: {
-                parse: {
-                    dateInput: 'L',
-                    monthInput: 'MMMM',
-                    timeInput: 'LT',
-                    datetimeInput: 'L LT',
-                },
-                display: {
-                    dateInput: 'L',
-                    monthInput: 'MMMM',
-                    datetimeInput: 'L LT',
-                    timeInput: 'LT',
-                    monthYearLabel: 'MMM YYYY',
-                    dateA11yLabel: 'LL',
-                    monthYearA11yLabel: 'MMMM YYYY',
-                    popupHeaderDateLabel: 'ddd, DD MMM',
-                },
-            },
-        },
-        { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
-        // { provide: MAT_DATETIME_FORMATS, useValue: MAT_NATIVE_DATETIME_FORMATS }
-        {
-            provide: MAT_DATETIME_FORMATS,
-            useValue: {
-                parse: {
-                    dateInput: 'L',
-                    monthInput: 'MMMM',
-                    timeInput: 'LT',
-                    datetimeInput: 'L LT',
-                },
-                display: {
-                    dateInput: 'L',
-                    monthInput: 'MMMM',
-                    datetimeInput: 'L LT',
-                    timeInput: 'LT',
-                    monthYearLabel: 'MMM YYYY',
-                    dateA11yLabel: 'LL',
-                    monthYearA11yLabel: 'MMMM YYYY',
-                    popupHeaderDateLabel: 'ddd, DD MMM',
-                },
-            },
-        },
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
-    @Input() value = '';
+
+    private _value = '';
+    @Input()
+    set value(value: string) {
+        this._value = value;
+        this.setDateModel();
+    }
+    get value() {
+        return this._value;
+    }
+
+
     @Input() formattedValue = '';
     @Input() label = '';
 
@@ -175,10 +129,8 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private element: ElementRef,
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
-        private renderer: Renderer2,
-        private adapter: DateAdapter<any>,
-        private translate: TranslateService
-    ) {}
+        private renderer: Renderer2
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -203,7 +155,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
 
         this.showTime = this.type === 'datetime';
 
-        this.initDate();
+        this.setDateModel();
     }
 
     ngOnChanges(changes: any): void {
@@ -211,22 +163,15 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         //     this.formattedValue = this.formattedValue || this.value;
         // }
 
-        if (changes.value) {
-            this.setDateModel();
-        }
+        // if (changes.value) {
+        //     this.setDateModel();
+        // }
     }
 
     ngOnDestroy(): void {
         if (this.valueChange) {
             this.valueChange.unsubscribe();
         }
-    }
-
-    private initDate(): void {
-        const culture = this.translate.getBrowserCultureLang() || 'en-US'; // this.userLang,
-        this.adapter.setLocale(culture);
-
-        this.setDateModel();
     }
 
     private setFormattedValueFromModel(): void {

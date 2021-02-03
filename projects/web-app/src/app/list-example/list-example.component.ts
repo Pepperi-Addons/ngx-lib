@@ -70,7 +70,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
 
     constructor(
         private dataConvertorService: PepDataConvertorService,
-        public layoutService: PepLayoutService,
+        private layoutService: PepLayoutService,
         // private httpService: PepHttpService,
         private translate: TranslateService
     ) {

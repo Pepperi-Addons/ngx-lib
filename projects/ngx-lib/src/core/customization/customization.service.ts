@@ -147,7 +147,7 @@ export class PepCustomizationService {
         private sessionService: PepSessionService,
         private fileService: PepFileService,
         public fb: FormBuilder
-    ) {}
+    ) { }
 
     getDefaultFromGroup(field: PepFieldBase, withValidators = true): FormGroup {
         const validators = withValidators ? field.getValidators() : [];
@@ -159,7 +159,7 @@ export class PepCustomizationService {
         return this.fb.group(group);
     }
 
-    private getFormControl(
+    getFormControl(
         form: FormGroup,
         fieldKey: string,
         parentFieldKey: string = null
@@ -918,8 +918,8 @@ export class PepCustomizationService {
 
         this.hasCustomHeader =
             res.TopHeaderFiles &&
-            res.TopHeaderFiles.length > 0 &&
-            res.TopHeaderFiles[0] !== ''
+                res.TopHeaderFiles.length > 0 &&
+                res.TopHeaderFiles[0] !== ''
                 ? true
                 : false;
         this.hasCustomHomepage =
