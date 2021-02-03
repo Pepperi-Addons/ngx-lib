@@ -15,7 +15,7 @@ export class PepAddonService {
     constructor(
         private sessionService: PepSessionService,
         private httpService: PepHttpService
-    ) {}
+    ) { }
 
     getAddonStaticFolder(): string {
         // return this.assetsPath;
@@ -36,7 +36,7 @@ export class PepAddonService {
     ): Observable<any> {
         const async = isAsync ? '/async' : '';
         return this.httpService.getPapiApiCall(
-            `/addons/api/${addonUUID}${async}/${fileName}/${functionName}`,
+            `/addons/api${async}/${addonUUID}/${fileName}/${functionName}`,
             httpOptions
         );
     }
@@ -51,7 +51,7 @@ export class PepAddonService {
     ): Observable<any> {
         const async = isAsync ? '/async' : '';
         return this.httpService.postPapiApiCall(
-            `/addons/api/${addonUUID}${async}/${fileName}/${functionName}`,
+            `/addons/api${async}/${addonUUID}/${fileName}/${functionName}`,
             body,
             httpOptions
         );
