@@ -31,10 +31,12 @@ export class PepAddonService {
         addonUUID: string,
         fileName: string,
         functionName: string,
-        httpOptions = {}
+        httpOptions = {},
+        isAsync = false
     ): Observable<any> {
+        const async = isAsync ? '/async' : '';
         return this.httpService.getPapiApiCall(
-            `/addons/api/${addonUUID}/${fileName}/${functionName}`,
+            `/addons/api/${addonUUID}${async}/${fileName}/${functionName}`,
             httpOptions
         );
     }
@@ -44,10 +46,12 @@ export class PepAddonService {
         fileName: string,
         functionName: string,
         body = {},
-        httpOptions = {}
+        httpOptions = {},
+        isAsync = false
     ): Observable<any> {
+        const async = isAsync ? '/async' : '';
         return this.httpService.postPapiApiCall(
-            `/addons/api/${addonUUID}/${fileName}/${functionName}`,
+            `/addons/api/${addonUUID}${async}/${fileName}/${functionName}`,
             body,
             httpOptions
         );
