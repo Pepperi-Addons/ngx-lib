@@ -18,7 +18,7 @@ export class PepMenuItemComponent implements OnDestroy {
     @Input() type: PepMenuType = 'action';
     @Input() items: Array<PepMenuItem> = [];
     @Input() selectedItem: PepMenuItem = null;
-    @Input() xPosition: 'before2' | 'after' = 'after';
+    @Input() xPosition: 'before' | 'after' = 'after';
     @Input() subMenuIconName: string = pepIconArrowRight.name;
 
     @ViewChild('childMenu', { static: true }) public childMenu: any;
