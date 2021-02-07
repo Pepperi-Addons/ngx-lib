@@ -92,7 +92,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() layout: UIControl;
     @Input() lockEvents = false;
     @Input() canEditObject = true;
-    @Input() data: ObjectsDataRow;
+    @Input() data: ObjectsDataRow = null;
     @Input() isActive = false;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() listType = '';
@@ -117,34 +117,37 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     formGutterSize;
     cardGutterSize;
     rowHeight;
-    lastFocusedField: any;
-    matrixIsLast = false;
+    private lastFocusedField: any;
+    private matrixIsLast = false;
     // lastUpdatedFieldApiName: string = '';
     form: FormGroup;
     differ: any;
 
     // payLoad = '';
-    rows: Array<PepFieldBase[]> = [];
+    private rows: Array<PepFieldBase[]> = [];
     fields: PepFieldBase[] = [];
     columns = 1;
 
-    hasMenuFloatingOnOtherField = false;
-    menuField: any;
-    menuDataField: any;
-    hasCampaignField: any;
-    hasCampaignDataField: any;
-    indicatorsField: any;
-    indicatorsDataField: any = null;
+    private hasMenuFloatingOnOtherField = false;
+    private menuField: any;
+    private menuDataField: any;
+    private hasCampaignField: any;
+    private hasCampaignDataField: any;
+    private indicatorsField: any;
+    private indicatorsDataField: any = null;
 
-    shouldReloadForm = false;
-    eventServiceSub: Subscription;
+    private _shouldReloadForm = false;
+    get shouldReloadForm(): boolean {
+        return this._shouldReloadForm;
+    }
 
-    public jsonLib = JSON;
+    // eventServiceSub: Subscription;
+    // public jsonLib = JSON;
 
     constructor(
         private dialogService: PepDialogService,
         private customizationService: PepCustomizationService,
-        public fb: FormBuilder,
+        private fb: FormBuilder,
         differs: KeyValueDiffers,
         private translate: TranslateService
     ) {
@@ -851,6 +854,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             ) * RemToPixel;
     }
 
+    // TODO: Check if we need this??
     ngDoCheck(): void {
         const changes = this.differ.diff(this.data); // check for changes
 
@@ -866,8 +870,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 this.data = changes.data.currentValue;
                 this.updateForm();
             } else {
-                this.shouldReloadForm = false;
-                this.initForm(changes);
+                this._shouldReloadForm = false;
+                this.initForm();
             }
         }
 
@@ -1061,8 +1065,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         if (!isForUpdate) {
             const fields = [];
-            // for (let i = 0; i < this.fields.length; i++) {
-            // const currentField = this.fields[i];
             for (const currentField of this.fields) {
                 // Add all fields except 'internalPage' type (for children).
                 if (currentField.controlType !== 'internalPage') {
@@ -1077,8 +1079,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             this.form = this.toControlGroup(fields);
         } else {
             // Update form values if changed by calculated fields.
-            // for (let i = 0; i < this.fields.length; i++) {
-            // const currentField = this.fields[i];
             for (const currentField of this.fields) {
                 if (currentField.controlType !== 'internalPage') {
                     if (
@@ -1117,9 +1117,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             }
         }
 
-        let isFormValid = this.form.valid;
+        let isFormValid = this.form?.valid;
 
-        // Change validation to true if all fields are read only. (By Amir.L request).
+        // Change validation to true if all fields are read only.
         if (!isFormValid && allFieldsAreReadOnly) {
             isFormValid = true;
         }
@@ -1130,7 +1130,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         this.isLocked = false;
     }
 
-    initForm(changes): void {
+    initForm(): void {
         if (this.data && this.data.Fields) {
             const fields: PepFieldBase[] = this.convertCustomFields(
                 this.getUiControlFields(),
@@ -1230,7 +1230,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     public ReloadForm(): void {
-        this.shouldReloadForm = true;
+        this._shouldReloadForm = true;
     }
 
     // onSubmit() {

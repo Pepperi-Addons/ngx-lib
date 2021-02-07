@@ -241,10 +241,10 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         }
     }
 
-    onKeyup(event) {
-        if (event.key === 'Enter') {
-            this.triggerSearch();
-        }
+    onSearch(event: Event) {
+        // Stop the event propagation - cause we don't want fire two events.
+        event.stopPropagation();
+        this.triggerSearch();
     }
 
     triggerSearch() {
