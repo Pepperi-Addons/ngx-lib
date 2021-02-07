@@ -97,6 +97,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() totalsRow = [];
     @Input() pagerType: PepListPagerType = 'scroll';
     @Input() pageSize: number = DEFAULT_PAGE_SIZE;
+    @Input() pageIndex: number;
 
     @Output()
     itemClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
@@ -1036,10 +1037,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.pagerType === 'pages') {
             this._useVirtualScroll = false;
-            if (typeof this.listPager !== 'undefined') {
-                this.listPager.pageIndex = 0;
+            if (this.pageIndex === undefined) {
+                this.pageIndex = 0;
             }
-            this.updatePage(items, { pageIndex: 0, pageSize: this.pageSize });
+            this.updatePage(items, {
+                pageIndex: this.pageIndex,
+                pageSize: this.pageSize,
+            });
         } else {
             if (this.totalRows === items.length) {
                 this._useVirtualScroll = false;
@@ -1375,7 +1379,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     onPagerChange(event: IPepListPagerChangeEvent): void {
         if (this.showItems) {
-            this.parentScroll.scrollTo({ top: 0 });
+            this.pageIndex = event.pageIndex;
+            // Scroll to top.
+            const scrollingElement = this.getParentContainer();
+            if (scrollingElement) {
+                scrollingElement.scrollTo(0, 0);
+            }
 
             this.toggleItems(false);
             const startIndex = event.pageIndex * event.pageSize;

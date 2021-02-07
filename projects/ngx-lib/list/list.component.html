@@ -36,7 +36,7 @@
 
     <ng-template #listPager>
         <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="!showItems" [length]="totalRows"
-            [pageSize]="pageSize" (pagerChange)="onPagerChange($event)">
+            [pageSize]="pageSize" [pageIndex]="pageIndex" (pagerChange)="onPagerChange($event)">
         </pep-list-pager>
     </ng-template>
 </div>
