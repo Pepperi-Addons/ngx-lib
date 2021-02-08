@@ -25,7 +25,15 @@ export class IPepListPagerChangeEvent {
 @Injectable()
 export class PepListPagerComponent {
     @Input() disabled = false;
-    @Input() pageIndex = 0;
+    private _pageIndex = 0;
+    @Input()
+    set pageIndex(value: number) {
+        this.setPageIndex(value);
+    }
+    get pageIndex(): number {
+        return this._pageIndex;
+    }
+
     @Input() length = 0;
     @Input() pageSize = DEFAULT_PAGE_SIZE;
 
@@ -39,9 +47,7 @@ export class PepListPagerComponent {
             return;
         }
 
-        const previousPageIndex = this.pageIndex;
-        this.pageIndex++;
-        this._emitChangeEvent(previousPageIndex);
+        this.setPageIndex(this.pageIndex + 1);
     }
 
     previousPage(): void {
@@ -49,9 +55,7 @@ export class PepListPagerComponent {
             return;
         }
 
-        const previousPageIndex = this.pageIndex;
-        this.pageIndex--;
-        this._emitChangeEvent(previousPageIndex);
+        this.setPageIndex(this.pageIndex - 1);
     }
 
     firstPage(): void {
@@ -59,9 +63,7 @@ export class PepListPagerComponent {
             return;
         }
 
-        const previousPageIndex = this.pageIndex;
-        this.pageIndex = 0;
-        this._emitChangeEvent(previousPageIndex);
+        this.setPageIndex(0);
     }
 
     lastPage(): void {
@@ -69,9 +71,7 @@ export class PepListPagerComponent {
             return;
         }
 
-        const previousPageIndex = this.pageIndex;
-        this.pageIndex = this.getNumberOfPages() - 1;
-        this._emitChangeEvent(previousPageIndex);
+        this.setPageIndex(this.getNumberOfPages() - 1);
     }
 
     hasPreviousPage(): boolean {
@@ -102,16 +102,18 @@ export class PepListPagerComponent {
     }
 
     onValueChange(event: IPepFieldValueChangeEvent) {
-        const newIndex = coerceNumberProperty(event.value);
+        const pageNumber = coerceNumberProperty(event.value);
+        this.setPageIndex(pageNumber - 1); // - 1 to convert number into index.
+    }
+
+    private setPageIndex(newIndex: number) {
         const previousPageIndex = this.pageIndex;
 
-        if (newIndex >= 1 && newIndex <= this.getNumberOfPages()) {
-            this.pageIndex = newIndex - 1;
+        if (newIndex >= 0 && newIndex < this.getNumberOfPages()) {
+            this._pageIndex = newIndex;
         } else {
-            this.pageIndex = 0;
+            this._pageIndex = 0;
         }
-
-        // this._changeDetectorRef.markForCheck();
 
         if (this.pageIndex !== previousPageIndex) {
             this._emitChangeEvent(previousPageIndex);
