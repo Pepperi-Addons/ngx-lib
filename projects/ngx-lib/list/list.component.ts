@@ -97,7 +97,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() totalsRow = [];
     @Input() pagerType: PepListPagerType = 'scroll';
     @Input() pageSize: number = DEFAULT_PAGE_SIZE;
-    @Input() pageIndex: number;
+    @Input() pageIndex = 0;
 
     @Output()
     itemClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
@@ -248,6 +248,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.saveSortingToSession();
+    }
+
+    private scrollToTop() {
+        const scrollingElement = this.getParentContainer();
+        if (scrollingElement) {
+            scrollingElement.scrollTo(0, 0);
+        }
     }
 
     private setContainerWidth(): void {
@@ -1007,7 +1014,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         showCardSelection = false
     ): void {
         this.initVariablesFromSession(items);
-
         const currentList = this.isAllSelected
             ? this.unSelectedItems
             : this.selectedItems;
@@ -1025,42 +1031,36 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.selectedItemId = '';
         this.totalRows = totalRows;
 
-        // fix bug for the scrollTo that doesn't work on edge div , not window
-        const scrollingElement = this.getParentContainer();
-        if (scrollingElement === window) {
-            scrollingElement.scrollTo(0, 0);
-        } else {
-            this.focusOnAnItem(0);
-        }
-
+        this.scrollToTop();
         this.cleanItems();
 
-        if (this.pagerType === 'pages') {
-            this._useVirtualScroll = false;
-            if (this.pageIndex === undefined) {
-                this.pageIndex = 0;
-            }
-            this.updatePage(items, {
-                pageIndex: this.pageIndex,
-                pageSize: this.pageSize,
-            });
-        } else {
-            if (this.totalRows === items.length) {
+        if (items) {
+            if (this.pagerType === 'pages') {
                 this._useVirtualScroll = false;
-                this.updateItems(items);
-            } else {
-                this._useVirtualScroll = true;
-                const numberOfStartItems = this.getNumberOfStartItems();
-                const event = {
-                    start: 0,
-                    end: numberOfStartItems,
-                    fromIndex: 0,
-                    toIndex: numberOfStartItems,
-                };
-                this.updateItems(items, event);
+                this.pageIndex = 0;
 
-                if (typeof this.virtualScroll !== 'undefined') {
-                    this.virtualScroll.refresh();
+                this.updatePage(items, {
+                    pageIndex: this.pageIndex,
+                    pageSize: this.pageSize,
+                });
+            } else {
+                if (this.totalRows === items.length) {
+                    this._useVirtualScroll = false;
+                    this.updateItems(items);
+                } else {
+                    this._useVirtualScroll = true;
+                    const numberOfStartItems = this.getNumberOfStartItems();
+                    const event = {
+                        start: 0,
+                        end: numberOfStartItems,
+                        fromIndex: 0,
+                        toIndex: numberOfStartItems,
+                    };
+                    this.updateItems(items, event);
+
+                    if (typeof this.virtualScroll !== 'undefined') {
+                        this.virtualScroll.refresh();
+                    }
                 }
             }
         }
@@ -1134,6 +1134,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.updateScrollItems(startIndex, startIndex + event.pageSize);
+
         this.toggleItems(true);
     }
 
@@ -1154,11 +1155,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    focusOnAnItem(itemIndex): void {
-        if (typeof this.virtualScroll !== 'undefined') {
-            this.virtualScroll.scrollInto(itemIndex);
-        }
-    }
+    // focusOnAnItem(itemIndex): void {
+    //     if (typeof this.virtualScroll !== 'undefined') {
+    //         this.virtualScroll.scrollInto(itemIndex);
+    //     }
+    // }
 
     getSelectedItemsData(isForEdit = false): PepSelectionData {
         const res = new PepSelectionData();
@@ -1380,11 +1381,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     onPagerChange(event: IPepListPagerChangeEvent): void {
         if (this.showItems) {
             this.pageIndex = event.pageIndex;
+
             // Scroll to top.
-            const scrollingElement = this.getParentContainer();
-            if (scrollingElement) {
-                scrollingElement.scrollTo(0, 0);
-            }
+            this.scrollToTop();
 
             this.toggleItems(false);
             const startIndex = event.pageIndex * event.pageSize;
