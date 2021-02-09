@@ -95,12 +95,12 @@
         </button>
         <ng-container *ngTemplateOutlet="quilTemplate; context: {inDialog: true}"></ng-container>
         <div mat-dialog-actions class=" pep-border-top">
-            <div class="spacing-element-negative">
-                <button mat-button [mat-dialog-close]="null" class="spacing-element pep-button md weak">
+            <div class="pep-spacing-element-negative">
+                <button mat-button [mat-dialog-close]="null" class="pep-spacing-element pep-button md weak">
                     {{'ACTIONS.CANCEL' | translate}}
                 </button>
                 <button mat-button [mat-dialog-close]="quillContentDialog || ''" [disabled]="disabled"
-                    class="spacing-element pep-button md strong ">
+                    class="pep-spacing-element pep-button md strong ">
                     {{'ACTIONS.SAVE' | translate}}
                 </button>
             </div>
@@ -116,16 +116,16 @@
         (onEditorCreated)="onEditorCreated($event, inDialog)" (onContentChanged)="onContentChanged($event, inDialog)"
         (onBlur)="onBlur($event, inDialog)" (onFocus)="onFocus($event, inDialog)" theme="">
         <div *ngIf="!disabled" quill-editor-toolbar>
-            <div class="spacing-element-negative">
+            <div class="pep-spacing-element-negative">
                 <span class="ql-formats">
                     <select *ngIf="toolbarOptions?.font"
-                        class="spacing-element pep-button icon-button md weak ql-font select-arrow">
+                        class="pep-spacing-element pep-button icon-button md weak ql-font select-arrow">
                         <option selected></option>
                         <option value="serif"></option>
                         <option value="monospace"></option>
                     </select>
                     <select *ngIf="toolbarOptions?.size"
-                        class="spacing-element pep-button icon-button md weak ql-size select-arrow">
+                        class="pep-spacing-element pep-button icon-button md weak ql-size select-arrow">
                         <option value="small"></option>
                         <option selected></option>
                         <option value="large"></option>
@@ -134,7 +134,7 @@
                 </span>
                 <span class="ql-formats">
                     <select *ngIf="toolbarOptions?.header"
-                        class="spacing-element pep-button icon-button md weak ql-header select-arrow">
+                        class="pep-spacing-element pep-button icon-button md weak ql-header select-arrow">
                         <option value="1"></option>
                         <option value="2"></option>
                         <option value="3"></option>
@@ -149,37 +149,37 @@
                 <!-- <hr class="vertical-separator" /> -->
                 <span class="ql-formats">
                     <button mat-button *ngIf="toolbarOptions?.bold"
-                        class="spacing-element pep-button icon-button md weak ql-bold"></button>
+                        class="pep-spacing-element pep-button icon-button md weak ql-bold"></button>
                     <button mat-button *ngIf="toolbarOptions?.italic"
-                        class="spacing-element pep-button icon-button md weak ql-italic"></button>
+                        class="pep-spacing-element pep-button icon-button md weak ql-italic"></button>
                     <button mat-button *ngIf="toolbarOptions?.underline"
-                        class="spacing-element pep-button icon-button md weak ql-underline"></button>
+                        class="pep-spacing-element pep-button icon-button md weak ql-underline"></button>
                     <button mat-button *ngIf="toolbarOptions?.strike"
-                        class="spacing-element pep-button icon-button md weak ql-strike"></button>
+                        class="pep-spacing-element pep-button icon-button md weak ql-strike"></button>
                 </span>
                 <span class="ql-formats">
                     <button mat-button *ngIf="toolbarOptions?.link"
-                        class="spacing-element pep-button icon-button md weak ql-link"></button>
+                        class="pep-spacing-element pep-button icon-button md weak ql-link"></button>
                     <button mat-button *ngIf="toolbarOptions?.image"
-                        class="spacing-element pep-button icon-button md weak ql-image"></button>
+                        class="pep-spacing-element pep-button icon-button md weak ql-image"></button>
                 </span>
                 <!-- <hr class="vertical-separator" /> -->
                 <span class="ql-formats">
                     <button mat-button *ngIf="toolbarOptions?.ordered"
-                        class="spacing-element pep-button icon-button md weak ql-list" value="ordered"></button>
+                        class="pep-spacing-element pep-button icon-button md weak ql-list" value="ordered"></button>
                     <button mat-button *ngIf="toolbarOptions?.bullet"
-                        class="spacing-element pep-button icon-button md weak ql-list" value="bullet"></button>
+                        class="pep-spacing-element pep-button icon-button md weak ql-list" value="bullet"></button>
                 </span>
                 <!-- <hr class="vertical-separator" /> -->
                 <span class="ql-formats">
                     <select *ngIf="toolbarOptions?.color"
-                        class="spacing-element pep-button icon-button md weak ql-color"></select>
+                        class="pep-spacing-element pep-button icon-button md weak ql-color"></select>
                     <select *ngIf="toolbarOptions?.background"
-                        class="spacing-element pep-button icon-button md weak ql-background"></select>
+                        class="pep-spacing-element pep-button icon-button md weak ql-background"></select>
                 </span>
                 <span class="ql-formats">
                     <select *ngIf="toolbarOptions?.align"
-                        class="spacing-element pep-button icon-button md weak ql-align">
+                        class="pep-spacing-element pep-button icon-button md weak ql-align">
                         <option selected></option>
                         <option value="center"></option>
                         <option value="right"></option>

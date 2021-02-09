@@ -14,9 +14,9 @@
             (opened)="toggleField(i, true)" (closed)="toggleField(i, false)">
             <mat-expansion-panel-header [collapsedHeight]="expansionPanelHeaderHeight"
                 [expandedHeight]="expansionPanelHeaderHeight">
-                <mat-panel-title class="spacing-element-negative">
+                <mat-panel-title class="pep-spacing-element-negative">
                     <div class="smart-filter-title-container">
-                        <mat-icon class="spacing-element">
+                        <mat-icon class="pep-spacing-element">
                             <pep-icon [name]="field.isOpen ? 'number_minus' : 'number_plus'"></pep-icon>
                         </mat-icon>
                         <span class="body-sm ellipsis" [title]="field.name">
@@ -24,7 +24,7 @@
                         </span>
                         <mat-chip *ngIf="filtersDataMap.get(field.id)" [selectable]="false" [removable]="true"
                             (click)="onFilterClear(field)" class="clear-filter pep-button chip xs weak">
-                            <span *ngIf="field.componentType === 'multi-select'" class="body-xs spacing-element">
+                            <span *ngIf="field.componentType === 'multi-select'" class="body-xs pep-spacing-element">
                                 {{ filtersDataMap.get(field.id).value?.first?.length }}
                                 <!-- {{ field.componentType === 'multi-select' ?
                                 filtersDataMap.get(field.id).value?.first?.length : 1 }} -->

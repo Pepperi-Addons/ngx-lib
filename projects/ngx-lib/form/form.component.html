@@ -5,7 +5,7 @@
         [gutterSize]="formGutterSize">
         <mat-grid-tile *ngFor="let field of fields" [rowspan]="field.rowSpan" [colspan]="field.colSpan">
             <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
-                [checkForChanges]="checkForChanges" [objectId]="data?.UID" [field]="field" [showTitle]="showTitle"
+                [checkForChanges]="checkForChanges" [uid]="data?.UID" [field]="field" [showTitle]="showTitle"
                 (valueChange)="onValueChanged($event)" (childClick)="onChildClicked($event)"
                 (childChange)="onChildChanged($event)" (elementClick)="onClick($event)"
                 (formValidationChange)="onFormValidationChanged($event)">
@@ -19,7 +19,7 @@
         <mat-grid-tile *ngFor="let field of fields" [rowspan]="field.rowSpan" [colspan]="field.colSpan"
             [ngStyle]="{ overflow: field.type == 'qs' ? 'unset' : 'hidden' }">
             <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
-                [isActive]="isActive" [checkForChanges]="checkForChanges" [objectId]="data?.UID" [field]="field"
+                [isActive]="isActive" [checkForChanges]="checkForChanges" [uid]="data?.UID" [field]="field"
                 [showTitle]="showTitle" (valueChange)="onValueChanged($event)" (childClick)="onChildClicked($event)"
                 (childChange)="onChildChanged($event)" (elementClick)="onClick($event)">
             </pep-field-generator>
@@ -36,7 +36,7 @@
                 [ngClass]="['text-align-' + field.xAlignment]" style="height: 100%"
                 [ngStyle]="{ width: (layout?.ControlFields)[j]?.calcColumnWidthString}">
                 <pep-field-generator *ngIf="field.controlType != 'placeholder'" [checkForChanges]="checkForChanges"
-                    [objectId]="data?.UID" [field]="field" (valueChange)="onValueChanged($event)"
+                    [uid]="data?.UID" [field]="field" (valueChange)="onValueChanged($event)"
                     (elementClick)="onClick($event)" [form]="form" [layoutType]="layoutType" [showTitle]="false"
                     [isActive]="isActive">
                 </pep-field-generator>
@@ -55,7 +55,7 @@
         [ngStyle]="{ width: (layout?.ControlFields)[j]?.calcColumnWidthString }"
         [ngClass]="['text-align-' + field.xAlignment]">
         <ng-container [ngSwitch]="field.controlType">
-            <pep-image *ngSwitchCase="'image'" [objectId]="objectId" [form]="form" [key]="field.key"
+            <pep-image *ngSwitchCase="'image'" [uid]="data?.UID" [form]="form" [key]="field.key"
                 [src]="field.formattedValue" [srcLarge]="field.value" [options]="field.options" [label]="field.label"
                 [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
                 [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [layoutType]="layoutType"

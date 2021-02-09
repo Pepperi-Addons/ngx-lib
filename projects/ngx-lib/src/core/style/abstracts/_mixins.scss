@@ -55,7 +55,7 @@
     #{$property}: calc(#{$expression});
 }
 
-@mixin spacing-element-negative($add-important: true, $spacing-size: $spacing-xs) {
+@mixin pep-spacing-element-negative($add-important: true, $spacing-size: $spacing-xs) {
     @if ($add-important) {
         margin-right: calc(#{$spacing-size} * -1) !important;
         margin-left: calc(#{$spacing-size} * -1) !important;
@@ -65,7 +65,7 @@
     }
 }
 
-@mixin spacing-element($add-important: true, $spacing-size: $spacing-xs) {
+@mixin pep-spacing-element($add-important: true, $spacing-size: $spacing-xs) {
     @if ($add-important) {
         margin-right: $spacing-size !important;
         margin-left: $spacing-size !important;

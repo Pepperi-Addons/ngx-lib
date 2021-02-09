@@ -6,7 +6,7 @@
             </pep-field-title>
             <div #galleryCont class="img-wrapper" [ngClass]="isVertical ? 'vertical-gallery' : 'horizontal-gallery'"
                 [style.height]="fieldHeight">
-                <gallery id="{{key}}-{{objectId}}-gallery" (itemClick)="enlargeImage($event);" [imageSize]="'contain'"
+                <gallery id="{{key}}-{{uid}}-gallery" (itemClick)="enlargeImage($event);" [imageSize]="'contain'"
                     (indexChange)="indexChange($event)" (error)="onError($event)">
                 </gallery>
             </div>
@@ -19,8 +19,8 @@
         <pep-dialog [title]="label" [showFooter]="false">
             <div pep-dialog-content #galleryDialogCont class="gallery-dialog-content"
                 [ngClass]="isVertical ? 'vertical-gallery' : 'horizontal-gallery'">
-                <gallery id="{{key}}-{{objectId}}-dlgGallery" [imageSize]="'contain'"
-                    (indexChange)="indexChange($event)" (error)="onError($event)">
+                <gallery id="{{key}}-{{uid}}-dlgGallery" [imageSize]="'contain'" (indexChange)="indexChange($event)"
+                    (error)="onError($event)">
                 </gallery>
             </div>
         </pep-dialog>

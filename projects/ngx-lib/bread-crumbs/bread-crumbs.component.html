@@ -1,4 +1,5 @@
-<div *ngIf="breadCrumbs?.length > 0" class="bread-crumbs ellipsis" [ngClass]="{ 'spacing-element': addSpacing }" [title]="getBreadCrumbTitle()">
+<div *ngIf="breadCrumbs?.length > 0" class="bread-crumbs ellipsis" [ngClass]="{ 'pep-spacing-element': addSpacing }"
+    [title]="getBreadCrumbTitle()">
     <div class="body-xs ellipsis">
         <ng-container *ngFor="let breadCrumb of breadCrumbs; let isFirst = first; let isLast = last">
             <span *ngIf="!isFirst && !isLast">&nbsp;{{ breadCrumbSeparator }}&nbsp;</span>

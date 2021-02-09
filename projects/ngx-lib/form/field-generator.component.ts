@@ -25,7 +25,7 @@ import {
 export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Input() field: any;
     @Input() isActive = false;
-    @Input() objectId: any = null;
+    @Input() uid: any = null;
     @Input() form: FormGroup;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() showTitle = true;
