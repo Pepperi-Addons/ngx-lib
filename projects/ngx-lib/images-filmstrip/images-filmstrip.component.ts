@@ -53,7 +53,7 @@ interface IPepImagesFilmstripDialogData {
     key: string;
     value: string;
     label: string;
-    objectId: string;
+    uid: string;
     showThumbnails: boolean;
 }
 
@@ -159,7 +159,7 @@ export class PepImagesFilmstripComponent
     controlType = 'images';
 
     @Input() form: FormGroup = null;
-    @Input() objectId = '';
+    @Input() uid = '0';
     @Input() showTitle = false;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() currIndex = 0;
@@ -300,7 +300,7 @@ export class PepImagesFilmstripComponent
             this.afterDialogOpened();
         } else {
             this.galleryRef = this.gallery.ref(
-                this.key + '-' + this.objectId + '-gallery'
+                `${this.key}-${this.uid}-gallery`
             );
             this.initGalleryStyle(this.galleryCont, this.galleryRef);
         }
@@ -368,7 +368,7 @@ export class PepImagesFilmstripComponent
 
     afterDialogOpened(): void {
         this.dialogGalleryRef = this.gallery.ref(
-            this.key + '-' + this.objectId + '-dlgGallery'
+            `${this.key}-${this.uid}-dlgGallery`
         );
         this.initGalleryStyle(this.galleryDialogCont, this.dialogGalleryRef);
     }

@@ -4,18 +4,19 @@
 
         </div>
         <div header-end-content>
-            <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'spacing-element '">
+            <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'"
+                [classNames]="'pep-spacing-element '">
             </pep-button>
         </div>
     </pep-top-bar>
     <!-- <div class="header-content ">
         <div class="content pep-border-bottom">
-            <div class="left-container body-lg spacing-element-negative pull-left flip">
-                <div class="spacing-element title">
+            <div class="left-container body-lg pep-spacing-element-negative pull-left flip">
+                <div class="pep-spacing-element title">
                     {{ 'Components_Example_Title' | translate }}
                 </div>
             </div>
-            <div class="right-container spacing-element-negative pull-right flip">
+            <div class="right-container pep-spacing-element-negative pull-right flip">
                 <pep-menu class="pull-right flip" [xPosition]="'before'" [sizeType]="'md'" [styleType]="'weak'"
                     [items]="menuItems" (menuClick)="menuClicked($event)"
                     (menuItemClick)="onMenuItemClicked($event)">
@@ -107,13 +108,13 @@
                 </pep-image>
 
                 <!-- Filmstrip Examples -->
-                <!-- <pep-images-filmstrip [objectId]="'Images Filmstrip 1'" [key]="'Images Filmstrip 1'" [xAlignment]="'center'"
+                <!-- <pep-images-filmstrip [key]="'Images Filmstrip 1'" [xAlignment]="'center'"
                     [label]="'Pepperi Images Filmstrip 1'" [showTitle]="true" [rowSpan]="3" [value]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;
                     https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'">
                 </pep-images-filmstrip> -->
 
-                <pep-images-filmstrip [objectId]="'Images Filmstrip'" [key]="'Images Filmstrip 2'"
-                    [xAlignment]="'center'" [label]="'Pepperi Images Filmstrip 1'" [showTitle]="true" [rowSpan]="7"
+                <pep-images-filmstrip [key]="'Images Filmstrip 2'" [xAlignment]="'center'"
+                    [label]="'Pepperi Images Filmstrip 1'" [showTitle]="true" [rowSpan]="7"
                     [value]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'"
                     (elementClicked)="elementClicked($event)">
                 </pep-images-filmstrip>

@@ -26,18 +26,16 @@
         (valueChange)="onValueChanged($event)" [isActive]="isActive">
     </pep-date>
 
-    <pep-images-filmstrip *ngSwitchCase="'images'" [objectId]="objectId" [form]="form" [key]="field.key"
-        [label]="field.label" [showTitle]="showTitle" [rowSpan]="field.rowSpan" [value]="field.value"
-        [layoutType]="layoutType">
+    <pep-images-filmstrip *ngSwitchCase="'images'" [uid]="uid" [form]="form" [key]="field.key" [label]="field.label"
+        [showTitle]="showTitle" [rowSpan]="field.rowSpan" [value]="field.value" [layoutType]="layoutType">
     </pep-images-filmstrip>
 
-    <pep-image *ngSwitchCase="'image'" [objectId]="objectId" [form]="form" [key]="field.key"
-        [src]="field.formattedValue" [srcLarge]="field.value" [options]="field.options" [label]="field.label"
-        [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
-        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [indicatorsField]="field.indicatorsField"
-        [menuField]="field.menuField" [hasCampaignField]="field.hasCampaignField" [sizeLimitMB]="field.sizeLimitMB"
-        [isActive]="isActive" [layoutType]="layoutType" (elementClick)="onClick($event)"
-        (valueChange)="onValueChanged($event)">
+    <pep-image *ngSwitchCase="'image'" [uid]="uid" [form]="form" [key]="field.key" [src]="field.formattedValue"
+        [srcLarge]="field.value" [options]="field.options" [label]="field.label" [required]="field.required"
+        [disabled]="field.disabled" [readonly]="field.readonly" [xAlignment]="field.xAlignment"
+        [rowSpan]="field.rowSpan" [indicatorsField]="field.indicatorsField" [menuField]="field.menuField"
+        [hasCampaignField]="field.hasCampaignField" [sizeLimitMB]="field.sizeLimitMB" [isActive]="isActive"
+        [layoutType]="layoutType" (elementClick)="onClick($event)" (valueChange)="onValueChanged($event)">
     </pep-image>
 
     <pep-quantity-selector *ngSwitchCase="'qs'" [form]="form" [key]="field.key" [value]="field.value"

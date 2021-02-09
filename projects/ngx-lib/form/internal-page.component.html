@@ -4,13 +4,13 @@
         }}" title="{{ field.label }}">
         <span class="block-with-text body-md">{{ field.label }}</span>
 
-        <div class="buttons-container spacing-element-negative pull-right flip">
+        <div class="buttons-container pep-spacing-element-negative pull-right flip">
             <ng-container *ngIf="
                     currentViewType?.Key == 'OrderCenterMatrix' &&
                     additionalApiNames &&
                     additionalApiNames.length > 0
                 ">
-                <button class="spacing-element pep-button icon-button sm weak" mat-button [matMenuTriggerFor]="menu"
+                <button class="pep-spacing-element pep-button icon-button sm weak" mat-button [matMenuTriggerFor]="menu"
                     menu-blur>
                     <span class="pull-left flip" *ngIf="currentAdditionalApiName">&nbsp;{{
                         currentAdditionalApiName?.Value }}&nbsp;</span>
@@ -36,7 +36,7 @@
                 </mat-menu>
             </ng-container>
             <ng-container *ngIf="childViewTypes && childViewTypes.length > 1">
-                <button class="spacing-element pep-button icon-button sm weak" mat-button
+                <button class="pep-spacing-element pep-button icon-button sm weak" mat-button
                     [matMenuTriggerFor]="viewsMenu" menu-blur>
                     <mat-icon>
                         <pep-icon name="view_card_md"></pep-icon>
@@ -72,7 +72,8 @@
     <div #my1mm id="my1_mm" style="height:1mm;width:1mm;visibility: hidden;"></div>
     <ng-container *ngIf="coverChildTable && uiControl != null">
         <div class="table-cover"></div>
-        <button (click)="showMatrixDialog()" class="pep-button strong sm table-cover-button" [ngClass]="{ 'lineview-btn': currentViewType?.Key == 'OrderCenterFlatMatrixLine'}">
+        <button (click)="showMatrixDialog()" class="pep-button strong sm table-cover-button"
+            [ngClass]="{ 'lineview-btn': currentViewType?.Key == 'OrderCenterFlatMatrixLine'}">
             {{ "INTERNAL_PAGE.CLICK_TO_ORDER" | translate }}
         </button>
     </ng-container>

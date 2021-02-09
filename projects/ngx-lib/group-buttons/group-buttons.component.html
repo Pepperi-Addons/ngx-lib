@@ -1,13 +1,13 @@
 <div class="group-buttons-container" pepRtlDirection>
     <ng-container *ngIf="viewType == 'regular'">
         <button *ngFor="let button of buttons" [pepDataQa]="button.value"
-            class="pep-button spacing-element pull-left flip first-button mat-button {{ buttonsClass }}"
+            class="pep-button pep-spacing-element pull-left flip first-button mat-button {{ buttonsClass }}"
             [disabled]="buttonsDisabled" mat-button (click)="onButtonClicked($event, button)">
             <span [title]="button?.value">{{ button?.value }}</span>
         </button>
     </ng-container>
 
-    <div *ngIf="viewType == 'dropdown'" class="dropdown-buttons spacing-element"
+    <div *ngIf="viewType == 'dropdown'" class="dropdown-buttons pep-spacing-element"
         [ngClass]="{dropup: screenSize >= PepScreenSizeType.MD}">
         <button [pepDataQa]="buttons[0].value"
             class="pep-button pull-left flip first-button mat-button {{ buttonsClass }}"

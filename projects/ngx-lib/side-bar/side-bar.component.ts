@@ -6,6 +6,7 @@ import {
     Output,
     EventEmitter,
     ViewChild,
+    ElementRef,
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import {
@@ -37,10 +38,21 @@ export class PepSideBarComponent implements OnInit {
     screenSize: PepScreenSizeType;
     PepScreenSizeType = PepScreenSizeType;
 
-    constructor(private layoutService: PepLayoutService) {
+    constructor(
+        private hostElement: ElementRef,
+        private layoutService: PepLayoutService
+    ) {
+        this.exportFunctionsOnHostElement();
+
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
+    }
+
+    private exportFunctionsOnHostElement() {
+        // This is for web component usage for use those functions.
+        this.hostElement.nativeElement.open = this.open.bind(this);
+        this.hostElement.nativeElement.close = this.close.bind(this);
     }
 
     ngOnInit() {

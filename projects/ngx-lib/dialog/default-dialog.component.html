@@ -1,41 +1,41 @@
 <pep-dialog [showClose]="data?.showClose" [showHeader]="data?.showHeader" [showFooter]="data?.showFooter"
     [title]="data?.title">
     <div pep-dialog-content [innerHtml]="data?.content | pepSafeHtml"></div>
-    <div pep-dialog-actions class="spacing-element-negative">
+    <div pep-dialog-actions class="pep-spacing-element-negative">
         <ng-container [ngSwitch]="data?.type">
             <ng-container *ngSwitchCase="'close'">
-                <button mat-button [mat-dialog-close]="true" class="spacing-element pep-button md weak">
+                <button mat-button [mat-dialog-close]="true" class="pep-spacing-element pep-button md weak">
                     {{ 'ACTIONS.CLOSE' | translate }}
                 </button>
             </ng-container>
             <ng-container *ngSwitchCase="'cancel-continue'">
-                <button mat-button [mat-dialog-close]="false" class="spacing-element pep-button md weak">
+                <button mat-button [mat-dialog-close]="false" class="pep-spacing-element pep-button md weak">
                     {{ 'ACTIONS.CANCEL' | translate }}
                 </button>
-                <button mat-button [mat-dialog-close]="true" class="spacing-element pep-button md strong">
+                <button mat-button [mat-dialog-close]="true" class="pep-spacing-element pep-button md strong">
                     {{ 'ACTIONS.CONTINUE' | translate }}
                 </button>
             </ng-container>
             <ng-container *ngSwitchCase="'cancel-ok'">
-                <button mat-button [mat-dialog-close]="false" class="spacing-element pep-button md weak">
+                <button mat-button [mat-dialog-close]="false" class="pep-spacing-element pep-button md weak">
                     {{ 'ACTIONS.CANCEL' | translate }}
                 </button>
-                <button mat-button [mat-dialog-close]="true" class="spacing-element pep-button md strong">
+                <button mat-button [mat-dialog-close]="true" class="pep-spacing-element pep-button md strong">
                     {{ 'ACTIONS.OK' | translate }}
                 </button>
             </ng-container>
             <ng-container *ngSwitchCase="'cancel-delete'">
-                <button mat-button [mat-dialog-close]="false" class="spacing-element pep-button md weak">
+                <button mat-button [mat-dialog-close]="false" class="pep-spacing-element pep-button md weak">
                     {{ 'ACTIONS.CANCEL' | translate }}
                 </button>
-                <button mat-button [mat-dialog-close]="true" class="spacing-element pep-button md strong caution">
+                <button mat-button [mat-dialog-close]="true" class="pep-spacing-element pep-button md strong caution">
                     {{ 'ACTIONS.DELETE' | translate }}
                 </button>
             </ng-container>
             <ng-container *ngSwitchCase="'custom'">
                 <ng-container *ngFor="let btn of data?.actionButtons">
                     <!-- [mat-dialog-close]="btn?.callback ? btn.callback : null" -->
-                    <button mat-button (click)="onActionButtonClicked(btn)" class="spacing-element pep-button md"
+                    <button mat-button (click)="onActionButtonClicked(btn)" class="pep-spacing-element pep-button md"
                         [ngClass]="btn?.className != '' ? btn?.className : 'weak'">
                         {{ btn?.title }}
                     </button>

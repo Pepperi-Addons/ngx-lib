@@ -78,7 +78,7 @@
 
     .list-actions-wrapper {
         ::ng-deep.pep-button {
-            @include spacing-element(false);
+            @include pep-spacing-element(false);
         }
     }
 

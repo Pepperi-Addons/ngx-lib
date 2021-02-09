@@ -97,20 +97,20 @@
         <ng-container pep-dialog-content>
             <textarea #dialogTextarea [readonly]="disabled || readonly">{{ value }}</textarea>
         </ng-container>
-        <div pep-dialog-actions class="spacing-element-negative">
+        <div pep-dialog-actions class="pep-spacing-element-negative">
             <ng-container *ngIf="disabled || readonly; then notEditableBlock; else editableBlock">
             </ng-container>
             <ng-template #editableBlock>
-                <button mat-button (click)="closeDialog()" class="spacing-element pep-button md weak">
+                <button mat-button (click)="closeDialog()" class="pep-spacing-element pep-button md weak">
                     {{ 'ACTIONS.CANCEL' | translate }}
                 </button>
-                <button mat-button class="spacing-element pep-button md strong"
+                <button mat-button class="pep-spacing-element pep-button md strong"
                     (click)="closeDialog(dialogTextarea.value)">
                     {{ 'ACTIONS.SAVE' | translate }}
                 </button>
             </ng-template>
             <ng-template #notEditableBlock>
-                <button mat-button (click)="closeDialog()" class="spacing-element pep-button md weak">
+                <button mat-button (click)="closeDialog()" class="pep-spacing-element pep-button md weak">
                     {{ 'ACTIONS.CLOSE' | translate }}
                 </button>
             </ng-template>

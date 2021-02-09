@@ -57,7 +57,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     controlType = 'image';
 
     @Input() form: FormGroup = null;
-    @Input() objectId = '';
+    @Input() uid = '';
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
@@ -174,13 +174,13 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     objectIdIsNotEmpty(): boolean {
-        return this.objectId?.length > 0 && this.objectId !== '0';
+        return this.uid?.length > 0 && this.uid !== '0';
     }
 
     onFileClicked(event: IPepFieldClickEvent): void {
         let hasParentImage = true;
         if (
-            this.objectIdIsNotEmpty() &&
+            // this.objectIdIsNotEmpty() &&
             this.src &&
             this.src.indexOf('no-image') > -1
         ) {
@@ -241,7 +241,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
                     key: this.key,
                     value: imagesValue,
                     label: this.label,
-                    objectId: this.objectId,
+                    uid: this.uid,
                     showThumbnails: arr.length > 1,
                 },
                 config

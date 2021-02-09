@@ -242,12 +242,12 @@ main {
 
 //  Spacing
 // ------------------------
-.spacing-element-negative {
-    @include spacing-element-negative();
+.pep-spacing-element-negative {
+    @include pep-spacing-element-negative();
 }
 
-.spacing-element {
-    @include spacing-element();
+.pep-spacing-element {
+    @include pep-spacing-element();
 }
 //  Floating alignment
 // ------------------------
