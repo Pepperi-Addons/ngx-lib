@@ -134,7 +134,9 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     isFloating = false;
     screenSize: PepScreenSizeType;
 
-    constructor(private layoutService: PepLayoutService) {
+    constructor(private layoutService: PepLayoutService) {}
+
+    ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
 
@@ -151,9 +153,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
                 this.fadeState = 'fadeIn';
             }
         });
-    }
 
-    ngOnInit(): void {
         this.isRtl = this.layoutService.isRtl();
         this.createSearchControlIfNotExist();
 
