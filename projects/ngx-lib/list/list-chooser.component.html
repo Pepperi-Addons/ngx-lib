@@ -3,5 +3,5 @@
         [iconName]="'arrow_down'" (menuItemClick)="onMenuItemClicked($event)"></pep-menu>
 </ng-container>
 <ng-container *ngIf="menuItems?.length == 1">
-    <pep-bread-crumbs [breadCrumbs]="breadCrumbs" [addSpacing]="true"></pep-bread-crumbs>
+    <pep-bread-crumbs [items]="breadCrumbsItems" [addSpacing]="true"></pep-bread-crumbs>
 </ng-container>

@@ -15,6 +15,8 @@ import {
     pepIconSystemSettings,
 } from '@pepperi-addons/ngx-lib/icon';
 
+import { PepBreadCrumbItem, IPepBreadCrumbItemClickEvent } from '@pepperi-addons/ngx-lib/bread-crumbs';
+
 @Component({
     templateUrl: './carousel-example.component.html',
     styleUrls: ['./carousel-example.component.scss'],
@@ -32,6 +34,7 @@ export class CarouselExampleComponent implements OnInit {
     searchAutoCompleteValues = [];
 
     menuItems: Array<PepMenuItem>;
+    breadCrumbsItems: Array<PepBreadCrumbItem>;
 
     constructor(public layoutService: PepLayoutService) {
         this.layoutService.onResize$.pipe().subscribe((size) => {
@@ -41,7 +44,15 @@ export class CarouselExampleComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadlist();
+        this.loadBreadCrumbsItems();
         this.menuItems = this.getMenuItems();
+    }
+
+    loadBreadCrumbsItems() {
+        this.breadCrumbsItems = [];
+        this.breadCrumbsItems.push({ key: '0', text: 'Home' });
+        this.breadCrumbsItems.push({ key: '1', text: 'Carusel', disabled: false });
+        this.breadCrumbsItems.push({ key: '2', text: 'Carusel items', disabled: true });
     }
 
     getMenuItems(withChildren = true, index = 0): Array<PepMenuItem> {
@@ -1963,10 +1974,14 @@ export class CarouselExampleComponent implements OnInit {
         return this.getLinesData();
     }
 
-    onItemClicked(item: ObjectsDataRow): void {}
+    onItemClicked(item: ObjectsDataRow): void { }
 
     onMenuItemClicked(action: IPepMenuItemClickEvent): void {
         alert(action.source.key);
+    }
+
+    onBreadCrumbItemClick(event: IPepBreadCrumbItemClickEvent) {
+        console.log(event);
     }
 
     menuClicked(event): void {

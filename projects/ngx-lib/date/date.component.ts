@@ -191,7 +191,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             this.value.indexOf('1970-1-1') >= 0 ||
             this.value.indexOf('1970-01-01') >= 0
         ) {
-            this.value = '';
+            this._value = '';
             this.dateModel = null;
         } else {
             this.dateModel = moment(
