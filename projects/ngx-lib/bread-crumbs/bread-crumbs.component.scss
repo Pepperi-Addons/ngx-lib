@@ -1,9 +1,33 @@
 @import '../src/core/style/abstracts/variables';
 
-.bread-crumbs {
-    // line-height: 1rem;
+:host {
+    display: flex;
+}
+
+.bread-crumbs-label {
     height: $top-bar-height-with-no-top;
     display: flex;
     flex-flow: wrap;
     align-items: center;
+}
+
+ul.bread-crumbs-items {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+
+    li {
+        display: inline-flex;
+        
+        .seperator {
+            height: 1rem;
+            width: 1rem;
+        }
+
+        a {
+            text-decoration: unset;
+        }
+    }
 }

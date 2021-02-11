@@ -1,22 +1,21 @@
-import { Component, Input, OnInit, Injectable } from '@angular/core';
-import { PepLayoutService } from '@pepperi-addons/ngx-lib';
-
-export class PepBreadCrumbItem {
-    text: string;
-    onClick: () => void;
-    clickParams: any;
-
-    constructor(
-        text: string,
-        onClick: () => void = null,
-        clickParams: any = null
-    ) {
-        this.text = text;
-        this.onClick = onClick;
-        this.clickParams = clickParams;
-    }
-}
-
+import {
+    Component,
+    Input,
+    OnInit,
+    Injectable,
+    Output,
+    EventEmitter,
+} from '@angular/core';
+import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import {
+    IPepBreadCrumbItemClickEvent,
+    PepBreadCrumbItem,
+    PepBreadCrumbsDisplayType,
+} from './bread-crumbs.model';
+import {
+    pepIconArrowLeft,
+    pepIconArrowRight,
+} from '@pepperi-addons/ngx-lib/icon';
 @Component({
     selector: 'pep-bread-crumbs',
     templateUrl: './bread-crumbs.component.html',
@@ -24,34 +23,54 @@ export class PepBreadCrumbItem {
 })
 @Injectable()
 export class PepBreadCrumbsComponent implements OnInit {
-    @Input() breadCrumbs: Array<PepBreadCrumbItem> = [];
+    @Input() items: Array<PepBreadCrumbItem> = [];
+    @Input() displayType: PepBreadCrumbsDisplayType = 'label';
     @Input() addSpacing = false;
 
-    breadCrumbSeparator = ' / ';
+    @Output()
+    itemClick: EventEmitter<IPepBreadCrumbItemClickEvent> = new EventEmitter<IPepBreadCrumbItemClickEvent>();
+
+    charSeparator = ' / ';
+    iconSeparator: string = pepIconArrowRight.name;
+    shrinkItems = false;
+    screenSize: PepScreenSizeType;
 
     constructor(private layoutService: PepLayoutService) {}
 
     ngOnInit(): void {
+        this.layoutService.onResize$.pipe().subscribe((size) => {
+            this.screenSize = size;
+
+            if (this.displayType === 'items' && this.items.length > 1) {
+                this.shrinkItems = this.screenSize > PepScreenSizeType.SM;
+            }
+        });
+
         if (this.layoutService.isRtl()) {
-            this.breadCrumbSeparator = ' \\ ';
+            this.charSeparator = ' \\ ';
+            this.iconSeparator = pepIconArrowLeft.name;
         }
     }
 
-    getBreadCrumbTitle(): string {
-        let breadCrumbTitle = '';
+    getLabelTitle(): string {
+        let labelTitle = '';
 
-        if (this.breadCrumbs && this.breadCrumbs.length > 0) {
-            for (let index = 0; index < this.breadCrumbs.length; index++) {
-                if (index < this.breadCrumbs.length - 1) {
+        if (this.items && this.items.length > 0) {
+            for (let index = 0; index < this.items.length; index++) {
+                if (index < this.items.length - 1) {
                     if (index > 0) {
-                        breadCrumbTitle += this.breadCrumbSeparator;
+                        labelTitle += this.charSeparator;
                     }
 
-                    breadCrumbTitle += this.breadCrumbs[index].text;
+                    labelTitle += this.items[index].text;
                 }
             }
         }
 
-        return breadCrumbTitle;
+        return labelTitle;
+    }
+
+    onBreadCrumbItemClick(item: PepBreadCrumbItem): void {
+        this.itemClick.emit({ source: item });
     }
 }

@@ -1,5 +1,5 @@
 @mixin pep-bread-crumbs-component-theme($pepperi-theme) {
-    .bread-crumbs {
+    .bread-crumbs-label {
         color: get-pep-color($pepperi-theme, color-text, color-dimmed);
 
         .current {
