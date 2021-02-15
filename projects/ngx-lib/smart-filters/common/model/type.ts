@@ -11,3 +11,12 @@ export type PepSmartFilterType =
     | 'multi-select'
     | 'percentage'
     | 'real';
+
+export type PepSmartFilterOperatorType =
+    'eq' | 'neq' | 'lt' | 'gt' |
+    'ltoe' | 'gtoe' | 'numberRange' |
+    'contains' | 'beginsWith' | 'endsWith' | 'after' | 'before' |
+    'inTheLast' | 'today' | 'thisWeek' | 'thisMonth' | 'dateRange' | 'dueIn' | 'on' | 'notInTheLast' | 'notDueIn' |
+    'isEmpty' | 'isNotEmpty' | 'in';
+
+export type PepSmartFilterOperatorUnitType = 'days' | 'weeks' | 'months' | 'years';

@@ -90,7 +90,13 @@ export abstract class BaseFilterComponent
     private _operator: IPepSmartFilterOperator;
     set operator(operator: IPepSmartFilterOperator) {
         if (operator?.id != this._operator?.id) {
-            this._operator = operator;
+            // Validate operator
+            if (this.operators.includes(operator)) {
+                this._operator = operator;
+            } else {
+                this._operator = this.operators[0];
+            }
+
             this.form.reset();
             this.updateValidity();
         }
@@ -101,7 +107,12 @@ export abstract class BaseFilterComponent
 
     private _operatorUnit: IPepSmartFilterOperatorUnit;
     set operatorUnit(operatorUnit: IPepSmartFilterOperatorUnit) {
-        this._operatorUnit = operatorUnit;
+        // Validate operator unit
+        if (operatorUnit === undefined || this.operatorUnits.includes(operatorUnit)) {
+            this._operatorUnit = operatorUnit;
+        } else {
+            this._operatorUnit = this.operatorUnits[0];
+        }
     }
     get operatorUnit(): IPepSmartFilterOperatorUnit {
         return this._operatorUnit;
@@ -183,6 +194,11 @@ export abstract class BaseFilterComponent
             })
             .map((key) => PepSmartFilterOperators[key]);
 
+        // Filter by from field.operators input if exist.
+        if (this.field.operators?.length > 0) {
+            this.operators = this.operators.filter(o1 => this.field.operators.some(o2 => o1.id === o2));
+        }
+
         // Get the operator units by componentType.
         this.operatorUnits = Object.keys(PepSmartFilterOperatorUnits)
             .filter((key) => {
@@ -191,6 +207,11 @@ export abstract class BaseFilterComponent
                 );
             })
             .map((key) => PepSmartFilterOperatorUnits[key]);
+
+        // Filter by from field.operatorsUnits input if exist.
+        if (this.field.operatorUnits?.length > 0) {
+            this.operatorUnits = this.operatorUnits.filter(o1 => this.field.operatorUnits.some(o2 => o1.id === o2));
+        }
 
         // Load translation before get the options in the children.
         this.translate.get('SMART_FILTERS.TITLE').subscribe((res) => {
