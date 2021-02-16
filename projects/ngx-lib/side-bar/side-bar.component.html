@@ -5,7 +5,7 @@
         <div class="side-layout pull-left flip" [ngStyle]="{ overflow: isMouseIn ? 'unset' : 'visible' }"
             (mouseenter)="setSideBarHeight($event)" [style.height]="sideBarHeight"
             (mouseleave)="mouseLeaveSideBar($event)">
-            <div class="content side-layout-content">
+            <div class="content">
                 <!-- New Filters -->
                 <ng-container *ngTemplateOutlet="filtersTemplate"></ng-container>
 

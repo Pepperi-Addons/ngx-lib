@@ -61,6 +61,7 @@ aside {
     }
 }
 
+header, // This is for the menu header that open chooser dialog.
 main {
     .side-layout {
         width: $side-bar-width;
@@ -453,7 +454,6 @@ main {
         }
     }
 }
-
 
 .pepperi-accordion2, .pep-accordion2 {
     &.mat-accordion .mat-expansion-panel {
