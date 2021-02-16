@@ -74,8 +74,8 @@
 </ng-template>
 
 <ng-template #triggerOnClickBlock>
-    <!-- || (isFloating && fadeState == 'fadeIn') -->
-    <ng-container *ngIf="(state == 'open' && searchControl.value?.length > 0)">
+    <!-- <ng-container *ngIf="(state == 'open' && searchControl.value?.length > 0)"> -->
+    <ng-container *ngIf="(state == 'open')">
         <mat-icon class="pep-text-icon pep-pointer" (click)="onClearClicked($event)">
             <pep-icon name="system_close"></pep-icon>
         </mat-icon>

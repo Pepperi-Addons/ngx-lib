@@ -134,7 +134,12 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     isFloating = false;
     screenSize: PepScreenSizeType;
 
-    constructor(private layoutService: PepLayoutService) {}
+    constructor(
+        private hostElement: ElementRef,
+        private layoutService: PepLayoutService
+    ) {
+        this.exportFunctionsOnHostElement();
+    }
 
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {
@@ -185,9 +190,9 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         this._destroyed.complete();
     }
 
-    private initSearch() {
-        this.lastValue = null;
-        this.searchControl.setValue('');
+    private exportFunctionsOnHostElement() {
+        // This is for web component usage for use those functions.
+        this.hostElement.nativeElement.initSearch = this.initSearch.bind(this);
     }
 
     private createSearchControlIfNotExist(): void {
@@ -212,6 +217,11 @@ export class PepSearchComponent implements OnInit, OnDestroy {
 
         // close the phone keyboard
         this.blur();
+    }
+
+    initSearch() {
+        this.lastValue = null;
+        this.searchControl.setValue('');
     }
 
     onClearClicked(event: any) {

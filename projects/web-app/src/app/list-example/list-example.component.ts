@@ -159,7 +159,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         this.fields = [
             createSmartFilterField({ id: 'filter1', name: 'Transaction Action Time' }, 'date-time'),
             createSmartFilterField({ id: 'filter2', name: 'stock' }, 'int'),
-            createSmartFilterField({ id: 'filter3', name: 'Delivery Date' }, 'date'),
+            createSmartFilterField({ id: 'filter3', name: 'Delivery Date', operators: ['dateRange'] }, 'date'),
             createSmartFilterField({ id: 'filter4', name: 'Brand', options: brandOptions }, 'multi-select'),
             createSmartFilterField({ id: 'filter5', name: 'Discout' }, 'boolean'),
             createSmartFilterField({ id: 'filter6', name: 'Price' }, 'currency'),
