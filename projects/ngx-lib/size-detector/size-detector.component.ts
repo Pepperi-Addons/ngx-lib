@@ -54,12 +54,15 @@ export class PepSizeDetectorComponent implements AfterViewInit {
             css: `d-none d-xl-block`,
         },
     ];
-    currentSize: IPepSizeDetectorItem;
+
+    private currentSize: IPepSizeDetectorItem;
 
     constructor(
-        private element: ElementRef,
+        private hostElement: ElementRef,
         private layoutService: PepLayoutService
     ) {
+        this.exportFunctionsOnHostElement();
+
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.currentSize = this.sizes.find(s => s.id === size);
             this.sizeChange.emit(this.currentSize);
@@ -77,7 +80,7 @@ export class PepSizeDetectorComponent implements AfterViewInit {
 
     private detectScreenSize(): void {
         this.currentSize = this.sizes.find((x) => {
-            const el = this.element.nativeElement.querySelector(
+            const el = this.hostElement.nativeElement.querySelector(
                 `.${this.prefix}${x.id}`
             );
             const isVisible = window.getComputedStyle(el).display !== 'none';
@@ -86,5 +89,14 @@ export class PepSizeDetectorComponent implements AfterViewInit {
         });
 
         this.layoutService.onResize(this.currentSize.id);
+    }
+
+    private exportFunctionsOnHostElement() {
+        // This is for web component usage for use those functions.
+        this.hostElement.nativeElement.getCurrentSize = this.getCurrentSize.bind(this);
+    }
+
+    getCurrentSize(): IPepSizeDetectorItem {
+        return this.currentSize;
     }
 }
