@@ -108,7 +108,10 @@ export abstract class BaseFilterComponent
     private _operatorUnit: IPepSmartFilterOperatorUnit;
     set operatorUnit(operatorUnit: IPepSmartFilterOperatorUnit) {
         // Validate operator unit
-        if (operatorUnit === undefined || this.operatorUnits.includes(operatorUnit)) {
+        if (
+            operatorUnit === undefined ||
+            this.operatorUnits.includes(operatorUnit)
+        ) {
             this._operatorUnit = operatorUnit;
         } else {
             this._operatorUnit = this.operatorUnits[0];
@@ -196,7 +199,9 @@ export abstract class BaseFilterComponent
 
         // Filter by from field.operators input if exist.
         if (this.field.operators?.length > 0) {
-            this.operators = this.operators.filter(o1 => this.field.operators.some(o2 => o1.id === o2));
+            this.operators = this.operators.filter((o1) =>
+                this.field.operators.some((o2) => o1.id === o2)
+            );
         }
 
         // Get the operator units by componentType.
@@ -210,7 +215,9 @@ export abstract class BaseFilterComponent
 
         // Filter by from field.operatorsUnits input if exist.
         if (this.field.operatorUnits?.length > 0) {
-            this.operatorUnits = this.operatorUnits.filter(o1 => this.field.operatorUnits.some(o2 => o1.id === o2));
+            this.operatorUnits = this.operatorUnits.filter((o1) =>
+                this.field.operatorUnits.some((o2) => o1.id === o2)
+            );
         }
 
         // Load translation before get the options in the children.

@@ -1,5 +1,13 @@
-import { IPepSmartFilterOperator, IPepSmartFilterOperatorUnit } from './operator';
-import { PepSmartFilterComponentType, PepSmartFilterType, PepSmartFilterOperatorType, PepSmartFilterOperatorUnitType } from './type';
+import {
+    IPepSmartFilterOperator,
+    IPepSmartFilterOperatorUnit,
+} from './operator';
+import {
+    PepSmartFilterComponentType,
+    PepSmartFilterType,
+    PepSmartFilterOperatorType,
+    PepSmartFilterOperatorUnitType,
+} from './type';
 
 export interface IPepSmartFilterFieldOption {
     value: string;
