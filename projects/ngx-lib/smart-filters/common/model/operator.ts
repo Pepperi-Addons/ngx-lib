@@ -1,4 +1,8 @@
-import { PepSmartFilterComponentType, PepSmartFilterOperatorType, PepSmartFilterOperatorUnitType } from './type';
+import {
+    PepSmartFilterComponentType,
+    PepSmartFilterOperatorType,
+    PepSmartFilterOperatorUnitType,
+} from './type';
 export class IPepSmartFilterOperator {
     id: PepSmartFilterOperatorType;
     name: string;

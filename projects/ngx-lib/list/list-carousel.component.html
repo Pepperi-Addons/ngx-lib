@@ -8,7 +8,7 @@
             [iconName]="'arrow_left_alt'" [styleType]="'regular'" [disabled]="prevDisabled" (click)="moveLeft()"
             class="carousel-arrow start-arrow">
         </pep-button>
-        <pep-carousel #carousel [xWheelEnabled]="true" [scrollbarHidden]="true" [snapDuration]="duration"
+        <pep-carousel #carousel [xWheelEnabled]="false" [snapDuration]="duration"
             (reachesLeftBound)="onReachesLeftBound($event)" (reachesRightBound)="onReachesRightBound($event)">
             <ng-container *ngFor="let item of items">
                 <pep-form pepCarouselItem [layout]="layout" [data]="item" [layoutType]="'card'"

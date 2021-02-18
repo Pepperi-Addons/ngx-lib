@@ -85,9 +85,9 @@ export class PepCarouselComponent
      */
     isScrolling = false;
 
-    scrollTimer: number; // | NodeJS.Timer = -1;
+    scrollTimer: any; // | NodeJS.Timer = -1;
 
-    scrollToTimer: number; // | NodeJS.Timer = -1;
+    scrollToTimer: any; // | NodeJS.Timer = -1;
 
     /**
      * Is the user currently dragging the element

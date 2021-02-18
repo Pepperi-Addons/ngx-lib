@@ -48,7 +48,7 @@ function createPercentageSmartFilterField(data: IPepSmartFilterField) {
 
 export function createSmartFilterField(
     data: IPepSmartFilterField,
-    type: PepSmartFilterType,
+    type: PepSmartFilterType
 ): PepSmartFilterBaseField {
     let field: PepSmartFilterBaseField;
 

@@ -32,7 +32,7 @@ export interface IPepListCarouselItemClickEvent {
 })
 @Injectable()
 export class PepListCarouselComponent implements AfterViewInit, OnDestroy {
-    @Input() duration = 500;
+    @Input() duration = 1000;
     @Input() layout: UIControl = null;
     @Input() itemsToMove = 3;
     @Input() lockItemInnerEvents = true;
