@@ -1,5 +1,6 @@
 <div [formGroup]="form">
-    <pep-search [searchControl]="searchControl" [triggerOn]="'keydown'" [shrinkInSmallScreen]="false"></pep-search>
+    <pep-search *ngIf="options?.length > 10" [searchControl]="searchControl" [triggerOn]="'keydown'"
+        [shrinkInSmallScreen]="false"></pep-search>
     <div pepRtlClass class="multi-select-options pep-border-top pep-border-bottom">
         <div #optionsContainer class="flip-scroll">
             <virtual-scroller #scroll [items]="filteredOptions$ | async" [parentScroll]="optionsContainer">
