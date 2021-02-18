@@ -41,7 +41,7 @@ export class PepMultiSelectFilterComponent
     @ViewChild('optionsContainer')
     optionsContainer: ElementRef;
 
-    private readonly MAX_OPTIONS_TO_SHOW = 6;
+    private readonly MAX_OPTIONS_TO_SHOW = 6.35;
     @ViewChild(VirtualScrollerComponent)
     private virtualScroller: VirtualScrollerComponent;
 
