@@ -68,13 +68,20 @@ export class PepListCarouselComponent implements AfterViewInit, OnDestroy {
     nextDisabled = false;
     screenSize: PepScreenSizeType;
     PepScreenSizeType = PepScreenSizeType;
+    // deviceHasMouse = false;
 
-    constructor(public layoutService: PepLayoutService) {}
+    constructor(public layoutService: PepLayoutService) {
+        // this.deviceHasMouse = this.layoutService.getDeviceHasMouse();
+    }
 
     ngAfterViewInit(): void {
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
+
+        // this.layoutService.onMouseOver$.subscribe((deviceHasMouse: boolean) => {
+        //     this.deviceHasMouse = deviceHasMouse;
+        // });
     }
 
     ngOnDestroy(): void {

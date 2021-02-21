@@ -15,13 +15,14 @@
 
     <!-- Thumbnails -->
     <mat-grid-list *ngIf="layoutType == 'card'" [cols]="columns" [rowHeight]="rowHeight + 'rem'"
-        [gutterSize]="cardGutterSize" class="card-spacing" [ngClass]="{ 'lock-events': lockEvents }">
+        [gutterSize]="cardGutterSize" class="card-spacing">
         <mat-grid-tile *ngFor="let field of fields" [rowspan]="field.rowSpan" [colspan]="field.colSpan"
             [ngStyle]="{ overflow: field.type == 'qs' ? 'unset' : 'hidden' }">
             <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
-                [isActive]="isActive" [checkForChanges]="checkForChanges" [uid]="data?.UID" [field]="field"
-                [showTitle]="showTitle" (valueChange)="onValueChanged($event)" (childClick)="onChildClicked($event)"
-                (childChange)="onChildChanged($event)" (elementClick)="onClick($event)">
+                [ngClass]="{ 'lock-events': lockEvents }" [isActive]="isActive" [checkForChanges]="checkForChanges"
+                [uid]="data?.UID" [field]="field" [showTitle]="showTitle" (valueChange)="onValueChanged($event)"
+                (childClick)="onChildClicked($event)" (childChange)="onChildChanged($event)"
+                (elementClick)="onClick($event)">
             </pep-field-generator>
         </mat-grid-tile>
     </mat-grid-list>

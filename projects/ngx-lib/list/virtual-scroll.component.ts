@@ -266,7 +266,7 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
             this.parentScroll instanceof Window
                 ? document.body
                 : this.parentScroll || this.element.nativeElement;
-        const offsetTop = this.getElementsOffset();
+        // const offsetTop = this.getElementsOffset();
         //let index: number = (this.items || []).indexOf(item);
         if (index < 0 || index >= this.totalRows) return;
 
