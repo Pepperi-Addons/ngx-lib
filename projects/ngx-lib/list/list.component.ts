@@ -15,6 +15,7 @@ import { delay } from 'rxjs/operators';
 import {
     PepLayoutType,
     PepLayoutService,
+    PepScrollToService,
     PepWindowScrollingService,
     PepScreenSizeType,
     PepSessionService,
@@ -191,6 +192,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         private hostElement: ElementRef,
         private layoutService: PepLayoutService,
         private sessionService: PepSessionService,
+        private scrollToService: PepScrollToService,
         private windowScrollingService: PepWindowScrollingService,
         private cd: ChangeDetectorRef,
         private renderer: Renderer2
@@ -251,9 +253,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private scrollToTop() {
-        const scrollingElement = this.getParentContainer();
+        const scrollingElement = this.getParentContainer() as HTMLElement;
         if (scrollingElement) {
-            scrollingElement.scrollTo(0, 0);
+            // if (this.useVirtualScroll && typeof this.virtualScroll !== 'undefined') {
+            //     this.virtualScroll.scrollInto(0);
+            // } else {
+            this.scrollToService.scrollElementTo(scrollingElement);
+            // }
         }
     }
 
@@ -744,14 +750,17 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 res = true;
             }
         } else {
-            if (this.selectedItems.size === this.totalRows) {
-                res = this.getIsAllSelected(this.scrollItems);
-            } else if (this.selectedItems.size < this.totalRows) {
-                for (const item of this.scrollItems) {
-                    res = item && this.selectedItems.has(item.UID.toString());
+            if (this.scrollItems) {
+                if (this.selectedItems.size === this.totalRows) {
+                    res = this.getIsAllSelected(this.scrollItems);
+                } else if (this.selectedItems.size < this.totalRows) {
+                    for (const item of this.scrollItems) {
+                        res =
+                            item && this.selectedItems.has(item.UID.toString());
 
-                    if (!res) {
-                        break;
+                        if (!res) {
+                            break;
+                        }
                     }
                 }
             }

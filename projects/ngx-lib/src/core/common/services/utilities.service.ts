@@ -8,6 +8,15 @@ export class PepUtilitiesService {
         let retVal: Date = null;
         if (dateStr !== '') {
             retVal = new Date(dateStr);
+
+            // Convert to date with no offset.
+            const dateText = dateStr.split('-');
+            if (dateText.length === 3 && !showTime) {
+                const year = Number(dateText[0]);
+                const month = Number(dateText[1]) - 1;
+                const day = Number(dateText[2]);
+                retVal = new Date(year, month, day);
+            }
         }
         if (retVal && isNaN(retVal.getTime())) {
             retVal = null;

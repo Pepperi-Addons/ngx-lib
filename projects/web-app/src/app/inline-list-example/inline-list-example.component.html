@@ -37,7 +37,7 @@
     </pep-top-bar>
     <div class="main-content ">
         <div class="content">
-            <div class="list-wrapper" #listContainer>
+            <div class="list-wrapper" #listContainer id="listContainer">
                 <pep-list [supportSorting]="false" [supportResizing]="false" [pagerType]="'pages'" [pageSize]="10"
                     [pageIndex]="pageIndex" [selectionTypeForActions]="'multi'" [noDataFoundMsg]="'No data'"
                     [parentScroll]="listContainer" (fieldClick)="onCustomizeFieldClick($event)"
