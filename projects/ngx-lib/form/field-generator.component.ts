@@ -65,25 +65,25 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
 
-        if (this.formValidationChange) {
-            this.formValidationChange.unsubscribe();
-        }
+        // if (this.formValidationChange) {
+        //     this.formValidationChange.unsubscribe();
+        // }
 
-        if (this.childChange) {
-            this.childChange.unsubscribe();
-        }
+        // if (this.childChange) {
+        //     this.childChange.unsubscribe();
+        // }
 
-        if (this.elementClick) {
-            this.elementClick.unsubscribe();
-        }
+        // if (this.elementClick) {
+        //     this.elementClick.unsubscribe();
+        // }
 
-        if (this.childClick) {
-            this.childClick.unsubscribe();
-        }
+        // if (this.childClick) {
+        //     this.childClick.unsubscribe();
+        // }
     }
 
     onValueChanged(valueChange: IPepFieldValueChangeEvent): void {

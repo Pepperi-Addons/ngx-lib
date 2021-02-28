@@ -596,16 +596,17 @@ $sorting-width: 1rem;
                 flex-basis: $card-field-button-size;
                 flex-shrink: 0;
 
-                &.self-end {
-                    align-self: flex-end;
-                }
-
                 width: $card-field-button-size;
                 height: $card-field-button-size;
                 line-height: $card-field-button-size;
                 min-width: unset;
                 padding: 0;
                 pointer-events: none;
+                align-self: center;
+
+                &.self-end {
+                    align-self: flex-end;
+                }
 
                 .mat-icon {
                     // line-height: 0.5rem !important;

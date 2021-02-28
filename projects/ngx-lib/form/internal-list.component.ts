@@ -133,17 +133,17 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
 
         // if (this.itemClick) {
         //     this.itemClick.unsubscribe();
         // }
 
-        if (this.fieldClick) {
-            this.fieldClick.unsubscribe();
-        }
+        // if (this.fieldClick) {
+        //     this.fieldClick.unsubscribe();
+        // }
     }
 
     setContainerWidth(): void {

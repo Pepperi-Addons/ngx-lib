@@ -129,7 +129,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -167,9 +167,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     private setFormattedValueFromModel(): void {

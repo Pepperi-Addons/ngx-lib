@@ -330,10 +330,11 @@
             @include state-weak-disable($pepperi-theme);
         }
 
+        .emoji-icon {
+            border: unset;
+        }
         &:not(.disable) {
             .emoji-icon {
-                border: unset;
-
                 &:focus {
                     @include focus($pepperi-theme);
                 }

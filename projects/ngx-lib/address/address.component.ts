@@ -42,7 +42,7 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
-    constructor(private element: ElementRef, private renderer: Renderer2) {}
+    constructor(private element: ElementRef, private renderer: Renderer2) { }
 
     ngOnInit(): void {
         this.renderer.addClass(this.element.nativeElement, 'pep-grouped-field');
@@ -60,9 +60,9 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     // Not in use for material

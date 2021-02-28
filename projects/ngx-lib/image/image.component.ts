@@ -80,7 +80,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         private renderer: Renderer2,
         private element: ElementRef,
         private translate: TranslateService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -123,13 +123,13 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.elementClick) {
-            this.elementClick.unsubscribe();
-        }
+        // if (this.elementClick) {
+        //     this.elementClick.unsubscribe();
+        // }
 
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     errorHandler(event: any): void {

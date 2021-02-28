@@ -71,7 +71,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     private addOptionsIfNeeded(): void {
         if (this.isMulti) {
@@ -164,13 +164,13 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
 
-        if (this.formValidationChange) {
-            this.formValidationChange.unsubscribe();
-        }
+        // if (this.formValidationChange) {
+        //     this.formValidationChange.unsubscribe();
+        // }
     }
 
     selectionChange(event: any): void {

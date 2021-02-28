@@ -68,7 +68,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -108,9 +108,9 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     onBlur(event: any): void {

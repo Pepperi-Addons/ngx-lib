@@ -83,7 +83,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         private cd: ChangeDetectorRef,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -122,9 +122,9 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     drawComplete(): void {

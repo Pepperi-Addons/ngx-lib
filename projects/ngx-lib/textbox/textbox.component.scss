@@ -5,6 +5,7 @@
 }
 :host > * { 
     align-self: center; // instead of  align-items: center; in the :host
+    align-items: baseline;
 }
 
 .disable-hidden {
@@ -13,4 +14,13 @@
 
 .dis-grid {
     display:grid;
+}
+
+.multi-rows-text {
+    display: -webkit-box; 
+    // -webkit-line-clamp: 2 or more - set this in the html by the rowSpan inout; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: unset !important;
 }
