@@ -102,6 +102,7 @@ $main-height: var(--pep-main-height); // window.innerHeight - header
 //  Side bar
 // -----------------------------------------------------------------------------
 $side-bar-width: var(--pep-side-bar-width, 16rem);
+$floating-side-bar-width: calc(#{$side-bar-width} + #{$spacing-2xl});
 $settings-bar-width: var(--pep-settings-bar-width, 16rem);
 
 //  Dialogs

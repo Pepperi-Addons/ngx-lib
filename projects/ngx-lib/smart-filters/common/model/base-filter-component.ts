@@ -91,8 +91,9 @@ export abstract class BaseFilterComponent
     set operator(operator: IPepSmartFilterOperator) {
         if (operator?.id != this._operator?.id) {
             // Validate operator
-            if (this.operators.includes(operator)) {
-                this._operator = operator;
+            const index = this.operators.findIndex((o) => o.id === operator.id);
+            if (index >= 0) {
+                this._operator = this.operators[index];
             } else {
                 this._operator = this.operators[0];
             }
@@ -108,13 +109,17 @@ export abstract class BaseFilterComponent
     private _operatorUnit: IPepSmartFilterOperatorUnit;
     set operatorUnit(operatorUnit: IPepSmartFilterOperatorUnit) {
         // Validate operator unit
-        if (
-            operatorUnit === undefined ||
-            this.operatorUnits.includes(operatorUnit)
-        ) {
-            this._operatorUnit = operatorUnit;
+        if (operatorUnit === undefined) {
+            this._operatorUnit = undefined;
         } else {
-            this._operatorUnit = this.operatorUnits[0];
+            const index = this.operatorUnits.findIndex(
+                (ou) => ou.id === operatorUnit.id
+            );
+            if (index >= 0) {
+                this._operatorUnit = this.operatorUnits[index];
+            } else {
+                this._operatorUnit = this.operatorUnits[0];
+            }
         }
     }
     get operatorUnit(): IPepSmartFilterOperatorUnit {

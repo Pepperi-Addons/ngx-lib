@@ -10,6 +10,7 @@ import {
     ChangeDetectorRef,
     OnDestroy,
     OnChanges,
+    NgZone,
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import {
@@ -47,6 +48,8 @@ import {
     IPepListPagerChangeEvent,
     PepListPagerComponent,
 } from './list-pager.component';
+
+import * as tween from '@tweenjs/tween.js';
 
 @Component({
     selector: 'pep-list',
@@ -99,6 +102,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pagerType: PepListPagerType = 'scroll';
     @Input() pageSize: number = DEFAULT_PAGE_SIZE;
     @Input() pageIndex = 0;
+    @Input() scrollAnimationTime = 500;
 
     @Output()
     itemClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
@@ -159,6 +163,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     unSelectedItems = new Map<string, string>();
 
     nativeWindow: any = null;
+    private currentTween: any;
 
     selectedItemId = '';
     hoveredItemId = '';
@@ -195,7 +200,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         private scrollToService: PepScrollToService,
         private windowScrollingService: PepWindowScrollingService,
         private cd: ChangeDetectorRef,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private zone: NgZone
     ) {
         this.exportFunctionsOnHostElement();
 
@@ -221,45 +227,101 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
 
-        if (this.loadItems) {
-            this.loadItems.unsubscribe();
-        }
+        // if (this.loadItems) {
+        //     this.loadItems.unsubscribe();
+        // }
 
-        if (this.loadPage) {
-            this.loadPage.unsubscribe();
-        }
+        // if (this.loadPage) {
+        //     this.loadPage.unsubscribe();
+        // }
 
-        if (this.sortingChange) {
-            this.sortingChange.unsubscribe();
-        }
+        // if (this.sortingChange) {
+        //     this.sortingChange.unsubscribe();
+        // }
 
-        if (this.fieldClick) {
-            this.fieldClick.unsubscribe();
-        }
+        // if (this.fieldClick) {
+        //     this.fieldClick.unsubscribe();
+        // }
 
-        if (this.itemClick) {
-            this.itemClick.unsubscribe();
-        }
+        // if (this.itemClick) {
+        //     this.itemClick.unsubscribe();
+        // }
 
-        if (this.listLoad) {
-            this.listLoad.unsubscribe();
-        }
+        // if (this.listLoad) {
+        //     this.listLoad.unsubscribe();
+        // }
 
         this.saveSortingToSession();
     }
 
     private scrollToTop() {
-        const scrollingElement = this.getParentContainer() as HTMLElement;
+        const scrollingElement = this.getParentContainer();
         if (scrollingElement) {
             // if (this.useVirtualScroll && typeof this.virtualScroll !== 'undefined') {
             //     this.virtualScroll.scrollInto(0);
             // } else {
-            this.scrollToService.scrollElementTo(scrollingElement);
+            // this.scrollToService.scrollElementTo(this.renderer, scrollingElement, 1000);
             // }
+
+            let animationRequest;
+            const scrollTop = 0;
+            const isWindow = scrollingElement instanceof Window;
+            const currentScrollTop =
+                scrollingElement instanceof Window
+                    ? window.pageYOffset
+                    : scrollingElement.scrollTop;
+
+            if (this.currentTween !== undefined) {
+                this.currentTween.stop();
+            }
+
+            // totally disable animate
+            if (this.scrollAnimationTime === 0) {
+                if (scrollingElement instanceof Window) {
+                    window.scrollTo(0, scrollTop);
+                } else {
+                    scrollingElement.scrollTop = scrollTop;
+                }
+                return;
+            }
+
+            this.currentTween = new tween.Tween({ scrollTop: currentScrollTop })
+                .to({ scrollTop }, this.scrollAnimationTime)
+                .easing(tween.Easing.Quadratic.Out)
+                .onUpdate((data) => {
+                    if (isNaN(data.scrollTop)) {
+                        return;
+                    }
+
+                    if (isWindow) {
+                        window.scrollTo(0, data.scrollTop);
+                    } else {
+                        this.renderer.setProperty(
+                            scrollingElement,
+                            'scrollTop',
+                            data.scrollTop
+                        );
+                    }
+                })
+                .onStop(() => {
+                    cancelAnimationFrame(animationRequest);
+                })
+                .start();
+
+            const animate = (time?) => {
+                this.currentTween.update(time);
+                if (this.currentTween._object.scrollTop !== scrollTop) {
+                    this.zone.runOutsideAngular(() => {
+                        animationRequest = requestAnimationFrame(animate);
+                    });
+                }
+            };
+
+            animate();
         }
     }
 
@@ -322,43 +384,44 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         // }
     }
 
-    private updateScrollItems(startIndex, endIndex, loadInChunks = true): void {
-        this.scrollItems = this.items.slice(startIndex, endIndex);
-        // if (!loadInChunks) {
-        //     this.scrollItems = this.items.slice(startIndex, endIndex).map((item) => item).filter((item) => item != null);
-        // } else {
-        //     // this.scrollItems = this.items.slice(startIndex, endIndex);
+    private updateScrollItems(
+        startIndex,
+        endIndex,
+        loadInChunks = false
+    ): void {
+        if (!loadInChunks) {
+            this.scrollItems = this.items.slice(startIndex, endIndex);
+        } else {
+            const ITEMS_RENDERED_AT_ONCE = 5;
+            const INTERVAL_IN_MS = 50;
 
-        //     const ITEMS_RENDERED_AT_ONCE = 15;//this.isTable ? 1 : 7;
-        //     const INTERVAL_IN_MS = 10;
+            let currentIndex = 0;
+            const tmp = this.items.slice(startIndex, endIndex);
 
-        //     let currentIndex = 0;
-        //     const tmp = this.items.slice(startIndex, endIndex);
-        //     // this.scrollItems = [];
+            const interval = setInterval(() => {
+                const nextIndex = currentIndex + ITEMS_RENDERED_AT_ONCE;
 
-        //     const interval = setInterval(() => {
-        //         const nextIndex = currentIndex + ITEMS_RENDERED_AT_ONCE;
+                for (let i = currentIndex; i < nextIndex; i++) {
+                    if (i >= tmp.length) {
+                        clearInterval(interval);
+                        break;
+                    }
 
-        //         for (let i = currentIndex; i < nextIndex; i++) {
-        //             // if (currentIndex === 0) {
-        //             //     this.scrollItems = [];
-        //             // }
+                    if (this.scrollItems[i]) {
+                        this.scrollItems[i] = tmp[i];
+                    } else {
+                        this.scrollItems.push(tmp[i]);
+                    }
+                }
 
-        //             if (i >= tmp.length) {
-        //                 clearInterval(interval);
-        //                 break;
-        //             }
+                currentIndex += ITEMS_RENDERED_AT_ONCE;
+            }, INTERVAL_IN_MS);
 
-        //             if (this.scrollItems[i]) {
-        //                 this.scrollItems[i] = tmp[i];
-        //             } else {
-        //                 this.scrollItems.push(tmp[i]);
-        //             }
-        //         }
-
-        //         currentIndex += ITEMS_RENDERED_AT_ONCE;
-        //     }, INTERVAL_IN_MS);
-        // }
+            // Remove the rest of the prev items - fit the current count
+            while (this.scrollItems.length > tmp.length) {
+                this.scrollItems.pop();
+            }
+        }
     }
 
     private setSelectionItems(
@@ -1046,7 +1109,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         if (items) {
             if (this.pagerType === 'pages') {
                 this._useVirtualScroll = false;
-                this.pageIndex = 0;
+                // this.pageIndex = 0; // The user need to init the page index.
 
                 this.updatePage(items, {
                     pageIndex: this.pageIndex,
@@ -1079,9 +1142,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.onListLoad();
         }
 
-        setTimeout(() => {
-            this.setLayout();
-        }, 0);
+        // setTimeout(() => {
+        this.setLayout();
+        // }, 0);
     }
 
     updateItems(
@@ -1133,7 +1196,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.cleanItems();
         }
 
+        const loadInChunks = this.itemsCounter > 0;
         const startIndex = event.pageIndex * event.pageSize;
+        const endIndex = Math.min(startIndex + event.pageSize, this.totalRows);
 
         for (let i = 0; i < items.length; i++) {
             if (!this.items[i + startIndex]) {
@@ -1142,7 +1207,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        this.updateScrollItems(startIndex, startIndex + event.pageSize);
+        this.updateScrollItems(startIndex, endIndex, loadInChunks);
 
         this.toggleItems(true);
     }
@@ -1418,8 +1483,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     pageSize: event.pageSize,
                 });
             } else {
-                this.updateScrollItems(startIndex, endIndex, false);
-                this.toggleItems(true);
+                setTimeout(() => {
+                    this.updateScrollItems(startIndex, endIndex, true);
+                    this.toggleItems(true);
+                }, this.scrollAnimationTime);
             }
         }
     }
@@ -1437,7 +1504,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.showItems) {
             this.toggleItems(false);
-            this.updateScrollItems(event.start, event.end, false);
+            this.updateScrollItems(event.start, event.end);
 
             let getItemsFromApi = false;
             let index: number = event.start;

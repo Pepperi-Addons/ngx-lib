@@ -77,13 +77,16 @@
             </div>
         </ng-template>
         <ng-template #readOnlyBlock>
-            <div class="pep-card-input card-flex-container"
-                [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled}"
-                [ngStyle]="{ color: textColor }" [class]="'text-align-' + xAlignment"
+            <div class="pep-card-input card-flex-container" [ngStyle]="{ color: textColor }"
+                [class]="'text-align-' + xAlignment" [ngClass]="{'one-row': rowSpan === 1,
+                            'multi-rows': rowSpan > 1,
+                            'pep-button weak': isActive && !disabled}"
                 (click)="!disabled ? cardTemplateClicked($event) : ''">
                 <span *ngIf="showTitle && label != ''" class="body-xs title" title="{{ label }}">{{ label
                     }}&nbsp;</span>
-                <span [id]="key" title="{{ formattedValue }}" class="body-sm value">{{ formattedValue }}</span>
+                <span [id]="key" title="{{ formattedValue }}" class="body-sm value"
+                    [ngClass]="{'multi-rows-text': rowSpan > 1}" [ngStyle]="{ '-webkit-line-clamp': rowSpan }">{{
+                    formattedValue }}</span>
                 <button *ngIf="isActive && !disabled" class="pep-button weak card-edit-button" mat-button>
                     <mat-icon>
                         <pep-icon name="system_edit">

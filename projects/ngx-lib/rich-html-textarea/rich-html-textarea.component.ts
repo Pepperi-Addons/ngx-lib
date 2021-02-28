@@ -134,9 +134,9 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     getDefaultToolbarOptions(): IPepRichHtmlTextareaToolbarOptions {

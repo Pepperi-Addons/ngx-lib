@@ -38,8 +38,8 @@
     
         .sidenav {
 
-            $side-nav-width: calc(#{$side-bar-width} + #{$double-content-padding});
-            $side-nav-content-width: $side-bar-width;
+            $side-nav-width: calc(#{$floating-side-bar-width} + #{$double-content-padding});
+            $side-nav-content-width: $floating-side-bar-width;
             
             width: $side-nav-width;
             height: 100%;
@@ -88,8 +88,8 @@
 
         @media (max-width: $screen-max-size-xs) {
             .sidenav {
-                $side-nav-width: $side-bar-width;
-                $side-nav-content-width: calc(#{$side-bar-width} - #{$double-content-padding});
+                $side-nav-width: $floating-side-bar-width;
+                $side-nav-content-width: calc(#{$floating-side-bar-width} - #{$double-content-padding});
 
                 width: $side-nav-width;
                 padding-left: $content-padding;

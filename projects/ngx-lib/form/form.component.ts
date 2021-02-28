@@ -879,25 +879,21 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
-
-        if (this.formValidationChange) {
-            this.formValidationChange.unsubscribe();
-        }
-
-        if (this.childClick) {
-            this.childClick.unsubscribe();
-        }
-
-        if (this.childChange) {
-            this.childChange.unsubscribe();
-        }
-
-        if (this.fieldClick) {
-            this.fieldClick.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
+        // if (this.formValidationChange) {
+        //     this.formValidationChange.unsubscribe();
+        // }
+        // if (this.childClick) {
+        //     this.childClick.unsubscribe();
+        // }
+        // if (this.childChange) {
+        //     this.childChange.unsubscribe();
+        // }
+        // if (this.fieldClick) {
+        //     this.fieldClick.unsubscribe();
+        // }
     }
 
     getUiControlFields(): Array<UIControlField> {

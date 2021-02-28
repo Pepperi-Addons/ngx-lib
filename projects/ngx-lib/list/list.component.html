@@ -18,8 +18,9 @@
     <ng-template #listBody>
         <ng-container *ngIf="useVirtualScroll; then virtualScrollBlock; else noVirtualScrollBlock"></ng-container>
         <ng-template #virtualScrollBlock>
-            <pep-virtual-scroll [totalRows]="totalRows" [isTable]="isTable" (load)="onListLoad()"
-                (change)="onScrollChange($event)" [parentScroll]="parentScroll ? parentScroll : nativeWindow"
+            <pep-virtual-scroll [totalRows]="totalRows" [isTable]="isTable" [scrollAnimationTime]="scrollAnimationTime"
+                (load)="onListLoad()" (change)="onScrollChange($event)"
+                [parentScroll]="parentScroll ? parentScroll : nativeWindow"
                 [bufferAmount]="isReport ? (isTable ? 20 : 3) : isTable ? 15 : 3"
                 [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
                 <ng-container *ngTemplateOutlet="listData"></ng-container>

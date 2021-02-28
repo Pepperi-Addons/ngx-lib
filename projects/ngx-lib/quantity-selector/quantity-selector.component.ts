@@ -32,8 +32,8 @@ import {
     PepQuantitySelectorFieldType,
     PepQuantitySelectorField,
 } from '@pepperi-addons/ngx-lib';
-import { fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, fromEvent, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'pep-quantity-selector',
@@ -105,6 +105,8 @@ export class PepQuantitySelectorComponent
     @ViewChild('QSCont') QSCont: ElementRef;
     @ViewChild('QSInput') QSInput: ElementRef;
 
+    private readonly _destroyed: Subject<void>;
+    private qsWidthSubject: BehaviorSubject<number>;
     lastQsContClientWidth = 0;
     showQsBtn = true;
 
@@ -125,7 +127,10 @@ export class PepQuantitySelectorComponent
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) {
+        this._destroyed = new Subject();
+        this.qsWidthSubject = new BehaviorSubject(0);
+    }
 
     setForm() {
         const pepField = new PepQuantitySelectorField({
@@ -136,6 +141,10 @@ export class PepQuantitySelectorComponent
             disabled: this.disabled,
         });
         this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
+    protected getDestroyer() {
+        return takeUntil(this._destroyed);
     }
 
     ngOnInit(): void {
@@ -159,24 +168,21 @@ export class PepQuantitySelectorComponent
         //     PepCustomizationService.STYLE_QS_KEY
         // ) as PepStyleType;
 
-        // this.resize = fromEvent(window, 'resize')
-        //     .pipe(debounceTime(250))
-        //     .subscribe((event) => {
-        //         this.setQsView();
-        //     });
+        this.qsWidthSubject
+            .asObservable()
+            .pipe(this.getDestroyer(), distinctUntilChanged())
+            .subscribe((qsWidth: number) => {
+                this.setupQsButtons(qsWidth);
+            });
     }
 
     ngAfterViewInit() {
-        // setTimeout(() => {
-        // this.setQsView();
-        // }, 0);
+        //
     }
 
     // TODO: Don't un comment this cause a lot of memory usage.
     ngAfterViewChecked(): void {
-        // setTimeout(() => {
         this.setQsView();
-        // }, 125);
     }
 
     ngOnChanges(changes: any): void {
@@ -233,17 +239,20 @@ export class PepQuantitySelectorComponent
     }
 
     ngOnDestroy(): void {
+        this._destroyed.next();
+        this._destroyed.complete();
+
         // if (this.resize) {
         //     this.resize.unsubscribe();
         // }
 
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
 
-        if (this.elementClick) {
-            this.elementClick.unsubscribe();
-        }
+        // if (this.elementClick) {
+        //     this.elementClick.unsubscribe();
+        // }
     }
 
     get getAdditionalValue(): string {
@@ -476,18 +485,23 @@ export class PepQuantitySelectorComponent
         });
     }
 
+    setupQsButtons(qsWidth: number) {
+        this.showQsBtn = qsWidth > 120;
+
+        if (!this.cd['destroyed']) {
+            this.cd.detectChanges();
+        }
+    }
+
     setQsView(): void {
-        if (this.QSCont && this.QSCont.nativeElement) {
-            const qsContClientWidth = this.QSCont.nativeElement.clientWidth;
-
-            if (qsContClientWidth != this.lastQsContClientWidth) {
-                this.showQsBtn = qsContClientWidth > 120;
-
-                if (!this.cd['destroyed']) {
-                    this.cd.detectChanges();
-                    this.lastQsContClientWidth = qsContClientWidth;
-                }
-            }
+        if (
+            this.QSCont &&
+            this.QSCont.nativeElement &&
+            this.QSCont.nativeElement.clientWidth > 0
+        ) {
+            setTimeout(() => {
+                this.qsWidthSubject.next(this.QSCont.nativeElement.clientWidth);
+            }, 0);
         }
     }
 

@@ -147,13 +147,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
-
-        if (this.formValidationChange) {
-            this.formValidationChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
+        // if (this.formValidationChange) {
+        //     this.formValidationChange.unsubscribe();
+        // }
     }
 
     onFocus(e: any): void {
