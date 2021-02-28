@@ -46,7 +46,7 @@ export class PepColorComponent implements OnInit, OnDestroy {
         private dialogService: PepDialogService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.renderer.addClass(

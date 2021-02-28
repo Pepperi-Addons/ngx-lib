@@ -75,7 +75,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     private getField(): PepFieldBase {
         const pepField = new PepTextboxField({
@@ -150,7 +150,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         // if (this.valueChange) {
         //     this.valueChange.unsubscribe();
         // }
-
         // if (this.formValidationChange) {
         //     this.formValidationChange.unsubscribe();
         // }
@@ -264,7 +263,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             // Allow: Ctrl+X
             (e.which === 88 &&
                 e.ctrlKey ===
-                true) /*||
+                    true) /*||
             // Allow: home, end, left, right
             (e.which >= 35 && e.which <= 39)*/
         ) {

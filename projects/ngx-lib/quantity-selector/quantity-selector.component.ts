@@ -168,17 +168,16 @@ export class PepQuantitySelectorComponent
         //     PepCustomizationService.STYLE_QS_KEY
         // ) as PepStyleType;
 
-        this.qsWidthSubject.asObservable()
-            .pipe(
-                this.getDestroyer(),
-                distinctUntilChanged())
+        this.qsWidthSubject
+            .asObservable()
+            .pipe(this.getDestroyer(), distinctUntilChanged())
             .subscribe((qsWidth: number) => {
                 this.setupQsButtons(qsWidth);
             });
     }
 
     ngAfterViewInit() {
-
+        //
     }
 
     // TODO: Don't un comment this cause a lot of memory usage.
@@ -495,7 +494,11 @@ export class PepQuantitySelectorComponent
     }
 
     setQsView(): void {
-        if (this.QSCont && this.QSCont.nativeElement && this.QSCont.nativeElement.clientWidth > 0) {
+        if (
+            this.QSCont &&
+            this.QSCont.nativeElement &&
+            this.QSCont.nativeElement.clientWidth > 0
+        ) {
             setTimeout(() => {
                 this.qsWidthSubject.next(this.QSCont.nativeElement.clientWidth);
             }, 0);
@@ -526,7 +529,7 @@ export class PepQuantitySelectorComponent
             // Allow: Ctrl+X
             (keyboardEvent.keyCode === 88 &&
                 keyboardEvent.ctrlKey ===
-                true) /*||
+                    true) /*||
             // Allow: home, end, left, right
             (keyboardEvent.keyCode >= 35 && keyboardEvent.keyCode <= 39)*/
         ) {

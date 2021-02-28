@@ -83,7 +83,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         private cd: ChangeDetectorRef,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {

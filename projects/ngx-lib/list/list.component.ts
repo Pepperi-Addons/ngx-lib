@@ -270,7 +270,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             let animationRequest;
             const scrollTop = 0;
             const isWindow = scrollingElement instanceof Window;
-            const currentScrollTop = (scrollingElement instanceof Window) ? window.pageYOffset : scrollingElement.scrollTop;
+            const currentScrollTop =
+                scrollingElement instanceof Window
+                    ? window.pageYOffset
+                    : scrollingElement.scrollTop;
 
             if (this.currentTween !== undefined) {
                 this.currentTween.stop();
@@ -297,7 +300,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     if (isWindow) {
                         window.scrollTo(0, data.scrollTop);
                     } else {
-                        this.renderer.setProperty(scrollingElement, 'scrollTop', data.scrollTop);
+                        this.renderer.setProperty(
+                            scrollingElement,
+                            'scrollTop',
+                            data.scrollTop
+                        );
                     }
                 })
                 .onStop(() => {
@@ -377,7 +384,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         // }
     }
 
-    private updateScrollItems(startIndex, endIndex, loadInChunks = false): void {
+    private updateScrollItems(
+        startIndex,
+        endIndex,
+        loadInChunks = false
+    ): void {
         if (!loadInChunks) {
             this.scrollItems = this.items.slice(startIndex, endIndex);
         } else {
@@ -1187,10 +1198,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         const loadInChunks = this.itemsCounter > 0;
         const startIndex = event.pageIndex * event.pageSize;
-        const endIndex = Math.min(
-            startIndex + event.pageSize,
-            this.totalRows
-        );
+        const endIndex = Math.min(startIndex + event.pageSize, this.totalRows);
 
         for (let i = 0; i < items.length; i++) {
             if (!this.items[i + startIndex]) {
@@ -1355,7 +1363,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             // Set the width of the column and the container of the whole columns.
             if (
                 this.startWidth + widthToAdd >=
-                PepListComponent.MINIMUM_COLUMN_WIDTH ||
+                    PepListComponent.MINIMUM_COLUMN_WIDTH ||
                 widthToAdd > 0
             ) {
                 const length = this._layout.ControlFields.length;

@@ -62,13 +62,12 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         public element: ElementRef,
         private fileService: PepFileService
-    ) { }
+    ) {}
 
     ngOnDestroy(): void {
         // if (this.elementClick) {
         //     this.elementClick.unsubscribe();
         // }
-
         // if (this.valueChange) {
         //     this.valueChange.unsubscribe();
         // }
