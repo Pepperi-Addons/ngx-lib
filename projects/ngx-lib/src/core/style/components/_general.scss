@@ -716,7 +716,7 @@ $sorting-width: 1rem;
         @include calc(min-width, $screen-almost-full-width + ' / 3');
 
         &.small-card {
-            @include calc(min-width, $screen-almost-full-width + ' / 4');
+            @include calc(min-width, $screen-almost-full-width + ' / 3');
         }
 
         &.x-small-card {
@@ -728,11 +728,11 @@ $sorting-width: 1rem;
         @include calc(min-width, $screen-almost-full-width + ' / 2');
 
         &.small-card {
-            @include calc(min-width, $screen-almost-full-width + ' / 3');
+            @include calc(min-width, $screen-almost-full-width + ' / 2');
         }
 
         &.x-small-card {
-            @include calc(min-width, $screen-almost-full-width + ' / 3');
+            @include calc(min-width, $screen-almost-full-width + ' / 2');
         }
     }
     /* < Extra small */
