@@ -24,8 +24,17 @@ import {
 @Injectable()
 export class PepBreadCrumbsComponent implements OnInit {
     @Input() items: Array<PepBreadCrumbItem> = [];
-    @Input() displayType: PepBreadCrumbsDisplayType = 'label';
     @Input() addSpacing = false;
+
+    private _displayType: PepBreadCrumbsDisplayType = 'label';
+    @Input()
+    set displayType(value: PepBreadCrumbsDisplayType) {
+        this._displayType = value;
+        this.setupShrinkItems();
+    }
+    get displayType(): PepBreadCrumbsDisplayType {
+        return this._displayType;
+    }
 
     @Output()
     itemClick: EventEmitter<IPepBreadCrumbItemClickEvent> = new EventEmitter<IPepBreadCrumbItemClickEvent>();
@@ -40,15 +49,18 @@ export class PepBreadCrumbsComponent implements OnInit {
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
-
-            if (this.displayType === 'items' && this.items.length > 1) {
-                this.shrinkItems = this.screenSize > PepScreenSizeType.SM;
-            }
+            this.setupShrinkItems();
         });
 
         if (this.layoutService.isRtl()) {
             this.charSeparator = ' \\ ';
             this.iconSeparator = pepIconArrowLeft.name;
+        }
+    }
+
+    private setupShrinkItems() {
+        if (this.displayType === 'items' && this.items.length > 1) {
+            this.shrinkItems = this.screenSize > PepScreenSizeType.SM;
         }
     }
 

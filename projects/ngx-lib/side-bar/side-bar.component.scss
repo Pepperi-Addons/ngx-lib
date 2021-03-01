@@ -49,6 +49,10 @@
             padding-right: $double-content-padding;
             overflow: visible;
 
+            &.hide-footer {
+                padding-bottom: 0;
+            }
+
             .sidenav-header {
                 position: absolute;
                 width: auto;
