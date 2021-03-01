@@ -12,7 +12,8 @@
             (reachesLeftBound)="onReachesLeftBound($event)" (reachesRightBound)="onReachesRightBound($event)">
             <ng-container *ngFor="let item of items">
                 <pep-form pepCarouselItem [layout]="layout" [data]="item" [layoutType]="'card'"
-                    (click)="itemClicked(item)" class="card-view " [lockEvents]="lockItemInnerEvents">
+                    (click)="itemClicked(item)" class="card-view " [lockEvents]="lockItemInnerEvents"
+                    [ngClass]="{ 'x-small-card': itemSize === 'xs', 'small-card': itemSize === 'sm'}">
                 </pep-form>
             </ng-container>
         </pep-carousel>
