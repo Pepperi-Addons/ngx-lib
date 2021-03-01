@@ -1,2 +1,16 @@
-// @import '../src/core/style/abstracts/variables';
-// @import '../src/core/style/abstracts/mixins';
+@import '../../src/core/style/abstracts/variables';
+@import '../../src/core/style/abstracts/mixins';
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+
+    .pep-radio-button {
+        // margin: $spacing-xs 0;
+        
+        &.pep-input {
+            height: 2.25rem;
+            display: flex;
+        }
+    }
+}

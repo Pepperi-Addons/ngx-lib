@@ -10,6 +10,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 
@@ -47,6 +48,7 @@ import { PepNumberFilterComponent } from './number-filter/number-filter.componen
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
+        MatRadioModule,
         // External modules
         VirtualScrollerModule,
         // ngx-lib modules
