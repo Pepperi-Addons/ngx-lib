@@ -23,8 +23,15 @@ import {
 })
 @Injectable()
 export class PepBreadCrumbsComponent implements OnInit {
-    @Input() items: Array<PepBreadCrumbItem> = [];
-    @Input() addSpacing = false;
+    private _items: Array<PepBreadCrumbItem> = [];
+    @Input()
+    set items(value: Array<PepBreadCrumbItem>) {
+        this._items = value;
+        this.setupShrinkItems();
+    }
+    get items(): Array<PepBreadCrumbItem> {
+        return this._items;
+    }
 
     private _displayType: PepBreadCrumbsDisplayType = 'label';
     @Input()
@@ -35,6 +42,8 @@ export class PepBreadCrumbsComponent implements OnInit {
     get displayType(): PepBreadCrumbsDisplayType {
         return this._displayType;
     }
+
+    @Input() addSpacing = false;
 
     @Output()
     itemClick: EventEmitter<IPepBreadCrumbItemClickEvent> = new EventEmitter<IPepBreadCrumbItemClickEvent>();
