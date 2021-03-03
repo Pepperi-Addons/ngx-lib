@@ -716,18 +716,6 @@ $sorting-width: 1rem;
         @include calc(min-width, $screen-almost-full-width + ' / 3');
 
         &.small-card {
-            @include calc(min-width, $screen-almost-full-width + ' / 4');
-        }
-
-        &.x-small-card {
-            @include calc(min-width, $screen-almost-full-width + ' / 5');
-        }
-    }
-    /* Extra small - Small */
-    @media (max-width: $screen-max-size-sm) and (min-width: $screen-max-size-xs) {
-        @include calc(min-width, $screen-almost-full-width + ' / 2');
-
-        &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 3');
         }
 
@@ -735,9 +723,9 @@ $sorting-width: 1rem;
             @include calc(min-width, $screen-almost-full-width + ' / 4');
         }
     }
-    /* < Extra small */
-    @media (max-width: $screen-max-size-xs) {
-        @include calc(min-width, $screen-almost-full-width + ' / 1');
+    /* Extra small - Small */
+    @media (max-width: $screen-max-size-sm) and (min-width: $screen-max-size-xs) {
+        @include calc(min-width, $screen-almost-full-width + ' / 2');
 
         &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 2');
@@ -745,6 +733,18 @@ $sorting-width: 1rem;
 
         &.x-small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 2');
+        }
+    }
+    /* < Extra small */
+    @media (max-width: $screen-max-size-xs) {
+        @include calc(min-width, $screen-almost-full-width + ' / 1');
+
+        &.small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 1');
+        }
+
+        &.x-small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 1');
         }
     }
 }
