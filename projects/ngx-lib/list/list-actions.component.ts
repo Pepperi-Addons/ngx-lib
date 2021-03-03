@@ -28,6 +28,8 @@ export class PepListActionsComponent {
     actionClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
     @Output()
     stateChange: EventEmitter<IPepMenuStateChangeEvent> = new EventEmitter<IPepMenuStateChangeEvent>();
+    @Output()
+    menuClick: EventEmitter<void> = new EventEmitter<void>();
 
     onActionClicked(action): void {
         this.actionClick.emit(action);
