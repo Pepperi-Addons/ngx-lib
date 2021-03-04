@@ -18,6 +18,7 @@ import { PepTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
 import { PepTextboxComponent } from './textbox.component';
+import { PepTextboxValidationDirective } from './textbox-validation.directive';
 
 @NgModule({
     imports: [
@@ -36,7 +37,7 @@ import { PepTextboxComponent } from './textbox.component';
         PepTextboxIconModule,
     ],
     exports: [PepTextboxComponent],
-    declarations: [PepTextboxComponent],
+    declarations: [PepTextboxComponent, PepTextboxValidationDirective],
 })
 export class PepTextboxModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
