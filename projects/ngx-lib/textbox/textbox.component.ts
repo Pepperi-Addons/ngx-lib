@@ -249,65 +249,64 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     onKeyPress(event: any): any {
-        let inputChar = String.fromCharCode(event.charCode);
-        const e = event as KeyboardEvent;
-
-        if (
-            [8, 9, 13, 27, 190].indexOf(e.which) !== -1 ||
-            // Allow: Ctrl+A
-            (e.which === 65 && e.ctrlKey === true) ||
-            // Allow: Ctrl+C
-            (e.which === 67 && e.ctrlKey === true) ||
-            // Allow: Ctrl+V
-            (e.which === 86 && e.ctrlKey === true) ||
-            // Allow: Ctrl+X
-            (e.which === 88 &&
-                e.ctrlKey ===
-                    true) /*||
-            // Allow: home, end, left, right
-            (e.which >= 35 && e.which <= 39)*/
-        ) {
-            // let it happen, don't do anything
-            return true;
-        }
-
-        switch (this.type) {
-            case 'int': {
-                const pattern = /[0-9\+\-\ ]/;
-                if (!pattern.test(inputChar)) {
-                    e.preventDefault();
-                }
-                break;
-            }
-            case 'currency':
-            case 'real': {
-                const decPoint = '.';
-                const thousandSeparator = ',';
-                const pattern = /^\d+(\.\d{1,9})?$/;
-                if (e.which === 46) {
-                    inputChar = inputChar + '0';
-                } else if (e.which === 44) {
-                    inputChar = inputChar + '000';
-                }
-                if (!pattern.test(event.target.value + inputChar)) {
-                    e.preventDefault();
-                }
-                break;
-            }
-            case 'phone': {
-                const pattern = /^[\d\.\-\+\(\)\*\#]+$/;
-                if (!pattern.test(event.target.value + inputChar)) {
-                    e.preventDefault();
-                }
-                break;
-            }
-            case 'text': {
-                // if (this.maxFieldCharacters !== 0 && event.target.value.length >= this.maxFieldCharacters) {
-                //     e.preventDefault();
-                // }
-                break;
-            }
-        }
+        // Not In use.
+        // let inputChar = String.fromCharCode(event.charCode);
+        // const e = event as KeyboardEvent;
+        // if (
+        //     [8, 9, 13, 27, 190].indexOf(e.which) !== -1 ||
+        //     // Allow: Ctrl+A
+        //     (e.which === 65 && e.ctrlKey === true) ||
+        //     // Allow: Ctrl+C
+        //     (e.which === 67 && e.ctrlKey === true) ||
+        //     // Allow: Ctrl+V
+        //     (e.which === 86 && e.ctrlKey === true) ||
+        //     // Allow: Ctrl+X
+        //     (e.which === 88 &&
+        //         e.ctrlKey ===
+        //         true) /*||
+        //     // Allow: home, end, left, right
+        //     (e.which >= 35 && e.which <= 39)*/
+        // ) {
+        //     // let it happen, don't do anything
+        //     return true;
+        // }
+        // switch (this.type) {
+        //     case 'int': {
+        //         const pattern = /[0-9\+\-\ ]/;
+        //         if (!pattern.test(inputChar)) {
+        //             e.preventDefault();
+        //         }
+        //         break;
+        //     }
+        //     case 'currency':
+        //     case 'real': {
+        //         const decPoint = '.';
+        //         const thousandSeparator = ',';
+        //         const pattern = /^[-+]?[0-9]+\.[0-9]+$/; // -> /^\d+(\.\d{1,9})?$/;
+        //         if (e.which === 46) {
+        //             inputChar = inputChar + '0';
+        //         } else if (e.which === 44) {
+        //             inputChar = inputChar + '000';
+        //         }
+        //         if (!pattern.test(event.target.value + inputChar)) {
+        //             e.preventDefault();
+        //         }
+        //         break;
+        //     }
+        //     case 'phone': {
+        //         const pattern = /^[\d\.\-\+\(\)\*\#]+$/;
+        //         if (!pattern.test(event.target.value + inputChar)) {
+        //             e.preventDefault();
+        //         }
+        //         break;
+        //     }
+        //     case 'text': {
+        //         // if (this.maxFieldCharacters !== 0 && event.target.value.length >= this.maxFieldCharacters) {
+        //         //     e.preventDefault();
+        //         // }
+        //         break;
+        //     }
+        // }
     }
 
     anchorClicked(): void {

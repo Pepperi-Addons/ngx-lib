@@ -371,9 +371,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private toggleItems(isVisible: boolean): void {
-        setTimeout(() => {
-            this._showItems = isVisible;
-        }, 0);
+        this._showItems = isVisible;
 
         // TODO: Maybe we need to check the disable scrolling just on the container.
         // if (this._useVirtualScroll) {
@@ -1208,7 +1206,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        this.updateScrollItems(startIndex, endIndex, loadInChunks);
+        this.updateScrollItems(startIndex, endIndex, false);
         this.toggleItems(true);
     }
 
@@ -1363,7 +1361,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             // Set the width of the column and the container of the whole columns.
             if (
                 this.startWidth + widthToAdd >=
-                PepListComponent.MINIMUM_COLUMN_WIDTH ||
+                    PepListComponent.MINIMUM_COLUMN_WIDTH ||
                 widthToAdd > 0
             ) {
                 const length = this._layout.ControlFields.length;
