@@ -14,6 +14,7 @@ import {
     PepFieldData,
     FIELD_TYPE,
     PepScreenSizeType,
+    PepGuid,
 } from '@pepperi-addons/ngx-lib';
 import { IPepFormFieldClickEvent } from '@pepperi-addons/ngx-lib/form';
 import {
@@ -54,7 +55,7 @@ import { createSmartFilter, createSmartFilterField } from 'projects/ngx-lib/smar
 })
 export class ListExampleComponent implements OnInit, AfterViewInit {
     @ViewChild(PepListComponent) customList: PepListComponent;
-    dataSource = FakeData.Addons;
+    dataSource = [];
 
     menuActions: Array<PepMenuItem>;
     listOptions: Array<PepMenuItem>;
@@ -103,6 +104,12 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        this.dataSource = FakeData.Addons;
+        // for (let index = 0; index < 10000; index++) {
+        //     this.dataSource.push(FakeData.Addons);
+        //     this.dataSource[index].UUID = PepGuid.newGuid();
+        // }
+
         if (this.customList && this.dataSource) {
             this.loadlist(this.dataSource);
         }
