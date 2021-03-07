@@ -117,8 +117,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     formGutterSize;
     cardGutterSize;
     rowHeight;
-    private lastFocusedField: any;
-    private matrixIsLast = false;
+    // private lastFocusedField: any = null;
+    // private matrixIsLast = false;
     // lastUpdatedFieldApiName: string = '';
     form: FormGroup;
     differ: any;
@@ -469,7 +469,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             }
 
             options.notificationInfo = dataField.NotificationInfo;
-
             customField = new PepQuantitySelectorField(options);
         } else {
             // Hack need to remove this..
@@ -854,13 +853,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             ) * RemToPixel;
     }
 
-    // TODO: Check if we need this??
+    // TODO: Check if we need this?? (comment in 16.55 By Tomer.p)
     ngDoCheck(): void {
-        const changes = this.differ.diff(this.data); // check for changes
-
-        if (changes) {
-            this.updateForm(true);
-        }
+        // const changes = this.differ.diff(this.data); // check for changes
+        // if (changes) {
+        //     this.updateForm(true);
+        // }
     }
 
     ngOnChanges(changes): void {
@@ -1153,9 +1151,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         customField: PepFieldBase,
         updatedField: ObjectsDataRowCell
     ): void {
-        const hasFocus =
-            this.lastFocusedField &&
-            this.lastFocusedField.id === customField.key;
         const options: any = {
             disabled: !updatedField.Enabled || !this.canEditObject,
             readonly: !updatedField.Enabled || !this.canEditObject,
@@ -1163,7 +1158,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             additionalValue: updatedField.AdditionalValue,
             formattedValue: updatedField.FormattedValue,
             textColor: updatedField.TextColor,
-            lastFocusField: hasFocus ? this.lastFocusedField : null,
         };
 
         if (customField instanceof PepQuantitySelectorField) {
@@ -1183,6 +1177,13 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         }
 
         customField.update(options);
+
+        // if (this.lastFocusedField && this.lastFocusedField.id === customField.key) {
+        //     setTimeout(() => {
+        //         this.lastFocusedField.focus();
+        //         this.lastFocusedField = null;
+        //     }, 100);
+        // }
     }
 
     updateForm(cleanLastFocusedField = false): void {
@@ -1225,10 +1226,11 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
             this.setForm(true);
 
-            if (cleanLastFocusedField) {
-                // Clean the last focused field.
-                this.lastFocusedField = null;
-            }
+            // if (cleanLastFocusedField) {
+            //     // Clean the last focused field.
+            //     this.lastFocusedField = null;
+            //     console.log(this.lastFocusedField);
+            // }
         }
     }
 
@@ -1357,10 +1359,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         const fields: PepFieldBase[] = [];
 
-        const matrixFields = controlFields.filter((cf) =>
-            this.isMatrixField(cf.ApiName)
-        ).length;
-        let matrixAlreadyPlaced = false;
+        // const matrixFields = controlFields.filter((cf) =>
+        //     this.isMatrixField(cf.ApiName)
+        // ).length;
+        // let matrixAlreadyPlaced = false;
 
         controlFields.forEach((field, index) => {
             const dataField = dataFields.filter(
@@ -1386,25 +1388,25 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             }
 
             // Remove this. (fix two matrix into one)
-            if (matrixFields > 0 && this.isMatrixField(field.ApiName)) {
-                if (matrixFields > 1 && matrixAlreadyPlaced) {
-                    return;
-                }
+            // if (matrixFields > 0 && this.isMatrixField(field.ApiName)) {
+            //     if (matrixFields > 1 && matrixAlreadyPlaced) {
+            //         return;
+            //     }
 
-                matrixAlreadyPlaced = true;
+            //     matrixAlreadyPlaced = true;
 
-                if (matrixFields > 1) {
-                    this.matrixIsLast =
-                        controlFields.length >= 2
-                            ? controlFields[controlFields.length - 2]
-                                  .ApiName === field.ApiName
-                            : false;
-                } else {
-                    this.matrixIsLast =
-                        controlFields[controlFields.length - 1].ApiName ===
-                        field.ApiName;
-                }
-            }
+            //     if (matrixFields > 1) {
+            //         this.matrixIsLast =
+            //             controlFields.length >= 2
+            //                 ? controlFields[controlFields.length - 2]
+            //                     .ApiName === field.ApiName
+            //                 : false;
+            //     } else {
+            //         this.matrixIsLast =
+            //             controlFields[controlFields.length - 1].ApiName ===
+            //             field.ApiName;
+            //     }
+            // }
 
             // Set type to link
             if (this.firstFieldAsLink && index === 0) {
@@ -1475,7 +1477,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 currentField.formattedValue = currentField.value = event.value;
             }
 
-            this.lastFocusedField = event.lastFocusedField;
+            // this.lastFocusedField = event.lastFocusedField;
+
             this.valueChange.emit({
                 id: this.data.UID.toString(),
                 key: event.key,

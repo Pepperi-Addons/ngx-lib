@@ -41,7 +41,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() lastFocusField: any;
+    // @Input() lastFocusField: any;
 
     controlType = 'textarea';
 
@@ -99,12 +99,12 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
-        setTimeout(() => {
-            if (this.lastFocusField) {
-                this.lastFocusField.focus();
-                this.lastFocusField = null;
-            }
-        }, 100);
+        // setTimeout(() => {
+        //     if (this.lastFocusField) {
+        //         this.lastFocusField.focus();
+        //         this.lastFocusField = null;
+        //     }
+        // }, 100);
     }
 
     ngOnDestroy(): void {

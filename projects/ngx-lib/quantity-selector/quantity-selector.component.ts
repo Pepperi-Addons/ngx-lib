@@ -79,7 +79,7 @@ export class PepQuantitySelectorComponent
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() lastFocusField: any;
+    // @Input() lastFocusField: any;
     @Input() alowDecimal = false;
     @Input() additionalValue = '';
     @Input() notificationInfo: any;
@@ -180,7 +180,6 @@ export class PepQuantitySelectorComponent
         //
     }
 
-    // TODO: Don't un comment this cause a lot of memory usage.
     ngAfterViewChecked(): void {
         this.setQsView();
     }
@@ -228,12 +227,12 @@ export class PepQuantitySelectorComponent
             }, 150);
         } else {
             setTimeout(() => {
-                if (this.lastFocusField) {
-                    this.lastFocusField.focus();
-                    this.lastFocusField = null;
-                } else {
-                    this.focusToTheSameElementInTheWantedRow();
-                }
+                // if (this.lastFocusField) {
+                //     this.lastFocusField.focus();
+                //     this.lastFocusField = null;
+                // } else {
+                this.focusToTheSameElementInTheWantedRow();
+                // }
             }, 100);
         }
     }

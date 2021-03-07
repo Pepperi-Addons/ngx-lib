@@ -59,8 +59,8 @@
                 </ng-template>
             </div>
             <input [id]="key" matInput [name]="key" [formControlName]="key" class="hidden-input" type="text"
-                [value]="src" [disabled]="disabled" (click)="onClick_ChooseFile($event)"
-                (keypress)="onKeyPress_ChooseFile($event)" autocomplete="off" />
+                [value]="src" (click)="onClick_ChooseFile($event)" (keypress)="onKeyPress_ChooseFile($event)"
+                autocomplete="off" />
         </div>
 
         <mat-error><span class="body-xs"
