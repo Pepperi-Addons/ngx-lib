@@ -44,7 +44,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() lastFocusField: any;
+    // @Input() lastFocusField: any;
     @Input() minValue = NaN;
     @Input() maxValue = NaN;
 
@@ -138,12 +138,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
 
         setTimeout(() => {
-            if (this.lastFocusField) {
-                this.lastFocusField.focus();
-                this.lastFocusField = null;
-            } else {
-            }
-        }, 100);
+            // if (this.lastFocusField) {
+            //     this.lastFocusField.focus();
+            //     this.lastFocusField = null;
+            // } else {
+            // }
+        }, 500);
     }
 
     ngOnDestroy(): void {

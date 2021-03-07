@@ -391,6 +391,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         if (!loadInChunks) {
             this.scrollItems = this.items.slice(startIndex, endIndex);
         } else {
+            // Insert the first for the UI calculation.
+            this.scrollItems = this.items.slice(startIndex, startIndex + 1);
+
             const ITEMS_RENDERED_AT_ONCE = 5;
             const INTERVAL_IN_MS = 50;
 
@@ -1164,6 +1167,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 this.cleanItems();
             }
 
+            const loadInChunks = this.itemsCounter === 0;
             const startIndex = event.fromIndex ? event.fromIndex : event.start;
 
             for (let i = 0; i < items.length; i++) {
@@ -1173,7 +1177,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
 
-            this.updateScrollItems(event.start, event.end);
+            this.updateScrollItems(event.start, event.end, loadInChunks);
             this.toggleItems(true);
         } else {
             this.scrollItems = this._items = items;
@@ -1195,7 +1199,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.cleanItems();
         }
 
-        const loadInChunks = this.itemsCounter > 0;
+        const loadInChunks = this.itemsCounter === 0;
         const startIndex = event.pageIndex * event.pageSize;
         const endIndex = Math.min(startIndex + event.pageSize, this.totalRows);
 
@@ -1222,9 +1226,15 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         // Update scrollItems list
         index = this.scrollItems.findIndex((i) => i && i.UID === data.UID);
         if (index >= 0 && index < this.scrollItems.length) {
-            this.scrollItems[index] = data;
+            // this.scrollItems[index] = data;
+            // Update item properties to keep the pep-form instance.
+            this.updateItemProperties(this.scrollItems[index], data);
             this.checkForChanges = new Date().getTime();
         }
+    }
+
+    updateItemProperties(itemToUpdate: ObjectsDataRow, data: ObjectsDataRow) {
+        Object.assign(itemToUpdate, data);
     }
 
     // focusOnAnItem(itemIndex): void {

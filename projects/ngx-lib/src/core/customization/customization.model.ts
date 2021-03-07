@@ -50,7 +50,7 @@ interface IPepFieldBaseOptions {
     minValue?: number;
     maxValue?: number;
     textColor?: string;
-    lastFocusField?: any;
+    // lastFocusField?: any;
 }
 export class PepFieldBase {
     value: any;
@@ -78,7 +78,7 @@ export class PepFieldBase {
     minValue: number;
     maxValue: number;
     textColor: string;
-    lastFocusField: any;
+    // lastFocusField: any;
 
     constructor(options: IPepFieldBaseOptions = {}) {
         this.key = options.key || '';
@@ -140,7 +140,7 @@ export class PepFieldBase {
         this.readonly = !!options.readonly;
         this.disabled = !!options.disabled;
         this.textColor = options.textColor || '';
-        this.lastFocusField = options.lastFocusField || null;
+        // this.lastFocusField = options.lastFocusField || null;
     }
 }
 

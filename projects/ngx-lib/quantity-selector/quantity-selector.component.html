@@ -27,9 +27,8 @@
                             class="body-lg ellipsis" title="{{ formattedValue }}" autocomplete="off" [id]="key"
                             [formControlName]="key"
                             [value]="isFocus ? (value | pepQuantitySelectorNumber: alowDecimal) : formattedValue"
-                            [disabled]="disabled" (keypress)="onKeyPress($event)"
-                            (click)="$event.target.setSelectionRange(0, 999)" (blur)="onBlur($event)"
-                            (focus)="onFocus($event)" />
+                            (keypress)="onKeyPress($event)" (click)="$event.target.setSelectionRange(0, 999)"
+                            (blur)="onBlur($event)" (focus)="onFocus($event)" />
                         <button *ngIf="showQsBtn" mat-button matPrefix (click)="decrement($event)"
                             class="pep-button icon-button sm weak qs-action" [disabled]="disabled" [ngClass]="{ disable: disabled, caution: isCaution && styleClass !== 'strong',
                                 'keep-background-on-focus': styleClass === 'strong'}">
@@ -72,7 +71,7 @@
                             title="{{ formattedValue }}" class="body-sm ellipsis" autocomplete="off" [id]="key"
                             [formControlName]="key"
                             [value]="isFocus ? (value | pepQuantitySelectorNumber: alowDecimal) : formattedValue"
-                            [disabled]="disabled" (keypress)="onKeyPress($event)"
+                            (keypress)="onKeyPress($event)"
                             (click)="onMatrixClick($event); $event.target.setSelectionRange(0, 999)"
                             (blur)="onMatrixBlur($event)" (focus)="onMatrixMouseEnter($event); onFocus($event)"
                             (mouseenter)="onMatrixMouseEnter($event)" />

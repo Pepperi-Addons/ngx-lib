@@ -41,10 +41,9 @@
     <pep-quantity-selector *ngSwitchCase="'qs'" [form]="form" [key]="field.key" [value]="field.value"
         [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type" [required]="field.required"
         [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
-        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [lastFocusField]="field.lastFocusField"
-        [alowDecimal]="field.alowDecimal" [additionalValue]="field.additionalValue"
-        [notificationInfo]="field.notificationInfo" [isActive]="isActive" [layoutType]="layoutType"
-        [showTitle]="showTitle" (valueChange)="onValueChanged($event)"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [alowDecimal]="field.alowDecimal"
+        [additionalValue]="field.additionalValue" [notificationInfo]="field.notificationInfo" [isActive]="isActive"
+        [layoutType]="layoutType" [showTitle]="showTitle" (valueChange)="onValueChanged($event)"
         (formValidationChange)="onFormValidationChanged($event)" (elementClick)="onClick($event)">
     </pep-quantity-selector>
 
@@ -74,17 +73,17 @@
     <pep-textarea *ngSwitchCase="'textarea'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
         [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
-        [rowSpan]="field.rowSpan" [lastFocusField]="field.lastFocusField" [showTitle]="showTitle"
-        [layoutType]="layoutType" (valueChange)="onValueChanged($event)" [isActive]="isActive">
+        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
+        (valueChange)="onValueChanged($event)" [isActive]="isActive">
     </pep-textarea>
 
     <pep-textbox *ngSwitchCase="'textbox'" [form]="form" [key]="field.key" [value]="field.value"
         [formattedValue]="field.formattedValue" [label]="field.label" [placeholder]="field.placeholder"
         [type]="field.type" [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
-        [rowSpan]="field.rowSpan" [lastFocusField]="field.lastFocusField" [showTitle]="showTitle"
-        [layoutType]="layoutType" (valueChange)="onValueChanged($event)"
-        (formValidationChange)="onFormValidationChanged($event)" [isActive]="isActive">
+        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
+        (valueChange)="onValueChanged($event)" (formValidationChange)="onFormValidationChanged($event)"
+        [isActive]="isActive">
     </pep-textbox>
 
     <pep-indicators *ngSwitchCase="'indicators'" [key]="field.key" [value]="field.value" [layoutType]="layoutType">

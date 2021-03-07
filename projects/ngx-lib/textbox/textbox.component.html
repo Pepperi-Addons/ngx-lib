@@ -12,7 +12,7 @@
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
                 title="{{ formattedValue }}" [formControlName]="key" [type]="type"
                 [value]="type == 'link' ? formattedValue : (isFocus ? value : formattedValue)" (blur)="onBlur($event)"
-                (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" [disabled]="disabled"
+                (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)"
                 [ngClass]="{'disable-hidden': disabled && formattedValue.length > 0 && (type === 'phone' || type === 'email' || type === 'link')}" />
 
             <span
@@ -61,7 +61,7 @@
                     <input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
                         (keyup)="onKeyUp($event)" [placeholder]="!disabled ? placeholder : ''"
                         title="{{ formattedValue }}" [formControlName]="key" [value]="value" (blur)="onBlur($event)"
-                        (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" [disabled]="disabled" />
+                        (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" />
                 </mat-form-field>
                 <!-- <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: true, hasParent: true }"></ng-container> -->
             </ng-container>

@@ -31,8 +31,8 @@
                         </ng-template>
                     </div>
                     <input [id]="key" matInput [formControlName]="key" class="hidden-input signature" type="text"
-                        [value]="src" [disabled]="disabled" (click)="openSignModal()"
-                        (keypress)="onKeyPress_OpenSignModal($event)" autocomplete="off" readonly />
+                        [value]="src" (click)="openSignModal()" (keypress)="onKeyPress_OpenSignModal($event)"
+                        autocomplete="off" readonly />
                 </div>
 
                 <mat-error><span class="body-xs"
