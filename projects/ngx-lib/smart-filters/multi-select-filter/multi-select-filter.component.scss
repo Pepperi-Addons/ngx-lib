@@ -4,6 +4,10 @@
 .multi-select-options {
     margin: $spacing-sm calc(#{$spacing-xs} * -1) 0;
     
+    &.with-no-search {
+        margin: calc(#{$spacing-sm} * -1) calc(#{$spacing-xs} * -1) 0;
+    }
+
     .no-options {
         display: flex;
         padding: $spacing-sm $spacing-md;
