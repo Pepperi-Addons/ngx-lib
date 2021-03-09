@@ -257,6 +257,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         this.saveSortingToSession();
     }
+
     private scrollToTop() {
         const scrollingElement = this.getParentContainer();
         if (scrollingElement) {
@@ -1144,9 +1145,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.onListLoad();
         }
 
-        setTimeout(() => {
-            this.setLayout();
-        }, 0);
+        this.setLayout();
     }
 
     updateItems(
@@ -1210,7 +1209,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        this.updateScrollItems(startIndex, endIndex, false);
+        this.updateScrollItems(startIndex, endIndex, loadInChunks);
         this.toggleItems(true);
     }
 

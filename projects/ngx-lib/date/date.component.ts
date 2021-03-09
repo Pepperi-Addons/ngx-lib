@@ -208,11 +208,12 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onBlur(event: any): void {
-        // setTimeout(() => {
-        if (this.isInEditMode && !this.datetimePicker.opened) {
-            this.isInEditMode = false;
-        }
-        // }, 0);
+        // Don't remove the timeout cause a bug DI-17819.
+        setTimeout(() => {
+            if (this.isInEditMode && !this.datetimePicker.opened) {
+                this.isInEditMode = false;
+            }
+        }, 0);
     }
 
     onDateChange(event: MatDatetimepickerInputEvent<moment.Moment>): void {
