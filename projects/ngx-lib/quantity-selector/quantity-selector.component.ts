@@ -95,7 +95,7 @@ export class PepQuantitySelectorComponent
     @Input()
     styleClass: PepStyleType = document.documentElement.style.getPropertyValue(
         PepCustomizationService.STYLE_QS_KEY
-    ) as PepStyleType; //'strong';
+    ) as PepStyleType;
 
     @Output()
     valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
@@ -528,7 +528,7 @@ export class PepQuantitySelectorComponent
             // Allow: Ctrl+X
             (keyboardEvent.keyCode === 88 &&
                 keyboardEvent.ctrlKey ===
-                    true) /*||
+                true) /*||
             // Allow: home, end, left, right
             (keyboardEvent.keyCode >= 35 && keyboardEvent.keyCode <= 39)*/
         ) {
