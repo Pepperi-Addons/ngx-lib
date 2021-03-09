@@ -528,7 +528,7 @@ export class PepQuantitySelectorComponent
             // Allow: Ctrl+X
             (keyboardEvent.keyCode === 88 &&
                 keyboardEvent.ctrlKey ===
-                true) /*||
+                    true) /*||
             // Allow: home, end, left, right
             (keyboardEvent.keyCode >= 35 && keyboardEvent.keyCode <= 39)*/
         ) {

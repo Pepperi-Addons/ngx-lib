@@ -713,7 +713,8 @@ main {
 
         .mat-dialog-container {
             .mat-dialog-content {
-                max-height: calc(90vh - (#{$dialog-header-height} + (#{$content-padding} * 2)));
+                $border-size: 1px;
+                max-height: calc(90vh - (#{$dialog-header-height} + (#{$content-padding} * 2) + (#{$border-size} * 2))); 
             }
         }
     }
@@ -752,7 +753,8 @@ main {
                 height: 100%;
 
                 .mat-dialog-content {
-                    max-height: calc(100% - ((#{$dialog-content-padding} * 2)));
+                    $border-size: 1px;
+                    max-height: calc(100% - ((#{$dialog-content-padding} * 2) + (#{$border-size} * 2)));
                     height: inherit;
                 }
             }
