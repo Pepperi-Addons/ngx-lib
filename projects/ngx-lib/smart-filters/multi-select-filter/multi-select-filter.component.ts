@@ -45,6 +45,8 @@ export class PepMultiSelectFilterComponent
     @ViewChild(VirtualScrollerComponent)
     private virtualScroller: VirtualScrollerComponent;
 
+    numberOptionsToShowSearch = 10;
+
     ngOnInit() {
         super.ngOnInit;
 
