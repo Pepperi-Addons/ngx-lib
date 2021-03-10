@@ -15,9 +15,8 @@
                 </mat-checkbox>
                 <ng-container *ngIf="scroll.viewPortItems?.length === 0">
                     <span class="no-options body-sm ellipsis" [title]="field.name">
-                        {{ options.length > 0 ?
-                        "SMART_FILTERS.NO_SEARCH_RESULTS" :
-                        "SMART_FILTERS.NO_OPTIONS" | translate}}
+                        {{ ( options.length > 0 ? "SMART_FILTERS.NO_SEARCH_RESULTS" : "SMART_FILTERS.NO_OPTIONS") |
+                        translate }}
                     </span>
                 </ng-container>
             </virtual-scroller>

@@ -1,6 +1,6 @@
 {
     "name": "@pepperi-addons/ngx-lib",
-    "version": "0.1.183",
+    "version": "0.1.185",
     "peerDependencies": {
         "@angular/animations": ">= 10.0.0",
         "@angular/cdk": ">= 10.0.0",
