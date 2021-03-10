@@ -1176,7 +1176,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
 
-            this.updateScrollItems(event.start, event.end, loadInChunks);
+            this.updateScrollItems(event.start, event.end, false);
             this.toggleItems(true);
         } else {
             this.scrollItems = this._items = items;
