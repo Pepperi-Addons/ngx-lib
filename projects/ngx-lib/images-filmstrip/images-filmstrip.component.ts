@@ -44,7 +44,7 @@ import {
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconArrowRightAlt } from '@pepperi-addons/ngx-lib/icon';
-import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
 import 'hammerjs';
 
@@ -271,7 +271,7 @@ export class PepImagesFilmstripComponent
             // add No image image when there is no images
             if (imgArr.length === 0) {
                 const noImageSrc = this.fileService.getSvgAsImageSrc(
-                    pepIconNoImage.data
+                    pepIconNoImage2.data
                 );
                 imgArr.push(noImageSrc);
             }
@@ -284,13 +284,13 @@ export class PepImagesFilmstripComponent
         this.config.dots = this.config.nav = this.items.length > 1;
         this.config.thumb =
             (this.key === 'ItemFilmstripImages' || this.showThumbnails) &&
-            this.items.length > 1
+                this.items.length > 1
                 ? true
                 : false;
         this.currIndex =
             this.key === 'ItemFilmstripImages' &&
-            this.currIndex === 0 &&
-            this.items.length > 1
+                this.currIndex === 0 &&
+                this.items.length > 1
                 ? Math.floor(this.items.length / 2) - 1
                 : this.currIndex;
     }
@@ -337,7 +337,7 @@ export class PepImagesFilmstripComponent
 
     onError(e): void {
         const noImageSrc = this.fileService.getSvgAsImageSrc(
-            pepIconNoImage.data
+            pepIconNoImage2.data
         );
         const noimg = new ImageItem({ src: noImageSrc, thumb: noImageSrc });
         this.items.splice(e.itemIndex, 1, noimg);
@@ -405,14 +405,14 @@ export class PepImagesFilmstripComponent
         this.config.thumbPosition = this.isVertical
             ? ThumbnailsPosition.Bottom
             : this.layoutService.isRtl()
-            ? ThumbnailsPosition.Right
-            : ThumbnailsPosition.Left;
+                ? ThumbnailsPosition.Right
+                : ThumbnailsPosition.Left;
         this.config.slidingDirection =
             this.key !== 'ItemFilmstripImages'
                 ? SlidingDirection.Horizontal
                 : this.isVertical
-                ? SlidingDirection.Horizontal
-                : SlidingDirection.Vertical;
+                    ? SlidingDirection.Horizontal
+                    : SlidingDirection.Vertical;
 
         this.config.imageSize = 'contain';
     }

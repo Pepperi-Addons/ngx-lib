@@ -107,6 +107,6 @@ export class PepSideBarComponent implements OnInit {
     }
 
     openedChange(isOpen: boolean) {
-        this.stateChange.emit({ state: isOpen ? 'close' : 'open' });
+        this.stateChange.emit({ state: isOpen ? 'open' : 'close' });
     }
 }

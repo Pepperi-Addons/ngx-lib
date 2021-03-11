@@ -1,5 +1,15 @@
 <ng-container *ngIf="totalRows == 0">
-    <div class="no-data body-xl">{{ noDataFoundMsg }}</div>
+    <div class="pep-border-bottom">
+        <p class="title-xl no-data">
+            {{ (noDataFoundMsg ? noDataFoundMsg : 'LIST.NO_DATA_FOUND') | translate}}
+        </p>
+    </div>
+    <div class="no-data-suggestions">
+        <p class="suggestions-title title-lg">
+            {{ 'LIST.NO_DATA_FOUND_SUGGESTIONS_TITLE' | translate}}
+        </p>
+        <ul class="suggestions-list body-lg" [innerHtml]="'LIST.NO_DATA_FOUND_SUGGESTIONS_LIST' | translate"></ul>
+    </div>
 </ng-container>
 <div *ngIf="totalRows > 0" [ngClass]="{ 'lock-events': lockEvents }">
     <ng-container *ngIf="isTable; then tableBlock; else cardsBlock"></ng-container>

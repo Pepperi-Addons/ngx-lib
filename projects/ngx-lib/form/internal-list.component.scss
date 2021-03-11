@@ -7,9 +7,19 @@
 }
 
 .no-data {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-top: 100px;
+    margin: $spacing-2xl 0;
+}
+
+.no-data-suggestions {
+    .suggestions-title {
+        margin: $spacing-lg 0 $spacing-sm;
+    }
+
+    .suggestions-list {
+        margin: 0;
+        padding: 0;
+        padding-inline-start: $spacing-2xl;
+    }
 }
 
 .table-header {

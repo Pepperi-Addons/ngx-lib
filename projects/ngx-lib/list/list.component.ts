@@ -79,7 +79,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     static MINIMUM_COLUMN_WIDTH = 48;
 
     @Input() currentListTypeTranslation = '';
-    @Input() noDataFoundMsg = 'Items not found';
+    @Input() noDataFoundMsg: string = null;
     @Input() selectionTypeForActions: PepListSelectionType = 'multi';
     @Input() hideAllSelectionInMulti = false;
 
@@ -1166,7 +1166,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 this.cleanItems();
             }
 
-            const loadInChunks = this.itemsCounter === 0;
+            // const loadInChunks = this.itemsCounter === 0;
             const startIndex = event.fromIndex ? event.fromIndex : event.start;
 
             for (let i = 0; i < items.length; i++) {
@@ -1370,7 +1370,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             // Set the width of the column and the container of the whole columns.
             if (
                 this.startWidth + widthToAdd >=
-                    PepListComponent.MINIMUM_COLUMN_WIDTH ||
+                PepListComponent.MINIMUM_COLUMN_WIDTH ||
                 widthToAdd > 0
             ) {
                 const length = this._layout.ControlFields.length;
