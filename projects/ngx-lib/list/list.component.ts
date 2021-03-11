@@ -1198,7 +1198,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.cleanItems();
         }
 
-        const loadInChunks = this.itemsCounter === 0;
+        // const loadInChunks = this.itemsCounter === 0;
         const startIndex = event.pageIndex * event.pageSize;
         const endIndex = Math.min(startIndex + event.pageSize, this.totalRows);
 
@@ -1209,7 +1209,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        this.updateScrollItems(startIndex, endIndex, loadInChunks);
+        this.updateScrollItems(startIndex, endIndex, false);
         this.toggleItems(true);
     }
 

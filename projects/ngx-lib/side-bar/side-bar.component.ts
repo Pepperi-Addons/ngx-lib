@@ -90,14 +90,12 @@ export class PepSideBarComponent implements OnInit {
     open() {
         if (this.sidenav) {
             this.sidenav.open();
-            this.stateChange.emit({ state: 'open' });
         }
     }
 
     close() {
         if (this.sidenav) {
             this.sidenav.close();
-            this.stateChange.emit({ state: 'close' });
         }
     }
 
@@ -105,7 +103,10 @@ export class PepSideBarComponent implements OnInit {
         if (this.sidenav) {
             const isOpen = this.sidenav.opened;
             this.sidenav.toggle();
-            this.stateChange.emit({ state: isOpen ? 'close' : 'open' });
         }
+    }
+
+    openedChange(isOpen: boolean) {
+        this.stateChange.emit({ state: isOpen ? 'close' : 'open' });
     }
 }
