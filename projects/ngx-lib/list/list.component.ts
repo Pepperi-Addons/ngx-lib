@@ -395,8 +395,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             // Insert the first for the UI calculation.
             this.scrollItems = this.items.slice(startIndex, startIndex + 1);
 
-            const ITEMS_RENDERED_AT_ONCE = 5;
-            const INTERVAL_IN_MS = 50;
+            const ITEMS_RENDERED_AT_ONCE = 1; //this.isTable ? 10 : 5;
+            const INTERVAL_IN_MS = 1;
 
             let currentIndex = 0;
             const tmp = this.items.slice(startIndex, endIndex);
@@ -1166,7 +1166,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 this.cleanItems();
             }
 
-            // const loadInChunks = this.itemsCounter === 0;
+            const loadInChunks = this.itemsCounter === 0;
             const startIndex = event.fromIndex ? event.fromIndex : event.start;
 
             for (let i = 0; i < items.length; i++) {
@@ -1176,7 +1176,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
 
-            this.updateScrollItems(event.start, event.end, false);
+            this.updateScrollItems(event.start, event.end, loadInChunks);
             this.toggleItems(true);
         } else {
             this.scrollItems = this._items = items;
@@ -1370,7 +1370,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             // Set the width of the column and the container of the whole columns.
             if (
                 this.startWidth + widthToAdd >=
-                PepListComponent.MINIMUM_COLUMN_WIDTH ||
+                    PepListComponent.MINIMUM_COLUMN_WIDTH ||
                 widthToAdd > 0
             ) {
                 const length = this._layout.ControlFields.length;

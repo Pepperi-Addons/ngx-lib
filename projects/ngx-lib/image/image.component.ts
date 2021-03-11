@@ -80,7 +80,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         private renderer: Renderer2,
         private element: ElementRef,
         private translate: TranslateService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
