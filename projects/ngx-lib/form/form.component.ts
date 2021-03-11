@@ -358,10 +358,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         if (
             floatingField.Layout.Y >= controlField.Layout.Y &&
             floatingField.Layout.Y <
-                controlField.Layout.Y + controlField.Layout.Height &&
+            controlField.Layout.Y + controlField.Layout.Height &&
             floatingField.Layout.X >= controlField.Layout.X &&
             floatingField.Layout.X <
-                controlField.Layout.X + controlField.Layout.Width
+            controlField.Layout.X + controlField.Layout.Width
         ) {
             hasFloatingField = true;
         }
@@ -453,7 +453,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 options.alowDecimal = true;
             } else if (
                 dataField.FieldType ===
-                    FIELD_TYPE.NumberIntegerQuantitySelector ||
+                FIELD_TYPE.NumberIntegerQuantitySelector ||
                 dataField.FieldType === FIELD_TYPE.NumberInteger
             ) {
                 options.type = 'qs';
@@ -536,23 +536,23 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     // options.type = 'image';
                     options.menuField =
                         menuField &&
-                        this.doesFieldHavaFloatingField(controlField, menuField)
+                            this.doesFieldHavaFloatingField(controlField, menuField)
                             ? menuField
                             : null;
                     options.hasCampaignField =
                         hasCampaignField &&
-                        this.doesFieldHavaFloatingField(
-                            controlField,
-                            hasCampaignField
-                        )
+                            this.doesFieldHavaFloatingField(
+                                controlField,
+                                hasCampaignField
+                            )
                             ? hasCampaignField
                             : null;
                     options.indicatorsField =
                         indicatorsField &&
-                        this.doesFieldHavaFloatingField(
-                            controlField,
-                            indicatorsField
-                        )
+                            this.doesFieldHavaFloatingField(
+                                controlField,
+                                indicatorsField
+                            )
                             ? indicatorsField
                             : null;
 
@@ -851,6 +851,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 themeVars,
                 PepCustomizationService.CARD_SPACEING_KEY
             ) * RemToPixel;
+
+        this.initForm();
     }
 
     ngDoCheck(): void {
@@ -873,7 +875,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         // }
 
         // this.checkForChanges = new Date();
-
         if (this.shouldReloadForm || !changes.data.previousValue) {
             this._shouldReloadForm = false;
             this.initForm();
@@ -982,7 +983,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                                 if (
                                     doesfieldExistIn.length > row &&
                                     doesfieldExistIn[0].length >
-                                        currentField.col
+                                    currentField.col
                                 ) {
                                     doesfieldExistIn[row][
                                         currentField.col
@@ -1047,12 +1048,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     f1.row > f2.row
                         ? 1
                         : f1.row < f2.row
-                        ? -1
-                        : f1.col > f2.col
-                        ? 1
-                        : f1.col < f2.col
-                        ? -1
-                        : 0
+                            ? -1
+                            : f1.col > f2.col
+                                ? 1
+                                : f1.col < f2.col
+                                    ? -1
+                                    : 0
                 );
             }
         }
@@ -1350,7 +1351,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     field.FieldType === FIELD_TYPE.CalculatedBool ||
                     field.FieldType === FIELD_TYPE.Signature ||
                     field.FieldType ===
-                        FIELD_TYPE.NumberIntegerQuantitySelector ||
+                    FIELD_TYPE.NumberIntegerQuantitySelector ||
                     field.FieldType === FIELD_TYPE.NumberRealQuantitySelector ||
                     field.FieldType === FIELD_TYPE.Package ||
                     field.FieldType === FIELD_TYPE.NumberIntegerForMatrix ||
@@ -1452,12 +1453,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             f1.row > f2.row
                 ? 1
                 : f1.row < f2.row
-                ? -1
-                : f1.col > f2.col
-                ? 1
-                : f1.col < f2.col
-                ? -1
-                : 0
+                    ? -1
+                    : f1.col > f2.col
+                        ? 1
+                        : f1.col < f2.col
+                            ? -1
+                            : 0
         );
     }
 
