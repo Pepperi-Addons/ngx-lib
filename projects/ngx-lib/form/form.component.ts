@@ -851,8 +851,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 themeVars,
                 PepCustomizationService.CARD_SPACEING_KEY
             ) * RemToPixel;
-
-        this.initForm();
     }
 
     ngDoCheck(): void {
@@ -876,7 +874,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         // this.checkForChanges = new Date();
 
-        if (this.shouldReloadForm) {
+        if (this.shouldReloadForm || !changes.data.previousValue) {
             this._shouldReloadForm = false;
             this.initForm();
         }

@@ -17,7 +17,7 @@
     <ng-template #notLargeScreensBlock>
         <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
             <mat-sidenav #sidenav mode="over" autoFocus="false" class="sidenav" fixedInViewport="false"
-                [ngClass]="{'hide-footer': !showFooter}">
+                (openedChange)="openedChange($event)" [ngClass]="{'hide-footer': !showFooter}">
                 <div class="sidenav-header pep-border-bottom">
                     <ng-content select="[header-content]"></ng-content>
                 </div>
