@@ -28,7 +28,7 @@ import {
 
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepImagesFilmstripComponent } from '@pepperi-addons/ngx-lib/images-filmstrip';
-import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'pep-image',
@@ -133,7 +133,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
 
     errorHandler(event: any): void {
         event.target.src = this.fileService.getSvgAsImageSrc(
-            pepIconNoImage.data
+            pepIconNoImage2.data
         );
         event.target.title = this.translate.instant('IMAGE.NO_IMAGE');
     }

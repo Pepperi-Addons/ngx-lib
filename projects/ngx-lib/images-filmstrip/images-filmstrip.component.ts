@@ -44,7 +44,7 @@ import {
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconArrowRightAlt } from '@pepperi-addons/ngx-lib/icon';
-import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
 import 'hammerjs';
 
@@ -271,7 +271,7 @@ export class PepImagesFilmstripComponent
             // add No image image when there is no images
             if (imgArr.length === 0) {
                 const noImageSrc = this.fileService.getSvgAsImageSrc(
-                    pepIconNoImage.data
+                    pepIconNoImage2.data
                 );
                 imgArr.push(noImageSrc);
             }
@@ -337,7 +337,7 @@ export class PepImagesFilmstripComponent
 
     onError(e): void {
         const noImageSrc = this.fileService.getSvgAsImageSrc(
-            pepIconNoImage.data
+            pepIconNoImage2.data
         );
         const noimg = new ImageItem({ src: noImageSrc, thumb: noImageSrc });
         this.items.splice(e.itemIndex, 1, noimg);

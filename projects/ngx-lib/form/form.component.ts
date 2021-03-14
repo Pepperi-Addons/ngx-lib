@@ -92,9 +92,27 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() layout: UIControl;
     @Input() lockEvents = false;
     @Input() canEditObject = true;
-    @Input() data: ObjectsDataRow = null;
+
+    private _data: ObjectsDataRow = null;
+    @Input()
+    set data(value: ObjectsDataRow) {
+        const shouldReload = this.shouldReloadForm || !this._data;
+        this._data = value;
+
+        if (shouldReload) {
+            this._shouldReloadForm = false;
+            this.initForm();
+        } else {
+            this.updateForm();
+        }
+    }
+
+    get data(): ObjectsDataRow {
+        return this._data;
+    }
+
     @Input() isActive = false;
-    @Input() layoutType: PepLayoutType = 'form';
+    @Input() layoutType: PepLayoutType = 'card';
     @Input() listType = '';
     @Input() objectId = '0';
     @Input() parentId = '0';
@@ -851,15 +869,14 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 themeVars,
                 PepCustomizationService.CARD_SPACEING_KEY
             ) * RemToPixel;
-
-        this.initForm();
     }
 
     ngDoCheck(): void {
-        const changes = this.differ.diff(this.data); // check for changes
-        if (changes) {
-            this.updateForm(true);
-        }
+        // const changes = this.differ.diff(this.data); // check for changes
+        // if (changes) {
+        //     this.updateForm(true);
+        //     this.checkForChanges = new Date();
+        // }
     }
 
     ngOnChanges(changes): void {
@@ -873,12 +890,11 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         //         this.initForm();
         //     }
         // }
-
-        // this.checkForChanges = new Date();
-        if (this.shouldReloadForm || !changes.data.previousValue) {
-            this._shouldReloadForm = false;
-            this.initForm();
-        }
+        // if (this.shouldReloadForm || !changes?.data?.previousValue) {
+        //     this._shouldReloadForm = false;
+        //     this.initForm();
+        //     this.checkForChanges = new Date();
+        // }
     }
 
     ngOnDestroy(): void {

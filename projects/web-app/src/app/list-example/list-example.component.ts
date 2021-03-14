@@ -104,7 +104,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.dataSource = FakeData.Addons;
+        // this.dataSource = FakeData.Addons;
         // for (let index = 0; index < 10000; index++) {
         //     this.dataSource.push(FakeData.Addons);
         //     this.dataSource[index].UUID = PepGuid.newGuid();

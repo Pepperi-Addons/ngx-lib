@@ -39,9 +39,8 @@
         <div class="content">
             <div class="list-wrapper" #listContainer id="listContainer">
                 <pep-list [supportSorting]="false" [supportResizing]="false" [pagerType]="'pages'" [pageSize]="10"
-                    [pageIndex]="pageIndex" [selectionTypeForActions]="'multi'" [noDataFoundMsg]="'No data'"
-                    [parentScroll]="listContainer" (fieldClick)="onCustomizeFieldClick($event)"
-                    (selectedItemsChange)="selectedRowsChanged($event)">
+                    [pageIndex]="pageIndex" [selectionTypeForActions]="'multi'" [parentScroll]="listContainer"
+                    (fieldClick)="onCustomizeFieldClick($event)" (selectedItemsChange)="selectedRowsChanged($event)">
                 </pep-list>
             </div>
 

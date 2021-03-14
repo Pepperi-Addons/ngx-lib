@@ -118,6 +118,13 @@ export const pepIconMiscExcel: {
     name: 'misc_excel',
     data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M15 4.18a1 1 0 01.993.884L16 5.18v13.64a1 1 0 01-1.048.998l-.116-.012-10-1.667a1 1 0 01-.829-.866L4 17.153V6.847a1 1 0 01.718-.96l.118-.026 10-1.667A1 1 0 0115 4.18zM19 7a1 1 0 011 1v8a1 1 0 01-1 1h-1a1 1 0 01-1-1V8a1 1 0 011-1zm-5.715.214l-2.078.224-1.243 2.976L8.769 7.7l-2.126.23 2.174 3.795L6.5 16.054l2.079.224 1.386-3.229 1.409 3.531 2.126.23-2.39-5.179 2.175-4.417z"/></svg>`,
 };
+export const pepIconNoImage2: {
+    name: 'no_image_2';
+    data: string;
+} = {
+    name: 'no_image_2',
+    data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><style>.placeholder{stroke:#333;stroke-width:4;stroke-linecap:round}</style><g fill="none" fill-rule="evenodd"><circle class="placeholder" cx="128" cy="60" r="32"/><path class="placeholder" d="M263 6H14a8 8 0 00-8 8v74M195.05 182.887L65.443 97.913a8 8 0 00-8.851.053L9.535 129.622A8 8 0 006 136.26V186a8 8 0 008 8h272a8 8 0 008-8v-84.869a8 8 0 00-3.368-6.523l-41.31-29.33a8 8 0 00-9.713.344l-90.374 74.339M294 85V63M294 45v-7.997M294 55.003v-2M294 29V14a8 8 0 00-8-8h-5M273 6h-2M6 122v-15.997m0-8v-2"/></g></svg>`,
+};
 export const pepIconNoImage: {
     name: 'no_image';
     data: string;
@@ -313,6 +320,13 @@ export const pepIconSystemFileUpload: {
 } = {
     name: 'system_file_upload',
     data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 11a1 1 0 011 1v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a1 1 0 012 0v3a1 1 0 001 1h10a1 1 0 001-1v-3a1 1 0 011-1zm-6.688-4.75l3.575 2.86a.5.5 0 01-.312.89H13v4a1 1 0 01-2 0v-4H8.425a.5.5 0 01-.312-.89l3.575-2.86a.5.5 0 01.624 0z"/></svg>`,
+};
+export const pepIconSystemFilter2: {
+    name: 'system_filter_2';
+    data: string;
+} = {
+    name: 'system_filter_2',
+    data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8 15.5a2.5 2.5 0 012.292 1.5H20a1 1 0 010 2h-9.708a2.5 2.5 0 01-4.584 0H4a1 1 0 010-2h1.708A2.5 2.5 0 018 15.5zm8-6a2.5 2.5 0 012.292 1.5H20a1 1 0 010 2h-1.708a2.5 2.5 0 01-4.584 0H4a1 1 0 010-2h9.708A2.5 2.5 0 0116 9.5zm-8-6A2.5 2.5 0 0110.292 5H20a1 1 0 010 2h-9.708a2.5 2.5 0 01-4.584 0H4a1 1 0 110-2h1.708A2.5 2.5 0 018 3.5z"/></svg>`,
 };
 export const pepIconSystemFilter: {
     name: 'system_filter';
@@ -612,6 +626,7 @@ export type PepIconType =
     | 'barnd_pepperi'
     | 'indicator_dot_placeholder'
     | 'misc_excel'
+    | 'no_image_2'
     | 'no_image'
     | 'number_coins'
     | 'number_decimal'
@@ -640,6 +655,7 @@ export type PepIconType =
     | 'system_file_download'
     | 'system_file_upload_cloud'
     | 'system_file_upload'
+    | 'system_filter_2'
     | 'system_filter'
     | 'system_full_screen'
     | 'system_heart'

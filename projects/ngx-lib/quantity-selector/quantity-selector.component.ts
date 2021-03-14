@@ -95,7 +95,7 @@ export class PepQuantitySelectorComponent
     @Input()
     styleClass: PepStyleType = document.documentElement.style.getPropertyValue(
         PepCustomizationService.STYLE_QS_KEY
-    ) as PepStyleType;
+    ) as PepStyleType; //'strong';
 
     @Output()
     valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();

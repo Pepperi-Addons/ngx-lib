@@ -41,6 +41,7 @@ import {
     PepIconRegistry,
     pepIconSystemBolt,
     pepIconNoImage,
+    pepIconNoImage2,
     pepIconArrowTwoWaysVerT,
     pepIconArrowDown,
     pepIconArrowUp,
@@ -76,6 +77,7 @@ import {
 const pepIcons = [
     pepIconSystemBolt,
     pepIconNoImage,
+    pepIconNoImage2,
     pepIconArrowTwoWaysVerT,
     pepIconArrowDown,
     pepIconArrowUp,
