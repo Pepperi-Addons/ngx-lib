@@ -113,7 +113,10 @@
         "TOTAL_RESULT": "<span class='bold number'>{{ totalRows }}</span> result",
         "TOTAL_RESULTS_OUT_OF": "<span class='bold number'>{{ xRows }}</span> of <span class='bold number'>{{ totalRows }}</span> results",
         "TOTAL_RESULT_OUT_OF_RESULT": "<span class='bold number'>{{ xRows }}</span> of <span class='bold number'>{{ totalRows }}</span> result",
-        "TOTAL_OF": "At total of: "
+        "TOTAL_OF": "At total of: ",
+        "NO_DATA_FOUND": "No results were found.",
+        "NO_DATA_FOUND_SUGGESTIONS_TITLE": "We have some suggestions:",
+        "NO_DATA_FOUND_SUGGESTIONS_LIST": "<li>Make sure that all words are spelled correctly.</li><li>Try different keywords.</li><li>Try more general keywords.</li>"
     },
     "MESSAGES": {
         "TITLE_NOTICE": "Notice",
