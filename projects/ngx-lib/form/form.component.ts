@@ -112,7 +112,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     @Input() isActive = false;
-    @Input() layoutType: PepLayoutType = 'form';
+    @Input() layoutType: PepLayoutType = 'card';
     @Input() listType = '';
     @Input() objectId = '0';
     @Input() parentId = '0';
