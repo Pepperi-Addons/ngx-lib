@@ -872,11 +872,11 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     ngDoCheck(): void {
-        // const changes = this.differ.diff(this.data); // check for changes
-        // if (changes) {
-        //     this.updateForm(true);
-        //     this.checkForChanges = new Date();
-        // }
+        const changes = this.differ.diff(this.data); // check for changes
+        if (changes) {
+            this.updateForm(true);
+            this.checkForChanges = new Date();
+        }
     }
 
     ngOnChanges(changes): void {

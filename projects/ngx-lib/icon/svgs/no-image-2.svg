@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
     <style>
     .placeholder {
-      stroke: #333;
+      stroke: #999;
       stroke-width: 4;
       stroke-linecap: round;
     }

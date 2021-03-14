@@ -123,7 +123,7 @@ export const pepIconNoImage2: {
     data: string;
 } = {
     name: 'no_image_2',
-    data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><style>.placeholder{stroke:#333;stroke-width:4;stroke-linecap:round}</style><g fill="none" fill-rule="evenodd"><circle class="placeholder" cx="128" cy="60" r="32"/><path class="placeholder" d="M263 6H14a8 8 0 00-8 8v74M195.05 182.887L65.443 97.913a8 8 0 00-8.851.053L9.535 129.622A8 8 0 006 136.26V186a8 8 0 008 8h272a8 8 0 008-8v-84.869a8 8 0 00-3.368-6.523l-41.31-29.33a8 8 0 00-9.713.344l-90.374 74.339M294 85V63M294 45v-7.997M294 55.003v-2M294 29V14a8 8 0 00-8-8h-5M273 6h-2M6 122v-15.997m0-8v-2"/></g></svg>`,
+    data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><style>.placeholder{stroke:#999;stroke-width:4;stroke-linecap:round}</style><g fill="none" fill-rule="evenodd"><circle class="placeholder" cx="128" cy="60" r="32"/><path class="placeholder" d="M263 6H14a8 8 0 00-8 8v74M195.05 182.887L65.443 97.913a8 8 0 00-8.851.053L9.535 129.622A8 8 0 006 136.26V186a8 8 0 008 8h272a8 8 0 008-8v-84.869a8 8 0 00-3.368-6.523l-41.31-29.33a8 8 0 00-9.713.344l-90.374 74.339M294 85V63M294 45v-7.997M294 55.003v-2M294 29V14a8 8 0 00-8-8h-5M273 6h-2M6 122v-15.997m0-8v-2"/></g></svg>`,
 };
 export const pepIconNoImage: {
     name: 'no_image';
