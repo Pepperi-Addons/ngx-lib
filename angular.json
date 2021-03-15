@@ -126,22 +126,6 @@
               "**/node_modules/**"
             ]
           }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/web-app/e2e/protractor.conf.js",
-            "devServerTarget": "web-app:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "web-app:serve:production"
-            }
-          }
-        },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {}
         }
       }
     },
