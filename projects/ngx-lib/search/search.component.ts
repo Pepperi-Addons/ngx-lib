@@ -115,6 +115,17 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         return this._searchControl;
     }
 
+    private _useAsWebComponent = false;
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
+
     @Output()
     search: EventEmitter<IPepSearchClickEvent> = new EventEmitter<IPepSearchClickEvent>();
     @Output()
@@ -137,9 +148,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     constructor(
         private hostElement: ElementRef,
         private layoutService: PepLayoutService
-    ) {
-        this.exportFunctionsOnHostElement();
-    }
+    ) { }
 
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {

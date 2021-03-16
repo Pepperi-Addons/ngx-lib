@@ -104,6 +104,18 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pageIndex = 0;
     @Input() scrollAnimationTime = 500;
 
+    private _useAsWebComponent = false;
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        this._useAsWebComponent = value;
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
+
     @Output()
     itemClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
     @Output()
@@ -203,14 +215,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         private zone: NgZone
     ) {
-        this.exportFunctionsOnHostElement();
-
+        this.nativeWindow = window;
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
 
-        this.nativeWindow = window;
-        this.deviceHasMouse = this.layoutService.getDeviceHasMouse();
         this.layoutService.onMouseOver$.subscribe((deviceHasMouse: boolean) => {
             this.deviceHasMouse = deviceHasMouse;
         });
@@ -218,6 +227,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit(): void {
         this.containerWidth = 0;
+        this.deviceHasMouse = this.layoutService.getDeviceHasMouse();
     }
 
     ngOnChanges(changes): void {
@@ -1119,24 +1129,24 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     pageSize: this.pageSize,
                 });
             } else {
-                if (this.totalRows === items.length) {
-                    this._useVirtualScroll = false;
-                    this.updateItems(items);
-                } else {
-                    this._useVirtualScroll = true;
-                    const numberOfStartItems = this.getNumberOfStartItems();
-                    const event = {
-                        start: 0,
-                        end: numberOfStartItems,
-                        fromIndex: 0,
-                        toIndex: numberOfStartItems,
-                    };
-                    this.updateItems(items, event);
+                // if (this.totalRows === items.length) {
+                //     this._useVirtualScroll = false;
+                //     this.updateItems(items);
+                // } else {
+                this._useVirtualScroll = true;
+                const numberOfStartItems = this.getNumberOfStartItems();
+                const event = {
+                    start: 0,
+                    end: numberOfStartItems,
+                    fromIndex: 0,
+                    toIndex: numberOfStartItems,
+                };
+                this.updateItems(items, event);
 
-                    if (typeof this.virtualScroll !== 'undefined') {
-                        this.virtualScroll.refresh();
-                    }
+                if (typeof this.virtualScroll !== 'undefined') {
+                    this.virtualScroll.refresh();
                 }
+                // }
             }
         }
 
@@ -1166,7 +1176,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 this.cleanItems();
             }
 
-            // const loadInChunks = this.itemsCounter === 0;
+            const loadInChunks = this.itemsCounter === 0;
             const startIndex = event.fromIndex ? event.fromIndex : event.start;
 
             for (let i = 0; i < items.length; i++) {
@@ -1176,11 +1186,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
 
-            this.updateScrollItems(event.start, event.end, false);
+            this.updateScrollItems(event.start, event.end, loadInChunks);
             this.toggleItems(true);
         } else {
-            this.scrollItems = this._items = items;
+            this._items = items;
             this.itemsCounter = items.length;
+            this.updateScrollItems(0, this.itemsCounter - 1, true);
         }
     }
 

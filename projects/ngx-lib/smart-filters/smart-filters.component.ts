@@ -51,6 +51,17 @@ export class PepSmartFiltersComponent {
         return this._fields;
     }
 
+    private _useAsWebComponent = false;
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
+
     // @Output()
     // filtersClear: EventEmitter<void> = new EventEmitter<void>();
     @Output()
@@ -60,9 +71,7 @@ export class PepSmartFiltersComponent {
 
     expansionPanelHeaderHeight = '*';
 
-    constructor(private hostElement: ElementRef) {
-        this.exportFunctionsOnHostElement();
-    }
+    constructor(private hostElement: ElementRef) { }
 
     private exportFunctionsOnHostElement() {
         // This is for web component usage for use those functions.

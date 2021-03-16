@@ -1,15 +1,25 @@
 <ng-container *ngIf="totalRows == 0">
-    <div class="pep-border-bottom">
-        <p class="title-xl no-data">
-            {{ (noDataFoundMsg ? noDataFoundMsg : 'LIST.NO_DATA_FOUND') | translate}}
-        </p>
-    </div>
-    <div class="no-data-suggestions">
-        <p class="suggestions-title title-lg">
-            {{ 'LIST.NO_DATA_FOUND_SUGGESTIONS_TITLE' | translate}}
-        </p>
-        <ul class="suggestions-list body-lg" [innerHtml]="'LIST.NO_DATA_FOUND_SUGGESTIONS_LIST' | translate"></ul>
-    </div>
+    <ng-container *ngIf="noDataFoundMsg; then noDataMsgInputBlock; else noDataMsgDefaultBlock"></ng-container>
+    <ng-template #noDataMsgInputBlock>
+        <div class="pep-border-bottom">
+            <p class="title-xl no-data">
+                {{ noDataFoundMsg }}
+            </p>
+        </div>
+    </ng-template>
+    <ng-template #noDataMsgDefaultBlock>
+        <div class="pep-border-bottom">
+            <p class="title-xl no-data">
+                {{ 'LIST.NO_DATA_FOUND' | translate}}
+            </p>
+        </div>
+        <div class="no-data-suggestions">
+            <p class="suggestions-title title-lg">
+                {{ 'LIST.NO_DATA_FOUND_SUGGESTIONS_TITLE' | translate}}
+            </p>
+            <ul class="suggestions-list body-lg" [innerHtml]="'LIST.NO_DATA_FOUND_SUGGESTIONS_LIST' | translate"></ul>
+        </div>
+    </ng-template>
 </ng-container>
 <div *ngIf="totalRows > 0" [ngClass]="{ 'lock-events': lockEvents }">
     <ng-container *ngIf="isTable; then tableBlock; else cardsBlock"></ng-container>
@@ -31,7 +41,7 @@
             <pep-virtual-scroll [totalRows]="totalRows" [isTable]="isTable" [scrollAnimationTime]="scrollAnimationTime"
                 (load)="onListLoad()" (change)="onScrollChange($event)"
                 [parentScroll]="parentScroll ? parentScroll : nativeWindow"
-                [bufferAmount]="isReport ? (isTable ? 20 : 3) : isTable ? 15 : 3"
+                [bufferAmount]="isReport ? (isTable ? 20 : 3) : isTable ? 10 : 3"
                 [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
                 <ng-container *ngTemplateOutlet="listData"></ng-container>
             </pep-virtual-scroll>

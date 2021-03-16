@@ -27,6 +27,17 @@ export class PepSideBarComponent implements OnInit {
     // @Input() showOnLargeScreens = true;
     // @Input() sideBarButtons: Array<SideBarButton> = [];
     @Input() showFooter = true;
+    private _useAsWebComponent = false;
+
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
 
     @Output()
     stateChange: EventEmitter<IPepSideBarStateChangeEvent> = new EventEmitter<IPepSideBarStateChangeEvent>();
@@ -43,8 +54,6 @@ export class PepSideBarComponent implements OnInit {
         private hostElement: ElementRef,
         private layoutService: PepLayoutService
     ) {
-        this.exportFunctionsOnHostElement();
-
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
