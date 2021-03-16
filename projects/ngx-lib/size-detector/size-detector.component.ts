@@ -23,6 +23,17 @@ interface IPepSizeDetectorItem {
 export class PepSizeDetectorComponent implements AfterViewInit {
     @Input() showScreenSize = false;
 
+    private _useAsWebComponent = false;
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
+
     @Output()
     sizeChange: EventEmitter<IPepSizeDetectorItem> = new EventEmitter<IPepSizeDetectorItem>();
 
@@ -61,8 +72,6 @@ export class PepSizeDetectorComponent implements AfterViewInit {
         private hostElement: ElementRef,
         private layoutService: PepLayoutService
     ) {
-        this.exportFunctionsOnHostElement();
-
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.currentSize = this.sizes.find((s) => s.id === size);
             this.sizeChange.emit(this.currentSize);

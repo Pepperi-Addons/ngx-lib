@@ -357,18 +357,26 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private countItemsPerRow() {
-        let offsetTop;
-        let itemsPerRow;
-        const children = this.contentElementRef.nativeElement.children;
-        for (itemsPerRow = 0; itemsPerRow < children.length; itemsPerRow++) {
-            if (
-                offsetTop != undefined &&
-                offsetTop !== children[itemsPerRow].offsetTop
-            )
-                break;
-            offsetTop = children[itemsPerRow].offsetTop;
+        if (this.isTable) {
+            return 1;
+        } else {
+            let offsetTop;
+            let itemsPerRow;
+            const children = this.contentElementRef.nativeElement.children;
+            for (
+                itemsPerRow = 0;
+                itemsPerRow < children.length;
+                itemsPerRow++
+            ) {
+                if (
+                    offsetTop != undefined &&
+                    offsetTop !== children[itemsPerRow].offsetTop
+                )
+                    break;
+                offsetTop = children[itemsPerRow].offsetTop;
+            }
+            return itemsPerRow;
         }
-        return itemsPerRow;
     }
 
     private getElementsOffset(): number {

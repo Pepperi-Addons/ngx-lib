@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import {
-    PepLayoutType,
     PepLayoutService,
     PepScrollToService,
     PepWindowScrollingService,
@@ -96,13 +95,24 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() lockEvents = false;
     @Input() lockItemInnerEvents = false;
     @Input() isReport = false;
-    @Input() layoutType: PepLayoutType = null;
     @Input() pageType = '';
     @Input() totalsRow = [];
     @Input() pagerType: PepListPagerType = 'scroll';
     @Input() pageSize: number = DEFAULT_PAGE_SIZE;
     @Input() pageIndex = 0;
     @Input() scrollAnimationTime = 500;
+
+    private _useAsWebComponent = false;
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        this._useAsWebComponent = value;
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
 
     @Output()
     itemClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
@@ -156,6 +166,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     viewType: PepListViewType;
     scrollItems: Array<ObjectsDataRow>;
+    scrollItemsInterval: any;
 
     SEPARATOR = ',';
     isAllSelected = false;
@@ -203,14 +214,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         private zone: NgZone
     ) {
-        this.exportFunctionsOnHostElement();
-
+        this.nativeWindow = window;
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
 
-        this.nativeWindow = window;
-        this.deviceHasMouse = this.layoutService.getDeviceHasMouse();
         this.layoutService.onMouseOver$.subscribe((deviceHasMouse: boolean) => {
             this.deviceHasMouse = deviceHasMouse;
         });
@@ -218,6 +226,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit(): void {
         this.containerWidth = 0;
+        this.deviceHasMouse = this.layoutService.getDeviceHasMouse();
     }
 
     ngOnChanges(changes): void {
@@ -401,12 +410,16 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             let currentIndex = 0;
             const tmp = this.items.slice(startIndex, endIndex);
 
-            const interval = setInterval(() => {
+            if (this.scrollItemsInterval) {
+                clearInterval(this.scrollItemsInterval);
+            }
+
+            this.scrollItemsInterval = setInterval(() => {
                 const nextIndex = currentIndex + ITEMS_RENDERED_AT_ONCE;
 
                 for (let i = currentIndex; i < nextIndex; i++) {
                     if (i >= tmp.length) {
-                        clearInterval(interval);
+                        clearInterval(this.scrollItemsInterval);
                         break;
                     }
 
@@ -1005,10 +1018,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.hoveredItemId = '';
     }
 
-    getThumbnailsLayout(): PepLayoutType {
-        return this.layoutType ?? 'card';
-    }
-
     // trackByFunc(index: number, item: ObjectsDataRow): any {
     //     return item && item.UID ? item.UID : index;
     //     // let res: string = "";
@@ -1119,24 +1128,24 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     pageSize: this.pageSize,
                 });
             } else {
-                if (this.totalRows === items.length) {
-                    this._useVirtualScroll = false;
-                    this.updateItems(items);
-                } else {
-                    this._useVirtualScroll = true;
-                    const numberOfStartItems = this.getNumberOfStartItems();
-                    const event = {
-                        start: 0,
-                        end: numberOfStartItems,
-                        fromIndex: 0,
-                        toIndex: numberOfStartItems,
-                    };
-                    this.updateItems(items, event);
+                // if (this.totalRows === items.length) {
+                //     this._useVirtualScroll = false;
+                //     this.updateItems(items);
+                // } else {
+                this._useVirtualScroll = true;
+                const numberOfStartItems = this.getNumberOfStartItems();
+                const event = {
+                    start: 0,
+                    end: numberOfStartItems,
+                    fromIndex: 0,
+                    toIndex: numberOfStartItems,
+                };
+                this.updateItems(items, event);
 
-                    if (typeof this.virtualScroll !== 'undefined') {
-                        this.virtualScroll.refresh();
-                    }
+                if (typeof this.virtualScroll !== 'undefined') {
+                    this.virtualScroll.refresh();
                 }
+                // }
             }
         }
 
@@ -1166,7 +1175,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 this.cleanItems();
             }
 
-            // const loadInChunks = this.itemsCounter === 0;
+            const loadInChunks = this.itemsCounter === 0;
             const startIndex = event.fromIndex ? event.fromIndex : event.start;
 
             for (let i = 0; i < items.length; i++) {
@@ -1176,11 +1185,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
 
-            this.updateScrollItems(event.start, event.end, false);
+            this.updateScrollItems(event.start, event.end, loadInChunks);
             this.toggleItems(true);
         } else {
-            this.scrollItems = this._items = items;
+            this._items = items;
             this.itemsCounter = items.length;
+            this.updateScrollItems(0, this.itemsCounter - 1, true);
         }
     }
 
@@ -1370,7 +1380,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             // Set the width of the column and the container of the whole columns.
             if (
                 this.startWidth + widthToAdd >=
-                PepListComponent.MINIMUM_COLUMN_WIDTH ||
+                    PepListComponent.MINIMUM_COLUMN_WIDTH ||
                 widthToAdd > 0
             ) {
                 const length = this._layout.ControlFields.length;
@@ -1497,6 +1507,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
     }
+
+    // onVirtualScrollerChange(event: any): void {
+    //     debugger;
+    //     event.start = event.startIndex;
+    //     event.end = event.endIndex;
+
+    //     this.onScrollChange(event);
+    // }
 
     onScrollChange(event: IPepVirtualScrollChangeEvent): void {
         // For other events do nothing.
