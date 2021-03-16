@@ -157,7 +157,7 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
         public element: ElementRef,
         private renderer: Renderer2,
         private zone: NgZone
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.scrollbarWidth = 0; // this.element.nativeElement.offsetWidth - this.element.nativeElement.clientWidth;
@@ -363,7 +363,11 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
             let offsetTop;
             let itemsPerRow;
             const children = this.contentElementRef.nativeElement.children;
-            for (itemsPerRow = 0; itemsPerRow < children.length; itemsPerRow++) {
+            for (
+                itemsPerRow = 0;
+                itemsPerRow < children.length;
+                itemsPerRow++
+            ) {
                 if (
                     offsetTop != undefined &&
                     offsetTop !== children[itemsPerRow].offsetTop
@@ -410,9 +414,9 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
             contentDimensions = content.children[0]
                 ? content.children[0].getBoundingClientRect()
                 : {
-                    width: viewWidth,
-                    height: viewHeight,
-                };
+                      width: viewWidth,
+                      height: viewHeight,
+                  };
         }
 
         const childWidth = this.childWidth || contentDimensions.width;
@@ -427,9 +431,9 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
         const elScrollTop =
             this.parentScroll instanceof Window
                 ? window.pageYOffset ||
-                document.documentElement.scrollTop ||
-                document.body.scrollTop ||
-                0
+                  document.documentElement.scrollTop ||
+                  document.body.scrollTop ||
+                  0
                 : el.scrollTop;
         const scrollTop = Math.max(0, elScrollTop);
 
@@ -444,8 +448,8 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
         if (
             itemsPerCol === 1 &&
             Math.floor((scrollTop / scrollHeight) * itemCount) +
-            itemsPerRowByCalc >=
-            itemCount
+                itemsPerRowByCalc >=
+                itemCount
         ) {
             itemsPerRow = itemsPerRowByCalc;
         }
@@ -488,9 +492,9 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
         let elScrollTop =
             this.parentScroll instanceof Window
                 ? window.pageYOffset ||
-                document.documentElement.scrollTop ||
-                document.body.scrollTop ||
-                0
+                  document.documentElement.scrollTop ||
+                  document.body.scrollTop ||
+                  0
                 : el.scrollTop;
 
         if (elScrollTop > d.scrollHeight) {
@@ -503,7 +507,7 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
         let end = Math.min(
             d.itemCount,
             Math.ceil(indexByScrollTop) * d.itemsPerRow +
-            d.itemsPerRow * (d.itemsPerCol + 1)
+                d.itemsPerRow * (d.itemsPerCol + 1)
         );
 
         let maxStartEnd = end;
@@ -526,7 +530,7 @@ export class PepVirtualScrollComponent implements OnInit, OnChanges, OnDestroy {
             this.totalRows === 0
                 ? 0
                 : d.childHeight * startRow -
-                d.childHeight * Math.min(startRow, this.bufferAmount);
+                  d.childHeight * Math.min(startRow, this.bufferAmount);
 
         if (topPadding !== this.lastTopPadding) {
             this.renderer.setStyle(

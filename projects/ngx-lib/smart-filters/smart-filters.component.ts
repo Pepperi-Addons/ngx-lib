@@ -71,7 +71,7 @@ export class PepSmartFiltersComponent {
 
     expansionPanelHeaderHeight = '*';
 
-    constructor(private hostElement: ElementRef) { }
+    constructor(private hostElement: ElementRef) {}
 
     private exportFunctionsOnHostElement() {
         // This is for web component usage for use those functions.
