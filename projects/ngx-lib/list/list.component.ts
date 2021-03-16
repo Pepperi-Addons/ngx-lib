@@ -166,6 +166,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     viewType: PepListViewType;
     scrollItems: Array<ObjectsDataRow>;
+    scrollItemsInterval: any;
 
     SEPARATOR = ',';
     isAllSelected = false;
@@ -409,12 +410,16 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             let currentIndex = 0;
             const tmp = this.items.slice(startIndex, endIndex);
 
-            const interval = setInterval(() => {
+            if (this.scrollItemsInterval) {
+                clearInterval(this.scrollItemsInterval);
+            }
+
+            this.scrollItemsInterval = setInterval(() => {
                 const nextIndex = currentIndex + ITEMS_RENDERED_AT_ONCE;
 
                 for (let i = currentIndex; i < nextIndex; i++) {
                     if (i >= tmp.length) {
-                        clearInterval(interval);
+                        clearInterval(this.scrollItemsInterval);
                         break;
                     }
 
