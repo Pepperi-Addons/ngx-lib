@@ -1508,6 +1508,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    // onVirtualScrollerChange(event: any): void {
+    //     debugger;
+    //     event.start = event.startIndex;
+    //     event.end = event.endIndex;
+
+    //     this.onScrollChange(event);
+    // }
+
     onScrollChange(event: IPepVirtualScrollChangeEvent): void {
         // For other events do nothing.
         if (
