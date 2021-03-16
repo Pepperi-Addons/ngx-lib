@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import {
-    PepLayoutType,
     PepLayoutService,
     PepScrollToService,
     PepWindowScrollingService,
@@ -96,7 +95,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() lockEvents = false;
     @Input() lockItemInnerEvents = false;
     @Input() isReport = false;
-    @Input() layoutType: PepLayoutType = null;
     @Input() pageType = '';
     @Input() totalsRow = [];
     @Input() pagerType: PepListPagerType = 'scroll';
@@ -1013,10 +1011,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     onCardMouseLeave(event: any, itemId: string, itemType: string): void {
         this.hoveredItemId = '';
-    }
-
-    getThumbnailsLayout(): PepLayoutType {
-        return this.layoutType ?? 'card';
     }
 
     // trackByFunc(index: number, item: ObjectsDataRow): any {

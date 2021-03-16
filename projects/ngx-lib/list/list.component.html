@@ -117,7 +117,7 @@
                 <!-- [canEditObject]="!disabled && item?.IsEditable" -->
                 <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges" [layout]="layout"
                     [data]="item" [canEditObject]="!disabled" [objectId]="objectId" [parentId]="parentId"
-                    [searchCode]="searchCode" [lockEvents]="lockItemInnerEvents" [layoutType]="getThumbnailsLayout()"
+                    [searchCode]="searchCode" [lockEvents]="lockItemInnerEvents" [layoutType]="'card'"
                     [listType]="listType" [isActive]="
                             (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
