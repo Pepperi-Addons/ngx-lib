@@ -48,6 +48,7 @@ const listComponents = [
     PepListViewsComponent,
 ];
 
+// import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { PepVirtualScrollComponent } from './virtual-scroll.component';
 @NgModule({
     imports: [
@@ -68,6 +69,7 @@ import { PepVirtualScrollComponent } from './virtual-scroll.component';
         PepFormModule,
         PepMenuModule,
         PepTextboxModule,
+        // VirtualScrollerModule
     ],
     exports: [listComponents],
     declarations: [PepVirtualScrollComponent, listComponents],
