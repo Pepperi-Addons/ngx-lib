@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import {
-    PepLayoutType,
     PepLayoutService,
     UIControl,
     UIControlField,
@@ -52,7 +51,6 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() disabled = false;
     @Input() disableEvents = false;
     @Input() disableSelectionItems = false;
-    @Input() layoutType: PepLayoutType = null;
     @Input() pageType = '';
     @Input() totalsRow = [];
 
@@ -570,10 +568,6 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
 
     onCardMouseLeave(event: any, itemId: string, itemType: string): void {
         this.hoveredItemId = '';
-    }
-
-    getThumbnailsLayout(): PepLayoutType {
-        return this.layoutType == null ? 'card' : this.layoutType;
     }
 
     // call this function after resize + animation end
