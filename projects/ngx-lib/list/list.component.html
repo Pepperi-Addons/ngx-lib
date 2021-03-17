@@ -94,11 +94,10 @@
                         (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                     </mat-radio-button>
                     <!-- [canEditObject]="!disabled && item?.IsEditable"  -->
-                    <pep-form [checkForChanges]="checkForChanges" [layout]="layout"
+                    <pep-form [layoutType]="'table'" [checkForChanges]="checkForChanges" [layout]="layout"
                         [firstFieldAsLink]="firstFieldAsLink" [data]="item" [canEditObject]="!disabled"
                         [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
-                        [lockEvents]="lockItemInnerEvents" [isReport]="isReport" [layoutType]="'table'"
-                        [listType]="listType" [isActive]="
+                        [lockEvents]="lockItemInnerEvents" [isReport]="isReport" [listType]="listType" [isActive]="
                                 (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                                 item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                             " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
@@ -123,10 +122,10 @@
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                 </mat-checkbox>
                 <!-- [canEditObject]="!disabled && item?.IsEditable" -->
-                <pep-form [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges" [layout]="layout"
-                    [data]="item" [canEditObject]="!disabled" [objectId]="objectId" [parentId]="parentId"
-                    [searchCode]="searchCode" [lockEvents]="lockItemInnerEvents" [layoutType]="'card'"
-                    [listType]="listType" [isActive]="
+                <pep-form [layoutType]="'card'" [firstFieldAsLink]="firstFieldAsLink"
+                    [checkForChanges]="checkForChanges" [layout]="layout" [data]="item" [canEditObject]="!disabled"
+                    [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
+                    [lockEvents]="lockItemInnerEvents" [listType]="listType" [isActive]="
                             (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
