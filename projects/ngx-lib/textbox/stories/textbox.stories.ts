@@ -60,7 +60,8 @@ export default {
                 PepNgxLibModule,
                 PepIconModule,
                 PepFieldTitleModule,
-                PepTextboxIconModule,],
+                PepTextboxIconModule,
+            ],
         }),
     ],
 } as Meta;
