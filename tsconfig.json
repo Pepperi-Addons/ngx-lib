@@ -30,6 +30,12 @@
             ],
             "@pepperi-addons/ngx-lib/*": [
                 "dist/ngx-lib/*"
+            ],
+            "@storybook-settings": [
+                ".storybook"
+            ],
+            "@storybook-settings/*": [
+                ".storybook/*"
             ]
         }
     },

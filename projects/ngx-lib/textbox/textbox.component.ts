@@ -75,7 +75,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     private getField(): PepFieldBase {
         const pepField = new PepTextboxField({
