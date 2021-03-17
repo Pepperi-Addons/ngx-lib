@@ -64,6 +64,7 @@ export class TopBarExampleComponent implements OnInit {
                     key: 'test1',
                     text: 'test 1',
                     iconName: pepIconSystemBin.name,
+                    children: this.getMenuItems(index <= 3, index)
                 },
                 {
                     key: 'test2',
