@@ -5,6 +5,20 @@ setCompodocJson(docJson);
 
 export const parameters = {
     actions: { argTypesRegex: "^on[A-Z].*" },
-}
+    // passArgsFirst : false
+    // controls: { expanded: true },
+};
 
 // import '!style-loader!css-loader!sass-loader!./theme.scss';
+// Note: To see the global decorator applied to your stories you'll need to include the template key with the component's selector with each story you have.
+
+// export const decorators = [
+//     (storyFunc) => {
+//       const story = storyFunc();
+  
+//       return {
+//         ...story,
+//         template: `<div class="pepperi-theme">${story.template}</div>`,
+//       };
+//     },
+//   ];
