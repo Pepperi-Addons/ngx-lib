@@ -37,7 +37,7 @@
     <mat-form-field appearance="outline">
         <!-- (@slideInOut.done)="animateSearchDone()" [@slideInOut]="state" -->
         <input #searchInput class="body-sm pep-search-input" matInput autocomplete="off"
-            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="search" (search)="onSearch($event)" results="5"
+            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="text" (keyup.enter)="onSearch($event)" results="5"
             [formControl]="searchControl" placeholder="{{ 'SEARCH.HINT' | translate }}..." [matAutocomplete]="auto" />
         <mat-autocomplete #auto="matAutocomplete" class="pep-select">
             <mat-option *ngFor="let value of autoCompleteValues" [value]="value" (click)="triggerSearch()">
@@ -60,7 +60,7 @@
 <ng-template #regularBlock>
     <mat-form-field appearance="outline">
         <input #searchInput class="body-sm pep-search-input" matInput autocomplete="off"
-            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="search" (search)="onSearch($event)"
+            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="text" (keyup.enter)="onSearch($event)"
             [formControl]="searchControl" placeholder="{{ 'SEARCH.HINT' | translate }}..." />
         <div matSuffix class="flex align-center">
             <ng-container *ngIf="triggerOn === 'click'">

@@ -996,13 +996,12 @@ main {
     // -------------------------------------------------
     .mat-menu-panel {
         box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
-        // border: 1px solid get-pep-color($pepperi-theme, color-system-primary, color-base);
-        @include inline(get-pep-color($pepperi-theme, color-system-primary, color-base));
+        border: 1px solid get-pep-color($pepperi-theme, color-system-primary, color-base);
+        
         max-width: 30rem;
         min-height: unset;
         
         .mat-menu-item {
-            @include fix-inline-z-index();
             background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
 
             &:hover {

@@ -198,7 +198,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            value,
+            // value,
+            this.fieldFormattedValue,
             this.parentFieldKey
         );
 
