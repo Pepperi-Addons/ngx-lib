@@ -38,7 +38,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     private _value = null;
     @Input()
     set value(value: string) {
-        if (!value) return;
+        if (value === null || value === undefined) return;
 
         this._value = value;
 
@@ -53,7 +53,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     private _formattedValue = null;
     @Input()
     set formattedValue(value: string) {
-        if (!value) return;
+        if (value === null || value === undefined) return;
 
         if (this._calculateFormattedValue) {
             this._calculateFormattedValue = false;
