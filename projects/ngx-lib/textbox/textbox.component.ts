@@ -38,7 +38,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     private _value = null;
     @Input()
     set value(value: string) {
-        if (!value) return;
+        if (!value) {
+            value = '';
+        }
 
         this._value = value;
 
@@ -53,7 +55,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     private _formattedValue = null;
     @Input()
     set formattedValue(value: string) {
-        if (!value) return;
+        if (!value) {
+            value = '';
+        }
 
         if (this._calculateFormattedValue) {
             this._calculateFormattedValue = false;
@@ -112,7 +116,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef,
-        private cdRef: ChangeDetectorRef,
         private translate: TranslateService
     ) {
         const culture = this.translate.getBrowserCultureLang() || 'en-US';
@@ -277,7 +280,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     onBlur(e: any): void {
         this.isInFocus = false;
         const value = e.target ? e.target.value : e;
-
+        debugger;
         if (value !== this.value && this.isDifferentValue(value)) {
             // If renderError is false and the new value is not valid.
             if (!this.renderError && !this.isValueValid(value)) {
