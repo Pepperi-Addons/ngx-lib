@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 
 import { withKnobs, text, select, radios } from '@storybook/addon-knobs';
 
-import { SBTranslateModule } from '@storybook-settings/translate.module'
+import { SBTranslateModule } from '@storybook-settings/translate.module';
 
 import { PepTextboxComponent } from './textbox.component';
 import { PepTextboxModule } from './textbox.module';
@@ -19,12 +19,11 @@ const typeOptions = {
     int: 'int',
     percentage: 'percentage',
     currency: 'currency',
-    real: 'real'
+    real: 'real',
 };
 const typeOptionsDisplayType: OptionsKnobOptions = {
     display: 'inline-radio',
 };
-
 
 // This exports the Stories group for this component
 export default {
@@ -34,10 +33,10 @@ export default {
     title: 'ngx-lib/textbox',
     // The component related to the Stories
     component: PepTextboxComponent,
-    args: {
-        // Now all Button stories will be primary.
-        value: true,
-    },
+    // args: {
+    //     // Now all Button stories will be primary.
+    //     value: true,
+    // },
     // argTypes: {
     //     label: { control: 'text' },
     //     value: { control: 'text' }, //{ control: { type: 'number', min: 0, max: 10 } },
@@ -58,10 +57,7 @@ export default {
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
             // declarations: [PepTextboxComponent, PepTextboxValidationDirective],
-            imports: [
-                PepTextboxModule,
-                SBTranslateModule
-            ],
+            imports: [PepTextboxModule, SBTranslateModule],
         }),
         // we add the withKnobs decorator in order to use it
         withKnobs,
@@ -81,45 +77,44 @@ const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
     component: PepTextboxComponent,
     props: args,
     template: `
-        <div style="width:200px;">
-            <pep-textbox [label]="label" [type]="type" [value]="value" [formattedValue]="formattedValue"></pep-textbox>
-        </div>
+        <pep-textbox [label]="label" [type]="type" [value]="value" [formattedValue]="formattedValue"></pep-textbox>
     `,
 });
 
 export const Base = Template.bind({});
 Base.args = {
     label: 'text',
-    value: 'some text...'
+    value: 'some text...',
 };
-
 
 // Other stories could be added here as well, all you have to do is export them along!
 export const withKnobsTest: Story<PepTextboxComponent> = () => ({
     component: PepTextboxComponent,
     props: {
         label: 'number',
-        type: optionsKnob('type', typeOptions, typeOptions.int, typeOptionsDisplayType),
+        type: optionsKnob(
+            'type',
+            typeOptions,
+            typeOptions.int,
+            typeOptionsDisplayType
+        ),
         value: text('value', '1000'),
         formattedValue: text('formattedValue', null),
     },
     template: `
-        <div style="width:200px;">
-            <pep-textbox [label]="label" [type]="type" [value]="value" [formattedValue]="formattedValue"></pep-textbox>
-        </div>
+        <pep-textbox [label]="label" [type]="type" [value]="value" [formattedValue]="formattedValue"></pep-textbox>
     `,
 });
 
-
-// export const Mandatory: Story<PepTextboxComponent> = () => ({
-//     component: PepTextboxComponent,
-//     props: {
-//         label: 'mandatory text',
-//         value: text('value', 'some text...'),
-//         formattedValue: text('formattedValue', 'some formatted text...'),
-//         required: true
-//     },
-// });
+export const Mandatory: Story<PepTextboxComponent> = () => ({
+    component: PepTextboxComponent,
+    props: {
+        label: 'mandatory text',
+        value: text('value', 'some text...'),
+        formattedValue: text('formattedValue', 'some formatted text...'),
+        required: true
+    },
+});
 
 export const Email = Template.bind({});
 Email.args = {
@@ -173,5 +168,3 @@ Phone.args = {
     type: 'phone',
     value: '+972-52-5555-555',
 };
-
-
