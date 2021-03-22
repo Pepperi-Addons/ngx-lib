@@ -71,7 +71,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     private addOptionsIfNeeded(): void {
         if (this.isMulti) {
@@ -198,7 +198,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            value,
+            // value,
+            this.fieldFormattedValue,
             this.parentFieldKey
         );
 

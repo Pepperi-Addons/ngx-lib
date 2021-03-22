@@ -129,7 +129,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -230,7 +230,8 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            value
+            this.formattedValue
+            // value
         );
 
         this.valueChange.emit({ key: this.key, value });
