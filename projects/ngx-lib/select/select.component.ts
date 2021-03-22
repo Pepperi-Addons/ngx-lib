@@ -71,7 +71,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     private addOptionsIfNeeded(): void {
         if (this.isMulti) {

@@ -38,8 +38,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     private _value = null;
     @Input()
     set value(value: string) {
-        if (!value)
-            return;
+        if (!value) return;
 
         this._value = value;
 
@@ -54,8 +53,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     private _formattedValue = null;
     @Input()
     set formattedValue(value: string) {
-        if (!value)
-            return;
+        if (!value) return;
 
         if (this._calculateFormattedValue) {
             this._calculateFormattedValue = false;
@@ -130,7 +128,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
-            this._formattedValue = this.isNumberType() ? this.formatNumber(value) : value;
+            this._formattedValue = this.isNumberType()
+                ? this.formatNumber(value)
+                : value;
         } else {
             this._formattedValue = value;
         }
@@ -207,7 +207,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     ngOnChanges(changes: any): void {
         if (this.standAlone) {
             // this._formattedValue = this._calculateFormattedValue ? this.value : this.formattedValue; // this.formattedValue || this.value;
-
             // const pepField = this.getField();
             // this.customizationService.updateFormField(
             //     this.form,
@@ -220,6 +219,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        //
     }
 
     onFocus(e: any): void {
