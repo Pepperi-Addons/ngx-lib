@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -56,7 +56,7 @@ export class PepLayoutService {
             .pipe(distinctUntilChanged());
     }
 
-    constructor() {
+    constructor(@Optional() private translate: TranslateService = null) {
         this.resizeSubject = new BehaviorSubject(PepScreenSizeType.LG);
 
         this.deviceHasMouseSubject = new BehaviorSubject(false);
@@ -162,8 +162,8 @@ export class PepLayoutService {
         );
     }
 
-    getCurrentLanguage(translate: TranslateService = null): string {
-        return translate?.currentLang || navigator.language;
+    getCurrentLanguage(): string {
+        return this.translate?.currentLang || navigator.language;
     }
 
     isRtl(): boolean {

@@ -1,9 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PepUtilitiesService {
+    private numberFormatter: Intl.NumberFormat;
+
+    constructor(@Optional() private translate: TranslateService = null) {
+        const culture = this.translate?.getBrowserCultureLang() || 'en-US';
+        this.numberFormatter = new Intl.NumberFormat(culture, {
+            maximumFractionDigits: 2,
+        });
+    }
+
     parseDate(dateStr: string, showTime = false): Date {
         let retVal: Date = null;
         if (dateStr !== '') {
@@ -71,15 +81,6 @@ export class PepUtilitiesService {
         // }
     }
 
-    // stringifyDateWithOffset(date: Date, showTime = false): string {
-    //     if (showTime) {
-    //         const offsetMinutes = new Date().getTimezoneOffset() * -1;
-    //         date.setMinutes(date.getMinutes() - offsetMinutes);
-    //     }
-
-    //     return this.stringifyDate(date, showTime);
-    // }
-
     isValueHtml(value: string): boolean {
         let res = false;
         const REGEXP = /<\/?[a-z][\s\S]*>/i;
@@ -104,5 +105,9 @@ export class PepUtilitiesService {
             div.querySelector('svg') ||
             document.createElementNS('http://www.w3.org/2000/svg', 'path')
         );
+    }
+
+    formatNumber(value: any): string {
+        return this.numberFormatter.format(value);
     }
 }

@@ -19,6 +19,7 @@ import {
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
 import { PepQuantitySelectorComponent } from './quantity-selector.component';
+import { PepQuantitySelectorValidationDirective } from './quantity-selector-validation.directive';
 import { PepQuantitySelectorNumberPipe } from './quantity-selector.pipes';
 
 @NgModule({
@@ -38,7 +39,11 @@ import { PepQuantitySelectorNumberPipe } from './quantity-selector.pipes';
         PepFieldTitleModule,
     ],
     exports: [PepQuantitySelectorComponent],
-    declarations: [PepQuantitySelectorComponent, PepQuantitySelectorNumberPipe],
+    declarations: [
+        PepQuantitySelectorComponent,
+        PepQuantitySelectorNumberPipe,
+        PepQuantitySelectorValidationDirective,
+    ],
 })
 export class PepQuantitySelectorModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
