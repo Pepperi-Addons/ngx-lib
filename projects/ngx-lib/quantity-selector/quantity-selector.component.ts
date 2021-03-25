@@ -31,9 +31,11 @@ import {
     IPepFieldClickEvent,
     PepQuantitySelectorFieldType,
     PepQuantitySelectorField,
+    PepUtilitiesService,
 } from '@pepperi-addons/ngx-lib';
 import { BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'pep-quantity-selector',
@@ -69,8 +71,41 @@ export class PepQuantitySelectorComponent
     public static MINUS = '[-]';
 
     @Input() key = '';
-    @Input() value = '';
-    @Input() formattedValue = '';
+
+    private _value = null;
+    @Input()
+    set value(value: string) {
+        if (!value) {
+            value = '';
+        }
+
+        this._value = value;
+
+        if (this._calculateFormattedValue) {
+            this.setFormattedValue(value);
+        }
+    }
+    get value(): string {
+        return this._value;
+    }
+
+    private _formattedValue = null;
+    @Input()
+    set formattedValue(value: string) {
+        if (!value) {
+            value = '';
+        }
+
+        if (this._calculateFormattedValue) {
+            this._calculateFormattedValue = false;
+        }
+
+        this.setFormattedValue(value);
+    }
+    get formattedValue(): string {
+        return this._formattedValue;
+    }
+
     @Input() label = '';
     @Input() type: PepQuantitySelectorFieldType = 'qs';
     @Input() required = false;
@@ -79,7 +114,6 @@ export class PepQuantitySelectorComponent
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    // @Input() lastFocusField: any;
     @Input() alowDecimal = false;
     @Input() additionalValue = '';
     @Input() notificationInfo: any;
@@ -105,6 +139,11 @@ export class PepQuantitySelectorComponent
     @ViewChild('QSCont') QSCont: ElementRef;
     @ViewChild('QSInput') QSInput: ElementRef;
 
+    private _calculateFormattedValue = true;
+    get calculateFormattedValue(): boolean {
+        return this._calculateFormattedValue;
+    }
+
     private readonly _destroyed: Subject<void>;
     private qsWidthSubject: BehaviorSubject<number>;
     lastQsContClientWidth = 0;
@@ -116,7 +155,6 @@ export class PepQuantitySelectorComponent
 
     isCaution = false;
     messages: Array<any> = null;
-    // resize: any;
 
     sameElementInTheWantedRow = null;
 
@@ -126,7 +164,9 @@ export class PepQuantitySelectorComponent
         private cd: ChangeDetectorRef,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
-        private element: ElementRef
+        private element: ElementRef,
+        private translate: TranslateService,
+        private utilitiesService: PepUtilitiesService
     ) {
         this._destroyed = new Subject();
         this.qsWidthSubject = new BehaviorSubject(0);
@@ -143,6 +183,23 @@ export class PepQuantitySelectorComponent
         this.form = this.customizationService.getDefaultFromGroup(pepField);
     }
 
+    private setFormattedValue(value: string) {
+        if (this._calculateFormattedValue) {
+            this._formattedValue = this.utilitiesService.formatNumber(value);
+        } else {
+            this._formattedValue = value;
+        }
+
+        // Need timeout for UI.
+        setTimeout(() => {
+            this.customizationService.updateFormFieldValue(
+                this.form,
+                this.key,
+                this.formattedValue
+            );
+        }, 0);
+    }
+
     protected getDestroyer() {
         return takeUntil(this._destroyed);
     }
@@ -155,7 +212,6 @@ export class PepQuantitySelectorComponent
 
             this.standAlone = true;
             this.setForm();
-            this.formattedValue = this.formattedValue || this.value;
 
             this.renderer.addClass(
                 this.element.nativeElement,
@@ -185,10 +241,6 @@ export class PepQuantitySelectorComponent
     }
 
     ngOnChanges(changes: any): void {
-        if (this.standAlone) {
-            this.formattedValue = this.formattedValue || this.value;
-        }
-
         // Bug fix for addons when the key is '' in the ngOnInit for some reson
         if (this.isEmptyKey && this.key !== '') {
             this.setForm();
@@ -240,18 +292,6 @@ export class PepQuantitySelectorComponent
     ngOnDestroy(): void {
         this._destroyed.next();
         this._destroyed.complete();
-
-        // if (this.resize) {
-        //     this.resize.unsubscribe();
-        // }
-
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
-
-        // if (this.elementClick) {
-        //     this.elementClick.unsubscribe();
-        // }
     }
 
     get getAdditionalValue(): string {
@@ -394,21 +434,31 @@ export class PepQuantitySelectorComponent
     onBlur(event: any): void {
         this.isFocus = false;
         this.cleanError();
-
         const value = event.target ? event.target.value : event;
 
         if (parseFloat(this.value) !== parseFloat(value)) {
             this.value = value;
-            this.formattedValue = value;
-            this.customizationService.updateFormFieldValue(
-                this.form,
-                this.key,
-                value
-            );
+
+            // If the user is setting the formatted value then set the value till the user format it and return it back.
+            if (!this._calculateFormattedValue) {
+                this._formattedValue = value;
+            }
 
             this.changeValue(this.value, event.relatedTarget);
         } else {
             this.focusToTheSameElementInTheWantedRow();
+        }
+    }
+
+    onKeydown(event): any {
+        const keyboardEvent = event as KeyboardEvent;
+
+        if (keyboardEvent.key === 'Enter') {
+            this.setSameElementInTheWantedRow(
+                keyboardEvent,
+                !keyboardEvent.shiftKey
+            );
+            return true;
         }
     }
 
@@ -425,15 +475,9 @@ export class PepQuantitySelectorComponent
         if (this.standAlone) {
             let tmp = parseFloat(this.value);
 
-            this.value = this.formattedValue = (++tmp).toString();
-            this.customizationService.updateFormFieldValue(
-                this.form,
-                this.key,
-                this.value
-            );
+            this.value = (++tmp).toString();
         }
 
-        // this.changeValue('+', null);
         this.elementClick.emit({
             key: this.key,
             value: PepQuantitySelectorComponent.PLUS,
@@ -447,15 +491,9 @@ export class PepQuantitySelectorComponent
         if (this.standAlone) {
             let tmp = parseFloat(this.value);
 
-            this.value = this.formattedValue = (--tmp).toString();
-            this.customizationService.updateFormFieldValue(
-                this.form,
-                this.key,
-                this.value
-            );
+            this.value = (--tmp).toString();
         }
 
-        // this.changeValue('-', null);
         this.elementClick.emit({
             key: this.key,
             value: PepQuantitySelectorComponent.MINUS,
@@ -501,58 +539,6 @@ export class PepQuantitySelectorComponent
             setTimeout(() => {
                 this.qsWidthSubject.next(this.QSCont.nativeElement.clientWidth);
             }, 0);
-        }
-    }
-
-    onKeyPress(event): any {
-        let inputChar = String.fromCharCode(event.charCode);
-        const keyboardEvent = event as KeyboardEvent;
-
-        if (keyboardEvent.key === 'Enter') {
-            this.setSameElementInTheWantedRow(
-                keyboardEvent,
-                !keyboardEvent.shiftKey
-            );
-            return true;
-        }
-
-        // TODO: Make it one function like in PepTextboxComponent
-        if (
-            /*[8, 9, 27, 13, 190].indexOf(keyboardEvent.keyCode) !== -1 ||*/
-            // Allow: Ctrl+A
-            (keyboardEvent.keyCode === 65 && keyboardEvent.ctrlKey === true) ||
-            // Allow: Ctrl+C
-            (keyboardEvent.keyCode === 67 && keyboardEvent.ctrlKey === true) ||
-            // Allow: Ctrl+V
-            (keyboardEvent.keyCode === 86 && keyboardEvent.ctrlKey === true) ||
-            // Allow: Ctrl+X
-            (keyboardEvent.keyCode === 88 &&
-                keyboardEvent.ctrlKey ===
-                    true) /*||
-            // Allow: home, end, left, right
-            (keyboardEvent.keyCode >= 35 && keyboardEvent.keyCode <= 39)*/
-        ) {
-            // let it happen, don't do anything
-            return true;
-        }
-
-        if (this.alowDecimal) {
-            const decPoint = '.';
-            const thousandSeparator = ',';
-            const pattern = /^\d[\d,]*(\.\d+)?$/;
-            if (keyboardEvent.keyCode === 46) {
-                inputChar = inputChar + '0';
-            } else if (keyboardEvent.keyCode === 44) {
-                inputChar = inputChar + '000';
-            }
-            if (!pattern.test(event.target.value + inputChar)) {
-                keyboardEvent.preventDefault();
-            }
-        } else {
-            const pattern = /[0-9\+\-\ ]/;
-            if (!pattern.test(inputChar)) {
-                keyboardEvent.preventDefault();
-            }
         }
     }
 }

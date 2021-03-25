@@ -162,6 +162,7 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
                 tableData[0]
             );
             const rows = this.dataConvertorService.convertListData(tableData);
+            this.pageIndex = 1;
             this.customList.initListData(
                 uiControl,
                 rows.length,
@@ -171,7 +172,6 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
                 true
             );
 
-            this.pageIndex = 1;
         }
     }
 

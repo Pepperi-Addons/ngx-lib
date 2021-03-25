@@ -23,11 +23,11 @@
                 </ng-template>
                 <ng-template #editableQSBlock>
                     <mat-form-field appearance="outline">
-                        <input type="decimalNumber" inputmode="decimal" matInput #QSInput name="{{ key }}"
-                            class="body-lg ellipsis" title="{{ formattedValue }}" autocomplete="off" [id]="key"
-                            [formControlName]="key"
+                        <input pepQsValidation [alowDecimal]="alowDecimal" type="decimalNumber" inputmode="decimal"
+                            matInput #QSInput name="{{ key }}" class="body-lg ellipsis" title="{{ formattedValue }}"
+                            autocomplete="off" [id]="key" [formControlName]="key"
                             [value]="isFocus ? (value | pepQuantitySelectorNumber: alowDecimal) : formattedValue"
-                            (keypress)="onKeyPress($event)" (click)="$event.target.setSelectionRange(0, 999)"
+                            (click)="$event.target.setSelectionRange(0, 999)" (keydown)="onKeydown($event)"
                             (blur)="onBlur($event)" (focus)="onFocus($event)" />
                         <button *ngIf="showQsBtn" mat-button matPrefix (click)="decrement($event)"
                             class="pep-button icon-button sm weak qs-action" [disabled]="disabled" [ngClass]="{ disable: disabled, caution: isCaution && styleClass !== 'strong',
@@ -67,13 +67,13 @@
                         matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
 
                     <mat-form-field appearance="outline" (mouseleave)="!isFocus ? onMatrixMouseleave($event) : null">
-                        <input type="decimalNumber" inputmode="decimal" matInput #QSInput name="{{ key }}"
-                            title="{{ formattedValue }}" class="body-sm ellipsis" autocomplete="off" [id]="key"
-                            [formControlName]="key"
+                        <input pepQsValidation [alowDecimal]="alowDecimal" type="decimalNumber" inputmode="decimal"
+                            matInput #QSInput name="{{ key }}" title="{{ formattedValue }}" class="body-sm ellipsis"
+                            autocomplete="off" [id]="key" [formControlName]="key"
                             [value]="isFocus ? (value | pepQuantitySelectorNumber: alowDecimal) : formattedValue"
-                            (keypress)="onKeyPress($event)"
                             (click)="onMatrixClick($event); $event.target.setSelectionRange(0, 999)"
-                            (blur)="onMatrixBlur($event)" (focus)="onMatrixMouseEnter($event); onFocus($event)"
+                            (keydown)="onKeydown($event)" (blur)="onMatrixBlur($event)"
+                            (focus)="onMatrixMouseEnter($event); onFocus($event)"
                             (mouseenter)="onMatrixMouseEnter($event)" />
 
                         <mat-error *ngIf="messages?.length > 0">

@@ -104,11 +104,11 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        // this.dataSource = FakeData.Addons;
-        // for (let index = 0; index < 10000; index++) {
-        //     this.dataSource.push(FakeData.Addons);
-        //     this.dataSource[index].UUID = PepGuid.newGuid();
-        // }
+        this.dataSource = FakeData.Addons;
+        for (let index = 0; index < 10000; index++) {
+            this.dataSource.push(FakeData.Addons);
+            this.dataSource[index].UUID = PepGuid.newGuid();
+        }
 
         if (this.customList && this.dataSource) {
             this.loadlist(this.dataSource);
@@ -250,9 +250,14 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         switch (key) {
             case 'Description':
                 dataRowField.ColumnWidth = 25;
+                dataRowField.FieldType = FIELD_TYPE.TextArea;
                 break;
-            case 'Name':
+            // case 'Name':
+            //     dataRowField.ColumnWidth = 15;
+            //     break;
+            case 'AutomaticUpgrade':
                 dataRowField.ColumnWidth = 15;
+                dataRowField.FieldType = FIELD_TYPE.RichTextHTML;
                 break;
             case 'Type':
                 dataRowField.ColumnWidth = 15;
