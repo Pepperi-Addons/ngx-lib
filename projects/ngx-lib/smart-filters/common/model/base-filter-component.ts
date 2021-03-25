@@ -30,7 +30,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { ValidatorService } from '@pepperi-addons/ngx-lib';
+import { PepValidatorService } from '@pepperi-addons/ngx-lib';
 import {
     IPepSmartFilterOperator,
     IPepSmartFilterOperatorUnit,
@@ -154,7 +154,7 @@ export abstract class BaseFilterComponent
         private resolver: ComponentFactoryResolver,
         private builder: FormBuilder,
         protected translate: TranslateService,
-        protected validator: ValidatorService,
+        protected validator: PepValidatorService,
         protected renderer: Renderer2
     ) {
         this._destroyed = new Subject();

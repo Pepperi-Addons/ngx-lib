@@ -24,6 +24,7 @@ import {
     PepTextboxFieldType,
     PepTextboxField,
     PepFieldBase,
+    PepUtilitiesService,
 } from '@pepperi-addons/ngx-lib';
 
 @Component({
@@ -109,30 +110,22 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     standAlone = false;
     isInEditMode = false;
     isInFocus: boolean;
-    private numberFormatter: Intl.NumberFormat;
 
     constructor(
         public fb: FormBuilder,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private utilitiesService: PepUtilitiesService
     ) {
-        const culture = this.translate.getBrowserCultureLang() || 'en-US';
-        this.numberFormatter = new Intl.NumberFormat(culture, {
-            maximumFractionDigits: 2,
-        });
         this.isInFocus = false;
-    }
-
-    private formatNumber(v: any): string {
-        return this.numberFormatter.format(v);
     }
 
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
             this._formattedValue = this.isNumberType()
-                ? this.formatNumber(value)
+                ? this.utilitiesService.formatNumber(value)
                 : value;
         } else {
             this._formattedValue = value;
@@ -196,8 +189,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 this.renderError
             );
 
-            // this._formattedValue = this._calculateFormattedValue ? this.value : this.formattedValue; // this.formattedValue || this.value;
-
             this.renderer.addClass(
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
@@ -208,16 +199,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
-        if (this.standAlone) {
-            // this._formattedValue = this._calculateFormattedValue ? this.value : this.formattedValue; // this.formattedValue || this.value;
-            // const pepField = this.getField();
-            // this.customizationService.updateFormField(
-            //     this.form,
-            //     pepField,
-            //     this.formattedValue
-            // );
-        }
-
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
     }
 
@@ -280,7 +261,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     onBlur(e: any): void {
         this.isInFocus = false;
         const value = e.target ? e.target.value : e;
-        debugger;
         if (value !== this.value && this.isDifferentValue(value)) {
             // If renderError is false and the new value is not valid.
             if (!this.renderError && !this.isValueValid(value)) {
@@ -297,8 +277,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                     this._formattedValue = value;
                 }
 
-                // There is formControl.setValue in the onKeyUp so we don't need it here.
-                // this.propagateChange(value, e.relatedTarget);
                 this.valueChange.emit({
                     key: this.key,
                     value,
@@ -311,17 +289,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             this.isInEditMode = false;
         }
     }
-
-    // onKeyUp(event: any): void {
-    //     const value = event.target ? event.target.value : event;
-    //     this.customizationService.updateFormFieldValue(
-    //         this.form,
-    //         this.key,
-    //         value,
-    //         this.parentFieldKey
-    //     );
-    //     this.formValidationChange.emit(this.form.valid);
-    // }
 
     anchorClicked(): void {
         const currentValue = this.value;
