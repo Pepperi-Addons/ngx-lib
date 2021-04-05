@@ -11,11 +11,19 @@ import { Observable } from 'rxjs';
 })
 export class PepAddonService {
     private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
+    private readonly ADDON_API_RELATIVE_PATH = '/addons/api';
+    private readonly ADDON_API_ASYNC_RELATIVE_PATH = `${this.ADDON_API_RELATIVE_PATH}/async`;
 
     constructor(
         private sessionService: PepSessionService,
         private httpService: PepHttpService
-    ) {}
+    ) { }
+
+    private getAddonBaseRelativePath(isAsync: boolean): string {
+        return isAsync
+            ? this.ADDON_API_ASYNC_RELATIVE_PATH
+            : this.ADDON_API_RELATIVE_PATH;
+    }
 
     getAddonStaticFolder(): string {
         // return this.assetsPath;
@@ -36,7 +44,9 @@ export class PepAddonService {
     ): Observable<any> {
         const async = isAsync ? '/async' : '';
         return this.httpService.getPapiApiCall(
-            `/addons/api/${addonUUID}${async}/${fileName}/${functionName}`,
+            `${this.getAddonBaseRelativePath(
+                isAsync
+            )}/${addonUUID}/${fileName}/${functionName}`,
             httpOptions
         );
     }
@@ -51,7 +61,9 @@ export class PepAddonService {
     ): Observable<any> {
         const async = isAsync ? '/async' : '';
         return this.httpService.postPapiApiCall(
-            `/addons/api/${addonUUID}${async}/${fileName}/${functionName}`,
+            `${this.getAddonBaseRelativePath(
+                isAsync
+            )}/${addonUUID}/${fileName}/${functionName}`,
             body,
             httpOptions
         );

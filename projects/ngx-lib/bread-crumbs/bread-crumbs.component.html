@@ -1,11 +1,66 @@
-<div *ngIf="breadCrumbs?.length > 0" class="bread-crumbs ellipsis" [ngClass]="{ 'spacing-element': addSpacing }" [title]="getBreadCrumbTitle()">
-    <div class="body-xs ellipsis">
-        <ng-container *ngFor="let breadCrumb of breadCrumbs; let isFirst = first; let isLast = last">
-            <span *ngIf="!isFirst && !isLast">&nbsp;{{ breadCrumbSeparator }}&nbsp;</span>
-            <span *ngIf="!isLast">{{ breadCrumb.text }}</span>
+<ng-container *ngIf="displayType === 'label'; then labelTemplate; else itemsTemplate">
+</ng-container>
+<ng-template #labelTemplate>
+    <div *ngIf="items?.length > 0" class="bread-crumbs-label ellipsis" [ngClass]="{ 'pep-spacing-element': addSpacing }"
+        [title]="getLabelTitle()">
+        <div class="body-xs ellipsis">
+            <ng-container *ngFor="let item of items; let isFirst = first; let isLast = last">
+                <span *ngIf="!isFirst && !isLast">&nbsp;{{ charSeparator }}&nbsp;</span>
+                <span *ngIf="!isLast">{{ item.text }}</span>
+            </ng-container>
+        </div>
+        <div class=" title-md ellipsis current full-screen" title="{{ items[items.length - 1]?.text }}">
+            <span>{{ items[items.length - 1]?.text }}</span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #itemsTemplate>
+    <ul *ngIf="items?.length > 0" class="bread-crumbs-items body-sm ellipsis">
+        <ng-container *ngIf="shrinkItems; then shrinkTemplate; else regularTemplate">
         </ng-container>
-    </div>
-    <div class=" title-md ellipsis current full-screen" title="{{ breadCrumbs[breadCrumbs.length - 1]?.text }}">
-        <span>{{ breadCrumbs[breadCrumbs.length - 1]?.text }}</span>
-    </div>
-</div>
+
+        <ng-template #shrinkTemplate>
+            <li>
+                <a class="color-link" [matMenuTriggerFor]="menu" href="javascript:void(0)">...</a>
+                <mat-menu #menu="matMenu">
+                    <ng-container *ngFor="let menuItem of items; let isLast = last">
+                        <button mat-menu-item *ngIf="!isLast" (click)="onBreadCrumbItemClick(menuItem)"
+                            [title]="menuItem.title || menuItem.text" [disabled]="menuItem.disabled"
+                            [ngClass]="{ disabled: menuItem.disabled }">
+                            <span>
+                                {{ menuItem.text }}
+                            </span>
+                        </button>
+                    </ng-container>
+                </mat-menu>
+            </li>
+            <li>
+                <mat-icon class="seperator pep-spacing-element">
+                    <pep-icon [name]="iconSeparator">
+                    </pep-icon>
+                </mat-icon>
+            </li>
+            <li>
+                <span [title]="items[items.length - 1]?.title || items[items.length - 1]?.text">
+                    {{ items[items.length - 1]?.text }}
+                </span>
+            </li>
+        </ng-template>
+        <ng-template #regularTemplate>
+            <ng-container *ngFor="let item of items; let isFirst = first; let isLast = last">
+                <li>
+                    <a *ngIf="!item.disabled" [title]="item.title || item.text" href="javascript:void(0)"
+                        class=" color-link" (click)="onBreadCrumbItemClick(item)">{{ item.text }}</a>
+                    <span *ngIf="item.disabled" [title]="item.title || item.text">{{ item.text }}</span>
+                </li>
+                <li *ngIf="!isLast">
+                    <mat-icon class="seperator pep-spacing-element">
+                        <pep-icon [name]="iconSeparator">
+                        </pep-icon>
+                    </mat-icon>
+                </li>
+            </ng-container>
+        </ng-template>
+    </ul>
+</ng-template>

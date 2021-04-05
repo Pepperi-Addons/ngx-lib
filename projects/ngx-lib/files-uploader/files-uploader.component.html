@@ -20,7 +20,7 @@
                             [ngClass]="['text-align-' + xAlignment]" />
                         <div *ngIf="controlType === 'attachment'" class="ellipsis pep-file-message">
                             <a *ngIf="src != ''" href="javascript:void(0)">
-                                <mat-icon class="spacing-element">
+                                <mat-icon class="pep-spacing-element">
                                     <pep-icon name="system_attach"></pep-icon>
                                 </mat-icon>
                                 <span class="body-sm ellipsis">{{ 'FILE.SEE_ORIGINAL' | translate }}</span>
@@ -30,10 +30,10 @@
                 </ng-template>
                 <ng-template #noImg>
                     <div class="ellipsis pep-file-message">
-                        <mat-icon *ngIf="controlType === 'attachment'" class="spacing-element">
+                        <mat-icon *ngIf="controlType === 'attachment'" class="pep-spacing-element">
                             <pep-icon name="system_attach"></pep-icon>
                         </mat-icon>
-                        <mat-icon *ngIf="controlType === 'image'" class="spacing-element">
+                        <mat-icon *ngIf="controlType === 'image'" class="pep-spacing-element">
                             <pep-icon name="system_file_upload_cloud"></pep-icon>
                         </mat-icon>
                         <span class="body-sm ellipsis" *ngIf="progress == 0">
@@ -59,8 +59,8 @@
                 </ng-template>
             </div>
             <input [id]="key" matInput [name]="key" [formControlName]="key" class="hidden-input" type="text"
-                [value]="src" [disabled]="disabled" (click)="onClick_ChooseFile($event)"
-                (keypress)="onKeyPress_ChooseFile($event)" autocomplete="off" />
+                [value]="src" (click)="onClick_ChooseFile($event)" (keypress)="onKeyPress_ChooseFile($event)"
+                autocomplete="off" />
         </div>
 
         <mat-error><span class="body-xs"

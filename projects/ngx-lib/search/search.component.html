@@ -2,8 +2,9 @@
 </ng-container> -->
 <ng-container *ngIf="shrinkInSmallScreen; then shrinkBlock; else staticBlock"></ng-container>
 <ng-template #shrinkBlock>
-    <div pepRtlClass class="search-container" [ngClass]="{ 'floating-search': isFloating}" [@fadeInOut]="fadeState">
-        <div class="search-input">
+    <div pepRtlClass class="pep-search-container" [ngClass]="{ 'pep-floating-search': isFloating}"
+        [@fadeInOut]="fadeState">
+        <div class="pep-search-input">
             <ng-container *ngIf="type === 'auto-complete'">
                 <ng-container *ngTemplateOutlet="autoCompleteBlock"></ng-container>
             </ng-container>
@@ -20,8 +21,8 @@
     </button>
 </ng-template>
 <ng-template #staticBlock>
-    <div pepRtlClass class="search-container">
-        <div class="search-input">
+    <div pepRtlClass class="pep-search-container">
+        <div class="pep-search-input">
             <ng-container *ngIf="type === 'auto-complete'">
                 <ng-container *ngTemplateOutlet="autoCompleteBlock"></ng-container>
             </ng-container>
@@ -33,10 +34,10 @@
 </ng-template>
 
 <ng-template #autoCompleteBlock>
-    <mat-form-field class="search-field" appearance="outline">
+    <mat-form-field appearance="outline">
         <!-- (@slideInOut.done)="animateSearchDone()" [@slideInOut]="state" -->
-        <input #searchInput class="body-sm search-input" matInput autocomplete="off"
-            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" (keyup)="onKeyup($event)" type="search" results="5"
+        <input #searchInput class="body-sm pep-search-input" matInput autocomplete="off"
+            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="text" (keyup.enter)="onSearch($event)" results="5"
             [formControl]="searchControl" placeholder="{{ 'SEARCH.HINT' | translate }}..." [matAutocomplete]="auto" />
         <mat-autocomplete #auto="matAutocomplete" class="pep-select">
             <mat-option *ngFor="let value of autoCompleteValues" [value]="value" (click)="triggerSearch()">
@@ -57,10 +58,10 @@
 </ng-template>
 
 <ng-template #regularBlock>
-    <mat-form-field class="search-field" appearance="outline">
-        <input #searchInput class="body-sm search-input" matInput autocomplete="off"
-            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="search" [formControl]="searchControl"
-            placeholder="{{ 'SEARCH.HINT' | translate }}..." />
+    <mat-form-field appearance="outline">
+        <input #searchInput class="body-sm pep-search-input" matInput autocomplete="off"
+            [ngStyle]="{ textAlign: isRtl ? 'right' : 'left' }" type="text" (keyup.enter)="onSearch($event)"
+            [formControl]="searchControl" placeholder="{{ 'SEARCH.HINT' | translate }}..." />
         <div matSuffix class="flex align-center">
             <ng-container *ngIf="triggerOn === 'click'">
                 <ng-container *ngTemplateOutlet="triggerOnClickBlock"></ng-container>
@@ -73,14 +74,14 @@
 </ng-template>
 
 <ng-template #triggerOnClickBlock>
-    <!-- || (isFloating && fadeState == 'fadeIn') -->
-    <ng-container *ngIf="(state == 'open' && searchControl.value?.length > 0)">
-        <mat-icon class="text-icon pointer" (click)="onClearClicked($event)">
+    <!-- <ng-container *ngIf="(state == 'open' && searchControl.value?.length > 0)"> -->
+    <ng-container *ngIf="(state == 'open')">
+        <mat-icon class="pep-text-icon pep-pointer" (click)="onClearClicked($event)">
             <pep-icon name="system_close"></pep-icon>
         </mat-icon>
-        <span class="text-icon spacing-element v-separator">|</span>
+        <span class="pep-text-icon pep-spacing-element pep-v-separator">|</span>
     </ng-container>
-    <mat-icon class="text-icon pointer" (click)="onSearchClicked()">
+    <mat-icon class="pep-text-icon pep-pointer" (click)="onSearchClicked()">
         <pep-icon name="system_search"></pep-icon>
     </mat-icon>
 </ng-template>
@@ -95,7 +96,7 @@
         </button>
     </ng-template>
     <ng-template #searchBlock>
-        <mat-icon class="text-icon">
+        <mat-icon class="pep-text-icon">
             <pep-icon name="system_search"></pep-icon>
         </mat-icon>
     </ng-template>

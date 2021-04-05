@@ -6,6 +6,7 @@ import {
     Output,
     EventEmitter,
     ViewChild,
+    ElementRef,
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import {
@@ -25,6 +26,18 @@ import { IPepSideBarStateChangeEvent } from './side-bar.model';
 export class PepSideBarComponent implements OnInit {
     // @Input() showOnLargeScreens = true;
     // @Input() sideBarButtons: Array<SideBarButton> = [];
+    @Input() showFooter = true;
+    private _useAsWebComponent = false;
+
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
 
     @Output()
     stateChange: EventEmitter<IPepSideBarStateChangeEvent> = new EventEmitter<IPepSideBarStateChangeEvent>();
@@ -37,10 +50,19 @@ export class PepSideBarComponent implements OnInit {
     screenSize: PepScreenSizeType;
     PepScreenSizeType = PepScreenSizeType;
 
-    constructor(private layoutService: PepLayoutService) {
+    constructor(
+        private hostElement: ElementRef,
+        private layoutService: PepLayoutService
+    ) {
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
+    }
+
+    private exportFunctionsOnHostElement() {
+        // This is for web component usage for use those functions.
+        this.hostElement.nativeElement.open = this.open.bind(this);
+        this.hostElement.nativeElement.close = this.close.bind(this);
     }
 
     ngOnInit() {
@@ -77,14 +99,12 @@ export class PepSideBarComponent implements OnInit {
     open() {
         if (this.sidenav) {
             this.sidenav.open();
-            this.stateChange.emit({ state: 'open' });
         }
     }
 
     close() {
         if (this.sidenav) {
             this.sidenav.close();
-            this.stateChange.emit({ state: 'close' });
         }
     }
 
@@ -92,7 +112,10 @@ export class PepSideBarComponent implements OnInit {
         if (this.sidenav) {
             const isOpen = this.sidenav.opened;
             this.sidenav.toggle();
-            this.stateChange.emit({ state: isOpen ? 'close' : 'open' });
         }
+    }
+
+    openedChange(isOpen: boolean) {
+        this.stateChange.emit({ state: isOpen ? 'open' : 'close' });
     }
 }

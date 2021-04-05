@@ -28,7 +28,7 @@ import {
 
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepImagesFilmstripComponent } from '@pepperi-addons/ngx-lib/images-filmstrip';
-import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'pep-image',
@@ -57,7 +57,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     controlType = 'image';
 
     @Input() form: FormGroup = null;
-    @Input() objectId = '';
+    @Input() uid = '';
     @Input() showTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
@@ -123,18 +123,17 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.elementClick) {
-            this.elementClick.unsubscribe();
-        }
-
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.elementClick) {
+        //     this.elementClick.unsubscribe();
+        // }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     errorHandler(event: any): void {
         event.target.src = this.fileService.getSvgAsImageSrc(
-            pepIconNoImage.data
+            pepIconNoImage2.data
         );
         event.target.title = this.translate.instant('IMAGE.NO_IMAGE');
     }
@@ -174,13 +173,13 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     objectIdIsNotEmpty(): boolean {
-        return this.objectId?.length > 0 && this.objectId !== '0';
+        return this.uid?.length > 0 && this.uid !== '0';
     }
 
     onFileClicked(event: IPepFieldClickEvent): void {
         let hasParentImage = true;
         if (
-            this.objectIdIsNotEmpty() &&
+            // this.objectIdIsNotEmpty() &&
             this.src &&
             this.src.indexOf('no-image') > -1
         ) {
@@ -241,7 +240,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
                     key: this.key,
                     value: imagesValue,
                     label: this.label,
-                    objectId: this.objectId,
+                    uid: this.uid,
                     showThumbnails: arr.length > 1,
                 },
                 config

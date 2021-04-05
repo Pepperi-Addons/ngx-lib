@@ -44,7 +44,7 @@ import {
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconArrowRightAlt } from '@pepperi-addons/ngx-lib/icon';
-import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
 import 'hammerjs';
 
@@ -53,7 +53,7 @@ interface IPepImagesFilmstripDialogData {
     key: string;
     value: string;
     label: string;
-    objectId: string;
+    uid: string;
     showThumbnails: boolean;
 }
 
@@ -159,7 +159,7 @@ export class PepImagesFilmstripComponent
     controlType = 'images';
 
     @Input() form: FormGroup = null;
-    @Input() objectId = '';
+    @Input() uid = '0';
     @Input() showTitle = false;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() currIndex = 0;
@@ -271,7 +271,7 @@ export class PepImagesFilmstripComponent
             // add No image image when there is no images
             if (imgArr.length === 0) {
                 const noImageSrc = this.fileService.getSvgAsImageSrc(
-                    pepIconNoImage.data
+                    pepIconNoImage2.data
                 );
                 imgArr.push(noImageSrc);
             }
@@ -300,7 +300,7 @@ export class PepImagesFilmstripComponent
             this.afterDialogOpened();
         } else {
             this.galleryRef = this.gallery.ref(
-                this.key + '-' + this.objectId + '-gallery'
+                `${this.key}-${this.uid}-gallery`
             );
             this.initGalleryStyle(this.galleryCont, this.galleryRef);
         }
@@ -337,7 +337,7 @@ export class PepImagesFilmstripComponent
 
     onError(e): void {
         const noImageSrc = this.fileService.getSvgAsImageSrc(
-            pepIconNoImage.data
+            pepIconNoImage2.data
         );
         const noimg = new ImageItem({ src: noImageSrc, thumb: noImageSrc });
         this.items.splice(e.itemIndex, 1, noimg);
@@ -368,7 +368,7 @@ export class PepImagesFilmstripComponent
 
     afterDialogOpened(): void {
         this.dialogGalleryRef = this.gallery.ref(
-            this.key + '-' + this.objectId + '-dlgGallery'
+            `${this.key}-${this.uid}-dlgGallery`
         );
         this.initGalleryStyle(this.galleryDialogCont, this.dialogGalleryRef);
     }

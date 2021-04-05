@@ -11,8 +11,10 @@ import {
     ViewChild,
     Renderer2,
     OnDestroy,
+    ChangeDetectorRef,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import {
     PepLayoutType,
     PepCustomizationService,
@@ -22,6 +24,7 @@ import {
     PepTextboxFieldType,
     PepTextboxField,
     PepFieldBase,
+    PepUtilitiesService,
 } from '@pepperi-addons/ngx-lib';
 
 @Component({
@@ -32,8 +35,41 @@ import {
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
-    @Input() value = '';
-    @Input() formattedValue = '';
+
+    private _value = null;
+    @Input()
+    set value(value: string) {
+        if (!value) {
+            value = '';
+        }
+
+        this._value = value;
+
+        if (this._calculateFormattedValue) {
+            this.setFormattedValue(value);
+        }
+    }
+    get value(): string {
+        return this._value;
+    }
+
+    private _formattedValue = null;
+    @Input()
+    set formattedValue(value: string) {
+        if (!value) {
+            value = '';
+        }
+
+        if (this._calculateFormattedValue) {
+            this._calculateFormattedValue = false;
+        }
+
+        this.setFormattedValue(value);
+    }
+    get formattedValue(): string {
+        return this._formattedValue;
+    }
+
     @Input() label = '';
     @Input() placeholder = '';
     @Input() type: PepTextboxFieldType = 'text';
@@ -44,7 +80,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() lastFocusField: any;
+    // @Input() lastFocusField: any;
     @Input() minValue = NaN;
     @Input() maxValue = NaN;
 
@@ -66,16 +102,45 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     @ViewChild('input') input: ElementRef;
 
+    private _calculateFormattedValue = true;
+    get calculateFormattedValue(): boolean {
+        return this._calculateFormattedValue;
+    }
+
     standAlone = false;
     isInEditMode = false;
-    isFocus = false;
+    isInFocus: boolean;
 
     constructor(
         public fb: FormBuilder,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
-        private element: ElementRef
-    ) {}
+        private element: ElementRef,
+        private translate: TranslateService,
+        private utilitiesService: PepUtilitiesService
+    ) {
+        this.isInFocus = false;
+    }
+
+    private setFormattedValue(value: string) {
+        if (this._calculateFormattedValue) {
+            this._formattedValue = this.isNumberType()
+                ? this.utilitiesService.formatNumber(value)
+                : value;
+        } else {
+            this._formattedValue = value;
+        }
+
+        // Need timeout for UI.
+        setTimeout(() => {
+            this.customizationService.updateFormFieldValue(
+                this.form,
+                this.key,
+                this.formattedValue,
+                this.parentFieldKey
+            );
+        }, 0);
+    }
 
     private getField(): PepFieldBase {
         const pepField = new PepTextboxField({
@@ -91,6 +156,18 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         });
 
         return pepField;
+    }
+
+    get displayValue(): string {
+        let res = '';
+
+        if (this.type == 'link') {
+            res = this.formattedValue;
+        } else {
+            res = this.isInFocus ? this.value : this.formattedValue;
+        }
+
+        return res;
     }
 
     ngOnInit(): void {
@@ -112,8 +189,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 this.renderError
             );
 
-            this.formattedValue = this.formattedValue || this.value;
-
             this.renderer.addClass(
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
@@ -124,40 +199,15 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
-        if (this.standAlone) {
-            this.formattedValue = this.formattedValue || this.value;
-
-            const pepField = this.getField();
-            this.customizationService.updateFormField(
-                this.form,
-                pepField,
-                this.formattedValue
-            );
-        }
-
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
-
-        setTimeout(() => {
-            if (this.lastFocusField) {
-                this.lastFocusField.focus();
-                this.lastFocusField = null;
-            } else {
-            }
-        }, 100);
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
-
-        if (this.formValidationChange) {
-            this.formValidationChange.unsubscribe();
-        }
+        //
     }
 
     onFocus(e: any): void {
-        this.isFocus = true;
+        this.isInFocus = true;
     }
 
     isNumberType(): boolean {
@@ -209,9 +259,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     onBlur(e: any): void {
-        this.isFocus = false;
+        this.isInFocus = false;
         const value = e.target ? e.target.value : e;
-
         if (value !== this.value && this.isDifferentValue(value)) {
             // If renderError is false and the new value is not valid.
             if (!this.renderError && !this.isValueValid(value)) {
@@ -221,10 +270,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                     this.value
                 );
             } else {
-                this.formattedValue = this.value = value;
+                this.value = value;
 
-                // There is formControl.setValue in the onKeyUp so we don't need it here.
-                // this.propagateChange(value, e.relatedTarget);
+                // If the user is setting the formatted value then set the value till the user format it and return it back.
+                if (!this._calculateFormattedValue) {
+                    this._formattedValue = value;
+                }
+
                 this.valueChange.emit({
                     key: this.key,
                     value,
@@ -235,79 +287,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.isInEditMode) {
             this.isInEditMode = false;
-        }
-    }
-
-    onKeyUp(event: any): void {
-        const value = event.target ? event.target.value : event;
-        this.customizationService.updateFormFieldValue(
-            this.form,
-            this.key,
-            value,
-            this.parentFieldKey
-        );
-        this.formValidationChange.emit(this.form.valid);
-    }
-
-    onKeyPress(event: any): any {
-        let inputChar = String.fromCharCode(event.charCode);
-        const e = event as KeyboardEvent;
-
-        if (
-            [8, 9, 13, 27, 190].indexOf(e.which) !== -1 ||
-            // Allow: Ctrl+A
-            (e.which === 65 && e.ctrlKey === true) ||
-            // Allow: Ctrl+C
-            (e.which === 67 && e.ctrlKey === true) ||
-            // Allow: Ctrl+V
-            (e.which === 86 && e.ctrlKey === true) ||
-            // Allow: Ctrl+X
-            (e.which === 88 &&
-                e.ctrlKey ===
-                    true) /*||
-            // Allow: home, end, left, right
-            (e.which >= 35 && e.which <= 39)*/
-        ) {
-            // let it happen, don't do anything
-            return true;
-        }
-
-        switch (this.type) {
-            case 'int': {
-                const pattern = /[0-9\+\-\ ]/;
-                if (!pattern.test(inputChar)) {
-                    e.preventDefault();
-                }
-                break;
-            }
-            case 'currency':
-            case 'real': {
-                const decPoint = '.';
-                const thousandSeparator = ',';
-                const pattern = /^\d+(\.\d{1,9})?$/;
-                if (e.which === 46) {
-                    inputChar = inputChar + '0';
-                } else if (e.which === 44) {
-                    inputChar = inputChar + '000';
-                }
-                if (!pattern.test(event.target.value + inputChar)) {
-                    e.preventDefault();
-                }
-                break;
-            }
-            case 'phone': {
-                const pattern = /^[\d\.\-\+\(\)\*\#]+$/;
-                if (!pattern.test(event.target.value + inputChar)) {
-                    e.preventDefault();
-                }
-                break;
-            }
-            case 'text': {
-                // if (this.maxFieldCharacters !== 0 && event.target.value.length >= this.maxFieldCharacters) {
-                //     e.preventDefault();
-                // }
-                break;
-            }
         }
     }
 

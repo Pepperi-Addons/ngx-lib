@@ -164,13 +164,12 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
-
-        if (this.formValidationChange) {
-            this.formValidationChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
+        // if (this.formValidationChange) {
+        //     this.formValidationChange.unsubscribe();
+        // }
     }
 
     selectionChange(event: any): void {
@@ -199,7 +198,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            value,
+            // value,
+            this.fieldFormattedValue,
             this.parentFieldKey
         );
 

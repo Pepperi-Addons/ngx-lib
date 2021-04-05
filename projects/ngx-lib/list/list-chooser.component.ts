@@ -38,9 +38,12 @@ export class PepListChooserComponent {
         });
 
         if (this.menuItems?.length === 1) {
-            this.breadCrumbs = [];
-            this.breadCrumbs.push(
-                new PepBreadCrumbItem(this.menuItems[0].text)
+            this.breadCrumbsItems = [];
+            this.breadCrumbsItems.push(
+                new PepBreadCrumbItem({
+                    key: this.menuItems[0].key,
+                    text: this.menuItems[0].text,
+                })
             );
         }
     }
@@ -48,13 +51,24 @@ export class PepListChooserComponent {
         return this._options;
     }
 
+    private _currentList: IPepListChooserOption = null;
+    @Input()
+    set currentList(value: IPepListChooserOption) {
+        this._currentList = value;
+        this.currentItem = { key: value.key, text: value.text };
+    }
+    get currentList(): IPepListChooserOption {
+        return this._currentList;
+    }
+
     @Input() sizeType: PepSizeType = 'md';
 
     @Output()
     change: EventEmitter<IPepListChooserOptionChangeEvent> = new EventEmitter<IPepListChooserOptionChangeEvent>();
 
-    breadCrumbs: Array<PepBreadCrumbItem> = null;
+    breadCrumbsItems: Array<PepBreadCrumbItem> = null;
     menuItems: Array<PepMenuItem> = null;
+    currentItem: PepMenuItem = null;
 
     onMenuItemClicked(menuItemClickEvent: IPepMenuItemClickEvent): void {
         const currentList = this.options.find(

@@ -2,14 +2,14 @@
 </ng-container>
 <ng-template #menuTemplate>
     <pep-menu [type]="'select'" [styleType]="styleType" [sizeType]="sizeType" [classNames]="classNames"
-        [items]="menuItems" [selectedItem]="currentView"
-        [iconName]="currentView?.iconName ? currentView?.iconName : 'arrow_down'"
+        [items]="menuItems" [selectedItem]="currentItem"
+        [iconName]="currentItem?.iconName ? currentItem?.iconName : 'arrow_down'"
         (menuItemClick)="onMenuItemClicked($event)"></pep-menu>
 </ng-template>
 <ng-template #buttonsTemplate>
-    <div class="buttons-wrapper spacing-element-negative">
+    <div class="buttons-wrapper pep-spacing-element-negative">
         <button *ngFor="let view of views" mat-button [title]="view.title" [disabled]="view.key === currentView?.key"
-            class="pep-button icon-button spacing-element {{ sizeType }} {{ styleType }} {{ classNames }}"
+            class="pep-button icon-button pep-spacing-element {{ sizeType }} {{ styleType }} {{ classNames }}"
             pepRtlDirection pepMenuBlur (click)="onViewChanged(view)">
             <mat-icon>
                 <pep-icon name="{{ view?.iconName }}"></pep-icon>

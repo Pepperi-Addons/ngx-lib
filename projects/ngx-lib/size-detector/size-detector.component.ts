@@ -5,6 +5,8 @@ import {
     HostListener,
     ElementRef,
     Input,
+    Output,
+    EventEmitter,
 } from '@angular/core';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 
@@ -20,6 +22,20 @@ interface IPepSizeDetectorItem {
 })
 export class PepSizeDetectorComponent implements AfterViewInit {
     @Input() showScreenSize = false;
+
+    private _useAsWebComponent = false;
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
+
+    @Output()
+    sizeChange: EventEmitter<IPepSizeDetectorItem> = new EventEmitter<IPepSizeDetectorItem>();
 
     prefix = 'is-';
     sizes: Array<IPepSizeDetectorItem> = [
@@ -50,10 +66,17 @@ export class PepSizeDetectorComponent implements AfterViewInit {
         },
     ];
 
+    private currentSize: IPepSizeDetectorItem;
+
     constructor(
-        private element: ElementRef,
+        private hostElement: ElementRef,
         private layoutService: PepLayoutService
-    ) {}
+    ) {
+        this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
+            this.currentSize = this.sizes.find((s) => s.id === size);
+            this.sizeChange.emit(this.currentSize);
+        });
+    }
 
     @HostListener('window:resize', ['$event'])
     onResize(event): void {
@@ -65,8 +88,8 @@ export class PepSizeDetectorComponent implements AfterViewInit {
     }
 
     private detectScreenSize(): void {
-        const currentSize = this.sizes.find((x) => {
-            const el = this.element.nativeElement.querySelector(
+        this.currentSize = this.sizes.find((x) => {
+            const el = this.hostElement.nativeElement.querySelector(
                 `.${this.prefix}${x.id}`
             );
             const isVisible = window.getComputedStyle(el).display !== 'none';
@@ -74,6 +97,17 @@ export class PepSizeDetectorComponent implements AfterViewInit {
             return isVisible;
         });
 
-        this.layoutService.onResize(currentSize.id);
+        this.layoutService.onResize(this.currentSize.id);
+    }
+
+    private exportFunctionsOnHostElement() {
+        // This is for web component usage for use those functions.
+        this.hostElement.nativeElement.getCurrentSize = this.getCurrentSize.bind(
+            this
+        );
+    }
+
+    getCurrentSize(): IPepSizeDetectorItem {
+        return this.currentSize;
     }
 }

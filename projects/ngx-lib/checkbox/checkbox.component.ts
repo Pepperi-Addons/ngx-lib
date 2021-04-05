@@ -103,9 +103,9 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     onMaterialChange(e: MatCheckboxChange): void {

@@ -26,7 +26,7 @@ import {
     PepDialogService,
     PepDialogData,
 } from '@pepperi-addons/ngx-lib/dialog';
-import { pepIconNoImage } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'pep-files-uploader',
@@ -198,7 +198,7 @@ export class PepFilesUploaderComponent implements OnInit {
 
     errorHandler(event): void {
         event.target.src = this.fileService.getSvgAsImageSrc(
-            pepIconNoImage.data
+            pepIconNoImage2.data
         );
         event.target.title = this.translate.instant('IMAGE.NO_IMAGE');
     }

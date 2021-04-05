@@ -1,4 +1,13 @@
-import { PepSmartFilterComponentType, PepSmartFilterType } from './type';
+import {
+    IPepSmartFilterOperator,
+    IPepSmartFilterOperatorUnit,
+} from './operator';
+import {
+    PepSmartFilterComponentType,
+    PepSmartFilterType,
+    PepSmartFilterOperatorType,
+    PepSmartFilterOperatorUnitType,
+} from './type';
 
 export interface IPepSmartFilterFieldOption {
     value: string;
@@ -10,6 +19,8 @@ export interface IPepSmartFilterField {
     name: string;
     isOpen?: boolean;
     options?: IPepSmartFilterFieldOption[];
+    operators?: PepSmartFilterOperatorType[];
+    operatorUnits?: PepSmartFilterOperatorUnitType[];
 }
 
 // Base field
@@ -19,6 +30,8 @@ export abstract class PepSmartFilterBaseField implements IPepSmartFilterField {
     name: string;
     isOpen?: boolean;
     options?: IPepSmartFilterFieldOption[];
+    operators?: PepSmartFilterOperatorType[];
+    operatorUnits?: PepSmartFilterOperatorUnitType[];
 
     protected _componentType: PepSmartFilterComponentType;
     get componentType(): PepSmartFilterComponentType {
@@ -35,6 +48,8 @@ export abstract class PepSmartFilterBaseField implements IPepSmartFilterField {
         this.name = field.name;
         this.isOpen = field.isOpen;
         this.options = field.options;
+        this.operators = field.operators;
+        this.operatorUnits = field.operatorUnits;
 
         this._type = this.getType();
     }

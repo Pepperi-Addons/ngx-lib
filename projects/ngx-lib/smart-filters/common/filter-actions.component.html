@@ -1,8 +1,8 @@
-<div [formGroup]="form" class="filter-actions spacing-element-negative">
-    <button mat-button class="spacing-element pep-button sm weak" (click)="clear()">
+<div [formGroup]="form" class="filter-actions pep-spacing-element-negative">
+    <button mat-button class="pep-spacing-element pep-button sm weak" (click)="clear()">
         {{ 'ACTIONS.CLEAR' | translate }}
     </button>
-    <button mat-button class="spacing-element pep-button sm strong" (click)="apply()" [disabled]="form.invalid">
+    <button mat-button class="pep-spacing-element pep-button sm strong" (click)="apply()" [disabled]="form.invalid">
         {{ 'ACTIONS.APPLY' | translate }}
     </button>
 </div>

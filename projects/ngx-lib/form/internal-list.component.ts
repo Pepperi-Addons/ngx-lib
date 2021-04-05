@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import {
-    PepLayoutType,
     PepLayoutService,
     UIControl,
     UIControlField,
@@ -52,7 +51,6 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() disabled = false;
     @Input() disableEvents = false;
     @Input() disableSelectionItems = false;
-    @Input() layoutType: PepLayoutType = null;
     @Input() pageType = '';
     @Input() totalsRow = [];
 
@@ -133,17 +131,15 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
-
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
         // if (this.itemClick) {
         //     this.itemClick.unsubscribe();
         // }
-
-        if (this.fieldClick) {
-            this.fieldClick.unsubscribe();
-        }
+        // if (this.fieldClick) {
+        //     this.fieldClick.unsubscribe();
+        // }
     }
 
     setContainerWidth(): void {
@@ -572,10 +568,6 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
 
     onCardMouseLeave(event: any, itemId: string, itemType: string): void {
         this.hoveredItemId = '';
-    }
-
-    getThumbnailsLayout(): PepLayoutType {
-        return this.layoutType == null ? 'card' : this.layoutType;
     }
 
     // call this function after resize + animation end

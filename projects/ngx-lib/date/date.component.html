@@ -17,8 +17,8 @@
             <pep-textbox-icon *ngIf="renderSymbol && showIcon && xAlignment == 'left'" matSuffix [value]="value"
                 [label]="label" [type]="type" [disabled]="disabled" (iconClick)="openDatetimePicker(datetimePicker)">
             </pep-textbox-icon>
-            <mat-datetimepicker #datetimePicker [type]="showTime ? 'datetime' : 'date'" openOnFocus="false"
-                touchUi="true" timeInterval="1"></mat-datetimepicker>
+            <mat-datetimepicker #datetimePicker [type]="showTime ? 'datetime' : 'date'" [openOnFocus]="false"
+                [touchUi]="true" [timeInterval]="1"></mat-datetimepicker>
         </mat-form-field>
     </ng-template>
 

@@ -526,6 +526,7 @@ $sorting-width: 1rem;
 }
 
 
+
 //  Card view & Line view
 // ------------------------
 .cards-body {
@@ -596,16 +597,17 @@ $sorting-width: 1rem;
                 flex-basis: $card-field-button-size;
                 flex-shrink: 0;
 
-                &.self-end {
-                    align-self: flex-end;
-                }
-
                 width: $card-field-button-size;
                 height: $card-field-button-size;
                 line-height: $card-field-button-size;
                 min-width: unset;
                 padding: 0;
                 pointer-events: none;
+                align-self: center;
+
+                &.self-end {
+                    align-self: flex-end;
+                }
 
                 .mat-icon {
                     // line-height: 0.5rem !important;
@@ -715,18 +717,6 @@ $sorting-width: 1rem;
         @include calc(min-width, $screen-almost-full-width + ' / 3');
 
         &.small-card {
-            @include calc(min-width, $screen-almost-full-width + ' / 4');
-        }
-
-        &.x-small-card {
-            @include calc(min-width, $screen-almost-full-width + ' / 5');
-        }
-    }
-    /* Extra small - Small */
-    @media (max-width: $screen-max-size-sm) and (min-width: $screen-max-size-xs) {
-        @include calc(min-width, $screen-almost-full-width + ' / 2');
-
-        &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 3');
         }
 
@@ -734,9 +724,9 @@ $sorting-width: 1rem;
             @include calc(min-width, $screen-almost-full-width + ' / 4');
         }
     }
-    /* < Extra small */
-    @media (max-width: $screen-max-size-xs) {
-        @include calc(min-width, $screen-almost-full-width + ' / 1');
+    /* Extra small - Small */
+    @media (max-width: $screen-max-size-sm) and (min-width: $screen-max-size-xs) {
+        @include calc(min-width, $screen-almost-full-width + ' / 2');
 
         &.small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 2');
@@ -744,6 +734,18 @@ $sorting-width: 1rem;
 
         &.x-small-card {
             @include calc(min-width, $screen-almost-full-width + ' / 2');
+        }
+    }
+    /* < Extra small */
+    @media (max-width: $screen-max-size-xs) {
+        @include calc(min-width, $screen-almost-full-width + ' / 1');
+
+        &.small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 1');
+        }
+
+        &.x-small-card {
+            @include calc(min-width, $screen-almost-full-width + ' / 1');
         }
     }
 }
@@ -810,7 +812,7 @@ $sorting-width: 1rem;
                 color: get-pep-color($pepperi-theme, color-weak, color-flat-r-20);
 
                 // For non icons symbols.
-                .text-icon {
+                .pep-text-icon {
                     color: get-pep-color($pepperi-theme, color-weak, color-flat-r-20);
                 }
             }

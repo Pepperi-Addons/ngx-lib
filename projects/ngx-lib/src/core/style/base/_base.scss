@@ -61,6 +61,7 @@ aside {
     }
 }
 
+header, // This is for the menu header that open chooser dialog.
 main {
     .side-layout {
         width: $side-bar-width;
@@ -106,6 +107,12 @@ main {
 
         .main-layout {
             padding: 0 $content-padding;
+        }
+
+        @media (max-width: $screen-max-size-xs) {
+            .main-layout {
+                padding: 0;
+            }
         }
     }
 
@@ -242,12 +249,12 @@ main {
 
 //  Spacing
 // ------------------------
-.spacing-element-negative {
-    @include spacing-element-negative();
+.pep-spacing-element-negative {
+    @include pep-spacing-element-negative();
 }
 
-.spacing-element {
-    @include spacing-element();
+.pep-spacing-element {
+    @include pep-spacing-element();
 }
 //  Floating alignment
 // ------------------------
@@ -453,7 +460,6 @@ main {
         }
     }
 }
-
 
 .pepperi-accordion2, .pep-accordion2 {
     &.mat-accordion .mat-expansion-panel {
@@ -707,7 +713,8 @@ main {
 
         .mat-dialog-container {
             .mat-dialog-content {
-                max-height: calc(90vh - (#{$dialog-header-height} + (#{$content-padding} * 2)));
+                $border-size: 1px;
+                max-height: calc(90vh - (#{$dialog-header-height} + (#{$content-padding} * 2) + (#{$border-size} * 2))); 
             }
         }
     }
@@ -746,7 +753,8 @@ main {
                 height: 100%;
 
                 .mat-dialog-content {
-                    max-height: calc(100% - ((#{$dialog-content-padding} * 2)));
+                    $border-size: 1px;
+                    max-height: calc(100% - ((#{$dialog-content-padding} * 2) + (#{$border-size} * 2)));
                     height: inherit;
                 }
             }
@@ -989,9 +997,10 @@ main {
     .mat-menu-panel {
         box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
         border: 1px solid get-pep-color($pepperi-theme, color-system-primary, color-base);
+        
         max-width: 30rem;
         min-height: unset;
-
+        
         .mat-menu-item {
             background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
 

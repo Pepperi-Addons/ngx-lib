@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,12 +18,12 @@ import { PepTextboxIconModule } from '@pepperi-addons/ngx-lib/textbox-icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
 import { PepTextboxComponent } from './textbox.component';
+import { PepTextboxValidationDirective } from './textbox-validation.directive';
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        FormsModule,
         // Material modules,
         MatCommonModule,
         MatButtonModule,
@@ -37,7 +37,7 @@ import { PepTextboxComponent } from './textbox.component';
         PepTextboxIconModule,
     ],
     exports: [PepTextboxComponent],
-    declarations: [PepTextboxComponent],
+    declarations: [PepTextboxComponent, PepTextboxValidationDirective],
 })
 export class PepTextboxModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

@@ -52,6 +52,8 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
     PepScreenSizeType = PepScreenSizeType;
     screenSize: PepScreenSizeType;
 
+    pageIndex = 0;
+
     constructor(
         private dataConvertorService: PepDataConvertorService,
         public layoutService: PepLayoutService,
@@ -138,7 +140,7 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
             this.menuActions === null ? this.getMenuActions() : null;
     }
 
-    onAnimationStateChange(state): void {}
+    onAnimationStateChange(state): void { }
 
     loadlist(dataSource) {
         if (this.customList && dataSource) {
@@ -160,6 +162,7 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
                 tableData[0]
             );
             const rows = this.dataConvertorService.convertListData(tableData);
+            this.pageIndex = 1;
             this.customList.initListData(
                 uiControl,
                 rows.length,
@@ -168,6 +171,7 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
                 '',
                 true
             );
+
         }
     }
 
@@ -229,13 +233,13 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
         this.footerState = footerStateType.state;
     }
 
-    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) {}
+    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) { }
 
-    selectedRowsChanged(selectedRowsCount: number) {}
+    selectedRowsChanged(selectedRowsCount: number) { }
 
-    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) {}
+    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) { }
 
-    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) {}
+    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) { }
 
     onViewChanged(viewChangeEvent: IListViewChangeEvent) {
         // debugger;

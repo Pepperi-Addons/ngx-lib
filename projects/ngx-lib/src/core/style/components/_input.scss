@@ -27,7 +27,10 @@
 }
 
 .pepperi-card-input, .pep-card-input {
-    @include ellipsis();
+    &:not(.multi-rows) {
+        @include ellipsis();
+    }
+
     padding: 0.125rem 0.25rem;
 }
 

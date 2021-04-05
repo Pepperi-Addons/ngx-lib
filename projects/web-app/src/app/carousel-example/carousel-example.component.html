@@ -1,7 +1,11 @@
 <div class="addon-page-container ">
-    <pep-top-bar [title]="'Carousel title'">
+    <pep-top-bar [title]="''">
         <div header-start-content>
-            <pep-menu class="spacing-element" [styleType]="'regular'" [text]="'open menu'" [iconName]="'arrow_down'"
+            <pep-bread-crumbs class="pep-spacing-element" [items]="breadCrumbsItems" [displayType]="'items'"
+                (itemClick)="onBreadCrumbItemClick($event)">
+
+            </pep-bread-crumbs>
+            <pep-menu class="pep-spacing-element" [styleType]="'regular'" [text]="'open menu'" [iconName]="'arrow_down'"
                 [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
             </pep-menu>
         </div>

@@ -1,6 +1,10 @@
-import { PepSmartFilterComponentType } from './type';
+import {
+    PepSmartFilterComponentType,
+    PepSmartFilterOperatorType,
+    PepSmartFilterOperatorUnitType,
+} from './type';
 export class IPepSmartFilterOperator {
-    id: string;
+    id: PepSmartFilterOperatorType;
     name: string;
     short: string;
     componentType: PepSmartFilterComponentType[];
@@ -216,7 +220,7 @@ export const PepSmartFilterOperators = {
 };
 
 export class IPepSmartFilterOperatorUnit {
-    id: string;
+    id: PepSmartFilterOperatorUnitType;
     name: string;
     componentType: PepSmartFilterComponentType[];
 }

@@ -1,5 +1,15 @@
 <ng-container *ngIf="totalRows == 0">
-    <div class="no-data">{{ noDataFoundMsg }}</div>
+    <div class="pep-border-bottom">
+        <p class="title-xl no-data">
+            {{ (noDataFoundMsg ? noDataFoundMsg : 'LIST.NO_DATA_FOUND') | translate}}
+        </p>
+    </div>
+    <div class="no-data-suggestions">
+        <p class="suggestions-title title-lg">
+            {{ 'LIST.NO_DATA_FOUND_SUGGESTIONS_TITLE' | translate}}
+        </p>
+        <ul class="suggestions-list body-lg" [innerHtml]="'LIST.NO_DATA_FOUND_SUGGESTIONS_LIST' | translate"></ul>
+    </div>
 </ng-container>
 <ng-container *ngIf="totalRows > 0">
     <div *ngIf="isTable" #tableHeader class="table-header" (mouseup)="onListResizeEnd($event)"
@@ -74,8 +84,7 @@
                 <!-- [canEditObject]="!disabled && item?.IsEditable" -->
                 <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item"
                     [canEditObject]="!disabled" [objectId]=" objectId" [parentId]="parentId" [searchCode]="searchCode"
-                    [lockEvents]="disableSelectionItems" [layoutType]="getThumbnailsLayout()" [listType]="listType"
-                    [isActive]="
+                    [lockEvents]="disableSelectionItems" [layoutType]="'card'" [listType]="listType" [isActive]="
                             (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"

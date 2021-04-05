@@ -115,6 +115,17 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         return this._searchControl;
     }
 
+    private _useAsWebComponent = false;
+    @Input()
+    set useAsWebComponent(value: boolean) {
+        if (value) {
+            this.exportFunctionsOnHostElement();
+        }
+    }
+    get useAsWebComponent(): boolean {
+        return this._useAsWebComponent;
+    }
+
     @Output()
     search: EventEmitter<IPepSearchClickEvent> = new EventEmitter<IPepSearchClickEvent>();
     @Output()
@@ -134,7 +145,12 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     isFloating = false;
     screenSize: PepScreenSizeType;
 
-    constructor(private layoutService: PepLayoutService) {
+    constructor(
+        private hostElement: ElementRef,
+        private layoutService: PepLayoutService
+    ) {}
+
+    ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
 
@@ -151,9 +167,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
                 this.fadeState = 'fadeIn';
             }
         });
-    }
 
-    ngOnInit(): void {
         this.isRtl = this.layoutService.isRtl();
         this.createSearchControlIfNotExist();
 
@@ -185,9 +199,9 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         this._destroyed.complete();
     }
 
-    private initSearch() {
-        this.lastValue = null;
-        this.searchControl.setValue('');
+    private exportFunctionsOnHostElement() {
+        // This is for web component usage for use those functions.
+        this.hostElement.nativeElement.initSearch = this.initSearch.bind(this);
     }
 
     private createSearchControlIfNotExist(): void {
@@ -212,6 +226,11 @@ export class PepSearchComponent implements OnInit, OnDestroy {
 
         // close the phone keyboard
         this.blur();
+    }
+
+    initSearch() {
+        this.lastValue = null;
+        this.searchControl.setValue('');
     }
 
     onClearClicked(event: any) {
@@ -241,10 +260,10 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         }
     }
 
-    onKeyup(event) {
-        if (event.key === 'Enter') {
-            this.triggerSearch();
-        }
+    onSearch(event: Event) {
+        // Stop the event propagation - cause we don't want fire two events.
+        event.stopPropagation();
+        this.triggerSearch();
     }
 
     triggerSearch() {

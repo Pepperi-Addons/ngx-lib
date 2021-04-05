@@ -5,7 +5,7 @@
         <div class="side-layout pull-left flip" [ngStyle]="{ overflow: isMouseIn ? 'unset' : 'visible' }"
             (mouseenter)="setSideBarHeight($event)" [style.height]="sideBarHeight"
             (mouseleave)="mouseLeaveSideBar($event)">
-            <div class="content side-layout-content">
+            <div class="content">
                 <!-- New Filters -->
                 <ng-container *ngTemplateOutlet="filtersTemplate"></ng-container>
 
@@ -16,7 +16,8 @@
     </ng-template>
     <ng-template #notLargeScreensBlock>
         <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
-            <mat-sidenav #sidenav mode="over" autoFocus="false" class="sidenav" fixedInViewport="false">
+            <mat-sidenav #sidenav mode="over" autoFocus="false" class="sidenav" fixedInViewport="false"
+                (openedChange)="openedChange($event)" [ngClass]="{'hide-footer': !showFooter}">
                 <div class="sidenav-header pep-border-bottom">
                     <ng-content select="[header-content]"></ng-content>
                 </div>
@@ -32,7 +33,7 @@
                     <ng-content></ng-content>
                 </div>
 
-                <div class="sidenav-footer pep-border-top">
+                <div *ngIf="showFooter" class="sidenav-footer pep-border-top">
                     <ng-content select="[footer-content]"></ng-content>
                 </div>
             </mat-sidenav>

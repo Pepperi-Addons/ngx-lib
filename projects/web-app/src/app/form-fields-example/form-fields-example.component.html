@@ -4,18 +4,19 @@
 
         </div>
         <div header-end-content>
-            <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'spacing-element '">
+            <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'"
+                [classNames]="'pep-spacing-element '">
             </pep-button>
         </div>
     </pep-top-bar>
     <!-- <div class="header-content ">
         <div class="content pep-border-bottom">
-            <div class="left-container body-lg spacing-element-negative pull-left flip">
-                <div class="spacing-element title">
+            <div class="left-container body-lg pep-spacing-element-negative pull-left flip">
+                <div class="pep-spacing-element title">
                     {{ 'Components_Example_Title' | translate }}
                 </div>
             </div>
-            <div class="right-container spacing-element-negative pull-right flip">
+            <div class="right-container pep-spacing-element-negative pull-right flip">
                 <pep-menu class="pull-right flip" [xPosition]="'before'" [sizeType]="'md'" [styleType]="'weak'"
                     [items]="menuItems" (menuClick)="menuClicked($event)"
                     (menuItemClick)="onMenuItemClicked($event)">
@@ -31,11 +32,23 @@
                     [maxFieldCharacters]="15" [required]="true" [xAlignment]="'left'" [rowSpan]="2"
                     [value]="'Pepperi Textbox'" (valueChanged)="onValueChanged($event)">
                 </pep-textbox>
-                <pep-textbox [key]="'Number'" [label]="'Pepperi Number'" [type]="'real'" [xAlignment]="'left'"
-                    [value]="'9399371'" [required]="true" [formattedValue]="'9,399,371'">
+                <pep-textbox [key]="'float'" [label]="'Pepperi float'" [type]="'real'" [xAlignment]="'left'"
+                    [value]="'9399371'" [required]="true" [disabled]="false">
+                </pep-textbox>
+                <pep-textbox [key]="'currency'" [label]="'Pepperi currency'" [type]="'currency'" [xAlignment]="'left'"
+                    [value]="'1092.50'" [required]="true">
+                </pep-textbox>
+                <pep-textbox [key]="'percentage'" [label]="'Pepperi percentage'" [type]="'percentage'"
+                    [xAlignment]="'left'" [value]="'10'" [required]="true" [disabled]="true">
+                </pep-textbox>
+                <pep-textbox [key]="'int'" [label]="'Pepperi int'" [type]="'int'" [xAlignment]="'left'"
+                    [value]="'20302'" [required]="true">
                 </pep-textbox>
                 <pep-textbox [key]="'Email'" [label]="'Pepperi Email'" [type]="'email'" [xAlignment]="'left'"
-                    [value]="'email@pepperi.com'">
+                    [value]="'email@pepperi.com'" [disabled]="true">
+                </pep-textbox>
+                <pep-textbox [key]="'phone'" [label]="'Pepperi phone'" [type]="'phone'" [xAlignment]="'left'"
+                    [value]="'+972-54-3653-445'">
                 </pep-textbox>
 
                 <!-- Separator Example -->
@@ -92,18 +105,19 @@
                 </pep-image> -->
 
                 <pep-image [key]="'Image'" [label]="'Pepperi Image'" [xAlignment]="'center'" [rowSpan]="4"
+                    [disabled]="true"
                     [src]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'"
                     (elementClicked)="elementClicked($event)">
                 </pep-image>
 
                 <!-- Filmstrip Examples -->
-                <!-- <pep-images-filmstrip [objectId]="'Images Filmstrip 1'" [key]="'Images Filmstrip 1'" [xAlignment]="'center'"
+                <!-- <pep-images-filmstrip [key]="'Images Filmstrip 1'" [xAlignment]="'center'"
                     [label]="'Pepperi Images Filmstrip 1'" [showTitle]="true" [rowSpan]="3" [value]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;
                     https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'">
                 </pep-images-filmstrip> -->
 
-                <pep-images-filmstrip [objectId]="'Images Filmstrip'" [key]="'Images Filmstrip 2'"
-                    [xAlignment]="'center'" [label]="'Pepperi Images Filmstrip 1'" [showTitle]="true" [rowSpan]="7"
+                <pep-images-filmstrip [key]="'Images Filmstrip 2'" [xAlignment]="'center'"
+                    [label]="'Pepperi Images Filmstrip 1'" [showTitle]="true" [rowSpan]="7"
                     [value]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'"
                     (elementClicked)="elementClicked($event)">
                 </pep-images-filmstrip>
@@ -111,7 +125,7 @@
 
             <div class="child4 child-container">
                 <!-- Quantity Selector -->
-                <pep-quantity-selector [key]="'qs1'" [label]="'Pepperi Quantity Selector 2'" [value]="'50'"
+                <pep-quantity-selector [key]="'qs1'" [label]="'Pepperi Quantity Selector 2'" [value]="'5000'"
                     [xAlignment]="'right'" (elementClicked)="elementClicked($event)">
                 </pep-quantity-selector>
 

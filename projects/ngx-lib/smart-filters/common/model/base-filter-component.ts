@@ -30,7 +30,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { ValidatorService } from '@pepperi-addons/ngx-lib';
+import { PepValidatorService } from '@pepperi-addons/ngx-lib';
 import {
     IPepSmartFilterOperator,
     IPepSmartFilterOperatorUnit,
@@ -90,7 +90,14 @@ export abstract class BaseFilterComponent
     private _operator: IPepSmartFilterOperator;
     set operator(operator: IPepSmartFilterOperator) {
         if (operator?.id != this._operator?.id) {
-            this._operator = operator;
+            // Validate operator
+            const index = this.operators.findIndex((o) => o.id === operator.id);
+            if (index >= 0) {
+                this._operator = this.operators[index];
+            } else {
+                this._operator = this.operators[0];
+            }
+
             this.form.reset();
             this.updateValidity();
         }
@@ -101,7 +108,19 @@ export abstract class BaseFilterComponent
 
     private _operatorUnit: IPepSmartFilterOperatorUnit;
     set operatorUnit(operatorUnit: IPepSmartFilterOperatorUnit) {
-        this._operatorUnit = operatorUnit;
+        // Validate operator unit
+        if (operatorUnit === undefined) {
+            this._operatorUnit = undefined;
+        } else {
+            const index = this.operatorUnits.findIndex(
+                (ou) => ou.id === operatorUnit.id
+            );
+            if (index >= 0) {
+                this._operatorUnit = this.operatorUnits[index];
+            } else {
+                this._operatorUnit = this.operatorUnits[0];
+            }
+        }
     }
     get operatorUnit(): IPepSmartFilterOperatorUnit {
         return this._operatorUnit;
@@ -135,7 +154,7 @@ export abstract class BaseFilterComponent
         private resolver: ComponentFactoryResolver,
         private builder: FormBuilder,
         protected translate: TranslateService,
-        protected validator: ValidatorService,
+        protected validator: PepValidatorService,
         protected renderer: Renderer2
     ) {
         this._destroyed = new Subject();
@@ -183,6 +202,13 @@ export abstract class BaseFilterComponent
             })
             .map((key) => PepSmartFilterOperators[key]);
 
+        // Filter by from field.operators input if exist.
+        if (this.field.operators?.length > 0) {
+            this.operators = this.operators.filter((o1) =>
+                this.field.operators.some((o2) => o1.id === o2)
+            );
+        }
+
         // Get the operator units by componentType.
         this.operatorUnits = Object.keys(PepSmartFilterOperatorUnits)
             .filter((key) => {
@@ -191,6 +217,13 @@ export abstract class BaseFilterComponent
                 );
             })
             .map((key) => PepSmartFilterOperatorUnits[key]);
+
+        // Filter by from field.operatorsUnits input if exist.
+        if (this.field.operatorUnits?.length > 0) {
+            this.operatorUnits = this.operatorUnits.filter((o1) =>
+                this.field.operatorUnits.some((o2) => o1.id === o2)
+            );
+        }
 
         // Load translation before get the options in the children.
         this.translate.get('SMART_FILTERS.TITLE').subscribe((res) => {

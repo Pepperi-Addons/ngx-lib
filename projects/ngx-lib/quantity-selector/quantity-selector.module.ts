@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,13 +19,13 @@ import {
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
 import { PepQuantitySelectorComponent } from './quantity-selector.component';
+import { PepQuantitySelectorValidationDirective } from './quantity-selector-validation.directive';
 import { PepQuantitySelectorNumberPipe } from './quantity-selector.pipes';
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        FormsModule,
         // Material modules
         MatCommonModule,
         MatFormFieldModule,
@@ -39,7 +39,11 @@ import { PepQuantitySelectorNumberPipe } from './quantity-selector.pipes';
         PepFieldTitleModule,
     ],
     exports: [PepQuantitySelectorComponent],
-    declarations: [PepQuantitySelectorComponent, PepQuantitySelectorNumberPipe],
+    declarations: [
+        PepQuantitySelectorComponent,
+        PepQuantitySelectorNumberPipe,
+        PepQuantitySelectorValidationDirective,
+    ],
 })
 export class PepQuantitySelectorModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

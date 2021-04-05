@@ -49,20 +49,20 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes): void {
-        setTimeout(() => {
-            const focusedFieldParent = this.groupFields.filter(
-                (groupField) => groupField.lastFocusField
-            )[0];
-            if (focusedFieldParent) {
-                focusedFieldParent.lastFocusField.focus();
-            }
-        }, 100);
+        // setTimeout(() => {
+        //     const focusedFieldParent = this.groupFields.filter(
+        //         (groupField) => groupField.lastFocusField
+        //     )[0];
+        //     if (focusedFieldParent) {
+        //         focusedFieldParent.lastFocusField.focus();
+        //     }
+        // }, 100);
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
     }
 
     // Not in use for material

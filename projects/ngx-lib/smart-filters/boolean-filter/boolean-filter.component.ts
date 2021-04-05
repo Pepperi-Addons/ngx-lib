@@ -23,8 +23,8 @@ export class PepBooleanFilterComponent extends BaseFilterComponent {
         return filterValue;
     }
 
-    // Override
-    setFieldsStateAndValidators(): void {
-        this.secondControl.disable();
-    }
+    // // Override
+    // setFieldsStateAndValidators(): void {
+    //     this.secondControl.disable();
+    // }
 }

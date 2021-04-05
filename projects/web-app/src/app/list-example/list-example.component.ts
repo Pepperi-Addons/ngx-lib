@@ -14,6 +14,7 @@ import {
     PepFieldData,
     FIELD_TYPE,
     PepScreenSizeType,
+    PepGuid,
 } from '@pepperi-addons/ngx-lib';
 import { IPepFormFieldClickEvent } from '@pepperi-addons/ngx-lib/form';
 import {
@@ -54,7 +55,7 @@ import { createSmartFilter, createSmartFilterField } from 'projects/ngx-lib/smar
 })
 export class ListExampleComponent implements OnInit, AfterViewInit {
     @ViewChild(PepListComponent) customList: PepListComponent;
-    dataSource = FakeData.Addons;
+    dataSource = [];
 
     menuActions: Array<PepMenuItem>;
     listOptions: Array<PepMenuItem>;
@@ -70,7 +71,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
 
     constructor(
         private dataConvertorService: PepDataConvertorService,
-        public layoutService: PepLayoutService,
+        private layoutService: PepLayoutService,
         // private httpService: PepHttpService,
         private translate: TranslateService
     ) {
@@ -103,6 +104,12 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        this.dataSource = FakeData.Addons;
+        for (let index = 0; index < 10000; index++) {
+            this.dataSource.push(FakeData.Addons);
+            this.dataSource[index].UUID = PepGuid.newGuid();
+        }
+
         if (this.customList && this.dataSource) {
             this.loadlist(this.dataSource);
         }
@@ -159,10 +166,11 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         this.fields = [
             createSmartFilterField({ id: 'filter1', name: 'Transaction Action Time' }, 'date-time'),
             createSmartFilterField({ id: 'filter2', name: 'stock' }, 'int'),
-            createSmartFilterField({ id: 'filter3', name: 'Delivery Date' }, 'date'),
+            createSmartFilterField({ id: 'filter3', name: 'Delivery Date', operators: ['dateRange'] }, 'date'),
             createSmartFilterField({ id: 'filter4', name: 'Brand', options: brandOptions }, 'multi-select'),
             createSmartFilterField({ id: 'filter5', name: 'Discout' }, 'boolean'),
-            createSmartFilterField({ id: 'filter6', name: 'Price' }, 'currency')
+            createSmartFilterField({ id: 'filter6', name: 'Price' }, 'currency'),
+            createSmartFilterField({ id: 'filter7', name: 'Brand2', options: brandOptions }, 'multi-select'),
         ];
     }
 
@@ -242,9 +250,14 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         switch (key) {
             case 'Description':
                 dataRowField.ColumnWidth = 25;
+                dataRowField.FieldType = FIELD_TYPE.TextArea;
                 break;
-            case 'Name':
+            // case 'Name':
+            //     dataRowField.ColumnWidth = 15;
+            //     break;
+            case 'AutomaticUpgrade':
                 dataRowField.ColumnWidth = 15;
+                dataRowField.FieldType = FIELD_TYPE.RichTextHTML;
                 break;
             case 'Type':
                 dataRowField.ColumnWidth = 15;

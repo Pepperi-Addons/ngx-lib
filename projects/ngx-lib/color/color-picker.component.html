@@ -46,16 +46,16 @@
             </div>
         </ng-container>
         <ng-container pep-dialog-actions>
-            <div class="color-actions spacing-element-negative">
-                <mat-checkbox *ngIf="data.showAAComplient" class="spacing-element" type="checkbox" id="checkAAComplient"
-                    (change)="checkAAComplient = !checkAAComplient" [checked]="checkAAComplient">
+            <div class="color-actions pep-spacing-element-negative">
+                <mat-checkbox *ngIf="data.showAAComplient" class="pep-spacing-element" type="checkbox"
+                    id="checkAAComplient" (change)="checkAAComplient = !checkAAComplient" [checked]="checkAAComplient">
                     <span class="body-xs ellipsis">{{ 'COLOR.AA_COMPLIENT' | translate }}</span>
                 </mat-checkbox>
                 <div>
-                    <button mat-button [mat-dialog-close]="null" class="spacing-element pep-button md weak">
+                    <button mat-button [mat-dialog-close]="null" class="pep-spacing-element pep-button md weak">
                         {{'ACTIONS.CANCEL' | translate}}
                     </button>
-                    <button mat-button class="spacing-element pep-button md strong" (click)="onSave($event)">
+                    <button mat-button class="pep-spacing-element pep-button md strong" (click)="onSave($event)">
                         {{'ACTIONS.OK' | translate}}
                     </button>
                 </div>

@@ -159,7 +159,7 @@ export class PepCustomizationService {
         return this.fb.group(group);
     }
 
-    private getFormControl(
+    getFormControl(
         form: FormGroup,
         fieldKey: string,
         parentFieldKey: string = null

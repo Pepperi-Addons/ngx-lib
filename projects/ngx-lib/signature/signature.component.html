@@ -21,7 +21,7 @@
                         </ng-template>
                         <ng-template #noImg>
                             <div class="ellipsis pep-file-message">
-                                <mat-icon class="spacing-element">
+                                <mat-icon class="pep-spacing-element">
                                     <pep-icon name="system_signature"></pep-icon>
                                 </mat-icon>
                                 <span class="body-sm ellipsis">
@@ -31,8 +31,8 @@
                         </ng-template>
                     </div>
                     <input [id]="key" matInput [formControlName]="key" class="hidden-input signature" type="text"
-                        [value]="src" [disabled]="disabled" (click)="openSignModal()"
-                        (keypress)="onKeyPress_OpenSignModal($event)" autocomplete="off" readonly />
+                        [value]="src" (click)="openSignModal()" (keypress)="onKeyPress_OpenSignModal($event)"
+                        autocomplete="off" readonly />
                 </div>
 
                 <mat-error><span class="body-xs"
@@ -126,12 +126,12 @@
                     (onEndEvent)="drawComplete()">
                 </signature-pad>
             </ng-container>
-            <div pep-dialog-actions class="spacing-element-negative">
-                <button mat-button class="spacing-element pep-button md weak" [disabled]="readonly || disabled"
+            <div pep-dialog-actions class="pep-spacing-element-negative">
+                <button mat-button class="pep-spacing-element pep-button md weak" [disabled]="readonly || disabled"
                     (click)="clearSignModal()">
                     {{ 'ACTIONS.CLEAR' | translate }}
                 </button>
-                <button mat-button class="spacing-element pep-button md strong" [disabled]="readonly || disabled"
+                <button mat-button class="pep-spacing-element pep-button md strong" [disabled]="readonly || disabled"
                     (click)="saveSignModal($event)">
                     {{ 'ACTIONS.DONE' | translate }}
                 </button>

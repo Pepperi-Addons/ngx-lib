@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+    <style>
+    .placeholder {
+      stroke: #999;
+      stroke-width: 4;
+      stroke-linecap: round;
+    }
+  </style>
+  <g fill="none" fill-rule="evenodd">
+    <circle class="placeholder" cx="128" cy="60" r="32"></circle>
+    <path class="placeholder" d="M6,6 L255,6 C259.418278,6 263,9.581722 263,14 L263,88" transform="matrix(-1 0 0 1 269 0)"></path>
+    <path class="placeholder" d="M104.950274,182.886907 L234.556682,97.9131688 C237.249047,96.1479756 240.73721,96.1686684 243.408443,97.9656799 L290.465414,129.622187 C292.674938,131.108595 294,133.596995 294,136.259964 L294,186 C294,190.418278 290.418278,194 286,194 L14,194 C9.581722,194 6,190.418278 6,186 C6,157.710407 6,129.420814 6,101.131221 C6,98.5396497 7.25538318,96.1086336 9.36847129,94.6082663 L50.6770918,65.277685 C53.6216187,63.1869667 57.6017578,63.3281632 60.3907316,65.6222788 L150.764893,139.96101 L150.764893,139.96101" transform="matrix(-1 0 0 1 300 0)"></path>
+    <line class="placeholder" x1="294" x2="294" y1="85" y2="63" transform="matrix(-1 0 0 1 588 0)"></line>
+    <path class="placeholder" d="M294,45 C294,42.0440923 294,39.3834276 294,37.003123" transform="matrix(-1 0 0 1 588 0)"></path>
+    <line class="placeholder" x1="294" x2="294" y1="55.003" y2="53.003" transform="matrix(-1 0 0 1 588 0)"></line>
+    <path class="placeholder" d="M281,29 L281,14 C281,9.581722 284.581722,6 289,6 L294,6 L294,6" transform="matrix(-1 0 0 1 575 0)"></path>
+    <line class="placeholder" x1="271" x2="273" y1="6" y2="6" transform="matrix(-1 0 0 1 544 0)"></line>
+    <path class="placeholder" d="M6 122C6 119.044092 6 108.383428 6 106.003123M6 98.003123C6 97.6335624 6 96.3007192 6 96.003123" transform="matrix(-1 0 0 1 12 0)"></path>
+  </g>
+</svg>

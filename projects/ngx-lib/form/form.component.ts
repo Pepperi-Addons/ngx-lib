@@ -92,9 +92,27 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() layout: UIControl;
     @Input() lockEvents = false;
     @Input() canEditObject = true;
-    @Input() data: ObjectsDataRow;
+
+    private _data: ObjectsDataRow = null;
+    @Input()
+    set data(value: ObjectsDataRow) {
+        const shouldReload = this.shouldReloadForm || !this._data;
+        this._data = value;
+
+        if (shouldReload) {
+            this._shouldReloadForm = false;
+            this.initForm();
+        } else {
+            this.updateForm();
+        }
+    }
+
+    get data(): ObjectsDataRow {
+        return this._data;
+    }
+
     @Input() isActive = false;
-    @Input() layoutType: PepLayoutType = 'form';
+    @Input() layoutType: PepLayoutType = 'card';
     @Input() listType = '';
     @Input() objectId = '0';
     @Input() parentId = '0';
@@ -117,29 +135,43 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     formGutterSize;
     cardGutterSize;
     rowHeight;
-    lastFocusedField: any;
-    matrixIsLast = false;
+    // private lastFocusedField: any = null;
+    // private matrixIsLast = false;
     // lastUpdatedFieldApiName: string = '';
     form: FormGroup;
     differ: any;
 
     // payLoad = '';
-    rows: Array<PepFieldBase[]> = [];
+    private rows: Array<PepFieldBase[]> = [];
     fields: PepFieldBase[] = [];
     columns = 1;
 
-    hasMenuFloatingOnOtherField = false;
-    menuField: any;
-    menuDataField: any;
-    hasCampaignField: any;
-    hasCampaignDataField: any;
-    indicatorsField: any;
-    indicatorsDataField: any = null;
+    private hasMenuFloatingOnOtherField = false;
+    private menuField: any;
+    private menuDataField: any;
+    private hasCampaignField: any;
+    private hasCampaignDataField: any;
+    private indicatorsField: any;
+    private indicatorsDataField: any = null;
 
-    shouldReloadForm = false;
-    eventServiceSub: Subscription;
+    private _shouldReloadForm = false;
+    get shouldReloadForm(): boolean {
+        return this._shouldReloadForm;
+    }
 
-    public jsonLib = JSON;
+    // eventServiceSub: Subscription;
+    // public jsonLib = JSON;
+
+    constructor(
+        private dialogService: PepDialogService,
+        private customizationService: PepCustomizationService,
+        private fb: FormBuilder,
+        differs: KeyValueDiffers,
+        private translate: TranslateService
+    ) {
+        // store the initial value to compare with
+        this.differ = differs.find({}).create();
+    }
 
     convertXAlignToHorizontalAlign(
         xAlign: X_ALIGNMENT_TYPE
@@ -455,7 +487,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             }
 
             options.notificationInfo = dataField.NotificationInfo;
-
             customField = new PepQuantitySelectorField(options);
         } else {
             // Hack need to remove this..
@@ -713,11 +744,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         return fieldFormattedValue;
     }
 
-    private toControlGroup(
-        fields: PepFieldBase[],
-        fb: FormBuilder,
-        customizationService: PepCustomizationService
-    ): FormGroup {
+    private toControlGroup(fields: PepFieldBase[]): FormGroup {
         const group = {};
         if (fields && fields.length > 0) {
             fields.forEach((field) => {
@@ -754,7 +781,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                         }
                     });
 
-                    group[field.key] = fb.group(subGroup);
+                    group[field.key] = this.fb.group(subGroup);
                 } else {
                     const validators = field.getValidators();
                     const fieldFormattedValue = this.getFieldFormattedValue(
@@ -772,18 +799,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             });
         }
 
-        return fb.group(group);
-    }
-
-    constructor(
-        private dialogService: PepDialogService,
-        private customizationService: PepCustomizationService,
-        public fb: FormBuilder,
-        differs: KeyValueDiffers,
-        private translate: TranslateService
-    ) {
-        // store the initial value to compare with
-        this.differ = differs.find({}).create();
+        return this.fb.group(group);
     }
 
     public showFormValidationMessage(): void {
@@ -857,47 +873,46 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
     ngDoCheck(): void {
         const changes = this.differ.diff(this.data); // check for changes
-
         if (changes) {
             this.updateForm(true);
+            this.checkForChanges = new Date();
         }
     }
 
     ngOnChanges(changes): void {
-        if (changes.data && changes.data.currentValue) {
-            // Load changes
-            if (!this.shouldReloadForm && changes.data.previousValue) {
-                this.data = changes.data.currentValue;
-                this.updateForm();
-            } else {
-                this.shouldReloadForm = false;
-                this.initForm(changes);
-            }
-        }
-
-        this.checkForChanges = new Date();
+        // if (changes.data && changes.data.currentValue) {
+        //     // Load changes
+        //     if (!this.shouldReloadForm && changes.data.previousValue) {
+        //         this.data = changes.data.currentValue;
+        //         this.updateForm();
+        //     } else {
+        //         this._shouldReloadForm = false;
+        //         this.initForm();
+        //     }
+        // }
+        // if (this.shouldReloadForm || !changes?.data?.previousValue) {
+        //     this._shouldReloadForm = false;
+        //     this.initForm();
+        //     this.checkForChanges = new Date();
+        // }
     }
 
     ngOnDestroy(): void {
-        if (this.valueChange) {
-            this.valueChange.unsubscribe();
-        }
-
-        if (this.formValidationChange) {
-            this.formValidationChange.unsubscribe();
-        }
-
-        if (this.childClick) {
-            this.childClick.unsubscribe();
-        }
-
-        if (this.childChange) {
-            this.childChange.unsubscribe();
-        }
-
-        if (this.fieldClick) {
-            this.fieldClick.unsubscribe();
-        }
+        // if (this.valueChange) {
+        //     this.valueChange.unsubscribe();
+        // }
+        // if (this.formValidationChange) {
+        //     this.formValidationChange.unsubscribe();
+        // }
+        // if (this.childClick) {
+        //     this.childClick.unsubscribe();
+        // }
+        // if (this.childChange) {
+        //     this.childChange.unsubscribe();
+        // }
+        // if (this.fieldClick) {
+        //     this.fieldClick.unsubscribe();
+        // }
     }
 
     getUiControlFields(): Array<UIControlField> {
@@ -1065,8 +1080,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         if (!isForUpdate) {
             const fields = [];
-            // for (let i = 0; i < this.fields.length; i++) {
-            // const currentField = this.fields[i];
             for (const currentField of this.fields) {
                 // Add all fields except 'internalPage' type (for children).
                 if (currentField.controlType !== 'internalPage') {
@@ -1078,15 +1091,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 }
             }
 
-            this.form = this.toControlGroup(
-                fields,
-                this.fb,
-                this.customizationService
-            );
+            this.form = this.toControlGroup(fields);
         } else {
             // Update form values if changed by calculated fields.
-            // for (let i = 0; i < this.fields.length; i++) {
-            // const currentField = this.fields[i];
             for (const currentField of this.fields) {
                 if (currentField.controlType !== 'internalPage') {
                     if (
@@ -1125,9 +1132,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             }
         }
 
-        let isFormValid = this.form.valid;
+        let isFormValid = this.form?.valid;
 
-        // Change validation to true if all fields are read only. (By Amir.L request).
+        // Change validation to true if all fields are read only.
         if (!isFormValid && allFieldsAreReadOnly) {
             isFormValid = true;
         }
@@ -1138,7 +1145,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         this.isLocked = false;
     }
 
-    initForm(changes): void {
+    initForm(): void {
         if (this.data && this.data.Fields) {
             const fields: PepFieldBase[] = this.convertCustomFields(
                 this.getUiControlFields(),
@@ -1165,9 +1172,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         customField: PepFieldBase,
         updatedField: ObjectsDataRowCell
     ): void {
-        const hasFocus =
-            this.lastFocusedField &&
-            this.lastFocusedField.id === customField.key;
         const options: any = {
             disabled: !updatedField.Enabled || !this.canEditObject,
             readonly: !updatedField.Enabled || !this.canEditObject,
@@ -1175,7 +1179,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             additionalValue: updatedField.AdditionalValue,
             formattedValue: updatedField.FormattedValue,
             textColor: updatedField.TextColor,
-            lastFocusField: hasFocus ? this.lastFocusedField : null,
         };
 
         if (customField instanceof PepQuantitySelectorField) {
@@ -1185,9 +1188,23 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             options.options = this.convertOptionalValues(
                 updatedField.OptionalValues
             );
+
+            if (!options.options || options.options.length === 0) {
+                options.options.push({
+                    key: options.value,
+                    value: options.formattedValue,
+                });
+            }
         }
 
         customField.update(options);
+
+        // if (this.lastFocusedField && this.lastFocusedField.id === customField.key) {
+        //     setTimeout(() => {
+        //         this.lastFocusedField.focus();
+        //         this.lastFocusedField = null;
+        //     }, 100);
+        // }
     }
 
     updateForm(cleanLastFocusedField = false): void {
@@ -1230,15 +1247,16 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
             this.setForm(true);
 
-            if (cleanLastFocusedField) {
-                // Clean the last focused field.
-                this.lastFocusedField = null;
-            }
+            // if (cleanLastFocusedField) {
+            //     // Clean the last focused field.
+            //     this.lastFocusedField = null;
+            //     console.log(this.lastFocusedField);
+            // }
         }
     }
 
     public ReloadForm(): void {
-        this.shouldReloadForm = true;
+        this._shouldReloadForm = true;
     }
 
     // onSubmit() {
@@ -1362,10 +1380,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         const fields: PepFieldBase[] = [];
 
-        const matrixFields = controlFields.filter((cf) =>
-            this.isMatrixField(cf.ApiName)
-        ).length;
-        let matrixAlreadyPlaced = false;
+        // const matrixFields = controlFields.filter((cf) =>
+        //     this.isMatrixField(cf.ApiName)
+        // ).length;
+        // let matrixAlreadyPlaced = false;
 
         controlFields.forEach((field, index) => {
             const dataField = dataFields.filter(
@@ -1391,25 +1409,25 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             }
 
             // Remove this. (fix two matrix into one)
-            if (matrixFields > 0 && this.isMatrixField(field.ApiName)) {
-                if (matrixFields > 1 && matrixAlreadyPlaced) {
-                    return;
-                }
+            // if (matrixFields > 0 && this.isMatrixField(field.ApiName)) {
+            //     if (matrixFields > 1 && matrixAlreadyPlaced) {
+            //         return;
+            //     }
 
-                matrixAlreadyPlaced = true;
+            //     matrixAlreadyPlaced = true;
 
-                if (matrixFields > 1) {
-                    this.matrixIsLast =
-                        controlFields.length >= 2
-                            ? controlFields[controlFields.length - 2]
-                                  .ApiName === field.ApiName
-                            : false;
-                } else {
-                    this.matrixIsLast =
-                        controlFields[controlFields.length - 1].ApiName ===
-                        field.ApiName;
-                }
-            }
+            //     if (matrixFields > 1) {
+            //         this.matrixIsLast =
+            //             controlFields.length >= 2
+            //                 ? controlFields[controlFields.length - 2]
+            //                     .ApiName === field.ApiName
+            //                 : false;
+            //     } else {
+            //         this.matrixIsLast =
+            //             controlFields[controlFields.length - 1].ApiName ===
+            //             field.ApiName;
+            //     }
+            // }
 
             // Set type to link
             if (this.firstFieldAsLink && index === 0) {
@@ -1460,10 +1478,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         );
     }
 
-    onValueChanged(
-        event: IPepFieldValueChangeEvent,
-        isEditModal = false
-    ): void {
+    onValueChanged(event: IPepFieldValueChangeEvent): void {
         this.onFormValidationChanged(this.form.valid);
 
         const formControl = this.getFormControlById(event.key);
@@ -1483,7 +1498,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 currentField.formattedValue = currentField.value = event.value;
             }
 
-            this.lastFocusedField = event.lastFocusedField;
+            // this.lastFocusedField = event.lastFocusedField;
+
             this.valueChange.emit({
                 id: this.data.UID.toString(),
                 key: event.key,
