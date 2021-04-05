@@ -96,7 +96,11 @@ export class PepDataConvertorService {
                 const rowData = new ObjectsDataRow();
                 rowData.Fields = [];
                 rowData.Type = 0;
-                rowData.UID = rowUUID ? rowUUID : (row.UUID ? row.UUID : PepGuid.newGuid());
+                rowData.UID = rowUUID
+                    ? rowUUID
+                    : row.UUID
+                    ? row.UUID
+                    : PepGuid.newGuid();
                 row.Fields.forEach((field) =>
                     rowData.Fields.push(this.setDataField(field))
                 );
