@@ -42,6 +42,7 @@ export class PepAddonService {
         httpOptions = {},
         isAsync = false
     ): Observable<any> {
+        const async = isAsync ? '/async' : '';
         return this.httpService.getPapiApiCall(
             `${this.getAddonBaseRelativePath(
                 isAsync
@@ -58,6 +59,7 @@ export class PepAddonService {
         httpOptions = {},
         isAsync = false
     ): Observable<any> {
+        const async = isAsync ? '/async' : '';
         return this.httpService.postPapiApiCall(
             `${this.getAddonBaseRelativePath(
                 isAsync
