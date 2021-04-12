@@ -15,7 +15,7 @@ import {
     pepIconNumberPlus,
     pepIconSystemBin,
     pepIconSystemEdit,
-    pepIconSystemClose
+    pepIconSystemClose,
 } from '@pepperi-addons/ngx-lib/icon';
 
 // import { optionsKnob } from '@storybook/addon-knobs';
@@ -27,7 +27,6 @@ import {
 //     regular: 'regular',
 //     strong: 'strong'
 // };
-
 
 // This exports the Stories group for this component
 export default {
@@ -48,19 +47,27 @@ export default {
         styleType: {
             control: {
                 type: 'radio',
-                options: ['weak', 'weak-invert', 'regular', 'strong']
+                options: ['weak', 'weak-invert', 'regular', 'strong'],
             },
         },
         sizeType: {
             control: {
                 type: 'radio',
-                options: ['xs', 'sm', 'md', 'lg', 'xl']
+                options: ['xs', 'sm', 'md', 'lg', 'xl'],
             },
         },
         iconName: {
             control: {
                 type: 'select',
-                options: ['', pepIconArrowRightAlt.name, pepIconArrowLeftAlt.name, pepIconNumberPlus.name, pepIconSystemBin.name, pepIconSystemEdit.name, pepIconSystemClose.name]
+                options: [
+                    '',
+                    pepIconArrowRightAlt.name,
+                    pepIconArrowLeftAlt.name,
+                    pepIconNumberPlus.name,
+                    pepIconSystemBin.name,
+                    pepIconSystemEdit.name,
+                    pepIconSystemClose.name,
+                ],
             },
         },
         // placeholder: { table: { disable: true } },
@@ -99,7 +106,7 @@ const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
 export const Base = Template.bind({});
 Base.args = {
     value: 'click me',
-    buttonClick: onButtonClicked
+    buttonClick: onButtonClicked,
 };
 
 export const Disabled = Template.bind({});
@@ -107,10 +114,10 @@ Disabled.args = {
     disabled: true,
     value: 'disabled',
 };
-Disabled.storyName = "new disabled";
+Disabled.storyName = 'new disabled';
 
 function onButtonClicked(event) {
-    alert("tomer");
+    alert('tomer');
 }
 
 const templateHtml = `
@@ -159,7 +166,9 @@ const templateHtml = `
 `;
 
 // This creates a Story for the component
-const StyleTypeTemplate: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
+const StyleTypeTemplate: Story<PepButtonComponent> = (
+    args: PepButtonComponent
+) => ({
     component: PepButtonComponent,
     props: args,
     template: templateHtml,
@@ -170,4 +179,4 @@ export const StyleType = StyleTypeTemplate.bind({});
 //     styleType: 'strong',
 //     value: 'strong',
 // };
-StyleType.storyName = "3 style types";
+StyleType.storyName = '3 style types';

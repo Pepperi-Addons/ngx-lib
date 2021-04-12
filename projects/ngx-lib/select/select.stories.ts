@@ -25,7 +25,10 @@ export const Base: Story<PepSelectComponent> = () => ({
     props: {
         label: 'select an option',
         value: text('value', 'test1'),
-        options: [{ key: 'test1', value: 'test1' }, { key: 'test2', value: 'test2' }]
+        options: [
+            { key: 'test1', value: 'test1' },
+            { key: 'test2', value: 'test2' },
+        ],
     },
     template: `
         <pep-select [label]="label" [value]="undefined" [options]="options"></pep-select>
@@ -39,7 +42,10 @@ export const Mandatory: Story<PepSelectComponent> = () => ({
     props: {
         label: 'mandatory',
         value: text('value', 'test1'),
-        options: [{ key: 'test1', value: 'test1' }, { key: 'test2', value: 'test2' }]
+        options: [
+            { key: 'test1', value: 'test1' },
+            { key: 'test2', value: 'test2' },
+        ],
     },
     template: `
         <pep-select [label]="label" [value]="value" [options]="options" required="true"></pep-select>
@@ -51,7 +57,10 @@ export const Multi: Story<PepSelectComponent> = () => ({
     props: {
         label: 'multi',
         value: text('value', 'test1'),
-        options: [{ key: 'test1', value: 'test1' }, { key: 'test2', value: 'test2' }]
+        options: [
+            { key: 'test1', value: 'test1' },
+            { key: 'test2', value: 'test2' },
+        ],
     },
     template: `
         <pep-select [label]="label" type="multi" [value]="value" [options]="options"></pep-select>

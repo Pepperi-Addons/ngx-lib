@@ -112,7 +112,7 @@ export const Mandatory: Story<PepTextboxComponent> = () => ({
         label: 'mandatory text',
         value: text('value', 'some text...'),
         formattedValue: text('formattedValue', 'some formatted text...'),
-        required: true
+        required: true,
     },
 });
 
