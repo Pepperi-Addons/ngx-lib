@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 
 import { withKnobs, text, select, radios } from '@storybook/addon-knobs';
 
-import { SBTranslateModule } from '@storybook-settings/translate.module';
+import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 
 import { PepTextboxComponent } from './textbox.component';
 import { PepTextboxModule } from './textbox.module';
@@ -57,7 +57,7 @@ export default {
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
             // declarations: [PepTextboxComponent, PepTextboxValidationDirective],
-            imports: [PepTextboxModule, SBTranslateModule],
+            imports: [PepTextboxModule, SBNgxHelperModule],
         }),
         // we add the withKnobs decorator in order to use it
         withKnobs,

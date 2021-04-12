@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 
 import { withKnobs, text, select, radios } from '@storybook/addon-knobs';
 
-import { SBTranslateModule } from '@storybook-settings/translate.module';
+import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 
 import { PepSelectComponent } from './select.component';
 import { PepSelectModule } from './select.module';
@@ -14,7 +14,7 @@ export default {
     component: PepSelectComponent,
     decorators: [
         moduleMetadata({
-            imports: [PepSelectModule, SBTranslateModule],
+            imports: [PepSelectModule, SBNgxHelperModule],
         }),
     ],
 } as Meta;

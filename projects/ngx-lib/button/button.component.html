@@ -3,7 +3,8 @@
     <mat-icon *ngIf="iconName && iconPosition === 'start'">
         <pep-icon name="{{iconName}}"></pep-icon>
     </mat-icon>
-    <span *ngIf="value" class="ellipsis" [ngClass]="{ 'button-title-with-icon': iconName }" [title]="value">
+    <span *ngIf="value" class="ellipsis"
+        [ngClass]="{ 'button-title-with-icon': iconName, 'icon-before': iconPosition === 'start' }" [title]="value">
         {{value}}
     </span>
     <mat-icon *ngIf="iconName && iconPosition === 'end'">

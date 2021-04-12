@@ -109,11 +109,12 @@ main {
             padding: 0 $content-padding;
         }
 
-        @media (max-width: $screen-max-size-xs) {
-            .main-layout {
-                padding: 0;
-            }
-        }
+        // This is in comment in 16.55 cause it make a bug on grid view (order center)
+        // @media (max-width: $screen-max-size-xs) {
+        //     .main-layout {
+        //         padding: 0;
+        //     }
+        // }
     }
 
     //  Layout - Setting & Plugin pages

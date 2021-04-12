@@ -147,7 +147,7 @@ export class PepCustomizationService {
         private sessionService: PepSessionService,
         private fileService: PepFileService,
         public fb: FormBuilder
-    ) {}
+    ) { }
 
     getDefaultFromGroup(field: PepFieldBase, withValidators = true): FormGroup {
         const validators = withValidators ? field.getValidators() : [];
@@ -430,7 +430,7 @@ export class PepCustomizationService {
         themeVars['--pep-button-xs-horizontal-spacing'] =
             '0.5' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xs-min-width'] =
-            '2' + PepCustomizationService.REM_STRING;
+            '1.5' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xs-height'] =
             '1.5' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xs-font-size'] =
@@ -470,7 +470,7 @@ export class PepCustomizationService {
         themeVars['--pep-button-xl-horizontal-spacing'] =
             '1.5' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xl-min-width'] =
-            '5' + PepCustomizationService.REM_STRING;
+            '4' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xl-height'] =
             '4' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xl-font-size'] =
@@ -918,8 +918,8 @@ export class PepCustomizationService {
 
         this.hasCustomHeader =
             res.TopHeaderFiles &&
-            res.TopHeaderFiles.length > 0 &&
-            res.TopHeaderFiles[0] !== ''
+                res.TopHeaderFiles.length > 0 &&
+                res.TopHeaderFiles[0] !== ''
                 ? true
                 : false;
         this.hasCustomHomepage =

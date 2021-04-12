@@ -9,18 +9,23 @@
     $button-height: var(--pep-button-md-height);
     $button-font-size: var(--pep-button-sm-font-size);
     $button-icon-height: 1.5rem;
+    $button-icon-with-text-height: 1.1rem;
 
     @if $size == 'xl' {
         $button-horizontal-spacing: var(--pep-button-xl-horizontal-spacing);
         $button-min-width: var(--pep-button-xl-min-width);
         $button-height: var(--pep-button-xl-height);
         $button-font-size: var(--pep-button-xl-font-size);
+        $button-icon-height: 2rem;
+        $button-icon-with-text-height: 1.5rem;
     }
     @else if $size == 'lg' {
         $button-horizontal-spacing: var(--pep-button-lg-horizontal-spacing);
         $button-min-width: var(--pep-button-lg-min-width);
         $button-height: var(--pep-button-lg-height);
         $button-font-size: var(--pep-button-md-font-size);
+        $button-icon-height: 1.75rem;
+        $button-icon-with-text-height: 1.3rem;
     }
     @else if $size == 'sm' {
         $button-horizontal-spacing: var(--pep-button-sm-horizontal-spacing);
@@ -28,6 +33,7 @@
         $button-height: var(--pep-button-sm-height);
         $button-font-size: var(--pep-button-xs-font-size);
         $button-icon-height: 1.25rem;
+        $button-icon-with-text-height: 1rem;
     }
     @else if $size == 'xs' {
         $button-horizontal-spacing: var(--pep-button-xs-horizontal-spacing);
@@ -35,6 +41,7 @@
         $button-height: var(--pep-button-xs-height);
         $button-font-size: var(--pep-button-xs-font-size);
         $button-icon-height: 1rem;
+        $button-icon-with-text-height: 0.8rem;
     }
     @else if $size == '2xs' {
         $button-horizontal-spacing: var(--pep-button-xxs-horizontal-spacing);
@@ -42,6 +49,7 @@
         $button-height: var(--pep-button-xxs-height);
         $button-font-size: var(--pep-button-xxs-font-size);
         $button-icon-height: 1rem;
+        $button-icon-with-text-height: 0.8rem;
     }
 
     padding-left: $button-horizontal-spacing;
@@ -54,8 +62,8 @@
 
     // For icon with text
     .mat-icon {
-        height: 1rem !important;
-        width: 1rem !important;
+        height: $button-icon-with-text-height !important;
+        width: $button-icon-with-text-height !important;
     }
 
     // For icon only
@@ -103,6 +111,21 @@
     max-width: 100%;
     padding-top: 0;
 
+    .button-title {
+        @include ellipsis();
+        @include calc(max-width, '100%'); // For none icon
+    }
+
+    .button-title-with-icon {
+        margin-inline-end: $spacing-sm;
+        @include ellipsis();
+        @include calc(max-width, '100% - 1rem'); // For icon if exist
+
+        &.icon-before {
+            margin-inline-end: unset;
+            margin-inline-start: $spacing-sm;
+        }
+    }
     // Default size
     // @include pep-button-size('md');
 
@@ -122,6 +145,15 @@
 
     &.xl {
         @include pep-button-size('xl');
+
+        .button-title-with-icon {
+            margin-inline-end: $spacing-md;
+            
+            &.icon-before {
+                margin-inline-end: unset;
+                margin-inline-start: $spacing-md;
+            }
+        }
     }
     &.lg {
         @include pep-button-size('lg');
@@ -134,6 +166,15 @@
     }
     &.xs {
         @include pep-button-size('xs');
+
+        .button-title-with-icon {
+            margin-inline-end: $spacing-xs;
+            
+            &.icon-before {
+                margin-inline-end: unset;
+                margin-inline-start: $spacing-xs;
+            }
+        }
     }
     // &.2xs {
     //     @include pep-button-size('2xs');
@@ -203,17 +244,6 @@
                 @include calc(max-width, '100% + .5rem');
             }
         }
-    }
-
-    .button-title {
-        @include ellipsis();
-        @include calc(max-width, '100%'); // For none icon
-    }
-
-    .button-title-with-icon {
-        margin-inline-end: $spacing-sm;
-        @include ellipsis();
-        @include calc(max-width, '100% - 1rem'); // For icon if exist
     }
 }
 
