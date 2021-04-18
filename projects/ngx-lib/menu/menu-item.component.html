@@ -13,7 +13,7 @@
                 <ng-template #childrenBlock>
                     <button mat-menu-item (click)="onMenuItemClicked(menuItem)" [matMenuTriggerFor]="menu.childMenu"
                         title="{{ menuItem.text }}" pepRtlDirection [disabled]="menuItem.disabled"
-                        [ngClass]="{ disabled: menuItem.disabled }">
+                        [ngClass]="{ selected: type === 'action-select' && menuItem.selected, disabled: menuItem.disabled }">
                         <ng-container *ngTemplateOutlet="itemTemplate; context: {
                             itemIconName: menuItem.iconName,
                             itemText: menuItem.text,
@@ -21,14 +21,14 @@
                             hasChildren: true
                         }"></ng-container>
                     </button>
-                    <pep-menu-item #menu [type]="type" [items]="menuItem.children"
+                    <pep-menu-item #menu [type]="type" [items]="menuItem.children" [parent]="menuItem"
                         (menuItemClick)="onChildClicked($event)">
                     </pep-menu-item>
                 </ng-template>
                 <ng-template #regularBlock>
                     <button mat-menu-item (click)="onMenuItemClicked(menuItem)" title="{{ menuItem.text }}"
                         pepRtlDirection [disabled]="menuItem.disabled"
-                        [ngClass]="{ selected: type === 'select' && selectedItem?.key == menuItem?.key, disabled: menuItem.disabled }">
+                        [ngClass]="{ selected: (type === 'select' || type === 'action-select') && menuItem.selected, disabled: menuItem.disabled }">
                         <ng-container *ngTemplateOutlet="itemTemplate; context: {
                             itemIconName: menuItem.iconName,
                             itemText: menuItem.text,

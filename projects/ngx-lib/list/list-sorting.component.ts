@@ -49,11 +49,7 @@ export class PepListSortingComponent implements OnInit {
     @Input()
     set currentSorting(value: IPepListSortingOption) {
         this._currentSorting = value;
-        this.currentItem = {
-            key: value.sortBy,
-            text: value.title,
-            iconName: value.iconName,
-        };
+        this.currentItem = this.menuItems.find((mi) => mi.key === value.sortBy);
     }
     get currentSorting(): IPepListSortingOption {
         return this._currentSorting;
