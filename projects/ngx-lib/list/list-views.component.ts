@@ -49,11 +49,12 @@ export class PepListViewsComponent implements OnInit {
     @Input()
     set currentView(value: IPepListView) {
         this._currentView = value;
-        this.currentItem = {
-            key: value.key,
-            text: value.title,
-            iconName: value.iconName,
-        };
+
+        if (this.displayType === 'menu') {
+            this.currentItem = this.menuItems.find(
+                (mi) => mi.key === value.key
+            );
+        }
     }
     get currentView(): IPepListView {
         return this._currentView;
@@ -71,8 +72,14 @@ export class PepListViewsComponent implements OnInit {
     currentItem: PepMenuItem = null;
 
     ngOnInit(): void {
-        if (this.currentView === null && this.views && this.views.length > 0) {
-            this.currentView = this.views[0];
+        if (this.displayType === 'buttons') {
+            if (
+                this.currentView === null &&
+                this.views &&
+                this.views.length > 0
+            ) {
+                this.currentView = this.views[0];
+            }
         }
     }
 

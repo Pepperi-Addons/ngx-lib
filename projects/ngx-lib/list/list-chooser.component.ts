@@ -55,7 +55,7 @@ export class PepListChooserComponent {
     @Input()
     set currentList(value: IPepListChooserOption) {
         this._currentList = value;
-        this.currentItem = { key: value.key, text: value.text };
+        this.currentItem = this.menuItems.find((mi) => mi.key === value.key);
     }
     get currentList(): IPepListChooserOption {
         return this._currentList;
@@ -71,9 +71,9 @@ export class PepListChooserComponent {
     currentItem: PepMenuItem = null;
 
     onMenuItemClicked(menuItemClickEvent: IPepMenuItemClickEvent): void {
-        const currentList = this.options.find(
+        this.currentList = this.options.find(
             (list) => list.key === menuItemClickEvent.source.key
         );
-        this.change.emit({ source: currentList });
+        this.change.emit({ source: this.currentList });
     }
 }

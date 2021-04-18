@@ -4,7 +4,8 @@
 
         </div>
         <div header-end-content>
-            <pep-menu class="pep-spacing-element" [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
+            <pep-menu class="pep-spacing-element" [items]="menuItems" [type]="'action-select'"
+                [selectedItem]="selectedMenuItem" (menuItemClick)="onMenuItemClicked($event)">
             </pep-menu>
         </div>
         <pep-search [value]="searchString" (search)="onSearchChanged($event)" [triggerOn]="'click'"
