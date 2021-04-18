@@ -20,6 +20,7 @@ export class TopBarExampleComponent implements OnInit {
     groupButtons: Array<PepButton>;
 
     menuItems: Array<PepMenuItem>;
+    selectedMenuItem: PepMenuItem;
 
     PepScreenSizeType = PepScreenSizeType;
     screenSize: PepScreenSizeType;
@@ -93,6 +94,7 @@ export class TopBarExampleComponent implements OnInit {
 
     private loadMenuItems(): void {
         this.menuItems = this.getMenuItems();
+        this.selectedMenuItem = this.menuItems[0];
     }
 
     toggleMenu(): void {

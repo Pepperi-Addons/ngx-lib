@@ -65,7 +65,17 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     @Input() classNames = '';
     @Input() xPosition: 'before' | 'after' = 'after';
     @Input() hideOnEmptyItems = false;
-    @Input() items: Array<PepMenuItem> = null;
+    // @Input() items: Array<PepMenuItem> = null;
+    private _items: Array<PepMenuItem> = null;
+    @Input()
+    set items(items: Array<PepMenuItem>) {
+        this.setItemsParent(items);
+        this._items = items;
+    }
+    get items(): Array<PepMenuItem> {
+        return this._items;
+    }
+
     @Input() selectedItem: PepMenuItem = null;
     @Input() disabled = false;
 
@@ -86,6 +96,30 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         this.layoutService.onResize$.subscribe((size) => {
             this.screenSize = size;
         });
+    }
+
+    private setChildrenParent(item: PepMenuItem, parent: PepMenuItem): void {
+        item.parent = parent;
+
+        if (item.children && item.children.length > 0) {
+            item.children.forEach((child) => {
+                this.setChildrenParent(child, item);
+            });
+        }
+    }
+
+    private setItemsParent(items: Array<PepMenuItem>): void {
+        if (items) {
+            items.forEach((item) => {
+                item.parent = null;
+
+                if (item.children && item.children.length > 0) {
+                    item.children.forEach((child) => {
+                        this.setChildrenParent(child, item);
+                    });
+                }
+            });
+        }
     }
 
     private updateText(): void {

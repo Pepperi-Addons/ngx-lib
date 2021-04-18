@@ -12,6 +12,8 @@ export class PepMenuItem {
     iconName?: string = null;
     type?: PepMenuItemType = 'regular';
     children?: Array<PepMenuItem> = null;
+    parent?: PepMenuItem = null;
+    selected?: boolean = false;
 
     constructor(data: Partial<PepMenuItem>) {
         Object.assign(this, data);
