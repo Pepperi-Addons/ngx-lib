@@ -22,7 +22,7 @@ export class PepTextboxValidationDirective implements OnInit {
     constructor(
         private hostElement: ElementRef,
         private validatorService: PepValidatorService
-    ) {}
+    ) { }
 
     ngOnInit() {
         //
@@ -61,13 +61,13 @@ export class PepTextboxValidationDirective implements OnInit {
         this.validateValue(this.hostElement.nativeElement.value);
     }
 
-    @HostListener('paste', ['$event'])
-    onPaste(e) {
-        // get and validate data from clipboard
-        const value = e.clipboardData.getData('text/plain');
-        this.validateValue(value);
-        e.preventDefault();
-    }
+    // @HostListener('paste', ['$event'])
+    // onPaste(e) {
+    //     // get and validate data from clipboard
+    //     const value = e.clipboardData.getData('text/plain');
+    //     this.validateValue(value);
+    //     e.preventDefault();
+    // }
 
     @HostListener('keydown', ['$event'])
     onKeyDown(e: KeyboardEvent) {
@@ -104,6 +104,8 @@ export class PepTextboxValidationDirective implements OnInit {
             this.hostElement.nativeElement['value'] = valid
                 ? value
                 : this.previousValue;
+        } else if (this.isText()) {
+            this.hostElement.nativeElement['value'] = value;
         }
     }
 }

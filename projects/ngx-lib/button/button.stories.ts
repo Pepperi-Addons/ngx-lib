@@ -58,7 +58,7 @@ export default {
                 ],
             },
         },
-        buttonClick: { action: 'clicked' },
+        buttonClick: { action: 'buttonClick' },
         ngOnDestroy: { table: { disable: true } },
         onButtonClicked: { table: { disable: true } },
     },
@@ -83,7 +83,8 @@ const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
     component: PepButtonComponent,
     props: args,
     template: `
-        <pep-button [value]="value" [styleType]="styleType" [sizeType]="sizeType" [disabled]="disabled" [iconName]="iconName" [iconPosition]="iconPosition" (buttonClick)="buttonClick($event)"></pep-button>
+        <pep-button [value]="value" [styleType]="styleType" [sizeType]="sizeType" [disabled]="disabled" [iconName]="iconName"
+        [iconPosition]="iconPosition" (buttonClick)="buttonClick($event)"></pep-button>
     `,
 });
 
