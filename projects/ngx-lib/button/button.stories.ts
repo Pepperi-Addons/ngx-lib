@@ -90,6 +90,7 @@ const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
 
 export const Base = Template.bind({});
 Base.storyName = "Basic";
+// Base.parameters = { docs: { page: null } } // Use this to remove Docs
 Base.args = {
     value: 'click me',
 };
