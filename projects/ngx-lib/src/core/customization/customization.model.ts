@@ -7,6 +7,9 @@ export type PepLayoutType = 'form' | 'card' | 'table';
 export type PepStyleType = 'weak' | 'weak-invert' | 'regular' | 'strong';
 
 /** Allowed size options */
+export type PepStyleStateType = 'system' | 'success' | 'caution';
+
+/** Allowed size options */
 export type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 /** Allowed horizontal alignment options */

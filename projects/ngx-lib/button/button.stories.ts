@@ -1,15 +1,6 @@
 import { moduleMetadata } from '@storybook/angular';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
-import {
-    Title,
-    Subtitle,
-    Description,
-    Primary,
-    ArgsTable,
-    Stories,
-    PRIMARY_STORY,
-} from '@storybook/addon-docs/blocks';
 
 import { PepButtonComponent } from '../button/button.component';
 import { PepButtonModule } from '../button/button.module';
@@ -27,20 +18,6 @@ import {
 export default {
     title: 'ngx-lib/button',
     component: PepButtonComponent,
-    parameters: {
-        docs: {
-            page: () => (
-                <>
-                <Title />
-                < Subtitle />
-                <Description />
-                < Primary />
-                <ArgsTable story= { PRIMARY_STORY } />
-                <Stories />
-                < />
-          ),
-        },
-    },
     argTypes: {
         key: { table: { disable: true } },
         value: { control: 'text' },
@@ -61,11 +38,21 @@ export default {
         },
         sizeType: {
             control: {
-                type: 'radio',
+                type: 'select',
                 options: ['xs', 'sm', 'md', 'lg', 'xl'],
             },
         },
-        classNames: { table: { disable: true } },
+        styleStateType: {
+            description: 'This uses the colors set by the Theme Editor',
+            defaultValue: 'system',
+            control: {
+                type: 'radio',
+                options: ['system', 'caution', 'success'],
+            },
+            table: {
+                defaultValue: { summary: 'system' },
+            }
+        },
         disabled: { control: 'boolean' },
         iconName: {
             control: {
@@ -106,14 +93,13 @@ const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
     component: PepButtonComponent,
     props: args,
     template: `
-        <pep-button [value]="value" [styleType]="styleType" [sizeType]="sizeType" [disabled]="disabled" [iconName]="iconName"
+        <pep-button [value]="value" [styleStateType]="styleStateType" [styleType]="styleType" [sizeType]="sizeType" [disabled]="disabled" [iconName]="iconName"
         [iconPosition]="iconPosition" (buttonClick)="buttonClick($event)"></pep-button>
     `,
 });
 
 export const Base = Template.bind({});
 Base.storyName = "Basic";
-// Base.parameters = { docs: { page: null } } // Use this to remove Docs
 Base.args = {
     value: 'click me',
 };

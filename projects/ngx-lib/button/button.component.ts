@@ -5,7 +5,7 @@ import {
     Output,
     EventEmitter,
 } from '@angular/core';
-import { PepStyleType, PepSizeType } from '@pepperi-addons/ngx-lib';
+import { PepStyleType, PepSizeType, PepStyleStateType } from '@pepperi-addons/ngx-lib';
 import { PepIconType } from '@pepperi-addons/ngx-lib/icon';
 import { PepButton, IPepButtonClickEvent } from './button.model';
 
@@ -20,6 +20,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
     @Input() classNames = '';
+    @Input() styleStateType: PepStyleStateType = 'system';
     @Input() disabled = false;
     @Input() iconName: PepIconType;
     @Input() iconPosition: 'start' | 'end' = 'end';
