@@ -7,7 +7,16 @@ import {
     ViewChild,
 } from '@angular/core';
 import { pepIconArrowRight } from '@pepperi-addons/ngx-lib/icon';
-import { PepMenuItem, IPepMenuItemClickEvent, PepMenuType } from './menu.model';
+import {
+    PepMenuItem,
+    IPepMenuItemClickEvent,
+    PepMenuType,
+    PepMenuItemParent,
+} from './menu.model';
+
+export class PepInternalMenuItem extends PepMenuItem {
+    selected?: boolean = false;
+}
 
 @Component({
     selector: 'pep-menu-item',
@@ -17,15 +26,15 @@ import { PepMenuItem, IPepMenuItemClickEvent, PepMenuType } from './menu.model';
 export class PepMenuItemComponent implements OnDestroy {
     @Input() type: PepMenuType = 'action';
 
-    @Input() parent: PepMenuItem = null;
-    @Input() items: Array<PepMenuItem> = [];
+    @Input() parent: PepMenuItemParent = null;
+    @Input() items: Array<PepInternalMenuItem> = [];
 
-    private _selectedItem: PepMenuItem = null;
+    private _selectedItem: PepInternalMenuItem = null;
     @Input()
-    set selectedItem(selectedItem: PepMenuItem) {
+    set selectedItem(selectedItem: PepInternalMenuItem) {
         this.updateSelectedItem(selectedItem);
     }
-    get selectedItem(): PepMenuItem {
+    get selectedItem(): PepInternalMenuItem {
         return this._selectedItem;
     }
 
@@ -43,56 +52,80 @@ export class PepMenuItemComponent implements OnDestroy {
         }
     }
 
-    private clearSelectedItem(): void {
+    private clearSelectedItem(selectedItem: PepInternalMenuItem): void {
         if (this.items) {
             this.items.forEach((item) => {
-                item.selected = false;
+                item.selected = selectedItem?.key === item.key;
 
                 if (item.children) {
                     item.children.forEach((child) => {
-                        this.clearSelectedChildren(child);
+                        this.clearSelectedChildren(child, selectedItem);
                     });
                 }
             });
         }
     }
 
-    private clearSelectedChildren(item: PepMenuItem): void {
-        item.selected = false;
+    private clearSelectedChildren(
+        item: PepInternalMenuItem,
+        selectedItem: PepInternalMenuItem
+    ): void {
+        item.selected = selectedItem?.key === item.key;
 
         if (item.children) {
             item.children.forEach((child) => {
-                this.clearSelectedChildren(child);
+                this.clearSelectedChildren(child, selectedItem);
             });
         }
     }
 
-    private updateSelectedParent(item: PepMenuItem) {
-        item.selected = true;
+    private selectParentAndChildren(
+        items: Array<PepInternalMenuItem>,
+        parentsKeys: Array<string>
+    ) {
+        if (parentsKeys.length > 0) {
+            const key = parentsKeys.pop();
+            const selectedParent = items.find((item) => item.key === key);
 
-        if (item.parent) {
-            this.updateSelectedParent(item.parent);
-        }
-    }
-
-    private updateSelectedItem(item: PepMenuItem) {
-        this.clearSelectedItem();
-        this._selectedItem = item;
-
-        if (item) {
-            item.selected = true;
-
-            if (item.parent) {
-                this.updateSelectedParent(item.parent);
+            if (selectedParent) {
+                selectedParent.selected = true;
+                this.selectParentAndChildren(
+                    selectedParent.children,
+                    parentsKeys
+                );
             }
         }
     }
 
+    private updateSelectedParent(
+        parentItem: PepMenuItemParent,
+        parentsKeys: Array<string>
+    ) {
+        parentsKeys.push(parentItem.key);
+
+        if (parentItem.parent) {
+            this.updateSelectedParent(parentItem.parent, parentsKeys);
+        } else {
+            this.selectParentAndChildren(this.items, parentsKeys);
+        }
+    }
+
+    private updateSelectedItem(selectedItem: PepInternalMenuItem) {
+        this.clearSelectedItem(selectedItem);
+        this._selectedItem = selectedItem;
+
+        if (selectedItem && selectedItem.parent) {
+            this.updateSelectedParent(selectedItem.parent, []);
+        }
+    }
+
     onChildClicked(click: IPepMenuItemClickEvent): void {
+        // click.source.selected = true;
         this.menuItemClick.emit(click);
     }
 
     onMenuItemClicked(item: PepMenuItem): void {
+        // item.selected = true;
         this.menuItemClick.emit({ source: item });
     }
 }
