@@ -100,6 +100,8 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
 
     private setChildrenParent(item: PepMenuItem, parent: PepMenuItem): void {
         item.parent = parent;
+        // Clear the children for no dupplicate data.
+        item.parent.children = null;
 
         if (item.children && item.children.length > 0) {
             item.children.forEach((child) => {
