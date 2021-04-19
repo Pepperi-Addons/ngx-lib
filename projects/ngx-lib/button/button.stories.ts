@@ -1,6 +1,15 @@
 import { moduleMetadata } from '@storybook/angular';
 import { Story, Meta } from '@storybook/angular/types-6-0';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import {
+    Title,
+    Subtitle,
+    Description,
+    Primary,
+    ArgsTable,
+    Stories,
+    PRIMARY_STORY,
+} from '@storybook/addon-docs/blocks';
 
 import { PepButtonComponent } from '../button/button.component';
 import { PepButtonModule } from '../button/button.module';
@@ -18,6 +27,20 @@ import {
 export default {
     title: 'ngx-lib/button',
     component: PepButtonComponent,
+    parameters: {
+        docs: {
+            page: () => (
+                <>
+                <Title />
+                < Subtitle />
+                <Description />
+                < Primary />
+                <ArgsTable story= { PRIMARY_STORY } />
+                <Stories />
+                < />
+          ),
+        },
+    },
     argTypes: {
         key: { table: { disable: true } },
         value: { control: 'text' },
