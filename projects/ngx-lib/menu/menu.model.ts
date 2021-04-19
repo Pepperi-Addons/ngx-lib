@@ -4,6 +4,15 @@ export type PepMenuItemType = 'regular' | 'splitter';
 
 export type PepMenuStateType = 'visible' | 'hidden';
 
+export class PepMenuItemParent {
+    key: string;
+    parent?: PepMenuItemParent = null;
+
+    constructor(data: PepMenuItem) {
+        this.key = data.key;
+        this.parent = data.parent;
+    }
+}
 export class PepMenuItem {
     key: string;
     text?: string;
@@ -12,8 +21,7 @@ export class PepMenuItem {
     iconName?: string = null;
     type?: PepMenuItemType = 'regular';
     children?: Array<PepMenuItem> = null;
-    parent?: PepMenuItem = null;
-    selected?: boolean = false;
+    parent?: PepMenuItemParent = null;
 
     constructor(data: Partial<PepMenuItem>) {
         Object.assign(this, data);

@@ -26,6 +26,7 @@ import {
     IPepMenuStateChangeEvent,
     PepMenuStateType,
     PepMenuType,
+    PepMenuItemParent,
 } from './menu.model';
 
 @Component({
@@ -98,14 +99,15 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         });
     }
 
-    private setChildrenParent(item: PepMenuItem, parent: PepMenuItem): void {
+    private setChildrenParent(
+        item: PepMenuItem,
+        parent: PepMenuItemParent
+    ): void {
         item.parent = parent;
-        // Clear the children for no dupplicate data.
-        item.parent.children = null;
 
         if (item.children && item.children.length > 0) {
             item.children.forEach((child) => {
-                this.setChildrenParent(child, item);
+                this.setChildrenParent(child, new PepMenuItemParent(item));
             });
         }
     }
@@ -117,7 +119,10 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
 
                 if (item.children && item.children.length > 0) {
                     item.children.forEach((child) => {
-                        this.setChildrenParent(child, item);
+                        this.setChildrenParent(
+                            child,
+                            new PepMenuItemParent(item)
+                        );
                     });
                 }
             });
@@ -169,9 +174,23 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         this.menuClick.emit();
     }
 
+    // private manipulateData(menuItem: PepMenuItem) {
+    //     menuItem.children = null;
+
+    //     if (menuItem.parent) {
+    //         menuItem.parent = new PepMenuItem(menuItem.parent);
+    //         this.manipulateData(menuItem.parent);
+    //     }
+    // }
+
     onMenuItemClicked(click: IPepMenuItemClickEvent): void {
         this.selectedItem = click.source;
         this.updateText();
+
+        // Manipulate click data because the data is dupplicate in parent.children
+        // const tmp = new PepMenuItem(click.source);
+        // this.manipulateData(tmp);
+        // click.source = tmp;
 
         this.menuItemClick.emit(click);
     }
