@@ -62,19 +62,19 @@ export class TopBarExampleComponent implements OnInit {
         if (withChildren) {
             menuItems = [
                 {
-                    key: 'test1',
+                    key: `${index}_test1`,
                     text: 'test 1',
                     iconName: pepIconSystemBin.name,
                     children: this.getMenuItems(index <= 3, index)
                 },
                 {
-                    key: 'test2',
+                    key: `${index}_test2`,
                     text: 'test 2',
                     iconName: pepIconSystemBin.name,
                 },
-                { key: 'sep', type: 'splitter' },
+                { key: `${index}_sep`, type: 'splitter' },
                 {
-                    key: 'test3',
+                    key: `${index}_test3`,
                     text: 'test 3',
                     iconName: pepIconSystemBin.name,
                     children: this.getMenuItems(index <= 3, index),
@@ -82,10 +82,10 @@ export class TopBarExampleComponent implements OnInit {
             ];
         } else {
             menuItems = [
-                { key: 'test1', text: 'test 1' },
-                { key: 'test2', text: 'test 2', disabled: true },
-                { key: 'sep', type: 'splitter' },
-                { key: 'test3', text: 'test 3' },
+                { key: `${index}_test1`, text: 'test 1' },
+                { key: `${index}_test2`, text: 'test 2', disabled: true },
+                { key: `${index}_sep`, type: 'splitter' },
+                { key: `${index}_test3`, text: 'test 3' },
             ];
         }
 
