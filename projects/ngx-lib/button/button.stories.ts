@@ -14,54 +14,66 @@ import {
     pepIconSystemClose,
 } from '@pepperi-addons/ngx-lib/icon';
 
+const argTypesBasicStory = {
+    value: { control: 'text' },
+    styleType: {
+        description: 'This is the style type of the button',
+        defaultValue: 'weak',
+        control: {
+            type: 'radio',
+            options: ['weak', 'regular', 'strong'],
+        },
+        table: {
+            type: {
+                summary: 'something short',
+                detail: 'something really really long'
+            },
+            defaultValue: { summary: 'weak' },
+        }
+    },
+    sizeType: {
+        control: {
+            type: 'radio',
+            options: ['xs', 'sm', 'md', 'lg', 'xl'],
+        },
+    },
+    disabled: { control: 'boolean' },
+    iconName: {
+        control: {
+            type: 'select',
+            options: [
+                '',
+                pepIconArrowRightAlt.name,
+                pepIconArrowLeftAlt.name,
+                pepIconNumberPlus.name,
+                pepIconSystemBin.name,
+                pepIconSystemEdit.name,
+                pepIconSystemClose.name,
+            ],
+        },
+    },
+    buttonClick: { action: 'buttonClick' },
+    key: { table: { disable: true } },
+    classNames: { table: { disable: true } },
+    ngOnDestroy: { table: { disable: true } },
+    onButtonClicked: { table: { disable: true } },
+};
+
+const argTypesOtherStories = {
+    value: { table: { disable: true } },
+    styleType: { control: { disable: true } },
+    sizeType: { control: { disable: true } },
+    disabled: { control: { disable: true } },
+    iconName: { control: { disable: true } },
+    // buttonClick: { control: { disable: true } },
+    iconPosition: { control: { disable: true } },
+};
+
 // This exports the Stories group for this component
 export default {
     title: 'ngx-lib/button',
     component: PepButtonComponent,
-    argTypes: {
-        key: { table: { disable: true } },
-        value: { control: 'text' },
-        styleType: {
-            description: 'This is the style type of the button',
-            defaultValue: 'weak',
-            control: {
-                type: 'radio',
-                options: ['weak', 'regular', 'strong'],
-            },
-            table: {
-                type: {
-                    summary: 'something short',
-                    detail: 'something really really long'
-                },
-                defaultValue: { summary: 'weak' },
-            }
-        },
-        sizeType: {
-            control: {
-                type: 'radio',
-                options: ['xs', 'sm', 'md', 'lg', 'xl'],
-            },
-        },
-        classNames: { table: { disable: true } },
-        disabled: { control: 'boolean' },
-        iconName: {
-            control: {
-                type: 'select',
-                options: [
-                    '',
-                    pepIconArrowRightAlt.name,
-                    pepIconArrowLeftAlt.name,
-                    pepIconNumberPlus.name,
-                    pepIconSystemBin.name,
-                    pepIconSystemEdit.name,
-                    pepIconSystemClose.name,
-                ],
-            },
-        },
-        buttonClick: { action: 'buttonClick' },
-        ngOnDestroy: { table: { disable: true } },
-        onButtonClicked: { table: { disable: true } },
-    },
+    argTypes: argTypesBasicStory,
     decorators: [
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
@@ -100,17 +112,19 @@ Base.args = {
 //     hideNoControlsWarning: false
 // };
 
+
 export const Disabled = Template.bind({});
 Disabled.args = {
     disabled: true,
     value: 'disabled',
-    buttonClick: onButtonClicked,
+    // buttonClick: onButtonClicked,
 };
-Disabled.storyName = 'new disabled';
+Disabled.argTypes = argTypesOtherStories;
+// Disabled.storyName = 'new disabled';
 
-function onButtonClicked(event) {
-    alert('tomer');
-}
+// function onButtonClicked(event) {
+//     alert('tomer');
+// }
 
 // This creates a Story for the component
 const StyleTypeTemplate: Story<PepButtonComponent> = (
@@ -169,6 +183,7 @@ export const StyleType = StyleTypeTemplate.bind({});
 //     styleType: 'strong',
 //     value: 'strong',
 // };
+StyleType.argTypes = argTypesOtherStories;
 StyleType.storyName = '3 style types';
 StyleType.parameters = {
     controls: { hideNoControlsWarning: true },
