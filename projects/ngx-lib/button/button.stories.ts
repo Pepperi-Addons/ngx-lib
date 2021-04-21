@@ -76,15 +76,7 @@ export default {
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
             imports: [PepButtonModule, SBNgxHelperModule],
-        }),
-        // (storyFunc) => {
-        //     const story = storyFunc();
-
-        //     return {
-        //         ...story,
-        //         template: `<div style="width:200px; background:blue;">${story.template}</div>`,
-        //     };
-        // },
+        })
     ],
 } as Meta;
 
@@ -101,14 +93,22 @@ const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
 export const Base = Template.bind({});
 Base.storyName = 'Basic';
 Base.args = {
-    value: 'click me',
+    value: 'Click Me!',
 };
-// Base.parameters = {
-//     controls: {
-//         include: ['value']
-//     },
-//     hideNoControlsWarning: false
-// };
+Base.parameters = {
+    docs: {
+        source: {
+            code: `
+// We use both " and ' for strings like so ("'Click Me'") 
+// Because Angular JS isn't that smart 😔
+<pep-button 
+    [value]="'Click Me'" 
+    [styleType]="'weak'" 
+    [sizeType]="'xl'">
+</pep-button>`,
+        },
+    },
+};
 
 export const Disabled = Template.bind({});
 Disabled.args = {
