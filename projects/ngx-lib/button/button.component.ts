@@ -5,7 +5,11 @@ import {
     Output,
     EventEmitter,
 } from '@angular/core';
-import { PepStyleType, PepSizeType, PepStyleStateType } from '@pepperi-addons/ngx-lib';
+import {
+    PepStyleType,
+    PepSizeType,
+    PepStyleStateType,
+} from '@pepperi-addons/ngx-lib';
 import { PepIconType } from '@pepperi-addons/ngx-lib/icon';
 import { PepButton, IPepButtonClickEvent } from './button.model';
 

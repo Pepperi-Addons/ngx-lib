@@ -1,0 +1,31 @@
+import { Meta, Story, ArgsTable, Canvas } from "@storybook/addon-docs/blocks";
+
+import { PepButtonComponent } from "../button/button.component";
+import { PepButtonModule } from "../button/button.module";
+
+<Meta title="ngx-lib/kof" component={PepButtonComponent} />
+
+# Yo
+
+_love is_
+
+<Canvas>
+    <Story name="basic check" height="400 px">
+        {{
+            component: PepButtonComponent,
+            template: `
+      <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'xl'"></pep-button>
+    `,
+        }}
+    </Story>
+
+    <Story name="kof" height="160px">
+        {{
+            component: PepButtonComponent,
+            props: {},
+        }}
+    </Story>
+
+</Canvas>
+
+<ArgsTable of={PepButtonComponent} />

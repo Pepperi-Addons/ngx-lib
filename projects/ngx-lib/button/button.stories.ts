@@ -31,10 +31,10 @@ export default {
             table: {
                 type: {
                     summary: 'something short',
-                    detail: 'something really really long'
+                    detail: 'something really really long',
                 },
                 defaultValue: { summary: 'weak' },
-            }
+            },
         },
         sizeType: {
             control: {
@@ -51,7 +51,7 @@ export default {
             },
             table: {
                 defaultValue: { summary: 'system' },
-            }
+            },
         },
         disabled: { control: 'boolean' },
         iconName: {
@@ -99,7 +99,7 @@ const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
 });
 
 export const Base = Template.bind({});
-Base.storyName = "Basic";
+Base.storyName = 'Basic';
 Base.args = {
     value: 'click me',
 };

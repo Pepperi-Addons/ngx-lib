@@ -23,10 +23,10 @@ export default {
             table: {
                 type: {
                     summary: 'something short',
-                    detail: 'something really really long'
+                    detail: 'something really really long',
                 },
                 defaultValue: { summary: 'form' },
-            }
+            },
         },
         xAlignment: {
             description: 'This is the x alignment of the component',
@@ -41,7 +41,7 @@ export default {
             control: {
                 type: 'radio',
                 options: ['select', 'multi'],
-            }
+            },
         },
         valueChange: { action: 'valueChange' },
         controlType: { table: { disable: true } },

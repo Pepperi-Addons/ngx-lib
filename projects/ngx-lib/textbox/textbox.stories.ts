@@ -37,7 +37,16 @@ export default {
         type: {
             control: {
                 type: 'inline-radio',
-                options: ['text', 'link', 'email', 'phone', 'int', 'percentage', 'currency', 'real']
+                options: [
+                    'text',
+                    'link',
+                    'email',
+                    'phone',
+                    'int',
+                    'percentage',
+                    'currency',
+                    'real',
+                ],
             },
         },
         layoutType: {
@@ -50,10 +59,10 @@ export default {
             table: {
                 type: {
                     summary: 'something short',
-                    detail: 'something really really long'
+                    detail: 'something really really long',
                 },
                 defaultValue: { summary: 'form' },
-            }
+            },
         },
         xAlignment: {
             description: 'This is the x alignment of the component',
@@ -66,7 +75,7 @@ export default {
         textColor: {
             control: {
                 type: 'color',
-            }
+            },
         },
         valueChange: { action: 'valueChange' },
         key: { table: { disable: true } },
