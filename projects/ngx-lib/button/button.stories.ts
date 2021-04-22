@@ -5,6 +5,8 @@ import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 import { PepButtonComponent } from '../button/button.component';
 import { PepButtonModule } from '../button/button.module';
 
+import { action } from '@storybook/addon-actions';
+
 import {
     pepIconArrowRightAlt,
     pepIconArrowLeftAlt,
@@ -17,18 +19,33 @@ import {
 const argTypesBasicStory = {
     value: { control: 'text' },
     styleType: {
-        description: 'This is the style type of the button',
+        // description: 'This is the style type of the button',
         defaultValue: 'weak',
         control: {
             type: 'radio',
             options: ['weak', 'regular', 'strong'],
         },
         table: {
+            // type: {
+            //     summary: 'something short',
+            //     detail: 'something really really long'
+            // },
+            defaultValue: { summary: 'weak' },
+        }
+    },
+    styleStateType: {
+        description: 'This is the style state type of the button',
+        defaultValue: 'system',
+        control: {
+            type: 'radio',
+            options: ['system', 'caution', 'success'],
+        },
+        table: {
             type: {
                 summary: 'something short',
                 detail: 'something really really long'
             },
-            defaultValue: { summary: 'weak' },
+            defaultValue: { summary: 'system' },
         }
     },
     sizeType: {
@@ -53,10 +70,10 @@ const argTypesBasicStory = {
         },
     },
     buttonClick: { action: 'buttonClick' },
-    key: { table: { disable: true } },
-    classNames: { table: { disable: true } },
-    ngOnDestroy: { table: { disable: true } },
-    onButtonClicked: { table: { disable: true } },
+    // key: { table: { disable: true } },
+    // classNames: { table: { disable: true } },
+    // ngOnDestroy: { table: { disable: true } },
+    // onButtonClicked: { table: { disable: true } },
 };
 
 const argTypesOtherStories = {
@@ -93,9 +110,12 @@ export default {
 // This creates a Story for the component
 const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
     component: PepButtonComponent,
-    props: args,
+    props: {
+        ...args,
+        // buttonClick: action('buttonClick'),
+    },
     template: `
-        <pep-button [value]="value" [styleType]="styleType" [sizeType]="sizeType" [disabled]="disabled" [iconName]="iconName"
+        <pep-button [value]="value" [styleType]="styleType" [styleStateType]="styleStateType" [sizeType]="sizeType" [disabled]="disabled" [iconName]="iconName"
         [iconPosition]="iconPosition" (buttonClick)="buttonClick($event)"></pep-button>
     `,
 });
@@ -136,42 +156,42 @@ const StyleTypeTemplate: Story<PepButtonComponent> = (
     <div style="display: flex; flex-direction: column;">
         <div class="pep-spacing-element-negative">
             <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">XL</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'xl'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'xl'">
+            <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="xl"></pep-button>
+            <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="xl">
             </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'xl'">
+            <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="xl">
             </pep-button>
         </div>
         <div class="pep-spacing-element-negative">
             <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">LG</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'lg'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'lg'">
+            <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="lg"></pep-button>
+            <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="lg">
             </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'lg'">
+            <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="lg">
             </pep-button>
         </div>
         <div class="pep-spacing-element-negative">
             <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">MD</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'md'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'md'">
+            <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="md"></pep-button>
+            <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="md">
             </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'md'">
+            <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="md">
             </pep-button>
         </div>
         <div class="pep-spacing-element-negative">
             <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">SM</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'sm'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'sm'">
+            <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="sm"></pep-button>
+            <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="sm">
             </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'sm'">
+            <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="sm">
             </pep-button>
         </div>
         <div class="pep-spacing-element-negative">
             <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">XS</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'xs'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'xs'">
+            <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="xs"></pep-button>
+            <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="xs">
             </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'xs'">
+            <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="xs">
             </pep-button>
         </div>
     </div>
