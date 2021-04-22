@@ -47,10 +47,15 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     set visible(visible: boolean) {
         this._visible = visible;
         if (visible) {
-            this.renderer.removeClass(this.element.nativeElement, 'hidden-element');
-        }
-        else {
-            this.renderer.addClass(this.element.nativeElement, 'hidden-element');
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
         }
     }
     get visible(): boolean {
@@ -84,7 +89,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {

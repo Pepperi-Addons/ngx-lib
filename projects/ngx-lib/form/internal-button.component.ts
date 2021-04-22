@@ -52,16 +52,20 @@ export class PepInternalButtonComponent
     set visible(visible: boolean) {
         this._visible = visible;
         if (visible) {
-            this.renderer.removeClass(this.element.nativeElement, 'hidden-element');
-        }
-        else {
-            this.renderer.addClass(this.element.nativeElement, 'hidden-element');
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
         }
     }
     get visible(): boolean {
         return this._visible;
     }
-
 
     controlType = 'button';
 
@@ -94,7 +98,7 @@ export class PepInternalButtonComponent
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {

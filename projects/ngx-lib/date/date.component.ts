@@ -77,10 +77,15 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     set visible(visible: boolean) {
         this._visible = visible;
         if (visible) {
-            this.renderer.removeClass(this.element.nativeElement, 'hidden-element');
-        }
-        else {
-            this.renderer.addClass(this.element.nativeElement, 'hidden-element');
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
         }
     }
     get visible(): boolean {
@@ -144,7 +149,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {

@@ -31,16 +31,20 @@ export class PepButtonComponent implements OnDestroy {
     set visible(visible: boolean) {
         this._visible = visible;
         if (visible) {
-            this.renderer.removeClass(this.element.nativeElement, 'hidden-element');
-        }
-        else {
-            this.renderer.addClass(this.element.nativeElement, 'hidden-element');
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
         }
     }
     get visible(): boolean {
         return this._visible;
     }
-
 
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
@@ -51,10 +55,7 @@ export class PepButtonComponent implements OnDestroy {
         }
     }
 
-    constructor(
-        private renderer: Renderer2,
-        private element: ElementRef
-    ) { }
+    constructor(private renderer: Renderer2, private element: ElementRef) {}
 
     onButtonClicked(event: Event): void {
         const button = new PepButton({
