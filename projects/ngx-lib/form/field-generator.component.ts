@@ -7,7 +7,6 @@ import {
     ViewEncapsulation,
     ChangeDetectionStrategy,
     OnDestroy,
-    OnInit,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -23,8 +22,7 @@ import {
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepFieldGeneratorComponent
-    implements OnInit, OnChanges, OnDestroy {
+export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Input() field: any;
     @Input() isActive = false;
     @Input() uid: any = null;
@@ -64,9 +62,6 @@ export class PepFieldGeneratorComponent
     get isDirty(): boolean {
         const formControl = this.form && this.form.get(this.field.key);
         return formControl ? formControl.dirty : false;
-    }
-
-    ngOnInit() {
     }
 
     ngOnDestroy(): void {
