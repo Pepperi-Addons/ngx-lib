@@ -117,6 +117,7 @@ export class PepQuantitySelectorComponent
     @Input() alowDecimal = false;
     @Input() additionalValue = '';
     @Input() notificationInfo: any;
+    @Input() visible = true;
 
     controlType = 'qs';
 
@@ -209,7 +210,8 @@ export class PepQuantitySelectorComponent
             if (this.key === '') {
                 this.isEmptyKey = true;
             }
-
+            debugger;
+            console.log('visible value:', this.visible);
             this.standAlone = true;
             this.setForm();
 

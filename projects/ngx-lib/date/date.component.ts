@@ -71,6 +71,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
+    @Input() visible = true;
 
     // Minimum in thicks
     @Input()

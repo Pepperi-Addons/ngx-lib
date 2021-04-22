@@ -61,6 +61,7 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
     @Input() maxFieldCharacters = 0;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
+    @Input() visible = true;
 
     controlType = 'richhtmltextarea';
 

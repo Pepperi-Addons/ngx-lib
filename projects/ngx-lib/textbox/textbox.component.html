@@ -4,7 +4,7 @@
             [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [xAlignment]="xAlignment"
             [showTitle]="showTitle" [inputLength]="input.value?.length">
         </pep-field-title>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" [ngClass]="{'hidden-element': !visible}">
             <!-- (keyup)="onKeyUp($event)"  -->
             <input #input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
                 maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
@@ -55,7 +55,7 @@
         </ng-template>
         <ng-template #groupedBlock>
             <ng-container [formGroupName]="parentFieldKey">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" [ngClass]="{'hidden-element': !visible}">
                     <!-- (keyup)="onKeyUp($event)"  -->
                     <input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
                         [placeholder]="!disabled ? placeholder : ''" title="{{ formattedValue }}"
@@ -79,8 +79,8 @@
             <div class="pep-card-input card-flex-container" [ngStyle]="{ color: textColor }"
                 [class]="'text-align-' + xAlignment" [ngClass]="{'one-row': rowSpan === 1,
                             'multi-rows': rowSpan > 1,
-                            'pep-button weak': isActive && !disabled}"
-                (click)="!disabled ? cardTemplateClicked($event) : ''">
+                            'pep-button weak': isActive && !disabled, 
+                            'hidden-element': !visible}" (click)="!disabled ? cardTemplateClicked($event) : ''">
                 <span *ngIf="showTitle && label != ''" class="body-xs title" title="{{ label }}">{{ label
                     }}&nbsp;</span>
                 <span [id]="key" title="{{ formattedValue }}" class="body-sm value"
@@ -114,8 +114,9 @@
                             formattedValue }}</a>
                     </ng-container>
                     <ng-container *ngSwitchDefault>
-                        <span [id]="key" class="body-sm pep-report-input" [ngClass]="{'readonly': disabled}"
-                            title="{{ formattedValue }}" [ngStyle]="{ color: textColor }">{{ formattedValue }}</span>
+                        <span [id]="key" class="body-sm pep-report-input"
+                            [ngClass]="{'readonly': disabled, 'hidden-element': !visible}" title="{{ formattedValue }}"
+                            [ngStyle]="{ color: textColor }">{{ formattedValue }}</span>
                     </ng-container>
                 </ng-container>
             </ng-template>

@@ -7,7 +7,8 @@
                 'one-row': rowSpan === 1,
                 'no-title': label.length == 0,
                 'right-alignment pull-right flip': xAlignment == 'right',
-                'center-alignment': xAlignment == 'center'
+                'center-alignment': xAlignment == 'center',
+                'hidden-element': !visible
             }" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}">
             <!--
                 This is cause a bug that when click on the pep-input area and after on the checkbox

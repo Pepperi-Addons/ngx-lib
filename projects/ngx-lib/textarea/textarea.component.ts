@@ -41,6 +41,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
+    @Input() visible = true;
     // @Input() lastFocusField: any;
 
     controlType = 'textarea';

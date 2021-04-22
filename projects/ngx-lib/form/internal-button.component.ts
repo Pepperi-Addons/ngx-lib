@@ -46,6 +46,7 @@ export class PepInternalButtonComponent
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
+    @Input() visible = true;
 
     controlType = 'button';
 

@@ -1,5 +1,6 @@
 <button mat-button [pepDataQa]="key ? key : value" class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
-    [ngClass]="{ 'icon-button': iconName && !value }" [disabled]="disabled" (click)="onButtonClicked($event)">
+    [ngClass]="{ 'icon-button': iconName && !value, 'hidden-element': !visible }" [disabled]="disabled"
+    (click)="onButtonClicked($event)">
     <mat-icon *ngIf="iconName && iconPosition === 'start'">
         <pep-icon name="{{iconName}}"></pep-icon>
     </mat-icon>

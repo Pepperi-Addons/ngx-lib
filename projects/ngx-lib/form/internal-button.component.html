@@ -2,7 +2,7 @@
     <ng-container *ngSwitchCase="'reference'">
         <ng-container *ngIf="layoutType === 'form'; then formBlock; else notFormBlock"></ng-container>
         <ng-template #formBlock>
-            <div class="pep-button-container reference-button">
+            <div class="pep-button-container reference-button" [ngClass]="{'hidden-element': !visible}">
                 <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
                     [showTitle]="showTitle">
                 </pep-field-title>
@@ -84,7 +84,7 @@
 </ng-container>
 
 <ng-template #buttonTemplate let-internal="internal">
-    <div class="pep-button-container">
+    <div class="pep-button-container" [ngClass]="{'hidden-element': !visible}">
         <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
             [showTitle]="showTitle">
         </pep-field-title>
@@ -103,7 +103,7 @@
             <button [id]="key" title="{{ formattedValue }}" mat-button class="pep-button md regular"
                 dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}" (click)="openReferenceObjectInternal($event)"
                 [disabled]="disabled"
-                [ngClass]="{disabled: disabled, 'pull-left': xAlignment == 'left', 'pull-right': xAlignment == 'right', 'center-alignment': xAlignment == 'center'}">
+                [ngClass]="{disabled: disabled, 'pull-left': xAlignment == 'left', 'pull-right': xAlignment == 'right', 'center-alignment': xAlignment == 'center', 'hidden-element': !visible}">
                 <ng-container *ngIf="formattedValue == '0' || formattedValue == ''; then newBlock; else existingBlock">
                 </ng-container>
                 <ng-template #newBlock>
@@ -130,7 +130,8 @@
 <ng-template #linkTemplate>
     <ng-container *ngIf="formattedValue?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
     <ng-template #notEmptyBlock>
-        <a href="{{ value }}" (mousedown)="hrefFunction($event)" class="color-link">
+        <a href="{{ value }}" (mousedown)="hrefFunction($event)" class="color-link"
+            [ngClass]="{'hidden-element': !visible}">
             <span *ngIf="layoutType === 'table'" [id]="key" title="{{ formattedValue }}"
                 class="body-sm pep-report-input readonly">
                 {{ formattedValue }}

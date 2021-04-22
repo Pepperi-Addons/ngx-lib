@@ -53,6 +53,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() indicatorsField: any = null;
     @Input() menuField: any = null;
     @Input() hasCampaignField: any = null;
+    @Input() visible = true;
 
     controlType = 'image';
 

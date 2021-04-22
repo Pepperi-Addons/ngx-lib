@@ -41,6 +41,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() options: Array<IPepOption> = [];
+    @Input() visible = true;
 
     controlType = 'select';
 

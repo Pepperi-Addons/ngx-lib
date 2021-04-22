@@ -23,6 +23,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() disabled = false;
     @Input() iconName: PepIconType;
     @Input() iconPosition: 'start' | 'end' = 'end';
+    @Input() visible = true;
 
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();

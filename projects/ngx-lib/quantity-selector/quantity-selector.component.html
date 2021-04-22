@@ -6,7 +6,8 @@
                 'one-row': rowSpan === 1,
                 caution: isCaution,
                 'matrix-qs': type === 'qsForMatrix',
-                'zero-quantity': formattedValue === '0'
+                'zero-quantity': formattedValue === '0',
+                'hidden-element': !visible
             }">
             <pep-field-title *ngIf="layoutType !== 'table' && layoutType !== 'card'" [label]="label"
                 [required]="required" [disabled]="disabled" [showTitle]="showTitle" [xAlignment]="xAlignment">
@@ -16,13 +17,13 @@
                 <ng-container *ngIf="readonly; then readonlyBlock; else editableQSBlock"></ng-container>
                 <ng-template #readonlyBlock>
                     <button [id]="key" mat-button class="pep-button {{ styleClass }} disable ellipsis"
-                        [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                        [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1, 'hidden-element': !visible}"
                         title="{{ formattedValue }}" disabled="true">
                         {{ formattedValue }}
                     </button>
                 </ng-template>
                 <ng-template #editableQSBlock>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="outline" [ngClass]="{'hidden-element': !visible}">
                         <input pepQsValidation [alowDecimal]="alowDecimal" type="decimalNumber" inputmode="decimal"
                             matInput #QSInput name="{{ key }}" class="body-lg ellipsis" title="{{ formattedValue }}"
                             autocomplete="off" [id]="key" [formControlName]="key"
@@ -57,7 +58,7 @@
                 <ng-container *ngIf="readonly; then readonlyBlock; else editableQSBlock"></ng-container>
                 <ng-template #readonlyBlock>
                     <button [id]="key" mat-button class="pep-button {{ styleClass }} disable" disabled="true"
-                        [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}">
+                        [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1, 'hidden-element': !visible}">
                         X
                     </button>
                 </ng-template>
@@ -66,7 +67,8 @@
                         matBadge="{{ additionalValue }}" matBadgePosition="before"
                         matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
 
-                    <mat-form-field appearance="outline" (mouseleave)="!isFocus ? onMatrixMouseleave($event) : null">
+                    <mat-form-field appearance="outline" [ngClass]="{'hidden-element': !visible}"
+                        (mouseleave)="!isFocus ? onMatrixMouseleave($event) : null">
                         <input pepQsValidation [alowDecimal]="alowDecimal" type="decimalNumber" inputmode="decimal"
                             matInput #QSInput name="{{ key }}" title="{{ formattedValue }}" class="body-sm ellipsis"
                             autocomplete="off" [id]="key" [formControlName]="key"
@@ -94,7 +96,7 @@
                 <ng-template #regularBlock>
                     <button mat-button [disabled]="disabled" class="pep-button {{ styleClass }} ellipsis" [id]="key"
                         name="{{ key }}"
-                        [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                        [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1, 'hidden-element': !visible}"
                         [title]="'QS.ORDER' | translate" (click)="enterChildren($event)">
                         {{ 'QS.ORDER' | translate }}
                     </button>
@@ -103,16 +105,17 @@
                     <button mat-button matBadge="{{ formattedValue }}"
                         matBadgePosition="{{xAlignment == 'right' ? 'before' : 'after'}}"
                         [matBadgeSize]="layoutType === 'card' && rowSpan === 1 ? 'small' : 'medium'"
-                        class="pep-button {{ styleClass }} ellipsis" [id]="key" name="{{ key }}" [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1,
-                            'right-alignment': xAlignment == 'right', 'left-alignment': xAlignment != 'right'}"
-                        [title]="'QS.ORDER' | translate" (click)="enterChildren($event)" [disabled]="disabled">
+                        class="pep-button {{ styleClass }} ellipsis" [id]="key" name="{{ key }}"
+                        [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1,
+                            'right-alignment': xAlignment == 'right', 'left-alignment': xAlignment != 'right', 'hidden-element': !visible}" [title]="'QS.ORDER' | translate"
+                        (click)="enterChildren($event)" [disabled]="disabled">
                         {{ 'QS.ORDER' | translate }}
                     </button>
                 </ng-template>
             </ng-container>
             <ng-container *ngIf="type == 'packageButton'">
                 <button mat-button class="pep-button {{ styleClass }} ellipsis" [id]="key" name="{{ key }}"
-                    [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
+                    [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1, 'hidden-element': !visible}"
                     [title]="'QS.ORDER' | translate" (click)="enterPackage($event)" [disabled]="disabled">
                     {{ 'QS.ORDER' | translate }} &#40;{{ formattedValue }}&#41;
                 </button>

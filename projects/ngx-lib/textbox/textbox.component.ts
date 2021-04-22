@@ -83,6 +83,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     // @Input() lastFocusField: any;
     @Input() minValue = NaN;
     @Input() maxValue = NaN;
+    @Input() visible = true;
 
     controlType = 'textbox';
 
