@@ -430,6 +430,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             // hasCampaign: hasCampaign,
             // hasIndicators: hasIndicators,
             textColor: dataField.TextColor,
+            visible: dataField.Visible,
         };
     }
 
@@ -1175,6 +1176,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         const options: any = {
             disabled: !updatedField.Enabled || !this.canEditObject,
             readonly: !updatedField.Enabled || !this.canEditObject,
+            visible: updatedField.Visible,
             value: updatedField.Value,
             additionalValue: updatedField.AdditionalValue,
             formattedValue: updatedField.FormattedValue,

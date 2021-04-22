@@ -62,7 +62,7 @@
                     </button>
                 </ng-template>
                 <ng-template #editableQSBlock>
-                    <span *ngIf="xAlignment == 'right'" class="body-sm additional-value prefix"
+                    <span *ngIf=" xAlignment=='right'" class=" body-sm additional-value prefix"
                         matBadge="{{ additionalValue }}" matBadgePosition="before"
                         matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
 
