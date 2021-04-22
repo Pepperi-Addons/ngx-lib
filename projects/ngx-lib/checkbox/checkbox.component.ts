@@ -48,7 +48,22 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     @Input() showTitle = true;
     @Input() renderTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
-    @Input() visible = true;
+
+    private _visible = true;
+    @Input()
+    set visible(visible: boolean) {
+        this._visible = visible;
+        if (visible) {
+            this.renderer.removeClass(this.element.nativeElement, 'hidden-element');
+        }
+        else {
+            this.renderer.addClass(this.element.nativeElement, 'hidden-element');
+        }
+    }
+    get visible(): boolean {
+        return this._visible;
+    }
+
 
     @Output()
     valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
@@ -63,7 +78,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private element: ElementRef,
         private translate: TranslateService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {

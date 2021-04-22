@@ -3,9 +3,9 @@
         <mat-form-field appearance="outline">
             <input #input [id]="key" title="{{ formattedValue }}" matInput class="body-sm" autocomplete="false"
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left'}"
-                [ngClass]="{ 'hidden-element': !visible }" [(ngModel)]="dateModel" [ngModelOptions]="{standalone: true}"
-                [matDatetimepicker]="datetimePicker" [min]="minDate" [max]="maxDate" [required]="required"
-                [disabled]="disabled" (dateChange)="onDateChange($event)" (click)="openDatetimePicker(datetimePicker)"
+                [(ngModel)]="dateModel" [ngModelOptions]="{standalone: true}" [matDatetimepicker]="datetimePicker"
+                [min]="minDate" [max]="maxDate" [required]="required" [disabled]="disabled"
+                (dateChange)="onDateChange($event)" (click)="openDatetimePicker(datetimePicker)"
                 (blur)="onBlur($event)" />
             <mat-error *ngIf="renderError"><span class="body-xs"
                     [title]="required && formattedValue.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"
@@ -38,7 +38,7 @@
         </ng-template>
         <ng-template #readOnlyBlock>
             <div class="pep-card-input card-flex-container"
-                [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled, 'hidden-element': !visible}"
+                [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled }"
                 [ngStyle]="{ color: textColor }" [class]="'text-align-' + xAlignment"
                 (click)="!disabled ? cardTemplateClicked($event) : ''">
                 <span *ngIf="showTitle && label != ''" class="body-xs title" title="{{ label }}">{{ label

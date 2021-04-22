@@ -5,7 +5,7 @@
             <mat-form-field appearance="outline" dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
                 <mat-select #select [required]="required ? required : undefined" matInput disableOptionCentering
                     class="body-sm text-align-{{ xAlignment }}" [id]="key"
-                    [ngClass]="{'right-alignment': xAlignment === 'right', 'hidden-element': !visible}"
+                    [ngClass]="{'right-alignment': xAlignment === 'right'}"
                     [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
                     [(ngModel)]="selectedValueModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
                     (selectionChange)="selectionChange($event)" (openedChange)="openedChange($event)"
@@ -25,7 +25,7 @@
             <mat-form-field appearance="outline" dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
                 <mat-select #select multiple [required]="required ? required : undefined" matInput
                     disableOptionCentering class="body-sm text-align-{{ xAlignment }}" [id]="key"
-                    [ngClass]="{'right-alignment': xAlignment === 'right', 'hidden-element': !visible}"
+                    [ngClass]="{'right-alignment': xAlignment === 'right'}"
                     [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
                     [(ngModel)]="selectedValuesModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
                     (openedChange)="openedChange($event)" title="{{ fieldFormattedValue }}">
@@ -55,7 +55,7 @@
         </ng-template>
         <ng-template #readOnlyBlock>
             <div class="pep-card-input card-flex-container"
-                [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled, 'hidden-element': !visible}"
+                [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled}"
                 [class]="'text-align-' + xAlignment" (click)="!disabled ? cardTemplateClicked($event) : ''">
                 <span *ngIf="showTitle && label != ''" class="body-xs title" title="{{ label }}">{{ label
                     }}&nbsp;</span>

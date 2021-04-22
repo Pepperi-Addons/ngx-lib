@@ -4,8 +4,7 @@
             <div class="img-wrapper" [ngClass]="{
                 'left-alignment': xAlignment == 'left',
                 'right-alignment': xAlignment == 'right',
-                'center-alignment': xAlignment == 'center',
-                'hidden-element': !visible
+                'center-alignment': xAlignment == 'center'
             }">
                 <img [id]="key" [style.max-height]="fieldHeight" class="pep-report-file" [alt]="label" [src]="src"
                     (click)="itemImageClick($event)" (error)="errorHandler($event)" (load)="onImageLoad($event)" />

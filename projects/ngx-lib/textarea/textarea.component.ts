@@ -41,7 +41,22 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() visible = true;
+
+    private _visible = true;
+    @Input()
+    set visible(visible: boolean) {
+        this._visible = visible;
+        if (visible) {
+            this.renderer.removeClass(this.element.nativeElement, 'hidden-element');
+        }
+        else {
+            this.renderer.addClass(this.element.nativeElement, 'hidden-element');
+        }
+    }
+    get visible(): boolean {
+        return this._visible;
+    }
+
     // @Input() lastFocusField: any;
 
     controlType = 'textarea';
@@ -69,7 +84,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
