@@ -229,8 +229,7 @@ export class PepQuantitySelectorComponent
             if (this.key === '') {
                 this.isEmptyKey = true;
             }
-            debugger;
-            console.log('visible value:', this.visible);
+
             this.standAlone = true;
             this.setForm();
 
