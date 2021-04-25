@@ -1,4 +1,3 @@
-import { getLocaleNumberSymbol, NumberSymbol } from '@angular/common';
 import {
     Directive,
     ElementRef,
@@ -22,7 +21,7 @@ export class PepTextboxValidationDirective implements OnInit {
     constructor(
         private hostElement: ElementRef,
         private validatorService: PepValidatorService
-    ) {}
+    ) { }
 
     ngOnInit() {
         //

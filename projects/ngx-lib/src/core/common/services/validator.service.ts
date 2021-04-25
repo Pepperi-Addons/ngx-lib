@@ -1,5 +1,4 @@
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { getLocaleNumberSymbol, NumberSymbol } from '@angular/common';
 import { Injectable, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -24,10 +23,10 @@ export class PepValidatorService {
 
     constructor(@Optional() private translate: TranslateService = null) {
         const currentLang = this.translate?.currentLang || navigator.language;
-        this.decimalSeparator = getLocaleNumberSymbol(
-            currentLang,
-            NumberSymbol.Decimal
-        );
+
+        // Check for number with thousands seperator and if === ',' then the decimal seperator is '.' else ','
+        const tmp = new Intl.NumberFormat(currentLang, { maximumSignificantDigits: 2 }).format(1000);
+        this.decimalSeparator = tmp.indexOf(",") === 1 ? '.' : ',';
     }
 
     /*
