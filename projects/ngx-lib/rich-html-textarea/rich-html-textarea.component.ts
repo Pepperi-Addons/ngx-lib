@@ -62,6 +62,26 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
 
+    private _visible = true;
+    @Input()
+    set visible(visible: boolean) {
+        this._visible = visible;
+        if (visible) {
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        }
+    }
+    get visible(): boolean {
+        return this._visible;
+    }
+
     controlType = 'richhtmltextarea';
 
     @Input() form: FormGroup = null;

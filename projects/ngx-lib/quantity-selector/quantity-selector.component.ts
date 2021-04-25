@@ -118,6 +118,26 @@ export class PepQuantitySelectorComponent
     @Input() additionalValue = '';
     @Input() notificationInfo: any;
 
+    private _visible = true;
+    @Input()
+    set visible(visible: boolean) {
+        this._visible = visible;
+        if (visible) {
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        }
+    }
+    get visible(): boolean {
+        return this._visible;
+    }
+
     controlType = 'qs';
 
     @Input() form: FormGroup = null;

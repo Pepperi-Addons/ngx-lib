@@ -4,6 +4,8 @@ import {
     Input,
     Output,
     EventEmitter,
+    Renderer2,
+    ElementRef,
 } from '@angular/core';
 import { PepStyleType, PepStyleStateType, PepSizeType } from '@pepperi-addons/ngx-lib';
 import { PepIconType } from '@pepperi-addons/ngx-lib/icon';
@@ -51,8 +53,30 @@ export class PepButtonComponent implements OnDestroy {
     @Input() iconName: PepIconType;
     @Input() iconPosition: 'start' | 'end' = 'end';
 
+    private _visible = true;
+    @Input()
+    set visible(visible: boolean) {
+        this._visible = visible;
+        if (visible) {
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        }
+    }
+    get visible(): boolean {
+        return this._visible;
+    }
+
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
+
+    constructor(private renderer: Renderer2, private element: ElementRef) { }
 
     /**
      * @ignore

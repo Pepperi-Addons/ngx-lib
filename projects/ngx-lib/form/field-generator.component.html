@@ -15,14 +15,15 @@
     <pep-checkbox *ngSwitchCase="'checkbox'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
         [type]="field.type" [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [additionalValue]="field.additionalValue"
-        [showTitle]="showTitle" [layoutType]="layoutType" (valueChange)="onValueChanged($event)" [isActive]="isActive">
+        [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
+        (valueChange)="onValueChanged($event)" [isActive]="isActive">
     </pep-checkbox>
 
     <pep-date *ngSwitchCase="'date'" [form]="form" [key]="field.key" [value]="field.value"
         [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type" [required]="field.required"
         [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [minValue]="field.minValue"
-        [maxValue]="field.maxValue" [showTitle]="showTitle" [layoutType]="layoutType"
+        [maxValue]="field.maxValue" [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
         (valueChange)="onValueChanged($event)" [isActive]="isActive">
     </pep-date>
 
@@ -35,7 +36,8 @@
         [disabled]="field.disabled" [readonly]="field.readonly" [xAlignment]="field.xAlignment"
         [rowSpan]="field.rowSpan" [indicatorsField]="field.indicatorsField" [menuField]="field.menuField"
         [hasCampaignField]="field.hasCampaignField" [sizeLimitMB]="field.sizeLimitMB" [isActive]="isActive"
-        [layoutType]="layoutType" (elementClick)="onClick($event)" (valueChange)="onValueChanged($event)">
+        [layoutType]="layoutType" [visible]="field.visible" (elementClick)="onClick($event)"
+        (valueChange)="onValueChanged($event)">
     </pep-image>
 
     <pep-quantity-selector *ngSwitchCase="'qs'" [form]="form" [key]="field.key" [value]="field.value"
@@ -43,20 +45,22 @@
         [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [alowDecimal]="field.alowDecimal"
         [additionalValue]="field.additionalValue" [notificationInfo]="field.notificationInfo" [isActive]="isActive"
-        [layoutType]="layoutType" [showTitle]="showTitle" (valueChange)="onValueChanged($event)"
-        (formValidationChange)="onFormValidationChanged($event)" (elementClick)="onClick($event)">
+        [layoutType]="layoutType" [showTitle]="showTitle" [visible]="field.visible"
+        (valueChange)="onValueChanged($event)" (formValidationChange)="onFormValidationChanged($event)"
+        (elementClick)="onClick($event)">
     </pep-quantity-selector>
 
     <pep-rich-html-textarea *ngSwitchCase="'richhtmltextarea'" [form]="form" [key]="field.key" [value]="field.value"
         [label]="field.label" [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
-        [showTitle]="showTitle" [layoutType]="layoutType" (valueChange)="onValueChanged($event)" [isActive]="isActive">
+        [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
+        (valueChange)="onValueChanged($event)" [isActive]="isActive">
     </pep-rich-html-textarea>
 
     <pep-select *ngSwitchCase="'select'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
         [type]="field.type" [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [options]="field.options" [showTitle]="showTitle"
-        [layoutType]="layoutType" (valueChange)="onValueChanged($event)"
+        [layoutType]="layoutType" [visible]="field.visible" (valueChange)="onValueChanged($event)"
         (formValidationChange)="onFormValidationChanged($event)" [isActive]="isActive">
     </pep-select>
 
@@ -73,7 +77,7 @@
     <pep-textarea *ngSwitchCase="'textarea'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
         [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
-        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
+        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
         (valueChange)="onValueChanged($event)" [isActive]="isActive">
     </pep-textarea>
 
@@ -83,7 +87,7 @@
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
         [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
         (valueChange)="onValueChanged($event)" (formValidationChange)="onFormValidationChanged($event)"
-        [isActive]="isActive">
+        [isActive]="isActive" [visible]="field.visible">
     </pep-textbox>
 
     <pep-indicators *ngSwitchCase="'indicators'" [key]="field.key" [value]="field.value" [layoutType]="layoutType">
@@ -92,7 +96,8 @@
         [formattedValue]="field.formattedValue" [label]="field.label"
         [referenceObjectInternalType]="field.referenceObjectInternalType" [type]="field.type"
         [disabled]="field.disabled" [readonly]="field.readonly" [xAlignment]="field.xAlignment"
-        [layoutType]="layoutType" (elementClick)="onClick($event)" (valueChange)="onValueChanged($event)">
+        [layoutType]="layoutType" [visible]="field.visible" (elementClick)="onClick($event)"
+        (valueChange)="onValueChanged($event)">
     </pep-internal-button>
     <pep-internal-menu *ngSwitchCase="'menu'" [key]="field.key" [label]="field.label" [disabled]="field.disabled"
         [xAlignment]="field.xAlignment" [options]="field.options" [layoutType]="layoutType"

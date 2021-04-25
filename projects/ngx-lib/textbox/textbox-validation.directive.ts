@@ -61,6 +61,7 @@ export class PepTextboxValidationDirective implements OnInit {
         this.validateValue(this.hostElement.nativeElement.value);
     }
 
+<<<<<<< HEAD
     // @HostListener('paste', ['$event'])
     // onPaste(e) {
     //     // get and validate data from clipboard
@@ -69,6 +70,8 @@ export class PepTextboxValidationDirective implements OnInit {
     //     e.preventDefault();
     // }
 
+=======
+>>>>>>> master
     @HostListener('keydown', ['$event'])
     onKeyDown(e: KeyboardEvent) {
         const originalValue: string = e.target['value'];

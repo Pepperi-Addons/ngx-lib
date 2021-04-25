@@ -53,6 +53,7 @@ interface IPepFieldBaseOptions {
     minValue?: number;
     maxValue?: number;
     textColor?: string;
+    visible?: boolean;
     // lastFocusField?: any;
 }
 export class PepFieldBase {
@@ -81,6 +82,7 @@ export class PepFieldBase {
     minValue: number;
     maxValue: number;
     textColor: string;
+    visible: boolean;
     // lastFocusField: any;
 
     constructor(options: IPepFieldBaseOptions = {}) {
@@ -142,6 +144,7 @@ export class PepFieldBase {
         // TODO: Remove this from here we not suppose to update the read only prop.
         this.readonly = !!options.readonly;
         this.disabled = !!options.disabled;
+        this.visible = !!options.visible;
         this.textColor = options.textColor || '';
         // this.lastFocusField = options.lastFocusField || null;
     }
