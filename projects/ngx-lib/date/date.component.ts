@@ -13,16 +13,16 @@ import {
     Optional,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     DatetimeAdapter,
     MatDatetimepickerInputEvent,
     MAT_DATETIME_FORMATS,
 } from '@mat-datetimepicker/core';
-// import { MomentDateAdapter } from '@angular/material-moment-adapter';
-// import { MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
-import { TranslateService } from '@ngx-translate/core';
+import { MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
 import {
+    PepLayoutService,
     PepUtilitiesService,
     PepLayoutType,
     PepCustomizationService,
@@ -34,11 +34,47 @@ import {
 } from '@pepperi-addons/ngx-lib';
 import moment, { Moment } from 'moment';
 
+export const MY_DATE_FORMATS = {
+    parse: {
+        dateInput: 'L',
+        monthInput: 'MMMM',
+        timeInput: 'LT',
+        datetimeInput: 'L LT'
+    },
+    display: {
+        dateInput: 'L',
+        monthInput: 'MMMM',
+        timeInput: 'LT',
+        datetimeInput: 'L LT',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+        popupHeaderDateLabel: 'ddd, DD MMM'
+    }
+};
+
 @Component({
     selector: 'pep-date',
     templateUrl: './date.component.html',
     styleUrls: ['./date.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        // CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,
+        // The locale would typically be provided on the root module of your application. We do it at
+        // the component level here, due to limitations of our example generation script.
+        //{ provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+
+        // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+        // `MatMomentDateModule` in your applications root module. We provide it at the component level
+        // here, due to limitations of our example generation script.
+        //{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        //{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+        { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
+        //{ provide: MAT_DATETIME_FORMATS, useValue: MAT_NATIVE_DATETIME_FORMATS }
+        { provide: MAT_DATETIME_FORMATS, useValue: MY_DATE_FORMATS }
+    ],
 })
 export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
@@ -145,11 +181,13 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     showTime = false;
 
     constructor(
+        private adapter: DateAdapter<any>,
         private element: ElementRef,
+        private layoutService: PepLayoutService,
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -174,6 +212,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
 
         this.showTime = this.type === 'datetime';
 
+        const culture = this.layoutService.getCurrentLanguage();
+        this.adapter.setLocale(culture);
+
         this.setDateModel();
     }
 
@@ -196,9 +237,8 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         if (this.dateModel === null) {
             this.formattedValue = '';
         } else {
-            this.formattedValue = this.showTime
-                ? this.dateModel.toDate().toLocaleString()
-                : this.dateModel.toDate().toLocaleDateString();
+            const format = this.showTime ? MY_DATE_FORMATS.display.datetimeInput : MY_DATE_FORMATS.display.dateInput;
+            this.formattedValue = this.adapter.format(this.dateModel, format);
         }
     }
 
@@ -250,8 +290,8 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            this.formattedValue
-            // value
+            // this.formattedValue
+            value
         );
 
         this.valueChange.emit({ key: this.key, value });
