@@ -25,8 +25,10 @@ export class PepValidatorService {
         const currentLang = this.translate?.currentLang || navigator.language;
 
         // Check for number with thousands seperator and if === ',' then the decimal seperator is '.' else ','
-        const tmp = new Intl.NumberFormat(currentLang, { maximumSignificantDigits: 2 }).format(1000);
-        this.decimalSeparator = tmp.indexOf(",") === 1 ? '.' : ',';
+        const tmp = new Intl.NumberFormat(currentLang, {
+            maximumSignificantDigits: 2,
+        }).format(1000);
+        this.decimalSeparator = tmp.indexOf(',') === 1 ? '.' : ',';
     }
 
     /*

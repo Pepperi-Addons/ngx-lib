@@ -74,7 +74,8 @@ export class PepSmartFiltersComponent {
 
     constructor(
         private hostElement: ElementRef,
-        public layoutService: PepLayoutService) { }
+        public layoutService: PepLayoutService
+    ) {}
 
     private exportFunctionsOnHostElement() {
         // This is for web component usage for use those functions.

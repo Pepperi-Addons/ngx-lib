@@ -2,10 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import {
-    MatCommonModule,
-    MatNativeDateModule,
-} from '@angular/material/core';
+import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -53,9 +50,7 @@ import { PepDateComponent } from './date.component';
     declarations: [PepDateComponent],
 })
 export class PepDateModule {
-    constructor(
-        private pepIconRegistry: PepIconRegistry
-    ) {
+    constructor(private pepIconRegistry: PepIconRegistry) {
         this.pepIconRegistry.registerIcons([pepIconSystemEdit]);
     }
 }

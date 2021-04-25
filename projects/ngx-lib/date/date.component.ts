@@ -39,7 +39,7 @@ export const MY_DATE_FORMATS = {
         dateInput: 'L',
         monthInput: 'MMMM',
         timeInput: 'LT',
-        datetimeInput: 'L LT'
+        datetimeInput: 'L LT',
     },
     display: {
         dateInput: 'L',
@@ -49,8 +49,8 @@ export const MY_DATE_FORMATS = {
         monthYearLabel: 'MMM YYYY',
         dateA11yLabel: 'LL',
         monthYearA11yLabel: 'MMMM YYYY',
-        popupHeaderDateLabel: 'ddd, DD MMM'
-    }
+        popupHeaderDateLabel: 'ddd, DD MMM',
+    },
 };
 
 @Component({
@@ -73,7 +73,7 @@ export const MY_DATE_FORMATS = {
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
         { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
         //{ provide: MAT_DATETIME_FORMATS, useValue: MAT_NATIVE_DATETIME_FORMATS }
-        { provide: MAT_DATETIME_FORMATS, useValue: MY_DATE_FORMATS }
+        { provide: MAT_DATETIME_FORMATS, useValue: MY_DATE_FORMATS },
     ],
 })
 export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
@@ -187,7 +187,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -237,7 +237,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         if (this.dateModel === null) {
             this.formattedValue = '';
         } else {
-            const format = this.showTime ? MY_DATE_FORMATS.display.datetimeInput : MY_DATE_FORMATS.display.dateInput;
+            const format = this.showTime
+                ? MY_DATE_FORMATS.display.datetimeInput
+                : MY_DATE_FORMATS.display.dateInput;
             this.formattedValue = this.adapter.format(this.dateModel, format);
         }
     }

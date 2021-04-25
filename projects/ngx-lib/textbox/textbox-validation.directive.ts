@@ -21,7 +21,7 @@ export class PepTextboxValidationDirective implements OnInit {
     constructor(
         private hostElement: ElementRef,
         private validatorService: PepValidatorService
-    ) { }
+    ) {}
 
     ngOnInit() {
         //
