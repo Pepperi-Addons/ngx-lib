@@ -2,7 +2,7 @@
     <ng-template #pepTemplate let-isFormView="isFormView">
         <div class="pep-textarea-container pep-report-textarea" [ngClass]="{ 'stand-alone': standAlone,
             'right-alignment': xAlignment == 'right', 'one-row': !isFormView && rowSpan === 1,
-            'pep-textarea-card-container': layoutType === 'card'  }">
+            'pep-textarea-card-container': layoutType === 'card'}">
             <pep-field-title *ngIf="isFormView" [label]="label" [required]="required" [disabled]="disabled"
                 [maxFieldCharacters]="inlineMode && !disabled && !readonly ? maxFieldCharacters : 0"
                 [xAlignment]="xAlignment" [showTitle]="showTitle" [inputLength]="quillContent?.length">
@@ -50,7 +50,7 @@
 
     <ng-container *ngIf="layoutType === 'card'">
         <div class="pep-textarea-card-container card-flex-container"
-            [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled }"
+            [ngClass]="{'one-row': rowSpan === 1, 'pep-button weak': isActive && !disabled}"
             [ngStyle]="{ '-webkit-line-clamp': rowSpan }" [class]="'text-align-' + xAlignment"
             (click)="!disabled ? cardTemplateClicked($event) : ''" [style.height]="fieldHeight">
             <span *ngIf="showTitle && label != ''" class="body-xs title no-shrink" title="{{ label }}">{{ label
