@@ -38,6 +38,7 @@
         "DIALOG_TITLE": "在此添加签名"
     },
     "ACTIONS": {
+        "APPLY": "使用",
         "CANCEL": "取消",
         "CLEAR": "清除",
         "CLEAR_ALL": "全部清除",

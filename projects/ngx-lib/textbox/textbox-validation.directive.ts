@@ -1,4 +1,3 @@
-import { getLocaleNumberSymbol, NumberSymbol } from '@angular/common';
 import {
     Directive,
     ElementRef,

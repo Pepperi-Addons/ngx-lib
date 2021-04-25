@@ -3,7 +3,7 @@
         [triggerOn]="'keydown'" [shrinkInSmallScreen]="false"></pep-search>
     <div pepRtlClass class="multi-select-options pep-border-top pep-border-bottom"
         [ngClass]="{'with-no-search': options?.length <= numberOptionsToShowSearch}">
-        <div #optionsContainer class="flip-scroll">
+        <div #optionsContainer class="flip-scroll" pepRtlClass>
             <virtual-scroller #scroll [items]="filteredOptions$ | async" [parentScroll]="optionsContainer">
                 <mat-checkbox *ngFor="let opt of scroll.viewPortItems"
                     class="pep-checkbox-container pep-input no-default-background md" [title]="opt.value"
