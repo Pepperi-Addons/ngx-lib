@@ -38,6 +38,7 @@
         "DIALOG_TITLE": "Add signature here"
     },
     "ACTIONS": {
+        "APPLY": "Jóváhagy",
         "CANCEL": "Mégsem",
         "CLEAR": "Törlés",
         "CLEAR_ALL": "Összes törlése",
