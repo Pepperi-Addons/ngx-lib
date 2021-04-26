@@ -38,6 +38,7 @@
         "DIALOG_TITLE": "Add signature here"
     },
     "ACTIONS": {
+        "APPLY": "Применить",
         "CANCEL": "Отмена",
         "CLEAR": "Очистить",
         "CLEAR_ALL": "Очистить всё",

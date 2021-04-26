@@ -38,6 +38,7 @@
         "DIALOG_TITLE": "Ajouter la signature ici"
     },
     "ACTIONS": {
+        "APPLY": "Appliquer",
         "CANCEL": "Annuler",
         "CLEAR": "Effacer",
         "CLEAR_ALL": "Effacer tout",

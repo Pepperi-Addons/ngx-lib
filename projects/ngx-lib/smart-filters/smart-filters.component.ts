@@ -10,6 +10,7 @@ import {
     IPepSmartFilterField,
     PepSmartFilterBaseField,
 } from './common/model/field';
+import { PepLayoutService } from '@pepperi-addons/ngx-lib';
 import { IPepSmartFilterData } from './common/model/filter';
 
 @Component({
@@ -71,7 +72,10 @@ export class PepSmartFiltersComponent {
 
     expansionPanelHeaderHeight = '*';
 
-    constructor(private hostElement: ElementRef) {}
+    constructor(
+        private hostElement: ElementRef,
+        public layoutService: PepLayoutService
+    ) {}
 
     private exportFunctionsOnHostElement() {
         // This is for web component usage for use those functions.

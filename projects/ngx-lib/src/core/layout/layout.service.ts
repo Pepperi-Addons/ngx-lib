@@ -163,7 +163,7 @@ export class PepLayoutService {
     }
 
     getCurrentLanguage(): string {
-        return this.translate?.currentLang || navigator.language;
+        return this.translate?.getBrowserCultureLang() || navigator.language;
     }
 
     isRtl(): boolean {

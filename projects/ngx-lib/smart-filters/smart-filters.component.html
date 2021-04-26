@@ -1,4 +1,4 @@
-<div class="smart-filters-container">
+<div class="smart-filters-container" dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
     <div class="title">
         <span class="body-md bold">{{ "SMART_FILTERS.TITLE" | translate}}</span>
         <mat-chip *ngIf="filtersDataMap.size > 0" [selectable]="false" [removable]="true" (click)="onFiltersClear()"

@@ -20,7 +20,8 @@
             [options]="chooseTimeUnitOptions" (valueChange)="onTimeUnitChanged($event)">
         </pep-select>
     </div>
-    <div *ngIf="operator === PepSmartFilterOperators.DateRange" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1rem">
+    <div pepRtlDirection *ngIf="operator === PepSmartFilterOperators.DateRange" fxLayout="row" fxLayout.xs="column"
+        fxLayoutGap="1rem">
         <!-- Start date -->
         <pep-date [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.START_DATE' | translate"
             [renderError]="false" fxFlex="50%" [type]="field.type === 'date' ? 'date' : 'datetime'"
