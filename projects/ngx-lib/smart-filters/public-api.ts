@@ -11,6 +11,7 @@ export * from './multi-select-filter/multi-select-filter.component';
 export * from './number-filter/number-filter.component';
 
 // Model
+export * from './common/model/creator';
 export * from './common/model/field';
 export * from './common/model/filter';
 export * from './common/model/operator';
