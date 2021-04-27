@@ -456,6 +456,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             options.type = 'menu';
             customField = new PepInternalMenuField(options);
         } else if (
+            controlField.FieldType === FIELD_TYPE.NumberRealQuantitySelector ||
+            controlField.FieldType ===
+                FIELD_TYPE.NumberIntegerQuantitySelector ||
             controlField.ApiName === 'QuantitySelector' ||
             controlField.ApiName === 'UnitsQuantity' ||
             controlField.ApiName.indexOf('size_') === 0
