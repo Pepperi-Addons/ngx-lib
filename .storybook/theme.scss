@@ -6,6 +6,27 @@
 // // Get the theme object.
 // // $pepperi-theme: get-pepperi-theme();
 
-// body {
-//     background-color: blue;
-// }
+.docs-story {
+    height: 100%;
+    div:first-child {
+        padding: 0;
+        div:first-child {
+            height: unset;
+        }
+    }
+}
+
+div[id^="story"] {
+    div:first-child {
+        height: 100% !important;
+    }
+}
+
+iframe[id^="iframe"] {
+    height: 16rem !important;
+    display: flow-root;
+}
+
+body {
+    // background-color: lightgray !important;
+}
