@@ -44,20 +44,7 @@ import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { PepFilterActionsComponent } from '../filter-actions.component';
 
-@Directive({
-    // providers: [
-    //     {
-    //         provide: NG_VALUE_ACCESSOR,
-    //         useExisting: forwardRef(() => BaseFilterComponent),
-    //         multi: true,
-    //     },
-    //     {
-    //         provide: NG_VALIDATORS,
-    //         useExisting: forwardRef(() => BaseFilterComponent),
-    //         multi: true,
-    //     },
-    // ],
-})
+@Directive({})
 export abstract class BaseFilterComponent
     implements OnInit, OnChanges, OnDestroy {
     private readonly _destroyed: Subject<void>;

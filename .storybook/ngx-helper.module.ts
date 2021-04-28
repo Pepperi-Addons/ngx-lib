@@ -5,82 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepSizeDetectorModule } from '@pepperi-addons/ngx-lib/size-detector';
 
+import { allIcons } from '@pepperi-addons/ngx-lib/icon';
 import {
     PepIconModule,
     PepIconRegistry,
-    pepIconSystemBolt,
-    pepIconNoImage,
-    pepIconNoImage2,
-    pepIconArrowTwoWaysVerT,
-    pepIconArrowDown,
-    pepIconArrowUp,
-    pepIconArrowRightAlt,
-    pepIconArrowLeftAlt,
-    pepIconArrowDownAlt,
-    pepIconArrowUpAlt,
-    pepIconNumberNumber,
-    pepIconNumberPlus,
-    pepIconSystemBin,
-    pepIconSystemEdit,
-    pepIconSystemEmail,
-    pepIconSystemClose,
-    pepIconSystemFilter,
-    pepIconSystemMenu,
-    pepIconSystemHome,
-    pepIconSystemSettings,
-    pepIconSystemQuestion,
-    pepIconSystemAvatar,
-    pepIconSystemDoor,
-    pepIconSystemPrint,
-    pepIconSystemSearch,
-    pepIconSystemSpinner,
-    pepIconSystemInfo,
-    pepIconShoppingCart,
-    pepIconTimeCal,
-    pepIconViewCardLg,
-    pepIconViewCardMd,
-    pepIconViewCardSm,
-    pepIconViewTable,
-    pepIconViewMatrix,
-    pepIconViewLine,
+    IPepIconData,
+    PepIconType
 } from '@pepperi-addons/ngx-lib/icon';
-const pepIcons = [
-    pepIconSystemBolt,
-    pepIconNoImage,
-    pepIconNoImage2,
-    pepIconArrowTwoWaysVerT,
-    pepIconArrowDown,
-    pepIconArrowUp,
-    pepIconArrowRightAlt,
-    pepIconArrowLeftAlt,
-    pepIconArrowDownAlt,
-    pepIconArrowUpAlt,
-    pepIconNumberNumber,
-    pepIconNumberPlus,
-    pepIconSystemBin,
-    pepIconSystemEdit,
-    pepIconSystemEmail,
-    pepIconSystemClose,
-    pepIconSystemFilter,
-    pepIconSystemMenu,
-    pepIconSystemHome,
-    pepIconSystemSettings,
-    pepIconSystemQuestion,
-    pepIconSystemAvatar,
-    pepIconSystemDoor,
-    pepIconSystemPrint,
-    pepIconSystemSearch,
-    pepIconSystemSpinner,
-    pepIconSystemInfo,
-    pepIconShoppingCart,
-    pepIconTimeCal,
-    pepIconViewCardLg,
-    pepIconViewCardMd,
-    pepIconViewCardSm,
-    pepIconViewTable,
-    pepIconViewMatrix,
-    pepIconViewLine,
-];
 
 const pepperiComponentsModules = [
     PepSizeDetectorModule,
@@ -120,7 +51,8 @@ export class SBNgxHelperModule {
         private pepperiIconRegistry: PepIconRegistry,
         private customizationService: PepCustomizationService,
     ) {
-        this.pepperiIconRegistry.registerIcons(pepIcons);
+        this.registerAllIcons();
+        // this.pepperiIconRegistry.registerIcons(pepIcons);
         this.customizationService.setThemeVariables();
 
         console.log("Configuring the translation service: ", this.translate);
@@ -140,5 +72,16 @@ export class SBNgxHelperModule {
         this.translate.use(userLang).subscribe((res: any) => {
             // In here you can put the code you want. At this point the lang will be loaded
         });
+    }
+
+    private registerAllIcons(): void {
+        let pepIcons: IPepIconData[] = [];
+        if (allIcons) {
+            Object.keys(allIcons).forEach(key => {
+                pepIcons.push({ name: key as PepIconType, data: allIcons[key] });
+            });
+
+            this.pepperiIconRegistry.registerIcons(pepIcons);
+        }
     }
 }

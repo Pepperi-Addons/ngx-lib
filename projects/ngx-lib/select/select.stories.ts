@@ -1,5 +1,4 @@
-import { moduleMetadata } from '@storybook/angular';
-import { Story, Meta } from '@storybook/angular/types-6-0';
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
 
 // import { withKnobs, text, select, radios } from '@storybook/addon-knobs';
 
@@ -23,10 +22,10 @@ export default {
             table: {
                 type: {
                     summary: 'something short',
-                    detail: 'something really really long'
+                    detail: 'something really really long',
                 },
                 defaultValue: { summary: 'form' },
-            }
+            },
         },
         xAlignment: {
             description: 'This is the x alignment of the component',
@@ -41,7 +40,7 @@ export default {
             control: {
                 type: 'radio',
                 options: ['select', 'multi'],
-            }
+            },
         },
         valueChange: { action: 'valueChange' },
         controlType: { table: { disable: true } },
@@ -77,7 +76,7 @@ export default {
 } as Meta;
 
 const Template: Story<PepSelectComponent> = (args: PepSelectComponent) => ({
-    component: PepSelectComponent,
+    // component: PepSelectComponent,
     props: args,
     template: `
         <pep-select [value]="value" [label]="label" [type]="type" [required]="required" [disabled]="disabled"

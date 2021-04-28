@@ -1,5 +1,4 @@
-import { moduleMetadata } from '@storybook/angular';
-import { Story, Meta } from '@storybook/angular/types-6-0';
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
 
 // import { withKnobs, text, select, radios } from '@storybook/addon-knobs';
 
@@ -37,7 +36,16 @@ export default {
         type: {
             control: {
                 type: 'inline-radio',
-                options: ['text', 'link', 'email', 'phone', 'int', 'percentage', 'currency', 'real']
+                options: [
+                    'text',
+                    'link',
+                    'email',
+                    'phone',
+                    'int',
+                    'percentage',
+                    'currency',
+                    'real',
+                ],
             },
         },
         layoutType: {
@@ -50,10 +58,10 @@ export default {
             table: {
                 type: {
                     summary: 'something short',
-                    detail: 'something really really long'
+                    detail: 'something really really long',
                 },
                 defaultValue: { summary: 'form' },
-            }
+            },
         },
         xAlignment: {
             description: 'This is the x alignment of the component',
@@ -66,7 +74,7 @@ export default {
         textColor: {
             control: {
                 type: 'color',
-            }
+            },
         },
         valueChange: { action: 'valueChange' },
         key: { table: { disable: true } },
@@ -121,7 +129,7 @@ export default {
 
 // This creates a Story for the component
 const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
-    component: PepTextboxComponent,
+    // component: PepTextboxComponent,
     props: args,
     template: `
         <pep-textbox [label]="label" [value]="value" [type]="type" [required]="required" [textColor]="textColor"

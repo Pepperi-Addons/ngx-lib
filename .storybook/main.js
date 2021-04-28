@@ -1,4 +1,4 @@
-const path = require('path');
+// const path = require('path');
 
 module.exports = {
     "stories": [
@@ -9,7 +9,14 @@ module.exports = {
     ],
     "addons": [
         "@storybook/addon-links",
-        "@storybook/addon-essentials",
-        // "@storybook/addon-knobs"
+        // "@storybook/addon-essentials",
+        {
+            name: '@storybook/addon-essentials',
+            // options: {
+            //     docs: false,
+            // }
+        },
+        // "@storybook/addon-knobs",
+        // '@storybook/addon-storysource',
     ]
 }

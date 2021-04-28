@@ -27,6 +27,15 @@ import {
     PepUtilitiesService,
 } from '@pepperi-addons/ngx-lib';
 
+/**
+ * This is a text box input component that can be use to 
+ *
+ * @export
+ * @class PepTextboxComponent
+ * @implements {OnChanges}
+ * @implements {OnInit}
+ * @implements {OnDestroy}
+ */
 @Component({
     selector: 'pep-textbox',
     templateUrl: './textbox.component.html',
@@ -34,9 +43,25 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
+    /**
+     * @ignore
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() key = '';
 
+    /**
+     * @ignore
+     *
+     * @private
+     * @memberof PepTextboxComponent
+     */
     private _value = null;
+    /**
+     * The value of the text box.
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input()
     set value(value: string) {
         if (!value) {
@@ -53,7 +78,18 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._value;
     }
 
+    /**
+     * @ignore
+     *
+     * @private
+     * @memberof PepTextboxComponent
+     */
     private _formattedValue = null;
+    /**
+     * @ignore
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input()
     set formattedValue(value: string) {
         if (!value) {
@@ -70,11 +106,49 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._formattedValue;
     }
 
+    /**
+     * The title of the textbox.
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() label = '';
+
+    /**
+     * @ignore
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() placeholder = '';
+
+    /**
+     * The type of the textbox.
+     *
+     * @type {PepTextboxFieldType}
+     * @memberof PepTextboxComponent
+     */
     @Input() type: PepTextboxFieldType = 'text';
+
+    // TODO: change to mandatory
+    /**
+     * If the textbox is mandatory
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() required = false;
+
+    // TODO: Check if should remove disabled and keep only readonly.
+    /**
+     * @ignore
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() disabled = false;
+
+    /**
+     * If the textbox is readonly
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
     @Input() textColor = '';
@@ -104,8 +178,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._visible;
     }
 
-    controlType = 'textbox';
-
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
@@ -115,8 +187,18 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
 
+    /**
+     * @ignore
+     *
+     * @type {EventEmitter<IPepFieldValueChangeEvent>}
+     * @memberof PepTextboxComponent
+     */
     @Output()
     valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    // TODO: Change to fieldValueChange.
+    // @Output()
+    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -126,6 +208,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     get calculateFormattedValue(): boolean {
         return this._calculateFormattedValue;
     }
+
+    controlType = 'textbox';
 
     standAlone = false;
     isInEditMode = false;
@@ -278,6 +362,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return res;
     }
 
+    onChange(e: any): void {
+        const value = e.target ? e.target.value : e;
+
+        // TODO: uncomment
+        // this.valueChange.emit(value);
+    }
+
     onBlur(e: any): void {
         this.isInFocus = false;
         const value = e.target ? e.target.value : e;
@@ -297,6 +388,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                     this._formattedValue = value;
                 }
 
+                // TODO: Rename to fieldValueChange.
                 this.valueChange.emit({
                     key: this.key,
                     value,
