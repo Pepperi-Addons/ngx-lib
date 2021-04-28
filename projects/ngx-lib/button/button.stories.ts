@@ -16,7 +16,7 @@ import {
 
 // This exports the Stories group for this component
 export default {
-    title: 'ngx-lib/button',
+    title: 'Components/Button',
     component: PepButtonComponent,
     argTypes: {
         key: { table: { disable: true } },
@@ -99,12 +99,11 @@ Base.parameters = {
     docs: {
         source: {
             code: `
-// We use both " and ' for strings like so ("'Click Me'") 
-// Because Angular JS isn't that smart 😔
+// Code for a basic button 🎉
 <pep-button 
-    [value]="'Click Me'" 
-    [styleType]="'weak'" 
-    [sizeType]="'xl'">
+    value="Click Me!" 
+    styleType="weak" 
+    sizeType="md">
 </pep-button>`,
         },
     },
@@ -113,10 +112,25 @@ Base.parameters = {
 export const Disabled = Template.bind({});
 Disabled.args = {
     disabled: true,
-    value: 'disabled',
+    value: 'Click Me!',
     buttonClick: onButtonClicked,
 };
-Disabled.storyName = 'new disabled';
+Disabled.storyName = 'A disabled button';
+Disabled.parameters = {
+    docs: {
+        source: {
+            code: `
+// To disable a button use the [disabled] property 
+// In this example the button is disabled if the 'showLoadingGif' function in running
+<pep-button 
+    value="Click Me!" 
+    styleType="weak" 
+    [disabled]="showLoadingGif()"
+    sizeType="md">
+</pep-button>`,
+        },
+    },
+};
 
 function onButtonClicked(event) {
     alert('tomer');
@@ -129,57 +143,136 @@ const StyleTypeTemplate: Story<PepButtonComponent> = (
     component: PepButtonComponent,
     props: args,
     template: `
-    <div style="display: flex; flex-direction: column;">
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">XL</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'xl'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'xl'">
-            </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'xl'">
-            </pep-button>
+    <div style="display: flex; flex-direction: column;">        
+        <div id="button-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 180%; ">X-Large</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Weak'" [styleType]="'weak'" [sizeType]="'xl'"></pep-button>
+                <pep-button [value]="'Regular'" [styleType]="'regular'" [sizeType]="'xl'"></pep-button>
+                <pep-button [value]="'Strong'" [styleType]="'strong'" [sizeType]="'xl'"></pep-button>
+            </div>
         </div>
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">LG</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'lg'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'lg'">
-            </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'lg'">
-            </pep-button>
+        
+        <div id="button-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 180%; ">X-Large</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Weak'" [styleType]="'weak'" [sizeType]="'lg'"></pep-button>
+                <pep-button [value]="'Regular'" [styleType]="'regular'" [sizeType]="'lg'"></pep-button>
+                <pep-button [value]="'Strong'" [styleType]="'strong'" [sizeType]="'lg'"></pep-button>
+            </div>
         </div>
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">MD</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'md'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'md'">
-            </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'md'">
-            </pep-button>
+        
+        <div id="button-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 180%; ">X-Large</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Weak'" [styleType]="'weak'" [sizeType]="'md'"></pep-button>
+                <pep-button [value]="'Regular'" [styleType]="'regular'" [sizeType]="'md'"></pep-button>
+                <pep-button [value]="'Strong'" [styleType]="'strong'" [sizeType]="'md'"></pep-button>
+            </div>
         </div>
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">SM</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'sm'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'sm'">
-            </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'sm'">
-            </pep-button>
+        
+        <div id="button-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 180%; ">X-Large</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Weak'" [styleType]="'weak'" [sizeType]="'sm'"></pep-button>
+                <pep-button [value]="'Regular'" [styleType]="'regular'" [sizeType]="'sm'"></pep-button>
+                <pep-button [value]="'Strong'" [styleType]="'strong'" [sizeType]="'sm'"></pep-button>
+            </div>
         </div>
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">XS</h3>
-            <pep-button class="pep-spacing-element" [value]="'Weak'" [styleType]="'weak'" [sizeType]="'xs'"></pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Regular'" [styleType]="'regular'" [sizeType]="'xs'">
-            </pep-button>
-            <pep-button class="pep-spacing-element" [value]="'Strong'" [styleType]="'strong'" [sizeType]="'xs'">
-            </pep-button>
+        
+        <div id="button-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 180%; ">X-Large</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Weak'" [styleType]="'weak'" [sizeType]="'xs'"></pep-button>
+                <pep-button [value]="'Regular'" [styleType]="'regular'" [sizeType]="'xs'"></pep-button>
+                <pep-button [value]="'Strong'" [styleType]="'strong'" [sizeType]="'xs'"></pep-button>
+            </div>
         </div>
     </div>
 `,
 });
-
 export const StyleType = StyleTypeTemplate.bind({});
-// StyleType.args = {
-//     styleType: 'strong',
-//     value: 'strong',
-// };
-StyleType.storyName = '3 style types';
+StyleType.storyName = 'Style types (over size)';
 StyleType.parameters = {
     controls: { hideNoControlsWarning: true },
+};
+
+const iconVarTemplate: Story<PepButtonComponent> = (
+    args: PepButtonComponent
+) => ({
+    component: PepButtonComponent,
+    props: args,
+    template: `
+    <div style="display: flex; flex-direction: column;">
+        <div id="button-icon-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 180%; ">X-Large</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'xl'"></pep-button>
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'xl'" [iconName]="'number_plus'"></pep-button>
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'xl'" [iconName]="'number_plus'" [iconPosition]="'start'"></pep-button>
+                <pep-button [styleType]="'weak'" [sizeType]="'xl'" [iconName]="'number_plus'"></pep-button>
+            </div>
+        </div>
+        <div id="button-icon-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 165%;">Large</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'lg'"></pep-button>
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'lg'" [iconName]="'number_plus'"></pep-button>
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'lg'" [iconName]="'number_plus'" [iconPosition]="'start'"></pep-button>
+                <pep-button [styleType]="'weak'" [sizeType]="'lg'" [iconName]="'number_plus'"></pep-button>
+            </div>
+        </div>
+        <div id="button-icon-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 145%;">Medium</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'md'"></pep-button>
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'md'" [iconName]="'number_plus'"></pep-button>
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'md'" [iconName]="'number_plus'" [iconPosition]="'start'"></pep-button>
+                <pep-button [styleType]="'weak'" [sizeType]="'md'" [iconName]="'number_plus'"></pep-button>
+            </div>
+        </div>
+        <div id="button-icon-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 120%;">Small</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'sm'"></pep-button>
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'sm'" [iconName]="'number_plus'"></pep-button>
+                <pep-button [value]="'Button'" [styleType]="'weak'" [sizeType]="'sm'" [iconName]="'number_plus'" [iconPosition]="'start'"></pep-button>
+                <pep-button [styleType]="'weak'" [sizeType]="'sm'" [iconName]="'number_plus'"></pep-button>
+            </div>
+        </div>
+        <div id="button-icon-vars">
+            <h3 style="margin: 1em 0 0.5em 0; font-size: 90%;">X-Small</h3>
+            <div style="display: flex; gap: 0.5em;">
+                <pep-button value="Button" styleType="weak" sizeType="xs"></pep-button>
+                <pep-button value="Button" styleType="weak" sizeType="xs" iconName="number_plus"></pep-button>
+                <pep-button value="Button" styleType="weak" sizeType="xs" iconName="number_plus" iconPosition="start"></pep-button>
+                <pep-button styleType="weak" sizeType="xs" iconName="number_plus"></pep-button>
+            </div>
+        </div>
+    </div>
+`,
+});
+export const iconVar = iconVarTemplate.bind({});
+iconVar.storyName = 'Icon Variants (over size)';
+iconVar.parameters = {
+    docs: {
+        source: {
+            code: `
+// A regular button
+<pep-button styleType="weak" value="Button" sizeType="..."></pep-button>
+
+// With an icon at the end, this is the default. 
+// No need to add the 'iconPosition' prop
+<pep-button styleType="weak" iconName="number_plus" value="Button" sizeType="..."></pep-button>
+
+// With an icon at the start. 
+// To have it add the 'iconPosition' prop
+<pep-button styleType="weak" iconName="number_plus" iconPosition="start" value="Button" sizeType="..."></pep-button>
+
+// Just an icon. 
+// To have it, remove the 'value' prop
+<pep-button styleType="weak" iconName="number_plus" sizeType="..."></pep-button>
+            `,
+        },
+    },
 };
