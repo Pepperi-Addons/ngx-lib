@@ -52,4 +52,4 @@ jobs:
     - name: Deploy
       env:
         GH_TOKEN: ${{ secrets.ROI_GH_TOKEN }}
-      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="roiaharon-pepperi" --email=roi.a@pepperi.com --no-silent
+      run: npm run deploy-storybook -- --ci --host-token-env-variable=ROI_GH_TOKEN
