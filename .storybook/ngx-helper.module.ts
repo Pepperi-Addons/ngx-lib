@@ -14,7 +14,7 @@ import {
 } from '@pepperi-addons/ngx-lib/icon';
 
 const pepperiComponentsModules = [
-    PepSizeDetectorModule,
+    //PepSizeDetectorModule,
     PepIconModule,
 ];
 
