@@ -234,7 +234,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private setFormattedValueFromModel(): void {
-        if (this.dateModel === null) {
+        if (this.dateModel === null || !this.dateModel.isValid()) {
             this.formattedValue = '';
         } else {
             const format = this.showTime
