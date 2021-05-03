@@ -6,7 +6,7 @@ addons.setConfig({
     isFullscreen: false,
     showNav: true,
     showPanel: true,
-    panelPosition: 'bootom',
+    panelPosition: 'right',
     enableShortcuts: true,
     isToolshown: true,
     theme: undefined,

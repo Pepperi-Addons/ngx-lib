@@ -85,7 +85,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() disabled = false;
 
     /**
-     * The icon name that can be shown on the button. look in (#ICON LIST)
+     * The icon name to show on the button. look in (@link icon -> All icons)
      *
      * @type {PepIconType} See {@link PepIconType}
      * @memberof PepButtonComponent

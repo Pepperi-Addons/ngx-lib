@@ -29,13 +29,82 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
+    /**
+     * The attachment key.
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() key = '';
-    @Input() src = '';
+
+    /**
+     * @ignore
+     *
+     * @private
+     * @memberof PepAttachmentComponent
+     */
+    private _src = '';
+    /**
+     * The src of the attachment.
+     *
+     * @memberof PepAttachmentComponent
+     */
+    @Input()
+    set src(value: string) {
+        if (!value) {
+            value = '';
+        }
+
+        this._src = value;
+        if (this._src.length > 0) {
+            // Empty dataURI.
+            this.dataURI = null;
+        }
+    }
+    get src(): string {
+        return this._src;
+    }
+
+    /**
+     * The title of the attachment.
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() label = '';
+
+    /**
+     * If the attachment is mandatory
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() required = false;
+
+    /**
+     * If the attachment is disabled
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() disabled = false;
+
+    /**
+     * If the attachment is readonly
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() readonly = false;
+
+    /**
+     * The horizontal alignment of the attachment
+     *
+     * @type {PepHorizontalAlignment}
+     * @memberof PepAttachmentComponent
+     */
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
+
+    /**
+     * @ignore
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() rowSpan = 1;
 
     controlType = 'attachment';
@@ -62,7 +131,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         public element: ElementRef,
         private fileService: PepFileService
-    ) {}
+    ) { }
 
     ngOnDestroy(): void {
         // if (this.elementClick) {
@@ -101,15 +170,19 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
-        if (changes.src && changes.src.currentValue.length > 0) {
-            // Empty dataURI if there is change in the src.
-            this.dataURI = null;
-        }
+        // Moved to src input
+        // if (changes.src && changes.src.currentValue.length > 0) {
+        //     // Empty dataURI if there is change in the src.
+        //     this.dataURI = null;
+        // }
     }
 
     onFileChanged(value: any): void {
-        this.dataURI = value.length > 0 ? JSON.parse(value) : null;
-        this.src = this.dataURI ? this.dataURI.fileStr : '';
+        const tmp = value.length > 0 ? JSON.parse(value) : null;
+        // set this.dataURI after this.src cause it initialize in the src setter.
+        this.src = tmp ? tmp.fileStr : '';
+        this.dataURI = tmp;
+
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,

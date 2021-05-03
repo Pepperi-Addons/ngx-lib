@@ -1,22 +1,8 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
-
-// import { withKnobs, text, select, radios } from '@storybook/addon-knobs';
-
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 
 import { PepTextboxComponent } from './textbox.component';
 import { PepTextboxModule } from './textbox.module';
-
-// const typeOptions = {
-//     text: 'text',
-//     link: 'link',
-//     email: 'email',
-//     phone: 'phone',
-//     int: 'int',
-//     percentage: 'percentage',
-//     currency: 'currency',
-//     real: 'real',
-// };
 
 // This exports the Stories group for this component
 export default {
@@ -77,53 +63,20 @@ export default {
             },
         },
         valueChange: { action: 'valueChange' },
-        key: { table: { disable: true } },
-        formattedValue: { table: { disable: true } },
-        placeholder: { table: { disable: true } },
-        form: { table: { disable: true } },
-        rowSpan: { table: { disable: true } },
-        readonly: { table: { disable: true } },
-        isActive: { table: { disable: true } },
-        parentFieldKey: { table: { disable: true } },
-        input: { table: { disable: true } },
-        formValidationChange: { table: { disable: true } },
-        _calculateFormattedValue: { table: { disable: true } },
-        _formattedValue: { table: { disable: true } },
-        _value: { table: { disable: true } },
-        controlType: { table: { disable: true } },
-        fb: { table: { disable: true } },
-        isInEditMode: { table: { disable: true } },
-        isInFocus: { table: { disable: true } },
-        standAlone: { table: { disable: true } },
-        anchorClicked: { table: { disable: true } },
-        cardTemplateClicked: { table: { disable: true } },
-        getField: { table: { disable: true } },
-        isDifferentValue: { table: { disable: true } },
-        isNumberType: { table: { disable: true } },
-        isValueValid: { table: { disable: true } },
-        ngOnChanges: { table: { disable: true } },
-        ngOnDestroy: { table: { disable: true } },
-        ngOnInit: { table: { disable: true } },
-        onBlur: { table: { disable: true } },
-        onFocus: { table: { disable: true } },
-        setFormattedValue: { table: { disable: true } },
+    },
+    parameters: {
+        controls: {
+            include: [
+                'label', 'value', 'type', 'required', 'textColor', 'disabled', 'maxFieldCharacters', // 'minValue', 'maxValue',
+                'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'layoutType', 'xAlignment', 'valueChange'
+            ]
+        }
     },
     decorators: [
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
-            // declarations: [PepTextboxComponent, PepTextboxValidationDirective],
             imports: [PepTextboxModule, SBNgxHelperModule],
         }),
-        // we add the withKnobs decorator in order to use it
-        // withKnobs,
-        // (storyFunc) => {
-        //     const story = storyFunc();
-
-        //     return {
-        //         ...story,
-        //         template: `<div style="width:200px">${story.template}</div>`,
-        //     };
-        // },
     ],
 } as Meta;
 
@@ -135,9 +88,8 @@ const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
         <pep-textbox [label]="label" [value]="value" [type]="type" [required]="required" [textColor]="textColor"
         [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [minValue]="minValue" [maxValue]="maxValue"
         [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
-        [layoutType]="layoutType" [textColor]="textColor" [xAlignment]="xAlignment"
-        (valueChange)="valueChange($event)"></pep-textbox>
-    `,
+        [layoutType]="layoutType" [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-textbox>
+    `
 });
 
 export const Base = Template.bind({});

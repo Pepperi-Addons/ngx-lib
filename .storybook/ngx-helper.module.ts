@@ -1,21 +1,20 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 import { PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-import { PepSizeDetectorModule } from '@pepperi-addons/ngx-lib/size-detector';
+// import { PepSizeDetectorModule } from '@pepperi-addons/ngx-lib/size-detector';
 
 import { allIcons } from '@pepperi-addons/ngx-lib/icon';
 import {
-    PepIconModule,
     PepIconRegistry,
     IPepIconData,
     PepIconType
 } from '@pepperi-addons/ngx-lib/icon';
 
 const pepperiComponentsModules = [
-    //PepSizeDetectorModule,
-    PepIconModule,
+    // PepSizeDetectorModule,
+    // PepIconModule,
 ];
 
 import {
@@ -27,6 +26,17 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient, '/assets/ngx-lib/i18n/', '.ngx-lib.json');
+}
+
+export function registerAllIcons(pepperiIconRegistry: PepIconRegistry): any {
+    let pepIcons: IPepIconData[] = [];
+    if (allIcons) {
+        Object.keys(allIcons).forEach(key => {
+            pepIcons.push({ name: key as PepIconType, data: allIcons[key] });
+        });
+    }
+
+    return () => pepperiIconRegistry.registerIcons(pepIcons);;
 }
 
 @NgModule({
@@ -43,20 +53,25 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
             },
         }),
     ],
-    // providers: [TranslateService]
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: registerAllIcons,
+            multi: true,
+            deps: [PepIconRegistry]
+        },
+        // TranslateService
+    ],
 })
 export class SBNgxHelperModule {
     constructor(
         private translate: TranslateService,
-        private pepperiIconRegistry: PepIconRegistry,
         private customizationService: PepCustomizationService,
     ) {
-        this.registerAllIcons();
-        // this.pepperiIconRegistry.registerIcons(pepIcons);
         this.customizationService.setThemeVariables();
 
-        console.log("Configuring the translation service: ", this.translate);
-        console.log("Translations: ", this.translate.translations);
+        // console.log("Configuring the translation service: ", this.translate);
+        // console.log("Translations: ", this.translate.translations);
         // this.translate.setDefaultLang("en");
         // this.translate.use("en");
 
@@ -72,16 +87,5 @@ export class SBNgxHelperModule {
         this.translate.use(userLang).subscribe((res: any) => {
             // In here you can put the code you want. At this point the lang will be loaded
         });
-    }
-
-    private registerAllIcons(): void {
-        let pepIcons: IPepIconData[] = [];
-        if (allIcons) {
-            Object.keys(allIcons).forEach(key => {
-                pepIcons.push({ name: key as PepIconType, data: allIcons[key] });
-            });
-
-            this.pepperiIconRegistry.registerIcons(pepIcons);
-        }
     }
 }

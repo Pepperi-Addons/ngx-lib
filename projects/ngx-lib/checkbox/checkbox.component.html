@@ -19,8 +19,8 @@
                 <div class="mat-checkbox-layout body-sm" (click)="toggleChecked($event)"
                     [title]="(label.length > 0 ? label + ': ' : '') + ((value | lowercase) == 'true' || value == '1' ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))">
                     <button [id]="key" class="emoji-icon pull-left flip">
-                        {{ value.toLowerCase() == 'true' || value == '1' ? additionalValueObject.CheckedText :
-                        additionalValueObject.UncheckedText }}
+                        {{ value.toLowerCase() == 'true' || value == '1' ? additionalValueObject?.CheckedText :
+                        additionalValueObject?.UncheckedText }}
                     </button>
                     <span *ngIf="label.length > 0 && layoutType !== 'table'" class="mat-checkbox-label emoji-title">{{
                         label }}</span>

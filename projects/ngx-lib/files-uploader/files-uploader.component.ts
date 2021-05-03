@@ -92,8 +92,8 @@ export class PepFilesUploaderComponent implements OnInit {
                 );
                 if (errorMsg === '') {
                     this.src = fileStr;
-                    this.setIntervalX(25, 75);
-                    this.setProgress(5);
+                    // this.setIntervalX(25, 75);
+                    // this.setProgress(5);
                     this.fileChange.emit(
                         JSON.stringify({
                             acceptedExtensions: this.acceptedExtensions,
@@ -186,15 +186,15 @@ export class PepFilesUploaderComponent implements OnInit {
         return fileSize; // return size in bytes;
     }
 
-    setIntervalX(delay, repetitions): void {
-        let x = 0;
-        this.intervalID = window.setInterval(() => {
-            // this.setProgress(this.progress + 5);
-            if (++x === repetitions || this.uploader.progress >= 100) {
-                window.clearInterval(this.intervalID);
-            }
-        }, delay);
-    }
+    // setIntervalX(delay, repetitions): void {
+    //     let x = 0;
+    //     this.intervalID = window.setInterval(() => {
+    //         // this.setProgress(this.progress + 5);
+    //         if (++x === repetitions || this.uploader.progress >= 100) {
+    //             window.clearInterval(this.intervalID);
+    //         }
+    //     }, delay);
+    // }
 
     errorHandler(event): void {
         event.target.src = this.fileService.getSvgAsImageSrc(

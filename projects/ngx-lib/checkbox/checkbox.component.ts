@@ -33,7 +33,33 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() label = '';
-    @Input() type: PepCheckboxFieldType = 'checkbox'; // || 'booleanText'
+
+    private _type: PepCheckboxFieldType = 'checkbox'; // || 'booleanText'
+    @Input()
+    set type(value: PepCheckboxFieldType) {
+        this._type = value;
+
+        if (this._type === 'booleanText') {
+            try {
+                if (typeof this.additionalValue === 'string') {
+                    this.additionalValueObject = JSON.parse(
+                        this.additionalValue
+                    );
+                } else {
+                    this.additionalValueObject = this.additionalValue;
+                }
+            } catch {
+                this.additionalValueObject = {
+                    CheckedText: this.translate.instant('CHECKBOX.TRUE'),
+                    UncheckedText: this.translate.instant('CHECKBOX.FALSE'),
+                };
+            }
+        }
+    }
+    get type(): PepCheckboxFieldType {
+        return this._type;
+    }
+
     @Input() required = false;
     @Input() disabled = false;
     @Input() readonly = false;
@@ -82,7 +108,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private element: ElementRef,
         private translate: TranslateService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -102,23 +128,6 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
-        }
-
-        if (this.type === 'booleanText') {
-            try {
-                if (typeof this.additionalValue === 'string') {
-                    this.additionalValueObject = JSON.parse(
-                        this.additionalValue
-                    );
-                } else {
-                    this.additionalValueObject = this.additionalValue;
-                }
-            } catch {
-                this.additionalValueObject = {
-                    CheckedText: this.translate.instant('CHECKBOX.TRUE'),
-                    UncheckedText: this.translate.instant('CHECKBOX.FALSE'),
-                };
-            }
         }
     }
 

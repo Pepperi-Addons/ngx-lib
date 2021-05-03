@@ -2,6 +2,7 @@
  * Public API Surface of ngx-lib/core/common/services
  */
 export * from './addon.service';
+export * from './color.service';
 export * from './cookie.service';
 export * from './data-convertor.service';
 export * from './file.service';

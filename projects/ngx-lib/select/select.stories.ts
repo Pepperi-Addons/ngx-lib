@@ -43,30 +43,14 @@ export default {
             },
         },
         valueChange: { action: 'valueChange' },
-        controlType: { table: { disable: true } },
-        rowSpan: { table: { disable: true } },
-        readonly: { table: { disable: true } },
-        fieldFormattedValue: { table: { disable: true } },
-        isInEditMode: { table: { disable: true } },
-        isMulti: { table: { disable: true } },
-        isActive: { table: { disable: true } },
-        selectedValueModel: { table: { disable: true } },
-        selectedValuesModel: { table: { disable: true } },
-        standAlone: { table: { disable: true } },
-        key: { table: { disable: true } },
-        form: { table: { disable: true } },
-        parentFieldKey: { table: { disable: true } },
-        addOptionsIfNeeded: { table: { disable: true } },
-        cardTemplateClicked: { table: { disable: true } },
-        changeValue: { table: { disable: true } },
-        ngOnDestroy: { table: { disable: true } },
-        ngOnChanges: { table: { disable: true } },
-        ngOnInit: { table: { disable: true } },
-        openedChange: { table: { disable: true } },
-        selectionChange: { table: { disable: true } },
-        setFieldFormattedValue: { table: { disable: true } },
-        formValidationChange: { table: { disable: true } },
-        select: { table: { disable: true } },
+    },
+    parameters: {
+        controls: {
+            include: [
+                'label', 'value', 'layoutType', 'xAlignment', 'type', 'required', 'disabled',
+                'showTitle', 'options', 'valueChange'
+            ]
+        }
     },
     decorators: [
         moduleMetadata({
@@ -81,7 +65,7 @@ const Template: Story<PepSelectComponent> = (args: PepSelectComponent) => ({
     template: `
         <pep-select [value]="value" [label]="label" [type]="type" [required]="required" [disabled]="disabled"
         [xAlignment]="xAlignment" [options]="options" [layoutType]="layoutType" [showTitle]="showTitle"
-        [emptyOption]="emptyOption" (valueChange)="valueChange($event)"></pep-select>
+        (valueChange)="valueChange($event)"></pep-select>
     `,
 });
 

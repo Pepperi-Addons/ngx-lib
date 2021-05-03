@@ -6,7 +6,7 @@ export const parameters = {
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
         matchers: {
-            color: /(background|color)$/i,
+            color: /(background|color|fill)$/i,
             date: /Date$/,
         },
     },
@@ -18,6 +18,7 @@ addParameters({
         inlineStories: true
     },
 });
+
 // export const parameters = {
 //     // automatically create action args for all props that start with "on"
 //     actions: { argTypesRegex: '^on.*' },
