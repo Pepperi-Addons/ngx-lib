@@ -19,6 +19,9 @@ addParameters({
     },
 });
 
+// Added theme style
+import '!style-loader!css-loader!sass-loader!./theme.scss';
+
 // export const parameters = {
 //     // automatically create action args for all props that start with "on"
 //     actions: { argTypesRegex: '^on.*' },
@@ -33,7 +36,6 @@ addParameters({
 //     },
 // };
 
-// import '!style-loader!css-loader!sass-loader!./theme.scss';
 // Note: To see the global decorator applied to your stories you'll need to include the template key with the component's selector with each story you have.
 
 // export const decorators = [
