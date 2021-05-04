@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
@@ -28,6 +29,7 @@ import { PepDateComponent } from './date.component';
 @NgModule({
     imports: [
         CommonModule,
+        BrowserAnimationsModule,
         ReactiveFormsModule,
         FormsModule,
         // Material modules,

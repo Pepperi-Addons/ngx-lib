@@ -188,7 +188,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() parentFieldKey: string = null;
 
     /**
-     * @ignore
+     * The value change event.
      *
      * @type {EventEmitter<IPepFieldValueChangeEvent>}
      * @memberof PepTextboxComponent

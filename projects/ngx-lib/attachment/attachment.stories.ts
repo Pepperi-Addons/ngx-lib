@@ -1,5 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import { commonArgTypes } from '@storybook-settings/common-args.model';
 
 import { PepAttachmentComponent } from './attachment.component';
 import { PepAttachmentModule } from './attachment.module';
@@ -8,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'ngx-lib/attachment',
+    title: 'Components/attachment',
     component: PepAttachmentComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -18,29 +19,19 @@ export default {
         }),
     ],
     argTypes: {
-        layoutType: {
-            description: 'This is the layout type of the component',
-            defaultValue: 'form',
-            control: {
-                type: 'radio',
-                options: ['form', 'card', 'table'],
-            },
+        label: commonArgTypes.label,
+        required: commonArgTypes.required,
+        layoutType: commonArgTypes.layoutType,
+        xAlignment: commonArgTypes.xAlignment,
+        disabled: commonArgTypes.disabled,
+        showTitle: commonArgTypes.showTitle,
+        src: {
             table: {
-                type: {
-                    summary: 'something short',
-                    detail: 'something really really long',
-                },
-                defaultValue: { summary: 'form' },
-            },
+                defaultValue: { summary: null },
+            }
         },
-        xAlignment: {
-            description: 'This is the x alignment of the component',
-            defaultValue: 'left',
-            control: {
-                type: 'radio',
-                options: ['left', 'center', 'right'],
-            },
-        },
+        elementClick: commonArgTypes.elementClick,
+        valueChange: commonArgTypes.valueChange,
     },
     parameters: {
         controls: {
@@ -56,8 +47,8 @@ export default {
 const Template: Story<PepAttachmentComponent> = (args: PepAttachmentComponent) => ({
     props: {
         ...args,
-        elementClick: action('elementClick'),
-        valueChange: action('valueChange'),
+        // elementClick: action('elementClick'),
+        // valueChange: action('valueChange'),
     },
     template: `
         <pep-attachment [label]="label" [src]="src" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment" 

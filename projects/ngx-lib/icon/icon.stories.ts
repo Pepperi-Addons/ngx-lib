@@ -5,7 +5,7 @@ import { PepIconComponent } from './icon.component';
 import { PepIconModule } from './icon.module';
 import { PepIconRegistry } from './icon-registry.service';
 import { allIcons } from './icon-generated-all.model'
-import { IPepIconData, pepIconSystemSettings, PepIconType } from './icon-generated.model';
+import { pepIconSystemSettings } from './icon-generated.model';
 import { APP_INITIALIZER } from '@angular/core';
 
 function allIconsToNames(): Array<string> {
@@ -21,7 +21,7 @@ function allIconsToNames(): Array<string> {
 
 // This exports the Stories group for this component
 export default {
-    title: 'ngx-lib/icon',
+    title: 'Components/icon',
     component: PepIconComponent,
     decorators: [
         // The necessary modules for the component to work on Storybook
@@ -46,10 +46,37 @@ export default {
     ],
     argTypes: {
         name: {
+            description: 'This is the name of the icon',
+            defaultValue: false,
             control: {
                 type: 'select',
                 options: allIconsToNames()
             },
+            table: {
+                type: {
+                    summary: 'string',
+                },
+            },
+        },
+        fill: {
+            description: 'The fill color of the icon like #ccc',
+            defaultValue: false,
+            table: {
+                type: {
+                    summary: 'color',
+                },
+            },
+        },
+        spin: {
+            description: 'If the icon should spin',
+            defaultValue: false,
+        }
+    },
+    parameters: {
+        controls: {
+            include: [
+                'name', 'spin', 'fill'
+            ]
         }
     }
 } as Meta;

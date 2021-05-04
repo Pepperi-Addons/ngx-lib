@@ -1,6 +1,7 @@
 // .storybook/manager.js
 
 import { addons } from '@storybook/addons';
+import pepperiTheme from './pepperi-theme';
 
 addons.setConfig({
     isFullscreen: false,
@@ -9,7 +10,7 @@ addons.setConfig({
     panelPosition: 'right',
     enableShortcuts: true,
     isToolshown: true,
-    theme: undefined,
+    theme: pepperiTheme,
     selectedPanel: undefined,
     initialActive: 'sidebar',
     sidebar: {

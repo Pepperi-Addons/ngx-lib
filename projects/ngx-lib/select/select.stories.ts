@@ -3,46 +3,32 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular';
 // import { withKnobs, text, select, radios } from '@storybook/addon-knobs';
 
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import { commonArgTypes } from '@storybook-settings/common-args.model';
 
 import { PepSelectComponent } from './select.component';
 import { PepSelectModule } from './select.module';
 
 // This exports the Stories group for this component
 export default {
-    title: 'ngx-lib/select',
+    title: 'Components/select',
     component: PepSelectComponent,
     argTypes: {
-        layoutType: {
-            description: 'This is the layout type of the component',
-            defaultValue: 'form',
-            control: {
-                type: 'radio',
-                options: ['form', 'card', 'table'],
-            },
-            table: {
-                type: {
-                    summary: 'something short',
-                    detail: 'something really really long',
-                },
-                defaultValue: { summary: 'form' },
-            },
-        },
-        xAlignment: {
-            description: 'This is the x alignment of the component',
-            defaultValue: 'left',
-            control: {
-                type: 'radio',
-                options: ['left', 'center', 'right'],
-            },
-        },
+        label: commonArgTypes.label,
+        value: commonArgTypes.value,
+        layoutType: commonArgTypes.layoutType,
+        xAlignment: commonArgTypes.xAlignment,
+        required: commonArgTypes.required,
+        showTitle: commonArgTypes.showTitle,
         type: {
+            description: 'This is the type of the component',
             defaultValue: 'select',
             control: {
                 type: 'radio',
                 options: ['select', 'multi'],
             },
         },
-        valueChange: { action: 'valueChange' },
+        disabled: commonArgTypes.disabled,
+        valueChange: commonArgTypes.valueChange,
     },
     parameters: {
         controls: {

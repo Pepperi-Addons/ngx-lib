@@ -1,5 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import { commonArgTypes } from '@storybook-settings/common-args.model';
 
 import { PepColorComponent } from './color.component';
 import { PepColorModule } from './color.module';
@@ -9,7 +10,7 @@ import { PepColorPickerComponent } from './color-picker.component';
 
 // This exports the Stories group for this component
 export default {
-    title: 'ngx-lib/color',
+    title: 'Components/color',
     component: PepColorComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -19,30 +20,18 @@ export default {
             imports: [PepColorModule, SBNgxHelperModule],
         }),
     ],
-    args: {
-        visible: true,
-    },
     argTypes: {
-        layoutType: {
-            description: 'This is the layout type of the component',
-            defaultValue: 'form',
-            control: {
-                type: 'radio',
-                options: ['form', 'card', 'table'],
-            },
-            table: {
-                type: {
-                    summary: 'something short',
-                    detail: 'something really really long',
-                },
-                defaultValue: { summary: 'form' },
-            },
-        },
+        label: commonArgTypes.label,
         value: {
+            description: 'The value of the component (Hex color like #ccc)', // TODO: change required to mandatory',
             control: {
                 type: 'color'
             }
         },
+        disabled: commonArgTypes.disabled,
+        layoutType: commonArgTypes.layoutType,
+        xAlignment: commonArgTypes.xAlignment,
+        showTitle: commonArgTypes.showTitle,
         type: {
             description: 'This is the type of the component',
             defaultValue: 'any',
@@ -54,19 +43,22 @@ export default {
                 defaultValue: { summary: 'any' },
             },
         },
-        xAlignment: {
-            description: 'This is the x alignment of the component',
-            defaultValue: 'left',
+        showAAComplient: {
+            description: 'If the component should fix color by AA complient',
+            defaultValue: true,
             control: {
-                type: 'radio',
-                options: ['left', 'center', 'right'],
+                type: 'boolean',
             },
+            table: {
+                defaultValue: { summary: 'true' },
+            }
         },
+        valueChange: commonArgTypes.valueChange
     },
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'type', 'disabled', 'xAlignment', 'showAAComplient', 'layoutType', 'valueChange'
+                'label', 'value', 'type', 'disabled', 'xAlignment', 'showTitle', 'showAAComplient', 'layoutType', 'valueChange'
             ]
         }
     },
@@ -76,7 +68,7 @@ export default {
 const Template: Story<PepColorComponent> = (args: PepColorComponent) => ({
     props: {
         ...args,
-        valueChange: action('valueChange'),
+        // valueChange: action('valueChange'),
     },
     template: `
         <pep-color [label]="label" [value]="value" [type]="type" [disabled]="disabled" [xAlignment]="xAlignment" 

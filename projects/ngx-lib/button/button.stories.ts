@@ -1,5 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import { commonArgTypes } from '@storybook-settings/common-args.model';
 
 import { PepButtonComponent } from './button.component';
 import { PepButtonModule } from './button.module';
@@ -8,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'ngx-lib/button',
+    title: 'Components/button',
     component: PepButtonComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -17,17 +18,49 @@ export default {
             imports: [PepButtonModule, SBNgxHelperModule],
         }),
     ],
-    args: {
-        visible: true,
-        // disabled: 'false',
-    },
+    // args: {
+    // },
+    argTypes: {
+        value: commonArgTypes.value,
+        visible: commonArgTypes.visible,
+        disabled: commonArgTypes.disabled,
+        iconPosition: {
+            table: {
+                defaultValue: { summary: 'end' },
+            }
+        },
+        iconName: {
+            table: {
+                defaultValue: { summary: null },
+            }
+        },
+        sizeType: {
+            table: {
+                defaultValue: { summary: 'md' },
+            }
+        },
+        styleStateType: {
+            table: {
+                defaultValue: { summary: 'system' },
+            }
+        },
+        styleType: {
+            table: {
+                defaultValue: { summary: 'weak' },
+            }
+        },
+        classNames: {
+            description: 'Class names that should be on the button element tag like classNames="class1 class2"',
+        },
+        buttonClick: commonArgTypes.buttonClick,
+    }
 } as Meta;
 
 // This creates a Story for the component
 const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
     props: {
         ...args,
-        buttonClick: action('buttonClick'),
+        // buttonClick: action('buttonClick'),
     },
     template: `
         <pep-button [value]="value" [disabled]="disabled" [styleType]="styleType" [styleStateType]="styleStateType" [sizeType]="sizeType" [iconName]="iconName"
@@ -38,7 +71,6 @@ const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
 export const Base = Template.bind({});
 Base.storyName = 'Basic';
 Base.args = {
-    // visible: true,
     value: 'click me',
 };
 
@@ -46,7 +78,6 @@ export const Disabled = Template.bind({});
 Disabled.args = {
     disabled: true,
     value: 'disabled',
-    // buttonClick: onButtonClicked,
 };
 
 // This creates a Story for the component

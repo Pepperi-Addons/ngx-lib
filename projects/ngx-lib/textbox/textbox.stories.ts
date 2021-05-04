@@ -1,5 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import { commonArgTypes } from '@storybook-settings/common-args.model';
 
 import { PepTextboxComponent } from './textbox.component';
 import { PepTextboxModule } from './textbox.module';
@@ -9,17 +10,23 @@ export default {
     // The title defines the name and where in the structure of
     // Storybook's menu this is going to be placed.
     // Here we add it to a "Components" section under "Textbox"
-    title: 'ngx-lib/textbox',
+    title: 'Components/textbox',
     // The component related to the Stories
     component: PepTextboxComponent,
-    // args: {
-    //     // Now all Button stories will be primary.
-    //     value: true,
-    // },
     argTypes: {
-        label: { control: 'text' },
-        value: { control: 'text' }, //{ control: { type: 'number', min: 0, max: 10 } },
+        label: commonArgTypes.label,
+        value: commonArgTypes.value, // { control: { type: 'number', min: 0, max: 10 } },
+        layoutType: commonArgTypes.layoutType,
+        xAlignment: commonArgTypes.xAlignment,
+        textColor: commonArgTypes.textColor,
+        required: commonArgTypes.required,
+        showTitle: commonArgTypes.showTitle,
+        renderTitle: commonArgTypes.renderTitle,
+        renderError: commonArgTypes.renderError,
+        renderSymbol: commonArgTypes.renderSymbol,
         type: {
+            description: 'This is the type of the component',
+            defaultValue: 'text',
             control: {
                 type: 'inline-radio',
                 options: [
@@ -34,35 +41,17 @@ export default {
                 ],
             },
         },
-        layoutType: {
-            description: 'This is the layout type of the component',
-            defaultValue: 'form',
-            control: {
-                type: 'radio',
-                options: ['form', 'card', 'table'],
-            },
-            table: {
-                type: {
-                    summary: 'something short',
-                    detail: 'something really really long',
-                },
-                defaultValue: { summary: 'form' },
-            },
+        maxFieldCharacters: {
+            description: 'Maximum characters to allow',
+            // defaultValue: null,
+            // table: {
+            //     type: {
+            //         summary: 'number',
+            //         defaultValue: { summary: null },
+            //     },
+            // },
         },
-        xAlignment: {
-            description: 'This is the x alignment of the component',
-            defaultValue: 'left',
-            control: {
-                type: 'radio',
-                options: ['left', 'center', 'right'],
-            },
-        },
-        textColor: {
-            control: {
-                type: 'color',
-            },
-        },
-        valueChange: { action: 'valueChange' },
+        valueChange: commonArgTypes.valueChange,
     },
     parameters: {
         controls: {
@@ -82,7 +71,6 @@ export default {
 
 // This creates a Story for the component
 const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
-    // component: PepTextboxComponent,
     props: args,
     template: `
         <pep-textbox [label]="label" [value]="value" [type]="type" [required]="required" [textColor]="textColor"

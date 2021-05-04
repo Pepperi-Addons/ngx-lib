@@ -32,6 +32,7 @@ interface IPepColorPickerDialogData {
 })
 export class PepColorPickerComponent implements OnInit {
     static CURRENT_HUE = '--pep-color-picker-current-hue';
+    private readonly defaultColor = '#ccc';
 
     checkAAComplient = true;
 
@@ -121,7 +122,9 @@ export class PepColorPickerComponent implements OnInit {
             const hsl = this.colorService.hex2hsl(color);
             this.convertColorToValueString(hsl);
         } else {
-            // Handle other colors.
+            // Handle default.
+            const hsl = this.colorService.hex2hsl(this.defaultColor);
+            this.convertColorToValueString(hsl);
         }
 
         this.setCurrentHueInCss();

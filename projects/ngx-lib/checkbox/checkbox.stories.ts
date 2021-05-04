@@ -1,5 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import { commonArgTypes } from '@storybook-settings/common-args.model';
 
 import { PepCheckboxComponent } from './checkbox.component';
 import { PepCheckboxModule } from './checkbox.module';
@@ -8,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'ngx-lib/checkbox',
+    title: 'Components/checkbox',
     component: PepCheckboxComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -17,25 +18,16 @@ export default {
             imports: [PepCheckboxModule, SBNgxHelperModule],
         }),
     ],
-    args: {
-        visible: true,
-    },
     argTypes: {
-        layoutType: {
-            description: 'This is the layout type of the component',
-            defaultValue: 'form',
-            control: {
-                type: 'radio',
-                options: ['form', 'card', 'table'],
-            },
-            table: {
-                type: {
-                    summary: 'something short',
-                    detail: 'something really really long',
-                },
-                defaultValue: { summary: 'form' },
-            },
-        },
+        label: commonArgTypes.label,
+        value: commonArgTypes.value,
+        visible: commonArgTypes.visible,
+        layoutType: commonArgTypes.layoutType,
+        xAlignment: commonArgTypes.xAlignment,
+        disabled: commonArgTypes.disabled,
+        required: commonArgTypes.required,
+        showTitle: commonArgTypes.showTitle,
+        renderTitle: commonArgTypes.renderTitle,
         type: {
             description: 'This is the type of the component',
             defaultValue: 'checkbox',
@@ -44,17 +36,27 @@ export default {
                 options: ['checkbox', 'booleanText'],
             },
             table: {
+                type: {
+                    summary: 'checkbox | booleanText',
+                    // detail: 'something really really long',
+                },
                 defaultValue: { summary: 'checkbox' },
             },
         },
-        xAlignment: {
-            description: 'This is the x alignment of the component',
-            defaultValue: 'left',
-            control: {
-                type: 'radio',
-                options: ['left', 'center', 'right'],
-            },
-        },
+        additionalValue: {
+            description: 'This is an object that represent "CheckedText" and "UncheckedText"',
+            control: 'object',
+            table: {
+                type: {
+                    summary: ` {
+                        CheckedText: "❤"
+                        UncheckedText: "💛"
+                    }`,
+                    // detail: 'something really really long',
+                },
+                defaultValue: { summary: null },
+            }
+        }
     },
     parameters: {
         controls: {
