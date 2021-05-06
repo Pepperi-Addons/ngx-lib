@@ -15,7 +15,6 @@ export default {
     argTypes: {
         label: commonArgTypes.label,
         value: commonArgTypes.value,
-        layoutType: commonArgTypes.layoutType,
         xAlignment: commonArgTypes.xAlignment,
         required: commonArgTypes.required,
         showTitle: commonArgTypes.showTitle,
@@ -33,7 +32,7 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'layoutType', 'xAlignment', 'type', 'required', 'disabled',
+                'label', 'value', 'xAlignment', 'type', 'required', 'disabled',
                 'showTitle', 'options', 'valueChange'
             ]
         }
@@ -50,7 +49,7 @@ const Template: Story<PepSelectComponent> = (args: PepSelectComponent) => ({
     props: args,
     template: `
         <pep-select [value]="value" [label]="label" [type]="type" [required]="required" [disabled]="disabled"
-        [xAlignment]="xAlignment" [options]="options" [layoutType]="layoutType" [showTitle]="showTitle"
+        [xAlignment]="xAlignment" [options]="options" [showTitle]="showTitle"
         (valueChange)="valueChange($event)"></pep-select>
     `,
 });

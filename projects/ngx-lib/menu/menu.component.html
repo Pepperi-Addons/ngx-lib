@@ -11,7 +11,7 @@
             <ng-container *ngTemplateOutlet="triggerTemplate">
             </ng-container>
         </button>
-        <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem"
+        <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem" [xPosition]="xPosition"
             (menuItemClick)="onMenuItemClicked($event)">
         </pep-menu-item>
     </ng-template>
@@ -25,7 +25,7 @@
                 <ng-container *ngTemplateOutlet="triggerTemplate">
                 </ng-container>
             </button>
-            <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem"
+            <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem" [xPosition]="xPosition"
                 (menuItemClick)="onMenuItemClicked($event)"></pep-menu-item>
         </ng-template>
         <ng-template #buttonTemplate>

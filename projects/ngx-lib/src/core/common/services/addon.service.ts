@@ -17,7 +17,7 @@ export class PepAddonService {
     constructor(
         private sessionService: PepSessionService,
         private httpService: PepHttpService
-    ) {}
+    ) { }
 
     private getAddonBaseRelativePath(isAsync: boolean): string {
         return isAsync
@@ -65,5 +65,10 @@ export class PepAddonService {
             body,
             httpOptions
         );
+    }
+
+    // TODO: need to chek this if the loader is working.
+    fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
+        return window.fetch(input, init);
     }
 }

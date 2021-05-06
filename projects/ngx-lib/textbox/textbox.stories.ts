@@ -16,9 +16,9 @@ export default {
     argTypes: {
         label: commonArgTypes.label,
         value: commonArgTypes.value, // { control: { type: 'number', min: 0, max: 10 } },
-        layoutType: commonArgTypes.layoutType,
         xAlignment: commonArgTypes.xAlignment,
         textColor: commonArgTypes.textColor,
+        disabled: commonArgTypes.disabled,
         required: commonArgTypes.required,
         showTitle: commonArgTypes.showTitle,
         renderTitle: commonArgTypes.renderTitle,
@@ -57,7 +57,7 @@ export default {
         controls: {
             include: [
                 'label', 'value', 'type', 'required', 'textColor', 'disabled', 'maxFieldCharacters', // 'minValue', 'maxValue',
-                'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'layoutType', 'xAlignment', 'valueChange'
+                'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'xAlignment', 'valueChange'
             ]
         }
     },
@@ -76,7 +76,7 @@ const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
         <pep-textbox [label]="label" [value]="value" [type]="type" [required]="required" [textColor]="textColor"
         [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [minValue]="minValue" [maxValue]="maxValue"
         [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
-        [layoutType]="layoutType" [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-textbox>
+        [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-textbox>
     `
 });
 

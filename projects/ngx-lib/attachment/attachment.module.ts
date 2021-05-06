@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
@@ -15,7 +14,6 @@ import { PepAttachmentComponent } from './attachment.component';
 @NgModule({
     imports: [
         CommonModule,
-        BrowserAnimationsModule,
         ReactiveFormsModule,
         // Material modules
         MatCommonModule,

@@ -66,7 +66,7 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     @Input() classNames = '';
     @Input() xPosition: 'before' | 'after' = 'after';
     @Input() hideOnEmptyItems = false;
-    // @Input() items: Array<PepMenuItem> = null;
+
     private _items: Array<PepMenuItem> = null;
     @Input()
     set items(items: Array<PepMenuItem>) {
@@ -80,6 +80,12 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     @Input() selectedItem: PepMenuItem = null;
     @Input() disabled = false;
 
+    /**
+     * @ignore
+     *
+     * @type {EventEmitter<IPepMenuStateChangeEvent>}
+     * @memberof PepMenuComponent
+     */
     @Output()
     stateChange: EventEmitter<IPepMenuStateChangeEvent> = new EventEmitter<IPepMenuStateChangeEvent>();
     @Output()
@@ -143,8 +149,8 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         if (this.hideOnEmptyItems) {
             this.state =
                 !this.disabled &&
-                this.items &&
-                this.items.filter((item) => !item.disabled).length > 0
+                    this.items &&
+                    this.items.filter((item) => !item.disabled).length > 0
                     ? 'visible'
                     : 'hidden';
         } else {

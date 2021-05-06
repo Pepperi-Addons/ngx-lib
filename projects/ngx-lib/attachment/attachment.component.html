@@ -1,7 +1,7 @@
 <ng-template #pepTemplate>
     <pep-files-uploader [key]="key" [src]="src" [label]="label" [required]="required" [disabled]="disabled"
-        [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
-        [layoutType]="layoutType" [standAlone]="standAlone" (fileChange)="onFileChanged($event)"
+        [xAlignment]="xAlignment" [rowSpan]="rowSpan" [fieldHeight]="fieldHeight" [controlType]="controlType"
+        [form]="form" [layoutType]="layoutType" [standAlone]="standAlone" (fileChange)="onFileChanged($event)"
         (elementClick)="onFileClicked($event)" [acceptedExtensions]="acceptAttachmentType">
     </pep-files-uploader>
 </ng-template>

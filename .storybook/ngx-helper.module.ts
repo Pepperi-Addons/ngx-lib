@@ -1,5 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient } from '@angular/common/http';
 
 import { PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
@@ -43,6 +44,7 @@ export function registerAllIcons(pepperiIconRegistry: PepIconRegistry): any {
     declarations: [],
     imports: [
         CommonModule,
+        BrowserAnimationsModule,
         PepNgxLibModule,
         pepperiComponentsModules,
         TranslateModule.forRoot({

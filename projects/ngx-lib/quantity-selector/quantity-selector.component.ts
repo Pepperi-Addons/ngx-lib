@@ -147,7 +147,7 @@ export class PepQuantitySelectorComponent
 
     // Get default style from theme.
     @Input()
-    styleClass: PepStyleType = document.documentElement.style.getPropertyValue(
+    styleType: PepStyleType = document.documentElement.style.getPropertyValue(
         PepCustomizationService.STYLE_QS_KEY
     ) as PepStyleType; //'strong';
 
@@ -240,7 +240,7 @@ export class PepQuantitySelectorComponent
         }
 
         // Get state class from theme.
-        // this.styleClass = document.documentElement.style.getPropertyValue(
+        // this.styleType = document.documentElement.style.getPropertyValue(
         //     PepCustomizationService.STYLE_QS_KEY
         // ) as PepStyleType;
 

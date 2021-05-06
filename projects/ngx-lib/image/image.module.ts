@@ -16,6 +16,7 @@ import {
 } from '@pepperi-addons/ngx-lib/icon';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
+import { PepImagesFilmstripModule, PepImagesFilmstripComponent } from '@pepperi-addons/ngx-lib/images-filmstrip';
 
 import { PepImageComponent } from './image.component';
 
@@ -31,10 +32,12 @@ import { PepImageComponent } from './image.component';
         PepNgxLibModule,
         PepIconModule,
         PepFieldTitleModule,
+        PepImagesFilmstripModule,
         PepFilesUploaderModule,
     ],
     exports: [PepImageComponent],
     declarations: [PepImageComponent],
+    entryComponents: [PepImagesFilmstripComponent],
 })
 export class PepImageModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

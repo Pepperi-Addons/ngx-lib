@@ -52,8 +52,19 @@ export default {
         classNames: {
             description: 'Class names that should be on the button element tag like classNames="class1 class2"',
         },
-        buttonClick: commonArgTypes.buttonClick,
-    }
+        buttonClick: {
+            action: 'buttonClick',
+            control: false
+        },
+    },
+    parameters: {
+        controls: {
+            include: [
+                'value', 'visible', 'disabled', 'iconPosition', 'iconName', 'sizeType', 'styleStateType',
+                'styleType', 'classNames', 'buttonClick'
+            ]
+        }
+    },
 } as Meta;
 
 // This creates a Story for the component
@@ -139,6 +150,6 @@ export const StyleType = StyleTypeTemplate.bind({});
 // StyleType.argTypes = argTypesOtherStories;
 StyleType.storyName = '3 style types';
 StyleType.parameters = {
-    docs: { iframeHeight: 500 },
-    controls: { hideNoControlsWarning: true },
+    // docs: { iframeHeight: 500 },
+    // controls: { hideNoControlsWarning: true },
 };

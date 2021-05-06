@@ -18,10 +18,12 @@ export default {
             imports: [PepAttachmentModule, SBNgxHelperModule],
         }),
     ],
+    args: {
+        rowSpan: 2
+    },
     argTypes: {
         label: commonArgTypes.label,
         required: commonArgTypes.required,
-        layoutType: commonArgTypes.layoutType,
         xAlignment: commonArgTypes.xAlignment,
         disabled: commonArgTypes.disabled,
         showTitle: commonArgTypes.showTitle,
@@ -30,14 +32,15 @@ export default {
                 defaultValue: { summary: null },
             }
         },
+        rowSpan: commonArgTypes.rowSpan,
         elementClick: commonArgTypes.elementClick,
         valueChange: commonArgTypes.valueChange,
     },
     parameters: {
         controls: {
             include: [
-                'label', 'src', 'required', 'disabled', 'xAlignment',
-                'showTitle', 'layoutType', 'elementClick', 'valueChange'
+                'label', 'src', 'required', 'disabled', 'xAlignment', 'rowSpan',
+                'showTitle', 'elementClick', 'valueChange'
             ]
         }
     },
@@ -51,8 +54,8 @@ const Template: Story<PepAttachmentComponent> = (args: PepAttachmentComponent) =
         // valueChange: action('valueChange'),
     },
     template: `
-        <pep-attachment [label]="label" [src]="src" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment" 
-        [showTitle]="showTitle" [layoutType]="layoutType" (elementClick)="elementClick($event)" (valueChange)="valueChange($event)"></pep-attachment>
+        <pep-attachment [label]="label" [src]="src" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
+        [showTitle]="showTitle" (elementClick)="elementClick($event)" (valueChange)="valueChange($event)"></pep-attachment>
     `,
 });
 

@@ -41,7 +41,17 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+        this.setFieldHeight();
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
+
     @Input() signatureURL = '';
     // @Input() inDialog = false;
 
@@ -83,27 +93,9 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         private cd: ChangeDetectorRef,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
-    ngOnInit(): void {
-        if (this.form === null) {
-            this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.src, this.required, this.readonly, this.disabled);
-            const pepField = new PepSignatureField({
-                key: this.key,
-                value: this.src,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
-
-            this.renderer.addClass(
-                this.element.nativeElement,
-                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
-            );
-        }
-
+    private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
             this.layoutType,
             this.rowSpan,
@@ -111,7 +103,35 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
 
+    private setDefaultForm(): void {
+        const pepField = new PepSignatureField({
+            key: this.key,
+            value: this.src,
+            required: this.required,
+            readonly: this.readonly,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
+    ngOnInit(): void {
+        if (this.form === null) {
+            this.standAlone = true;
+            this.setFieldHeight();
+            this.setDefaultForm();
+
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
+        }
+    }
+
     ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
+
         if (changes.src && changes.src.currentValue.length > 0) {
             // Empty dataURI if there is change in the src.
             this.dataURI = null;

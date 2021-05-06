@@ -5,7 +5,6 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 import { PepColorComponent } from './color.component';
 import { PepColorModule } from './color.module';
 
-import { action } from '@storybook/addon-actions';
 import { PepColorPickerComponent } from './color-picker.component';
 
 // This exports the Stories group for this component
@@ -29,7 +28,6 @@ export default {
             }
         },
         disabled: commonArgTypes.disabled,
-        layoutType: commonArgTypes.layoutType,
         xAlignment: commonArgTypes.xAlignment,
         showTitle: commonArgTypes.showTitle,
         type: {
@@ -58,7 +56,7 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'type', 'disabled', 'xAlignment', 'showTitle', 'showAAComplient', 'layoutType', 'valueChange'
+                'label', 'value', 'type', 'disabled', 'xAlignment', 'showTitle', 'showAAComplient', 'valueChange'
             ]
         }
     },
@@ -72,8 +70,7 @@ const Template: Story<PepColorComponent> = (args: PepColorComponent) => ({
     },
     template: `
         <pep-color [label]="label" [value]="value" [type]="type" [disabled]="disabled" [xAlignment]="xAlignment" 
-        [showTitle]="showTitle" [showAAComplient]="showAAComplient" [layoutType]="layoutType"
-        (valueChange)="valueChange($event)"></pep-color>
+        [showTitle]="showTitle" [showAAComplient]="showAAComplient" (valueChange)="valueChange($event)"></pep-color>
     `,
 });
 

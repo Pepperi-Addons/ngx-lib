@@ -23,10 +23,10 @@
             </ng-template>
             <ng-template #editableTemplate>
                 <div class="pep-file-container image-container" [ngClass]="{ 'one-row': rowSpan == 1}">
-                    <pep-files-uploader [id]="key" [key]="key" [layoutType]="layoutType" [standAlone]="standAlone"
-                        [src]="srcLarge || src" [label]="label" [required]="required" [disabled]="disabled"
-                        [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType" [form]="form"
-                        [acceptedExtensions]="acceptImagesType" (fileChange)="onFileChanged($event)"
+                    <pep-files-uploader [id]="key" [key]="key" [fieldHeight]="fieldHeight" [layoutType]="layoutType"
+                        [standAlone]="standAlone" [src]="srcLarge || src" [label]="label" [required]="required"
+                        [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType"
+                        [form]="form" [acceptedExtensions]="acceptImagesType" (fileChange)="onFileChanged($event)"
                         (elementClick)="onFileClicked($event)" [sizeLimitMB]="sizeLimitMB">
                     </pep-files-uploader>
                 </div>

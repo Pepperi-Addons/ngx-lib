@@ -15,22 +15,22 @@ export const commonArgTypes = {
             defaultValue: { summary: null },
         }
     },
-    layoutType: {
-        // name: 'layoutType',
-        defaultValue: 'form',
-        description: 'This is the layout type of the component',
-        control: {
-            type: 'radio',
-            options: ['form', 'card', 'table'],
-        },
-        table: {
-            type: {
-                summary: 'something short',
-                detail: 'something really really long',
-            },
-            defaultValue: { summary: 'form' },
-        },
-    },
+    // layoutType: {
+    //     // name: 'layoutType',
+    //     defaultValue: 'form',
+    //     description: 'This is the layout type of the component',
+    //     control: {
+    //         type: 'radio',
+    //         options: ['form', 'card', 'table'],
+    //     },
+    //     table: {
+    //         type: {
+    //             summary: 'something short',
+    //             detail: 'something really really long',
+    //         },
+    //         defaultValue: { summary: 'form' },
+    //     },
+    // },
     xAlignment: {
         defaultValue: 'left',
         description: 'This is the horizontal alignment of the component',
@@ -65,6 +65,16 @@ export const commonArgTypes = {
     },
     disabled: {
         description: 'If the component is disabled',
+        defaultValue: false,
+        control: {
+            type: 'boolean',
+        },
+        table: {
+            defaultValue: { summary: 'false' },
+        }
+    },
+    readonly: {
+        description: 'If the component is readonly',
         defaultValue: false,
         control: {
             type: 'boolean',
@@ -123,6 +133,16 @@ export const commonArgTypes = {
             defaultValue: { summary: 'true' },
         }
     },
+    rowSpan: {
+        description: 'The numbers of rows that the component should bo on (height)',
+        defaultValue: 1,
+        control: {
+            type: 'number',
+        },
+        table: {
+            defaultValue: { summary: 1 },
+        }
+    },
     valueChange: {
         // table: {
         //     disable: true
@@ -134,8 +154,4 @@ export const commonArgTypes = {
         action: 'elementClick',
         control: false
     },
-    buttonClick: {
-        action: 'buttonClick',
-        control: false
-    }
 }

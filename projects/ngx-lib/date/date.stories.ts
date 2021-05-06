@@ -21,7 +21,6 @@ export default {
         label: commonArgTypes.label,
         value: commonArgTypes.value,
         disabled: commonArgTypes.disabled,
-        layoutType: commonArgTypes.layoutType,
         xAlignment: commonArgTypes.xAlignment,
         textColor: commonArgTypes.textColor,
         required: commonArgTypes.required,
@@ -49,7 +48,7 @@ export default {
         controls: {
             include: [
                 'label', 'value', 'type', 'required', 'textColor', 'disabled', // 'minDateValue', 'maxDateValue', 'minValue', 'maxValue',
-                'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'layoutType', 'xAlignment', 'valueChange'
+                'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'xAlignment', 'valueChange'
             ]
         }
     },
@@ -68,7 +67,7 @@ const Template: Story<PepDateComponent> = (args: PepDateComponent) => ({
         <pep-date [label]="label" [value]="value" [type]="type" [required]="required" [textColor]="textColor"
         [disabled]="disabled" [minDateValue]="minDateValue" [maxDateValue]="maxDateValue" [minValue]="minValue" [maxValue]="maxValue"
         [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
-        [layoutType]="layoutType" [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-date>
+        [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-date>
     `
 });
 

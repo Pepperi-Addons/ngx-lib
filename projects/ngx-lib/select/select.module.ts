@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { MatCommonModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,7 +21,6 @@ import { PepSelectComponent } from './select.component';
 @NgModule({
     imports: [
         CommonModule,
-        BrowserAnimationsModule,
         ReactiveFormsModule,
         FormsModule,
         // Material modules

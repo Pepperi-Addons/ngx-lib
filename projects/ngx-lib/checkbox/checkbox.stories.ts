@@ -22,7 +22,6 @@ export default {
         label: commonArgTypes.label,
         value: commonArgTypes.value,
         visible: commonArgTypes.visible,
-        layoutType: commonArgTypes.layoutType,
         xAlignment: commonArgTypes.xAlignment,
         disabled: commonArgTypes.disabled,
         required: commonArgTypes.required,
@@ -62,7 +61,7 @@ export default {
         controls: {
             include: [
                 'label', 'value', 'type', 'required', 'disabled', 'xAlignment',
-                'additionalValue', 'showTitle', 'renderTitle', 'layoutType', 'visible', 'valueChange'
+                'additionalValue', 'showTitle', 'renderTitle', 'visible', 'valueChange'
             ]
         }
     },
@@ -76,7 +75,7 @@ const Template: Story<PepCheckboxComponent> = (args: PepCheckboxComponent) => ({
     },
     template: `
         <pep-checkbox [label]="label" [value]="value" [type]="type" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment" 
-        [additionalValue]="additionalValue" [showTitle]="showTitle" [renderTitle]="renderTitle" [layoutType]="layoutType" [visible]="visible"
+        [additionalValue]="additionalValue" [showTitle]="showTitle" [renderTitle]="renderTitle" [visible]="visible"
         (valueChange)="valueChange($event)"></pep-checkbox>
     `,
 });

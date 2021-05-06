@@ -42,7 +42,16 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() required = false;
     @Input() disabled = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
+
     @Input() controlType = '';
     @Input() sizeLimitMB = 5;
 
@@ -58,7 +67,7 @@ export class PepFilesUploaderComponent implements OnInit {
     @ViewChild('fileInput') fileInput: any;
     @ViewChild('imagePreview') imagePreview: any;
 
-    fieldHeight = '';
+    @Input() fieldHeight = '';
 
     // multiple = false;
     uploader: FileUploader;
@@ -117,12 +126,6 @@ export class PepFilesUploaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.fieldHeight = this.customizationService.calculateFieldHeight(
-            this.layoutType,
-            this.rowSpan,
-            this.standAlone
-        );
-
         /*this.uploader.onCompleteAll = () => {
             this.fileInput.nativeElement.value = '';
         }*/

@@ -49,7 +49,17 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+        this.setFieldHeight();
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
+
     @Input() indicatorsField: any = null;
     @Input() menuField: any = null;
     @Input() hasCampaignField: any = null;
@@ -100,34 +110,22 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         private renderer: Renderer2,
         private element: ElementRef,
         private translate: TranslateService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-
-            // this.form = this.customizationService.getDefaultFromGroup(
-            //     this.key,
-            //     this.src,
-            //     this.required,
-            //     this.readonly,
-            //     this.disabled
-            // );
-            const pepField = new PepImageField({
-                key: this.key,
-                value: this.src,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+            this.setFieldHeight();
+            this.setDefaultForm();
 
             this.renderer.addClass(
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
         }
+    }
 
+    private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
             this.layoutType,
             this.rowSpan,
@@ -135,7 +133,22 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         );
     }
 
+    private setDefaultForm(): void {
+        const pepField = new PepImageField({
+            key: this.key,
+            value: this.src,
+            required: this.required,
+            readonly: this.readonly,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
     ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
+
         if (changes.src?.currentValue?.length > 0) {
             // Empty dataURI if there is change in the src.
             this.dataURI = null;
