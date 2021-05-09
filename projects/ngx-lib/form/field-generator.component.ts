@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
+    PepFieldBase,
     PepLayoutType,
     IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
@@ -65,25 +66,34 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
-        // if (this.formValidationChange) {
-        //     this.formValidationChange.unsubscribe();
-        // }
-        // if (this.childChange) {
-        //     this.childChange.unsubscribe();
-        // }
-        // if (this.elementClick) {
-        //     this.elementClick.unsubscribe();
-        // }
-        // if (this.childClick) {
-        //     this.childClick.unsubscribe();
-        // }
     }
 
-    onValueChanged(valueChange: IPepFieldValueChangeEvent): void {
-        this.valueChange.emit(valueChange);
+    onFileChanged(fileChange: any, field: PepFieldBase) {
+        // const value = fileChange.length > 0 ? JSON.stringify(fileChange) : '';
+        const fieldValueChange = {
+            key: field.key,
+            value: fileChange,
+            controlType: field.controlType
+        };
+        this.valueChange.emit(fieldValueChange);
+    }
+
+    onAddressValueChanged(valueChange: IPepFieldValueChangeEvent, field: PepFieldBase) {
+        const fieldValueChange = {
+            key: valueChange.key,
+            value: valueChange.value,
+            controlType: field.controlType
+        };
+        this.valueChange.emit(fieldValueChange);
+    }
+
+    onValueChanged(value: string, field: PepFieldBase): void {
+        const fieldValueChange = {
+            key: field.key,
+            value: value,
+            controlType: field.controlType
+        };
+        this.valueChange.emit(fieldValueChange);
     }
 
     onChildChanged(childChange: any): void {

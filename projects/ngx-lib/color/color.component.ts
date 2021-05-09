@@ -14,7 +14,6 @@ import {
     PepLayoutType,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepColorPickerComponent } from './color-picker.component';
@@ -30,7 +29,6 @@ export class PepColorComponent implements OnInit, OnDestroy {
     @Input() value = '';
     @Input() label = '';
     @Input() disabled = false;
-    @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() type: PepColorType = 'any';
@@ -40,13 +38,13 @@ export class PepColorComponent implements OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(
         private dialogService: PepDialogService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.renderer.addClass(
@@ -56,14 +54,11 @@ export class PepColorComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
     }
 
     changeColor(value: any): void {
         this.value = value;
-        this.valueChange.emit({ key: this.key, value });
+        this.valueChange.emit(value);
     }
 
     chooseColor(): void {

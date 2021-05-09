@@ -64,7 +64,7 @@
         "ERROR_INVALID_FIELDS": "Ellenőrizze a következő mezőket:",
         "ERROR_INVENTORY_LIMIT": "Maximum mennyiség",
         "ERROR_IS_NOT_VALID": "{{field}} is not valid",
-        "ERROR_IS_REQUIRED": "{{field}} is required",
+        "ERROR_IS_REQUIRED": "{{field}} is mandatory",
         "ERROR_MANDATORY_FIELDS": "Szükséges mezők:",
         "ERROR_MAX_QUANTITY_LIMIT": "Maximum mennyiség",
         "ERROR_MIN_QUANTITY_LIMIT": "Minimum mennyiség",

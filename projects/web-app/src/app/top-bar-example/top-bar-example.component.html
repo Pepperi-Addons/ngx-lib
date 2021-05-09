@@ -9,7 +9,7 @@
             </pep-menu>
         </div>
         <pep-search [value]="searchString" (search)="onSearchChanged($event)" [triggerOn]="'click'"
-            (valueChange)="onSearchAutocompleteChanged($event)" (stateChange)="onSearchStateChanged($event)">
+            (autocompleteChange)="onSearchAutocompleteChanged($event)" (stateChange)="onSearchStateChanged($event)">
         </pep-search>
     </pep-top-bar>
     <div class="main-content ">

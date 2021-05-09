@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PepSessionService } from './session.service';
 import { PepHttpService } from '../../http/services/http.service';
+import { PepLoaderService } from '../../http/services/loader.service';
 import { Observable } from 'rxjs';
 
 /*
@@ -16,7 +17,8 @@ export class PepAddonService {
 
     constructor(
         private sessionService: PepSessionService,
-        private httpService: PepHttpService
+        private httpService: PepHttpService,
+        private loaderService: PepLoaderService
     ) { }
 
     private getAddonBaseRelativePath(isAsync: boolean): string {
@@ -69,6 +71,10 @@ export class PepAddonService {
 
     // TODO: need to chek this if the loader is working.
     fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
-        return window.fetch(input, init);
+        this.loaderService.show();
+
+        return window.fetch(input, init).finally(() => {
+            this.loaderService.hide();
+        });
     }
 }

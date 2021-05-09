@@ -1,5 +1,5 @@
 <ng-template #pepTemplate>
-    <pep-files-uploader [key]="key" [src]="src" [label]="label" [required]="required" [disabled]="disabled"
+    <pep-files-uploader [key]="key" [src]="src" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
         [xAlignment]="xAlignment" [rowSpan]="rowSpan" [fieldHeight]="fieldHeight" [controlType]="controlType"
         [form]="form" [layoutType]="layoutType" [standAlone]="standAlone" (fileChange)="onFileChanged($event)"
         (elementClick)="onFileClicked($event)" [acceptedExtensions]="acceptAttachmentType">
@@ -21,7 +21,7 @@
 
 <ng-container *ngIf="layoutType === 'form'">
     <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone }">
-        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+        <pep-field-title [label]="label" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment"
             [showTitle]="showTitle">
         </pep-field-title>
         <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>

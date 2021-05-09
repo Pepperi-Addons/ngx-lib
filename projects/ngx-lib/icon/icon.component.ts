@@ -112,7 +112,6 @@ export class PepIconComponent {
      * @memberof PepIconComponent
      */
     private _fill = null;
-    // TODO: Change to color.
     /**
      * The fill color of the icon like #cccccc
      *

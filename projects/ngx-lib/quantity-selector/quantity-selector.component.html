@@ -9,7 +9,7 @@
                 'zero-quantity': formattedValue === '0'
             }">
             <pep-field-title *ngIf="layoutType !== 'table' && layoutType !== 'card'" [label]="label"
-                [required]="required" [disabled]="disabled" [showTitle]="showTitle" [xAlignment]="xAlignment">
+                [mandatory]="mandatory" [disabled]="disabled" [showTitle]="showTitle" [xAlignment]="xAlignment">
             </pep-field-title>
 
             <ng-container *ngIf="type == 'qs'">

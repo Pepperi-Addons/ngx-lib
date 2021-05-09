@@ -40,7 +40,7 @@ export class PepListPagerComponent {
     @Output()
     pagerChange: EventEmitter<IPepListPagerChangeEvent> = new EventEmitter<IPepListPagerChangeEvent>();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private _changeDetectorRef: ChangeDetectorRef) { }
 
     nextPage(): void {
         if (!this.hasNextPage()) {
@@ -101,8 +101,8 @@ export class PepListPagerComponent {
         return this.disabled || !this.hasPreviousPage();
     }
 
-    onValueChange(event: IPepFieldValueChangeEvent) {
-        const pageNumber = coerceNumberProperty(event.value);
+    onValueChange(value: string) {
+        const pageNumber = coerceNumberProperty(value);
         this.setPageIndex(pageNumber - 1); // - 1 to convert number into index.
     }
 

@@ -23,7 +23,7 @@ export default {
         disabled: commonArgTypes.disabled,
         xAlignment: commonArgTypes.xAlignment,
         textColor: commonArgTypes.textColor,
-        required: commonArgTypes.required,
+        mandatory: commonArgTypes.mandatory,
         showTitle: commonArgTypes.showTitle,
         renderTitle: commonArgTypes.renderTitle,
         renderError: commonArgTypes.renderError,
@@ -47,7 +47,7 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'type', 'required', 'textColor', 'disabled', // 'minDateValue', 'maxDateValue', 'minValue', 'maxValue',
+                'label', 'value', 'type', 'mandatory', 'textColor', 'disabled', // 'minDateValue', 'maxDateValue', 'minValue', 'maxValue',
                 'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'xAlignment', 'valueChange'
             ]
         }
@@ -64,7 +64,7 @@ export default {
 const Template: Story<PepDateComponent> = (args: PepDateComponent) => ({
     props: args,
     template: `
-        <pep-date [label]="label" [value]="value" [type]="type" [required]="required" [textColor]="textColor"
+        <pep-date [label]="label" [value]="value" [type]="type" [mandatory]="mandatory" [textColor]="textColor"
         [disabled]="disabled" [minDateValue]="minDateValue" [maxDateValue]="maxDateValue" [minValue]="minValue" [maxValue]="maxValue"
         [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
         [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-date>
@@ -73,16 +73,16 @@ const Template: Story<PepDateComponent> = (args: PepDateComponent) => ({
 
 export const Base = Template.bind({});
 Base.args = {
-    label: 'date time',
-    value: '2020-1-1 12:00',
+    label: 'date',
+    value: '2020-1-1',
 };
 
-// export const Email = Template.bind({});
-// Email.args = {
-//     label: 'email',
-//     type: 'email',
-//     value: 'email@pepperi.com',
-// };
+export const DateTime = Template.bind({});
+DateTime.args = {
+    label: 'date time',
+    type: 'datetime',
+    value: '2020-1-1 12:00',
+};
 
 // export const NumberInteger = Template.bind({});
 // NumberInteger.args = {

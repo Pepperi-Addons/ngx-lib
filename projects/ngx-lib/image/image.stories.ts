@@ -21,7 +21,7 @@ export default {
     },
     argTypes: {
         label: commonArgTypes.label,
-        required: commonArgTypes.required,
+        mandatory: commonArgTypes.mandatory,
         xAlignment: commonArgTypes.xAlignment,
         disabled: commonArgTypes.disabled,
         showTitle: commonArgTypes.showTitle,
@@ -39,13 +39,13 @@ export default {
         },
         rowSpan: commonArgTypes.rowSpan,
         elementClick: commonArgTypes.elementClick,
-        valueChange: commonArgTypes.valueChange,
+        fileChange: commonArgTypes.fileChange,
     },
     parameters: {
         controls: {
             include: [
-                'label', 'srcLarge', 'src', 'required', 'disabled', 'xAlignment', 'rowSpan',
-                'showTitle', 'elementClick', 'valueChange'
+                'label', 'srcLarge', 'src', 'mandatory', 'disabled', 'xAlignment', 'rowSpan',
+                'showTitle', 'elementClick', 'fileChange'
             ]
         }
     },
@@ -55,12 +55,10 @@ export default {
 const Template: Story<PepImageComponent> = (args: PepImageComponent) => ({
     props: {
         ...args,
-        // elementClick: action('elementClick'),
-        // valueChange: action('valueChange'),
     },
     template: `
-        <pep-image [label]="label" [srcLarge]="srcLarge" [src]="src" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
-        [showTitle]="showTitle" (elementClick)="elementClick($event)" (valueChange)="valueChange($event)"></pep-image>
+        <pep-image [label]="label" [srcLarge]="srcLarge" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
+        [showTitle]="showTitle" (elementClick)="elementClick($event)" (fileChange)="fileChange($event)"></pep-image>
     `,
 });
 

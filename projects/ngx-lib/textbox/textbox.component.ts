@@ -20,7 +20,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     PepTextboxFieldType,
     PepTextboxField,
     PepFieldBase,
@@ -128,13 +127,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
      */
     @Input() type: PepTextboxFieldType = 'text';
 
-    // TODO: change to mandatory
     /**
      * If the textbox is mandatory
      *
      * @memberof PepTextboxComponent
      */
-    @Input() required = false;
+    @Input() mandatory = false;
 
     // TODO: Check if should remove disabled and keep only readonly.
     /**
@@ -190,12 +188,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * The value change event.
      *
-     * @type {EventEmitter<IPepFieldValueChangeEvent>}
+     * @type {EventEmitter<string>}
      * @memberof PepTextboxComponent
      */
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-    // TODO: Change to fieldValueChange.
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
+
     // @Output()
     // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
@@ -250,7 +248,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         const pepField = new PepTextboxField({
             key: this.key,
             value: this.value,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
             maxFieldCharacters: this.maxFieldCharacters,
@@ -328,7 +326,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.isNumberType()) {
             if (value === '') {
-                res = this.required ? false : true;
+                res = this.mandatory ? false : true;
             } else {
                 const numberValue = coerceNumberProperty(value);
                 res =
@@ -388,12 +386,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                     this._formattedValue = value;
                 }
 
-                // TODO: Rename to fieldValueChange.
-                this.valueChange.emit({
-                    key: this.key,
-                    value,
-                    lastFocusedField: e.relatedTarget,
-                });
+                this.valueChange.emit(value);
             }
         }
 

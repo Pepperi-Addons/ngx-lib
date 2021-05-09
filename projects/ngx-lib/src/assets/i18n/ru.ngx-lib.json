@@ -64,7 +64,7 @@
         "ERROR_INVALID_FIELDS": "Пожалуйста, подтвердите следующие поля:",
         "ERROR_INVENTORY_LIMIT": "Макс. количество",
         "ERROR_IS_NOT_VALID": "{{field}} is not valid",
-        "ERROR_IS_REQUIRED": "{{field}} is required",
+        "ERROR_IS_REQUIRED": "{{field}} is mandatory",
         "ERROR_MANDATORY_FIELDS": "Обязательные поля:",
         "ERROR_MAX_QUANTITY_LIMIT": "Макс. количество",
         "ERROR_MIN_QUANTITY_LIMIT": "Мин. количество",

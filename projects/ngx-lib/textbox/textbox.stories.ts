@@ -19,7 +19,7 @@ export default {
         xAlignment: commonArgTypes.xAlignment,
         textColor: commonArgTypes.textColor,
         disabled: commonArgTypes.disabled,
-        required: commonArgTypes.required,
+        mandatory: commonArgTypes.mandatory,
         showTitle: commonArgTypes.showTitle,
         renderTitle: commonArgTypes.renderTitle,
         renderError: commonArgTypes.renderError,
@@ -56,7 +56,7 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'type', 'required', 'textColor', 'disabled', 'maxFieldCharacters', // 'minValue', 'maxValue',
+                'label', 'value', 'type', 'mandatory', 'textColor', 'disabled', 'maxFieldCharacters', // 'minValue', 'maxValue',
                 'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'xAlignment', 'valueChange'
             ]
         }
@@ -73,7 +73,7 @@ export default {
 const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
     props: args,
     template: `
-        <pep-textbox [label]="label" [value]="value" [type]="type" [required]="required" [textColor]="textColor"
+        <pep-textbox [label]="label" [value]="value" [type]="type" [mandatory]="mandatory" [textColor]="textColor"
         [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [minValue]="minValue" [maxValue]="maxValue"
         [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
         [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-textbox>

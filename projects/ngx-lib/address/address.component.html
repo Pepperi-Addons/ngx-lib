@@ -1,6 +1,6 @@
 <ng-container [formGroup]="form">
     <ng-container *ngIf="layoutType === 'form'">
-        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" class="header">
+        <pep-field-title [label]="label" [mandatory]="mandatory" [disabled]="disabled" class="header">
         </pep-field-title>
         <div [formGroupName]="key" [id]="key" class="pep-address-container"
             dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
@@ -9,7 +9,7 @@
                 <pep-textbox *ngSwitchCase="'textbox'" [layoutType]="layoutType" title="{{ groupField.formattedValue }}"
                     [form]="form" [key]="groupField.key" [value]="groupField.value"
                     [formattedValue]="groupField.formattedValue" [label]="groupField.label"
-                    [placeholder]="groupField.placeholder" [type]="groupField.type" [required]="groupField.required"
+                    [placeholder]="groupField.placeholder" [type]="groupField.type" [mandatory]="groupField.mandatory"
                     [disabled]="groupField.disabled" [readonly]="groupField.readonly"
                     [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan" [parentFieldKey]="key"
                     (valueChange)="onValueChange($event, groupField.key)">
@@ -17,7 +17,7 @@
 
                 <pep-select *ngSwitchCase="'select'" [layoutType]="layoutType" title="{{ groupField.formattedValue }}"
                     [form]="form" [key]="groupField.key" [value]="groupField.value" [label]="groupField.label"
-                    [type]="groupField.type" [required]="groupField.required" [disabled]="groupField.disabled"
+                    [type]="groupField.type" [mandatory]="groupField.mandatory" [disabled]="groupField.disabled"
                     [readonly]="groupField.readonly" [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan"
                     [options]="groupField.options" [parentFieldKey]="key"
                     (valueChange)="onValueChange($event, groupField.key)">

@@ -39,7 +39,7 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() key = '';
     @Input() src = '';
     @Input() label = '';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
 

@@ -108,7 +108,7 @@ export class PepQuantitySelectorComponent
 
     @Input() label = '';
     @Input() type: PepQuantitySelectorFieldType = 'qs';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() textColor = '';
@@ -152,7 +152,8 @@ export class PepQuantitySelectorComponent
     ) as PepStyleType; //'strong';
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
+
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -196,7 +197,7 @@ export class PepQuantitySelectorComponent
         const pepField = new PepQuantitySelectorField({
             key: this.key,
             value: this.value,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
         });
@@ -464,7 +465,7 @@ export class PepQuantitySelectorComponent
                 this._formattedValue = value;
             }
 
-            this.changeValue(this.value, event.relatedTarget);
+            this.valueChange.emit(this.value);
         } else {
             this.focusToTheSameElementInTheWantedRow();
         }
@@ -480,15 +481,6 @@ export class PepQuantitySelectorComponent
             );
             return true;
         }
-    }
-
-    changeValue(value: any, lastFocusedField: any = null): void {
-        this.valueChange.emit({
-            key: this.key,
-            value,
-            controlType: this.controlType,
-            lastFocusedField,
-        });
     }
 
     increment(event): void {

@@ -35,7 +35,7 @@ interface IPepFieldBaseOptions {
     key?: string;
     label?: string;
     accessory?: string;
-    required?: boolean;
+    mandatory?: boolean;
     readonly?: boolean;
     disabled?: boolean;
     order?: number;
@@ -63,7 +63,7 @@ export class PepFieldBase {
     key: string;
     label: string;
     accessory: string;
-    required: boolean;
+    mandatory: boolean;
     readonly: boolean;
     disabled: boolean;
     order: number;
@@ -89,7 +89,7 @@ export class PepFieldBase {
         this.key = options.key || '';
         this.label = options.label || '';
         this.accessory = options.accessory || '';
-        this.required = !!options.required;
+        this.mandatory = !!options.mandatory;
 
         this.order = options.order ?? 1;
         this.controlType = options.controlType || '';
@@ -115,7 +115,7 @@ export class PepFieldBase {
     protected getBaseValidators(isCheckbox = false): ValidatorFn[] {
         const validators = [];
 
-        if (this.required && !this.readonly && !this.disabled) {
+        if (this.mandatory && !this.readonly && !this.disabled) {
             if (isCheckbox) {
                 validators.push(Validators.requiredTrue);
             } else {
@@ -141,7 +141,7 @@ export class PepFieldBase {
         this.value = options.value;
         this.formattedValue = options.formattedValue;
         this.additionalValue = options.additionalValue;
-        // TODO: Remove this from here we not suppose to update the read only prop.
+
         this.readonly = !!options.readonly;
         this.disabled = !!options.disabled;
         this.visible = !!options.visible;
@@ -489,7 +489,6 @@ export interface IPepFieldValueChangeEvent {
     key: string;
     value: string;
     controlType?: string;
-    lastFocusedField?: any;
 }
 
 export interface IPepFieldClickEvent {

@@ -60,7 +60,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         return this._type;
     }
 
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
@@ -96,7 +96,7 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     }
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     standAlone = false;
 
@@ -114,11 +114,11 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         if (this.form === null) {
             this.standAlone = true;
 
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled, 0, null, true);
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled, 0, null, true);
             const pepField = new PepCheckboxField({
                 key: this.key,
                 value: this.value,
-                required: this.required,
+                mandatory: this.mandatory,
                 readonly: this.readonly,
                 disabled: this.disabled,
             });
@@ -132,9 +132,6 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
     }
 
     onMaterialChange(e: MatCheckboxChange): void {
@@ -157,6 +154,6 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
             this.key,
             value
         );
-        this.valueChange.emit({ key: this.key, value: value.toString() });
+        this.valueChange.emit(value.toString());
     }
 }

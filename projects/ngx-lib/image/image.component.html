@@ -12,7 +12,7 @@
         </ng-template>
 
         <ng-container *ngIf="layoutType === 'form'">
-            <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+            <pep-field-title [label]="label" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment"
                 [showTitle]="showTitle">
             </pep-field-title>
             <ng-container *ngIf="disabled || readonly; then disabledTemplate; else editableTemplate"></ng-container>
@@ -24,7 +24,7 @@
             <ng-template #editableTemplate>
                 <div class="pep-file-container image-container" [ngClass]="{ 'one-row': rowSpan == 1}">
                     <pep-files-uploader [id]="key" [key]="key" [fieldHeight]="fieldHeight" [layoutType]="layoutType"
-                        [standAlone]="standAlone" [src]="srcLarge || src" [label]="label" [required]="required"
+                        [standAlone]="standAlone" [src]="srcLarge || src" [label]="label" [mandatory]="mandatory"
                         [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan" [controlType]="controlType"
                         [form]="form" [acceptedExtensions]="acceptImagesType" (fileChange)="onFileChanged($event)"
                         (elementClick)="onFileClicked($event)" [sizeLimitMB]="sizeLimitMB">

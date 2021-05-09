@@ -45,7 +45,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() options: IPepOption[] = [];
     @Input() label = '';
     // @Input() type = 'image';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
@@ -95,7 +95,9 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() acceptImagesType = 'bmp,jpg,jpeg,png,gif'; // "image/bmp, image/jpg, image/jpeg, image/png, image/tif, image/tiff";
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    fileChange: EventEmitter<any> = new EventEmitter<any>();
+    // @Output()
+    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -137,7 +139,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         const pepField = new PepImageField({
             key: this.key,
             value: this.src,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
         });
@@ -156,12 +158,6 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.elementClick) {
-        //     this.elementClick.unsubscribe();
-        // }
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
     }
 
     errorHandler(event: any): void {
@@ -198,11 +194,13 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             this.key,
             this.dataURI ? this.dataURI.fileExt : ''
         );
-        this.valueChange.emit({
-            key: this.key,
-            value,
-            controlType: this.controlType,
-        });
+        // this.valueChange.emit({
+        //     key: this.key,
+        //     value,
+        // });
+
+        this.fileChange.emit(value);
+        // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 
     objectIdIsNotEmpty(): boolean {

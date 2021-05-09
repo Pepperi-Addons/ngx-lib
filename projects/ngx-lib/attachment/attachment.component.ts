@@ -17,7 +17,7 @@ import {
     PepLayoutType,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
+    // IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
     PepAttachmentField,
 } from '@pepperi-addons/ngx-lib';
@@ -76,7 +76,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
      *
      * @memberof PepAttachmentComponent
      */
-    @Input() required = false;
+    @Input() mandatory = false;
 
     /**
      * If the attachment is disabled
@@ -117,8 +117,12 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
+    // @Output()
+    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    fileChange: EventEmitter<any> = new EventEmitter<any>();
+
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -148,7 +152,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         const pepField = new PepAttachmentField({
             key: this.key,
             value: this.src,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
         });
@@ -156,12 +160,6 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.elementClick) {
-        //     this.elementClick.unsubscribe();
-        // }
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
     }
 
     ngOnInit(): void {
@@ -199,11 +197,13 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
             this.key,
             this.dataURI ? this.dataURI.fileExt : ''
         );
-        this.valueChange.emit({
-            key: this.key,
-            value,
-            controlType: this.controlType,
-        });
+        // this.valueChange.emit({
+        //     key: this.key,
+        //     value,
+        // });
+
+        this.fileChange.emit(value);
+        // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 
     onFileClicked(event: IPepFieldClickEvent): void {

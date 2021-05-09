@@ -19,7 +19,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     PepTextareaField,
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
@@ -34,7 +33,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() label = '';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
@@ -81,7 +80,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     // @ViewChild('input') input: ElementRef;
     @ViewChild('textAreaDialogTemplate', { read: TemplateRef })
@@ -112,7 +111,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         const pepField = new PepTextareaField({
             key: this.key,
             value: this.value,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
             maxFieldCharacters: this.maxFieldCharacters,
@@ -140,14 +139,11 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
     }
 
     onBlur(event: any): void {
         const value = event.target ? event.target.value : event;
-        this.changeValue(value, event.relatedTarget);
+        this.changeValue(value);
 
         setTimeout(() => {
             if (this.isInEditMode) {
@@ -156,7 +152,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         }, 0);
     }
 
-    changeValue(value: any, lastFocusedField: any = null): void {
+    changeValue(value: any): void {
         if (value !== this.value) {
             this.value = value;
             this.customizationService.updateFormFieldValue(
@@ -164,7 +160,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
                 this.key,
                 value
             );
-            this.valueChange.emit({ key: this.key, value, lastFocusedField });
+            this.valueChange.emit(value);
         }
     }
 

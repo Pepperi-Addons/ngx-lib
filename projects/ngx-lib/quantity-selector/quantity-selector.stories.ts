@@ -21,7 +21,7 @@ export default {
         value: commonArgTypes.value,
         disabled: commonArgTypes.disabled,
         readonly: commonArgTypes.readonly,
-        required: commonArgTypes.required,
+        mandatory: commonArgTypes.mandatory,
         textColor: commonArgTypes.textColor,
         xAlignment: commonArgTypes.xAlignment,
         alowDecimal: {
@@ -35,8 +35,9 @@ export default {
             },
         },
         styleType: {
+            defaultValue: 'regular',
             table: {
-                defaultValue: { summary: 'weak' },
+                defaultValue: { summary: 'regular' },
             }
         },
         rowSpan: commonArgTypes.rowSpan,
@@ -48,7 +49,7 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'disabled', 'readonly', 'required', 'textColor', 'xAlignment', 'alowDecimal',
+                'label', 'value', 'disabled', 'readonly', 'mandatory', 'textColor', 'xAlignment', 'alowDecimal',
                 'styleType', 'rowSpan', 'visible', 'showTitle', 'valueChange', 'elementClick'
             ]
         }
@@ -65,7 +66,7 @@ export default {
 const Template: Story<PepQuantitySelectorComponent> = (args: PepQuantitySelectorComponent) => ({
     props: args,
     template: `
-        <pep-quantity-selector [label]="label" [value]="value" [disabled]="disabled" [readonly]="readonly" [required]="required" [textColor]="textColor"
+        <pep-quantity-selector [label]="label" [value]="value" [disabled]="disabled" [readonly]="readonly" [mandatory]="mandatory" [textColor]="textColor"
         [xAlignment]="xAlignment" [alowDecimal]="alowDecimal" [styleType]="styleType" [visible]="visible" [showTitle]="showTitle" [rowSpan]="rowSpan"
         (valueChange)="valueChange($event)" (elementClick)="elementClick($event)"></pep-quantity-selector>
     `

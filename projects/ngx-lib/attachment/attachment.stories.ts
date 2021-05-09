@@ -23,7 +23,7 @@ export default {
     },
     argTypes: {
         label: commonArgTypes.label,
-        required: commonArgTypes.required,
+        mandatory: commonArgTypes.mandatory,
         xAlignment: commonArgTypes.xAlignment,
         disabled: commonArgTypes.disabled,
         showTitle: commonArgTypes.showTitle,
@@ -34,13 +34,13 @@ export default {
         },
         rowSpan: commonArgTypes.rowSpan,
         elementClick: commonArgTypes.elementClick,
-        valueChange: commonArgTypes.valueChange,
+        fileChange: commonArgTypes.fileChange,
     },
     parameters: {
         controls: {
             include: [
-                'label', 'src', 'required', 'disabled', 'xAlignment', 'rowSpan',
-                'showTitle', 'elementClick', 'valueChange'
+                'label', 'src', 'mandatory', 'disabled', 'xAlignment', 'rowSpan',
+                'showTitle', 'elementClick', 'fileChange'
             ]
         }
     },
@@ -50,12 +50,10 @@ export default {
 const Template: Story<PepAttachmentComponent> = (args: PepAttachmentComponent) => ({
     props: {
         ...args,
-        // elementClick: action('elementClick'),
-        // valueChange: action('valueChange'),
     },
     template: `
-        <pep-attachment [label]="label" [src]="src" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
-        [showTitle]="showTitle" (elementClick)="elementClick($event)" (valueChange)="valueChange($event)"></pep-attachment>
+        <pep-attachment [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
+        [showTitle]="showTitle" (elementClick)="elementClick($event)" (fileChange)="fileChange($event)"></pep-attachment>
     `,
 });
 

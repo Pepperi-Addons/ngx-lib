@@ -219,7 +219,8 @@ $sorting-width: 1rem;
                 margin-bottom: 0;
                 // cursor: text;
 
-                .required {
+                .required,
+                .mandatory {
                     height: 0.75rem;
                     width: 0.75rem;
                 }
@@ -767,8 +768,8 @@ $sorting-width: 1rem;
 }
 
 @mixin pep-general-theme($pepperi-theme) {
-
-    .required {
+    .required,
+    .mandatory {
         color: get-pep-color($pepperi-theme, color-system-caution, color-base);
 
         .svg-icon {

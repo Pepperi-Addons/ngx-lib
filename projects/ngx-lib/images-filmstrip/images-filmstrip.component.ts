@@ -184,7 +184,7 @@ export class PepImagesFilmstripComponent
     items: GalleryItem[] = null;
     inDialog = false;
 
-    required = false;
+    mandatory = false;
     readonly = false;
     disabled = false;
     fieldHeight = '';
@@ -259,7 +259,7 @@ export class PepImagesFilmstripComponent
         const pepField = new PepImagesField({
             key: this.key,
             value: this.value,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
         });

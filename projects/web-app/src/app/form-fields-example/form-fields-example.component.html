@@ -29,20 +29,20 @@
             <div class="child1 child-container">
                 <!-- Textbox Examples -->
                 <pep-textbox [key]="'Texbox'" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
-                    [maxFieldCharacters]="15" [required]="true" [xAlignment]="'left'" [rowSpan]="2"
+                    [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
                     [value]="'Pepperi Textbox'" (valueChanged)="onValueChanged($event)">
                 </pep-textbox>
                 <pep-textbox [key]="'float'" [label]="'Pepperi float'" [type]="'real'" [xAlignment]="'left'"
-                    [value]="'9399371'" [required]="true" [disabled]="false">
+                    [value]="'9399371'" [mandatory]="true" [disabled]="false">
                 </pep-textbox>
                 <pep-textbox [key]="'currency'" [label]="'Pepperi currency'" [type]="'currency'" [xAlignment]="'left'"
-                    [value]="'1092.50'" [required]="true">
+                    [value]="'1092.50'" [mandatory]="true">
                 </pep-textbox>
                 <pep-textbox [key]="'percentage'" [label]="'Pepperi percentage'" [type]="'percentage'"
-                    [xAlignment]="'left'" [value]="'10'" [required]="true" [disabled]="true">
+                    [xAlignment]="'left'" [value]="'10'" [mandatory]="true" [disabled]="true">
                 </pep-textbox>
                 <pep-textbox [key]="'int'" [label]="'Pepperi int'" [type]="'int'" [xAlignment]="'left'"
-                    [value]="'20302'" [required]="true">
+                    [value]="'20302'" [mandatory]="true">
                 </pep-textbox>
                 <pep-textbox [key]="'Email'" [label]="'Pepperi Email'" [type]="'email'" [xAlignment]="'left'"
                     [value]="'email@pepperi.com'" [disabled]="true">
@@ -66,7 +66,7 @@
                 </pep-checkbox>
 
                 <!-- Date Examples -->
-                <pep-date [key]="'date1'" [required]="true" [label]="'Pepperi Date'" [value]="dateString"
+                <pep-date [key]="'date1'" [mandatory]="true" [label]="'Pepperi Date'" [value]="dateString"
                     [minValue]="minDateValue" [maxValue]="maxDateValue" [xAlignment]="'left'"
                     (valueChanged)="onValueChanged($event)">
                 </pep-date>

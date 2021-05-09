@@ -126,7 +126,7 @@
         "ERROR_INVALID_FIELDS": "Please validate the following fields:",
         "ERROR_INVENTORY_LIMIT": "Max quantity",
         "ERROR_IS_NOT_VALID": "{{field}} is not valid",
-        "ERROR_IS_REQUIRED": "{{field}} is required",
+        "ERROR_IS_REQUIRED": "{{field}} is mandatory",
         "ERROR_MANDATORY_FIELDS": "Required fields:",
         "ERROR_MAX_QUANTITY_LIMIT": "Max quantity",
         "ERROR_MIN_QUANTITY_LIMIT": "Min quantity",

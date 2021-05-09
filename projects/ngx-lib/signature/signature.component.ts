@@ -21,7 +21,7 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
+    // IPepFieldValueChangeEvent,
     PepSignatureField,
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
@@ -37,7 +37,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
     @Input() src = '';
     @Input() label = '';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
@@ -62,8 +62,11 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
+    // @Output()
+    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    fileChange: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('signaturePad') signaturePad: SignaturePad;
     @ViewChild('signaturePopupPad', { read: TemplateRef })
@@ -107,7 +110,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         const pepField = new PepSignatureField({
             key: this.key,
             value: this.src,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
         });
@@ -142,9 +145,6 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
     }
 
     drawComplete(): void {
@@ -228,7 +228,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         this.signatureURL = this.src = ''; // this.blankImage;
     }
 
-    changeValue(value: any, lastFocusedField: any = null): void {
+    changeValue(value: any): void {
         this.dataURI = value.length > 0 ? JSON.parse(value) : null;
         this.src = this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
         this.customizationService.updateFormFieldValue(
@@ -236,12 +236,13 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
             this.key,
             this.dataURI ? this.dataURI.fileExt : ''
         );
-        this.valueChange.emit({
-            key: this.key,
-            value,
-            controlType: this.controlType,
-            lastFocusedField,
-        });
+        // this.valueChange.emit({
+        //     key: this.key,
+        //     value,
+        // });
+
+        this.fileChange.emit(value);
+        // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 
     onKeyPress_OpenSignModal(event: any): void {

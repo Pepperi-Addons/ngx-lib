@@ -147,7 +147,7 @@ export class PepCustomizationService {
         private sessionService: PepSessionService,
         private fileService: PepFileService,
         public fb: FormBuilder
-    ) {}
+    ) { }
 
     getDefaultFromGroup(field: PepFieldBase, withValidators = true): FormGroup {
         const validators = withValidators ? field.getValidators() : [];
@@ -206,9 +206,6 @@ export class PepCustomizationService {
             // If disabled has changed.
             if (formControl.disabled !== field.disabled) {
                 field.disabled ? formControl.disable() : formControl.enable();
-
-                // const validators = this.getValidatorsForField(field.required, field.readonly, field.disabled,
-                //     field.maxFieldCharacters, field.type, field.controlType === 'checkbox');
 
                 const validators = field.getValidators();
                 formControl.setValidators(validators);
@@ -918,8 +915,8 @@ export class PepCustomizationService {
 
         this.hasCustomHeader =
             res.TopHeaderFiles &&
-            res.TopHeaderFiles.length > 0 &&
-            res.TopHeaderFiles[0] !== ''
+                res.TopHeaderFiles.length > 0 &&
+                res.TopHeaderFiles[0] !== ''
                 ? true
                 : false;
         this.hasCustomHomepage =

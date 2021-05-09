@@ -53,8 +53,8 @@ export const commonArgTypes = {
             },
         },
     },
-    required: {
-        description: 'If the component is required', // TODO: change required to mandatory',
+    mandatory: {
+        description: 'If the component is mandatory',
         defaultValue: false,
         control: {
             type: 'boolean',
@@ -144,10 +144,11 @@ export const commonArgTypes = {
         }
     },
     valueChange: {
-        // table: {
-        //     disable: true
-        // },
         action: 'valueChange',
+        control: false
+    },
+    fileChange: {
+        action: 'fileChange',
         control: false
     },
     elementClick: {

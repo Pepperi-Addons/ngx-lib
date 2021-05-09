@@ -22,7 +22,7 @@ export default {
     argTypes: {
         label: commonArgTypes.label,
         value: {
-            description: 'The value of the component (Hex color like #ccc)', // TODO: change required to mandatory',
+            description: 'The value of the component (Hex color like #ccc)',
             control: {
                 type: 'color'
             }
