@@ -184,8 +184,8 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    onFileChanged(value: any): void {
-        this.dataURI = value.length > 0 ? JSON.parse(value) : null;
+    onFileChanged(fileData: any): void {
+        this.dataURI = fileData;
         this.src = this.srcLarge =
             this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
 
@@ -199,7 +199,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         //     value,
         // });
 
-        this.fileChange.emit(value);
+        this.fileChange.emit(fileData);
         // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 

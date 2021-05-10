@@ -228,8 +228,8 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         this.signatureURL = this.src = ''; // this.blankImage;
     }
 
-    changeValue(value: any): void {
-        this.dataURI = value.length > 0 ? JSON.parse(value) : null;
+    changeValue(fileData: any): void {
+        this.dataURI = fileData;
         this.src = this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
         this.customizationService.updateFormFieldValue(
             this.form,
@@ -241,7 +241,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         //     value,
         // });
 
-        this.fileChange.emit(value);
+        this.fileChange.emit(fileData);
         // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 

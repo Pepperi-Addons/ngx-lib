@@ -68,11 +68,11 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     ngOnDestroy(): void {
     }
 
-    onFileChanged(fileChange: any, field: PepFieldBase) {
-        // const value = fileChange.length > 0 ? JSON.stringify(fileChange) : '';
+    onFileChanged(fileData: any, field: PepFieldBase) {
+        const value = fileData ? JSON.stringify(fileData) : '';
         const fieldValueChange = {
             key: field.key,
-            value: fileChange,
+            value: value,
             controlType: field.controlType
         };
         this.valueChange.emit(fieldValueChange);

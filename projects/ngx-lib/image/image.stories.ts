@@ -25,12 +25,12 @@ export default {
         xAlignment: commonArgTypes.xAlignment,
         disabled: commonArgTypes.disabled,
         showTitle: commonArgTypes.showTitle,
-        srcLarge: {
-            description: 'This is the large image src',
-            table: {
-                defaultValue: { summary: null },
-            }
-        },
+        // srcLarge: {
+        //     description: 'This is the large image src',
+        //     table: {
+        //         defaultValue: { summary: null },
+        //     }
+        // },
         src: {
             description: 'This is the src of the image',
             table: {
@@ -44,7 +44,7 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'srcLarge', 'src', 'mandatory', 'disabled', 'xAlignment', 'rowSpan',
+                'label', 'src', 'mandatory', 'disabled', 'xAlignment', 'rowSpan', // 'srcLarge', 
                 'showTitle', 'elementClick', 'fileChange'
             ]
         }
@@ -56,8 +56,9 @@ const Template: Story<PepImageComponent> = (args: PepImageComponent) => ({
     props: {
         ...args,
     },
-    template: `
-        <pep-image [label]="label" [srcLarge]="srcLarge" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
+    template: // [srcLarge]="srcLarge" 
+        `
+        <pep-image [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
         [showTitle]="showTitle" (elementClick)="elementClick($event)" (fileChange)="fileChange($event)"></pep-image>
     `,
 });

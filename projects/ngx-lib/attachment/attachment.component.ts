@@ -186,11 +186,11 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         // }
     }
 
-    onFileChanged(value: any): void {
-        const tmp = value.length > 0 ? JSON.parse(value) : null;
+    onFileChanged(fileData: any): void {
+        // const tmp = value.length > 0 ? JSON.parse(value) : null;
         // set this.dataURI after this.src cause it initialize in the src setter.
-        this.src = tmp ? tmp.fileStr : '';
-        this.dataURI = tmp;
+        this.src = fileData ? fileData.fileStr : '';
+        this.dataURI = fileData;
 
         this.customizationService.updateFormFieldValue(
             this.form,
@@ -202,7 +202,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         //     value,
         // });
 
-        this.fileChange.emit(value);
+        this.fileChange.emit(fileData);
         // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 
