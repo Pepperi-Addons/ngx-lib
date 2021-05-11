@@ -48,9 +48,13 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
         this.renderer.addClass(this.element.nativeElement, 'pep-grouped-field');
     }
 
-    ngOnChanges(changes): void {}
+    ngOnChanges(changes): void {
+        //
+    }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     // Not in use anymore comment in 16.55.
     // onBlur(e: any, key: string): void {

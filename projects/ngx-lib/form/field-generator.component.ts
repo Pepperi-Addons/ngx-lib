@@ -65,7 +65,9 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         return formControl ? formControl.dirty : false;
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     onFileChanged(fileData: any, field: PepFieldBase) {
         const value = fileData ? JSON.stringify(fileData) : '';

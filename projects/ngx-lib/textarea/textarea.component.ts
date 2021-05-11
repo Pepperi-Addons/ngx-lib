@@ -138,7 +138,9 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     onBlur(event: any): void {
         const value = event.target ? event.target.value : event;

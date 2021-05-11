@@ -128,12 +128,6 @@ export class PepInternalButtonComponent
         }
     }
 
-    ngOnDestroy(): void {
-        if (this.elementClick) {
-            this.elementClick.unsubscribe();
-        }
-    }
-
     // groupButtonClicked(action: IPepButtonClickEvent): void {
     //     if (action.source.key === 'action') {
     //         this.onButtonClicked(action.event);

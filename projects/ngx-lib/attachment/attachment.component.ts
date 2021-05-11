@@ -159,7 +159,9 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         this.form = this.customizationService.getDefaultFromGroup(pepField);
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     ngOnInit(): void {
         if (this.form === null) {

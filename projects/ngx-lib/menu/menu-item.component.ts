@@ -47,9 +47,9 @@ export class PepMenuItemComponent implements OnDestroy {
     menuItemClick: EventEmitter<IPepMenuItemClickEvent> = new EventEmitter<IPepMenuItemClickEvent>();
 
     ngOnDestroy(): void {
-        if (this.menuItemClick) {
-            this.menuItemClick.unsubscribe();
-        }
+        // if (this.menuItemClick) {
+        //     this.menuItemClick.unsubscribe();
+        // }
     }
 
     private clearSelectedItem(selectedItem: PepInternalMenuItem): void {

@@ -173,7 +173,9 @@ export class PepRichHtmlTextareaComponent
         }
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     getDefaultToolbarOptions(): IPepRichHtmlTextareaToolbarOptions {
         return {

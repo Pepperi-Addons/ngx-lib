@@ -53,7 +53,9 @@ export class PepColorComponent implements OnInit, OnDestroy {
         );
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     changeColor(value: any): void {
         this.value = value;

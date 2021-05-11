@@ -181,7 +181,9 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         this.setFieldFormattedValue(this.value);
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     selectionChange(event: any): void {
         if (!this.isMulti) {

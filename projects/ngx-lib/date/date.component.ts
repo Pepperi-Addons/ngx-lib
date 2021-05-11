@@ -225,7 +225,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         // }
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     private setFormattedValueFromModel(): void {
         if (this.dateModel === null || !this.dateModel.isValid()) {

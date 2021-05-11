@@ -144,7 +144,9 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //
+    }
 
     drawComplete(): void {
         // will be notified of szimek/signature_pad's onEnd event

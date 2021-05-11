@@ -36,9 +36,9 @@ export class PepGroupButtonsComponent implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.buttonClick) {
-            this.buttonClick.unsubscribe();
-        }
+        // if (this.buttonClick) {
+        //     this.buttonClick.unsubscribe();
+        // }
     }
 
     onButtonClicked(event: Event, button: PepButton): void {

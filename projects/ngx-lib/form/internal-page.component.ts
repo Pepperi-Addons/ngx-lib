@@ -392,13 +392,13 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.childChange) {
-            this.childChange.unsubscribe();
-        }
+        // if (this.childChange) {
+        //     this.childChange.unsubscribe();
+        // }
 
-        if (this.childClick) {
-            this.childClick.unsubscribe();
-        }
+        // if (this.childClick) {
+        //     this.childClick.unsubscribe();
+        // }
 
         if (this.resize) {
             this.resize.unsubscribe();

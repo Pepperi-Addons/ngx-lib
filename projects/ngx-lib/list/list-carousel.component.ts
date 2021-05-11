@@ -85,9 +85,9 @@ export class PepListCarouselComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.itemClick) {
-            this.itemClick.unsubscribe();
-        }
+        // if (this.itemClick) {
+        //     this.itemClick.unsubscribe();
+        // }
     }
 
     itemClicked(item: ObjectsDataRow): void {

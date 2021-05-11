@@ -171,9 +171,9 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.menuItemClick) {
-            this.menuItemClick.unsubscribe();
-        }
+        // if (this.menuItemClick) {
+        //     this.menuItemClick.unsubscribe();
+        // }
     }
 
     onMenuClicked(event): void {
