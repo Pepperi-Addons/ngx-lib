@@ -1,4 +1,3 @@
-import { coerceNumberProperty, _isNumberValue } from '@angular/cdk/coercion';
 import {
     Component,
     OnInit,
@@ -27,7 +26,7 @@ import {
 } from '@pepperi-addons/ngx-lib';
 
 /**
- * This is a text box input component that can be use to 
+ * This is a text box input component that can be use to
  *
  * @export
  * @class PepTextboxComponent
@@ -233,15 +232,16 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             this._formattedValue = value;
         }
 
-        // Need timeout for UI.
-        setTimeout(() => {
-            this.customizationService.updateFormFieldValue(
-                this.form,
-                this.key,
-                this.formattedValue,
-                this.parentFieldKey
-            );
-        }, 0);
+        this.updateFormFieldValue();
+    }
+
+    private updateFormFieldValue() {
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            this.formattedValue,
+            this.parentFieldKey
+        );
     }
 
     private getField(): PepFieldBase {
@@ -298,6 +298,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
+
+        this.updateFormFieldValue();
     }
 
     ngOnChanges(changes: any): void {
@@ -328,7 +330,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             if (value === '') {
                 res = this.mandatory ? false : true;
             } else {
-                const numberValue = coerceNumberProperty(value);
+                const numberValue = this.utilitiesService.coerceNumberProperty(
+                    value
+                );
                 res =
                     numberValue >= this.minValue &&
                     numberValue <= this.maxValue;
@@ -348,8 +352,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             if (this.value === '' || value === '') {
                 res = true;
             } else {
-                const currentValue = coerceNumberProperty(this.value);
-                const newValue = coerceNumberProperty(value);
+                const currentValue = this.utilitiesService.coerceNumberProperty(
+                    this.value
+                );
+                const newValue = this.utilitiesService.coerceNumberProperty(
+                    value
+                );
 
                 res = currentValue !== newValue;
             }

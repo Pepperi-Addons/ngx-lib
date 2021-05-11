@@ -155,13 +155,13 @@ export class PepColorPickerComponent implements OnInit {
 
         this.currentSaturation =
             hslColor.s >= this.currentSaturationMin &&
-                hslColor.s <= this.currentSaturationMax
+            hslColor.s <= this.currentSaturationMax
                 ? hslColor.s
                 : this.currentSaturation;
 
         this.currentLightness =
             hslColor.l >= this.currentLightnessMin &&
-                hslColor.l <= this.currentLightnessMax
+            hslColor.l <= this.currentLightnessMax
                 ? hslColor.l
                 : this.currentLightness;
 
@@ -183,7 +183,9 @@ export class PepColorPickerComponent implements OnInit {
         );
 
         this.isUserChooseAAComplientColor = adjustableColor === closestHex;
-        this.complientColor = this.colorService.convertHslToStringHsl(this.colorService.hex2hsl(closestHex));
+        this.complientColor = this.colorService.convertHslToStringHsl(
+            this.colorService.hex2hsl(closestHex)
+        );
     }
 
     onHueChange(event): void {

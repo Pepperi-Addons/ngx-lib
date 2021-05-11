@@ -97,7 +97,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
@@ -138,8 +138,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnDestroy(): void {}
 
     onBlur(event: any): void {
         const value = event.target ? event.target.value : event;

@@ -66,7 +66,8 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() acceptedExtensions = 'bmp,jpg,jpeg,png,gif,ico,svg,html,css';
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() fileChange: EventEmitter<IPepFileChangeEvent> = new EventEmitter<IPepFileChangeEvent>();
+    @Output()
+    fileChange: EventEmitter<IPepFileChangeEvent> = new EventEmitter<IPepFileChangeEvent>();
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -112,7 +113,7 @@ export class PepFilesUploaderComponent implements OnInit {
                     this.fileChange.emit({
                         acceptedExtensions: this.acceptedExtensions,
                         fileStr,
-                        fileExt
+                        fileExt,
                     });
                 } else {
                     const title = this.translate.instant(

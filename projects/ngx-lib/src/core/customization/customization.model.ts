@@ -321,13 +321,13 @@ export type PepQuantitySelectorFieldType =
     | 'qs'
     | 'qsForMatrix';
 interface IPepQuantitySelectorFieldOptions extends IPepFieldBaseOptions {
-    alowDecimal?: boolean;
+    allowDecimal?: boolean;
     notificationInfo?: any;
     type?: PepQuantitySelectorFieldType;
 }
 export class PepQuantitySelectorField extends PepFieldBase {
     controlType = 'qs';
-    alowDecimal: boolean;
+    allowDecimal: boolean;
     notificationInfo: any = {};
     updatedDataCount: number;
     type: PepQuantitySelectorFieldType;
@@ -336,7 +336,7 @@ export class PepQuantitySelectorField extends PepFieldBase {
         super(options);
 
         this.updatedDataCount = 0;
-        this.alowDecimal = options.alowDecimal || false;
+        this.allowDecimal = options.allowDecimal || false;
         this.type = options.type || 'qs';
 
         this.update(options);

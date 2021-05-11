@@ -16,20 +16,19 @@ export default {
             imports: [PepMenuModule, SBNgxHelperModule],
         }),
     ],
-    args: {
-    },
+    args: {},
     argTypes: {
         text: {
             description: 'This is the text of the component',
             control: 'text',
             table: {
                 defaultValue: { summary: null },
-            }
+            },
         },
         iconName: {
             table: {
                 defaultValue: { summary: null },
-            }
+            },
         },
         type: {
             description: 'This is the type of the component',
@@ -48,15 +47,16 @@ export default {
         styleType: {
             table: {
                 defaultValue: { summary: 'weak' },
-            }
+            },
         },
         sizeType: {
             table: {
                 defaultValue: { summary: 'md' },
-            }
+            },
         },
         classNames: {
-            description: 'Class names that should be on the menu element tag like classNames="class1 class2"',
+            description:
+                'Class names that should be on the menu element tag like classNames="class1 class2"',
         },
         disabled: commonArgTypes.disabled,
         items: {
@@ -64,7 +64,7 @@ export default {
             control: 'object',
             table: {
                 type: {
-                    summary: `[PepMenuItem]`
+                    summary: `[PepMenuItem]`,
                     // summary: ` [{
                     //     key: "key1",
                     //     value: "value1",
@@ -75,34 +75,43 @@ export default {
                     // }]`,
                 },
                 defaultValue: { summary: null },
-            }
+            },
         },
         selectedItem: {
             description: 'This is the selected item',
             control: 'object',
             table: {
                 type: {
-                    summary: `PepMenuItem`
+                    summary: `PepMenuItem`,
                 },
                 defaultValue: { summary: null },
-            }
+            },
         },
         menuClick: {
             action: 'menuClick',
-            control: false
+            control: false,
         },
         menuItemClick: {
             action: 'menuItemClick',
-            control: false
+            control: false,
         },
     },
     parameters: {
         controls: {
             include: [
-                'text', 'iconName', 'type', 'styleType', 'sizeType', 'classNames', 'disabled',
-                'items', 'selectedItem', 'menuClick', 'menuItemClick'
-            ]
-        }
+                'text',
+                'iconName',
+                'type',
+                'styleType',
+                'sizeType',
+                'classNames',
+                'disabled',
+                'items',
+                'selectedItem',
+                'menuClick',
+                'menuItemClick',
+            ],
+        },
     },
 } as Meta;
 
@@ -127,7 +136,6 @@ Base.args = {
         { key: 'sep', type: 'splitter' },
         { key: 'test3', text: 'test 3', iconName: 'system_settings' },
     ],
-
 };
 
 export const Select = Template.bind({});
@@ -140,5 +148,4 @@ Select.args = {
         { key: 'test2', text: 'test 2' },
         { key: 'test3', text: 'test 3', iconName: 'system_settings' },
     ],
-
 };

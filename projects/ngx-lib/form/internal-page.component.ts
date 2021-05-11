@@ -104,7 +104,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         public customizationService: PepCustomizationService,
         private elementRef: ElementRef,
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     private fillData(isInDialog = false): void {
         const view = this.matrixTemplate.createEmbeddedView(null);
@@ -201,7 +201,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                     // + 16 is the 1rem margin outside card.
                     const rowSpanToAdd =
                         (childrenCount * (cardRowsHeight + 16)) /
-                        formRowHeight +
+                            formRowHeight +
                         rowsToAdd;
                     this.field.rowSpan = rowSpanToAdd;
                 } else {
@@ -441,10 +441,10 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                     if (
                         field.FieldType === FIELD_TYPE.NumberIntegerForMatrix ||
                         field.FieldType ===
-                        FIELD_TYPE.NumberIntegerQuantitySelector ||
+                            FIELD_TYPE.NumberIntegerQuantitySelector ||
                         field.FieldType === FIELD_TYPE.NumberRealForMatrix ||
                         field.FieldType ===
-                        FIELD_TYPE.NumberRealQuantitySelector ||
+                            FIELD_TYPE.NumberRealQuantitySelector ||
                         field.FieldType === FIELD_TYPE.CalculatedInt ||
                         field.FieldType === FIELD_TYPE.NumberInteger ||
                         field.FieldType === FIELD_TYPE.CalculatedReal ||

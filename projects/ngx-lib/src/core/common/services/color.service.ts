@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 export interface IPepRgbColor {
     r?: any;
@@ -26,7 +26,6 @@ export class PepColorService {
     readonly THREE_DIGIT_HEX_COLOR_WITH_HASH_REGEX = /^#[0-9a-fA-F]{3}$/;
     readonly SIX_DIGIT_HEX_COLOR_REGEX = /^[0-9a-fA-F]{6}$/;
     readonly SIX_DIGIT_HEX_COLOR_WITH_HASH_REGEX = /^#[0-9a-fA-F]{6}$/;
-
 
     /**
      * Convert hex string to 6 digits hex string.
@@ -424,7 +423,10 @@ export class PepColorService {
 
         const { l } = this.hex2hsl(adjustableColor);
 
-        if (closestLighterColor.lightness - l < l - closestDarkerColor.lightness) {
+        if (
+            closestLighterColor.lightness - l <
+            l - closestDarkerColor.lightness
+        ) {
             return closestLighterColor.color;
         }
 

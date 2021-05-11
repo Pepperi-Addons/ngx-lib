@@ -149,8 +149,8 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         if (this.hideOnEmptyItems) {
             this.state =
                 !this.disabled &&
-                    this.items &&
-                    this.items.filter((item) => !item.disabled).length > 0
+                this.items &&
+                this.items.filter((item) => !item.disabled).length > 0
                     ? 'visible'
                     : 'hidden';
         } else {

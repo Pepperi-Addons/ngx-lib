@@ -15,8 +15,8 @@ export class PepValidatorService {
     //  Regular expressions
     readonly integerUnsigned = '^[0-9]*$';
     readonly integerSigned = '^-?[0-9]+$';
-    readonly decimalUnsigned = '^[0-9]+(.[0-9]+)?$';
-    readonly decimalSigned = '^-?[0-9]+(.[0-9]+)?$';
+    decimalUnsigned = '^[0-9]+(.[0-9]+)?$';
+    decimalSigned = '^-?[0-9]+(.[0-9]+)?$';
     readonly phone = '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$';
 
     decimalSeparator = '.';
@@ -29,6 +29,9 @@ export class PepValidatorService {
             maximumSignificantDigits: 2,
         }).format(1000);
         this.decimalSeparator = tmp.indexOf(',') === 1 ? '.' : ',';
+
+        this.decimalUnsigned = `^[0-9]+(${this.decimalSeparator}[0-9]+)?$`;
+        this.decimalSigned = `^-?[0-9]+(${this.decimalSeparator}[0-9]+)?$`;
     }
 
     /*
@@ -137,11 +140,11 @@ export class PepValidatorService {
     /*
         RegExp functions
     */
-    validateNumber(value: string, alowDecimal: boolean): string {
+    validateNumber(value: string, allowDecimal: boolean): string {
         // choose the appropiate regular expression
         let regex: string;
 
-        if (alowDecimal) {
+        if (allowDecimal) {
             regex = this.decimalSigned;
         } else {
             regex = this.integerSigned;
@@ -210,8 +213,20 @@ export class PepValidatorService {
         key: string,
         controlOrCommand: boolean
     ): boolean {
+        const defaultAllowedKeys = [
+            'Backspace',
+            'ArrowLeft',
+            'ArrowRight',
+            'Escape',
+            'Tab',
+            'Home',
+            'End',
+            'Delete',
+        ];
+
         // allow some non-numeric characters
         if (
+            defaultAllowedKeys.indexOf(key) != -1 ||
             allowedKeys.indexOf(key) != -1 ||
             // Allow: Ctrl+A and Command+A
             (key == 'a' && controlOrCommand) ||
@@ -220,7 +235,8 @@ export class PepValidatorService {
             // Allow: Ctrl+V and Command+V
             (key == 'v' && controlOrCommand) ||
             // Allow: Ctrl+X and Command+X
-            (key == 'x' && controlOrCommand)
+            (key == 'x' && controlOrCommand) ||
+            key.startsWith('F')
         ) {
             // let it happen, don't do anything
             return true;
@@ -234,23 +250,7 @@ export class PepValidatorService {
         const controlOrCommand = e.ctrlKey === true || e.metaKey === true;
 
         // allowed keys apart from numeric characters
-        const allowedKeys = [
-            'Backspace',
-            'ArrowLeft',
-            'ArrowRight',
-            'Escape',
-            'Tab',
-            'Home',
-            'End',
-            'Delete',
-            '.',
-            '-',
-            '+',
-            '(',
-            ')',
-            '*',
-            '#',
-        ];
+        const allowedKeys = ['.', '-', '+', '(', ')', '*', '#'];
 
         // allow some non-numeric characters
         if (
@@ -268,7 +268,7 @@ export class PepValidatorService {
         return isPhone;
     }
 
-    isNumber(e: KeyboardEvent, alowDecimal: boolean): boolean {
+    isNumber(e: KeyboardEvent, allowDecimal: boolean): boolean {
         const cursorPosition: number = e.target['selectionStart'];
         const originalValue: string = e.target['value'];
         const key: string = this.getName(e);
@@ -277,22 +277,13 @@ export class PepValidatorService {
         const separatorExists = originalValue.includes(this.decimalSeparator);
 
         // allowed keys apart from numeric characters
-        const allowedKeys = [
-            'Backspace',
-            'ArrowLeft',
-            'ArrowRight',
-            'Escape',
-            'Tab',
-            'Home',
-            'End',
-            'Delete',
-        ];
+        const allowedKeys = [];
 
         // when decimals are allowed, add
         // decimal separator to allowed codes when
         // its position is not close to the the sign (-. and .-)
         const separatorIsCloseToSign = signExists && cursorPosition <= 1;
-        if (alowDecimal && !separatorIsCloseToSign && !separatorExists) {
+        if (allowDecimal && !separatorIsCloseToSign && !separatorExists) {
             if (this.decimalSeparator == '.') allowedKeys.push('.');
             else allowedKeys.push(',');
         }

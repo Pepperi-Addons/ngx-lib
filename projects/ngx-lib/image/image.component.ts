@@ -112,7 +112,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         private renderer: Renderer2,
         private element: ElementRef,
         private translate: TranslateService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -157,8 +157,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnDestroy(): void {}
 
     errorHandler(event: any): void {
         event.target.src = this.fileService.getSvgAsImageSrc(

@@ -65,24 +65,26 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         return formControl ? formControl.dirty : false;
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnDestroy(): void {}
 
     onFileChanged(fileData: any, field: PepFieldBase) {
         const value = fileData ? JSON.stringify(fileData) : '';
         const fieldValueChange = {
             key: field.key,
             value: value,
-            controlType: field.controlType
+            controlType: field.controlType,
         };
         this.valueChange.emit(fieldValueChange);
     }
 
-    onAddressValueChanged(valueChange: IPepFieldValueChangeEvent, field: PepFieldBase) {
+    onAddressValueChanged(
+        valueChange: IPepFieldValueChangeEvent,
+        field: PepFieldBase
+    ) {
         const fieldValueChange = {
             key: valueChange.key,
             value: valueChange.value,
-            controlType: field.controlType
+            controlType: field.controlType,
         };
         this.valueChange.emit(fieldValueChange);
     }
@@ -91,7 +93,7 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         const fieldValueChange = {
             key: field.key,
             value: value,
-            controlType: field.controlType
+            controlType: field.controlType,
         };
         this.valueChange.emit(fieldValueChange);
     }

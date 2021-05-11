@@ -23,10 +23,9 @@
                 </ng-template>
                 <ng-template #editableQSBlock>
                     <mat-form-field appearance="outline">
-                        <input pepQsValidation [alowDecimal]="alowDecimal" type="decimalNumber" inputmode="decimal"
+                        <input pepQsValidation [allowDecimal]="allowDecimal" type="decimalNumber" inputmode="decimal"
                             matInput #QSInput name="{{ key }}" class="body-lg ellipsis" title="{{ formattedValue }}"
-                            autocomplete="off" [id]="key" [formControlName]="key"
-                            [value]="isFocus ? (value | pepQuantitySelectorNumber: alowDecimal) : formattedValue"
+                            autocomplete="off" [id]="key" [formControlName]="key" [value]="displayValue"
                             (click)="$event.target.setSelectionRange(0, 999)" (keydown)="onKeydown($event)"
                             (blur)="onBlur($event)" (focus)="onFocus($event)" />
                         <button *ngIf="showQsBtn" mat-button matPrefix (click)="decrement($event)"
@@ -66,11 +65,10 @@
                         matBadge="{{ additionalValue }}" matBadgePosition="before"
                         matBadgeSize="rowSpan === 1 ? small : medium" [@showHide]="getAdditionalValue"></span>
 
-                    <mat-form-field appearance="outline" (mouseleave)="!isFocus ? onMatrixMouseleave($event) : null">
-                        <input pepQsValidation [alowDecimal]="alowDecimal" type="decimalNumber" inputmode="decimal"
+                    <mat-form-field appearance="outline" (mouseleave)="!isInFocus ? onMatrixMouseleave($event) : null">
+                        <input pepQsValidation [allowDecimal]="allowDecimal" type="decimalNumber" inputmode="decimal"
                             matInput #QSInput name="{{ key }}" title="{{ formattedValue }}" class="body-sm ellipsis"
-                            autocomplete="off" [id]="key" [formControlName]="key"
-                            [value]="isFocus ? (value | pepQuantitySelectorNumber: alowDecimal) : formattedValue"
+                            autocomplete="off" [id]="key" [formControlName]="key" [value]="displayValue"
                             (click)="onMatrixClick($event); $event.target.setSelectionRange(0, 999)"
                             (keydown)="onKeydown($event)" (blur)="onMatrixBlur($event)"
                             (focus)="onMatrixMouseEnter($event); onFocus($event)"

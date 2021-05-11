@@ -24,8 +24,8 @@ export default {
         value: {
             description: 'The value of the component (Hex color like #ccc)',
             control: {
-                type: 'color'
-            }
+                type: 'color',
+            },
         },
         disabled: commonArgTypes.disabled,
         xAlignment: commonArgTypes.xAlignment,
@@ -49,16 +49,23 @@ export default {
             },
             table: {
                 defaultValue: { summary: 'true' },
-            }
+            },
         },
-        valueChange: commonArgTypes.valueChange
+        valueChange: commonArgTypes.valueChange,
     },
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'type', 'disabled', 'xAlignment', 'showTitle', 'showAAComplient', 'valueChange'
-            ]
-        }
+                'label',
+                'value',
+                'type',
+                'disabled',
+                'xAlignment',
+                'showTitle',
+                'showAAComplient',
+                'valueChange',
+            ],
+        },
     },
 } as Meta;
 
@@ -78,5 +85,5 @@ export const Base = Template.bind({});
 Base.storyName = 'Basic';
 Base.args = {
     label: 'choose color',
-    value: '#ccc'
+    value: '#ccc',
 };

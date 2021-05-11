@@ -26,4 +26,4 @@ import { PepAttachmentComponent } from './attachment.component';
     exports: [PepAttachmentComponent],
     declarations: [PepAttachmentComponent],
 })
-export class PepAttachmentModule { }
+export class PepAttachmentModule {}

@@ -73,11 +73,6 @@
                 <pep-date [key]="'dateTime1'" [label]="'Pepperi Date Time'" [type]="'datetime'" [value]="dateString"
                     [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
                 </pep-date>
-
-                <!-- Quantity Selector -->
-                <pep-quantity-selector [key]="'qs2'" [label]="'Pepperi Quantity Selector 1'" [type]="'button'"
-                    [value]="'55'" [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
-                </pep-quantity-selector>
             </div>
 
             <div class="child2 child-container">
@@ -128,8 +123,12 @@
 
             <div class="child4 child-container">
                 <!-- Quantity Selector -->
-                <pep-quantity-selector [key]="'qs1'" [label]="'Pepperi Quantity Selector 2'" [value]="'5000'"
-                    [xAlignment]="'right'" (elementClicked)="elementClicked($event)">
+                <pep-quantity-selector [key]="'qs1'" [label]="'Pepperi Quantity Selector 2'" [value]="'500,50'"
+                    [allowDecimal]="true" [xAlignment]="'right'" (elementClicked)="elementClicked($event)">
+                </pep-quantity-selector>
+
+                <pep-quantity-selector [key]="'qs2'" [label]="'Pepperi Quantity Selector 1'" [type]="'button'"
+                    [value]="'55'" [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
                 </pep-quantity-selector>
 
                 <!-- Select Example -->

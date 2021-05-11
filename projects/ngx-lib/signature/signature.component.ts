@@ -96,7 +96,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         private cd: ChangeDetectorRef,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
@@ -144,8 +144,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnDestroy(): void {}
 
     drawComplete(): void {
         // will be notified of szimek/signature_pad's onEnd event

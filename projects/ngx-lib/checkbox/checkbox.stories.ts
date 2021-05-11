@@ -43,7 +43,8 @@ export default {
             },
         },
         additionalValue: {
-            description: 'This is an object that represent "CheckedText" and "UncheckedText"',
+            description:
+                'This is an object that represent "CheckedText" and "UncheckedText"',
             control: 'object',
             table: {
                 type: {
@@ -54,16 +55,25 @@ export default {
                     // detail: 'something really really long',
                 },
                 defaultValue: { summary: null },
-            }
-        }
+            },
+        },
     },
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'type', 'mandatory', 'disabled', 'xAlignment',
-                'additionalValue', 'showTitle', 'renderTitle', 'visible', 'valueChange'
-            ]
-        }
+                'label',
+                'value',
+                'type',
+                'mandatory',
+                'disabled',
+                'xAlignment',
+                'additionalValue',
+                'showTitle',
+                'renderTitle',
+                'visible',
+                'valueChange',
+            ],
+        },
     },
 } as Meta;
 
@@ -85,5 +95,5 @@ Base.storyName = 'Basic';
 Base.args = {
     label: 'check box',
     value: 'true',
-    additionalValue: { "CheckedText": "❤", "UncheckedText": "💛" }
+    additionalValue: { CheckedText: '❤', UncheckedText: '💛' },
 };

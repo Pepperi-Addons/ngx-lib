@@ -11,7 +11,7 @@ export class PepSessionService {
     private readonly WAPI_BASE_URL_KEY = 'serverHostURL'; // pepperi.webapibaseurl
     // private readonly PEPPERI_CONSUMER_TOKEN: 'YY2pAwx6Exo2LWXrUllF9xzSfWF53wqc';
 
-    constructor(private jwtHelper: PepJwtHelperService) { }
+    constructor(private jwtHelper: PepJwtHelperService) {}
 
     private getParseToken(): any {
         // debugger;

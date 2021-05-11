@@ -27,43 +27,52 @@ export default {
         iconPosition: {
             table: {
                 defaultValue: { summary: 'end' },
-            }
+            },
         },
         iconName: {
             table: {
                 defaultValue: { summary: null },
-            }
+            },
         },
         sizeType: {
             table: {
                 defaultValue: { summary: 'md' },
-            }
+            },
         },
         styleStateType: {
             table: {
                 defaultValue: { summary: 'system' },
-            }
+            },
         },
         styleType: {
             table: {
                 defaultValue: { summary: 'weak' },
-            }
+            },
         },
         classNames: {
-            description: 'Class names that should be on the button element tag like classNames="class1 class2"',
+            description:
+                'Class names that should be on the button element tag like classNames="class1 class2"',
         },
         buttonClick: {
             action: 'buttonClick',
-            control: false
+            control: false,
         },
     },
     parameters: {
         controls: {
             include: [
-                'value', 'visible', 'disabled', 'iconPosition', 'iconName', 'sizeType', 'styleStateType',
-                'styleType', 'classNames', 'buttonClick'
-            ]
-        }
+                'value',
+                'visible',
+                'disabled',
+                'iconPosition',
+                'iconName',
+                'sizeType',
+                'styleStateType',
+                'styleType',
+                'classNames',
+                'buttonClick',
+            ],
+        },
     },
 } as Meta;
 

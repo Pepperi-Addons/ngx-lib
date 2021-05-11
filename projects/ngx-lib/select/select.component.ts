@@ -80,7 +80,6 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
 
     standAlone = false;
     isInEditMode = false;
-    // isFocus: boolean = false;
     isMulti = false;
     selectedValuesModel: string[];
     selectedValueModel: string;
@@ -90,7 +89,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     private addOptionsIfNeeded(): void {
         if (this.isMulti) {
@@ -182,11 +181,9 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         this.setFieldFormattedValue(this.value);
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnDestroy(): void {}
 
     selectionChange(event: any): void {
-        // this.isFocus = false;
         if (!this.isMulti) {
             this.changeValue(this.selectedValueModel);
         }
@@ -196,7 +193,6 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         // Only on close.
         if (!event) {
             if (this.isMulti) {
-                // this.isFocus = false;
                 this.changeValue(this.selectedValuesModel.join(';'));
             }
 

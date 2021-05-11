@@ -14,7 +14,7 @@ export default {
     // The component related to the Stories
     component: PepQuantitySelectorComponent,
     args: {
-        rowSpan: 2
+        rowSpan: 2,
     },
     argTypes: {
         label: commonArgTypes.label,
@@ -24,7 +24,7 @@ export default {
         mandatory: commonArgTypes.mandatory,
         textColor: commonArgTypes.textColor,
         xAlignment: commonArgTypes.xAlignment,
-        alowDecimal: {
+        allowDecimal: {
             description: 'If the component is allow decimal',
             defaultValue: true,
             control: {
@@ -38,7 +38,7 @@ export default {
             defaultValue: 'regular',
             table: {
                 defaultValue: { summary: 'regular' },
-            }
+            },
         },
         rowSpan: commonArgTypes.rowSpan,
         visible: commonArgTypes.visible,
@@ -49,10 +49,22 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'disabled', 'readonly', 'mandatory', 'textColor', 'xAlignment', 'alowDecimal',
-                'styleType', 'rowSpan', 'visible', 'showTitle', 'valueChange', 'elementClick'
-            ]
-        }
+                'label',
+                'value',
+                'disabled',
+                'readonly',
+                'mandatory',
+                'textColor',
+                'xAlignment',
+                'allowDecimal',
+                'styleType',
+                'rowSpan',
+                'visible',
+                'showTitle',
+                'valueChange',
+                'elementClick',
+            ],
+        },
     },
     decorators: [
         // The necessary modules for the component to work on Storybook
@@ -63,13 +75,15 @@ export default {
 } as Meta;
 
 // This creates a Story for the component
-const Template: Story<PepQuantitySelectorComponent> = (args: PepQuantitySelectorComponent) => ({
+const Template: Story<PepQuantitySelectorComponent> = (
+    args: PepQuantitySelectorComponent
+) => ({
     props: args,
     template: `
         <pep-quantity-selector [label]="label" [value]="value" [disabled]="disabled" [readonly]="readonly" [mandatory]="mandatory" [textColor]="textColor"
-        [xAlignment]="xAlignment" [alowDecimal]="alowDecimal" [styleType]="styleType" [visible]="visible" [showTitle]="showTitle" [rowSpan]="rowSpan"
+        [xAlignment]="xAlignment" [allowDecimal]="allowDecimal" [styleType]="styleType" [visible]="visible" [showTitle]="showTitle" [rowSpan]="rowSpan"
         (valueChange)="valueChange($event)" (elementClick)="elementClick($event)"></pep-quantity-selector>
-    `
+    `,
 });
 
 export const Base = Template.bind({});

@@ -32,10 +32,17 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'xAlignment', 'type', 'mandatory', 'disabled',
-                'showTitle', 'options', 'valueChange'
-            ]
-        }
+                'label',
+                'value',
+                'xAlignment',
+                'type',
+                'mandatory',
+                'disabled',
+                'showTitle',
+                'options',
+                'valueChange',
+            ],
+        },
     },
     decorators: [
         moduleMetadata({

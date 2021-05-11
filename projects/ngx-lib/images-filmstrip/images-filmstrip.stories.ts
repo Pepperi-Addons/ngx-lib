@@ -17,7 +17,7 @@ export default {
         }),
     ],
     args: {
-        rowSpan: 4
+        rowSpan: 4,
     },
     argTypes: {
         label: commonArgTypes.label,
@@ -27,21 +27,21 @@ export default {
             description: 'This is the value of all images with ";" seperator',
             table: {
                 defaultValue: { summary: null },
-            }
+            },
         },
         rowSpan: commonArgTypes.rowSpan,
     },
     parameters: {
         controls: {
-            include: [
-                'label', 'value', 'xAlignment', 'rowSpan', 'showTitle'
-            ]
-        }
+            include: ['label', 'value', 'xAlignment', 'rowSpan', 'showTitle'],
+        },
     },
 } as Meta;
 
 // This creates a Story for the component
-const Template: Story<PepImagesFilmstripComponent> = (args: PepImagesFilmstripComponent) => ({
+const Template: Story<PepImagesFilmstripComponent> = (
+    args: PepImagesFilmstripComponent
+) => ({
     props: {
         ...args,
     },
@@ -54,5 +54,6 @@ const Template: Story<PepImagesFilmstripComponent> = (args: PepImagesFilmstripCo
 export const Base = Template.bind({});
 Base.storyName = 'Basic';
 Base.args = {
-    value: "https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg"
+    value:
+        'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg',
 };

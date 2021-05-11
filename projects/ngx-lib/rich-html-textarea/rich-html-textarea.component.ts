@@ -50,7 +50,8 @@ export interface IPepRichHtmlTextareaToolbarOptions {
     styleUrls: ['./rich-html-textarea.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepRichHtmlTextareaComponent implements OnInit, OnChanges, OnDestroy {
+export class PepRichHtmlTextareaComponent
+    implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() label = '';
@@ -172,8 +173,7 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnChanges, OnDestro
         }
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnDestroy(): void {}
 
     getDefaultToolbarOptions(): IPepRichHtmlTextareaToolbarOptions {
         return {

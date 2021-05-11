@@ -18,7 +18,7 @@ import { PepButton, IPepButtonClickEvent } from './button.model';
 /**
  * This is a button component that support pepperi theme
  * style & state & sizes
- * 
+ *
  * @export
  * @class PepButtonComponent
  * @implements {OnDestroy}
@@ -142,7 +142,7 @@ export class PepButtonComponent implements OnDestroy {
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
 
-    constructor(private renderer: Renderer2, private element: ElementRef) { }
+    constructor(private renderer: Renderer2, private element: ElementRef) {}
 
     /**
      * @ignore

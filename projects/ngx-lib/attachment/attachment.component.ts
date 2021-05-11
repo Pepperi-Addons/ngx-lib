@@ -138,7 +138,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         public element: ElementRef,
         private fileService: PepFileService
-    ) { }
+    ) {}
 
     private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
@@ -159,8 +159,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         this.form = this.customizationService.getDefaultFromGroup(pepField);
     }
 
-    ngOnDestroy(): void {
-    }
+    ngOnDestroy(): void {}
 
     ngOnInit(): void {
         if (this.form === null) {

@@ -98,7 +98,7 @@ export class PepInternalButtonComponent
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         if (this.form === null) {

@@ -56,10 +56,21 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'type', 'mandatory', 'textColor', 'disabled', 'maxFieldCharacters', // 'minValue', 'maxValue',
-                'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'xAlignment', 'valueChange'
-            ]
-        }
+                'label',
+                'value',
+                'type',
+                'mandatory',
+                'textColor',
+                'disabled',
+                'maxFieldCharacters', // 'minValue', 'maxValue',
+                'showTitle',
+                'renderTitle',
+                'renderError',
+                'renderSymbol',
+                'xAlignment',
+                'valueChange',
+            ],
+        },
     },
     decorators: [
         // The necessary modules for the component to work on Storybook
@@ -77,7 +88,7 @@ const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
         [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [minValue]="minValue" [maxValue]="maxValue"
         [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
         [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-textbox>
-    `
+    `,
 });
 
 export const Base = Template.bind({});

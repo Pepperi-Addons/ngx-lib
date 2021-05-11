@@ -10,7 +10,11 @@ import {
     Renderer2,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { PepUtilitiesService, PepColorService, IPepHslColor } from '@pepperi-addons/ngx-lib';
+import {
+    PepUtilitiesService,
+    PepColorService,
+    IPepHslColor,
+} from '@pepperi-addons/ngx-lib';
 import { PepIconRegistry } from './icon-registry.service';
 import { PepIconType } from './icon-generated.model';
 
@@ -69,7 +73,7 @@ export class PepIconComponent {
      * @type {boolean}
      * @memberof PepIconComponent
      */
-    private _spin: boolean = false;
+    private _spin = false;
     /**
      * If icon spin
      *
@@ -131,7 +135,7 @@ export class PepIconComponent {
         private colorService: PepColorService,
         private iconRegistry: PepIconRegistry,
         @Optional() @Inject(DOCUMENT) private document: any
-    ) { }
+    ) {}
 
     /**
      * @ignore
@@ -141,7 +145,9 @@ export class PepIconComponent {
      */
     private setFill(): void {
         if (this.svgIcon && this._fill) {
-            const colorProperty = this.svgIcon.classList.contains('stroke') ? 'stroke' : 'fill';
+            const colorProperty = this.svgIcon.classList.contains('stroke')
+                ? 'stroke'
+                : 'fill';
             this.renderer.setStyle(this.svgIcon, colorProperty, this._fill);
         }
     }

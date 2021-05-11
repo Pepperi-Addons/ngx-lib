@@ -40,7 +40,7 @@ export class PepListPagerComponent {
     @Output()
     pagerChange: EventEmitter<IPepListPagerChangeEvent> = new EventEmitter<IPepListPagerChangeEvent>();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) { }
+    constructor(private _changeDetectorRef: ChangeDetectorRef) {}
 
     nextPage(): void {
         if (!this.hasNextPage()) {

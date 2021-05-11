@@ -1,17 +1,25 @@
-import { moduleMetadata, Story, Meta, componentWrapperDecorator } from '@storybook/angular';
-import { registerAllIcons, SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import {
+    moduleMetadata,
+    Story,
+    Meta,
+    componentWrapperDecorator,
+} from '@storybook/angular';
+import {
+    registerAllIcons,
+    SBNgxHelperModule,
+} from '@storybook-settings/ngx-helper.module';
 
 import { PepIconComponent } from './icon.component';
 import { PepIconModule } from './icon.module';
 import { PepIconRegistry } from './icon-registry.service';
-import { allIcons } from './icon-generated-all.model'
+import { allIcons } from './icon-generated-all.model';
 import { pepIconSystemSettings } from './icon-generated.model';
 import { APP_INITIALIZER } from '@angular/core';
 
 function allIconsToNames(): Array<string> {
-    let pepIcons = [];
+    const pepIcons = [];
     if (allIcons) {
-        Object.keys(allIcons).forEach(key => {
+        Object.keys(allIcons).forEach((key) => {
             pepIcons.push(key);
         });
     }
@@ -31,8 +39,8 @@ export default {
                     provide: APP_INITIALIZER,
                     useFactory: registerAllIcons,
                     multi: true,
-                    deps: [PepIconRegistry]
-                }
+                    deps: [PepIconRegistry],
+                },
             ],
             imports: [PepIconModule, SBNgxHelperModule],
         }),
@@ -50,7 +58,7 @@ export default {
             defaultValue: false,
             control: {
                 type: 'select',
-                options: allIconsToNames()
+                options: allIconsToNames(),
             },
             table: {
                 type: {
@@ -70,15 +78,13 @@ export default {
         spin: {
             description: 'If the icon should spin',
             defaultValue: false,
-        }
+        },
     },
     parameters: {
         controls: {
-            include: [
-                'name', 'spin', 'fill'
-            ]
-        }
-    }
+            include: ['name', 'spin', 'fill'],
+        },
+    },
 } as Meta;
 
 // This creates a Story for the component
@@ -100,9 +106,7 @@ Base.args = {
 // Base.parameters = { controls: { include: ['fill'] } };
 
 // This creates a Story for the component
-const AllIconsTemplate: Story<PepIconComponent> = (
-    args: PepIconComponent
-) => ({
+const AllIconsTemplate: Story<PepIconComponent> = (args: PepIconComponent) => ({
     props: {
         ...args,
         allIconsNames: allIconsToNames(),

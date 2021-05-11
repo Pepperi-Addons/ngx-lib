@@ -47,10 +47,20 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'type', 'mandatory', 'textColor', 'disabled', // 'minDateValue', 'maxDateValue', 'minValue', 'maxValue',
-                'showTitle', 'renderTitle', 'renderError', 'renderSymbol', 'xAlignment', 'valueChange'
-            ]
-        }
+                'label',
+                'value',
+                'type',
+                'mandatory',
+                'textColor',
+                'disabled', // 'minDateValue', 'maxDateValue', 'minValue', 'maxValue',
+                'showTitle',
+                'renderTitle',
+                'renderError',
+                'renderSymbol',
+                'xAlignment',
+                'valueChange',
+            ],
+        },
     },
     decorators: [
         // The necessary modules for the component to work on Storybook
@@ -68,7 +78,7 @@ const Template: Story<PepDateComponent> = (args: PepDateComponent) => ({
         [disabled]="disabled" [minDateValue]="minDateValue" [maxDateValue]="maxDateValue" [minValue]="minValue" [maxValue]="maxValue"
         [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
         [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-date>
-    `
+    `,
 });
 
 export const Base = Template.bind({});

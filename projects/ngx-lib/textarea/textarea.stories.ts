@@ -14,7 +14,7 @@ export default {
     // The component related to the Stories
     component: PepTextareaComponent,
     args: {
-        rowSpan: 2
+        rowSpan: 2,
     },
     argTypes: {
         label: commonArgTypes.label,
@@ -34,10 +34,19 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'value', 'mandatory', 'disabled', 'maxFieldCharacters', 'textColor',
-                'xAlignment', 'rowSpan', 'visible', 'showTitle', 'valueChange'
-            ]
-        }
+                'label',
+                'value',
+                'mandatory',
+                'disabled',
+                'maxFieldCharacters',
+                'textColor',
+                'xAlignment',
+                'rowSpan',
+                'visible',
+                'showTitle',
+                'valueChange',
+            ],
+        },
     },
     decorators: [
         // The necessary modules for the component to work on Storybook
@@ -53,7 +62,7 @@ const Template: Story<PepTextareaComponent> = (args: PepTextareaComponent) => ({
     template: `
         <pep-textarea [label]="label" [value]="value" [mandatory]="mandatory" [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [textColor]="textColor"
         [xAlignment]="xAlignment"  [rowSpan]="rowSpan" [visible]="visible" [showTitle]="showTitle" (valueChange)="valueChange($event)"></pep-textarea>
-    `
+    `,
 });
 
 export const Base = Template.bind({});

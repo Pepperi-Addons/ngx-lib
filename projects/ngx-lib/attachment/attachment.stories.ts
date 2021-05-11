@@ -19,7 +19,7 @@ export default {
         }),
     ],
     args: {
-        rowSpan: 2
+        rowSpan: 2,
     },
     argTypes: {
         label: commonArgTypes.label,
@@ -30,7 +30,7 @@ export default {
         src: {
             table: {
                 defaultValue: { summary: null },
-            }
+            },
         },
         rowSpan: commonArgTypes.rowSpan,
         elementClick: commonArgTypes.elementClick,
@@ -39,15 +39,24 @@ export default {
     parameters: {
         controls: {
             include: [
-                'label', 'src', 'mandatory', 'disabled', 'xAlignment', 'rowSpan',
-                'showTitle', 'elementClick', 'fileChange'
-            ]
-        }
+                'label',
+                'src',
+                'mandatory',
+                'disabled',
+                'xAlignment',
+                'rowSpan',
+                'showTitle',
+                'elementClick',
+                'fileChange',
+            ],
+        },
     },
 } as Meta;
 
 // This creates a Story for the component
-const Template: Story<PepAttachmentComponent> = (args: PepAttachmentComponent) => ({
+const Template: Story<PepAttachmentComponent> = (
+    args: PepAttachmentComponent
+) => ({
     props: {
         ...args,
     },
@@ -60,5 +69,6 @@ const Template: Story<PepAttachmentComponent> = (args: PepAttachmentComponent) =
 export const Base = Template.bind({});
 Base.storyName = 'Basic';
 Base.args = {
-    src: "https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg"
+    src:
+        'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg',
 };
