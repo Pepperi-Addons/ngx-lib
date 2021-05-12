@@ -42,18 +42,12 @@ import {
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     /**
-     * @ignore
+     * The text box key 
      *
      * @memberof PepTextboxComponent
      */
     @Input() key = '';
 
-    /**
-     * @ignore
-     *
-     * @private
-     * @memberof PepTextboxComponent
-     */
     private _value = null;
     /**
      * The value of the text box.
@@ -76,15 +70,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._value;
     }
 
-    /**
-     * @ignore
-     *
-     * @private
-     * @memberof PepTextboxComponent
-     */
     private _formattedValue = null;
     /**
-     * @ignore
+     * The formatted value.
      *
      * @memberof PepTextboxComponent
      */
@@ -112,7 +100,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() label = '';
 
     /**
-     * @ignore
+     * The placeholder (relevant only for children - if parent isn't null).
      *
      * @memberof PepTextboxComponent
      */
@@ -135,7 +123,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     // TODO: Check if should remove disabled and keep only readonly.
     /**
-     * @ignore
+     * If the textbox is disabled.
      *
      * @memberof PepTextboxComponent
      */

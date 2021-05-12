@@ -36,12 +36,6 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
      */
     @Input() key = '';
 
-    /**
-     * @ignore
-     *
-     * @private
-     * @memberof PepAttachmentComponent
-     */
     private _src = '';
     /**
      * The src of the attachment.
@@ -138,7 +132,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         public element: ElementRef,
         private fileService: PepFileService
-    ) {}
+    ) { }
 
     private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(

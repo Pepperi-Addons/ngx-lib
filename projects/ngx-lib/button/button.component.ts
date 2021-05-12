@@ -30,7 +30,7 @@ import { PepButton, IPepButtonClickEvent } from './button.model';
 })
 export class PepButtonComponent implements OnDestroy {
     /**
-     * @ignore
+     * The button key
      *
      * @type {string}
      * @memberof PepButtonComponent
@@ -100,12 +100,6 @@ export class PepButtonComponent implements OnDestroy {
      */
     @Input() iconPosition: 'start' | 'end' = 'end';
 
-    /**
-     * @ignore
-     *
-     * @private
-     * @memberof PepButtonComponent
-     */
     private _visible = true;
     /**
      * If the button is visible or not.
@@ -142,11 +136,8 @@ export class PepButtonComponent implements OnDestroy {
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
 
-    constructor(private renderer: Renderer2, private element: ElementRef) {}
+    constructor(private renderer: Renderer2, private element: ElementRef) { }
 
-    /**
-     * @ignore
-     */
     ngOnDestroy(): void {
         if (this.buttonClick) {
             this.buttonClick.unsubscribe();
@@ -154,7 +145,7 @@ export class PepButtonComponent implements OnDestroy {
     }
 
     /**
-     * @ignore
+     * The button click
      */
     onButtonClicked(event: Event): void {
         const button = new PepButton({

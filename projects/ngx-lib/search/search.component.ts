@@ -22,7 +22,7 @@ import {
     animate,
 } from '@angular/animations';
 import { FormControl } from '@angular/forms';
-import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService, PepScreenSizeType, PepSizeType } from '@pepperi-addons/ngx-lib';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import {
     IPepSearchClickEvent,
@@ -126,6 +126,14 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         return this._useAsWebComponent;
     }
 
+    /**
+     * The size of the button.
+     *
+     * @type {PepSizeType}
+     * @memberof PepButtonComponent
+     */
+    @Input() sizeType: PepSizeType = 'md';
+
     @Output()
     search: EventEmitter<IPepSearchClickEvent> = new EventEmitter<IPepSearchClickEvent>();
     @Output()
@@ -148,7 +156,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     constructor(
         private hostElement: ElementRef,
         private layoutService: PepLayoutService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {

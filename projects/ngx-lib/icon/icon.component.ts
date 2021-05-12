@@ -57,22 +57,8 @@ import { PepIconType } from './icon-generated.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepIconComponent {
-    /**
-     * @ignore
-     *
-     * @private
-     * @type {SVGElement}
-     * @memberof PepIconComponent
-     */
     private svgIcon: SVGElement;
 
-    /**
-     * @ignore
-     *
-     * @private
-     * @type {boolean}
-     * @memberof PepIconComponent
-     */
     private _spin = false;
     /**
      * If icon spin
@@ -109,12 +95,6 @@ export class PepIconComponent {
         }
     }
 
-    /**
-     * @ignore
-     *
-     * @private
-     * @memberof PepIconComponent
-     */
     private _fill = null;
     /**
      * The fill color of the icon like #cccccc
@@ -135,10 +115,10 @@ export class PepIconComponent {
         private colorService: PepColorService,
         private iconRegistry: PepIconRegistry,
         @Optional() @Inject(DOCUMENT) private document: any
-    ) {}
+    ) { }
 
     /**
-     * @ignore
+     * Set fill on the svg icon.
      *
      * @private
      * @memberof PepIconComponent
@@ -153,7 +133,7 @@ export class PepIconComponent {
     }
 
     /**
-     * @ignore
+     * Toggle  spin class by spin property.
      *
      * @private
      * @memberof PepIconComponent

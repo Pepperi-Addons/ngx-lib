@@ -151,6 +151,54 @@
 
 }
 
+@mixin pep-field-size($size: 'md') {
+    // Default is md
+    $field-height: $spacing-3xl;
+    $field-padding: $spacing-md;
+
+    @if $size == 'xl' {
+        $field-height: $spacing-5xl;
+        $field-padding: $spacing-xl;
+    }
+    @else if $size == 'lg' {
+        $field-height: $spacing-4xl;
+        $field-padding: $spacing-lg;
+    }
+    @else if $size == 'sm' {
+        $field-height: $spacing-2xl;
+        $field-padding: $spacing-sm;
+    }
+    @else if $size == 'xs' {
+        $field-height: $spacing-xl;
+        $field-padding: $spacing-xs;
+    }
+
+    .mat-form-field .mat-form-field-wrapper {
+        .mat-form-field-flex {
+            min-height: $field-height;
+            height: $field-height;
+            padding-left: $field-padding;
+            padding-right: $field-padding;
+        }
+    }
+}
+
+.xl {
+    @include pep-field-size('xl');
+}
+.lg {
+    @include pep-field-size('lg');
+}
+.md {
+    @include pep-field-size('md');
+}
+.sm {
+    @include pep-field-size('sm');
+}
+.xs {
+    @include pep-field-size('xs');
+}
+
 .mat-grid-tile {
     overflow: inherit !important;
 }
@@ -525,7 +573,6 @@ $sorting-width: 1rem;
         height: auto;
     }
 }
-
 
 
 //  Card view & Line view

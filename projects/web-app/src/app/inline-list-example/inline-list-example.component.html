@@ -14,6 +14,8 @@
                 [iconName]="'system_bolt'">
             </pep-button>
         </div>
+        <pep-search value="searchString" [triggerOn]="'click'">
+        </pep-search>
         <div footer-start-content>
             <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'"
                 [classNames]="'pep-spacing-element '">
@@ -56,6 +58,8 @@
                             [iconName]="'system_settings'">
                         </pep-button>
                     </div>
+                    <pep-search value="searchString" [sizeType]="'sm'" [triggerOn]="'click'">
+                    </pep-search>
                     <pep-list-actions [actions]="menuActions" [sizeType]="'sm'"></pep-list-actions>
                     <pep-list-chooser [options]="listOptions" [sizeType]="'sm'"></pep-list-chooser>
                     <pep-list-sorting [options]="sortingOptions" [sizeType]="'sm'" (change)="onSortingChanged($event)">
