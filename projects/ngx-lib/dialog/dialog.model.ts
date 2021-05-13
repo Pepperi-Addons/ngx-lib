@@ -26,7 +26,7 @@ export class PepDialogActionButton {
 
 export class PepDialogData {
     title: string;
-    type: PepDialogActionsType;
+    actionsType: PepDialogActionsType;
     content: any;
     showClose: boolean;
     showHeader: boolean;
@@ -35,7 +35,7 @@ export class PepDialogData {
 
     constructor(options: {
         title?: string;
-        type?: PepDialogActionsType;
+        actionsType?: PepDialogActionsType;
         content?: any;
         contentDisabled?: boolean;
         showClose?: boolean;
@@ -44,7 +44,7 @@ export class PepDialogData {
         actionButtons?: Array<PepDialogActionButton>;
     }) {
         this.title = options.title || '';
-        this.type = options.type || 'close';
+        this.actionsType = options.actionsType || 'close';
         this.content = options.content || '';
         this.showClose = options.showClose ?? true;
         this.showHeader = options.showHeader ?? true;

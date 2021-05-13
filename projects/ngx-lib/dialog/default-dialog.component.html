@@ -2,7 +2,7 @@
     [title]="data?.title">
     <div pep-dialog-content [innerHtml]="data?.content | pepSafeHtml"></div>
     <div pep-dialog-actions class="pep-spacing-element-negative">
-        <ng-container [ngSwitch]="data?.type">
+        <ng-container [ngSwitch]="data?.actionsType">
             <ng-container *ngSwitchCase="'close'">
                 <button mat-button [mat-dialog-close]="true" class="pep-spacing-element pep-button md weak">
                     {{ 'ACTIONS.CLOSE' | translate }}

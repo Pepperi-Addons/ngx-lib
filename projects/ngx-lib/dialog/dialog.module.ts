@@ -30,6 +30,7 @@ import { PepDialogComponent } from './dialog.component';
     ],
     exports: [PepDialogComponent],
     declarations: [PepDefaultDialogComponent, PepDialogComponent],
+    entryComponents: [PepDefaultDialogComponent],
 })
 export class PepDialogModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
