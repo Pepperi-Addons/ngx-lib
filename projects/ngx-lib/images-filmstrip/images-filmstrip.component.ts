@@ -12,6 +12,7 @@ import {
     Inject,
     Optional,
     ViewContainerRef,
+    OnChanges,
 } from '@angular/core';
 import {
     trigger,
@@ -148,13 +149,22 @@ export function createViewerConfig(
     ],
 })
 export class PepImagesFilmstripComponent
-    implements OnInit, AfterViewInit, OnDestroy {
+    implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     // @ViewChild('ngxViewerImage') ngxViewerImage: any; // TODO: Check if we need to use this??
-    @Input() value = '';
     @Input() key = '';
+    @Input() value = '';
     @Input() label = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+        this.setFieldHeight();
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
 
     controlType = 'images';
 
@@ -174,7 +184,7 @@ export class PepImagesFilmstripComponent
     items: GalleryItem[] = null;
     inDialog = false;
 
-    required = false;
+    mandatory = false;
     readonly = false;
     disabled = false;
     fieldHeight = '';
@@ -237,33 +247,37 @@ export class PepImagesFilmstripComponent
         };
     }
 
+    private setFieldHeight(): void {
+        this.fieldHeight = this.customizationService.calculateFieldHeight(
+            this.layoutType,
+            this.rowSpan,
+            this.standAlone
+        );
+    }
+
+    private setDefaultForm(): void {
+        const pepField = new PepImagesField({
+            key: this.key,
+            value: this.value,
+            mandatory: this.mandatory,
+            readonly: this.readonly,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
     ngOnInit(): void {
         if (!this.inDialog) {
             if (this.form === null) {
                 this.standAlone = true;
-                // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required,
-                //     this.readonly, this.disabled);
-                const pepField = new PepImagesField({
-                    key: this.key,
-                    value: this.value,
-                    required: this.required,
-                    readonly: this.readonly,
-                    disabled: this.disabled,
-                });
-                this.form = this.customizationService.getDefaultFromGroup(
-                    pepField
-                );
+                this.setFieldHeight();
+                this.setDefaultForm();
 
                 this.renderer.addClass(
                     this.element.nativeElement,
                     PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
                 );
             }
-            this.fieldHeight = this.customizationService.calculateFieldHeight(
-                this.layoutType,
-                this.rowSpan,
-                this.standAlone
-            );
         }
 
         if (this.items === null) {
@@ -303,6 +317,12 @@ export class PepImagesFilmstripComponent
                 `${this.key}-${this.uid}-gallery`
             );
             this.initGalleryStyle(this.galleryCont, this.galleryRef);
+        }
+    }
+
+    ngOnChanges(): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
         }
     }
 

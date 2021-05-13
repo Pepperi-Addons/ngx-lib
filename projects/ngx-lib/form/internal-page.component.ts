@@ -227,8 +227,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     }
 
     private fillChildData(res: any): void {
-        // TODO: ??
-        // this.userService.setOptionalValuesDic(res.Rows);
         this.childData = res;
         this.uiControl = res.UIControl;
         this.additionalApiNames = res.AdditionalApiNames;
@@ -394,13 +392,13 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.childChange) {
-            this.childChange.unsubscribe();
-        }
+        // if (this.childChange) {
+        //     this.childChange.unsubscribe();
+        // }
 
-        if (this.childClick) {
-            this.childClick.unsubscribe();
-        }
+        // if (this.childClick) {
+        //     this.childClick.unsubscribe();
+        // }
 
         if (this.resize) {
             this.resize.unsubscribe();

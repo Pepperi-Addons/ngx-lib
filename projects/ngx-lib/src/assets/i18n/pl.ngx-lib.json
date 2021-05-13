@@ -64,7 +64,7 @@
         "ERROR_INVALID_FIELDS": "Sprawdź poprawność następujących pól:",
         "ERROR_INVENTORY_LIMIT": "Max ilość",
         "ERROR_IS_NOT_VALID": "{{field}} is not valid",
-        "ERROR_IS_REQUIRED": "{{field}} is required",
+        "ERROR_IS_REQUIRED": "{{field}} is mandatory",
         "ERROR_MANDATORY_FIELDS": "Wymagane pola:",
         "ERROR_MAX_QUANTITY_LIMIT": "Max ilość",
         "ERROR_MIN_QUANTITY_LIMIT": "Ilość min",

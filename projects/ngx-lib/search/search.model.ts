@@ -8,7 +8,7 @@ export interface IPepSearchClickEvent {
     value: string;
 }
 
-export interface IPepSearchValueChangeEvent {
+export interface IPepSearchAutocompleteChangeEvent {
     value: string;
     top: number;
 }

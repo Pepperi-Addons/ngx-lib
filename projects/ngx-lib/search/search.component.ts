@@ -22,11 +22,11 @@ import {
     animate,
 } from '@angular/animations';
 import { FormControl } from '@angular/forms';
-import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService, PepScreenSizeType, PepSizeType } from '@pepperi-addons/ngx-lib';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import {
     IPepSearchClickEvent,
-    IPepSearchValueChangeEvent,
+    IPepSearchAutocompleteChangeEvent,
     IPepSearchStateChangeEvent,
     PepSearchType,
     PepSearchTriggerType,
@@ -126,10 +126,18 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         return this._useAsWebComponent;
     }
 
+    /**
+     * The size of the button.
+     *
+     * @type {PepSizeType}
+     * @memberof PepButtonComponent
+     */
+    @Input() sizeType: PepSizeType = 'md';
+
     @Output()
     search: EventEmitter<IPepSearchClickEvent> = new EventEmitter<IPepSearchClickEvent>();
     @Output()
-    valueChange: EventEmitter<IPepSearchValueChangeEvent> = new EventEmitter<IPepSearchValueChangeEvent>();
+    autocompleteChange: EventEmitter<IPepSearchAutocompleteChangeEvent> = new EventEmitter<IPepSearchAutocompleteChangeEvent>();
     @Output()
     stateChange: EventEmitter<IPepSearchStateChangeEvent> = new EventEmitter<IPepSearchStateChangeEvent>();
 
@@ -148,7 +156,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     constructor(
         private hostElement: ElementRef,
         private layoutService: PepLayoutService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {
@@ -181,7 +189,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
                         newValue.length > 2 &&
                         newValue !== this.lastValue
                     ) {
-                        this.valueChange.emit({
+                        this.autocompleteChange.emit({
                             value: newValue,
                             top: this.autoCompleteTop,
                         });

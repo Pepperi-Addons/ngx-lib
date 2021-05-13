@@ -19,7 +19,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     PepTextareaField,
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
@@ -34,13 +33,22 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() label = '';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+        this.setFieldHeight();
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
 
     private _visible = true;
     @Input()
@@ -72,7 +80,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     // @ViewChild('input') input: ElementRef;
     @ViewChild('textAreaDialogTemplate', { read: TemplateRef })
@@ -91,27 +99,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         private element: ElementRef
     ) {}
 
-    ngOnInit(): void {
-        if (this.form === null) {
-            this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(
-            //     this.key, this.value, this.required, this.readonly, this.disabled, this.maxFieldCharacters);
-            const pepField = new PepTextareaField({
-                key: this.key,
-                value: this.value,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled,
-                maxFieldCharacters: this.maxFieldCharacters,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
-
-            this.renderer.addClass(
-                this.element.nativeElement,
-                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
-            );
-        }
-
+    private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
             this.layoutType,
             this.rowSpan,
@@ -119,24 +107,44 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         );
     }
 
+    private setDefaultForm(): void {
+        const pepField = new PepTextareaField({
+            key: this.key,
+            value: this.value,
+            mandatory: this.mandatory,
+            readonly: this.readonly,
+            disabled: this.disabled,
+            maxFieldCharacters: this.maxFieldCharacters,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
+    ngOnInit(): void {
+        if (this.form === null) {
+            this.standAlone = true;
+            this.setFieldHeight();
+            this.setDefaultForm();
+
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
+        }
+    }
+
     ngOnChanges(changes: any): void {
-        // setTimeout(() => {
-        //     if (this.lastFocusField) {
-        //         this.lastFocusField.focus();
-        //         this.lastFocusField = null;
-        //     }
-        // }, 100);
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
+        //
     }
 
     onBlur(event: any): void {
         const value = event.target ? event.target.value : event;
-        this.changeValue(value, event.relatedTarget);
+        this.changeValue(value);
 
         setTimeout(() => {
             if (this.isInEditMode) {
@@ -145,7 +153,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         }, 0);
     }
 
-    changeValue(value: any, lastFocusedField: any = null): void {
+    changeValue(value: any): void {
         if (value !== this.value) {
             this.value = value;
             this.customizationService.updateFormFieldValue(
@@ -153,7 +161,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
                 this.key,
                 value
             );
-            this.valueChange.emit({ key: this.key, value, lastFocusedField });
+            this.valueChange.emit(value);
         }
     }
 

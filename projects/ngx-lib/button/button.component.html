@@ -1,9 +1,11 @@
-<button mat-button [pepDataQa]="key ? key : value" class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
+<button mat-button [pepDataQa]="key ? key : value"
+    class="pep-button {{ sizeType }} {{ styleType }} {{ styleStateType }} {{ classNames }}"
     [ngClass]="{ 'icon-button': iconName && !value }" [disabled]="disabled" (click)="onButtonClicked($event)">
     <mat-icon *ngIf="iconName && iconPosition === 'start'">
         <pep-icon name="{{iconName}}"></pep-icon>
     </mat-icon>
-    <span *ngIf="value" class="ellipsis" [ngClass]="{ 'button-title-with-icon': iconName }" [title]="value">
+    <span *ngIf="value" class="ellipsis"
+        [ngClass]="{ 'button-title-with-icon': iconName, 'icon-before': iconPosition === 'start' }" [title]="value">
         {{value}}
     </span>
     <mat-icon *ngIf="iconName && iconPosition === 'end'">

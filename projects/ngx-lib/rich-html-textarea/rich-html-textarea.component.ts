@@ -19,7 +19,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     PepRichHtmlTextareaField,
 } from '@pepperi-addons/ngx-lib';
 import {
@@ -51,16 +50,26 @@ export interface IPepRichHtmlTextareaToolbarOptions {
     styleUrls: ['./rich-html-textarea.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
+export class PepRichHtmlTextareaComponent
+    implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() label = '';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
-    @Input() maxFieldCharacters = 0;
+    @Input() maxFieldCharacters: number;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+        this.setFieldHeight();
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
 
     private _visible = true;
     @Input()
@@ -102,7 +111,7 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
     }
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('richTextEditorDialogTemplate', { read: TemplateRef })
     richTextEditorDialogTemplate: TemplateRef<any>;
@@ -123,20 +132,31 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
         this.toolbarOptions = this.getDefaultToolbarOptions();
     }
 
+    private setFieldHeight(): void {
+        this.fieldHeight = this.customizationService.calculateFieldHeight(
+            this.layoutType,
+            this.rowSpan,
+            this.standAlone
+        );
+    }
+
+    private setDefaultForm(): void {
+        const pepField = new PepRichHtmlTextareaField({
+            key: this.key,
+            value: this.value,
+            mandatory: this.mandatory,
+            readonly: this.readonly,
+            disabled: this.disabled,
+            maxFieldCharacters: this.maxFieldCharacters,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(
-            //     this.key, this.value, this.required, this.readonly, this.disabled, this.maxFieldCharacters);
-            const pepField = new PepRichHtmlTextareaField({
-                key: this.key,
-                value: this.value,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled,
-                maxFieldCharacters: this.maxFieldCharacters,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+            this.setFieldHeight();
+            this.setDefaultForm();
 
             this.renderer.addClass(
                 this.element.nativeElement,
@@ -144,19 +164,17 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
             );
         }
 
-        this.fieldHeight = this.customizationService.calculateFieldHeight(
-            this.layoutType,
-            this.rowSpan,
-            this.standAlone
-        );
-
         this.quillContent = this.value;
     }
 
+    ngOnChanges(): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
+    }
+
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
+        //
     }
 
     getDefaultToolbarOptions(): IPepRichHtmlTextareaToolbarOptions {
@@ -178,7 +196,7 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
         };
     }
 
-    changeValue(value: any, lastFocusedField: any = null): void {
+    changeValue(value: any): void {
         if (value !== this.value) {
             this.value = value;
             this.quillContent = value;
@@ -187,7 +205,7 @@ export class PepRichHtmlTextareaComponent implements OnInit, OnDestroy {
                 this.key,
                 value
             );
-            this.valueChange.emit({ key: this.key, value, lastFocusedField });
+            this.valueChange.emit(value);
         }
     }
 

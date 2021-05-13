@@ -4,23 +4,23 @@
             <div class="color-chooser-content">
                 <div class="current-color" [ngStyle]="{ 'background': data?.value ? data.value : 'transparent' }"></div>
 
-                <div class="slider-box">
+                <div class="slider-box current-hue">
                     <mat-label class="body-xs ">{{ 'COLOR.CHANGE_HUE' | translate}}</mat-label>
-                    <div class="current-hue" [class]="data?.type">
+                    <div [class]="data?.type">
                         <mat-slider [min]="currentHueMin" [max]="currentHueMax" step="1" [value]="currentHue"
                             (change)="onHueChange($event)"></mat-slider>
                     </div>
                 </div>
-                <div class="slider-box">
+                <div class="slider-box current-saturation">
                     <mat-label class="body-xs ">{{ 'COLOR.CHANGE_SATURATION' | translate}}</mat-label>
-                    <div class="current-saturation" [class]="data?.type">
+                    <div [class]="data?.type">
                         <mat-slider [min]="currentSaturationMin" [max]="currentSaturationMax" step="1"
                             [value]="currentSaturation" (change)="onSaturationChange($event)"></mat-slider>
                     </div>
                 </div>
-                <div class="slider-box">
+                <div class="slider-box current-lightness">
                     <mat-label class="body-xs ">{{ 'COLOR.CHANGE_LIGHTNESS' | translate}}</mat-label>
-                    <div class="current-lightness" [class]="data?.type">
+                    <div [class]="data?.type">
                         <mat-slider [min]="currentLightnessMin" [max]="currentLightnessMax" step="1"
                             [value]="currentLightnessMax - currentLightness + currentLightnessMin"
                             (change)="onLightnessChange($event)"></mat-slider>

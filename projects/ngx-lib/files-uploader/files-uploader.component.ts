@@ -28,6 +28,12 @@ import {
 } from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
+export interface IPepFileChangeEvent {
+    acceptedExtensions?: string;
+    fileStr?: string;
+    fileExt?: string;
+}
+
 @Component({
     selector: 'pep-files-uploader',
     templateUrl: './files-uploader.component.html',
@@ -39,10 +45,19 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() key = '';
     @Input() src = '';
     @Input() label = '';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
+
     @Input() controlType = '';
     @Input() sizeLimitMB = 5;
 
@@ -51,14 +66,15 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() acceptedExtensions = 'bmp,jpg,jpeg,png,gif,ico,svg,html,css';
     @Input() layoutType: PepLayoutType = 'form';
 
-    @Output() fileChange: EventEmitter<string> = new EventEmitter<string>();
+    @Output()
+    fileChange: EventEmitter<IPepFileChangeEvent> = new EventEmitter<IPepFileChangeEvent>();
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     @ViewChild('fileInput') fileInput: any;
     @ViewChild('imagePreview') imagePreview: any;
 
-    fieldHeight = '';
+    @Input() fieldHeight = '';
 
     // multiple = false;
     uploader: FileUploader;
@@ -92,15 +108,13 @@ export class PepFilesUploaderComponent implements OnInit {
                 );
                 if (errorMsg === '') {
                     this.src = fileStr;
-                    this.setIntervalX(25, 75);
-                    this.setProgress(5);
-                    this.fileChange.emit(
-                        JSON.stringify({
-                            acceptedExtensions: this.acceptedExtensions,
-                            fileStr,
-                            fileExt,
-                        })
-                    );
+                    // this.setIntervalX(25, 75);
+                    // this.setProgress(5);
+                    this.fileChange.emit({
+                        acceptedExtensions: this.acceptedExtensions,
+                        fileStr,
+                        fileExt,
+                    });
                 } else {
                     const title = this.translate.instant(
                         'MESSAGES.TITLE_NOTICE'
@@ -117,12 +131,6 @@ export class PepFilesUploaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.fieldHeight = this.customizationService.calculateFieldHeight(
-            this.layoutType,
-            this.rowSpan,
-            this.standAlone
-        );
-
         /*this.uploader.onCompleteAll = () => {
             this.fileInput.nativeElement.value = '';
         }*/
@@ -186,15 +194,15 @@ export class PepFilesUploaderComponent implements OnInit {
         return fileSize; // return size in bytes;
     }
 
-    setIntervalX(delay, repetitions): void {
-        let x = 0;
-        this.intervalID = window.setInterval(() => {
-            // this.setProgress(this.progress + 5);
-            if (++x === repetitions || this.uploader.progress >= 100) {
-                window.clearInterval(this.intervalID);
-            }
-        }, delay);
-    }
+    // setIntervalX(delay, repetitions): void {
+    //     let x = 0;
+    //     this.intervalID = window.setInterval(() => {
+    //         // this.setProgress(this.progress + 5);
+    //         if (++x === repetitions || this.uploader.progress >= 100) {
+    //             window.clearInterval(this.intervalID);
+    //         }
+    //     }, delay);
+    // }
 
     errorHandler(event): void {
         event.target.src = this.fileService.getSvgAsImageSrc(
@@ -213,9 +221,16 @@ export class PepFilesUploaderComponent implements OnInit {
         window.clearInterval(this.intervalID);
         this.setProgress(0);
 
-        const value = '';
-        this.src = value;
-        this.fileChange.emit(value);
+        const empltValue = '';
+        this.src = empltValue;
+
+        this.fileChange.emit(null);
+
+        // this.fileChange.emit({
+        //     acceptedExtensions: this.acceptedExtensions,
+        //     fileStr: null,
+        //     fileExt: null,
+        // });
     }
 
     onElementClicked(event): void {

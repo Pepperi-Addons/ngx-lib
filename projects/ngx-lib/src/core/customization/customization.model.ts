@@ -6,6 +6,9 @@ export type PepLayoutType = 'form' | 'card' | 'table';
 /** Allowed style options */
 export type PepStyleType = 'weak' | 'weak-invert' | 'regular' | 'strong';
 
+/** Allowed style state options */
+export type PepStyleStateType = 'system' | 'caution' | 'success';
+
 /** Allowed size options */
 export type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -32,7 +35,7 @@ interface IPepFieldBaseOptions {
     key?: string;
     label?: string;
     accessory?: string;
-    required?: boolean;
+    mandatory?: boolean;
     readonly?: boolean;
     disabled?: boolean;
     order?: number;
@@ -60,7 +63,7 @@ export class PepFieldBase {
     key: string;
     label: string;
     accessory: string;
-    required: boolean;
+    mandatory: boolean;
     readonly: boolean;
     disabled: boolean;
     order: number;
@@ -86,7 +89,7 @@ export class PepFieldBase {
         this.key = options.key || '';
         this.label = options.label || '';
         this.accessory = options.accessory || '';
-        this.required = !!options.required;
+        this.mandatory = !!options.mandatory;
 
         this.order = options.order ?? 1;
         this.controlType = options.controlType || '';
@@ -112,7 +115,7 @@ export class PepFieldBase {
     protected getBaseValidators(isCheckbox = false): ValidatorFn[] {
         const validators = [];
 
-        if (this.required && !this.readonly && !this.disabled) {
+        if (this.mandatory && !this.readonly && !this.disabled) {
             if (isCheckbox) {
                 validators.push(Validators.requiredTrue);
             } else {
@@ -138,7 +141,7 @@ export class PepFieldBase {
         this.value = options.value;
         this.formattedValue = options.formattedValue;
         this.additionalValue = options.additionalValue;
-        // TODO: Remove this from here we not suppose to update the read only prop.
+
         this.readonly = !!options.readonly;
         this.disabled = !!options.disabled;
         this.visible = !!options.visible;
@@ -318,13 +321,13 @@ export type PepQuantitySelectorFieldType =
     | 'qs'
     | 'qsForMatrix';
 interface IPepQuantitySelectorFieldOptions extends IPepFieldBaseOptions {
-    alowDecimal?: boolean;
+    allowDecimal?: boolean;
     notificationInfo?: any;
     type?: PepQuantitySelectorFieldType;
 }
 export class PepQuantitySelectorField extends PepFieldBase {
     controlType = 'qs';
-    alowDecimal: boolean;
+    allowDecimal: boolean;
     notificationInfo: any = {};
     updatedDataCount: number;
     type: PepQuantitySelectorFieldType;
@@ -333,7 +336,7 @@ export class PepQuantitySelectorField extends PepFieldBase {
         super(options);
 
         this.updatedDataCount = 0;
-        this.alowDecimal = options.alowDecimal || false;
+        this.allowDecimal = options.allowDecimal || false;
         this.type = options.type || 'qs';
 
         this.update(options);
@@ -486,7 +489,6 @@ export interface IPepFieldValueChangeEvent {
     key: string;
     value: string;
     controlType?: string;
-    lastFocusedField?: any;
 }
 
 export interface IPepFieldClickEvent {

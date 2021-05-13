@@ -64,8 +64,8 @@
         </div>
 
         <mat-error><span class="body-xs"
-                [title]="required && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
-                [innerText]="required && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
+                [title]="mandatory && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
+                [innerText]="mandatory && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
         </mat-error>
     </mat-form-field>
 </ng-template>

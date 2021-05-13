@@ -103,11 +103,6 @@ export class PepMultiSelectFilterComponent
             const isValueSelected =
                 selectedValues && selectedValues.includes(opt.value);
             opt.selected = isValueSelected;
-
-            // TODO: Maybe we need to support in values that not come over here from the api (with count 0).
-            // if (isValueSelected) {
-            //     opt.selected === true;
-            // }
         });
     }
 

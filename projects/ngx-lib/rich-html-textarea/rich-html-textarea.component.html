@@ -3,7 +3,7 @@
         <div class="pep-textarea-container pep-report-textarea" [ngClass]="{ 'stand-alone': standAlone,
             'right-alignment': xAlignment == 'right', 'one-row': !isFormView && rowSpan === 1,
             'pep-textarea-card-container': layoutType === 'card'}">
-            <pep-field-title *ngIf="isFormView" [label]="label" [required]="required" [disabled]="disabled"
+            <pep-field-title *ngIf="isFormView" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
                 [maxFieldCharacters]="inlineMode && !disabled && !readonly ? maxFieldCharacters : 0"
                 [xAlignment]="xAlignment" [showTitle]="showTitle" [inputLength]="quillContent?.length">
             </pep-field-title>
@@ -36,8 +36,8 @@
                 </pep-textbox-icon>
                 <mat-error>
                     <span class="body-xs"
-                        [title]="required && value.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
-                        [innerText]="required && value.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
+                        [title]="mandatory && value.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
+                        [innerText]="mandatory && value.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
                 </mat-error>
 
             </mat-form-field>
@@ -112,7 +112,7 @@
     <quill-editor id="{{inDialog ? 'quill-editor-dialog' : 'quill-editor-inline'}}"
         [class]="inDialog ? 'dialog-quill' : 'inline-quill'" [ngClass]="{ 'rich-text-cont': !inDialog }"
         placeholder="{{'RICH_TEXTAREA.HINT' | translate}}" [ngModel]="inDialog ? quillContentDialog : quillContent"
-        [sanitize]="true" [readOnly]="disabled" [maxLength]="maxFieldCharacters" [required]="required"
+        [sanitize]="true" [readOnly]="disabled" [maxLength]="maxFieldCharacters" [required]="mandatory"
         (onEditorCreated)="onEditorCreated($event, inDialog)" (onContentChanged)="onContentChanged($event, inDialog)"
         (onBlur)="onBlur($event, inDialog)" (onFocus)="onFocus($event, inDialog)" theme="">
         <div *ngIf="!disabled" quill-editor-toolbar>

@@ -1,3 +1,4 @@
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { Injectable, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -6,10 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class PepUtilitiesService {
     private numberFormatter: Intl.NumberFormat;
+    private culture = 'en-US';
 
     constructor(@Optional() private translate: TranslateService = null) {
-        const culture = this.translate?.getBrowserCultureLang() || 'en-US';
-        this.numberFormatter = new Intl.NumberFormat(culture, {
+        this.culture = this.translate?.getBrowserCultureLang() || 'en-US';
+        this.numberFormatter = new Intl.NumberFormat(this.culture, {
             maximumFractionDigits: 2,
         });
     }
@@ -116,6 +118,52 @@ export class PepUtilitiesService {
     }
 
     formatNumber(value: any): string {
-        return this.numberFormatter.format(value);
+        const number = this.coerceNumberProperty(value);
+        return this.numberFormatter.format(number);
+    }
+
+    incrementNumber(value: any): string {
+        let numberValue = this.coerceNumberProperty(value);
+        const newNumber = this.changeDecimalSeperator(
+            (++numberValue).toString(),
+            true
+        );
+
+        return newNumber;
+    }
+
+    decrementNumber(value: any): string {
+        let numberValue = this.coerceNumberProperty(value);
+        const newNumber = this.changeDecimalSeperator(
+            (--numberValue).toString(),
+            true
+        );
+
+        return newNumber;
+    }
+
+    coerceNumberProperty(value: any, fallbackValue = 0): number {
+        // If the decimal separator is ',' change it to '.'
+        value = this.changeDecimalSeperator(value);
+
+        return coerceNumberProperty(value, fallbackValue);
+    }
+
+    private changeDecimalSeperator(value: string, reverse = false): string {
+        // If the decimal separator is ','
+        if (this.getDecimalSeparator() === ',') {
+            // If reverse change the number from '.' to ',' else do the opposite.
+            value = reverse ? value.replace('.', ',') : value.replace(',', '.');
+        }
+
+        return value;
+    }
+
+    private getDecimalSeparator() {
+        const numberWithDecimalSeparator = 1.1;
+
+        return numberWithDecimalSeparator
+            .toLocaleString(this.culture)
+            .substring(1, 2);
     }
 }

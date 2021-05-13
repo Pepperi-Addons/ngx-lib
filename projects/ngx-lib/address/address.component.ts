@@ -29,7 +29,7 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     // @Input() value = '';
     @Input() formattedValue = '';
     @Input() label = '';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
@@ -40,7 +40,7 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    addressValueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     constructor(private element: ElementRef, private renderer: Renderer2) {}
 
@@ -49,57 +49,65 @@ export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes): void {
-        // setTimeout(() => {
-        //     const focusedFieldParent = this.groupFields.filter(
-        //         (groupField) => groupField.lastFocusField
-        //     )[0];
-        //     if (focusedFieldParent) {
-        //         focusedFieldParent.lastFocusField.focus();
-        //     }
-        // }, 100);
+        //
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
+        //
+    }
+
+    // Not in use anymore comment in 16.55.
+    // onBlur(e: any, key: string): void {
+    //     const value = e.target ? e.target.value : e;
+    //     this.changeValue({ key, value }, e.relatedTarget);
+    // }
+
+    onValueChange(value: string, key: string): void {
+        // if (e.target) {
+        //     const input = e.target ? e.target.value : e;
+        //     this.changeValue({ key, value: input.value });
+        // } else {
+        //     this.changeValue(e);
         // }
-    }
 
-    // Not in use for material
-    onBlur(e: any, key: string): void {
-        const value = e.target ? e.target.value : e;
-        this.changeValue({ key, value }, e.relatedTarget);
-    }
+        const currentGroupField = this.groupFields.find((gf) => gf.key === key);
 
-    onValueChange(e: any, key: string): void {
-        if (e.target) {
-            const input = e.target ? e.target.value : e;
-            this.changeValue({ key, value: input.value });
-        } else {
-            this.changeValue(e);
-        }
-    }
-
-    changeValue(field: any, lastFocusedField: any = null): void {
-        const currentGroupField = this.groupFields.filter(
-            (groupField) => groupField.key === field.key
-        )[0];
-
-        if (currentGroupField.value !== field.value) {
+        if (currentGroupField && currentGroupField.value !== value) {
             // Set the value in the form controls
             if (this.form) {
                 const formCtrl = this.form.get(this.key);
 
                 if (formCtrl) {
-                    formCtrl.get(field.key).setValue(field.value);
+                    formCtrl.get(key).setValue(value);
                 }
             }
 
-            this.valueChange.emit({
-                key: field.key,
-                value: field.value,
-                lastFocusedField,
+            this.addressValueChange.emit({
+                key: key,
+                value: value,
             });
         }
     }
+
+    // changeValue(field: any): void {
+    //     const currentGroupField = this.groupFields.filter(
+    //         (groupField) => groupField.key === field.key
+    //     )[0];
+
+    //     if (currentGroupField.value !== field.value) {
+    //         // Set the value in the form controls
+    //         if (this.form) {
+    //             const formCtrl = this.form.get(this.key);
+
+    //             if (formCtrl) {
+    //                 formCtrl.get(field.key).setValue(field.value);
+    //             }
+    //         }
+
+    //         this.valueChange.emit({
+    //             key: field.key,
+    //             value: field.value,
+    //         });
+    //     }
+    // }
 }

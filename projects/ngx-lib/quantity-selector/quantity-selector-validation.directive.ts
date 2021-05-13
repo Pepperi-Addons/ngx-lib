@@ -12,7 +12,7 @@ import { PepValidatorService } from '@pepperi-addons/ngx-lib';
     selector: '[pepQsValidation]',
 })
 export class PepQuantitySelectorValidationDirective implements OnInit {
-    @Input() alowDecimal: boolean;
+    @Input() allowDecimal: boolean;
 
     previousValue = '';
 
@@ -37,7 +37,7 @@ export class PepQuantitySelectorValidationDirective implements OnInit {
         // save value before keydown event
         this.previousValue = originalValue;
 
-        const isNumber = this.validatorService.isNumber(e, this.alowDecimal);
+        const isNumber = this.validatorService.isNumber(e, this.allowDecimal);
         if (isNumber) return;
         else e.preventDefault();
     }
@@ -45,7 +45,7 @@ export class PepQuantitySelectorValidationDirective implements OnInit {
     validateValue(value: string): void {
         const newValue = this.validatorService.validateNumber(
             value,
-            this.alowDecimal
+            this.allowDecimal
         );
         this.hostElement.nativeElement['value'] = newValue ? newValue : 0;
     }

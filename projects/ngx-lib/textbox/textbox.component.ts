@@ -1,4 +1,3 @@
-import { coerceNumberProperty, _isNumberValue } from '@angular/cdk/coercion';
 import {
     Component,
     OnInit,
@@ -20,13 +19,21 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     PepTextboxFieldType,
     PepTextboxField,
     PepFieldBase,
     PepUtilitiesService,
 } from '@pepperi-addons/ngx-lib';
 
+/**
+ * This is a text box input component that can be use to
+ *
+ * @export
+ * @class PepTextboxComponent
+ * @implements {OnChanges}
+ * @implements {OnInit}
+ * @implements {OnDestroy}
+ */
 @Component({
     selector: 'pep-textbox',
     templateUrl: './textbox.component.html',
@@ -34,9 +41,19 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
+    /**
+     * The text box key 
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() key = '';
 
     private _value = null;
+    /**
+     * The value of the text box.
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input()
     set value(value: string) {
         if (!value) {
@@ -54,6 +71,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private _formattedValue = null;
+    /**
+     * The formatted value.
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input()
     set formattedValue(value: string) {
         if (!value) {
@@ -70,11 +92,48 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._formattedValue;
     }
 
+    /**
+     * The title of the textbox.
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() label = '';
+
+    /**
+     * The placeholder (relevant only for children - if parent isn't null).
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() placeholder = '';
+
+    /**
+     * The type of the textbox.
+     *
+     * @type {PepTextboxFieldType}
+     * @memberof PepTextboxComponent
+     */
     @Input() type: PepTextboxFieldType = 'text';
-    @Input() required = false;
+
+    /**
+     * If the textbox is mandatory
+     *
+     * @memberof PepTextboxComponent
+     */
+    @Input() mandatory = false;
+
+    // TODO: Check if should remove disabled and keep only readonly.
+    /**
+     * If the textbox is disabled.
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() disabled = false;
+
+    /**
+     * If the textbox is readonly
+     *
+     * @memberof PepTextboxComponent
+     */
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
     @Input() textColor = '';
@@ -104,8 +163,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._visible;
     }
 
-    controlType = 'textbox';
-
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
@@ -115,8 +172,18 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
 
+    /**
+     * The value change event.
+     *
+     * @type {EventEmitter<string>}
+     * @memberof PepTextboxComponent
+     */
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
+
+    // @Output()
+    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -126,6 +193,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     get calculateFormattedValue(): boolean {
         return this._calculateFormattedValue;
     }
+
+    controlType = 'textbox';
 
     standAlone = false;
     isInEditMode = false;
@@ -151,22 +220,23 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             this._formattedValue = value;
         }
 
-        // Need timeout for UI.
-        setTimeout(() => {
-            this.customizationService.updateFormFieldValue(
-                this.form,
-                this.key,
-                this.formattedValue,
-                this.parentFieldKey
-            );
-        }, 0);
+        this.updateFormFieldValue();
+    }
+
+    private updateFormFieldValue() {
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            this.formattedValue,
+            this.parentFieldKey
+        );
     }
 
     private getField(): PepFieldBase {
         const pepField = new PepTextboxField({
             key: this.key,
             value: this.value,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
             maxFieldCharacters: this.maxFieldCharacters,
@@ -216,6 +286,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
+
+        this.updateFormFieldValue();
     }
 
     ngOnChanges(changes: any): void {
@@ -244,9 +316,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.isNumberType()) {
             if (value === '') {
-                res = this.required ? false : true;
+                res = this.mandatory ? false : true;
             } else {
-                const numberValue = coerceNumberProperty(value);
+                const numberValue = this.utilitiesService.coerceNumberProperty(
+                    value
+                );
                 res =
                     numberValue >= this.minValue &&
                     numberValue <= this.maxValue;
@@ -266,8 +340,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             if (this.value === '' || value === '') {
                 res = true;
             } else {
-                const currentValue = coerceNumberProperty(this.value);
-                const newValue = coerceNumberProperty(value);
+                const currentValue = this.utilitiesService.coerceNumberProperty(
+                    this.value
+                );
+                const newValue = this.utilitiesService.coerceNumberProperty(
+                    value
+                );
 
                 res = currentValue !== newValue;
             }
@@ -276,6 +354,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         return res;
+    }
+
+    onChange(e: any): void {
+        const value = e.target ? e.target.value : e;
+
+        // TODO: uncomment
+        // this.valueChange.emit(value);
     }
 
     onBlur(e: any): void {
@@ -297,11 +382,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                     this._formattedValue = value;
                 }
 
-                this.valueChange.emit({
-                    key: this.key,
-                    value,
-                    lastFocusedField: e.relatedTarget,
-                });
+                this.valueChange.emit(value);
             }
         }
 

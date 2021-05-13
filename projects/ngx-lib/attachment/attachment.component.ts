@@ -17,7 +17,7 @@ import {
     PepLayoutType,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
+    // IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
     PepAttachmentField,
 } from '@pepperi-addons/ngx-lib';
@@ -29,14 +29,80 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
+    /**
+     * The attachment key.
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() key = '';
-    @Input() src = '';
+
+    private _src = '';
+    /**
+     * The src of the attachment.
+     *
+     * @memberof PepAttachmentComponent
+     */
+    @Input()
+    set src(value: string) {
+        if (!value) {
+            value = '';
+        }
+
+        this._src = value;
+        if (this._src.length > 0) {
+            // Empty dataURI.
+            this.dataURI = null;
+        }
+    }
+    get src(): string {
+        return this._src;
+    }
+
+    /**
+     * The title of the attachment.
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() label = '';
-    @Input() required = false;
+
+    /**
+     * If the attachment is mandatory
+     *
+     * @memberof PepAttachmentComponent
+     */
+    @Input() mandatory = false;
+
+    /**
+     * If the attachment is disabled
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() disabled = false;
+
+    /**
+     * If the attachment is readonly
+     *
+     * @memberof PepAttachmentComponent
+     */
     @Input() readonly = false;
+
+    /**
+     * The horizontal alignment of the attachment
+     *
+     * @type {PepHorizontalAlignment}
+     * @memberof PepAttachmentComponent
+     */
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+        this.setFieldHeight();
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
 
     controlType = 'attachment';
 
@@ -45,8 +111,12 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
+    // @Output()
+    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    fileChange: EventEmitter<any> = new EventEmitter<any>();
+
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -62,37 +132,9 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         public element: ElementRef,
         private fileService: PepFileService
-    ) {}
+    ) { }
 
-    ngOnDestroy(): void {
-        // if (this.elementClick) {
-        //     this.elementClick.unsubscribe();
-        // }
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
-    }
-
-    ngOnInit(): void {
-        if (this.form === null) {
-            this.standAlone = true;
-
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.src, this.required, this.readonly, this.disabled);
-            const pepField = new PepAttachmentField({
-                key: this.key,
-                value: this.src,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
-
-            this.renderer.addClass(
-                this.element.nativeElement,
-                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
-            );
-        }
-
+    private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
             this.layoutType,
             this.rowSpan,
@@ -100,26 +142,63 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
 
-    ngOnChanges(changes: any): void {
-        if (changes.src && changes.src.currentValue.length > 0) {
-            // Empty dataURI if there is change in the src.
-            this.dataURI = null;
+    private setDefaultForm(): void {
+        const pepField = new PepAttachmentField({
+            key: this.key,
+            value: this.src,
+            mandatory: this.mandatory,
+            readonly: this.readonly,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
+    ngOnDestroy(): void {
+        //
+    }
+
+    ngOnInit(): void {
+        if (this.form === null) {
+            this.standAlone = true;
+            this.setFieldHeight();
+            this.setDefaultForm();
+
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+            );
         }
     }
 
-    onFileChanged(value: any): void {
-        this.dataURI = value.length > 0 ? JSON.parse(value) : null;
-        this.src = this.dataURI ? this.dataURI.fileStr : '';
+    ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
+        // Moved to src input
+        // if (changes.src && changes.src.currentValue.length > 0) {
+        //     // Empty dataURI if there is change in the src.
+        //     this.dataURI = null;
+        // }
+    }
+
+    onFileChanged(fileData: any): void {
+        // const tmp = value.length > 0 ? JSON.parse(value) : null;
+        // set this.dataURI after this.src cause it initialize in the src setter.
+        this.src = fileData ? fileData.fileStr : '';
+        this.dataURI = fileData;
+
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
             this.dataURI ? this.dataURI.fileExt : ''
         );
-        this.valueChange.emit({
-            key: this.key,
-            value,
-            controlType: this.controlType,
-        });
+        // this.valueChange.emit({
+        //     key: this.key,
+        //     value,
+        // });
+
+        this.fileChange.emit(fileData);
+        // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 
     onFileClicked(event: IPepFieldClickEvent): void {

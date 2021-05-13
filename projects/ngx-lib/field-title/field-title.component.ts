@@ -11,7 +11,7 @@ import {
 })
 export class PepFieldTitleComponent {
     @Input() label = '';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() maxFieldCharacters = 0;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;

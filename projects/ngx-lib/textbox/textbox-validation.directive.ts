@@ -67,11 +67,11 @@ export class PepTextboxValidationDirective implements OnInit {
         if (this.isNumber()) {
             // save value before keydown event
             this.previousValue = originalValue;
-
             const isNumber = this.validatorService.isNumber(
                 e,
                 this.isDecimal()
             );
+
             if (isNumber) return;
             else e.preventDefault();
         } else if (this.isPhone()) {
@@ -95,6 +95,8 @@ export class PepTextboxValidationDirective implements OnInit {
             this.hostElement.nativeElement['value'] = valid
                 ? value
                 : this.previousValue;
+        } else if (this.isText()) {
+            this.hostElement.nativeElement['value'] = value;
         }
     }
 }

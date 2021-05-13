@@ -45,11 +45,21 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() options: IPepOption[] = [];
     @Input() label = '';
     // @Input() type = 'image';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() rowSpan = 1;
+
+    private _rowSpan = 1;
+    @Input()
+    set rowSpan(value) {
+        this._rowSpan = value;
+        this.setFieldHeight();
+    }
+    get rowSpan(): number {
+        return this._rowSpan;
+    }
+
     @Input() indicatorsField: any = null;
     @Input() menuField: any = null;
     @Input() hasCampaignField: any = null;
@@ -85,7 +95,9 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() acceptImagesType = 'bmp,jpg,jpeg,png,gif'; // "image/bmp, image/jpg, image/jpeg, image/png, image/tif, image/tiff";
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    fileChange: EventEmitter<any> = new EventEmitter<any>();
+    // @Output()
+    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -105,29 +117,17 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-
-            // this.form = this.customizationService.getDefaultFromGroup(
-            //     this.key,
-            //     this.src,
-            //     this.required,
-            //     this.readonly,
-            //     this.disabled
-            // );
-            const pepField = new PepImageField({
-                key: this.key,
-                value: this.src,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+            this.setFieldHeight();
+            this.setDefaultForm();
 
             this.renderer.addClass(
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
         }
+    }
 
+    private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
             this.layoutType,
             this.rowSpan,
@@ -135,7 +135,22 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         );
     }
 
+    private setDefaultForm(): void {
+        const pepField = new PepImageField({
+            key: this.key,
+            value: this.src,
+            mandatory: this.mandatory,
+            readonly: this.readonly,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
     ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
+
         if (changes.src?.currentValue?.length > 0) {
             // Empty dataURI if there is change in the src.
             this.dataURI = null;
@@ -143,12 +158,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.elementClick) {
-        //     this.elementClick.unsubscribe();
-        // }
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
+        //
     }
 
     errorHandler(event: any): void {
@@ -175,8 +185,8 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    onFileChanged(value: any): void {
-        this.dataURI = value.length > 0 ? JSON.parse(value) : null;
+    onFileChanged(fileData: any): void {
+        this.dataURI = fileData;
         this.src = this.srcLarge =
             this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
 
@@ -185,11 +195,13 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             this.key,
             this.dataURI ? this.dataURI.fileExt : ''
         );
-        this.valueChange.emit({
-            key: this.key,
-            value,
-            controlType: this.controlType,
-        });
+        // this.valueChange.emit({
+        //     key: this.key,
+        //     value,
+        // });
+
+        this.fileChange.emit(fileData);
+        // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 
     objectIdIsNotEmpty(): boolean {

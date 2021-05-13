@@ -1,14 +1,16 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {
-    hex2hsl,
-    hslString2hsl,
-    rgbString2hsl,
-    IPepHslColor,
-    findClosestAccessibleColor,
-    hsl2hex,
-    convertHslToStringHsl,
-} from './color-utils';
+// import {
+//     hex2hsl,
+//     hslString2hsl,
+//     rgbString2hsl,
+//     IPepHslColor,
+//     findClosestAccessibleColor,
+//     hsl2hex,
+//     convertHslToStringHsl,
+// } from './color-utils';
+import { PepColorService, IPepHslColor } from '@pepperi-addons/ngx-lib';
+
 import { PepColorType } from './color.model';
 
 enum PepContrastRatioType {
@@ -30,10 +32,12 @@ interface IPepColorPickerDialogData {
 })
 export class PepColorPickerComponent implements OnInit {
     static CURRENT_HUE = '--pep-color-picker-current-hue';
+    private readonly defaultColor = '#ccc';
 
     checkAAComplient = true;
 
     constructor(
+        private colorService: PepColorService,
         private dialogRef: MatDialogRef<PepColorPickerComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IPepColorPickerDialogData
     ) {
@@ -109,16 +113,18 @@ export class PepColorPickerComponent implements OnInit {
 
     convertValueStringToColor(color): void {
         if (color.indexOf('hsl') === 0) {
-            const hsl = hslString2hsl(color);
+            const hsl = this.colorService.hslString2hsl(color);
             this.convertColorToValueString(hsl);
         } else if (color.indexOf('rgb') === 0) {
-            const hsl = rgbString2hsl(color);
+            const hsl = this.colorService.rgbString2hsl(color);
             this.convertColorToValueString(hsl);
         } else if (color.indexOf('#') === 0) {
-            const hsl = hex2hsl(color);
+            const hsl = this.colorService.hex2hsl(color);
             this.convertColorToValueString(hsl);
         } else {
-            // Handle other colors.
+            // Handle default.
+            const hsl = this.colorService.hex2hsl(this.defaultColor);
+            this.convertColorToValueString(hsl);
         }
 
         this.setCurrentHueInCss();
@@ -165,19 +171,21 @@ export class PepColorPickerComponent implements OnInit {
             s: this.currentSaturation,
             l: this.currentLightness,
         };
-        this.data.value = convertHslToStringHsl(hsl);
+        this.data.value = this.colorService.convertHslToStringHsl(hsl);
 
         // Check the contrast ratio - set the closest accessible color to complientColor
         // and update isUserChooseAAComplientColor.
-        const adjustableColor = hsl2hex(hsl);
-        const closestHex = findClosestAccessibleColor(
+        const adjustableColor = this.colorService.hsl2hex(hsl);
+        const closestHex = this.colorService.findClosestAccessibleColor(
             adjustableColor,
             this.data.textColor,
             this.data.contrastRatio
         );
 
         this.isUserChooseAAComplientColor = adjustableColor === closestHex;
-        this.complientColor = convertHslToStringHsl(hex2hsl(closestHex));
+        this.complientColor = this.colorService.convertHslToStringHsl(
+            this.colorService.hex2hsl(closestHex)
+        );
     }
 
     onHueChange(event): void {

@@ -18,7 +18,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     PepSelectFieldType,
     PepSelectField,
     IPepOption,
@@ -35,7 +34,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() value = '';
     @Input() label = '';
     @Input() type: PepSelectFieldType = 'select';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
@@ -73,7 +72,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() emptyOption = true;
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -81,7 +80,6 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
 
     standAlone = false;
     isInEditMode = false;
-    // isFocus: boolean = false;
     isMulti = false;
     selectedValuesModel: string[];
     selectedValueModel: string;
@@ -153,11 +151,11 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled);
             const pepField = new PepSelectField({
                 key: this.key,
                 value: this.value,
-                required: this.required,
+                mandatory: this.mandatory,
                 readonly: this.readonly,
                 disabled: this.disabled,
             });
@@ -184,16 +182,10 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
-        // if (this.formValidationChange) {
-        //     this.formValidationChange.unsubscribe();
-        // }
+        //
     }
 
     selectionChange(event: any): void {
-        // this.isFocus = false;
         if (!this.isMulti) {
             this.changeValue(this.selectedValueModel);
         }
@@ -203,7 +195,6 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         // Only on close.
         if (!event) {
             if (this.isMulti) {
-                // this.isFocus = false;
                 this.changeValue(this.selectedValuesModel.join(';'));
             }
 
@@ -223,7 +214,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
             this.parentFieldKey
         );
 
-        if (this.required) {
+        if (this.mandatory) {
             const fieldControl = this.form.controls[this.key];
             if (value) {
                 fieldControl.setErrors(null);
@@ -235,7 +226,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
             this.formValidationChange.emit(this.form.valid);
         }
 
-        this.valueChange.emit({ key: this.key, value });
+        this.valueChange.emit(value);
     }
 
     cardTemplateClicked(event: any): void {

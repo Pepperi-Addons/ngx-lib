@@ -58,19 +58,19 @@
         <ng-container [ngSwitch]="field.controlType">
             <pep-image *ngSwitchCase="'image'" [uid]="data?.UID" [form]="form" [key]="field.key"
                 [src]="field.formattedValue" [srcLarge]="field.value" [options]="field.options" [label]="field.label"
-                [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
+                [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
                 [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [layoutType]="layoutType"
                 (elementClick)="onClick($event)">
             </pep-image>
 
             <pep-signature *ngSwitchCase="'signature'" [form]="form" [key]="field.key" [src]="field.value"
-                [label]="field.label" [required]="field.required" [disabled]="field.disabled"
+                [label]="field.label" [mandatory]="field.mandatory" [disabled]="field.disabled"
                 [readonly]="field.readonly" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
                 [layoutType]="layoutType">
             </pep-signature>
 
             <pep-checkbox *ngSwitchCase="'checkbox'" [form]="form" [key]="field.key" [value]="field.value"
-                [label]="field.label" [type]="field.type" [required]="field.required" [disabled]="field.disabled"
+                [label]="field.label" [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled"
                 [readonly]="field.readonly" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
                 [additionalValue]="field.additionalValue" [layoutType]="layoutType">
             </pep-checkbox>
@@ -82,7 +82,7 @@
             </pep-internal-button>
 
             <pep-textarea *ngSwitchCase="'textarea'" [form]="form" [key]="field.key" [value]="field.value"
-                [label]="field.label" [required]="field.required" [disabled]="field.disabled"
+                [label]="field.label" [mandatory]="field.mandatory" [disabled]="field.disabled"
                 [readonly]="field.readonly" [maxFieldCharacters]="field.maxFieldCharacters"
                 [textColor]="field.textColor" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
                 [layoutType]="layoutType">
@@ -90,7 +90,7 @@
 
             <pep-quantity-selector *ngSwitchCase="'qs'" [id]="field.key" [form]="form" [key]="field.key"
                 [value]="field.value" [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type"
-                [required]="field.required" [disabled]="field.disabled" [readonly]="field.readonly"
+                [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
                 [textColor]="field.textColor" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
                 [layoutType]="layoutType" (valueChange)="onValueChanged($event)" (elementClick)="onClick($event)">
             </pep-quantity-selector>

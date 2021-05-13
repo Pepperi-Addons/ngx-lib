@@ -113,6 +113,13 @@ export class PepCustomizationService {
     static SPACING_SIZE_LG_KEY = '--pep-spacing-lg';
     static SPACING_SIZE_XL_KEY = '--pep-spacing-xl';
     static SPACING_SIZE_2XL_KEY = '--pep-spacing-2xl';
+    static SPACING_SIZE_3XL_KEY = '--pep-spacing-3xl';
+    static SPACING_SIZE_4XL_KEY = '--pep-spacing-4xl';
+    static SPACING_SIZE_5XL_KEY = '--pep-spacing-5xl';
+    static SPACING_SIZE_6XL_KEY = '--pep-spacing-6xl';
+    static SPACING_SIZE_7XL_KEY = '--pep-spacing-7xl';
+    static SPACING_SIZE_8XL_KEY = '--pep-spacing-8xl';
+    static SPACING_SIZE_9XL_KEY = '--pep-spacing-9xl';
 
     // Form variables keys
     static FORM_FIELD_HEIGHT_KEY = '--pep-form-field-height';
@@ -147,7 +154,7 @@ export class PepCustomizationService {
         private sessionService: PepSessionService,
         private fileService: PepFileService,
         public fb: FormBuilder
-    ) {}
+    ) { }
 
     getDefaultFromGroup(field: PepFieldBase, withValidators = true): FormGroup {
         const validators = withValidators ? field.getValidators() : [];
@@ -206,9 +213,6 @@ export class PepCustomizationService {
             // If disabled has changed.
             if (formControl.disabled !== field.disabled) {
                 field.disabled ? formControl.disable() : formControl.enable();
-
-                // const validators = this.getValidatorsForField(field.required, field.readonly, field.disabled,
-                //     field.maxFieldCharacters, field.type, field.controlType === 'checkbox');
 
                 const validators = field.getValidators();
                 formControl.setValidators(validators);
@@ -369,6 +373,20 @@ export class PepCustomizationService {
             '1.5' + PepCustomizationService.REM_STRING;
         themeVars[PepCustomizationService.SPACING_SIZE_2XL_KEY] =
             '2' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_3XL_KEY] =
+            '2.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_4XL_KEY] =
+            '3' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_5XL_KEY] =
+            '3.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_6XL_KEY] =
+            '5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_7XL_KEY] =
+            '6' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_8XL_KEY] =
+            '8' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.SPACING_SIZE_9XL_KEY] =
+            '16' + PepCustomizationService.REM_STRING;
     }
 
     getDefaultThemeFontsVariables(themeVars: any): void {
@@ -430,7 +448,7 @@ export class PepCustomizationService {
         themeVars['--pep-button-xs-horizontal-spacing'] =
             '0.5' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xs-min-width'] =
-            '2' + PepCustomizationService.REM_STRING;
+            '1.5' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xs-height'] =
             '1.5' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xs-font-size'] =
@@ -470,7 +488,7 @@ export class PepCustomizationService {
         themeVars['--pep-button-xl-horizontal-spacing'] =
             '1.5' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xl-min-width'] =
-            '5' + PepCustomizationService.REM_STRING;
+            '4' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xl-height'] =
             '4' + PepCustomizationService.REM_STRING;
         themeVars['--pep-button-xl-font-size'] =
@@ -918,8 +936,8 @@ export class PepCustomizationService {
 
         this.hasCustomHeader =
             res.TopHeaderFiles &&
-            res.TopHeaderFiles.length > 0 &&
-            res.TopHeaderFiles[0] !== ''
+                res.TopHeaderFiles.length > 0 &&
+                res.TopHeaderFiles[0] !== ''
                 ? true
                 : false;
         this.hasCustomHomepage =

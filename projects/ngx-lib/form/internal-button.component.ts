@@ -41,7 +41,7 @@ export class PepInternalButtonComponent
     @Input() label = '';
     @Input() referenceObjectInternalType: any;
     @Input() type: PepInternalButtonFieldType = 'button';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
@@ -76,7 +76,7 @@ export class PepInternalButtonComponent
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     standAlone = false;
     createNewReference = false;
@@ -103,11 +103,11 @@ export class PepInternalButtonComponent
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled);
             const pepField = new PepInternalButtonField({
                 key: this.key,
                 value: this.value,
-                required: this.required,
+                mandatory: this.mandatory,
                 readonly: this.readonly,
                 disabled: this.disabled,
             });
@@ -129,9 +129,7 @@ export class PepInternalButtonComponent
     }
 
     ngOnDestroy(): void {
-        if (this.elementClick) {
-            this.elementClick.unsubscribe();
-        }
+        //
     }
 
     // groupButtonClicked(action: IPepButtonClickEvent): void {
@@ -187,6 +185,6 @@ export class PepInternalButtonComponent
 
     remove(): void {
         this.value = '';
-        this.valueChange.emit({ key: this.key, value: this.value });
+        this.valueChange.emit(this.value);
     }
 }

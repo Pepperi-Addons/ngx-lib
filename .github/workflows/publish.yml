@@ -29,7 +29,7 @@ jobs:
 
     # Set up git
     - name: Setup GIT
-      run: git config --global user.email "roi.a@pepperi.com" && git config --global user.name "roiaharon-pepperi"
+      run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
 
     # Set up npm
     - name: Create .npmrc
@@ -51,5 +51,5 @@ jobs:
     # Deploy examples project to Github Pages
     - name: Deploy
       env:
-        GH_TOKEN: ${{ secrets.ROI_GH_TOKEN }}
-      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="roiaharon-pepperi" --email=roi.a@pepperi.com --no-silent
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm run deploy-storybook -- --ci

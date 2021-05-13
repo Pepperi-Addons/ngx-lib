@@ -28,7 +28,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     PepDateFieldType,
     PepDateField,
 } from '@pepperi-addons/ngx-lib';
@@ -96,12 +95,13 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     set type(type: PepDateFieldType) {
         this._type = type;
+        this.showTime = type === 'datetime';
     }
     get type(): PepDateFieldType {
         return this._type;
     }
 
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() textColor = '';
@@ -167,7 +167,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
     @ViewChild('datetimePicker') datetimePicker: any;
 
     @ViewChild('input') input: ElementRef;
@@ -192,11 +192,11 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.required, this.readonly, this.disabled);
+            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled);
             const pepField = new PepDateField({
                 key: this.key,
                 value: this.value,
-                required: this.required,
+                mandatory: this.mandatory,
                 readonly: this.readonly,
                 disabled: this.disabled,
             });
@@ -209,8 +209,6 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
         }
-
-        this.showTime = this.type === 'datetime';
 
         const culture = this.layoutService.getCurrentLanguage();
         this.adapter.setLocale(culture);
@@ -228,9 +226,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
+        //
     }
 
     private setFormattedValueFromModel(): void {
@@ -296,7 +292,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             value
         );
 
-        this.valueChange.emit({ key: this.key, value });
+        this.valueChange.emit(value);
 
         setTimeout(() => {
             if (this.isInEditMode) {

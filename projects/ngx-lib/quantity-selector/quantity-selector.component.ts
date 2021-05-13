@@ -108,13 +108,13 @@ export class PepQuantitySelectorComponent
 
     @Input() label = '';
     @Input() type: PepQuantitySelectorFieldType = 'qs';
-    @Input() required = false;
+    @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() alowDecimal = false;
+    @Input() allowDecimal = false;
     @Input() additionalValue = '';
     @Input() notificationInfo: any;
 
@@ -147,12 +147,13 @@ export class PepQuantitySelectorComponent
 
     // Get default style from theme.
     @Input()
-    styleClass: PepStyleType = document.documentElement.style.getPropertyValue(
+    styleType: PepStyleType = document.documentElement.style.getPropertyValue(
         PepCustomizationService.STYLE_QS_KEY
     ) as PepStyleType; //'strong';
 
     @Output()
-    valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
+
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -170,7 +171,7 @@ export class PepQuantitySelectorComponent
     showQsBtn = true;
 
     standAlone = false;
-    isFocus = false;
+    isInFocus = false;
     isMatrixFocus = false;
 
     isCaution = false;
@@ -196,7 +197,7 @@ export class PepQuantitySelectorComponent
         const pepField = new PepQuantitySelectorField({
             key: this.key,
             value: this.value,
-            required: this.required,
+            mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
         });
@@ -210,14 +211,21 @@ export class PepQuantitySelectorComponent
             this._formattedValue = value;
         }
 
-        // Need timeout for UI.
-        setTimeout(() => {
-            this.customizationService.updateFormFieldValue(
-                this.form,
-                this.key,
-                this.formattedValue
-            );
-        }, 0);
+        this.updateFormFieldValue();
+    }
+
+    private updateFormFieldValue() {
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            this.formattedValue
+        );
+    }
+
+    get displayValue(): string {
+        const res = this.isInFocus ? this.value : this.formattedValue;
+
+        return res;
     }
 
     protected getDestroyer() {
@@ -240,7 +248,7 @@ export class PepQuantitySelectorComponent
         }
 
         // Get state class from theme.
-        // this.styleClass = document.documentElement.style.getPropertyValue(
+        // this.styleType = document.documentElement.style.getPropertyValue(
         //     PepCustomizationService.STYLE_QS_KEY
         // ) as PepStyleType;
 
@@ -250,6 +258,8 @@ export class PepQuantitySelectorComponent
             .subscribe((qsWidth: number) => {
                 this.setupQsButtons(qsWidth);
             });
+
+        this.updateFormFieldValue();
     }
 
     ngAfterViewInit() {
@@ -429,7 +439,7 @@ export class PepQuantitySelectorComponent
     }
 
     onMatrixClick(event: any): void {
-        this.isFocus = true;
+        this.isInFocus = true;
 
         if (this.QSInput && this.QSInput.nativeElement) {
             this.QSInput.nativeElement.focus();
@@ -448,15 +458,28 @@ export class PepQuantitySelectorComponent
     }
 
     onFocus(event: any): void {
-        this.isFocus = true;
+        this.isInFocus = true;
+    }
+
+    isDifferentValue(value: string): boolean {
+        let res = false;
+
+        const currentValue = this.utilitiesService.coerceNumberProperty(
+            this.value
+        );
+        const newValue = this.utilitiesService.coerceNumberProperty(value);
+
+        res = currentValue !== newValue;
+
+        return res;
     }
 
     onBlur(event: any): void {
-        this.isFocus = false;
+        this.isInFocus = false;
         this.cleanError();
         const value = event.target ? event.target.value : event;
 
-        if (parseFloat(this.value) !== parseFloat(value)) {
+        if (value !== this.value && this.isDifferentValue(value)) {
             this.value = value;
 
             // If the user is setting the formatted value then set the value till the user format it and return it back.
@@ -464,7 +487,7 @@ export class PepQuantitySelectorComponent
                 this._formattedValue = value;
             }
 
-            this.changeValue(this.value, event.relatedTarget);
+            this.valueChange.emit(this.value);
         } else {
             this.focusToTheSameElementInTheWantedRow();
         }
@@ -482,20 +505,9 @@ export class PepQuantitySelectorComponent
         }
     }
 
-    changeValue(value: any, lastFocusedField: any = null): void {
-        this.valueChange.emit({
-            key: this.key,
-            value,
-            controlType: this.controlType,
-            lastFocusedField,
-        });
-    }
-
     increment(event): void {
         if (this.standAlone) {
-            let tmp = parseFloat(this.value);
-
-            this.value = (++tmp).toString();
+            this.value = this.utilitiesService.incrementNumber(this.value);
         }
 
         this.elementClick.emit({
@@ -509,9 +521,7 @@ export class PepQuantitySelectorComponent
 
     decrement(event): void {
         if (this.standAlone) {
-            let tmp = parseFloat(this.value);
-
-            this.value = (--tmp).toString();
+            this.value = this.utilitiesService.decrementNumber(this.value);
         }
 
         this.elementClick.emit({

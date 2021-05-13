@@ -3,7 +3,7 @@
         <ng-container *ngIf="layoutType === 'form'; then formBlock; else notFormBlock"></ng-container>
         <ng-template #formBlock>
             <div class="pep-button-container reference-button">
-                <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+                <pep-field-title [label]="label" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment"
                     [showTitle]="showTitle">
                 </pep-field-title>
                 <ng-container *ngIf="createNewReference; then newBlock; else existingBlock"></ng-container>
@@ -85,7 +85,7 @@
 
 <ng-template #buttonTemplate let-internal="internal">
     <div class="pep-button-container">
-        <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+        <pep-field-title [label]="label" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment"
             [showTitle]="showTitle">
         </pep-field-title>
 

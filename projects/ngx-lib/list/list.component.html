@@ -166,7 +166,7 @@
                     <label id="{{ field.ApiName }}"
                         class="header-label body-sm pull-left flip text-align-{{ field.Layout.XAlignment }}"
                         title="{{ field.Title }}">
-                        <span *ngIf="field.Mandatory" class="required">
+                        <span *ngIf="field.Mandatory" class="mandatory">
                             <pep-icon name="system_must"></pep-icon>
                         </span>
                         {{ field.Title != '' ? field.Title : ' '}}

@@ -30,6 +30,7 @@ export class FormFieldsExampleComponent implements OnInit {
     searchString = '';
     searchAutoCompleteValues = [];
 
+    dateString;
     constructor(public layoutService: PepLayoutService) {
         this.minDateValue = new Date('1-1-2019').getTime();
         this.maxDateValue = new Date('1-1-2021').getTime();
@@ -49,6 +50,8 @@ export class FormFieldsExampleComponent implements OnInit {
             { key: 'sep', type: 'splitter' },
             { key: 'test3', text: 'test 3' },
         ];
+
+        this.dateString = new Date().toUTCString();
     }
 
     menuClicked(event): void {

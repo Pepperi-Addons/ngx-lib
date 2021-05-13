@@ -36,15 +36,15 @@
                 </div>
 
                 <mat-error><span class="body-xs"
-                        [title]="required && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
-                        [innerText]="required && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
+                        [title]="mandatory && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"
+                        [innerText]="mandatory && src.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label }) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })"></span>
                 </mat-error>
             </mat-form-field>
         </ng-template>
 
         <ng-container *ngIf="layoutType === 'form'">
             <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone}">
-                <pep-field-title [label]="label" [required]="required" [disabled]="disabled" [xAlignment]="xAlignment"
+                <pep-field-title [label]="label" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment"
                     [showTitle]="showTitle">
                 </pep-field-title>
                 <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>

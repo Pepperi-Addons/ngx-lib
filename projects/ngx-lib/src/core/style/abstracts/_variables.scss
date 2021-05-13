@@ -75,14 +75,13 @@ $spacing-md: var(--pep-spacing-md, 0.75rem);
 $spacing-lg: var(--pep-spacing-lg, 1rem);
 $spacing-xl: var(--pep-spacing-xl, 1.5rem);
 $spacing-2xl: var(--pep-spacing-2xl, 2rem);
-
-$spacing-3xl: 2.5rem;   // 40px
-$spacing-4xl: 3rem;     // 48px
-$spacing-5xl: 3.5rem;     // 56px
-$spacing-6xl: 5rem;     // 80px
-$spacing-7xl: 6rem;     // 96px
-$spacing-8xl: 8rem;     // 128px
-$spacing-9xl: 16rem;    // 256px
+$spacing-3xl: var(--pep-spacing-3xl, 2.5rem);   // 40px
+$spacing-4xl: var(--pep-spacing-4xl, 3rem);     // 48px
+$spacing-5xl: var(--pep-spacing-5xl, 3.5rem);   // 56px
+$spacing-6xl: var(--pep-spacing-6xl, 5rem);     // 80px
+$spacing-7xl: var(--pep-spacing-7xl, 6rem);     // 96px
+$spacing-8xl: var(--pep-spacing-8xl, 8rem);     // 128px
+$spacing-9xl: var(--pep-spacing-9xl, 16rem);    // 256px
 // *****************************************************************************************
 //                        Layout - General
 // *****************************************************************************************

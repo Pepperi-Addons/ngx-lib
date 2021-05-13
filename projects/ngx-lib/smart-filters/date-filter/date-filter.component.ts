@@ -8,7 +8,7 @@ import {
 } from '../common/model/operator';
 import { IPepSmartFilterDataValue } from '../common/model/filter';
 import { Validators } from '@angular/forms';
-import { IPepFieldValueChangeEvent, IPepOption } from '@pepperi-addons/ngx-lib';
+import { IPepOption } from '@pepperi-addons/ngx-lib';
 
 @Component({
     selector: 'pep-date-filter',
@@ -100,16 +100,16 @@ export class PepDateFilterComponent extends BaseFilterComponent {
         }
     }
 
-    onOperatorChanged(event: IPepFieldValueChangeEvent) {
+    onOperatorChanged(value: string) {
         const operator = Object.values(PepSmartFilterOperators).find(
-            (operator) => operator.id === event.value
+            (operator) => operator.id === value
         );
         this.operator = operator;
     }
 
-    onTimeUnitChanged(event: IPepFieldValueChangeEvent) {
+    onTimeUnitChanged(value: string) {
         const operatorUnit = Object.values(PepSmartFilterOperatorUnits).find(
-            (operatorUnit) => operatorUnit.id === event.value
+            (operatorUnit) => operatorUnit.id === value
         );
         this.operatorUnit = operatorUnit;
     }

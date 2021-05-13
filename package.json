@@ -27,28 +27,54 @@
         "serve:ngx-lib-elements": "cd dist/ngx-lib-elements &&  http-server  -p 4333 -d --cors",
         "build+serve:ngx-lib-elements": "npm run build:ngx-lib-elements && npm run delete:ngx-lib-elements && npm run serve:ngx-lib-elements",
         "compile": "npm run build-lib-prod && ng build",
-        "prepare": "npm run compile && npm run lint"
+        "prepare": "npm run compile",
+        "prepare-lint": "npm run compile && npm run lint",
+        "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
+        "storybook": "npm run docs:json && start-storybook -p 6006 --no-manager-cache -s .storybook/public",
+        "build-storybook": "npm run docs:json && build-storybook",
+        "deploy-storybook": "storybook-to-ghpages --out=./dist/storybook"
     },
-    "svg-to-ts": {
-        "conversionType": "constants",
-        "srcFiles": [
-            "./projects/ngx-lib/icon/svgs/**/*.svg"
-        ],
-        "outputDirectory": "./projects/ngx-lib/icon",
-        "interfaceName": "IPepIconData",
-        "typeName": "PepIconType",
-        "prefix": "pepIcon",
-        "svgoConfig": {
-            "plugins": [
-                {
-                    "cleanupAttrs": true
-                }
-            ]
+    "svg-to-ts": [
+        {
+            "conversionType": "constants",
+            "srcFiles": [
+                "./projects/ngx-lib/icon/svgs/**/*.svg"
+            ],
+            "outputDirectory": "./projects/ngx-lib/icon",
+            "interfaceName": "IPepIconData",
+            "typeName": "PepIconType",
+            "prefix": "pepIcon",
+            "svgoConfig": {
+                "plugins": [
+                    {
+                        "cleanupAttrs": true
+                    }
+                ]
+            },
+            "fileName": "icon-generated.model",
+            "additionalModelFile": "./projects/ngx-lib/icon",
+            "compileSources": true
         },
-        "fileName": "icon-generated.model",
-        "additionalModelFile": "./projects/ngx-lib/icon",
-        "compileSources": true
-    },
+        {
+            "conversionType": "object",
+            "srcFiles": [
+                "./projects/ngx-lib/icon/svgs/**/*.svg"
+            ],
+            "outputDirectory": "./projects/ngx-lib/icon",
+            "svgoConfig": {
+                "plugins": [
+                    {
+                        "cleanupAttrs": true
+                    }
+                ]
+            },
+            "fileName": "icon-generated-all.model",
+            "delimiter": "SNAKE",
+            "objectName": "allIcons",
+            "additionalModelFile": "./projects/ngx-lib/icon",
+            "compileSources": true
+        }
+    ],
     "private": true,
     "dependencies": {
         "@angular-builders/custom-webpack": "^10.0.1",
@@ -57,7 +83,6 @@
         "@angular/common": "~10.2.4",
         "@angular/compiler": "~10.2.4",
         "@angular/core": "~10.2.4",
-        "@angular/elements": "^11.0.5",
         "@angular/flex-layout": "^10.0.0-beta.32",
         "@angular/forms": "~10.2.4",
         "@angular/material": "^10.1.3",
@@ -89,11 +114,23 @@
         "@angular-devkit/build-ng-packagr": "~0.1002.1",
         "@angular/cli": "~10.2.1",
         "@angular/compiler-cli": "~10.2.4",
+        "@angular/elements": "^11.2.11",
+        "@babel/core": "^7.13.16",
+        "@compodoc/compodoc": "^1.1.11",
+        "@storybook/addon-actions": "^6.2.9",
+        "@storybook/addon-essentials": "^6.2.9",
+        "@storybook/addon-links": "^6.2.9",
+        "@storybook/addons": "^6.2.9",
+        "@storybook/angular": "^6.2.9",
+        "@storybook/storybook-deployer": "^2.8.7",
+        "@storybook/theming": "^6.2.9",
         "@types/jasmine": "~3.5.0",
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^12.11.1",
         "@typescript-eslint/eslint-plugin": "^4.11.1",
+        "@webcomponents/custom-elements": "^1.4.3",
         "angular-cli-ghpages": "^1.0.0-rc.1",
+        "babel-loader": "^8.2.2",
         "codelyzer": "^6.0.0-next.1",
         "eslint": "^7.17.0",
         "eslint-config-prettier": "^7.1.0",
@@ -117,5 +154,10 @@
         "webpack": "^4.44.1",
         "webpack-bundle-analyzer": "^3.8.0",
         "webpack-cli": "^3.3.12"
+    },
+    "storybook-deployer": {
+        "gitUsername": "GitHub Action",
+        "gitEmail": "action@github.com",
+        "commitMessage": "Deploy ngx-lib Storybook"
     }
 }

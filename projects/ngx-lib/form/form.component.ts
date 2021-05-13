@@ -135,7 +135,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     formGutterSize;
     cardGutterSize;
     rowHeight;
-    // private lastFocusedField: any = null;
     // private matrixIsLast = false;
     // lastUpdatedFieldApiName: string = '';
     form: FormGroup;
@@ -243,7 +242,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     readonly: !canEditObject,
                     disabled: !field.Enabled || !canEditObject,
                     hidden: false,
-                    required: false,
+                    mandatory: false,
                     value: field.Value,
                     formattedValue: field.FormattedValue,
                     row: 0,
@@ -267,7 +266,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     readonly: !canEditObject,
                     disabled: !field.Enabled || !canEditObject,
                     hidden: false,
-                    required: false,
+                    mandatory: false,
                     value: field.Value,
                     formattedValue: field.FormattedValue,
                     row: 0,
@@ -291,7 +290,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     readonly: !canEditObject,
                     disabled: !field.Enabled || !canEditObject,
                     hidden: false,
-                    required: false,
+                    mandatory: false,
                     value: field.Value,
                     formattedValue: field.FormattedValue,
                     row: 1,
@@ -315,7 +314,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     readonly: !canEditObject,
                     disabled: !field.Enabled || !canEditObject,
                     hidden: false,
-                    required: false,
+                    mandatory: false,
                     value: field.Value,
                     formattedValue: field.FormattedValue,
                     row: 1,
@@ -339,7 +338,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     readonly: !canEditObject,
                     disabled: !field.Enabled || !canEditObject,
                     hidden: false,
-                    required: false,
+                    mandatory: false,
                     value: field.Value,
                     formattedValue: field.FormattedValue,
                     row: 2,
@@ -407,7 +406,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             readonly: controlField.ReadOnly || !canEditObject,
             disabled: !dataField.Enabled || !canEditObject,
             hidden: controlField.Hidden,
-            required: controlField.Mandatory,
+            mandatory: controlField.Mandatory,
             value: dataField.Value,
             formattedValue: dataField.FormattedValue,
             additionalValue: dataField.AdditionalValue,
@@ -472,22 +471,22 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 dataField.FieldType === FIELD_TYPE.NumberReal
             ) {
                 options.type = 'qs';
-                options.alowDecimal = true;
+                options.allowDecimal = true;
             } else if (
                 dataField.FieldType ===
                     FIELD_TYPE.NumberIntegerQuantitySelector ||
                 dataField.FieldType === FIELD_TYPE.NumberInteger
             ) {
                 options.type = 'qs';
-                options.alowDecimal = false;
+                options.allowDecimal = false;
             } else if (
                 dataField.FieldType === FIELD_TYPE.NumberIntegerForMatrix
             ) {
                 options.type = 'qsForMatrix';
-                options.alowDecimal = false;
+                options.allowDecimal = false;
             } else if (dataField.FieldType === FIELD_TYPE.NumberRealForMatrix) {
                 options.type = 'qsForMatrix';
-                options.alowDecimal = true;
+                options.allowDecimal = true;
             }
 
             options.notificationInfo = dataField.NotificationInfo;
@@ -705,7 +704,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 case FIELD_TYPE.NumberRealQuantitySelector:
                 case FIELD_TYPE.NumberIntegerQuantitySelector: {
                     options.type = 'qs';
-                    options.alowDecimal =
+                    options.allowDecimal =
                         dataField.FieldType ===
                         FIELD_TYPE.NumberRealQuantitySelector;
                     options.notificationInfo = dataField.NotificationInfo;
@@ -757,7 +756,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
                     field.groupFields.forEach((groupField) => {
                         if (
-                            groupField.required &&
+                            groupField.mandatory &&
                             !field.readonly &&
                             !field.disabled
                         ) {
@@ -819,7 +818,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             if (formControl) {
                 // Mandatory is empty.
                 if (
-                    field.required &&
+                    field.mandatory &&
                     formControl.value.toString().trim().length === 0
                 ) {
                     emptyMandatoryFieldsMsg +=
@@ -878,7 +877,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     ngDoCheck(): void {
         const changes = this.differ.diff(this.data); // check for changes
         if (changes) {
-            this.updateForm(true);
+            this.updateForm();
             this.checkForChanges = new Date();
         }
     }
@@ -1049,7 +1048,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                                     readonly: false,
                                     disabled: false,
                                     hidden: false,
-                                    required: false,
+                                    mandatory: false,
                                     value: '',
                                     formattedValue: '',
                                     row: i,
@@ -1203,16 +1202,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         }
 
         customField.update(options);
-
-        // if (this.lastFocusedField && this.lastFocusedField.id === customField.key) {
-        //     setTimeout(() => {
-        //         this.lastFocusedField.focus();
-        //         this.lastFocusedField = null;
-        //     }, 100);
-        // }
     }
 
-    updateForm(cleanLastFocusedField = false): void {
+    updateForm(): void {
         if (this.data && this.data.Fields) {
             for (const currentField of this.data.Fields) {
                 const customField = this.fields.filter(
@@ -1220,8 +1212,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 )[0];
                 // Update all fields except 'internalPage' type (for children).
                 if (customField && customField.controlType !== 'internalPage') {
-                    // const hasFocus = this.lastFocusedField && this.lastFocusedField.id === customField.key;
-                    // customField.updateField(currentField, this.canEditObject, hasFocus ? this.lastFocusedField : null);
                     this.updateField(customField, currentField);
 
                     // Update the group fields.
@@ -1239,8 +1229,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                             const customGroupField = customField.groupFields.filter(
                                 (f) => f.key === currentGroupField.ApiName
                             )[0];
-                            // const hasGroupFocus = this.lastFocusedField && this.lastFocusedField.id === customGroupField.key;
-                            // customGroupField.updateField(currentGroupField, this.canEditObject, hasGroupFocus ? this.lastFocusedField : null);
                             this.updateField(
                                 customGroupField,
                                 currentGroupField
@@ -1251,12 +1239,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             }
 
             this.setForm(true);
-
-            // if (cleanLastFocusedField) {
-            //     // Clean the last focused field.
-            //     this.lastFocusedField = null;
-            //     console.log(this.lastFocusedField);
-            // }
         }
     }
 
@@ -1502,8 +1484,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             if (currentField) {
                 currentField.formattedValue = currentField.value = event.value;
             }
-
-            // this.lastFocusedField = event.lastFocusedField;
 
             this.valueChange.emit({
                 id: this.data.UID.toString(),

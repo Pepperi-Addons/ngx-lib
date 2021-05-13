@@ -3,7 +3,7 @@
         <ng-container *ngIf="type == 'multi'; then multiSelectBlock; else regularSelectBlock"></ng-container>
         <ng-template #regularSelectBlock>
             <mat-form-field appearance="outline" dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
-                <mat-select #select [required]="required ? required : undefined" matInput disableOptionCentering
+                <mat-select #select [required]="mandatory ? mandatory : undefined" matInput disableOptionCentering
                     class="body-sm text-align-{{ xAlignment }}" [id]="key"
                     [ngClass]="{'right-alignment': xAlignment === 'right'}"
                     [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
@@ -23,7 +23,7 @@
         </ng-template>
         <ng-template #multiSelectBlock>
             <mat-form-field appearance="outline" dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
-                <mat-select #select multiple [required]="required ? required : undefined" matInput
+                <mat-select #select multiple [required]="mandatory ? mandatory : undefined" matInput
                     disableOptionCentering class="body-sm text-align-{{ xAlignment }}" [id]="key"
                     [ngClass]="{'right-alignment': xAlignment === 'right'}"
                     [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
@@ -40,7 +40,7 @@
     </ng-template>
 
     <ng-container *ngIf="layoutType === 'form'">
-        <pep-field-title *ngIf="!parentFieldKey" [label]="label" [required]="required" [disabled]="disabled"
+        <pep-field-title *ngIf="!parentFieldKey" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
             [xAlignment]="xAlignment" [showTitle]="showTitle">
         </pep-field-title>
         <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
