@@ -46,6 +46,7 @@ import { PepColorPickerComponent } from './color-picker.component';
     ],
     exports: [PepColorComponent],
     declarations: [PepColorComponent, PepColorPickerComponent],
+    entryComponents: [PepColorPickerComponent],
 })
 export class PepColorModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

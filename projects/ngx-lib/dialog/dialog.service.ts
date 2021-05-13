@@ -20,6 +20,19 @@ export class PepDialogService {
         private overlay: Overlay
     ) {}
 
+    private fixConfigIfNeeded(data: PepDialogData, config: MatDialogConfig) {
+        if (config.disableClose) {
+            if (
+                ((!data.showClose || !data.showHeader) && !data.showFooter) ||
+                (data.actionsType === 'custom' &&
+                    (data.actionButtons === null ||
+                        data.actionButtons.length === 0))
+            ) {
+                config.disableClose = false;
+            }
+        }
+    }
+
     getDialogConfig(
         options: {
             disableClose?: boolean;
@@ -60,6 +73,7 @@ export class PepDialogService {
         if (!config) {
             config = this.getDialogConfig();
         }
+        this.fixConfigIfNeeded(data, config);
 
         config.data = data;
         const dialogRef = this.dialog.open(PepDefaultDialogComponent, config);
@@ -74,9 +88,9 @@ export class PepDialogService {
         if (!config) {
             config = this.getDialogConfig();
         }
+        this.fixConfigIfNeeded(data, config);
 
         config.data = data;
-
         const dialogRef = this.dialog.open(componentOrTemplateRef, config);
         return dialogRef;
     }

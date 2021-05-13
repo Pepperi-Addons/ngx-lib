@@ -4,8 +4,17 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 
 import { PepDialogComponent } from './dialog.component';
 import { PepDialogModule } from './dialog.module';
+import { PepDialogActionButton, PepDialogData } from './dialog.model';
+import { PepDialogService } from './dialog.service';
+import { PepButtonModule } from '../button/button.module';
 
-import { action } from '@storybook/addon-actions';
+import { APP_INITIALIZER } from '@angular/core';
+
+let dialogService = null;
+
+function initDialogService(ds: PepDialogService) {
+    return () => (dialogService = ds);
+}
 
 // This exports the Stories group for this component
 export default {
@@ -15,12 +24,47 @@ export default {
     decorators: [
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
-            imports: [PepDialogModule, SBNgxHelperModule],
+            providers: [
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: initDialogService,
+                    multi: true,
+                    deps: [PepDialogService],
+                },
+            ],
+            imports: [PepButtonModule, PepDialogModule, SBNgxHelperModule],
         }),
     ],
     argTypes: {
         title: {
             description: 'This is the title of the dialog',
+            control: 'text',
+            table: {
+                defaultValue: { summary: null },
+            },
+        },
+        actionsType: {
+            description: 'This is the actions type of the dialog',
+            defaultValue: 'close',
+            control: {
+                type: 'radio',
+                options: [
+                    'close',
+                    'cancel-continue',
+                    'cancel-ok',
+                    'cancel-delete',
+                    'custom',
+                ],
+            },
+            table: {
+                type: {
+                    summary: 'PepDialogActionsType',
+                },
+                defaultValue: { summary: 'close' },
+            },
+        },
+        content: {
+            description: 'This is the content of the dialog',
             control: 'text',
             table: {
                 defaultValue: { summary: null },
@@ -59,23 +103,66 @@ export default {
     },
     parameters: {
         controls: {
-            include: ['title', 'showClose', 'showHeader', 'showFooter'],
+            include: [
+                'title',
+                'actionsType',
+                'content',
+                'showClose',
+                'showHeader',
+                'showFooter',
+            ],
         },
     },
 } as Meta;
+
+function openDialog(event, args): void {
+    const config = dialogService.getDialogConfig({}, 'large');
+    let actionButtons = null;
+
+    if (args.actionsType === 'custom') {
+        actionButtons = [
+            new PepDialogActionButton(
+                'custom button',
+                'strong'
+                // () => alert("custom button clicked")
+            ),
+        ];
+    }
+
+    const dataMsg = new PepDialogData({
+        title: args.title,
+        actionsType: args.actionsType,
+        content: args.content,
+        showClose: args.showClose,
+        showHeader: args.showHeader,
+        showFooter: args.showFooter,
+        actionButtons,
+    });
+
+    dialogService
+        .openDefaultDialog(dataMsg, config)
+        .afterClosed()
+        .subscribe((res) => {
+            // debugger;
+        });
+}
 
 // This creates a Story for the component
 const Template: Story<PepDialogComponent> = (args: PepDialogComponent) => ({
     props: {
         ...args,
+        onButtonClick: (event) => openDialog(event, args),
     },
     template: `
-        <pep-dialog [title]="title" [showClose]="showClose" [showHeader]="showHeader" [showFooter]="showFooter"></pep-dialog>
+        <pep-button value="open dialog" (buttonClick)="onButtonClick($event)"></pep-button>
     `,
 });
+
+// <pep-dialog [title]="title" [showClose]="showClose" [showHeader]="showHeader" [showFooter]="showFooter"></pep-dialog>
 
 export const Base = Template.bind({});
 Base.storyName = 'Basic';
 Base.args = {
     title: 'Dialog title',
+    content: 'Dialog content',
 };

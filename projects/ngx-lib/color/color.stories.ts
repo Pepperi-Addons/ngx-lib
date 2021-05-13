@@ -15,7 +15,6 @@ export default {
     decorators: [
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
-            entryComponents: [PepColorPickerComponent],
             imports: [PepColorModule, SBNgxHelperModule],
         }),
     ],
