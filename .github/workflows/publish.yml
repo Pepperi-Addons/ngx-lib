@@ -29,7 +29,7 @@ jobs:
 
     # Set up git
     - name: Setup GIT
-      run: git config --global user.email "roi.a@pepperi.com" && git config --global user.name "roiaharon-pepperi"
+      run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
 
     # Set up npm
     - name: Create .npmrc
