@@ -22,7 +22,11 @@ import {
     animate,
 } from '@angular/animations';
 import { FormControl } from '@angular/forms';
-import { PepLayoutService, PepScreenSizeType, PepSizeType } from '@pepperi-addons/ngx-lib';
+import {
+    PepLayoutService,
+    PepScreenSizeType,
+    PepSizeType,
+} from '@pepperi-addons/ngx-lib';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import {
     IPepSearchClickEvent,
@@ -156,7 +160,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     constructor(
         private hostElement: ElementRef,
         private layoutService: PepLayoutService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {
