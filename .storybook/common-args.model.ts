@@ -53,6 +53,30 @@ export const commonArgTypes = {
             },
         },
     },
+    sizeType: {
+        table: {
+            defaultValue: { summary: 'md' },
+        },
+    },
+    styleStateType: {
+        table: {
+            defaultValue: { summary: 'system' },
+        },
+    },
+    styleType: {
+        table: {
+            defaultValue: { summary: 'weak' },
+        },
+    },
+    classNames: {
+        description:
+            'Class names that should be on the menu element tag like classNames="class1 class2"',
+    },
+    iconName: {
+        table: {
+            defaultValue: { summary: null },
+        },
+    },
     mandatory: {
         description: 'If the component is mandatory',
         defaultValue: false,

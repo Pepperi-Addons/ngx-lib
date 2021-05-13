@@ -25,11 +25,6 @@ export default {
                 defaultValue: { summary: null },
             },
         },
-        iconName: {
-            table: {
-                defaultValue: { summary: null },
-            },
-        },
         type: {
             description: 'This is the type of the component',
             defaultValue: 'action',
@@ -44,20 +39,10 @@ export default {
                 defaultValue: { summary: 'action' },
             },
         },
-        styleType: {
-            table: {
-                defaultValue: { summary: 'weak' },
-            },
-        },
-        sizeType: {
-            table: {
-                defaultValue: { summary: 'md' },
-            },
-        },
-        classNames: {
-            description:
-                'Class names that should be on the menu element tag like classNames="class1 class2"',
-        },
+        iconName: commonArgTypes.iconName,
+        styleType: commonArgTypes.styleType,
+        sizeType: commonArgTypes.sizeType,
+        classNames: commonArgTypes.classNames,
         disabled: commonArgTypes.disabled,
         items: {
             description: 'This is an array of items',

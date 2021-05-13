@@ -111,12 +111,60 @@ export class PepQuantitySelectorComponent
     @Input() mandatory = false;
     @Input() disabled = false;
     @Input() readonly = false;
-    @Input() textColor = '';
+
+    private _textColor = '';
+    @Input()
+    set textColor(value: string) {
+        this._textColor = value;
+        this.isCaution = value === '#FF0000';
+    }
+    get textColor(): string {
+        return this._textColor;
+    }
+
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     @Input() allowDecimal = false;
     @Input() additionalValue = '';
-    @Input() notificationInfo: any;
+
+    private _notificationInfo: any;
+    @Input()
+    set notificationInfo(value: any) {
+        this._notificationInfo = value;
+
+        const messages = value && value > 0 ? JSON.parse(value).Messages : '';
+        if (messages && messages.length > 0) {
+            // Replace the msg keys.
+            for (const msg of messages) {
+                if (msg.Key === 'Inventory_Limit_Msg') {
+                    msg.Key = 'MESSAGES.ERROR_INVENTORY_LIMIT';
+                } else if (msg.Key === 'Case_Quantity_Limit_Msg') {
+                    msg.Key = 'MESSAGES.ERROR_CASE_QUANTITY_LIMIT';
+                } else if (msg.Key === 'Min_Quantity_Limit_Msg') {
+                    msg.Key = 'MESSAGES.ERROR_MIN_QUANTITY_LIMIT';
+                } else if (msg.Key === 'Max_Quantity_Limit_Msg') {
+                    msg.Key = 'MESSAGES.ERROR_MAX_QUANTITY_LIMIT';
+                }
+            }
+
+            this.messages = messages;
+
+            const fieldControl = this.form.controls[this.key];
+            fieldControl.setErrors({
+                serverError: 'Error',
+            });
+
+            this.sameElementInTheWantedRow = null;
+            setTimeout(() => {
+                if (this.QSInput && this.QSInput.nativeElement) {
+                    this.QSInput.nativeElement.focus();
+                }
+            }, 150);
+        }
+    }
+    get notificationInfo(): any {
+        return this._notificationInfo;
+    }
 
     private _visible = true;
     @Input()
@@ -223,8 +271,7 @@ export class PepQuantitySelectorComponent
     }
 
     get displayValue(): string {
-        const res = this.isInFocus ? this.value : this.formattedValue;
-
+        const res = this.isInFocus ? parseFloat(this.value).toString() : this.formattedValue;
         return res;
     }
 
@@ -246,11 +293,6 @@ export class PepQuantitySelectorComponent
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
         }
-
-        // Get state class from theme.
-        // this.styleType = document.documentElement.style.getPropertyValue(
-        //     PepCustomizationService.STYLE_QS_KEY
-        // ) as PepStyleType;
 
         this.qsWidthSubject
             .asObservable()
@@ -276,47 +318,9 @@ export class PepQuantitySelectorComponent
             this.setForm();
         }
 
-        this.isCaution = this.textColor === '#FF0000';
-
-        const messages =
-            this.notificationInfo && this.notificationInfo.length > 0
-                ? JSON.parse(this.notificationInfo).Messages
-                : '';
-        if (messages && messages.length > 0) {
-            // Replace the msg keys.
-            for (const msg of messages) {
-                if (msg.Key === 'Inventory_Limit_Msg') {
-                    msg.Key = 'MESSAGES.ERROR_INVENTORY_LIMIT';
-                } else if (msg.Key === 'Case_Quantity_Limit_Msg') {
-                    msg.Key = 'MESSAGES.ERROR_CASE_QUANTITY_LIMIT';
-                } else if (msg.Key === 'Min_Quantity_Limit_Msg') {
-                    msg.Key = 'MESSAGES.ERROR_MIN_QUANTITY_LIMIT';
-                } else if (msg.Key === 'Max_Quantity_Limit_Msg') {
-                    msg.Key = 'MESSAGES.ERROR_MAX_QUANTITY_LIMIT';
-                }
-            }
-
-            this.messages = messages;
-
-            const fieldControl = this.form.controls[this.key];
-            fieldControl.setErrors({
-                serverError: 'Error',
-            });
-            setTimeout(() => {
-                if (this.QSInput && this.QSInput.nativeElement) {
-                    this.QSInput.nativeElement.focus();
-                }
-            }, 150);
-        } else {
-            setTimeout(() => {
-                // if (this.lastFocusField) {
-                //     this.lastFocusField.focus();
-                //     this.lastFocusField = null;
-                // } else {
-                this.focusToTheSameElementInTheWantedRow();
-                // }
-            }, 100);
-        }
+        setTimeout(() => {
+            this.focusToTheSameElementInTheWantedRow();
+        }, 150);
     }
 
     ngOnDestroy(): void {
@@ -365,27 +369,32 @@ export class PepQuantitySelectorComponent
             }
         }
 
-        if (isNext) {
-            if (parentSelector.nextElementSibling === null) {
-                sameElementInTheWantedRowByClassName = parentSelector.parentElement.querySelectorAll(
-                    '[name=' + this.key + ']'
-                )[0];
-            } else {
-                sameElementInTheWantedRowByClassName = parentSelector.nextElementSibling.querySelectorAll(
-                    '[name=' + this.key + ']'
-                )[0];
-            }
+        if (parentSelector.nextElementSibling === null &&
+            parentSelector.previousElementSibling === null) {
+            sameElementInTheWantedRowByClassName = null;
         } else {
-            if (parentSelector.previousElementSibling === null) {
-                const elementsList = parentSelector.parentElement.querySelectorAll(
-                    '[name=' + this.key + ']'
-                );
-                sameElementInTheWantedRowByClassName =
-                    elementsList[elementsList.length - 1];
+            if (isNext) {
+                if (parentSelector.nextElementSibling === null) {
+                    sameElementInTheWantedRowByClassName = parentSelector.parentElement.querySelectorAll(
+                        '[name=' + this.key + ']'
+                    )[0];
+                } else {
+                    sameElementInTheWantedRowByClassName = parentSelector.nextElementSibling.querySelectorAll(
+                        '[name=' + this.key + ']'
+                    )[0];
+                }
             } else {
-                sameElementInTheWantedRowByClassName = parentSelector.previousElementSibling.querySelectorAll(
-                    '[name=' + this.key + ']'
-                )[0];
+                if (parentSelector.previousElementSibling === null) {
+                    const elementsList = parentSelector.parentElement.querySelectorAll(
+                        '[name=' + this.key + ']'
+                    );
+                    sameElementInTheWantedRowByClassName =
+                        elementsList[elementsList.length - 1];
+                } else {
+                    sameElementInTheWantedRowByClassName = parentSelector.previousElementSibling.querySelectorAll(
+                        '[name=' + this.key + ']'
+                    )[0];
+                }
             }
         }
 

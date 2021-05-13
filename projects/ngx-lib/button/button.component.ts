@@ -136,7 +136,7 @@ export class PepButtonComponent implements OnDestroy {
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
 
-    constructor(private renderer: Renderer2, private element: ElementRef) { }
+    constructor(private renderer: Renderer2, private element: ElementRef) {}
 
     ngOnDestroy(): void {
         if (this.buttonClick) {

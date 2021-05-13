@@ -29,30 +29,11 @@ export default {
                 defaultValue: { summary: 'end' },
             },
         },
-        iconName: {
-            table: {
-                defaultValue: { summary: null },
-            },
-        },
-        sizeType: {
-            table: {
-                defaultValue: { summary: 'md' },
-            },
-        },
-        styleStateType: {
-            table: {
-                defaultValue: { summary: 'system' },
-            },
-        },
-        styleType: {
-            table: {
-                defaultValue: { summary: 'weak' },
-            },
-        },
-        classNames: {
-            description:
-                'Class names that should be on the button element tag like classNames="class1 class2"',
-        },
+        iconName: commonArgTypes.iconName,
+        sizeType: commonArgTypes.sizeType,
+        styleStateType: commonArgTypes.styleStateType,
+        styleType: commonArgTypes.styleType,
+        classNames: commonArgTypes.classNames,
         buttonClick: {
             action: 'buttonClick',
             control: false,

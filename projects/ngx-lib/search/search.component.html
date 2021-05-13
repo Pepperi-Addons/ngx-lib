@@ -89,7 +89,7 @@
 <ng-template #triggerOnKeydownBlock>
     <ng-container *ngIf="searchControl.value?.length > 0; then clearBlock; else searchBlock"></ng-container>
     <ng-template #clearBlock>
-        <button class="pep-button {{ sizeType }} regular" mat-button (click)="onClearClicked($event)">
+        <button class="pep-button regular {{ sizeType }}" mat-button (click)="onClearClicked($event)">
             <mat-icon>
                 <pep-icon name="system_close"></pep-icon>
             </mat-icon>

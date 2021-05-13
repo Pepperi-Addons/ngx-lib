@@ -42,7 +42,7 @@ import {
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     /**
-     * The text box key 
+     * The text box key
      *
      * @memberof PepTextboxComponent
      */

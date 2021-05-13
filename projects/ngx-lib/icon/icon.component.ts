@@ -115,7 +115,7 @@ export class PepIconComponent {
         private colorService: PepColorService,
         private iconRegistry: PepIconRegistry,
         @Optional() @Inject(DOCUMENT) private document: any
-    ) { }
+    ) {}
 
     /**
      * Set fill on the svg icon.
