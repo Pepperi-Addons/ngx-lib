@@ -271,7 +271,9 @@ export class PepQuantitySelectorComponent
     }
 
     get displayValue(): string {
-        const res = this.isInFocus ? parseFloat(this.value).toString() : this.formattedValue;
+        const res = this.isInFocus
+            ? parseFloat(this.value).toString()
+            : this.formattedValue;
         return res;
     }
 
@@ -369,8 +371,10 @@ export class PepQuantitySelectorComponent
             }
         }
 
-        if (parentSelector.nextElementSibling === null &&
-            parentSelector.previousElementSibling === null) {
+        if (
+            parentSelector.nextElementSibling === null &&
+            parentSelector.previousElementSibling === null
+        ) {
             sameElementInTheWantedRowByClassName = null;
         } else {
             if (isNext) {

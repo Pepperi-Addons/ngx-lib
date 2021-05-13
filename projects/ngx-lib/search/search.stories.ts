@@ -23,17 +23,12 @@ export default {
         sizeType: commonArgTypes.sizeType,
         search: {
             action: 'search',
-            control: false
+            control: false,
         },
     },
     parameters: {
         controls: {
-            include: [
-                'triggerOn',
-                'value',
-                'sizeType',
-                'search',
-            ],
+            include: ['triggerOn', 'value', 'sizeType', 'search'],
         },
     },
     decorators: [

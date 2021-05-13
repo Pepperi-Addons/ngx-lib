@@ -24,7 +24,7 @@ export default {
             control: 'text',
             table: {
                 defaultValue: { summary: null },
-            }
+            },
         },
         showClose: {
             description: 'If show close button',
@@ -34,7 +34,7 @@ export default {
             },
             table: {
                 defaultValue: { summary: 'true' },
-            }
+            },
         },
         showHeader: {
             description: 'If show dialog header',
@@ -44,7 +44,7 @@ export default {
             },
             table: {
                 defaultValue: { summary: 'true' },
-            }
+            },
         },
         showFooter: {
             description: 'If show dialog footer',
@@ -54,17 +54,12 @@ export default {
             },
             table: {
                 defaultValue: { summary: 'true' },
-            }
+            },
         },
     },
     parameters: {
         controls: {
-            include: [
-                'title',
-                'showClose',
-                'showHeader',
-                'showFooter',
-            ],
+            include: ['title', 'showClose', 'showHeader', 'showFooter'],
         },
     },
 } as Meta;
