@@ -38,6 +38,8 @@
         "DIALOG_TITLE": "הוסף חתימה"
     },
     "ACTIONS": {
+        "CONTINUE": "המשך",
+        "DELETE": "מחק",
         "APPLY": "החל",
         "CANCEL": "בטל",
         "CLEAR": "נקה",

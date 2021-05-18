@@ -38,6 +38,8 @@
         "DIALOG_TITLE": "Adicione a assinatura aqui"
     },
     "ACTIONS": {
+        "CONTINUE": "Continue",
+        "DELETE": "Delete",
         "APPLY": "Aplicar",
         "CANCEL": "Cancelar",
         "CLEAR": "Limpar",

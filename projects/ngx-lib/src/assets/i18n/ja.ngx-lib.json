@@ -38,6 +38,8 @@
         "DIALOG_TITLE": "ここに署名を追加"
     },
     "ACTIONS": {
+        "CONTINUE": "Continue",
+        "DELETE": "Delete",
         "APPLY": "適用",
         "CANCEL": "キャンセル",
         "CLEAR": "クリア",

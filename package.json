@@ -156,8 +156,8 @@
         "webpack-cli": "^3.3.12"
     },
     "storybook-deployer": {
-        "gitUsername": "Roi Aharon",
-        "gitEmail": "roi.a@pepperi.com",
+        "gitUsername": "GitHub Action",
+        "gitEmail": "action@github.com",
         "commitMessage": "Deploy ngx-lib Storybook"
     }
 }

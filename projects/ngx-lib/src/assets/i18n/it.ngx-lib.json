@@ -38,6 +38,8 @@
         "DIALOG_TITLE": "Inserire la firma qui"
     },
     "ACTIONS": {
+        "CONTINUE": "Continue",
+        "DELETE": "Delete",
         "APPLY": "Applica",
         "CANCEL": "Annulla",
         "CLEAR": "Elimina",
