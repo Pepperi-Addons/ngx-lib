@@ -38,7 +38,8 @@
         "DIALOG_TITLE": "Unterschrift hier hinzufügen"
     },
     "ACTIONS": {
-        "APPLY": "Anwenden",
+        "CONTINUE": "Continue",
+        "DELETE": "Delete",
         "CANCEL": "Abbrechen",
         "CLEAR": "Löschen",
         "CLEAR_ALL": "Alles löschen",

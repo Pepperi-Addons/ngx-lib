@@ -38,7 +38,8 @@
         "DIALOG_TITLE": "Agregar la firma aquí"
     },
     "ACTIONS": {
-        "APPLY": "Aplicar",
+        "CONTINUE": "Continue",
+        "DELETE": "Delete",
         "CANCEL": "Cancelar",
         "CLEAR": "Borrar",
         "CLEAR_ALL": "Borrar todo",
