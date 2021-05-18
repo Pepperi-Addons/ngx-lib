@@ -18,8 +18,8 @@ function initDialogService(ds: PepDialogService) {
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/dialog',
-    component: PepDialogComponent,
+    title: 'Services/dialog',
+    // component: PepDialogComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
         // The necessary modules for the component to work on Storybook

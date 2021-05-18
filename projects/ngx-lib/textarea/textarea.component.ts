@@ -77,7 +77,16 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
-    @Input() layoutType: PepLayoutType = 'form';
+
+    private _layoutType: PepLayoutType = 'form';
+    @Input()
+    set layoutType(value: PepLayoutType) {
+        this._layoutType = value;
+        this.setFieldHeight();
+    }
+    get layoutType(): PepLayoutType {
+        return this._layoutType;
+    }
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
