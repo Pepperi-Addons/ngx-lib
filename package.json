@@ -154,10 +154,5 @@
         "webpack": "^4.44.1",
         "webpack-bundle-analyzer": "^3.8.0",
         "webpack-cli": "^3.3.12"
-    },
-    "storybook-deployer": {
-        "gitUsername": "GitHub Action",
-        "gitEmail": "action@github.com",
-        "commitMessage": "Deploy ngx-lib Storybook"
     }
 }
