@@ -51,5 +51,5 @@ jobs:
     # Deploy examples project to Github Pages
     - name: Deploy
       env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
       run: npm run deploy-storybook -- --ci
