@@ -54,8 +54,4 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ROI_TOKEN: ${{ secrets.ROI_GH_TOKEN}}
         GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: |
-      echo ${#GH_TOKEN} \
-      echo ${#ROI_TOKEN} \
-      echo ${#GITHUB_CONTEXT} \
-      npm run deploy-storybook -- --ci
+      run: echo ${#GH_TOKEN} && echo ${#ROI_TOKEN} && echo ${#GITHUB_CONTEXT} && npm run deploy-storybook -- --ci
