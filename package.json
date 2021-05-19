@@ -30,8 +30,8 @@
         "prepare": "npm run compile",
         "prepare-lint": "npm run compile && npm run lint",
         "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-        "storybook": "npm run docs:json && start-storybook -p 6006 --no-manager-cache -s .storybook/public",
-        "build-storybook": "npm run docs:json && build-storybook",
+        "storybook": "npm run docs:json && start-storybook -s .storybook/public -p 6006 --no-manager-cache",
+        "build-storybook": "npm run docs:json && build-storybook -s .storybook/public",
         "deploy-storybook": "storybook-to-ghpages --out=./dist/storybook"
     },
     "svg-to-ts": [
