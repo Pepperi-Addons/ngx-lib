@@ -59,7 +59,17 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() form: FormGroup = null;
     @Input() showTitle = true;
-    @Input() layoutType: PepLayoutType = 'form';
+
+    private _layoutType: PepLayoutType = 'form';
+    @Input()
+    set layoutType(value: PepLayoutType) {
+        this._layoutType = value;
+        this.setFieldHeight();
+    }
+    get layoutType(): PepLayoutType {
+        return this._layoutType;
+    }
+
     @Input() isActive = false;
 
     // @Output()

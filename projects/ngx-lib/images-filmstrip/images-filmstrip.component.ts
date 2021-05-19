@@ -171,7 +171,17 @@ export class PepImagesFilmstripComponent
     @Input() form: FormGroup = null;
     @Input() uid = '0';
     @Input() showTitle = false;
-    @Input() layoutType: PepLayoutType = 'form';
+
+    private _layoutType: PepLayoutType = 'form';
+    @Input()
+    set layoutType(value: PepLayoutType) {
+        this._layoutType = value;
+        this.setFieldHeight();
+    }
+    get layoutType(): PepLayoutType {
+        return this._layoutType;
+    }
+
     @Input() currIndex = 0;
     @Input() showThumbnails = false;
 

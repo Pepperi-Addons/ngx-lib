@@ -89,7 +89,17 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() uid = '';
     @Input() showTitle = true;
-    @Input() layoutType: PepLayoutType = 'form';
+
+    private _layoutType: PepLayoutType = 'form';
+    @Input()
+    set layoutType(value: PepLayoutType) {
+        this._layoutType = value;
+        this.setFieldHeight();
+    }
+    get layoutType(): PepLayoutType {
+        return this._layoutType;
+    }
+
     @Input() isActive = false;
     @Input() sizeLimitMB = 5;
     @Input() acceptImagesType = 'bmp,jpg,jpeg,png,gif'; // "image/bmp, image/jpg, image/jpeg, image/png, image/tif, image/tiff";

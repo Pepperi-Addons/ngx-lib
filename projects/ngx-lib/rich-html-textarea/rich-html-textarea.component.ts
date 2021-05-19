@@ -96,7 +96,17 @@ export class PepRichHtmlTextareaComponent
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
-    @Input() layoutType: PepLayoutType = 'form';
+
+    private _layoutType: PepLayoutType = 'form';
+    @Input()
+    set layoutType(value: PepLayoutType) {
+        this._layoutType = value;
+        this.setFieldHeight();
+    }
+    get layoutType(): PepLayoutType {
+        return this._layoutType;
+    }
+
     @Input() inlineMode = false;
 
     protected _toolbarOptions: IPepRichHtmlTextareaToolbarOptions;
