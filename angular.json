@@ -36,7 +36,7 @@
               {
                 "glob": "**/*",
                 "input": "./dist/ngx-lib/src/assets",
-                "output": "./assets/ngx-lib"
+                "output": "./ngx-lib/assets/ngx-lib"
               }
             ],
             "styles": [
