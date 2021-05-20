@@ -31,8 +31,9 @@
         "prepare-lint": "npm run compile && npm run lint",
         "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
         "storybook": "npm run docs:json && start-storybook -s .storybook/public -p 6006 --no-manager-cache",
-        "build-storybook": "npm run docs:json && build-storybook -s .storybook/public",
-        "deploy-storybook": "storybook-to-ghpages --out=./dist/storybook --s build-storybook"
+        "build-storybook": "npm run docs:json && build-storybook -o ngx-lib -s .storybook/public",
+        "deploy-storybook": "storybook-to-ghpages --out=./dist/storybook --s build-storybook --baseurl=/ngx-lib",
+        "chromatic": "npx chromatic --project-token=0f8599740c87"
     },
     "svg-to-ts": [
         {
@@ -131,6 +132,7 @@
         "@webcomponents/custom-elements": "^1.4.3",
         "angular-cli-ghpages": "^1.0.0-rc.1",
         "babel-loader": "^8.2.2",
+        "chromatic": "^5.8.2",
         "codelyzer": "^6.0.0-next.1",
         "eslint": "^7.17.0",
         "eslint-config-prettier": "^7.1.0",

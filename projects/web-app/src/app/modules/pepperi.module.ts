@@ -167,7 +167,7 @@ export function createTranslateLoader(
             prefix:
                 addonStaticFolder.length > 0
                     ? addonStaticFolder
-                    : '/ngx-lib/' + translationsPath,
+                    : translationsPath,
             suffix: translationsSuffix,
         },
         {
