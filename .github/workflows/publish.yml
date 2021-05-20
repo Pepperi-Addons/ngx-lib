@@ -50,6 +50,7 @@ jobs:
 
     # Deploy examples project to Github Pages
     - name: Deploy
+      baseurl: /ngx-lib
       env:
         GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
       run: npm run deploy-storybook -- --ci 
