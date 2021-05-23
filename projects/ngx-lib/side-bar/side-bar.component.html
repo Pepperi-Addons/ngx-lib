@@ -13,7 +13,7 @@
                 <ng-container *ngTemplateOutlet="smartFiltersTemplate"></ng-container>
 
                 <!-- Custom -->
-                <ng-content></ng-content>
+                <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
             </div>
         </div>
     </ng-template>
@@ -33,7 +33,7 @@
                     <ng-container *ngTemplateOutlet="smartFiltersTemplate"></ng-container>
 
                     <!-- Custom -->
-                    <ng-content></ng-content>
+                    <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
                 </div>
 
                 <div *ngIf="showFooter" class="sidenav-footer pep-border-top">
@@ -50,4 +50,8 @@
 
 <ng-template #smartFiltersTemplate>
     <ng-content select="pep-smart-filters"></ng-content>
+</ng-template>
+
+<ng-template #customTemplate>
+    <ng-content></ng-content>
 </ng-template>
