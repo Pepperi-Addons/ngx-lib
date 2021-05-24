@@ -45,9 +45,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
-import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
 const matComponentsModules = [
     MatAutocompleteModule,
     MatBadgeModule,
@@ -112,10 +111,10 @@ const matComponentsModules = [
         matComponentsModules,
     ],
     providers: [
-        { provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' } },
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { float: 'never' } },
     ],
 })
-export class MaterialModule {}
+export class MaterialModule { }
 
 /**  Copyright 2018 Google Inc. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that
