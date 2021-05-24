@@ -1,19 +1,15 @@
 import {
     Component,
     OnInit,
-    ViewEncapsulation,
     Injectable,
     Input,
-    OnChanges,
     OnDestroy,
-    SimpleChange,
     Output,
     EventEmitter,
     ViewChild,
     ElementRef,
-    Renderer2,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
     trigger,
     state,
@@ -160,7 +156,7 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     constructor(
         private hostElement: ElementRef,
         private layoutService: PepLayoutService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {
