@@ -62,8 +62,10 @@
 
     // For icon with text
     .mat-icon {
-        height: $button-icon-with-text-height !important;
-        width: $button-icon-with-text-height !important;
+        height: $button-icon-with-text-height;
+        width: $button-icon-with-text-height;
+        // height: $button-icon-with-text-height !important;
+        // width: $button-icon-with-text-height !important;
     }
 
     // For icon only
@@ -72,8 +74,10 @@
         padding-right: 0;
 
         .mat-icon {
-            height: $button-icon-height !important;
-            width: $button-icon-height !important;
+            height: $button-icon-height;
+            width: $button-icon-height;
+            // height: $button-icon-height !important;
+            // width: $button-icon-height !important;
             @include align-center();
         }
     }
