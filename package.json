@@ -1,166 +1,139 @@
 {
-    "name": "pep-angular-library",
-    "version": "0.0.0",
-    "scripts": {
-        "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build",
-        "test": "ng test",
-        "lint": "eslint --ext .ts .",
-        "fix-lint": "eslint --ext .ts . --fix",
-        "e2e": "ng e2e",
-        "build-lib": "ng build ngx-lib",
-        "build-lib-watch": "ng build ngx-lib --watch",
-        "build-lib-prod": "ng build ngx-lib --configuration production",
-        "link-lib": "cd dist && cd ngx-lib && npm link",
-        "link+install-lib": "npm run link-lib && npm i file:./dist/ngx-lib",
-        "pack-lib": "cd dist && cd ngx-lib && npm pack",
-        "publish-lib": "cd dist && cd ngx-lib && npm publish",
-        "pack+install-lib": "npm run pack-lib && npm i",
-        "build+pack+install-lib": "npm run build-lib && npm run pack-lib && npm i",
-        "generate-icons": "svg-to-ts",
-        "analyze": "ng build web-app --prod --stats-json && webpack-bundle-analyzer ./dist/web-app/stats.json",
-        "webpack": "webpack",
-        "bundle:ngx-lib-elements": "cd dist/ngx-lib-elements && concat-cli -f main.js polyfills.js runtime.js vendor.js styles.js -o assets/scripts/pepperi-elements.js",
-        "build:ngx-lib-elements": "ng build --project ngx-lib-elements --output-hashing none --sourceMap=false && cd dist && cd ngx-lib-elements && npm run bundle:ngx-lib-elements",
-        "delete:ngx-lib-elements": "rimraf ./dist/ngx-lib-elements/main.js ./dist/ngx-lib-elements/vendor.js ./dist/ngx-lib-elements/styles.js ./dist/ngx-lib-elements/polyfills.js ./dist/ngx-lib-elements/runtime.js ./dist/ngx-lib-elements/scripts.js ./dist/ngx-lib-elements/4.js ./dist/ngx-lib-elements/3rdpartylicenses.txt",
-        "serve:ngx-lib-elements": "cd dist/ngx-lib-elements &&  http-server  -p 4333 -d --cors",
-        "build+serve:ngx-lib-elements": "npm run build:ngx-lib-elements && npm run delete:ngx-lib-elements && npm run serve:ngx-lib-elements",
-        "compile": "npm run build-lib-prod && ng build",
-        "prepare": "npm run compile",
-        "prepare-lint": "npm run compile && npm run lint",
-        "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-        "storybook": "npm run docs:json && start-storybook -s .storybook/public -p 6006 --no-manager-cache",
-        "build-storybook": "npm run docs:json && build-storybook -o ngx-lib -s .storybook/public",
-        "deploy-storybook": "storybook-to-ghpages --out=./dist/storybook --s build-storybook",
-        "chromatic": "npx chromatic --project-token=0f8599740c87"
+  "name": "pep-angular-library",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "e2e": "ng e2e",
+    "build-lib": "ng build ngx-lib",
+    "build-lib-watch": "ng build ngx-lib --watch",
+    "build-lib-prod": "ng build ngx-lib --configuration production",
+    "link-lib": "cd dist && cd ngx-lib && npm link",
+    "link+install-lib": "npm run link-lib && npm i file:./dist/ngx-lib",
+    "pack-lib": "cd dist && cd ngx-lib && npm pack",
+    "publish-lib": "cd dist && cd ngx-lib && npm publish",
+    "pack+install-lib": "npm run pack-lib && npm i",
+    "build+pack+install-lib": "npm run build-lib && npm run pack-lib && npm i",
+    "generate-icons": "svg-to-ts",
+    "compile": "",
+    "compile_old": "npm run build-lib-prod",
+    "prepare": "npm run compile",
+    "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
+    "storybook": "npm run docs:json && start-storybook -s .storybook/public -p 6006 --no-manager-cache",
+    "build-storybook": "npm run docs:json && build-storybook -s .storybook/public",
+    "deploy-storybook": "storybook-to-ghpages --out=./dist/storybook --s build-storybook",
+    "chromatic": "npx chromatic --project-token=0f8599740c87"
+  },
+  "svg-to-ts": [
+    {
+      "conversionType": "constants",
+      "srcFiles": [
+        "./projects/ngx-lib/icon/svgs/**/*.svg"
+      ],
+      "outputDirectory": "./projects/ngx-lib/icon",
+      "interfaceName": "IPepIconData",
+      "typeName": "PepIconType",
+      "prefix": "pepIcon",
+      "svgoConfig": {
+        "plugins": [
+          {
+            "cleanupAttrs": true
+          }
+        ]
+      },
+      "fileName": "icon-generated.model",
+      "additionalModelFile": "./projects/ngx-lib/icon",
+      "compileSources": true
     },
-    "svg-to-ts": [
-        {
-            "conversionType": "constants",
-            "srcFiles": [
-                "./projects/ngx-lib/icon/svgs/**/*.svg"
-            ],
-            "outputDirectory": "./projects/ngx-lib/icon",
-            "interfaceName": "IPepIconData",
-            "typeName": "PepIconType",
-            "prefix": "pepIcon",
-            "svgoConfig": {
-                "plugins": [
-                    {
-                        "cleanupAttrs": true
-                    }
-                ]
-            },
-            "fileName": "icon-generated.model",
-            "additionalModelFile": "./projects/ngx-lib/icon",
-            "compileSources": true
-        },
-        {
-            "conversionType": "object",
-            "srcFiles": [
-                "./projects/ngx-lib/icon/svgs/**/*.svg"
-            ],
-            "outputDirectory": "./projects/ngx-lib/icon",
-            "svgoConfig": {
-                "plugins": [
-                    {
-                        "cleanupAttrs": true
-                    }
-                ]
-            },
-            "fileName": "icon-generated-all.model",
-            "delimiter": "SNAKE",
-            "objectName": "allIcons",
-            "additionalModelFile": "./projects/ngx-lib/icon",
-            "compileSources": true
-        }
-    ],
-    "private": true,
-    "dependencies": {
-        "@angular-builders/custom-webpack": "^10.0.1",
-        "@angular/animations": "~12.0.1",
-        "@angular/cdk": "^12.0.1",
-        "@angular/common": "~12.0.1",
-        "@angular/compiler": "~12.0.1",
-        "@angular/core": "~12.0.1",
-        "@angular/flex-layout": "^12.0.0-beta.34",
-        "@angular/forms": "~12.0.1",
-        "@angular/material": "^12.0.1",
-        "@angular/material-moment-adapter": "^12.0.1",
-        "@angular/platform-browser": "~12.0.1",
-        "@angular/platform-browser-dynamic": "~12.0.1",
-        "@angular/router": "~12.0.1",
-        "@hallysonh/ngx-imageviewer": "^2.0.4",
-        "@mat-datetimepicker/core": "^5.0.1",
-        "@mat-datetimepicker/moment": "^5.0.1",
-        "@ngx-translate/core": "^13.0.0",
-        "@ngx-translate/http-loader": "^6.0.0",
-        "@tweenjs/tween.js": "^17.1.1",
-        "hammerjs": "^2.0.8",
-        "mini-css-extract-plugin": "^1.6.0",
-        "moment": "^2.26.0",
-        "ng-gallery": "^5.0.0",
-        "ng2-file-upload": "^1.4.0",
-        "ngx-quill": "^12.0.1",
-        "ngx-signaturepad": "0.0.9",
-        "ngx-translate-multi-http-loader": "^3.0.0",
-        "ngx-virtual-scroller": "^4.0.3",
-        "quill": "^1.3.7",
-        "rxjs": "^6.5.5",
-        "sass": "^1.34.0",
-        "tslib": "^2.2.0",
-        "zone.js": "~0.11.4"
-    },
-    "devDependencies": {
-        "@angular-devkit/build-angular": "~12.0.1",
-        "@angular/cli": "~12.0.1",
-        "@angular/compiler-cli": "~12.0.1",
-        "@angular/elements": "^12.0.1",
-        "@babel/core": "^7.13.16",
-        "@compodoc/compodoc": "^1.1.11",
-        "@storybook/addon-actions": "^6.2.9",
-        "@storybook/addon-essentials": "^6.2.9",
-        "@storybook/addon-links": "^6.2.9",
-        "@storybook/addons": "^6.2.9",
-        "@storybook/angular": "^6.2.9",
-        "@storybook/storybook-deployer": "^2.8.7",
-        "@storybook/theming": "^6.2.9",
-        "@types/jasmine": "~3.6.0",
-        "@types/jasminewd2": "~2.0.3",
-        "@types/node": "^12.11.1",
-        "@typescript-eslint/eslint-plugin": "^4.11.1",
-        "@webcomponents/custom-elements": "^1.4.3",
-        "angular-cli-ghpages": "^1.0.0-rc.1",
-        "babel-loader": "^8.2.2",
-        "chromatic": "^5.8.2",
-        "codelyzer": "^6.0.0",
-        "eslint": "^7.17.0",
-        "eslint-config-prettier": "^7.1.0",
-        "eslint-plugin-prettier": "^3.3.0",
-        "jasmine-core": "~3.6.0",
-        "jasmine-spec-reporter": "~5.0.0",
-        "karma": "~6.3.2",
-        "karma-chrome-launcher": "~3.1.0",
-        "karma-coverage-istanbul-reporter": "~3.0.2",
-        "karma-jasmine": "~4.0.0",
-        "karma-jasmine-html-reporter": "^1.5.0",
-        "ng-packagr": "^12.0.0",
-        "ngx-library-assets": "^1.2.0",
-        "prettier": "^2.2.1",
-        "prettier-eslint": "^12.0.0",
-        "protractor": "~7.0.0",
-        "svg-to-ts": "^5.0.1",
-        "ts-node": "~8.3.0",
-        "tslint": "~6.1.0",
-        "typescript": "~4.2.4",
-        "webpack": "^5.37.1",
-        "webpack-bundle-analyzer": "^3.8.0",
-        "webpack-cli": "^3.3.12"
-    },
-    "storybook-deployer": {
-        "gitUsername": "GitHub Action",
-        "gitEmail": "action@github.com",
-        "commitMessage": "Deploy ngx-lib Storybook"
+    {
+      "conversionType": "object",
+      "srcFiles": [
+        "./projects/ngx-lib/icon/svgs/**/*.svg"
+      ],
+      "outputDirectory": "./projects/ngx-lib/icon",
+      "svgoConfig": {
+        "plugins": [
+          {
+            "cleanupAttrs": true
+          }
+        ]
+      },
+      "fileName": "icon-generated-all.model",
+      "delimiter": "SNAKE",
+      "objectName": "allIcons",
+      "additionalModelFile": "./projects/ngx-lib/icon",
+      "compileSources": true
     }
+  ],
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~12.0.1",
+    "@angular/cdk": "^12.0.1",
+    "@angular/common": "~12.0.1",
+    "@angular/compiler": "~12.0.1",
+    "@angular/core": "~12.0.1",
+    "@angular/flex-layout": "^12.0.0-beta.34",
+    "@angular/forms": "~12.0.1",
+    "@angular/material": "^12.0.1",
+    "@angular/material-moment-adapter": "^12.0.1",
+    "@angular/platform-browser": "~12.0.1",
+    "@angular/platform-browser-dynamic": "~12.0.1",
+    "@angular/router": "~12.0.1",
+    "@hallysonh/ngx-imageviewer": "^2.0.4",
+    "@mat-datetimepicker/core": "^5.0.1",
+    "@mat-datetimepicker/moment": "^5.0.1",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
+    "@tweenjs/tween.js": "^17.1.1",
+    "hammerjs": "^2.0.8",
+    "mini-css-extract-plugin": "^1.6.0",
+    "moment": "^2.26.0",
+    "ng-gallery": "^5.0.0",
+    "ng2-file-upload": "^1.4.0",
+    "ngx-quill": "^12.0.1",
+    "ngx-signaturepad": "0.0.9",
+    "ngx-translate-multi-http-loader": "^3.0.0",
+    "ngx-virtual-scroller": "^4.0.3",
+    "quill": "^1.3.7",
+    "rxjs": "^6.5.5",
+    "tslib": "^2.2.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~12.0.1",
+    "@angular/cli": "~12.0.1",
+    "@angular/compiler-cli": "~12.0.1",
+    "@angular/elements": "^12.0.1",
+    "@babel/core": "^7.14.3",
+    "@compodoc/compodoc": "^1.1.11",
+    "@storybook/addon-actions": "^6.3.0-alpha.45",
+    "@storybook/addon-essentials": "^6.3.0-alpha.45",
+    "@storybook/addon-links": "^6.3.0-alpha.45",
+    "@storybook/angular": "^6.3.0-alpha.45",
+    "@storybook/builder-webpack5": "^6.3.0-alpha.45",
+    "@storybook/manager-webpack5": "^6.3.0-alpha.45",
+    "@types/jasmine": "~3.6.0",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
+    "@webcomponents/custom-elements": "^1.4.3",
+    "angular-cli-ghpages": "^1.0.0-rc.1",
+    "babel-loader": "^8.2.2",
+    "chromatic": "^5.8.2",
+    "codelyzer": "^6.0.0",
+    "jasmine-core": "~3.6.0",
+    "jasmine-spec-reporter": "~5.0.0",
+    "karma": "~6.3.2",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage-istanbul-reporter": "~3.0.2",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-packagr": "^12.0.0",
+    "protractor": "~7.0.0",
+    "svg-to-ts": "^5.0.1",
+    "ts-node": "~8.3.0",
+    "tslint": "~6.1.0",
+    "typescript": "~4.2.4"
+  }
 }
