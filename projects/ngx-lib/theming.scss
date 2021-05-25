@@ -1,5 +1,6 @@
 @charset 'UTF-8';
-// @import 'variables.css';
+@use '~@angular/material' as mat;
+@import 'variables.css';
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
@@ -18,13 +19,12 @@
         './src/core/style/base/typography';
 
 // 4. theme
-@import '~@angular/material/theming';
 
 // Override material font.
-$pep-typography: mat-typography-config(
+$pep-typography: mat.define-typography-config(
     $font-family: $font-family-body
 );
-@include mat-core($pep-typography);
+@include mat.core($pep-typography);
 
 /*************************************************************************************************************/
 /* Here we add the system + component's themes (all the colors definitions that change by the theme) - Start */
@@ -98,7 +98,7 @@ $material-theme-for-pep: $material-default-theme;
     }
 
     // Add angular-material-theme.
-    @include angular-material-theme($material-theme);
+    @include mat.all-component-themes($material-theme);
 
     // // Add mat-datetimepicker-theme.
     // @include mat-datetimepicker-theme($material-theme);

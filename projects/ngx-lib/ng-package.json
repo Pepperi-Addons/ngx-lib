@@ -3,7 +3,7 @@
     "dest": "../../dist/ngx-lib",
     "allowedNonPeerDependencies": [],
     "assets": [
-        "**/*_theming.scss",
+        "**/*theming.scss",
         "**/*.theme.scss",
         "**/assets/*",
         "**/core/style/*"

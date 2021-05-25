@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 $system-palette: (
     50 : #ebebeb,
     100 : #cdcdcd,
@@ -135,9 +136,9 @@ $secondary-palette: (
 
 // define 3 theme color
 // mat-palette accepts $palette-name, main, lighter and darker variants
-$material-primary: mat-palette($system-palette, 400, 200, 600);
-//$material-primary: mat-palette($system-palette, main, lighter, darker);
-$material-accent: mat-palette($secondary-palette);
-$material-warn: mat-palette($secondary-palette, 600);
+$material-primary: mat.define-palette($system-palette, 400, 200, 600);
+//$material-primary: mat.define-palette($system-palette, main, lighter, darker);
+$material-accent: mat.define-palette($secondary-palette);
+$material-warn: mat.define-palette($secondary-palette, 600);
 
-$material-default-theme: mat-light-theme($material-primary, $material-accent, $material-warn);
+$material-default-theme: mat.define-light-theme($material-primary, $material-accent, $material-warn);
