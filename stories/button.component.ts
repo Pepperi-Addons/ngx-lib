@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     [ngClass]="classes"
     [ngStyle]="{ 'background-color': backgroundColor }"
   >
-    {{ label }}
+    {{ label }} test
   </button>`,
   styleUrls: ['./button.css'],
 })
