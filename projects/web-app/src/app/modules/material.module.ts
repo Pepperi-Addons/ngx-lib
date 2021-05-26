@@ -114,7 +114,9 @@ const matComponentsModules = [
         { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { float: 'never' } },
     ],
 })
-export class MaterialModule { }
+export class MaterialModule {
+    //
+}
 
 /**  Copyright 2018 Google Inc. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that

@@ -284,7 +284,7 @@ export class PepCarouselComponent
         this.displayType =
             typeof window !== 'undefined'
                 ? window.getComputedStyle(this._elementRef.nativeElement)
-                      .display
+                    .display
                 : 'block';
 
         this._renderer.setStyle(
@@ -374,7 +374,6 @@ export class PepCarouselComponent
         if (this.isPressed && !this.disabled) {
             // Workaround for prevent scroll stuck if browser lost focus
             // MouseEvent.buttons not support by Safari
-            // tslint:disable-next-line:deprecation
             if (!event.buttons && !event.which) {
                 return this.onMouseUpHandler(event);
             }
@@ -474,7 +473,7 @@ export class PepCarouselComponent
         if (
             !this.isScrollReachesRightEnd() &&
             this.currIndex <
-                this.maximumIndex(containerWidth, this._children.toArray())
+            this.maximumIndex(containerWidth, this._children.toArray())
         ) {
             this.currIndex++;
             clearTimeout(this.scrollToTimer as number);
@@ -493,7 +492,7 @@ export class PepCarouselComponent
             index >= 0 &&
             index !== this.currIndex &&
             this.currIndex <=
-                this.maximumIndex(containerWidth, this._children.toArray())
+            this.maximumIndex(containerWidth, this._children.toArray())
         ) {
             this.currIndex = Math.min(
                 index,
@@ -513,7 +512,7 @@ export class PepCarouselComponent
             const onlyOneItem = Boolean(this._children.length <= 1);
             const containerIsLargerThanContent = Boolean(
                 this._contentRef.nativeElement.scrollWidth <=
-                    this._contentRef.nativeElement.clientWidth
+                this._contentRef.nativeElement.clientWidth
             );
             if (onlyOneItem || containerIsLargerThanContent) {
                 // only one element
@@ -526,7 +525,7 @@ export class PepCarouselComponent
             } else if (
                 this._contentRef.nativeElement.scrollLeft === 0 &&
                 this._contentRef.nativeElement.scrollWidth >
-                    this._contentRef.nativeElement.clientWidth
+                this._contentRef.nativeElement.clientWidth
             ) {
                 // reached left end
                 this.reachesLeftBound.emit(true);
@@ -836,14 +835,14 @@ export class PepCarouselComponent
             ) => {
                 if (
                     this._contentRef.nativeElement.scrollLeft >=
-                        childrenWidth &&
+                    childrenWidth &&
                     this._contentRef.nativeElement.scrollLeft <=
-                        nextChildrenWidth
+                    nextChildrenWidth
                 ) {
                     if (
                         nextChildrenWidth -
-                            this._contentRef.nativeElement.scrollLeft >
-                            currentChildWidth / 2 &&
+                        this._contentRef.nativeElement.scrollLeft >
+                        currentChildWidth / 2 &&
                         !this.isScrollReachesRightEnd()
                     ) {
                         // roll back scrolling

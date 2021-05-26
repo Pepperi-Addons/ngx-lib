@@ -156,7 +156,9 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     constructor(
         private hostElement: ElementRef,
         private layoutService: PepLayoutService
-    ) { }
+    ) {
+        //
+    }
 
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {

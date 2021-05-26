@@ -1974,7 +1974,9 @@ export class CarouselExampleComponent implements OnInit {
         return this.getLinesData();
     }
 
-    onItemClicked(item: ObjectsDataRow): void { }
+    onItemClicked(item: ObjectsDataRow): void {
+        //
+    }
 
     onMenuItemClicked(action: IPepMenuItemClickEvent): void {
         alert(action.source.key);

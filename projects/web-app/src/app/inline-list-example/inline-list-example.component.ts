@@ -140,7 +140,9 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
             this.menuActions === null ? this.getMenuActions() : null;
     }
 
-    onAnimationStateChange(state): void { }
+    onAnimationStateChange(state): void {
+        //
+    }
 
     loadlist(dataSource) {
         if (this.customList && dataSource) {
@@ -233,13 +235,21 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
         this.footerState = footerStateType.state;
     }
 
-    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) { }
+    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) {
+        //
+    }
 
-    selectedRowsChanged(selectedRowsCount: number) { }
+    selectedRowsChanged(selectedRowsCount: number) {
+        //
+    }
 
-    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) { }
+    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) {
+        //
+    }
 
-    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) { }
+    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) {
+        //
+    }
 
     onViewChanged(viewChangeEvent: IListViewChangeEvent) {
         // debugger;

@@ -19,7 +19,9 @@ export class PepAddonService {
         private sessionService: PepSessionService,
         private httpService: PepHttpService,
         private loaderService: PepLoaderService
-    ) {}
+    ) {
+        //
+    }
 
     private getAddonBaseRelativePath(isAsync: boolean): string {
         return isAsync
