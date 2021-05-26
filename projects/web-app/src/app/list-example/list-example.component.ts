@@ -287,15 +287,25 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
         this.footerState = footerStateType.state;
     }
 
-    onAnimationStateChange(state): void { }
+    onAnimationStateChange(state): void {
+        //
+    }
 
-    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) { }
+    onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent) {
+        //
+    }
 
-    selectedRowsChanged(selectedRowsCount: number) { }
+    selectedRowsChanged(selectedRowsCount: number) {
+        //
+    }
 
-    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) { }
+    onListChanged(listChangeEvent: IPepListChooserOptionChangeEvent) {
+        //
+    }
 
-    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) { }
+    onSortingChanged(sortingChangeEvent: IPepListSortingOptionChangeEvent) {
+        //
+    }
 
     onViewChanged(viewChangeEvent: IListViewChangeEvent) {
         // debugger;

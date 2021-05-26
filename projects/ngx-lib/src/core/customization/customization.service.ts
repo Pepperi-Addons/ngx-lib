@@ -154,7 +154,9 @@ export class PepCustomizationService {
         private sessionService: PepSessionService,
         private fileService: PepFileService,
         public fb: FormBuilder
-    ) {}
+    ) {
+        //
+    }
 
     getDefaultFromGroup(field: PepFieldBase, withValidators = true): FormGroup {
         const validators = withValidators ? field.getValidators() : [];
@@ -736,7 +738,6 @@ export class PepCustomizationService {
 
         // Override defaults.
         if (themeVars) {
-            // tslint:disable-next-line: forin
             for (const key in themeVars) {
                 ret[key] = themeVars[key];
             }
@@ -750,7 +751,6 @@ export class PepCustomizationService {
 
         // Override defaults.
         if (themeVariablesToSet) {
-            // tslint:disable-next-line: forin
             for (const key in themeVariablesToSet) {
                 themeVariables[key] = themeVariablesToSet[key];
             }
@@ -761,7 +761,6 @@ export class PepCustomizationService {
             JSON.stringify(themeVariables)
         );
 
-        // tslint:disable-next-line: forin
         for (const key in themeVariables) {
             if (this.isFontUrlKey(key)) {
                 this.fileService.loadFontStyle(key, themeVariables[key]);
@@ -936,8 +935,8 @@ export class PepCustomizationService {
 
         this.hasCustomHeader =
             res.TopHeaderFiles &&
-            res.TopHeaderFiles.length > 0 &&
-            res.TopHeaderFiles[0] !== ''
+                res.TopHeaderFiles.length > 0 &&
+                res.TopHeaderFiles[0] !== ''
                 ? true
                 : false;
         this.hasCustomHomepage =
