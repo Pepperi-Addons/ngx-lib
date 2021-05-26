@@ -16,6 +16,13 @@ export default {
     argTypes: {
         label: commonArgTypes.label,
         value: commonArgTypes.value, // { control: { type: 'number', min: 0, max: 10 } },
+        // formattedValue: {
+        //     description: 'This is the value of the component',
+        //     control: 'text',
+        //     table: {
+        //         defaultValue: { summary: null },
+        //     }
+        // },
         xAlignment: commonArgTypes.xAlignment,
         textColor: commonArgTypes.textColor,
         disabled: commonArgTypes.disabled,
@@ -109,7 +116,7 @@ NumberInteger.args = {
     label: 'int',
     type: 'int',
     value: '1000',
-    formattedValue: '1,000',
+    // formattedValue: '1,000',
 };
 
 export const NumberDecimal = Template.bind({});
@@ -117,7 +124,7 @@ NumberDecimal.args = {
     label: 'decimal',
     type: 'real',
     value: '1000.50',
-    formattedValue: '1,000.50',
+    // formattedValue: '1,000.50',
 };
 
 export const Currency = Template.bind({});
@@ -139,7 +146,7 @@ Link.args = {
     label: 'link',
     type: 'link',
     value: 'http://www.google.com',
-    formattedValue: 'google',
+    // formattedValue: 'google',
     // disabled: true
 };
 
