@@ -1,12 +1,12 @@
 {
     "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
     "dest": "../../dist/ngx-lib",
-    "whitelistedNonPeerDependencies": [],
+    "allowedNonPeerDependencies": [],
     "assets": [
-        "**/*_theming.scss",
         "**/*.theme.scss",
-        "**/assets/*",
-        "**/core/style/*"
+        "./theming.scss",
+        "./src/assets/**/*.*",
+        "./src/core/style/**/*.*"
     ],
     "lib": {
         "entryFile": "src/public-api.ts",

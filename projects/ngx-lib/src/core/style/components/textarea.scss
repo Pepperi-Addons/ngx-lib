@@ -1,0 +1,188 @@
+// -----------------------------------------------------
+//  Textarea & Override material style
+// -----------------------------------------------------
+.pepperi-textarea-container, .pep-textarea-container {
+    height: inherit;
+    display: grid;
+    align-items: center;
+
+    // Hide scroll
+    .mat-form-field {
+        .mat-form-field-wrapper {
+            .mat-form-field-infix {
+                line-height: unset;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                display: grid !important;
+            }
+
+            .mat-input-element {
+                margin: 0;
+                padding: 0.5rem 1.5rem 0.5rem 0;
+                vertical-align: unset;
+                resize: none;
+                @include calc(width, '100% + 3rem');
+                max-width: unset;
+                overflow-y: scroll;
+                @include box-sizing(border-box);
+            }
+        }
+
+        .mat-form-field-prefix,
+        .mat-form-field-suffix {
+            align-self: flex-end !important;
+            margin-bottom: 0.5rem;
+        }
+
+    }
+
+    &.one-row {
+        .mat-form-field {
+            .mat-form-field-wrapper {
+                .mat-form-field-infix {
+                    .mat-input-element {
+                        padding-top: 0.35rem;
+                    }
+                }
+
+                .mat-form-field-prefix,
+                .mat-form-field-suffix {
+                    align-self: center !important;
+                    margin-bottom: unset;
+
+                    .card-one-row-icon {
+                        .pepperi-button, .pep-button {
+                            width: 1rem !important;
+                            height: 1rem !important;
+                        }
+                    }
+                }
+            }
+
+            &.pepperi-table-textarea, &.pep-table-textarea {
+                .mat-input-element {
+                    padding-top: 0.135rem !important;
+                }
+            }
+        }
+    }
+
+    .rich-text-cont {
+        overflow-x: hidden;
+        display: inline-block;
+        // vertical-align: middle;
+        vertical-align: unset;
+        margin: 0;
+        padding: 0.5rem 1.5rem 0.5rem 0;
+        resize: none;
+        // @include calc(width, '100%');
+        @include calc(width, '100% + 3rem');
+        max-width: unset;
+        overflow-y: scroll;
+        @include box-sizing(border-box);
+    }
+
+    &.right-alignment {
+        .mat-form-field {
+            .mat-form-field-wrapper {
+                .mat-input-element {
+                    padding: 0.5rem 0 0.5rem 1.5rem;
+                }
+            }
+        }
+
+        .rich-text-cont {
+            padding: 0.5rem 0 0.5rem 1.5rem;
+        }
+    }
+}
+
+.pepperi-textarea-card-container, .pep-textarea-card-container {
+    .mat-form-field {
+        .mat-form-field-wrapper {
+
+            .mat-form-field-flex {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+
+                .mat-input-element {
+                    padding: 0.25rem 1.5rem 0.5rem 0;
+                }
+            }
+        }
+    }
+
+    &.card-flex-container {
+        height: inherit;
+        display: flex;
+        @include ellipsis();
+        white-space: unset;
+        // padding: 0.5rem 1.5rem 0.5rem 0;
+        padding: 0.25rem;
+
+        &.one-row {
+            .title {
+                padding-top: 0.25rem;
+            }
+        }
+
+        span {
+            &.value {
+                @include ellipsis();
+                white-space: unset;
+            }
+        }
+    }
+
+    &.one-row {
+        .mat-form-field {
+            .mat-form-field-wrapper {
+                .mat-form-field-infix {
+                    line-height: 0 !important;
+
+                    .mat-input-element {
+                        padding-top: 0;
+                        padding-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &.right-alignment {
+        .mat-form-field {
+            .mat-form-field-wrapper {
+                .mat-input-element {
+                    padding: 0.25rem 0 0.5rem 1.5rem;
+                }
+            }
+        }
+    }
+}
+
+.pepperi-report-textarea, .pep-report-textarea {
+    .mat-form-field-wrapper {
+        // margin-top: 0 !important;
+    }
+
+    .mat-form-field-suffix {
+        right: 0 !important;
+    }
+
+    &.readonly {
+        .mat-form-field-wrapper {
+            .mat-form-field-flex {
+                padding: 0;
+            }
+        }
+    }
+}
+
+@mixin pep-textarea-theme($pepperi-theme) {
+    .pepperi-report-textarea, .pep-report-textarea {
+        .mat-form-field-flex {
+            background: transparent !important;
+        }
+    }
+}

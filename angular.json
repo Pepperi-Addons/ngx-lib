@@ -22,7 +22,6 @@
             "main": "projects/web-app/src/main.ts",
             "polyfills": "projects/web-app/src/polyfills.ts",
             "tsConfig": "projects/web-app/tsconfig.app.json",
-            "aot": true,
             "stylePreprocessorOptions": {
               "includePaths": [
                 "dist",
@@ -45,7 +44,13 @@
               "projects/web-app/src/theme.scss",
               "projects/web-app/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -58,7 +63,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -136,7 +140,7 @@
       "prefix": "pep",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ngx-lib/tsconfig.lib.json",
             "project": "projects/ngx-lib/ng-package.json"
@@ -165,132 +169,6 @@
             "exclude": [
               "**/node_modules/**"
             ]
-          }
-        }
-      }
-    },
-    "ngx-lib-elements": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "projects/ngx-lib-elements",
-      "sourceRoot": "projects/ngx-lib-elements/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
-          "options": {
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "dist",
-                "node_modules",
-                "node_modules/@pepperi-addons"
-              ]
-            },
-            "indexTransform": "projects/ngx-lib-elements/index-transform.ts",
-            "outputPath": "dist/ngx-lib-elements",
-            "index": "projects/ngx-lib-elements/src/index.html",
-            "main": "projects/ngx-lib-elements/src/main.ts",
-            "polyfills": "projects/ngx-lib-elements/src/polyfills.ts",
-            "tsConfig": "projects/ngx-lib-elements/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "projects/ngx-lib-elements/src/favicon.ico",
-              "projects/ngx-lib-elements/src/assets"
-            ],
-            "styles": [
-              "projects/ngx-lib-elements/src/styles.scss",
-              "projects/ngx-lib-elements/src/ngx-lib.scss",
-              "node_modules/quill/dist/quill.snow.css",
-              "node_modules/quill/dist/quill.core.css"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "ngx-lib-elements:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ngx-lib-elements:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ngx-lib-elements:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ngx-lib-elements/src/test.ts",
-            "polyfills": "projects/ngx-lib-elements/src/polyfills.ts",
-            "tsConfig": "projects/ngx-lib-elements/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-lib-elements/karma.conf.js",
-            "assets": [
-              "projects/ngx-lib-elements/src/favicon.ico",
-              "projects/ngx-lib-elements/src/assets"
-            ],
-            "styles": [
-              "projects/ngx-lib-elements/src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngx-lib-elements/tsconfig.app.json",
-              "projects/ngx-lib-elements/tsconfig.spec.json",
-              "projects/ngx-lib-elements/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/ngx-lib-elements/e2e/protractor.conf.js",
-            "devServerTarget": "ngx-lib-elements:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ngx-lib-elements:serve:production"
-            }
           }
         }
       }

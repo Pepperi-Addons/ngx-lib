@@ -1,0 +1,94 @@
+// -----------------------------------------------------
+//  Input
+// -----------------------------------------------------
+.pepperi-input, .pep-input {
+    border-radius: $border-radius-md;
+    min-width: 1.5rem;
+    // width: 100%;
+    width: inherit;
+    // padding: 0.5rem 0.75rem;
+    padding: 0 0.75rem;
+    height: $form-field-height; // 2.5rem;
+
+    &:hover {
+        //cursor: pointer;
+    }
+    &:focus {
+    }
+    &:active {
+        //cursor: pointer;
+    }
+    &.read-only {
+        border-radius: 0;
+    }
+    &.disable,
+    &:disabled {
+    }
+}
+
+.pepperi-card-input, .pep-card-input {
+    &:not(.multi-rows) {
+        @include ellipsis();
+    }
+
+    padding: 0.125rem 0.25rem;
+}
+
+.pepperi-report-input, .pep-report-input {
+    // padding: 0.7rem 0.75rem;
+    padding: 0 0.25rem;
+    height: $table-row-fieldset-height; // 2.5rem;
+    line-height: $table-row-fieldset-height !important; // 2.5rem !important;
+    vertical-align: middle;
+    display: block;
+    @include ellipsis();
+
+    &.readonly {
+        // padding: 0.7rem 0.5rem;
+    }
+}
+
+@mixin pep-input-theme($pepperi-theme) {
+    .pepperi-input:not(.pepperi-checkbox-container), .pep-input:not(.pep-checkbox-container) {
+        // background: get-pep-color($pepperi-theme, color-system-primary, color-tran-30);
+        border: none;
+
+        &::placeholder {
+            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+            opacity: 1; /* Firefox */
+        }
+
+        &::-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+        }
+
+        &::-ms-input-placeholder {
+            /* Microsoft Edge */
+            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+        }
+
+        &::error {
+            @include state-error($pepperi-theme);
+        }
+
+        @include state-weak-default($pepperi-theme);
+        &.no-default-background {
+            background: unset;
+        }
+
+        &:hover:not(.disable) {
+            @include state-weak-hover($pepperi-theme);
+        }
+        &:focus:not(.disable) {
+            @include state-weak-focus($pepperi-theme);
+        }
+        &:active {
+            @include state-weak-active($pepperi-theme);
+        }
+        &.disable,
+        &:disabled {
+            @include state-weak-disable($pepperi-theme);
+        }
+    }
+}

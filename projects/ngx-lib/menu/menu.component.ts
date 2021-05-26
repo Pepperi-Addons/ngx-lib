@@ -19,7 +19,7 @@ import {
     PepSizeType,
     PepScreenSizeType,
 } from '@pepperi-addons/ngx-lib';
-import { pepIconSystemMenu } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconSystemMenu, PepIconType } from '@pepperi-addons/ngx-lib/icon';
 import {
     PepMenuItem,
     IPepMenuItemClickEvent,
@@ -59,7 +59,13 @@ import {
 })
 export class PepMenuComponent implements OnChanges, OnDestroy {
     @Input() text: string = null;
-    @Input() iconName = pepIconSystemMenu.name;
+    /**
+     * The icon name to show on the menu. look in (@link icon -> All icons)
+     *
+     * @type {PepIconType} See {@link PepIconType}
+     * @memberof PepMenuComponent
+     */
+    @Input() iconName: PepIconType = pepIconSystemMenu.name;
     @Input() type: PepMenuType = 'action';
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
@@ -143,8 +149,8 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
         if (this.hideOnEmptyItems) {
             this.state =
                 !this.disabled &&
-                this.items &&
-                this.items.filter((item) => !item.disabled).length > 0
+                    this.items &&
+                    this.items.filter((item) => !item.disabled).length > 0
                     ? 'visible'
                     : 'hidden';
         } else {

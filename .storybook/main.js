@@ -1,6 +1,9 @@
 // .storybook/main.js
 
 module.exports = {
+    "core": {
+        "builder": "webpack5"
+    },
     "stories": [
         "../projects/ngx-lib/**/*.stories.mdx",
         "../projects/ngx-lib/**/*.stories.@(js|jsx|ts|tsx)",
@@ -9,12 +12,13 @@ module.exports = {
     ],
     "addons": [
         "@storybook/addon-links",
-        {
-            name: '@storybook/addon-essentials',
-            // options: {
-            //     docs: false,
-            // }
-        },
+        "@storybook/addon-essentials"
+        // {
+        //     name: '@storybook/addon-essentials',
+        //     // options: {
+        //     //     docs: false,
+        //     // }
+        // },
         // '@storybook/addon-storysource',
-    ],
+    ]
 }

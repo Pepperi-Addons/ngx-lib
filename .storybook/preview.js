@@ -15,6 +15,7 @@ export const parameters = {
             date: /Date$/,
         },
     },
+    // inlineStories: true
 }
 
 import { addParameters } from '@storybook/angular';
@@ -23,16 +24,3 @@ addParameters({
         inlineStories: true
     },
 });
-
-// Note: To see the global decorator applied to your stories you'll need to include the template key with the component's selector with each story you have.
-
-// export const decorators = [
-//     (storyFunc) => {
-//       const story = storyFunc();
-  
-//       return {
-//         ...story,
-//         template: `<div class="pepperi-theme">${story.template}</div>`,
-//       };
-//     },
-//   ];
