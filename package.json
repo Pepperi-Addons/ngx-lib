@@ -24,7 +24,7 @@
     "storybook": "npm run docs:json && start-storybook -s .storybook/public -p 6006 --no-manager-cache",
     "build-storybook": "npm run docs:json && build-storybook -s .storybook/public",
     "deploy-storybook": "storybook-to-ghpages --out=./dist/storybook --s build-storybook",
-    "chromatic": "npx chromatic --project-token=0f8599740c87"
+    "chromatic": "chromatic --project-token=CHROMATIC_PROJECT_TOKEN"
   },
   "svg-to-ts": [
     {
