@@ -25,7 +25,7 @@ jobs:
 
     # Install node modules
     - name: Installation
-      run: npm ci --ignore-scripts
+      run: npm install --ignore-scripts
 
     # Set up git
     - name: Setup GIT
@@ -42,11 +42,11 @@ jobs:
       run: npm run build-lib-prod
 
     # Publish package to npm
-    # - name: Publish
-    #   run: npm publish
-    #   working-directory: dist/ngx-lib 
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish
+      run: npm publish
+      working-directory: dist/ngx-lib 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # # Deploy examples project to Github Pages
     # - name: Deploy
