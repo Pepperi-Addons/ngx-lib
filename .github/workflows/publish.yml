@@ -52,7 +52,7 @@ jobs:
     - name: Deploy
       env:
         GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="roiaharon-pepperi" --email=roi.a@pepperi.com --no-silent
+      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="GitHub Action" --email=action@github.com --no-silent
 
     # # Deploy examples project to Github Pages
     # - name: Deploy
