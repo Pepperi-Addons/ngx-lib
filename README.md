@@ -63,7 +63,7 @@ To contribute commit your changes to a seperate branch, and then create a PR at 
 Before submitting your PR make sure:
 - That your branch compiles `npm run compile`
 - That your branch follows this repo's linting guides `npm run lint`
-  You can fix most linting issues by running `npm run fix-lint`. Make sure that these scripts do not return an error or warning.
+  You can fix most linting issues by running `npm run lint-fix`. Make sure that these scripts do not return an error or warning.
 - That you increment the version number for your changes to be published, according to the specfications above.
 
 To increment the package version:
