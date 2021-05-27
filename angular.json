@@ -3,25 +3,25 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "web-app": {
+    "ngx-lib-tester": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/web-app",
-      "sourceRoot": "projects/web-app/src",
+      "root": "projects/ngx-lib-tester",
+      "sourceRoot": "projects/ngx-lib-tester/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/web-app",
-            "index": "projects/web-app/src/index.html",
-            "main": "projects/web-app/src/main.ts",
-            "polyfills": "projects/web-app/src/polyfills.ts",
-            "tsConfig": "projects/web-app/tsconfig.app.json",
+            "outputPath": "dist/ngx-lib-tester",
+            "index": "projects/ngx-lib-tester/src/index.html",
+            "main": "projects/ngx-lib-tester/src/main.ts",
+            "polyfills": "projects/ngx-lib-tester/src/polyfills.ts",
+            "tsConfig": "projects/ngx-lib-tester/tsconfig.app.json",
             "stylePreprocessorOptions": {
               "includePaths": [
                 "dist",
@@ -30,8 +30,8 @@
               ]
             },
             "assets": [
-              "projects/web-app/src/favicon.ico",
-              "projects/web-app/src/assets",
+              "projects/ngx-lib-tester/src/favicon.ico",
+              "projects/ngx-lib-tester/src/assets",
               {
                 "glob": "**/*",
                 "input": "./dist/ngx-lib/src/assets",
@@ -41,8 +41,8 @@
             "styles": [
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/quill/dist/quill.core.css",
-              "projects/web-app/src/theme.scss",
-              "projects/web-app/src/styles.scss"
+              "projects/ngx-lib-tester/src/theme.scss",
+              "projects/ngx-lib-tester/src/styles.scss"
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -56,8 +56,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/web-app/src/environments/environment.ts",
-                  "with": "projects/web-app/src/environments/environment.prod.ts"
+                  "replace": "projects/ngx-lib-tester/src/environments/environment.ts",
+                  "with": "projects/ngx-lib-tester/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -85,35 +85,35 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "web-app:build",
+            "browserTarget": "ngx-lib-tester:build",
             "port": 2626
           },
           "configurations": {
             "production": {
-              "browserTarget": "web-app:build:production"
+              "browserTarget": "ngx-lib-tester:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "web-app:build"
+            "browserTarget": "ngx-lib-tester:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/web-app/src/test.ts",
-            "polyfills": "projects/web-app/src/polyfills.ts",
-            "tsConfig": "projects/web-app/tsconfig.spec.json",
-            "karmaConfig": "projects/web-app/karma.conf.js",
+            "main": "projects/ngx-lib-tester/src/test.ts",
+            "polyfills": "projects/ngx-lib-tester/src/polyfills.ts",
+            "tsConfig": "projects/ngx-lib-tester/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-lib-tester/karma.conf.js",
             "assets": [
-              "projects/web-app/src/favicon.ico",
-              "projects/web-app/src/assets"
+              "projects/ngx-lib-tester/src/favicon.ico",
+              "projects/ngx-lib-tester/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "projects/web-app/src/styles.scss"
+              "projects/ngx-lib-tester/src/styles.scss"
             ],
             "scripts": []
           }
@@ -149,7 +149,7 @@
       }
     }
   },
-  "defaultProject": "web-app",
+  "defaultProject": "ngx-lib-tester",
   "cli": {
     "analytics": "24759c03-7ae3-43c1-b439-27b39a1d252a"
   }
