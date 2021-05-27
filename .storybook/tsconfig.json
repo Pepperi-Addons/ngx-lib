@@ -1,5 +1,5 @@
 {
-  "extends": "../projects/web-app/tsconfig.app.json",
+  "extends": "../projects/ngx-lib-tester/tsconfig.app.json",
   "compilerOptions": {
     "types": [
       "node"
