@@ -10,6 +10,6 @@
     },
     "peerDependencies": {
         "@ngx-translate/core": "^13.0.0",
-        "ngx-quill": ">= 12.0.1"
+        "ngx-quill": ">= 14.0.0"
     }
 }

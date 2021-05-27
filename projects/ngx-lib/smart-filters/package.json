@@ -12,10 +12,10 @@
         }
     },
     "peerDependencies": {
-        "@angular/flex-layout": ">= 10.0.0-beta.32",
-        "@angular/material-moment-adapter": ">= 10.0.0",
-        "@mat-datetimepicker/core": ">= 5.0.1",
-        "@mat-datetimepicker/moment": ">= 5.0.0",
+        "@angular/flex-layout": ">= 12.0.0",
+        "@angular/material-moment-adapter": ">= 12.0.0",
+        "@mat-datetimepicker/core": ">= 6.0.0",
+        "@mat-datetimepicker/moment": ">= 6.0.0",
         "@ngx-translate/core": "^13.0.0",
         "ngx-virtual-scroller": "^4.0.3",
         "moment": ">= 2.26.0"

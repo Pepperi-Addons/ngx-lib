@@ -106,7 +106,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         private cd: ChangeDetectorRef,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
@@ -221,11 +221,11 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     saveSignModal(event: any): void {
         if (!this.signaturePad.isEmpty()) {
             this.signatureURL = this.signaturePad.toDataURL('image/png');
-            const fileValue = JSON.stringify({
+            const fileValue = {
                 acceptedExtensions: this.acceptSignatureType,
                 fileStr: this.signatureURL,
                 fileExt: this.acceptSignatureType,
-            });
+            };
             this.changeValue(fileValue);
         } else {
             this.signatureURL = '';
