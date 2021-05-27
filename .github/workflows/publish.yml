@@ -42,17 +42,17 @@ jobs:
       run: npm run build-lib-prod
 
     # Publish package to npm
-    - name: Publish
-      run: npm publish
-      working-directory: dist/ngx-lib 
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Publish
+    #   run: npm publish
+    #   working-directory: dist/ngx-lib 
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # Deploy examples project to Github Pages
     - name: Deploy
       env:
         GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-      run: npm run ng -- deploy --base-href=/ngx-lib/ --no-silent #--name="GitHub Action" --email=action@github.com
+      run: npm run ng -- deploy --base-href=/ngx-lib/ --name="GitHub Action" --email=action@github.com --no-silent
 
     # # Deploy examples project to Github Pages
     # - name: Deploy
