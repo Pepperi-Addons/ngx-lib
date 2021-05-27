@@ -9,6 +9,6 @@
     },
     "peerDependencies": {
         "@ngx-translate/core": "^13.0.0",
-        "@angular/cdk": ">= 10.0.0"
+        "@angular/cdk": ">= 12.0.0"
     }
 }
