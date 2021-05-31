@@ -5,12 +5,17 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 import { PepDialogComponent } from './dialog.component';
 import { PepDialogModule } from './dialog.module';
 import { PepDialogActionButton, PepDialogData } from './dialog.model';
+import { PepDefaultDialogComponent } from './default-dialog.component';
 import { PepDialogService } from './dialog.service';
+
 import { PepButtonModule } from '../button/button.module';
 
 import { APP_INITIALIZER } from '@angular/core';
 
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+
 let dialogService = null;
+let dialogRef: MatDialogRef<PepDefaultDialogComponent> = null;
 
 function initDialogService(ds: PepDialogService) {
     return () => (dialogService = ds);
@@ -139,7 +144,7 @@ function openDialog(event, args): void {
         actionButtons,
     });
 
-    dialogService
+    dialogRef = dialogService
         .openDefaultDialog(dataMsg, config)
         .afterClosed()
         .subscribe((res) => {
@@ -147,8 +152,36 @@ function openDialog(event, args): void {
         });
 }
 
+function changeArgs(args) {
+    debugger;
+    if (!dialogRef) return;
+
+    let actionButtons = null;
+
+    if (args.actionsType === 'custom') {
+        actionButtons = [
+            new PepDialogActionButton(
+                'custom button',
+                'strong'
+                // () => alert("custom button clicked")
+            ),
+        ];
+    }
+    const dataMsg = new PepDialogData({
+        title: args.title,
+        actionsType: args.actionsType,
+        content: args.content,
+        showClose: args.showClose,
+        showHeader: args.showHeader,
+        showFooter: args.showFooter,
+        actionButtons,
+    });
+    dialogRef.componentInstance.data = dataMsg;
+}
+
 // This creates a Story for the component
 const Template: Story<PepDialogComponent> = (args: PepDialogComponent) => ({
+    onChange: changeArgs(args),
     props: {
         ...args,
         onButtonClick: (event) => openDialog(event, args),

@@ -70,12 +70,15 @@ export class PepSmartFiltersComponent {
         IPepSmartFilterData[]
     >();
 
+    @Output()
+    fieldToggleChange: EventEmitter<IPepSmartFilterField> = new EventEmitter<IPepSmartFilterField>();
+
     expansionPanelHeaderHeight = '*';
 
     constructor(
         private hostElement: ElementRef,
         public layoutService: PepLayoutService
-    ) {}
+    ) { }
 
     private exportFunctionsOnHostElement() {
         // This is for web component usage for use those functions.
@@ -95,9 +98,13 @@ export class PepSmartFiltersComponent {
         if (value) {
             value.forEach((filter) => {
                 // Validate before add the filter into the map.
-                const currentField = this.fields.find(
-                    (field) => field.id === filter.fieldId
-                ) as PepSmartFilterBaseField;
+                let currentField = null;
+
+                if (this.fields && this.fields.length > 0) {
+                    currentField = this.fields.find(
+                        (field) => field.id === filter.fieldId
+                    ) as PepSmartFilterBaseField;
+                }
 
                 if (currentField) {
                     // Only if the operator is from the same type
@@ -134,6 +141,7 @@ export class PepSmartFiltersComponent {
 
     toggleField(index: number, isOpen: boolean): void {
         this.fields[index].isOpen = isOpen;
+        this.fieldToggleChange.emit(this.fields[index]);
     }
 
     clearFilters() {
