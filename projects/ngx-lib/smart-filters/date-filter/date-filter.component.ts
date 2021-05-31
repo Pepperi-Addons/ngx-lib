@@ -105,6 +105,7 @@ export class PepDateFilterComponent extends BaseFilterComponent {
             (operator) => operator.id === value
         );
         this.operator = operator;
+        this.operatorUnit = undefined;
     }
 
     onTimeUnitChanged(value: string) {

@@ -51,7 +51,7 @@ jobs:
     # Deploy examples project to Github Pages
     - name: Deploy
       env:
-        GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm run ng -- deploy --base-href=/ngx-lib/ --name="GitHub Action" --email=action@github.com --no-silent
 
     # # Deploy examples project to Github Pages
