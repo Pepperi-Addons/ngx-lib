@@ -120,8 +120,7 @@ export default {
     },
 } as Meta;
 
-function openDialog(event, args): void {
-    const config = dialogService.getDialogConfig({}, 'large');
+function getDialogData(args) {
     let actionButtons = null;
 
     if (args.actionsType === 'custom') {
@@ -144,38 +143,24 @@ function openDialog(event, args): void {
         actionButtons,
     });
 
-    dialogRef = dialogService
-        .openDefaultDialog(dataMsg, config)
-        .afterClosed()
+    return dataMsg;
+}
+
+function openDialog(event, args): void {
+    const config = dialogService.getDialogConfig({}, 'large');
+    const dataMsg = getDialogData(args);
+    dialogRef = dialogService.openDefaultDialog(dataMsg, config);
+
+    dialogRef.afterClosed()
         .subscribe((res) => {
             // debugger;
         });
 }
 
 function changeArgs(args) {
-    debugger;
     if (!dialogRef) return;
 
-    let actionButtons = null;
-
-    if (args.actionsType === 'custom') {
-        actionButtons = [
-            new PepDialogActionButton(
-                'custom button',
-                'strong'
-                // () => alert("custom button clicked")
-            ),
-        ];
-    }
-    const dataMsg = new PepDialogData({
-        title: args.title,
-        actionsType: args.actionsType,
-        content: args.content,
-        showClose: args.showClose,
-        showHeader: args.showHeader,
-        showFooter: args.showFooter,
-        actionButtons,
-    });
+    const dataMsg = getDialogData(args);
     dialogRef.componentInstance.data = dataMsg;
 }
 
