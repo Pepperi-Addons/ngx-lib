@@ -26,7 +26,8 @@
 
                     .mat-datetimepicker-calendar-previous-button {
                         @include select-arrow();
-                        @include rotate(90deg);
+                        // @include rotate(90deg);
+                        transform: rotate(90deg);
 
                         svg {
                             @include state-icon($pepperi-theme);
@@ -39,7 +40,8 @@
 
                     .mat-datetimepicker-calendar-next-button {
                         @include select-arrow();
-                        @include rotate(-90deg);
+                        // @include rotate(-90deg);
+                        transform: rotate(-90deg);
 
                         svg {
                             @include state-icon($pepperi-theme);

@@ -46,7 +46,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-package-lock.json
 projects/ngx-lib/node_modules/
 node_modules
 node_modules*

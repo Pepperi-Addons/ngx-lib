@@ -22,7 +22,6 @@
 
     .img-wrapper {
         height: 100%;
-        // @include calc(height, '100% - 1.5rem');
     }
 }
 
@@ -41,7 +40,6 @@ gallery {
     // padding-bottom: 0 !important;
 
     gallery {
-        // @include calc(min-height, '100% - 50px' );
         min-width:  65vw;
         // height: 427px;
     }

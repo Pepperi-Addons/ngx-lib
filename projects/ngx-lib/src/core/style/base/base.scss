@@ -75,7 +75,8 @@ main {
     }
 
     .main-layout {
-        @include calc(width, '100% - ' $side-bar-width);
+        // @include calc(width, '100% - ' $side-bar-width);
+        width: calc('100% - ' $side-bar-width);
         height: inherit;
         padding: 0;
 
@@ -681,7 +682,8 @@ main {
             -webkit-overflow-scrolling: touch;
             min-height: 5rem;
             max-height: 65vh;
-            @include box-sizing(border-box);
+            // @include box-sizing(border-box);
+            box-sizing: border-box;
             // grid-row: mat-dialog-content;
             // max-height: unset; // This is cause a bug in the email dialog that the actions buttons are not displayed.
         }

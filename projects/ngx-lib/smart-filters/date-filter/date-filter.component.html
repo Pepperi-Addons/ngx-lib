@@ -15,7 +15,7 @@
             [value]="firstControl.value">
         </pep-textbox>
         <!-- Time unit -->
-        <pep-select [form]="form" [key]="'timeUnit'" [value]="operatorUnit.id"
+        <pep-select [form]="form" [key]="'timeUnit'" [value]="operatorUnit?.id"
             [label]="'SMART_FILTERS.TIME_UNIT' | translate" fxFlex="50%" [emptyOption]="false"
             [options]="chooseTimeUnitOptions" (valueChange)="onTimeUnitChanged($event)">
         </pep-select>

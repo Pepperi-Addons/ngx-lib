@@ -48,13 +48,6 @@
     }
 }
 
-// Function for calc a property for an element.
-@mixin calc($property, $expression) {
-    #{$property}: -moz-calc(#{$expression});
-    #{$property}: -webkit-calc(#{$expression});
-    #{$property}: calc(#{$expression});
-}
-
 @mixin pep-spacing-element-negative($add-important: true, $spacing-size: $spacing-xs) {
     @if ($add-important) {
         margin-right: calc(#{$spacing-size} * -1) !important;
@@ -87,18 +80,33 @@
     }
 }
 
+// Function for calc a property for an element.
+// @mixin calc($property, $expression) {
+//     #{$property}: -moz-calc(#{$expression});
+//     #{$property}: -webkit-calc(#{$expression});
+//     #{$property}: calc(#{$expression});
+// }
+
+// @mixin box-sizing($box-model) {
+//     -webkit-box-sizing: $box-model; // Safari <= 5
+//     -moz-box-sizing: $box-model; // Firefox <= 19
+//     box-sizing: $box-model;
+// }
+
+// @mixin rotate($degrees) {
+//     -webkit-transform: rotate($degrees);
+//     -moz-transform: rotate($degrees);
+//     -ms-transform: rotate($degrees);
+//     -o-transform: rotate($degrees);
+//     transform: rotate($degrees);
+// }
+
 @mixin flex-grow($int: 1) {
     -webkit-box-flex: $int;
     -moz-box-flex: $int;
     -webkit-flex-grow: $int;
     -ms-flex: $int;
     flex-grow: $int;
-}
-
-@mixin box-sizing($box-model) {
-    -webkit-box-sizing: $box-model; // Safari <= 5
-    -moz-box-sizing: $box-model; // Firefox <= 19
-    box-sizing: $box-model;
 }
 
 @mixin ellipsis() {
@@ -126,16 +134,9 @@
     content: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAwIDI0IDI0IgogICBoZWlnaHQ9IjE2IgogICB3aWR0aD0iMTYiPgogIDxtZXRhZGF0YQogICAgIGlkPSJtZXRhZGF0YTEwIj4KICAgIDxyZGY6UkRGPgogICAgICA8Y2M6V29yawogICAgICAgICByZGY6YWJvdXQ9IiI+CiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CiAgICAgICAgPGRjOnR5cGUKICAgICAgICAgICByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIiAvPgogICAgICA8L2NjOldvcms+CiAgICA8L3JkZjpSREY+CiAgPC9tZXRhZGF0YT4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8cGF0aAogICAgIGlkPSJwYXRoMiIKICAgICBkPSJNNS44MDAzMjE0OCw5LjI4Njc0MzU0IEwxMS4yNTQyODI0LDEzLjIwMjc1ODMgQzExLjY2NjEzMDksMTMuNTg1MDgzIDEyLjMzMzg2OTEsMTMuNTg1MDgzIDEyLjc0NTcxNzYsMTMuMjAyNzU4MyBMMTguMTk5Njc4NSw5LjI4Njc0MzU0IEMxOC42MTE1MjcsOC45MDQ0MTg4MiAxOS4yNzkyNjUyLDguOTA0NDE4ODIgMTkuNjkxMTEzNyw5LjI4Njc0MzU0IEMyMC4xMDI5NjIxLDkuNjY5MDY4MjYgMjAuMTAyOTYyMSwxMC4yODg5MzkxIDE5LjY5MTExMzcsMTAuNjcxMjYzOCBMMTMuNDkxNDM1MSwxNi40MjY1MTI5IEMxMi42Njc3MzgzLDE3LjE5MTE2MjQgMTEuMzMyMjYxNywxNy4xOTExNjI0IDEwLjUwODU2NDksMTYuNDI2NTEyOSBMNC4zMDg4ODYzMywxMC42NzEyNjM4IEMzLjg5NzAzNzg5LDEwLjI4ODkzOTEgMy44OTcwMzc4OSw5LjY2OTA2ODI2IDQuMzA4ODg2MzMsOS4yODY3NDM1NCBDNC43MjA3MzQ3OCw4LjkwNDQxODgyIDUuMzg4NDczMDMsOC45MDQ0MTg4MiA1LjgwMDMyMTQ4LDkuMjg2NzQzNTQgWiIKICAgICBmaWxsLXJ1bGU9ImV2ZW5vZGQiCiAgICAgZmlsbC1vcGFjaXR5PSIuNSIgLz4KPC9zdmc+Cg==");
 }
 
-@mixin rotate($degrees) {
-    -webkit-transform: rotate($degrees);
-    -moz-transform: rotate($degrees);
-    -ms-transform: rotate($degrees);
-    -o-transform: rotate($degrees);
-    transform: rotate($degrees);
-}
-
 @mixin multi-line-ellipsis($alignment: 1, $line-height: 1.5rem, $lines-count: 2, $text-background: #fff) {
-    @include calc(max-width, "100%");
+    // @include calc(max-width, "100%");
+    max-width: calc('100%');
 
     /* hide text if it more than N lines  */
     overflow: hidden;

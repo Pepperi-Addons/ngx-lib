@@ -7,15 +7,30 @@ import {
 import { IPepSmartFilterDataValue } from '../common/model/filter';
 import { Validators } from '@angular/forms';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     selector: 'pep-number-filter',
     templateUrl: './number-filter.component.html',
     styleUrls: ['./number-filter.component.scss'],
 })
-export class PepNumberFilterComponent extends BaseFilterComponent {
+export class PepNumberFilterComponent extends BaseFilterComponent implements OnInit {
     PepSmartFilterOperators = PepSmartFilterOperators;
     chooseTypeOptions: Array<IPepOption> = [];
+
+    ngOnInit() {
+        this.firstControl.valueChanges
+            .pipe(this.getDestroyer(), distinctUntilChanged())
+            .subscribe(() => {
+                this.setFieldsStateAndValidators();
+            });
+
+        this.secondControl.valueChanges
+            .pipe(this.getDestroyer(), distinctUntilChanged())
+            .subscribe(() => {
+                this.setFieldsStateAndValidators();
+            });
+    }
 
     // Override
     getDefaultOperator(): IPepSmartFilterOperator {
@@ -50,15 +65,19 @@ export class PepNumberFilterComponent extends BaseFilterComponent {
     // Override
     setFieldsStateAndValidators(): void {
         if (this.operator === PepSmartFilterOperators.NumberRange) {
-            this.firstControl.setValidators([
-                Validators.required,
-                this.validator.isLessThan(this.secondControl),
-            ]);
+            const firstValidators = [Validators.required];
+            if (this.secondControl.value) {
+                firstValidators.push(this.validator.isLessThan(this.secondControl));
+            }
+            this.firstControl.setValidators(firstValidators);
+
+
             this.secondControl.enable();
-            this.secondControl.setValidators([
-                Validators.required,
-                this.validator.isGreaterThan(this.firstControl),
-            ]);
+            const secondValidators = [Validators.required];
+            if (this.firstControl.value) {
+                secondValidators.push(this.validator.isGreaterThan(this.firstControl));
+            }
+            this.secondControl.setValidators(secondValidators);
         } else {
             super.setFieldsStateAndValidators();
         }

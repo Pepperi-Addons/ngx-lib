@@ -18,7 +18,7 @@ export class PepDialogService {
         private dialog: MatDialog,
         private layoutService: PepLayoutService,
         private overlay: Overlay
-    ) {}
+    ) { }
 
     private fixConfigIfNeeded(data: PepDialogData, config: MatDialogConfig) {
         if (config.disableClose) {
@@ -69,7 +69,7 @@ export class PepDialogService {
     openDefaultDialog(
         data: PepDialogData,
         config: MatDialogConfig = null
-    ): MatDialogRef<any> {
+    ): MatDialogRef<PepDefaultDialogComponent> {
         if (!config) {
             config = this.getDialogConfig();
         }
