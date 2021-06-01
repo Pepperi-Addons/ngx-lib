@@ -27,7 +27,14 @@ export class PepDateFilterComponent extends BaseFilterComponent {
 
     // Override
     getDefaultOperatorUnit(): IPepSmartFilterOperatorUnit {
-        return PepSmartFilterOperatorUnits.Months;
+        if (this.operator === PepSmartFilterOperators.InTheLast ||
+            this.operator === PepSmartFilterOperators.NotInTheLast ||
+            this.operator === PepSmartFilterOperators.DueIn ||
+            this.operator === PepSmartFilterOperators.NotDueIn) {
+            return PepSmartFilterOperatorUnits.Months;
+        } else {
+            return undefined;
+        }
     }
 
     // Override
@@ -104,8 +111,9 @@ export class PepDateFilterComponent extends BaseFilterComponent {
         const operator = Object.values(PepSmartFilterOperators).find(
             (operator) => operator.id === value
         );
+
         this.operator = operator;
-        this.operatorUnit = undefined;
+        this.operatorUnit = this.getDefaultOperatorUnit();
     }
 
     onTimeUnitChanged(value: string) {
