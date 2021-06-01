@@ -16,6 +16,7 @@ const Equals: IPepSmartFilterOperator = {
     short: '=',
     componentType: [
         'number',
+        'boolean'
         // 'multi-select',
         // 'date',
         // 'text',

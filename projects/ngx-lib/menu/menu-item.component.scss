@@ -29,7 +29,8 @@
         width: 1rem;
     
         &.rotate {
-            @include rotate(180deg);
+            // @include rotate(180deg);
+            transform: rotate(180deg);
         }
     }
 
@@ -49,10 +50,12 @@
         .submenu-trigger {
             right: unset;
             left: $spacing-sm;
-            @include rotate(180deg);
+            // @include rotate(180deg);
+            transform: rotate(180deg);
 
             &.rotate {
-                @include rotate(0deg);
+                // @include rotate(0deg);
+                transform: rotate(0deg);
             }
         }
     }

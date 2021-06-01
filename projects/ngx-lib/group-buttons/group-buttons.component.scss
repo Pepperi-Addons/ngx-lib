@@ -35,7 +35,6 @@
         @media (max-width: $screen-max-size-xs) {
             &.dropup {
                 .first-button {
-                    // @include calc(max-width, '75vw - 4rem'); //we have a variants for it !!!
                     max-width: 200px;
                     padding: 0 0.25rem;
                 }

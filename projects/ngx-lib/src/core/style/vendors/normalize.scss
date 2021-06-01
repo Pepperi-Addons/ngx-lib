@@ -96,7 +96,8 @@ figure {
  */
 
 hr {
-    @include box-sizing(content-box);
+    // @include box-sizing(content-box);
+    box-sizing: border-box;
     // box-sizing: content-box; /* 1 */
     height: 0; /* 1 */
     overflow: visible; /* 2 */
