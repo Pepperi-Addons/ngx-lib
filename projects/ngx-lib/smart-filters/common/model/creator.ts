@@ -11,7 +11,7 @@ import {
     PepSmartFilterRealField,
 } from './field';
 import { IPepSmartFilterData } from './filter';
-import { IPepSmartFilterOperator } from './operator';
+import { IPepSmartFilterOperator, IPepSmartFilterOperatorUnit } from './operator';
 import { PepSmartFilterType } from './type';
 
 function createBooleanSmartFilterField(data: IPepSmartFilterField) {
@@ -90,11 +90,13 @@ export function createSmartFilter(
     fieldId: string,
     operator: IPepSmartFilterOperator,
     first: any,
-    second?: any
+    second?: any,
+    operatorUnit?: IPepSmartFilterOperatorUnit
 ): IPepSmartFilterData {
     return {
         fieldId: fieldId,
         operator: operator,
+        operatorUnit: operatorUnit,
         value: {
             first: first,
             second: second,

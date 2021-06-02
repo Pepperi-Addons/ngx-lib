@@ -76,7 +76,7 @@ main {
 
     .main-layout {
         // @include calc(width, '100% - ' $side-bar-width);
-        width: calc('100% - ' $side-bar-width);
+        width: calc(100% - #{$side-bar-width});
         height: inherit;
         padding: 0;
 

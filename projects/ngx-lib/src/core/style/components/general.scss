@@ -731,91 +731,91 @@ $sorting-width: 1rem;
     /* > XLarge */
     @media (min-width: $screen-max-size-xl) {
         // @include calc(min-width, $screen-almost-full-width + ' / 6');
-        min-width: calc($screen-almost-full-width + ' / 6');
+        min-width: calc(#{$screen-almost-full-width} + ' / 6');
 
         &.small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 8');
-            min-width: calc($screen-almost-full-width + ' / 8');
+            min-width: calc(#{$screen-almost-full-width} + ' / 8');
         }
 
         &.x-small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 9');
-            min-width: calc($screen-almost-full-width + ' / 9');
+            min-width: calc(#{$screen-almost-full-width} + ' / 9');
         }
     }
     /* Large - XLarge */
     @media (max-width: $screen-max-size-xl) and (min-width: $screen-max-size-lg) {
         // @include calc(min-width, $screen-almost-full-width + ' / 4');
-        min-width: calc($screen-almost-full-width + ' / 4');
+        min-width: calc(#{$screen-almost-full-width} + ' / 4');
 
         &.small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 6');
-            min-width: calc($screen-almost-full-width + ' / 6');
+            min-width: calc(#{$screen-almost-full-width} + ' / 6');
         }
 
         &.x-small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 7');
-            min-width: calc($screen-almost-full-width + ' / 7');
+            min-width: calc(#{$screen-almost-full-width} + ' / 7');
         }
     }
     /* Medium - Large */
     @media (max-width: $screen-max-size-lg) and (min-width: $screen-max-size-md) {
         // @include calc(min-width, $screen-almost-full-width + ' / 3');
-        min-width: calc($screen-almost-full-width + ' / 3');
+        min-width: calc(#{$screen-almost-full-width} + ' / 3');
 
         &.small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 4');
-            min-width: calc($screen-almost-full-width + ' / 4');
+            min-width: calc(#{$screen-almost-full-width} + ' / 4');
         }
 
         &.x-small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 5');
-            min-width: calc($screen-almost-full-width + ' / 5');
+            min-width: calc(#{$screen-almost-full-width} + ' / 5');
         }
     }
     /* Small - Medium */
     @media (max-width: $screen-max-size-md) and (min-width: $screen-max-size-sm) {
         // @include calc(min-width, $screen-almost-full-width + ' / 3');
-        min-width: calc($screen-almost-full-width + ' / 3');
+        min-width: calc(#{$screen-almost-full-width} + ' / 3');
 
         &.small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 3');
-            min-width: calc($screen-almost-full-width + ' / 3');
+            min-width: calc(#{$screen-almost-full-width} + ' / 3');
         }
 
         &.x-small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 4');
-            min-width: calc($screen-almost-full-width + ' / 4');
+            min-width: calc(#{$screen-almost-full-width} + ' / 4');
         }
     }
     /* Extra small - Small */
     @media (max-width: $screen-max-size-sm) and (min-width: $screen-max-size-xs) {
         // @include calc(min-width, $screen-almost-full-width + ' / 2');
-        min-width: calc($screen-almost-full-width + ' / 2');
+        min-width: calc(#{$screen-almost-full-width} + ' / 2');
 
         &.small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 2');
-            min-width: calc($screen-almost-full-width + ' / 2');
+            min-width: calc(#{$screen-almost-full-width} + ' / 2');
         }
 
         &.x-small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 2');
-            min-width: calc($screen-almost-full-width + ' / 2');
+            min-width: calc(#{$screen-almost-full-width} + ' / 2');
         }
     }
     /* < Extra small */
     @media (max-width: $screen-max-size-xs) {
         // @include calc(min-width, $screen-almost-full-width + ' / 1');
-        min-width: calc($screen-almost-full-width + ' / 1');
+        min-width: calc(#{$screen-almost-full-width} + ' / 1');
 
         &.small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 1');
-            min-width: calc($screen-almost-full-width + ' / 1');
+            min-width: calc(#{$screen-almost-full-width} + ' / 1');
         }
 
         &.x-small-card {
             // @include calc(min-width, $screen-almost-full-width + ' / 1');
-            min-width: calc($screen-almost-full-width + ' / 1');
+            min-width: calc(#{$screen-almost-full-width} + ' / 1');
         }
     }
 }

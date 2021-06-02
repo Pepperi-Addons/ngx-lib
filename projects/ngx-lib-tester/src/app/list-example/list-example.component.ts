@@ -41,7 +41,8 @@ import {
     // MultiSelectFilter,
     IPepSmartFilterData,
     IPepSmartFilterFieldOption,
-    PepSmartFilterOperators
+    PepSmartFilterOperators,
+    PepSmartFilterOperatorUnits,
     // PepSmartFilterWorker,
     // Field
 } from '@pepperi-addons/ngx-lib/smart-filters';
@@ -177,6 +178,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
     addFilters(): void {
         const selectedValues = ['value 1', 'value 5', 'value 10', 'value 11'];
         this.filters = [
+            createSmartFilter('filter1', PepSmartFilterOperators.InTheLast, '3', undefined, PepSmartFilterOperatorUnits.Years),
             createSmartFilter('filter3', PepSmartFilterOperators.DateRange, '2020-1-1', '2021-1-1'),
             createSmartFilter('filter4', PepSmartFilterOperators.In, selectedValues)
         ];
