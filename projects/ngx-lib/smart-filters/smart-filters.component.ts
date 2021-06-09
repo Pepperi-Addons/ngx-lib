@@ -20,6 +20,9 @@ import { IPepSmartFilterData } from './common/model/filter';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepSmartFiltersComponent {
+
+    @Input() title = '';
+
     filtersDataMap: Map<string, IPepSmartFilterData> = new Map<
         string,
         IPepSmartFilterData

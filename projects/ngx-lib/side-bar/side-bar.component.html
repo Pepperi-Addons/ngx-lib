@@ -6,6 +6,9 @@
             (mouseenter)="setSideBarHeight($event)" [style.height]="sideBarHeight"
             (mouseleave)="mouseLeaveSideBar($event)">
             <div class="content">
+                <!-- Start content -->
+                <ng-container *ngTemplateOutlet="startContentTemplate"></ng-container>
+
                 <!-- New Filters -->
                 <ng-container *ngTemplateOutlet="filtersTemplate"></ng-container>
 
@@ -14,6 +17,9 @@
 
                 <!-- Custom -->
                 <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
+
+                <!-- End content -->
+                <ng-container *ngTemplateOutlet="endContentTemplate"></ng-container>
             </div>
         </div>
     </ng-template>
@@ -26,6 +32,9 @@
                 </div>
 
                 <div class="sidenav-main">
+                    <!-- Start content -->
+                    <ng-container *ngTemplateOutlet="startContentTemplate"></ng-container>
+
                     <!-- New Filters -->
                     <ng-container *ngTemplateOutlet="filtersTemplate"></ng-container>
 
@@ -34,6 +43,9 @@
 
                     <!-- Custom -->
                     <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
+
+                    <!-- End content -->
+                    <ng-container *ngTemplateOutlet="endContentTemplate"></ng-container>
                 </div>
 
                 <div *ngIf="showFooter" class="sidenav-footer pep-border-top">
@@ -43,6 +55,10 @@
         </mat-sidenav-container>
     </ng-template>
 </div>
+
+<ng-template #startContentTemplate>
+    <ng-content select="[start-content]"></ng-content>
+</ng-template>
 
 <ng-template #filtersTemplate>
 
@@ -54,4 +70,8 @@
 
 <ng-template #customTemplate>
     <ng-content></ng-content>
+</ng-template>
+
+<ng-template #endContentTemplate>
+    <ng-content select="[end-content]"></ng-content>
 </ng-template>
