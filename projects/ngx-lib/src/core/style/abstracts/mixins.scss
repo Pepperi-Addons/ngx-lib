@@ -136,7 +136,7 @@
 
 @mixin multi-line-ellipsis($alignment: 1, $line-height: 1.5rem, $lines-count: 2, $text-background: #fff) {
     // @include calc(max-width, "100%");
-    max-width: calc('100%');
+    max-width: calc(100%);
 
     /* hide text if it more than N lines  */
     overflow: hidden;

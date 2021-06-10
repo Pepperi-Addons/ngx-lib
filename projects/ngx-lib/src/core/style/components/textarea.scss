@@ -23,7 +23,7 @@
                 vertical-align: unset;
                 resize: none;
                 // @include calc(width, '100% + 3rem');
-                width: calc('100% + 3rem');
+                width: calc(100% + 3rem);
                 max-width: unset;
                 overflow-y: scroll;
                 // @include box-sizing(border-box);
@@ -79,7 +79,7 @@
         padding: 0.5rem 1.5rem 0.5rem 0;
         resize: none;
         // @include calc(width, '100% + 3rem');
-        width: calc('100% + 3rem');
+        width: calc(100% + 3rem);
         max-width: unset;
         overflow-y: scroll;
         // @include box-sizing(border-box);

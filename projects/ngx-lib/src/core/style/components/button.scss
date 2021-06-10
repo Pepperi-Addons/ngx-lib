@@ -118,14 +118,14 @@
     .button-title {
         @include ellipsis();
         // @include calc(max-width, '100%'); // For none icon
-        max-width: calc('100%'); // For none icon
+        max-width: calc(100%); // For none icon
     }
 
     .button-title-with-icon {
         margin-inline-end: $spacing-sm;
         @include ellipsis();
         // @include calc(max-width, '100% - 1rem'); // For icon if exist
-        max-width: calc('100% - 1rem'); // For icon if exist
+        max-width: calc(100% - 1rem); // For icon if exist
 
         &.icon-before {
             margin-inline-end: unset;
@@ -248,7 +248,7 @@
             .mat-badge-content {
                 font-size: 70%;
                 // @include calc(max-width, '100% + .5rem');
-                max-width: calc('100% + .5rem');
+                max-width: calc(100% + .5rem);
             }
         }
     }
