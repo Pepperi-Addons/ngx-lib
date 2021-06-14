@@ -269,7 +269,9 @@ $sorting-width: 1rem;
                 line-height: 2rem !important;
                 margin-bottom: 0;
                 // cursor: text;
-
+                display: flex;
+                align-items: center;
+    
                 .required,
                 .mandatory {
                     height: 0.75rem;
