@@ -181,10 +181,10 @@ main {
 
             .fit-page-height {
                 // height: calc (#{$main-height} - #{$tabs-labels-height});
-                height: calc(100vh - calc(#{$header-height} + #{$top-bar-height} + #{$content-margin}));
+                height: calc(100vh - (#{$header-height} + #{$top-bar-height} + #{$content-margin}));
 
                 @media (max-width: $screen-max-size-md) {
-                    height: calc(100vh - calc(#{$header-height} + #{$top-bar-height} + #{$content-margin} + #{$footer-bar-height}));
+                    height: calc(100vh - (#{$header-height} + #{$top-bar-height} + #{$content-margin} + #{$footer-bar-height}));
                 }
             }
 
