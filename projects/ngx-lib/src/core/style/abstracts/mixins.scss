@@ -110,8 +110,8 @@
 }
 
 @mixin ellipsis() {
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
+    // -ms-text-overflow: ellipsis;
+    // -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -282,11 +282,9 @@
     width: fit-content !important;
     border-radius: 0.625rem;
     padding: 0 0.5rem;
-    // top: -0.5rem !important;
-    // right: -0.5rem !important;
+    top: calc(#{$spacing-sm} * -1) !important;
     @include ellipsis();
     max-width: inherit;
-
 }
 
 @mixin pep-top-bar-button() {

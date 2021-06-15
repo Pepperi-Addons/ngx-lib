@@ -48,7 +48,7 @@ export class PepMultiSelectFilterComponent
     numberOptionsToShowSearch = 10;
 
     ngOnInit() {
-        super.ngOnInit();
+        super.ngOnInit;
 
         if (this.field.options?.length > 0) {
             this.options = this.field.options.map((opt) => {

@@ -665,6 +665,7 @@ $sorting-width: 1rem;
 
                 .mat-icon {
                     // line-height: 0.5rem !important;
+                    width: $card-field-button-icon-size;
 
                     .svg-icon {
                         width: $card-field-button-icon-size; // $card-field-button-size - 0.25rem !important;

@@ -205,24 +205,24 @@
     &.mat-button {
         border-radius: $border-radius-md; // override material.
 
+        span {
+            &.mat-button-wrapper {
+                display: block !important;
+                @include ellipsis();
+                max-width: inherit;
+            }
+        }
+
         .mat-button-wrapper {
             line-height: inherit;
-            // height: inherit;
             height: 100%;
             width: 100%;
 
             @include align-center();
 
-            &span {
-                display: block;
-                @include ellipsis();
-                max-width: inherit;
-            }
-
             .mat-icon {
                 @include align-center();
                 vertical-align: unset; // Init material middle style
-
                 line-height: inherit;
                 height: inherit;
             }

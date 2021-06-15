@@ -15,7 +15,7 @@
             <ng-container *ngIf="type == 'qs'">
                 <ng-container *ngIf="readonly; then readonlyBlock; else editableQSBlock"></ng-container>
                 <ng-template #readonlyBlock>
-                    <button [id]="key" mat-button class="pep-button {{ styleType }} disable ellipsis"
+                    <button [id]="key" mat-button class="pep-button {{ styleType }} disable "
                         [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                         title="{{ formattedValue }}" disabled="true">
                         {{ formattedValue }}
@@ -90,7 +90,7 @@
                 <ng-container *ngIf="(value | pepToNumber) == 0; then regularBlock; else withBadgeBlock">
                 </ng-container>
                 <ng-template #regularBlock>
-                    <button mat-button [disabled]="disabled" class="pep-button {{ styleType }} ellipsis" [id]="key"
+                    <button mat-button [disabled]="disabled" class="pep-button {{ styleType }} " [id]="key"
                         name="{{ key }}"
                         [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                         [title]="'QS.ORDER' | translate" (click)="enterChildren($event)">
@@ -101,7 +101,7 @@
                     <button mat-button matBadge="{{ formattedValue }}"
                         matBadgePosition="{{xAlignment == 'right' ? 'before' : 'after'}}"
                         [matBadgeSize]="layoutType === 'card' && rowSpan === 1 ? 'small' : 'medium'"
-                        class="pep-button {{ styleType }} ellipsis" [id]="key" name="{{ key }}" [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1,
+                        class="pep-button {{ styleType }} " [id]="key" name="{{ key }}" [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1,
                             'right-alignment': xAlignment == 'right', 'left-alignment': xAlignment != 'right'}"
                         [title]="'QS.ORDER' | translate" (click)="enterChildren($event)" [disabled]="disabled">
                         {{ 'QS.ORDER' | translate }}
@@ -109,7 +109,7 @@
                 </ng-template>
             </ng-container>
             <ng-container *ngIf="type == 'packageButton'">
-                <button mat-button class="pep-button {{ styleType }} ellipsis" [id]="key" name="{{ key }}"
+                <button mat-button class="pep-button {{ styleType }} " [id]="key" name="{{ key }}"
                     [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                     [title]="'QS.ORDER' | translate" (click)="enterPackage($event)" [disabled]="disabled">
                     {{ 'QS.ORDER' | translate }} &#40;{{ formattedValue }}&#41;
