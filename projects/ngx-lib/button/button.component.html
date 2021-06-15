@@ -8,14 +8,14 @@
 </button>
 
 <ng-template #triggerTemplate>
-    <mat-icon *ngIf="iconName && iconPosition === 'start'" class="{{ value ? 'pull-left flip' : '' }}">
+    <mat-icon *ngIf="iconName && iconPosition === 'start'" [ngClass]="{ 'pull-left flip': value }">
         <pep-icon name="{{iconName}}"></pep-icon>
     </mat-icon>
     <span *ngIf="value" class="ellipsis pull-left flip"
         [ngClass]="{ 'button-title-with-icon': iconName, 'icon-before': iconPosition === 'start' }" [title]="value">
         {{value}}
     </span>
-    <mat-icon *ngIf="iconName && iconPosition === 'end'" class="{{ value ? 'pull-left flip' : '' }}">
+    <mat-icon *ngIf="iconName && iconPosition === 'end'" [ngClass]="{ 'pull-left flip': value }">
         <pep-icon name="{{iconName}}"></pep-icon>
     </mat-icon>
 

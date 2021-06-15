@@ -18,7 +18,9 @@
                     <button [id]="key" mat-button class="pep-button {{ styleType }} disable "
                         [ngClass]="{caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                         title="{{ formattedValue }}" disabled="true">
-                        {{ formattedValue }}
+                        <span class="ellipsis">
+                            {{ formattedValue }}
+                        </span>
                     </button>
                 </ng-template>
                 <ng-template #editableQSBlock>
@@ -94,7 +96,9 @@
                         name="{{ key }}"
                         [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                         [title]="'QS.ORDER' | translate" (click)="enterChildren($event)">
-                        {{ 'QS.ORDER' | translate }}
+                        <span class="ellipsis">
+                            {{ 'QS.ORDER' | translate }}
+                        </span>
                     </button>
                 </ng-template>
                 <ng-template #withBadgeBlock>
@@ -104,7 +108,9 @@
                         class="pep-button {{ styleType }} " [id]="key" name="{{ key }}" [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1,
                             'right-alignment': xAlignment == 'right', 'left-alignment': xAlignment != 'right'}"
                         [title]="'QS.ORDER' | translate" (click)="enterChildren($event)" [disabled]="disabled">
-                        {{ 'QS.ORDER' | translate }}
+                        <span class="ellipsis">
+                            {{ 'QS.ORDER' | translate }}
+                        </span>
                     </button>
                 </ng-template>
             </ng-container>
@@ -112,7 +118,9 @@
                 <button mat-button class="pep-button {{ styleType }} " [id]="key" name="{{ key }}"
                     [ngClass]="{ disable: disabled, caution: isCaution, md: rowSpan !== 1, xs: rowSpan === 1}"
                     [title]="'QS.ORDER' | translate" (click)="enterPackage($event)" [disabled]="disabled">
-                    {{ 'QS.ORDER' | translate }} &#40;{{ formattedValue }}&#41;
+                    <span class="ellipsis">
+                        {{ 'QS.ORDER' | translate }} &#40;{{ formattedValue }}&#41;
+                    </span>
                 </button>
             </ng-container>
         </div>

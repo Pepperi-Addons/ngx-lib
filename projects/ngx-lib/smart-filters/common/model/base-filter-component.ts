@@ -50,7 +50,7 @@ export abstract class BaseFilterComponent
     private readonly _destroyed: Subject<void>;
     private actionsContainerRef: ComponentRef<PepFilterActionsComponent>;
 
-    private _fieldIdWithNoDots: string = '';
+    private _fieldIdWithNoDots = '';
     private _field: PepSmartFilterBaseField;
     @Input()
     set field(value: PepSmartFilterBaseField) {

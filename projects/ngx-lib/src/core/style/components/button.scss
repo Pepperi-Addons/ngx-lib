@@ -125,7 +125,7 @@
         margin-inline-end: $spacing-sm;
         @include ellipsis();
         // @include calc(max-width, '100% - 1rem'); // For icon if exist
-        max-width: calc(100% - 1rem); // For icon if exist
+        // max-width: calc(100% - 1rem); // For icon if exist
 
         &.icon-before {
             margin-inline-end: unset;
@@ -207,7 +207,9 @@
 
         span {
             &.mat-button-wrapper {
-                display: block !important;
+                // display: block !important;
+                display: grid!important;
+                grid-auto-flow: column;
                 @include ellipsis();
                 max-width: inherit;
             }
