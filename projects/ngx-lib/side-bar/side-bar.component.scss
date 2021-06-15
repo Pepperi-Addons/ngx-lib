@@ -49,6 +49,10 @@
             padding-right: $double-content-padding;
             overflow: visible;
 
+            &.hide-header {
+                padding-top: 0;
+            }
+
             &.hide-footer {
                 padding-bottom: 0;
             }

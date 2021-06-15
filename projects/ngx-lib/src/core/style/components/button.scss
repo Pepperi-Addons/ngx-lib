@@ -118,14 +118,14 @@
     .button-title {
         @include ellipsis();
         // @include calc(max-width, '100%'); // For none icon
-        max-width: calc('100%'); // For none icon
+        max-width: calc(100%); // For none icon
     }
 
     .button-title-with-icon {
         margin-inline-end: $spacing-sm;
         @include ellipsis();
         // @include calc(max-width, '100% - 1rem'); // For icon if exist
-        max-width: calc('100% - 1rem'); // For icon if exist
+        // max-width: calc(100% - 1rem); // For icon if exist
 
         &.icon-before {
             margin-inline-end: unset;
@@ -205,24 +205,26 @@
     &.mat-button {
         border-radius: $border-radius-md; // override material.
 
+        span {
+            &.mat-button-wrapper {
+                // display: block !important;
+                display: grid!important;
+                grid-auto-flow: column;
+                @include ellipsis();
+                max-width: inherit;
+            }
+        }
+
         .mat-button-wrapper {
             line-height: inherit;
-            // height: inherit;
             height: 100%;
             width: 100%;
 
             @include align-center();
 
-            &span {
-                display: block;
-                @include ellipsis();
-                max-width: inherit;
-            }
-
             .mat-icon {
                 @include align-center();
                 vertical-align: unset; // Init material middle style
-
                 line-height: inherit;
                 height: inherit;
             }
@@ -248,7 +250,7 @@
             .mat-badge-content {
                 font-size: 70%;
                 // @include calc(max-width, '100% + .5rem');
-                max-width: calc('100% + .5rem');
+                max-width: calc(100% + .5rem);
             }
         }
     }

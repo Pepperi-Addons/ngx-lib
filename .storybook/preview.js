@@ -15,12 +15,18 @@ export const parameters = {
             date: /Date$/,
         },
     },
-    // inlineStories: true
-}
-
-import { addParameters } from '@storybook/angular';
-addParameters({
+    viewMode: 'docs',
+    // previewTabs: { 'storybook/docs/panel': { index: -1 } },
     docs: {
         inlineStories: true
     },
-});
+}
+
+// import { addParameters } from '@storybook/angular';
+// addParameters({
+//     viewMode: 'docs',
+//     previewTabs: { 'storybook/docs/panel': { index: -1 } },
+//     docs: {
+//         inlineStories: true
+//     },
+// });

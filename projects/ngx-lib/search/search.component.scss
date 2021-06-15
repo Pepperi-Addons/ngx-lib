@@ -24,7 +24,7 @@
         // justify-content: flex-start;
 
         &.pep-is-action-button-visable {
-            width: calc('100% -' (#{$spacing-sm} * 2 + #{$spacing-xl})); // content spacing in both sides + 1.5 rem is the action-button width.
+            width: calc(100% - (#{$spacing-sm} * 2 + #{$spacing-xl})); // content spacing in both sides + 1.5 rem is the action-button width.
         }
     }
 

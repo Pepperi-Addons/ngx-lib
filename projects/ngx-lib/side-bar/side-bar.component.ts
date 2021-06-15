@@ -26,7 +26,9 @@ import { IPepSideBarStateChangeEvent } from './side-bar.model';
 export class PepSideBarComponent implements OnInit {
     // @Input() showOnLargeScreens = true;
     // @Input() sideBarButtons: Array<SideBarButton> = [];
+    @Input() showHeader = true;
     @Input() showFooter = true;
+
     private _useAsWebComponent = false;
 
     @Input()

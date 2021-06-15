@@ -35,7 +35,8 @@
     <div class="main-content ">
 
         <pep-side-bar #sideNav>
-            <pep-smart-filters [fields]="fields" [filters]="filters" (filtersChange)="onFiltersChange($event)">
+            <pep-smart-filters title="Test filters" [fields]="fields" [filters]="filters"
+                (filtersChange)="onFiltersChange($event)">
             </pep-smart-filters>
         </pep-side-bar>
 

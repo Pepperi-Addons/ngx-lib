@@ -72,7 +72,7 @@ const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
 export const Base = Template.bind({});
 Base.storyName = 'Basic';
 Base.args = {
-    value: 'click me',
+    value: 'click me'
 };
 
 export const Disabled = Template.bind({});

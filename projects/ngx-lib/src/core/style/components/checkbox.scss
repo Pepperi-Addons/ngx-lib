@@ -258,6 +258,10 @@
         border-radius: $border-radius-md;
 
         @include pep-checkbox-size('lg');
+
+        .mat-checkbox-ripple {
+            display: none;
+        }
     }
 
     .mat-checkbox-label {

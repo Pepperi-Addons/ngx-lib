@@ -1,14 +1,29 @@
 <button mat-button [pepDataQa]="key ? key : value"
     class="pep-button {{ sizeType }} {{ styleType }} {{ styleStateType }} {{ classNames }}"
     [ngClass]="{ 'icon-button': iconName && !value }" [disabled]="disabled" (click)="onButtonClicked($event)">
-    <mat-icon *ngIf="iconName && iconPosition === 'start'">
+    <ng-container *ngTemplateOutlet="triggerTemplate">
+
+    </ng-container>
+
+</button>
+
+<ng-template #triggerTemplate>
+    <mat-icon *ngIf="iconName && iconPosition === 'start'" [ngClass]="{ 'pull-left flip': value }">
         <pep-icon name="{{iconName}}"></pep-icon>
     </mat-icon>
-    <span *ngIf="value" class="ellipsis"
+    <span *ngIf="value" class="ellipsis pull-left flip"
         [ngClass]="{ 'button-title-with-icon': iconName, 'icon-before': iconPosition === 'start' }" [title]="value">
         {{value}}
     </span>
-    <mat-icon *ngIf="iconName && iconPosition === 'end'">
+    <mat-icon *ngIf="iconName && iconPosition === 'end'" [ngClass]="{ 'pull-left flip': value }">
         <pep-icon name="{{iconName}}"></pep-icon>
     </mat-icon>
-</button>
+
+    <!-- <span *ngIf="displayText && screenSize <= PepScreenSizeType.SM" class="ellipsis"
+        [ngClass]="{ 'button-title-with-icon': iconName }" [title]="displayText">
+        {{ displayText }}
+    </span>
+    <mat-icon *ngIf="iconName">
+        <pep-icon name="{{ iconName }}"></pep-icon>
+    </mat-icon> -->
+</ng-template>

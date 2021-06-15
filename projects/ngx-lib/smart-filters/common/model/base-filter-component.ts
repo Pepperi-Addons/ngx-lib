@@ -50,10 +50,12 @@ export abstract class BaseFilterComponent
     private readonly _destroyed: Subject<void>;
     private actionsContainerRef: ComponentRef<PepFilterActionsComponent>;
 
+    private _fieldIdWithNoDots = '';
     private _field: PepSmartFilterBaseField;
     @Input()
     set field(value: PepSmartFilterBaseField) {
         this._field = value;
+        this._fieldIdWithNoDots = value ? value.id.replace(/./g, '_') : '';
         this.setupForm();
     }
     get field(): PepSmartFilterBaseField {
@@ -114,13 +116,13 @@ export abstract class BaseFilterComponent
     }
 
     get firstControlKey() {
-        return this.field ? `${this.field.id}_first` : 'first';
+        return this.field ? `${this._fieldIdWithNoDots}_first` : 'first';
     }
     get firstControl(): AbstractControl {
         return this.form.get(this.firstControlKey);
     }
     get secondControlKey() {
-        return this.field ? `${this.field.id}_second` : 'second';
+        return this.field ? `${this._fieldIdWithNoDots}_second` : 'second';
     }
     get secondControl(): AbstractControl {
         return this.form.get(this.secondControlKey);
