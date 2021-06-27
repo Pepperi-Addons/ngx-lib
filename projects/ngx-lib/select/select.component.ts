@@ -89,7 +89,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     private addOptionsIfNeeded(): void {
         if (this.isMulti) {
@@ -148,18 +148,21 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
+    private setDefaultForm(): void {
+        const pepField = new PepSelectField({
+            key: this.key,
+            value: this.value,
+            mandatory: this.mandatory,
+            readonly: this.readonly,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled);
-            const pepField = new PepSelectField({
-                key: this.key,
-                value: this.value,
-                mandatory: this.mandatory,
-                readonly: this.readonly,
-                disabled: this.disabled,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+            this.setDefaultForm();
 
             this.renderer.addClass(
                 this.element.nativeElement,
@@ -169,6 +172,10 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
+
         this.isMulti = this.type === 'multi';
         if (this.isMulti) {
             this.selectedValuesModel =

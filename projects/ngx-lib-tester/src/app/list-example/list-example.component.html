@@ -1,56 +1,52 @@
 <!-- <main> -->
-<div class="addon-page-container">
-    <pep-top-bar (footerStateChange)="onFooterStateChange($event)">
-        <div header-start-content>
+<pep-page-layout>
+    <pep-side-bar #sideNav>
+        <pep-smart-filters title="Test filters" [fields]="fields" [filters]="filters"
+            (filtersChange)="onFiltersChange($event)">
+        </pep-smart-filters>
+    </pep-side-bar>
 
-        </div>
-        <div *ngIf="footerState === 'hidden'" header-end-content>
-            <pep-button [value]="'toggle menu'" [classNames]="'pep-spacing-element'" (click)="toggleMenu()">
-            </pep-button>
-            <pep-button [classNames]="'pep-spacing-element '" [value]="'Add filters'" [iconName]="'system_bolt'"
-                (click)="addFilters()">
-            </pep-button>
-        </div>
-        <div footer-start-content>
-            <pep-button [value]="'filters'" [sizeType]="'sm'" [styleType]="'regular'"
-                [classNames]="'pep-spacing-element '" (click)="toggleFilters(sideNav)">
-            </pep-button>
-            <pep-button [sizeType]="'sm'" [classNames]="'pep-spacing-element '" [value]="'Add filters'"
-                [iconName]="'system_bolt'" (click)="addFilters()">
-            </pep-button>
-            <pep-button [value]="'toggle menu'" [classNames]="'pep-spacing-element'" (click)="toggleMenu()">
-            </pep-button>
-        </div>
-        <div footer-end-content>
+    <ng-container pep-top-area>
+        <pep-top-bar (footerStateChange)="onFooterStateChange($event)">
+            <div header-start-content>
 
-        </div>
-        <pep-list-actions [actions]="menuActions" (actionClick)="onMenuItemClicked($event)"></pep-list-actions>
-        <pep-list-total [totalRows]="customList?.totalRows"></pep-list-total>
-        <pep-list-chooser [options]="listOptions" (change)="onListChanged($event)"></pep-list-chooser>
-        <pep-list-sorting [options]="sortingOptions" (change)="onSortingChanged($event)">
-        </pep-list-sorting>
-        <pep-list-views [views]="views" [displayType]="screenSize > PepScreenSizeType.SM ? 'menu' : 'buttons'"
-            (change)="onViewChanged($event)"></pep-list-views>
-    </pep-top-bar>
-    <div class="main-content ">
-
-        <pep-side-bar #sideNav>
-            <pep-smart-filters title="Test filters" [fields]="fields" [filters]="filters"
-                (filtersChange)="onFiltersChange($event)">
-            </pep-smart-filters>
-        </pep-side-bar>
-
-        <div class="main-layout pull-right flip">
-            <div class="content">
-                <div class="list-wrapper" #listContainer>
-                    <pep-list [supportSorting]="false" [supportResizing]="false" [pagerType]="'pages'" [pageSize]="10"
-                        [selectionTypeForActions]="'multi'" [parentScroll]="listContainer"
-                        (fieldClick)="onCustomizeFieldClick($event)"
-                        (selectedItemsChange)="selectedRowsChanged($event)">
-                    </pep-list>
-                </div>
             </div>
-        </div>
+            <div *ngIf="footerState === 'hidden'" header-end-content>
+                <pep-button [value]="'toggle menu'" [classNames]="'pep-spacing-element'" (click)="toggleMenu()">
+                </pep-button>
+                <pep-button [classNames]="'pep-spacing-element '" [value]="'Add filters'" [iconName]="'system_bolt'"
+                    (click)="addFilters()">
+                </pep-button>
+            </div>
+            <div footer-start-content>
+                <pep-button [value]="'filters'" [sizeType]="'sm'" [styleType]="'regular'"
+                    [classNames]="'pep-spacing-element '" (click)="toggleFilters(sideNav)">
+                </pep-button>
+                <pep-button [sizeType]="'sm'" [classNames]="'pep-spacing-element '" [value]="'Add filters'"
+                    [iconName]="'system_bolt'" (click)="addFilters()">
+                </pep-button>
+                <pep-button [value]="'toggle menu'" [classNames]="'pep-spacing-element'" (click)="toggleMenu()">
+                </pep-button>
+            </div>
+            <div footer-end-content>
 
-    </div>
-</div>
+            </div>
+            <pep-list-actions [actions]="menuActions" (actionClick)="onMenuItemClicked($event)"></pep-list-actions>
+            <pep-list-total [totalRows]="customList?.totalRows"></pep-list-total>
+            <pep-list-chooser [options]="listOptions" (change)="onListChanged($event)"></pep-list-chooser>
+            <pep-list-sorting [options]="sortingOptions" (change)="onSortingChanged($event)">
+            </pep-list-sorting>
+            <pep-list-views [views]="views" [displayType]="screenSize > PepScreenSizeType.SM ? 'menu' : 'buttons'"
+                (change)="onViewChanged($event)"></pep-list-views>
+        </pep-top-bar>
+    </ng-container>
+
+    <ng-container pep-main-area>
+        <div #listContainer class="list-container">
+            <pep-list [supportSorting]="false" [supportResizing]="false" [pagerType]="'pages'" [pageSize]="10"
+                [selectionTypeForActions]="'multi'" [parentScroll]="listContainer"
+                (fieldClick)="onCustomizeFieldClick($event)" (selectedItemsChange)="selectedRowsChanged($event)">
+            </pep-list>
+        </div>
+    </ng-container>
+</pep-page-layout>

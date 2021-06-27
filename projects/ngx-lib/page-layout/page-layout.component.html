@@ -1,0 +1,14 @@
+<div class="pep-page-layout" pepRtlClass>
+    <div class="pep-page-side-layout">
+        <ng-content select="pep-side-bar"></ng-content>
+        <ng-content select="[pep-side-area]"></ng-content>
+    </div>
+    <div class="pep-page-main-layout">
+        <div class="pep-top-area">
+            <ng-content select="[pep-top-area]"></ng-content>
+        </div>
+        <div class="pep-main-area">
+            <ng-content select="[pep-main-area]"></ng-content>
+        </div>
+    </div>
+</div>

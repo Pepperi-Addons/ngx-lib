@@ -70,6 +70,7 @@ $pep-typography: mat.define-typography-config(
 @import './textbox/textbox.component.theme';
 @import './textbox-icon/textbox-icon.component.theme';
 @import './top-bar/top-bar.component.theme';
+@import './page-layout/page-layout.component.theme';
 
 @import './form/indicators.component.theme';
 // @import './form/internal-button.component.theme';
@@ -162,6 +163,7 @@ $material-theme-for-pep: $material-default-theme;
         @include pep-textbox-component-theme($pepperi-theme);
         @include pep-textbox-icon-component-theme($pepperi-theme);
         @include pep-top-bar-component-theme($pepperi-theme);
+        @include pep-page-layout-component-theme($pepperi-theme);
         
         @include pep-indicators-component-theme($pepperi-theme);
         // @include pep-internal-button-component-theme($pepperi-theme);

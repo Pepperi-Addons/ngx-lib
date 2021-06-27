@@ -2,13 +2,14 @@
 @import '../src/core/style/abstracts/mixins';
 
 .top-bar-container {
+    display: grid;
     height: $top-bar-height;
-    position: fixed;
+    // position: fixed;
     // width: 100%;
     // width: calc(100% - ((#{$content-padding} * 2)));
     z-index: $z-index-medium + 1;
     width: calc(100% - (#{$settings-bar-width}));
-    top: $header-height;
+    // top: $header-height;
     
     .title {
         @include align-center();
@@ -17,8 +18,8 @@
     .header-content {
         height: $top-bar-height-with-no-top;
         margin-top: $top-bar-spacing-top;
-        padding-right: $content-padding;
-        padding-left: $content-padding;
+        // padding-right: $content-padding;
+        // padding-left: $content-padding;
 
         .main-layout {
             width: inherit;

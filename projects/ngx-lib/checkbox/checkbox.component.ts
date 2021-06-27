@@ -9,6 +9,7 @@ import {
     Renderer2,
     ElementRef,
     Optional,
+    OnChanges,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -29,7 +30,7 @@ import {
     styleUrls: ['./checkbox.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepCheckboxComponent implements OnInit, OnDestroy {
+export class PepCheckboxComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
     @Input() value = '';
     @Input() label = '';
@@ -122,24 +123,32 @@ export class PepCheckboxComponent implements OnInit, OnDestroy {
         }
     }
 
+    private setDefaultForm(): void {
+        const pepField = new PepCheckboxField({
+            key: this.key,
+            value: this.value,
+            mandatory: this.mandatory,
+            readonly: this.readonly,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled, 0, null, true);
-            const pepField = new PepCheckboxField({
-                key: this.key,
-                value: this.value,
-                mandatory: this.mandatory,
-                readonly: this.readonly,
-                disabled: this.disabled,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+            this.setDefaultForm();
 
             this.renderer.addClass(
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+        }
+    }
+
+    ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
         }
     }
 

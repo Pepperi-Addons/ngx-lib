@@ -7,29 +7,67 @@ import {
     EventEmitter,
     ViewChild,
     ElementRef,
+    Renderer2,
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import {
+    trigger,
+    state,
+    style,
+    transition,
+    animate,
+} from '@angular/animations';
 import {
     PepCustomizationService,
     PepLayoutService,
     PepScreenSizeType,
 } from '@pepperi-addons/ngx-lib';
-import { IPepSideBarStateChangeEvent } from './side-bar.model';
-// import { pepIconSystemClose } from '@pepperi-addons/ngx-lib/icon';
+import { IPepSideBarStateChangeEvent, PepSideBarStateType } from './side-bar.model';
+import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/icon';
 
 @Component({
     selector: 'pep-side-bar',
     templateUrl: './side-bar.component.html',
     styleUrls: ['./side-bar.component.scss'],
+    animations: [
+        trigger('toggleInOut', [
+            state(
+                'close',
+                style({
+                    transform: 'translateX(calc(var(--pep-one-multi-by-dir) * var(--pep-side-bar-width)))',
+                    'padding-inline-start': '1rem',
+                    width: 'calc(3rem + 1px)',
+                })
+            ),
+            state(
+                'open',
+                style({
+                    transform: 'translateX(0%)',
+                    width: 'calc(var(--pep-side-bar-width) + var(--pep-double-content-padding) + 1px)',
+                })
+            ),
+            // transition('* => *', [
+            //     animate(250)
+            // ])
+            transition('close => open', animate('500ms ease-out')),
+            transition('open => close', animate('500ms ease-in')),
+        ]),
+    ],
 })
 @Injectable()
 export class PepSideBarComponent implements OnInit {
+    static ONE_MULTI_BY_DIR_KEY = '--pep-one-multi-by-dir';
+
     // @Input() showOnLargeScreens = true;
     // @Input() sideBarButtons: Array<SideBarButton> = [];
     @Input() showHeader = true;
-    @Input() showFooter = true;
+    @Input() showFooter = false;
 
     private _useAsWebComponent = false;
+
+    state: PepSideBarStateType = 'open';
+    toggleButtonArrowName: string = pepIconArrowRight.name;
+    isLargeScreen = true;
 
     @Input()
     set useAsWebComponent(value: boolean) {
@@ -45,6 +83,7 @@ export class PepSideBarComponent implements OnInit {
     stateChange: EventEmitter<IPepSideBarStateChangeEvent> = new EventEmitter<IPepSideBarStateChangeEvent>();
 
     @ViewChild('sidenav') sidenav: MatSidenav;
+    // @ViewChild('sidenavWrapper') sidenavWrapper: ElementRef;
 
     isMouseIn = false;
     sideBarHeight = '100%';
@@ -54,10 +93,12 @@ export class PepSideBarComponent implements OnInit {
 
     constructor(
         private hostElement: ElementRef,
-        private layoutService: PepLayoutService
+        private renderer: Renderer2,
+        public layoutService: PepLayoutService
     ) {
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
+            this.isLargeScreen = size < PepScreenSizeType.MD;
         });
     }
 
@@ -67,57 +108,82 @@ export class PepSideBarComponent implements OnInit {
         this.hostElement.nativeElement.close = this.close.bind(this);
     }
 
+    private setState(state: PepSideBarStateType) {
+        this.state = state;
+        this.toggleButtonArrowName =
+            state === 'open' ?
+                (this.layoutService.isRtl() ? pepIconArrowRight.name : pepIconArrowLeft.name) :
+                (this.layoutService.isRtl() ? pepIconArrowLeft.name : pepIconArrowRight.name);
+    }
+
+    private toggleState() {
+        this.setState(this.state === 'close' ? 'open' : 'close');
+    }
+
     ngOnInit() {
-        // this.sideBarButtons.push(new SideBarButton('', () => this.close(), pepIconSystemClose.name, null, true, null, ''));
+        document.documentElement.style.setProperty(PepSideBarComponent.ONE_MULTI_BY_DIR_KEY, this.layoutService.isRtl() ? '1' : '-1');
+        this.setState(this.isLargeScreen ? 'open' : 'close');
     }
 
     setSideBarHeight(event) {
-        const from = event.relatedTarget
-            ? event.relatedTarget
-            : event.fromElement;
-        const to = event.target ? event.target : event.toElement;
+        // const from = event.relatedTarget
+        //     ? event.relatedTarget
+        //     : event.fromElement;
+        // const to = event.target ? event.target : event.toElement;
 
-        if (typeof from === 'undefined' || typeof to === 'undefined') {
-            return;
-        }
-        this.isMouseIn = true;
+        // if (typeof from === 'undefined' || typeof to === 'undefined') {
+        //     return;
+        // }
+        // this.isMouseIn = true;
 
-        this.sideBarHeight = window.innerHeight - to.offsetTop + 'px';
+        // this.sideBarHeight = window.innerHeight - to.offsetTop + 'px';
     }
 
     mouseLeaveSideBar(event) {
-        const from = event.relatedTarget
-            ? event.relatedTarget
-            : event.fromElement;
-        const to = event.target ? event.target : event.toElement;
+        // const from = event.relatedTarget
+        //     ? event.relatedTarget
+        //     : event.fromElement;
+        // const to = event.target ? event.target : event.toElement;
 
-        if (typeof from === 'undefined' || typeof to === 'undefined') {
-            return;
-        }
-        this.sideBarHeight = '100%';
-        this.isMouseIn = false;
+        // if (typeof from === 'undefined' || typeof to === 'undefined') {
+        //     return;
+        // }
+        // this.sideBarHeight = '100%';
+        // this.isMouseIn = false;
     }
 
     open() {
         if (this.sidenav) {
             this.sidenav.open();
         }
+
+        this.state = 'open';
     }
 
     close() {
         if (this.sidenav) {
             this.sidenav.close();
         }
+
+        this.state = 'close';
     }
 
     toggle() {
         if (this.sidenav) {
-            const isOpen = this.sidenav.opened;
+            // const isOpen = this.sidenav.opened;
             this.sidenav.toggle();
         }
+
+        this.toggleState();
     }
 
-    openedChange(isOpen: boolean) {
-        this.stateChange.emit({ state: isOpen ? 'open' : 'close' });
+    toggleSideWrapper() {
+        this.toggleState();
+        this.stateChange.emit({ state: this.state });
+    }
+
+    toggleSidenav(isOpen: boolean) {
+        this.setState(isOpen ? 'open' : 'close');
+        this.stateChange.emit({ state: this.state });
     }
 }

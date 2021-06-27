@@ -4,8 +4,8 @@
 -->
 <!-- <router-outlet></router-outlet> -->
 
-<div class="viewportDiv" #viewportDiv pepRtlDirection>
-    <header>
+<div class="pep-layout" dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
+    <header class="pep-header-layout">
         <div id="header" pepRtlClass>
             <nav class="navbar {{ getTopBarStyle() }} navbar-light bg-faded menuCont"
                 [ngStyle]="{'background-color': customizationService.getBrandingMainColor() }">
@@ -54,10 +54,6 @@
                 </div>
             </nav>
         </div>
-    </header>
-    <aside>
-    </aside>
-    <main>
         <div #loadingSpinner pepRtlClass [ngStyle]="{ visibility: showLoading ? 'visible' : 'hidden' }"
             id="loadingSpinnerModal">
             <div id="loadingSpinner">
@@ -65,9 +61,18 @@
                     [ngStyle]="{ 'background-color': customizationService?.getLoadingSpinnerColor() }"></div>
             </div>
         </div>
-        <div id="mainCont" #mainCont pepRtlDirection pepRtlClass [ngStyle]="{ 'padding-bottom': footerHeight + 'rem' }">
-            <router-outlet [ngStyle]="{ 'padding-bottom': footerHeight + 'rem' }"></router-outlet>
-        </div>
+    </header>
+    <aside class="pep-side-layout">
+    </aside>
+    <main class="pep-main-layout">
+        <!-- <div #loadingSpinner pepRtlClass [ngStyle]="{ visibility: showLoading ? 'visible' : 'hidden' }"
+            id="loadingSpinnerModal">
+            <div id="loadingSpinner">
+                <div class="pep-loading-spinner" *ngFor="let number of [0, 1, 2, 3, 4]"
+                    [ngStyle]="{ 'background-color': customizationService?.getLoadingSpinnerColor() }"></div>
+            </div>
+        </div> -->
+        <router-outlet></router-outlet>
     </main>
 </div>
 <pep-size-detector></pep-size-detector>

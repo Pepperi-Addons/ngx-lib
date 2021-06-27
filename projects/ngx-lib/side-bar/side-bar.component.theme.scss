@@ -4,7 +4,14 @@
             background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
         }
 
-        .sidenav-container {
+        .side-bar-wrapper {
+            .toggle-button-border {
+                @include pep-border(border-inline-end, $pepperi-theme);
+            }
+        }
+
+        .sidenav-container,
+        .over-sidenav-container {
             background-color: transparent;
 
             .mat-drawer-backdrop.mat-drawer-shown {
