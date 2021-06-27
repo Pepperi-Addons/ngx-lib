@@ -162,7 +162,19 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         }, 0);
     }
 
-    private getField(): PepFieldBase {
+    get displayValue(): string {
+        let res = '';
+
+        if (this.type == 'link') {
+            res = this.formattedValue;
+        } else {
+            res = this.isInFocus ? this.value : this.formattedValue;
+        }
+
+        return res;
+    }
+
+    private setDefaultForm(): void {
         const pepField = new PepTextboxField({
             key: this.key,
             value: this.value,
@@ -175,19 +187,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             maxValue: this.maxValue,
         });
 
-        return pepField;
-    }
-
-    get displayValue(): string {
-        let res = '';
-
-        if (this.type == 'link') {
-            res = this.formattedValue;
-        } else {
-            res = this.isInFocus ? this.value : this.formattedValue;
-        }
-
-        return res;
+        this.form = this.customizationService.getDefaultFromGroup(
+            pepField,
+            this.renderError
+        );
     }
 
     ngOnInit(): void {
@@ -203,11 +206,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                     ? 99999
                     : this.maxValue;
 
-            const pepField = this.getField();
-            this.form = this.customizationService.getDefaultFromGroup(
-                pepField,
-                this.renderError
-            );
+            this.setDefaultForm();
 
             this.renderer.addClass(
                 this.element.nativeElement,
@@ -219,6 +218,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
+
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
     }
 

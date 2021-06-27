@@ -89,22 +89,24 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
+
+    private setDefaultForm(): void {
+        const pepField = new PepTextareaField({
+            key: this.key,
+            value: this.value,
+            required: this.required,
+            readonly: this.readonly,
+            disabled: this.disabled,
+            maxFieldCharacters: this.maxFieldCharacters,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
 
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(
-            //     this.key, this.value, this.required, this.readonly, this.disabled, this.maxFieldCharacters);
-            const pepField = new PepTextareaField({
-                key: this.key,
-                value: this.value,
-                required: this.required,
-                readonly: this.readonly,
-                disabled: this.disabled,
-                maxFieldCharacters: this.maxFieldCharacters,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+            this.setDefaultForm();
 
             this.renderer.addClass(
                 this.element.nativeElement,
@@ -120,6 +122,9 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
         // setTimeout(() => {
         //     if (this.lastFocusField) {
         //         this.lastFocusField.focus();

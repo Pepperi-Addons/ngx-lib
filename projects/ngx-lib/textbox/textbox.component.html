@@ -12,10 +12,10 @@
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
                 title="{{ formattedValue }}" [formControlName]="key" [type]="type" [value]="displayValue"
                 (blur)="onBlur($event)" (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)"
-                [ngClass]="{'disable-hidden': disabled && formattedValue.length > 0 && (type === 'phone' || type === 'email' || type === 'link')}" />
+                [ngClass]="{'disable-hidden': disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')}" />
 
             <span
-                *ngIf="disabled && formattedValue.length > 0 && (type === 'phone' || type === 'email' || type === 'link')"
+                *ngIf="disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')"
                 class="dis-grid">
                 <a href="javascript:void(0)" (click)="anchorClicked()" [id]="key" [name]="key"
                     class="color-link body-sm "> {{formattedValue}}</a>
