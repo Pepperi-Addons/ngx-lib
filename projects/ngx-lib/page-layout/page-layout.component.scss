@@ -1,7 +1,7 @@
 @import '../src/core/style/abstracts/variables';
 @import '../src/core/style/abstracts/mixins';
 
-.pep-page-layout     {
+.pep-page-layout {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: 1fr;
@@ -19,7 +19,8 @@
 
     .pep-page-side-layout {
         grid-area: side;
-        overflow: auto;
+        // overflow: auto;
+        overflow: hidden;
     }
 
     .pep-page-main-layout {
@@ -50,3 +51,4 @@
         }
     }
 }
+

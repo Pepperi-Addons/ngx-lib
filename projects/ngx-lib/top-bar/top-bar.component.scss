@@ -4,12 +4,7 @@
 .top-bar-container {
     display: grid;
     height: $top-bar-height;
-    // position: fixed;
-    // width: 100%;
-    // width: calc(100% - ((#{$content-padding} * 2)));
     z-index: $z-index-medium + 1;
-    width: calc(100% - (#{$settings-bar-width}));
-    // top: $header-height;
     
     .title {
         @include align-center();
@@ -18,9 +13,7 @@
     .header-content {
         height: $top-bar-height-with-no-top;
         margin-top: $top-bar-spacing-top;
-        // padding-right: $content-padding;
-        // padding-left: $content-padding;
-
+        
         .main-layout {
             width: inherit;
             height: inherit;
@@ -50,14 +43,13 @@
         .content {
             display: flex;
             justify-content: space-between;
-            margin: 0 $double-content-margin;
+            margin-inline: $double-content-margin;
             padding-top: $footer-bar-spacing-top;
         }
 
         @media (max-width: $screen-max-size-xs) {
             .content {
-                margin-right: $content-margin;
-                margin-left: $content-margin;
+                margin-inline: $content-margin;
             }
         }
     }

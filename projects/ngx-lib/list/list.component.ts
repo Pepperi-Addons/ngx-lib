@@ -102,6 +102,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pageIndex = 0;
     @Input() scrollAnimationTime = 500;
 
+    @Input() bufferAmount = -1;
+
     private _useAsWebComponent = false;
     @Input()
     set useAsWebComponent(value: boolean) {
@@ -1150,7 +1152,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // Raise list load event immediately, else will be raised from the scroller load event.
-        if (!this._useVirtualScroll) {
+        if (totalRows == 0 || !this._useVirtualScroll) {
             this.onListLoad();
         }
 

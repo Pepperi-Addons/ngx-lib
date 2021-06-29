@@ -1,27 +1,19 @@
 @mixin pep-side-bar-component-theme($pepperi-theme) {
-    .side-bar-container {
-        .side-layout {
-            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+    .pep-side-bar-container {
+        .toggle-button-border {
+            @include pep-border(border-inline-end, $pepperi-theme);
         }
-
-        .side-bar-wrapper {
-            .toggle-button-border {
-                @include pep-border(border-inline-end, $pepperi-theme);
-            }
-        }
-
-        .sidenav-container,
-        .over-sidenav-container {
-            background-color: transparent;
+    
+        .mat-sidenav-container {
+            // background-color: transparent;
 
             .mat-drawer-backdrop.mat-drawer-shown {
                 background-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-50);
             }
-
-            .sidenav {
-                background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
-            }
         }
 
+        .side-layout {
+            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+        }
     }
 }

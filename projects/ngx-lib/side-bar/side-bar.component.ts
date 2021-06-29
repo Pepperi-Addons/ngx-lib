@@ -35,15 +35,15 @@ import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/ico
                 'close',
                 style({
                     transform: 'translateX(calc(var(--pep-one-multi-by-dir) * var(--pep-side-bar-width)))',
-                    'padding-inline-start': '1rem',
-                    width: 'calc(3rem + 1px)',
+                    width: 'calc(var(--pep-spacing-lg) * 2 + 1px)',
+                    // 'padding-inline-start': '.5rem',
                 })
             ),
             state(
                 'open',
                 style({
                     transform: 'translateX(0%)',
-                    width: 'calc(var(--pep-side-bar-width) + var(--pep-double-content-padding) + 1px)',
+                    width: 'inherit',
                 })
             ),
             // transition('* => *', [

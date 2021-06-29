@@ -1,29 +1,9 @@
-<div #sideBarCont class="side-bar-container" pepRtlDirection>
+<div class="pep-side-bar-container">
     <ng-container *ngIf="isLargeScreen; then largeScreensBlock; else notLargeScreensBlock">
     </ng-container>
     <ng-template #largeScreensBlock>
-        <div class="side-bar-wrapper" [@toggleInOut]="state">
-            <div class="side-layout">
-                <div *ngIf="showHeader" class="header-content">
-                    <div class="content pep-border-bottom body-lg ellipsis">
-                        <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
-                    </div>
-                </div>
-                <div class="main-content">
-                    <div class="content">
-                        <ng-container *ngTemplateOutlet="startContentTemplate"></ng-container>
-                        <ng-container *ngTemplateOutlet="filtersTemplate"></ng-container>
-                        <ng-container *ngTemplateOutlet="smartFiltersTemplate"></ng-container>
-                        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-                        <ng-container *ngTemplateOutlet="endContentTemplate"></ng-container>
-                    </div>
-                </div>
-                <div *ngIf="showFooter" class="footer-content">
-                    <div class="content pep-border-top body-lg ellipsis">
-                        <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
-                    </div>
-                </div>
-            </div>
+        <div class="toggle-side-bar-container" [@toggleInOut]="state">
+            <ng-container *ngTemplateOutlet="sideLayoutTemplate"></ng-container>
             <div class="toggle-button-border"></div>
             <button mat-button class="toggle-button pep-button xs regular icon-button " (click)="toggleSideWrapper()">
                 <mat-icon>
@@ -34,29 +14,39 @@
         </div>
     </ng-template>
     <ng-template #notLargeScreensBlock>
-        <mat-sidenav-container class="over-sidenav-container" [hasBackdrop]="true">
-            <mat-sidenav #sidenav mode="over" autoFocus="false" class="sidenav" fixedInViewport="false"
-                (openedChange)="toggleSidenav($event)"
-                [ngClass]="{'hide-header': !showHeader, 'hide-footer': !showFooter}">
-                <div *ngIf="showHeader" class="sidenav-header pep-border-bottom">
-                    <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
-                </div>
-
-                <div class="sidenav-main">
-                    <ng-container *ngTemplateOutlet="startContentTemplate"></ng-container>
-                    <ng-container *ngTemplateOutlet="filtersTemplate"></ng-container>
-                    <ng-container *ngTemplateOutlet="smartFiltersTemplate"></ng-container>
-                    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-                    <ng-container *ngTemplateOutlet="endContentTemplate"></ng-container>
-                </div>
-
-                <div *ngIf="showFooter" class="sidenav-footer pep-border-top">
-                    <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
-                </div>
+        <mat-sidenav-container [hasBackdrop]="true">
+            <mat-sidenav #sidenav mode="over" autoFocus="false" fixedInViewport="false"
+                (openedChange)="toggleSidenav($event)">
+                <ng-container *ngTemplateOutlet="sideLayoutTemplate"></ng-container>
             </mat-sidenav>
         </mat-sidenav-container>
     </ng-template>
 </div>
+
+<ng-template #sideLayoutTemplate>
+    <div class="side-layout">
+        <div *ngIf="showHeader" class="header-content">
+            <div class="content pep-border-bottom body-lg ellipsis">
+                <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="content">
+                <ng-container *ngTemplateOutlet="startContentTemplate"></ng-container>
+                <ng-container *ngTemplateOutlet="filtersTemplate"></ng-container>
+                <ng-container *ngTemplateOutlet="smartFiltersTemplate"></ng-container>
+                <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+                <ng-container *ngTemplateOutlet="endContentTemplate"></ng-container>
+            </div>
+        </div>
+        <div *ngIf="showFooter" class="footer-content">
+            <div class="content pep-border-top body-lg ellipsis">
+                <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
 
 <ng-template #headerTemplate>
     <ng-content select="[header-content]"></ng-content>

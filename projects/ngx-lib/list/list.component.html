@@ -41,7 +41,7 @@
             <pep-virtual-scroll [totalRows]="totalRows" [isTable]="isTable" [scrollAnimationTime]="scrollAnimationTime"
                 (load)="onListLoad()" (change)="onScrollChange($event)"
                 [parentScroll]="parentScroll ? parentScroll : nativeWindow"
-                [bufferAmount]="isReport ? (isTable ? 20 : 3) : isTable ? 10 : 3"
+                [bufferAmount]="bufferAmount >= 0 ? bufferAmount : (isTable ? 10 : 3)"
                 [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
                 <ng-container *ngTemplateOutlet="listData"></ng-container>
             </pep-virtual-scroll>

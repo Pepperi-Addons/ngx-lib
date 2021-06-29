@@ -41,7 +41,7 @@ export class PepPageLayoutComponent implements AfterViewInit, AfterContentInit {
     }
 
     ngAfterContentInit() {
-
+        //
     }
 
 }
