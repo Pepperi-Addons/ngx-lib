@@ -42,7 +42,7 @@ import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/ico
             state(
                 'open',
                 style({
-                    transform: 'translateX(0%)',
+                    transform: 'unset',
                     width: 'inherit',
                 })
             ),
