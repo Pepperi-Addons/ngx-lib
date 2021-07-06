@@ -60,7 +60,7 @@ export class PepListViewsComponent implements OnInit {
         return this._currentView;
     }
 
-    @Input() displayType: PepListViewDisplayType = 'buttons';
+    @Input() displayType: PepListViewDisplayType = 'menu';
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
     @Input() classNames = '';

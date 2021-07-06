@@ -2,10 +2,33 @@
 @import '../src/core/style/abstracts/mixins';
 
 .pep-side-bar-container {
+    $animition-time: 0.5s;
+    
     .toggle-side-bar-container {
         display: grid;
         grid-auto-flow: column;
+        height: calc(100vh - #{$header-height});
         // max-width: calc(#{$side-bar-width} + #{$double-content-padding} + 1px); // 1px is for the toggle-button-border width
+
+        transition: transform ease-out $animition-time, width ease-out $animition-time;
+        transform: translateX(calc(var(--pep-one-multi-by-dir) * #{$side-bar-width}));
+        width: calc((#{$spacing-lg} * 2) + 1px);
+        
+        &.is-open-state {
+            transition: transform ease-out $animition-time, width ease-out $animition-time;
+            transform: unset;
+            width: $side-bar-width;
+
+            .toggle-button {
+                transition: margin-inline ease-out $animition-time, transform ease-out $animition-time;
+                transform: rotate(180deg);
+                margin-inline: -4rem 0.25rem;
+            }
+            
+            .toggle-button-border {
+                border: none;
+            }
+        }
 
         .toggle-button {
             $half-button-width: 0.75rem;
@@ -15,13 +38,14 @@
             align-items: center;
             justify-content: center;
             margin-top: calc(#{$top-bar-height} - #{$half-button-width});
+            transition: margin-inline ease-out $animition-time, transform ease-out $animition-time;
+            transform: rotate(0deg);
             margin-inline: calc(-1 * #{$half-button-width}) 0.25rem;
         }
 
         .toggle-button-border {
             width: 1px;
             padding-inline-start: $content-padding;
-            // padding-inline-start: calc(#{$content-padding} / 2);
             margin-top: $top-bar-spacing-top;
         }
     }
@@ -46,6 +70,8 @@
             @media (max-width: $screen-max-size-xs) {
                 padding-inline: 0;
             }
+        }
+    }
 
             .side-layout {
                 max-width: $floating-side-bar-width;
@@ -64,7 +90,8 @@
         max-width: $side-bar-width;
         width: $side-bar-width;
         padding: 0 $content-padding;
-        height: calc(100vh - #{$header-height});
+        height: 100%;
+        overflow: auto;
 
         .header-content {
             height: $top-bar-height;
@@ -74,7 +101,6 @@
                 height: $top-bar-height-with-no-top;
                 display: flex;
                 overflow: unset; // For showing the focus (if hidden the focus is cutted).
-                // align-items: center;
             }
         }
 
