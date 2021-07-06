@@ -2,8 +2,9 @@
 @import "../src/core/style/abstracts/mixins";
  
 .pep-side-bar-container {
-    $animation-time: 0.5s;
-    
+    $animation-time: 0.35s;
+    $animation-time-third: calc(#{$animation-time} / 3);
+
     .toggle-side-bar-container {
         display: grid;
         grid-auto-flow: column;
@@ -26,7 +27,7 @@
             }
             
             .toggle-button-border {
-                transition: opacity calc(#{$animation-time} / 2) ease-out, margin-inline ease-out $animation-time;
+                transition: opacity calc(#{$animation-time-third} * 2) ease-out, margin-inline ease-out $animation-time;
                 opacity: 0;
                 margin-inline: -3rem 0.25rem;
             }
@@ -46,12 +47,12 @@
         }
         
         .toggle-button-border {
+            transition: opacity calc(#{$animation-time-third} * 2) ease-out $animation-time-third, margin-inline ease-out $animation-time;
             opacity: 1;
-            transition: opacity calc(#{$animation-time} / 2) ease-out calc(#{$animation-time} / 2), margin-inline ease-out $animation-time;
+            margin-inline: unset;
             width: 1px;
             padding-inline-start: $content-padding;
             margin-top: $top-bar-spacing-top;
-            margin-inline: unset;
         }
     }
     
