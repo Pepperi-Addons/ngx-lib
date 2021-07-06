@@ -28,31 +28,7 @@ import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/ico
 @Component({
     selector: 'pep-side-bar',
     templateUrl: './side-bar.component.html',
-    styleUrls: ['./side-bar.component.scss'],
-    animations: [
-        trigger('toggleInOut', [
-            state(
-                'close',
-                style({
-                    transform: 'translateX(calc(var(--pep-one-multi-by-dir) * var(--pep-side-bar-width)))',
-                    width: 'calc(var(--pep-spacing-lg) * 2 + 1px)',
-                    // 'padding-inline-start': '.5rem',
-                })
-            ),
-            state(
-                'open',
-                style({
-                    transform: 'unset',
-                    width: 'inherit',
-                })
-            ),
-            // transition('* => *', [
-            //     animate(250)
-            // ])
-            transition('close => open', animate('500ms ease-out')),
-            transition('open => close', animate('500ms ease-in')),
-        ]),
-    ],
+    styleUrls: ['./side-bar.component.scss']
 })
 @Injectable()
 export class PepSideBarComponent implements OnInit {
@@ -111,9 +87,9 @@ export class PepSideBarComponent implements OnInit {
     private setState(state: PepSideBarStateType) {
         this.state = state;
         this.toggleButtonArrowName =
-            state === 'open' ?
-                (this.layoutService.isRtl() ? pepIconArrowRight.name : pepIconArrowLeft.name) :
-                (this.layoutService.isRtl() ? pepIconArrowLeft.name : pepIconArrowRight.name);
+            // state === 'open' ?
+            // (this.layoutService.isRtl() ? pepIconArrowRight.name : pepIconArrowLeft.name) :
+            (this.layoutService.isRtl() ? pepIconArrowLeft.name : pepIconArrowRight.name);
     }
 
     private toggleState() {
