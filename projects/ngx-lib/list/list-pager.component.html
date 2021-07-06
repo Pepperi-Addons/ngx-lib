@@ -12,7 +12,7 @@
         class="pep-button icon-button pep-spacing-element sm weak" pepRtlDirection pepMenuBlur (click)="previousPage()"
         [title]="('LIST.PAGER_PREVIOUS' | translate)">
         <mat-icon>
-            <pep-icon name="arrow_left"></pep-icon>
+            <pep-icon [name]="layoutService.isRtl() ? 'arrow_right' : 'arrow_left'"></pep-icon>
         </mat-icon>
     </button>
     <button mat-button [disabled]="disabled || _nextButtonsDisabled()"
@@ -20,7 +20,7 @@
         class="pep-button icon-button pep-spacing-element sm weak" pepRtlDirection pepMenuBlur (click)="nextPage()"
         [title]="('LIST.PAGER_NEXT' | translate)">
         <mat-icon>
-            <pep-icon name="arrow_right"></pep-icon>
+            <pep-icon [name]="layoutService.isRtl() ? 'arrow_left' : 'arrow_right'"></pep-icon>
         </mat-icon>
     </button>
 </div>

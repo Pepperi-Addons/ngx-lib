@@ -1,0 +1,54 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.pep-page-layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+        // "navigation navigation"
+        "side       main";
+
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+    // .pep-page-navigation-layout {
+    //     grid-area: navigation;
+    // }
+
+    .pep-page-side-layout {
+        grid-area: side;
+        // overflow: auto;
+        overflow: hidden;
+    }
+
+    .pep-page-main-layout {
+        grid-area: main;
+        overflow: auto;
+        height: 100%;
+        padding-inline: $content-padding;
+        padding-bottom: $footer-bar-height; // In case that the fixed footer is shown (the footer is in the top bar component).
+        
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-areas: "top-area"
+                             "main-area";
+
+        .pep-top-area {
+            grid-area: top-area;
+            // overflow: auto;
+        }
+    
+        .pep-main-area {
+            grid-area: main-area;
+            overflow: auto;
+
+            ::ng-deep.list-container {
+                overflow: auto;
+                height: 100%;
+            }
+        }
+    }
+}
+

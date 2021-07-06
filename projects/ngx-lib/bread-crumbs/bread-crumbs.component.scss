@@ -1,7 +1,7 @@
 @import '../src/core/style/abstracts/variables';
 
 :host {
-    display: flex;
+    display: grid;
 }
 
 .bread-crumbs-label {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
     PepCustomizationService,
     PepLoaderService,
+    PepLayoutService,
     PepStyleType,
 } from '@pepperi-addons/ngx-lib';
 
@@ -16,7 +17,8 @@ export class AppComponent implements OnInit {
 
     constructor(
         public customizationService: PepCustomizationService,
-        public loaderService: PepLoaderService
+        public loaderService: PepLoaderService,
+        public layoutService: PepLayoutService,
     ) {
         // this.loaderService.show();
         this.loaderService.onChanged$.subscribe((show) => {

@@ -1,126 +1,117 @@
 @import '../src/core/style/abstracts/variables';
 @import '../src/core/style/abstracts/mixins';
 
-.side-bar-container {
-    .side-layout {
-        position: fixed;
-        z-index: $z-index-medium + 1;
-        // padding: 0 0 0 $double-content-padding;
-        padding: 0 $content-padding;
-        top: inherit;
-        height: stretch;
-        overflow: auto;
+.pep-side-bar-container {
+    $animition-time: 0.5s;
+    
+    .toggle-side-bar-container {
+        display: grid;
+        grid-auto-flow: column;
+        height: calc(100vh - #{$header-height});
+        // max-width: calc(#{$side-bar-width} + #{$double-content-padding} + 1px); // 1px is for the toggle-button-border width
 
-        .content {
-            margin: 0;
-            height: inherit;
-            // width: inherit;
-            overflow: auto;
+        transition: transform ease-out $animition-time, width ease-out $animition-time;
+        transform: translateX(calc(var(--pep-one-multi-by-dir) * #{$side-bar-width}));
+        width: calc((#{$spacing-lg} * 2) + 1px);
+        
+        &.is-open-state {
+            transition: transform ease-out $animition-time, width ease-out $animition-time;
+            transform: unset;
+            width: $side-bar-width;
+
+            .toggle-button {
+                transition: margin-inline ease-out $animition-time, transform ease-out $animition-time;
+                transform: rotate(180deg);
+                margin-inline: -4rem 0.25rem;
+            }
+            
+            .toggle-button-border {
+                border: none;
+            }
         }
 
-        @media (min-width: $screen-max-size-sm + 1) {
-            overflow: hidden;
+        .toggle-button {
+            $half-button-width: 0.75rem;
+
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: calc(#{$top-bar-height} - #{$half-button-width});
+            transition: margin-inline ease-out $animition-time, transform ease-out $animition-time;
+            transform: rotate(0deg);
+            margin-inline: calc(-1 * #{$half-button-width}) 0.25rem;
+        }
+
+        .toggle-button-border {
+            width: 1px;
+            padding-inline-start: $content-padding;
+            margin-top: $top-bar-spacing-top;
         }
     }
 
-    .sidenav-container {
-        position: fixed;
-        top: $header-height;
+    .mat-sidenav-container {
+        position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
         z-index: $z-index-high;
+        height: calc(100vh - #{$header-height});
         visibility: hidden;
         
         &.mat-drawer-opened {
             visibility: unset;
         }
-    
-        .sidenav {
 
-            $side-nav-width: calc(#{$floating-side-bar-width} + #{$double-content-padding});
-            $side-nav-content-width: $floating-side-bar-width;
-            
-            width: $side-nav-width;
-            height: 100%;
-            padding-top: $top-bar-height;
-            padding-bottom: $footer-bar-height;
-            padding-left: $double-content-padding;
-            padding-right: $double-content-padding;
-            overflow: visible;
+        .mat-sidenav {
+            max-width: calc(#{$floating-side-bar-width} + #{$double-content-padding});
+            padding-inline: $content-padding;
 
-            &.hide-header {
-                padding-top: 0;
+            @media (max-width: $screen-max-size-xs) {
+                padding-inline: 0;
             }
 
-            &.hide-footer {
-                padding-bottom: 0;
+            .side-layout {
+                max-width: $floating-side-bar-width;
+                width: $floating-side-bar-width;
             }
+        }
+    }
 
-            .sidenav-header {
-                position: absolute;
-                width: auto;
-                top: 0;
-                height: $top-bar-height;
-                left: $double-content-padding;
-                right: $double-content-padding;
-                justify-content: unset;
-                padding: 0;
-                display: block;
-                padding-top: $top-bar-spacing-top;
-                max-width: $side-nav-content-width;
-            }
-            
-            .sidenav-main {
-                max-width: $side-nav-content-width;
-            }
+    .side-layout {
+        $side-bar-width-less-padding: calc(#{$side-bar-width} - #{$double-content-padding});
 
-            .sidenav-footer {
-                position: absolute;
-                width: auto;
-                max-width: $side-nav-content-width;
-                bottom: 0;
-                height: $footer-bar-height;
-                left: $double-content-padding;
-                right: $double-content-padding;
-                justify-content: unset;
-                padding: 0;
-                display: block;
-                padding-top: $footer-bar-spacing-top;
+        display: grid;
+        grid-auto-rows: auto 1fr auto;
+        grid-auto-flow: row;
 
-                .pep-button {
-                    @include pep-top-bar-button();
-                }
+        max-width: $side-bar-width;
+        width: $side-bar-width;
+        padding: 0 $content-padding;
+        height: 100%;
+        overflow: auto;
+
+        .header-content {
+            height: $top-bar-height;
+            padding-top: $top-bar-spacing-top;
+
+            .content {
+                height: $top-bar-height-with-no-top;
+                display: flex;
+                overflow: unset; // For showing the focus (if hidden the focus is cutted).
             }
         }
 
-        @media (max-width: $screen-max-size-xs) {
-            .sidenav {
-                $side-nav-width: $floating-side-bar-width;
-                $side-nav-content-width: calc(#{$floating-side-bar-width} - #{$double-content-padding});
-
-                width: $side-nav-width;
-                padding-left: $content-padding;
-                padding-right: $content-padding;
-            
-                .sidenav-main {
-                    max-width: $side-nav-content-width;
-                }
-
-                .sidenav-header,
-                .sidenav-footer {
-                    left: $content-padding;
-                    right: $content-padding;
-                    max-width: $side-nav-content-width;
-                }
-            }
+        .footer-content {
+            height: $top-bar-height;
         }
 
+        .main-content {
+            overflow: auto;
+            
+            .content {
+                overflow: hidden;
+            }
+        }
     }
 }
-
-// [dir='rtl'] {
-//     .side-layout {
-//         padding: 0 $double-content-padding 0 0;
-//     }
-// }

@@ -1,50 +1,6 @@
 @import 'ngx-lib/src/core/style/abstracts/mixins';
 @import 'ngx-lib/src/core/style/abstracts/variables';
 
-.viewportDiv {
-    background: white;
-    display: -ms-grid;
-    display: grid;
-    height: 100vh;
-
-    max-width: $max-scr-width;
-    margin: 0 auto;
-
-    grid-template-areas: 'header header' 'sidebar content';
-    -ms-grid-rows: $header-height 1fr;
-    grid-template-rows: $header-height 1fr;
-    -ms-grid-columns: auto 1fr;
-    grid-template-columns: auto 1fr;
-
-    header {
-        grid-row: header;
-        -ms-grid-row: header;
-        grid-row-start: header;
-        -ms-grid-row-span: NaN;
-        grid-row-end: header;
-        grid-column: header;
-        -ms-grid-column: header;
-        grid-column-start: header;
-        -ms-grid-column-span: NaN;
-        grid-column-end: header;
-
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: $z-index-high + 1;
-    }
-
-    aside {
-        grid-area: sidebar;
-    }
-
-    main {
-        -ms-grid-row: 2;
-        -ms-grid-column: 2;
-        grid-area: content;
-    }
-}
-
 #header {
     height: $header-height;
 
@@ -76,63 +32,50 @@
     min-height: 100%;
 }
 
+
 #loadingSpinnerModal {
     z-index: $z-index-high + 101;
     height: 1rem;
     width: 100%;
-    position: fixed;
-    left: 0;
+    // position: fixed;
+    // left: 0;
     background-color: transparent;
     opacity: 1;
- 
+    position: absolute;
+    overflow: hidden;
+
     &.no-top-bar {
         top: $header-height !important;
     }
 }
- 
+
 #loadingSpinner {
     z-index: $z-index-high;
     width: 100%;
     margin-top: 5px;
- 
+
     div {
         width: 7px;
         height: 7px;
         position: absolute;
         left: -20px;
-        // background-color: @pepperiGreen;
         border-radius: 50%;
-        -moz-animation: move 4s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
-        -o-animation: move 4s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
-        -webkit-animation: move 4s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
         animation: move 4s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
     }
- 
+
     div:nth-child(2) {
-        -moz-animation-delay: 150ms;
-        -o-animation-delay: 150ms;
-        -webkit-animation-delay: 150ms;
         animation-delay: 150ms;
     }
- 
+
     div:nth-child(3) {
-        -moz-animation-delay: 300ms;
-        -o-animation-delay: 300ms;
-        -webkit-animation-delay: 300ms;
         animation-delay: 300ms;
     }
- 
+
     div:nth-child(4) {
-        -moz-animation-delay: 450ms;
-        -o-animation-delay: 450ms;
-        -webkit-animation-delay: 450ms;
         animation-delay: 450ms;
     }
- 
+
     div:nth-child(5) {
-        -moz-animation-delay: 600ms;
-        -o-animation-delay: 600ms;
-        -webkit-animation-delay: 600ms;
         animation-delay: 600ms;
     }
 }
@@ -150,4 +93,80 @@
     100% {
         left: 100%;
     }
+}
+
+[dir='rtl'] {
+    #loadingSpinner {
+        div {
+            animation: moveOpp 4s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+        }
+
+        div:nth-child(2) {
+            animation-delay: 150ms;
+        }
+        div:nth-child(3) {
+            animation-delay: 300ms;
+        }
+        div:nth-child(4) {
+            animation-delay: 450ms;
+        }
+        div:nth-child(5) {
+            animation-delay: 600ms;
+        }
+    }
+
+    @keyframes moveOpp {
+        0% {
+            left: 100%;
+        }
+        50% {
+            left: -2%;
+        }
+        75% {
+            left: -2%;
+        }
+        100% {
+            left: -2%;
+        }
+    }
+}
+
+.pep-layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: $header-height 1fr;
+    grid-template-areas: "header header"
+                         "side   page";
+                      // "footer footer";
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    
+    .pep-header-layout {
+        grid-area: header;
+        display: block;
+        z-index: $z-index-high + 1;
+    }
+
+    .pep-side-layout {
+        grid-area: side;
+        display: block;
+        overflow: auto;
+        width: auto;
+
+        // @media (max-width: $screen-max-size-md) {
+        //     // width: 0;
+        // }
+    }
+
+    .pep-main-layout {
+        grid-area: page;
+        display: block;
+        overflow: auto;
+    }
+
+    // .pep-footer-layout {
+    //     grid-area: footer;
+    //     display: block;
+    // }
 }

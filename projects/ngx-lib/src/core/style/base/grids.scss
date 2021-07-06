@@ -3,142 +3,175 @@
 //  Layout - General
 // -----------------------------------------------------
 
-aside {
-    z-index: $z-index-medium + 2 !important;
-
-    .settings-bar-container {
-        // position: fixed;
-        z-index: $z-index-medium + 1;
-        width: $settings-bar-width;
-        padding: 0 0 0 $double-content-padding;
-
-        .header-content {
-            z-index: $z-index-medium + 1;
-            position: fixed;
-            width: calc(#{$settings-bar-width} - #{$double-content-padding});
-            height: $top-bar-height;
-            padding-top: $top-bar-spacing-top;
-
-            .content {
-                height: $top-bar-height-with-no-top;
-                display: flex;
-                align-items: center;
-            }
-        }
-
-        .main-content {
-            position: fixed;
-            width: calc(#{$settings-bar-width} - #{$content-padding});
-            height: inherit;
-            padding-top: $top-bar-height;
-            margin-right: calc(#{$content-padding} * -1);
-            margin-left: calc(#{$content-padding} * -1);
-            display: block;
-
-            .content {
-                height: 100%;
-                padding-top: $spacing-md;
-                padding-left: $content-padding;
-                padding-right: $content-padding;
-            }
-        }
-
-        @media (max-width: $screen-max-size-md) {
-            width: 0 !important;
-            padding: 0 !important;
-        }
-    }
-}
-[dir='rtl'] {
-    aside {
-
-        .settings-bar-container {
-            padding: 0 $double-content-padding 0 0;
-        }
-    }
-}
-
 header, // This is for the menu header that open chooser dialog.
 main {
-    .side-layout {
-        width: $side-bar-width;
-        height: inherit;
-        padding: 0;
-
+    .side-layout,
+    .main-layout { // This is for break the last versions that use this with value - erase (unset) the value.
         .content {
-            margin-right: $content-margin;
-            margin-left: $content-margin;
-        }
-    }
-
-    .main-layout {
-        // @include calc(width, '100% - ' $side-bar-width);
-        width: calc(100% - #{$side-bar-width});
-        height: inherit;
-        padding: 0;
-
-        .content {
-            height: inherit;
-            margin-right: $content-margin;
-            margin-left: $content-margin;
-        }
-
-        @media (max-width: $screen-max-size-xs) {
-            .content {
-                margin-right: 0;
-                margin-left: 0;
-            }
-        }
-    }
-
-    @media (max-width: $screen-max-size-md) {
-        .main-layout {
-            width: 100%;
+            margin-right: unset;
+            margin-left: unset;
         }
     }
 
     .main-content {
-        padding-top: $top-bar-height;
-        margin-right: 0;
-        margin-left: 0;
-        display: block;
-
-        .main-layout {
-            padding: 0 $content-padding;
-        }
-
-        // This is in comment in 16.55 cause it make a bug on grid view (order center)
-        // @media (max-width: $screen-max-size-xs) {
-        //     .main-layout {
-        //         padding: 0;
-        //     }
-        // }
+        padding-top: unset;
     }
+
+    // .side-layout {
+    //     width: $side-bar-width;
+    //     height: inherit;
+    //     padding: 0;
+
+    //     .content {
+    //         margin-right: $content-margin;
+    //         margin-left: $content-margin;
+    //     }
+    // }
+
+    // .main-layout {
+    //     width: calc(100% - #{$side-bar-width});
+    //     height: inherit;
+    //     padding: 0;
+
+    //     .content {
+    //         height: inherit;
+    //         margin-right: $content-margin;
+    //         margin-left: $content-margin;
+    //     }
+
+    //     @media (max-width: $screen-max-size-xs) {
+    //         .content {
+    //             margin-right: 0;
+    //             margin-left: 0;
+    //         }
+    //     }
+    // }
+
+    // @media (max-width: $screen-max-size-md) {
+    //     .main-layout {
+    //         width: 100%;
+    //     }
+    // }
+
+    // .main-content {
+    //     padding-top: $top-bar-height;
+    //     margin-right: 0;
+    //     margin-left: 0;
+    //     display: block;
+
+    //     .main-layout {
+    //         padding: 0 $content-padding;
+    //     }
+    // }
 
     //  Layout - Setting & Plugin pages
     // ----------------------------------------
+    // .plugin-page-container,
+    // .settings-page-container {
+    //     display: block;
+    //     width: 100%;
+
+    //     .header-content {
+    //         z-index: $z-index-medium + 1;
+    //         // position: fixed;
+    //         // width: calc(100% - (#{$settings-bar-width}));
+    //         width: 100%;
+
+    //         height: $top-bar-height;
+    //         padding-top: $top-bar-spacing-top;
+    //         // padding-right: $content-padding;
+    //         // padding-left: $content-padding;
+
+    //         .content {
+    //             // height: inherit;
+    //             height: $top-bar-height-with-no-top;
+    //             margin-right: $content-margin;
+    //             margin-left: $content-margin;
+    //             display: flex;
+    //             // align-items: center;
+    //             justify-content: space-between;
+
+    //             .title {
+    //                 height: 100%;
+    //                 display: flex;
+    //                 align-items: center;
+    //                 @include font-body($fs-md, $lh-md);
+    //             }
+    //         }
+
+    //         @media (max-width: $screen-max-size-xs) {
+    //             .content {
+    //                 margin-right: 0;
+    //                 margin-left: 0;
+    //             }
+    //         }
+    //     }
+
+    //     .main-content {
+    //         display: block;
+    //         // padding-right: $content-padding;
+    //         // padding-left: $content-padding;
+
+    //         .content {
+    //             // height: auto;
+    //             margin-top: $content-margin;
+    //             margin-right: $content-margin;
+    //             margin-left: $content-margin;
+    //         }
+
+    //         @media (max-width: $screen-max-size-xs) {
+    //             .content {
+    //                 margin-right: 0;
+    //                 margin-left: 0;
+    //             }
+    //         }
+
+    //         // .fit-page-height {
+    //         //     // height: calc (#{$main-height} - #{$tabs-labels-height});
+    //         //     height: calc(100vh - (#{$header-height} + #{$top-bar-height} + #{$content-margin}));
+
+    //         //     @media (max-width: $screen-max-size-md) {
+    //         //         height: calc(100vh - (#{$header-height} + #{$top-bar-height} + #{$content-margin} + #{$footer-bar-height}));
+    //         //     }
+    //         // }
+
+    //         // &.limit-max-width {
+    //         //     max-width: 896px;
+    //         // }
+    //     }
+
+    //     //  Tabs.
+    //     // -----------------------------------------------------
+    //     .mat-tab-group {
+    //         &.fixed-header {
+    //             .mat-tab-header {
+    //                 @include mat-tabs-fixed-header-width($settings-bar-width);
+    //             }
+    //         }
+    //     }
+    // }
+
+    // This is for the ng 10 with ngxlib - addoon
     .plugin-page-container,
-    .settings-page-container {
+    .settings-page-container,
+    .addon-page-container {
         display: block;
         width: 100%;
 
         .header-content {
             z-index: $z-index-medium + 1;
-            position: fixed;
-            width: calc(100% - (#{$settings-bar-width}));
+            width: 100%;
 
             height: $top-bar-height;
             padding-top: $top-bar-spacing-top;
-            padding-right: $content-padding;
-            padding-left: $content-padding;
+            
+            position: unset;
+            padding-inline: unset;
 
             .content {
-                // height: inherit;
                 height: $top-bar-height-with-no-top;
-                margin-right: $content-margin;
-                margin-left: $content-margin;
+                margin-inline: unset;
                 display: flex;
-                // align-items: center;
                 justify-content: space-between;
 
                 .title {
@@ -149,85 +182,37 @@ main {
                 }
             }
 
-            @media (max-width: $screen-max-size-xs) {
-                .content {
-                    margin-right: 0;
-                    margin-left: 0;
-                }
-            }
+            // @media (max-width: $screen-max-size-xs) {
+            //     .content {
+            //         margin-right: 0;
+            //         margin-left: 0;
+            //     }
+            // }
         }
 
         .main-content {
             display: block;
-            padding-right: $content-padding;
-            padding-left: $content-padding;
+            // padding-right: $content-padding;
+            // padding-left: $content-padding;
+            padding-inline: unset;
 
             .content {
                 // height: auto;
-                margin-top: $content-margin;
-                margin-right: $content-margin;
-                margin-left: $content-margin;
-            }
-
-            @media (max-width: $screen-max-size-xs) {
-                .content {
-                    margin-right: 0;
-                    margin-left: 0;
-                }
-            }
-
-            .fit-page-height {
-                // height: calc (#{$main-height} - #{$tabs-labels-height});
-                height: calc(100vh - (#{$header-height} + #{$top-bar-height} + #{$content-margin}));
-
-                @media (max-width: $screen-max-size-md) {
-                    height: calc(100vh - (#{$header-height} + #{$top-bar-height} + #{$content-margin} + #{$footer-bar-height}));
-                }
-            }
-
-            &.limit-max-width {
-                max-width: 896px;
-            }
-        }
-
-        //  Tabs.
-        // -----------------------------------------------------
-        .mat-tab-group {
-            &.fixed-header {
-                .mat-tab-header {
-                    @include mat-tabs-fixed-header-width($settings-bar-width);
-                }
-            }
-        }
-    }
-
-    // This is for the ng 10 with ngxlib - addoon
-    .pep-page-container,
-    .addon-page-container {
-        display: block;
-        width: 100%;
-
-        .main-content {
-            display: block;
-            padding-right: $content-padding;
-            padding-left: $content-padding;
-
-            .content {
-                // height: auto;
-                margin-right: $content-margin;
-                margin-left: $content-margin;
+                // margin-right: $content-margin;
+                // margin-left: $content-margin;
+                margin-inline: unset;
 
                 &.spacing-top {
                     margin-top: $content-margin;
                 }
             }
 
-            @media (max-width: $screen-max-size-xs) {
-                .content {
-                    margin-right: 0;
-                    margin-left: 0;
-                }
-            }
+            // @media (max-width: $screen-max-size-xs) {
+            //     .content {
+            //         margin-right: 0;
+            //         margin-left: 0;
+            //     }
+            // }
 
             &.limit-max-width {
                 max-width: 896px;
@@ -239,7 +224,8 @@ main {
         .mat-tab-group {
             &.fixed-header {
                 .mat-tab-header {
-                    @include mat-tabs-fixed-header-width($settings-bar-width);
+                    width: 100%;
+                    // @include mat-tabs-fixed-header-width($settings-bar-width);
                 }
             }
         }

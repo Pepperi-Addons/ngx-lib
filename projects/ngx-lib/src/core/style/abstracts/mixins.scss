@@ -778,14 +778,14 @@
 // ******************************************************************************
 //                       Tabs declerations
 // ******************************************************************************
-@mixin mat-tabs-fixed-header-width($side-width) {
-    width: calc(100% - (#{$side-width} + #{$double-content-padding} + #{$double-content-margin}));
+// @mixin mat-tabs-fixed-header-width($side-width) {
+//     width: calc(100% - (#{$side-width} + #{$double-content-padding} + #{$double-content-margin}));
     
-    @media (max-width: $screen-max-size-md) {
-        width: calc(100% - (#{$double-content-padding} + #{$double-content-margin}));
-    }
+//     @media (max-width: $screen-max-size-md) {
+//         width: calc(100% - (#{$double-content-padding} + #{$double-content-margin}));
+//     }
 
-    @media (max-width: $screen-max-size-xs) {
-        width: calc(100% - (#{$content-padding} + #{$content-margin}));
-    }
-}
+//     @media (max-width: $screen-max-size-xs) {
+//         width: calc(100% - (#{$content-padding} + #{$content-margin}));
+//     }
+// }

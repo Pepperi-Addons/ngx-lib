@@ -187,22 +187,23 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         private utilitiesService: PepUtilitiesService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2
-    ) {}
+    ) { }
+
+    private setDefaultForm(): void {
+        const pepField = new PepDateField({
+            key: this.key,
+            value: this.value,
+            mandatory: this.mandatory,
+            readonly: this.readonly,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
 
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled);
-            const pepField = new PepDateField({
-                key: this.key,
-                value: this.value,
-                mandatory: this.mandatory,
-                readonly: this.readonly,
-                disabled: this.disabled,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
-
-            // this.formattedValue = this.formattedValue || this.value;
+            this.setDefaultForm();
 
             this.renderer.addClass(
                 this.element.nativeElement,
@@ -217,12 +218,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: any): void {
-        // if (this.standAlone) {
-        //     this.formattedValue = this.formattedValue || this.value;
-        // }
-        // if (changes.value) {
-        //     this.setDateModel();
-        // }
+        if (this.standAlone) {
+            this.setDefaultForm();
+        }
     }
 
     ngOnDestroy(): void {

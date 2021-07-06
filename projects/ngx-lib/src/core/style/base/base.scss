@@ -131,14 +131,16 @@
 
     &.fixed-header {
         .mat-tab-header {
-            position: fixed;
+            // position: fixed;
+            position: unset;
             z-index: $tabs-z-index + 1;
-
-            @include mat-tabs-fixed-header-width($side-bar-width);
+            width: 100%;
+            // @include mat-tabs-fixed-header-width($side-bar-width);
         }
 
         .mat-tab-body-wrapper {
-            margin-top: $tabs-labels-height;
+            // margin-top: $tabs-labels-height;
+            margin-top: unset;
         }
     }
 }

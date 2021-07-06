@@ -15,7 +15,8 @@
         }
 
         &.spacing-from-submenu-trigger {
-            padding-right: $spacing-lg;
+            // padding-right: $spacing-lg;
+            padding-inline-end: $spacing-lg;
         }
     }
 
@@ -40,21 +41,19 @@
     }
 
     &[dir='rtl'] {
-        .title {
-            &.spacing-from-submenu-trigger {
-                padding-right: unset;
-                padding-left: $spacing-lg;
-            }
-        }
+        // .title {
+        //     &.spacing-from-submenu-trigger {
+        //         padding-right: unset;
+        //         padding-left: $spacing-lg;
+        //     }
+        // }
 
         .submenu-trigger {
             right: unset;
             left: $spacing-sm;
-            // @include rotate(180deg);
             transform: rotate(180deg);
 
             &.rotate {
-                // @include rotate(0deg);
                 transform: rotate(0deg);
             }
         }

@@ -214,11 +214,18 @@
 .form-view {
     margin-top: $content-margin;
     margin-bottom: $content-margin;
+    margin-inline: 0.25rem;
 }
 
 //  Table view
 // ------------------------
 $sorting-width: 1rem;
+
+// .below-sticky-top-bar {
+//     .table-header {
+//         top: calc(#{$top-bar-height});
+//     }
+// }
 
 .table-header {
     position: sticky;
@@ -317,7 +324,7 @@ $sorting-width: 1rem;
             .resize-box {
                 display: none;
                 cursor: w-resize;
-                margin-right: calc((#{$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
+                margin-inline-end: calc((#{$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
                 height: $table-field-height; // 2rem;
                 align-items: center;
 
@@ -328,10 +335,10 @@ $sorting-width: 1rem;
                     line-height: $table-field-height; // 2rem;
                     // padding: 0 0.625rem 0 0.375rem;
 
-                    padding-right: 0.425rem;
+                    padding-inline-end: 0.425rem;
                     border:none;
-                    border-right-width: 1px;
-                    border-right-style: dashed;
+                    border-inline-end-width: 1px;
+                    border-inline-end-style: dashed;
                 }
             }
 
@@ -340,7 +347,7 @@ $sorting-width: 1rem;
                     cursor: pointer;
                     .header-label {
                         cursor: pointer;
-                        padding-right: 1rem;
+                        padding-inline-end: 1rem;
                     }
 
                     .sorting-box {
@@ -352,7 +359,7 @@ $sorting-width: 1rem;
             &.has-sorting {
                 &.support-sorting {
                     .header-label {
-                        padding-right: 1rem;
+                        padding-inline-end: 1rem;
                     }
                 }
             }
@@ -364,16 +371,22 @@ $sorting-width: 1rem;
             }
 
             &.is-first {
-                border-radius: $table-border-radius 0 0 $table-border-radius;
+                // border-radius: $table-border-radius 0 0 $table-border-radius;
+                border-start-start-radius: $table-border-radius;
+                border-start-end-radius: $table-border-radius;
             }
 
             &.is-last {
-                border-radius: 0 $table-border-radius $table-border-radius 0;
-
+                // border-radius: 0 $table-border-radius $table-border-radius 0;
+                border-start-end-radius: $table-border-radius;
+                border-end-end-radius: $table-border-radius;
+                
                 &:hover {
                     .resize-box {
                         // width: 1rem;
-                        border-radius: 0 $table-border-radius $table-border-radius 0;
+                        // border-radius: 0 $table-border-radius $table-border-radius 0;
+                        border-start-end-radius: $table-border-radius;
+                        border-end-end-radius: $table-border-radius;
                     }
                 }
             }
@@ -390,53 +403,52 @@ $sorting-width: 1rem;
     .table-header {
         .table-header-fieldset {
             .header-column {
-                .resize-box {
-                    margin-right: unset;
-                    margin-left: calc((#{$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
+                // .resize-box {
+                //     // margin-right: unset;
+                //     // margin-left: calc((#{$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
 
-                    // .mat-icon,
-                    .splitter {
-                        // padding: 0 $spacing-sm 0 0;
-                        padding-right: unset;
-                        padding-left: 0.425rem;
+                //     // .mat-icon,
+                //     .splitter {
+                //         // padding-right: unset;
+                //         // padding-left: 0.425rem;
 
-                        border:none;
-                        border-left-width: 1px;
-                        border-left-style: dashed;
-                    }
-                }
+                //         // border:none;
+                //         // border-left-width: 1px;
+                //         // border-left-style: dashed;
+                //     }
+                // }
 
-                &:hover {
-                    &.support-sorting {
-                        .header-label {
-                            padding-right: unset;
-                            padding-left: 1rem;
-                        }
-                    }
-                }
+                // &:hover {
+                //     &.support-sorting {
+                //         .header-label {
+                //             padding-right: unset;
+                //             padding-left: 1rem;
+                //         }
+                //     }
+                // }
 
-                &.has-sorting {
-                    &.support-sorting {
-                        .header-label {
-                            padding-right: unset;
-                            padding-left: 1rem;
-                        }
-                    }
-                }
+                // &.has-sorting {
+                //     &.support-sorting {
+                //         .header-label {
+                //             padding-right: unset;
+                //             padding-left: 1rem;
+                //         }
+                //     }
+                // }
 
-                &.is-first {
-                    border-radius: 0 $table-border-radius $table-border-radius 0;
-                }
+                // &.is-first {
+                //     border-radius: 0 $table-border-radius $table-border-radius 0;
+                // }
 
-                &.is-last {
-                    border-radius: $table-border-radius 0 0 $table-border-radius;
+                // &.is-last {
+                //     border-radius: $table-border-radius 0 0 $table-border-radius;
 
-                    &:hover {
-                        .resize-box {
-                            border-radius: $table-border-radius 0 0 $table-border-radius;
-                        }
-                    }
-                }
+                //     &:hover {
+                //         .resize-box {
+                //             border-radius: $table-border-radius 0 0 $table-border-radius;
+                //         }
+                //     }
+                // }
             }
         }
     }
@@ -475,11 +487,13 @@ $sorting-width: 1rem;
                 padding: 0 $spacing-2xs;
 
                 &:first-of-type {
-                    padding: 0 $spacing-2xs 0 $spacing-xs;
+                    // padding: 0 $spacing-2xs 0 $spacing-xs;
+                    padding-inline: $spacing-xs $spacing-2xs;
                 }
 
                 &:last-of-type {
-                    padding: 0 $spacing-xs 0 $spacing-2xs;
+                    // padding: 0 $spacing-xs 0 $spacing-2xs;
+                    padding-inline: $spacing-2xs $spacing-xs;
                 }
             }
 
@@ -521,13 +535,13 @@ $sorting-width: 1rem;
         .table-row {
             fieldset {
                 .table-cell {
-                    &:first-of-type {
-                        padding: 0 $spacing-xs 0 $spacing-2xs;
-                    }
+                    // &:first-of-type {
+                    //     padding: 0 $spacing-xs 0 $spacing-2xs;
+                    // }
 
-                    &:last-of-type {
-                        padding: 0 $spacing-2xs 0 $spacing-xs;
-                    }
+                    // &:last-of-type {
+                    //     padding: 0 $spacing-2xs 0 $spacing-xs;
+                    // }
                 }
             }
         }
@@ -595,7 +609,9 @@ $sorting-width: 1rem;
     padding: 0 !important;
 
     .card-selection {
-        margin: $spacing-xs calc(#{$content-margin} * -1) 0 $spacing-xs;
+        // margin: $spacing-xs calc(#{$content-margin} * -1) 0 $spacing-xs;
+        margin-top: $spacing-xs;
+        margin-inline: $spacing-xs calc(#{$content-margin} * -1);
         height: 1rem;
         width: 1rem;
         position: relative;
@@ -826,9 +842,9 @@ $sorting-width: 1rem;
 [dir='rtl'] {
     .line-view,
     .card-view {
-        .card-selection {
-            margin: $spacing-xs $spacing-xs 0 calc(#{$content-margin} * -1);
-        }
+        // .card-selection {
+        //     margin: $spacing-xs $spacing-xs 0 calc(#{$content-margin} * -1);
+        // }
     }
 }
 

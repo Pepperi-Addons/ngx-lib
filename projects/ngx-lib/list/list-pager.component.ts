@@ -7,7 +7,7 @@ import {
     Input,
     Output,
 } from '@angular/core';
-import { IPepFieldValueChangeEvent } from '@pepperi-addons/ngx-lib';
+import { IPepFieldValueChangeEvent, PepLayoutService, } from '@pepperi-addons/ngx-lib';
 import { DEFAULT_PAGE_SIZE } from './list.model';
 
 export class IPepListPagerChangeEvent {
@@ -40,7 +40,9 @@ export class PepListPagerComponent {
     @Output()
     pagerChange: EventEmitter<IPepListPagerChangeEvent> = new EventEmitter<IPepListPagerChangeEvent>();
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
+        public layoutService: PepLayoutService) { }
 
     nextPage(): void {
         if (!this.hasNextPage()) {
