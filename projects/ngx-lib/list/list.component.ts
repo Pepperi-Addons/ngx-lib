@@ -730,7 +730,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.selectedItems?.size > 0 && items?.length > 0) {
             for (const item of items) {
-                if (!(item && this.selectedItems.has(item.UID.toString()))) {
+                if (!(item && this.selectedItems.has(item?.UID.toString()))) {
                     result = false;
                     break;
                 }
@@ -837,7 +837,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 } else if (this.selectedItems.size < this.totalRows) {
                     for (const item of this.scrollItems) {
                         res =
-                            item && this.selectedItems.has(item.UID.toString());
+                            item && this.selectedItems.has(item?.UID.toString());
 
                         if (!res) {
                             break;
@@ -959,8 +959,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     itemClicked(e: any, item: ObjectsDataRow): void {
         // Set seleted item
-        const itemId = item.UID.toString();
-        const itemType = item.Type.toString();
+        const itemId = item?.UID.toString();
+        const itemType = item?.Type.toString();
         let isChecked = false;
 
         if (item && item.IsSelectableForActions) {
@@ -1021,11 +1021,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     // trackByFunc(index: number, item: ObjectsDataRow): any {
-    //     return item && item.UID ? item.UID : index;
+    //     return item && item?.UID ? item?.UID : index;
     //     // let res: string = "";
 
-    //     // if (item && item.UID) {
-    //     //    res = item.UID + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
+    //     // if (item && item?.UID) {
+    //     //    res = item?.UID + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
     //     // }
     //     // else {
     //     //    res = index + "_" + this.listType + "_" + (this.isTable ? "Table" : "Thumbnails");
@@ -1229,13 +1229,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         let index = 0;
 
         // Update items list
-        index = this.items.findIndex((i) => i && i.UID === data.UID);
+        index = this.items.findIndex((i) => i && i?.UID === data?.UID);
         if (index >= 0 && index < this.items.length) {
             this.items[index] = data;
         }
 
         // Update scrollItems list
-        index = this.scrollItems.findIndex((i) => i && i.UID === data.UID);
+        index = this.scrollItems.findIndex((i) => i && i?.UID === data?.UID);
         if (index >= 0 && index < this.scrollItems.length) {
             // this.scrollItems[index] = data;
             // Update item properties to keep the pep-form instance.
@@ -1278,12 +1278,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     this.items.forEach((item) => {
                         if (
                             item &&
-                            !this.unSelectedItems.has(item.UID.toString())
+                            !this.unSelectedItems.has(item?.UID.toString())
                         ) {
                             currentList.push(
                                 this.getUniqItemId(
-                                    item.UID.toString(),
-                                    item.Type.toString()
+                                    item?.UID.toString(),
+                                    item?.Type.toString()
                                 )
                             );
                         }
@@ -1326,7 +1326,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     // }
 
     getIsItemEditable(uid: string): boolean {
-        const item = this.items.filter((x) => x.UID.toString() === uid);
+        const item = this.items.filter((x) => x?.UID.toString() === uid);
         if (item.length > 0) {
             return item[0].IsEditable;
         } else {
@@ -1335,7 +1335,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getItemDataByID(uid: string): ObjectsDataRow {
-        return this.items.find((item) => item.UID.toString() === uid);
+        return this.items.find((item) => item?.UID.toString() === uid);
     }
 
     // ---------------------------------------------------------------
