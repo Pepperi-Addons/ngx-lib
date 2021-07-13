@@ -17,140 +17,6 @@ main {
         padding-top: unset;
     }
 
-    // .side-layout {
-    //     width: $side-bar-width;
-    //     height: inherit;
-    //     padding: 0;
-
-    //     .content {
-    //         margin-right: $content-margin;
-    //         margin-left: $content-margin;
-    //     }
-    // }
-
-    // .main-layout {
-    //     width: calc(100% - #{$side-bar-width});
-    //     height: inherit;
-    //     padding: 0;
-
-    //     .content {
-    //         height: inherit;
-    //         margin-right: $content-margin;
-    //         margin-left: $content-margin;
-    //     }
-
-    //     @media (max-width: $screen-max-size-xs) {
-    //         .content {
-    //             margin-right: 0;
-    //             margin-left: 0;
-    //         }
-    //     }
-    // }
-
-    // @media (max-width: $screen-max-size-md) {
-    //     .main-layout {
-    //         width: 100%;
-    //     }
-    // }
-
-    // .main-content {
-    //     padding-top: $top-bar-height;
-    //     margin-right: 0;
-    //     margin-left: 0;
-    //     display: block;
-
-    //     .main-layout {
-    //         padding: 0 $content-padding;
-    //     }
-    // }
-
-    //  Layout - Setting & Plugin pages
-    // ----------------------------------------
-    // .plugin-page-container,
-    // .settings-page-container {
-    //     display: block;
-    //     width: 100%;
-
-    //     .header-content {
-    //         z-index: $z-index-medium + 1;
-    //         // position: fixed;
-    //         // width: calc(100% - (#{$settings-bar-width}));
-    //         width: 100%;
-
-    //         height: $top-bar-height;
-    //         padding-top: $top-bar-spacing-top;
-    //         // padding-right: $content-padding;
-    //         // padding-left: $content-padding;
-
-    //         .content {
-    //             // height: inherit;
-    //             height: $top-bar-height-with-no-top;
-    //             margin-right: $content-margin;
-    //             margin-left: $content-margin;
-    //             display: flex;
-    //             // align-items: center;
-    //             justify-content: space-between;
-
-    //             .title {
-    //                 height: 100%;
-    //                 display: flex;
-    //                 align-items: center;
-    //                 @include font-body($fs-md, $lh-md);
-    //             }
-    //         }
-
-    //         @media (max-width: $screen-max-size-xs) {
-    //             .content {
-    //                 margin-right: 0;
-    //                 margin-left: 0;
-    //             }
-    //         }
-    //     }
-
-    //     .main-content {
-    //         display: block;
-    //         // padding-right: $content-padding;
-    //         // padding-left: $content-padding;
-
-    //         .content {
-    //             // height: auto;
-    //             margin-top: $content-margin;
-    //             margin-right: $content-margin;
-    //             margin-left: $content-margin;
-    //         }
-
-    //         @media (max-width: $screen-max-size-xs) {
-    //             .content {
-    //                 margin-right: 0;
-    //                 margin-left: 0;
-    //             }
-    //         }
-
-    //         // .fit-page-height {
-    //         //     // height: calc (#{$main-height} - #{$tabs-labels-height});
-    //         //     height: calc(100vh - (#{$header-height} + #{$top-bar-height} + #{$content-margin}));
-
-    //         //     @media (max-width: $screen-max-size-md) {
-    //         //         height: calc(100vh - (#{$header-height} + #{$top-bar-height} + #{$content-margin} + #{$footer-bar-height}));
-    //         //     }
-    //         // }
-
-    //         // &.limit-max-width {
-    //         //     max-width: 896px;
-    //         // }
-    //     }
-
-    //     //  Tabs.
-    //     // -----------------------------------------------------
-    //     .mat-tab-group {
-    //         &.fixed-header {
-    //             .mat-tab-header {
-    //                 @include mat-tabs-fixed-header-width($settings-bar-width);
-    //             }
-    //         }
-    //     }
-    // }
-
     // This is for the ng 10 with ngxlib - addoon
     .plugin-page-container,
     .settings-page-container,
@@ -228,6 +94,12 @@ main {
                     // @include mat-tabs-fixed-header-width($settings-bar-width);
                 }
             }
+        }
+    }
+
+    .addon-page-container {
+        .header-content {
+            padding-top: unset;
         }
     }
 }

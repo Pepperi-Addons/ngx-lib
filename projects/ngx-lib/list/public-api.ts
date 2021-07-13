@@ -4,6 +4,7 @@
 export * from './list.module';
 export * from './list.model';
 export * from './list.component';
+export * from './list2.component';
 export * from './list-actions.component';
 export * from './list-carousel.component';
 export * from './list-chooser.component';

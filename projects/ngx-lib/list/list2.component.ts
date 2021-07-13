@@ -29,9 +29,12 @@ import {
     IPepFormFieldClickEvent,
 } from '@pepperi-addons/ngx-lib/form';
 import {
-    PepVirtualScrollComponent,
+    // PepVirtualScrollComponent,
     IPepVirtualScrollChangeEvent,
 } from './virtual-scroll.component';
+
+import { VirtualScrollerComponent, IPageInfo } from './virtual-scroller';
+
 import {
     IPepListLoadItemsEvent,
     IPepListSortingChangeEvent,
@@ -51,9 +54,9 @@ import {
 import * as tween from '@tweenjs/tween.js';
 
 @Component({
-    selector: 'pep-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.scss'],
+    selector: 'pep-list2',
+    templateUrl: './list2.component.html',
+    styleUrls: ['./list2.component.scss'],
     host: {
         // '[style.width]': "'inherit'",
         '(document:mousedown)': 'onMouseDown($event)',
@@ -63,7 +66,7 @@ import * as tween from '@tweenjs/tween.js';
     },
     // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PepListComponent implements OnInit, OnChanges, OnDestroy {
+export class PepList2Component implements OnInit, OnChanges, OnDestroy {
     static TOP_ITEMS_DEFAULT = 100;
     static TOP_ITEMS_TABLE = 100;
     static TOP_ITEMS_THUMBNAILS = 100;
@@ -136,8 +139,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     loadPage: EventEmitter<IPepListLoadPageEvent> = new EventEmitter<IPepListLoadPageEvent>();
 
-    @ViewChild(PepVirtualScrollComponent)
-    virtualScroll: PepVirtualScrollComponent;
+    @ViewChild(VirtualScrollerComponent) private virtualScroller: VirtualScrollerComponent;
     @ViewChild(PepListPagerComponent) listPager: PepListPagerComponent;
     @ViewChild('noVirtualScrollContnainer')
     noVirtualScrollContnainer: ElementRef;
@@ -272,8 +274,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     private scrollToTop() {
         const scrollingElement = this.getParentContainer();
         if (scrollingElement) {
-            // if (this.useVirtualScroll && typeof this.virtualScroll !== 'undefined') {
-            //     this.virtualScroll.scrollInto(0);
+            // if (this.useVirtualScroll && typeof this.virtualScroller !== 'undefined') {
+            //     this.virtualScroller.scrollInto(0);
             // } else {
             // this.scrollToService.scrollElementTo(this.renderer, scrollingElement, 1000);
             // }
@@ -367,19 +369,19 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     private saveSortingToSession(): void {
         this.sessionService.setObject(
-            PepListComponent.SORT_BY_STATE_KEY,
+            PepList2Component.SORT_BY_STATE_KEY,
             this.sortBy
         );
         this.sessionService.setObject(
-            PepListComponent.ASCENDING_STATE_KEY,
+            PepList2Component.ASCENDING_STATE_KEY,
             this.isAsc
         );
     }
 
     private getTopItems(): number {
         return this.isTable
-            ? PepListComponent.TOP_ITEMS_TABLE
-            : PepListComponent.TOP_ITEMS_THUMBNAILS;
+            ? PepList2Component.TOP_ITEMS_TABLE
+            : PepList2Component.TOP_ITEMS_THUMBNAILS;
     }
 
     private toggleItems(isVisible: boolean): void {
@@ -650,7 +652,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     private initVariablesFromSession(items: ObjectsDataRow[]): void {
         const selectedItemsObject: Array<any> = this.sessionService.getObject<
             Array<any>
-        >(PepListComponent.SELECTED_ITEMS_STATE_KEY);
+        >(PepList2Component.SELECTED_ITEMS_STATE_KEY);
         const selectedItemsFromMap: Map<string, string> =
             selectedItemsObject && selectedItemsObject.length > 0
                 ? new Map(selectedItemsObject)
@@ -662,7 +664,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         ) {
             this.selectedItems = selectedItemsFromMap;
             this.sessionService.removeObject(
-                PepListComponent.SELECTED_ITEMS_STATE_KEY
+                PepList2Component.SELECTED_ITEMS_STATE_KEY
             );
         } else {
             this.selectedItems.clear();
@@ -670,7 +672,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         const unSelectedItemsObject: Array<any> = this.sessionService.getObject<
             Array<any>
-        >(PepListComponent.UN_SELECTED_ITEMS_STATE_KEY);
+        >(PepList2Component.UN_SELECTED_ITEMS_STATE_KEY);
         const unSelectedItemsMap: Map<string, string> =
             unSelectedItemsObject && unSelectedItemsObject.length > 0
                 ? new Map(unSelectedItemsObject)
@@ -682,43 +684,43 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         ) {
             this.unSelectedItems = unSelectedItemsMap;
             this.sessionService.removeObject(
-                PepListComponent.UN_SELECTED_ITEMS_STATE_KEY
+                PepList2Component.UN_SELECTED_ITEMS_STATE_KEY
             );
         } else {
             this.unSelectedItems.clear();
         }
 
         const isAllSelected = this.sessionService.getObject(
-            PepListComponent.ALL_SELECTED_STATE_KEY
+            PepList2Component.ALL_SELECTED_STATE_KEY
         );
         if (isAllSelected != null) {
             this.isAllSelected = isAllSelected && this.getIsAllSelected(items);
             this.sessionService.removeObject(
-                PepListComponent.ALL_SELECTED_STATE_KEY
+                PepList2Component.ALL_SELECTED_STATE_KEY
             );
         } else {
             this.isAllSelected = false;
         }
 
         const sortBy = this.sessionService.getObject(
-            PepListComponent.SORT_BY_STATE_KEY
+            PepList2Component.SORT_BY_STATE_KEY
         );
         if (sortBy && sortBy !== '') {
             this.sortBy = sortBy;
             this.sessionService.removeObject(
-                PepListComponent.SORT_BY_STATE_KEY
+                PepList2Component.SORT_BY_STATE_KEY
             );
         } else {
             this.sortBy = '';
         }
 
         const isAsc = this.sessionService.getObject(
-            PepListComponent.ASCENDING_STATE_KEY
+            PepList2Component.ASCENDING_STATE_KEY
         );
         if (isAsc != null) {
             this.isAsc = isAsc;
             this.sessionService.removeObject(
-                PepListComponent.ASCENDING_STATE_KEY
+                PepList2Component.ASCENDING_STATE_KEY
             );
         } else {
             this.isAsc = true;
@@ -1051,28 +1053,26 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.setSelectionDataInSession();
         }
 
-        if (typeof this.virtualScroll !== 'undefined') {
-            this.virtualScroll.refresh();
-        }
+        this.refresh();
     }
 
     setSelectionDataInSession(): void {
         if (this.selectedItems.size > 0) {
             this.sessionService.setObject(
-                PepListComponent.SELECTED_ITEMS_STATE_KEY,
+                PepList2Component.SELECTED_ITEMS_STATE_KEY,
                 JSON.stringify([...this.selectedItems])
             );
         }
 
         if (this.unSelectedItems.size > 0) {
             this.sessionService.setObject(
-                PepListComponent.UN_SELECTED_ITEMS_STATE_KEY,
+                PepList2Component.UN_SELECTED_ITEMS_STATE_KEY,
                 JSON.stringify([...this.unSelectedItems])
             );
         }
 
         this.sessionService.setObject(
-            PepListComponent.ALL_SELECTED_STATE_KEY,
+            PepList2Component.ALL_SELECTED_STATE_KEY,
             this.isAllSelected
         );
     }
@@ -1130,9 +1130,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 };
                 this.updateItems(items, event);
 
-                if (typeof this.virtualScroll !== 'undefined') {
-                    this.virtualScroll.refresh();
-                }
+                this.refresh();
+
+                setTimeout(() => {
+                    let dimensions = this.virtualScroller.calculateDimensions();
+                    this.calculatedObjectHeight = dimensions?.childHeight + 'px';
+
+                }, 0);
                 // }
             }
         }
@@ -1158,12 +1162,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             // Clean array
             if (
                 this.itemsCounter + items.length >
-                PepListComponent.TOP_ITEMS_ARRAY
+                PepList2Component.TOP_ITEMS_ARRAY
             ) {
                 this.cleanItems();
             }
 
-            const loadInChunks = this.itemsCounter === 0;
+            // const loadInChunks = this.itemsCounter === 0;
             const startIndex = event.fromIndex ? event.fromIndex : event.start;
 
             for (let i = 0; i < items.length; i++) {
@@ -1173,7 +1177,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
 
-            this.updateScrollItems(event.start, event.end, loadInChunks);
+            // this.updateScrollItems(event.start, event.end, loadInChunks);
             this.toggleItems(true);
         } else {
             this._items = items;
@@ -1191,7 +1195,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         // Clean array
         if (
             this.itemsCounter + items.length >
-            PepListComponent.TOP_ITEMS_ARRAY
+            PepList2Component.TOP_ITEMS_ARRAY
         ) {
             this.cleanItems();
         }
@@ -1235,8 +1239,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     // focusOnAnItem(itemIndex): void {
-    //     if (typeof this.virtualScroll !== 'undefined') {
-    //         this.virtualScroll.scrollInto(itemIndex);
+    //     if (typeof this.virtualScroller !== 'undefined') {
+    //         this.virtualScroller.scrollInto(itemIndex);
     //     }
     // }
 
@@ -1324,6 +1328,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         return this.items.find((item) => item?.UID.toString() === uid);
     }
 
+    refresh() {
+        if (typeof this.virtualScroller !== 'undefined') {
+            this.virtualScroller.refresh();
+        }
+    }
+
     // ---------------------------------------------------------------
     //              Events handlers.
     // ---------------------------------------------------------------
@@ -1339,9 +1349,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onWinResize(e): void {
-        if (typeof this.virtualScroll !== 'undefined') {
-            this.virtualScroll.refresh();
-        }
+        this.refresh();
 
         this.containerWidth = 0;
         this.setLayout();
@@ -1352,7 +1360,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.startX = event.x;
         this.startWidth = event.target.closest('.header-column').offsetWidth;
         if (this._useVirtualScroll) {
-            this.tableStartWidth = this.virtualScroll.contentElementRef.nativeElement.offsetWidth;
+            this.tableStartWidth = this.virtualScroller.contentElementRef.nativeElement.offsetWidth;
         } else {
             // Set the tableStartWidth to the container offsetWidth
             this.tableStartWidth = this.noVirtualScrollContnainer.nativeElement.offsetWidth;
@@ -1368,7 +1376,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             // Set the width of the column and the container of the whole columns.
             if (
                 this.startWidth + widthToAdd >=
-                PepListComponent.MINIMUM_COLUMN_WIDTH ||
+                PepList2Component.MINIMUM_COLUMN_WIDTH ||
                 widthToAdd > 0
             ) {
                 const length = this._layout.ControlFields.length;
@@ -1496,13 +1504,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    // onVirtualScrollerChange(event: any): void {
-    //     debugger;
-    //     event.start = event.startIndex;
-    //     event.end = event.endIndex;
-
-    //     this.onScrollChange(event);
-    // }
+    onVirtualScrollerChange(event: IPageInfo): void {
+        // debugger;
+        let pepEvent: IPepVirtualScrollChangeEvent = {};
+        pepEvent.start = event.startIndex;
+        pepEvent.end = event.endIndex;
+        pepEvent.addAtStart = event.scrollDirection === 'backward';
+        this.onScrollChange(pepEvent);
+    }
 
     onScrollChange(event: IPepVirtualScrollChangeEvent): void {
         // For other events do nothing.
@@ -1513,20 +1522,21 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             return;
         }
 
-        this.calculatedObjectHeight = event.calculatedChildHeight + 'px';
-
         if (this.showItems) {
             this.toggleItems(false);
-            this.updateScrollItems(event.start, event.end);
+            // this.updateScrollItems(event.start, event.end);
 
             let getItemsFromApi = false;
-            let index: number = event.start;
+            let indexOfMissingItem: number = event.start;
 
-            while (!getItemsFromApi && index < event.end) {
-                if (!this.items[index]) {
+            while (!getItemsFromApi && indexOfMissingItem < event.end) {
+                if (!this.items[indexOfMissingItem]) {
                     getItemsFromApi = true;
                 }
-                index++;
+
+                if (!getItemsFromApi) {
+                    indexOfMissingItem++;
+                }
             }
 
             // Get bulk from api.
@@ -1536,17 +1546,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 let toIndex;
 
                 if (event.addAtStart) {
-                    fromIndex = Math.max(
-                        event.start - (top - (event.end - event.start)),
-                        0
-                    );
-                    toIndex = event.end;
+                    fromIndex = Math.max(indexOfMissingItem - top, 0);
+                    toIndex = indexOfMissingItem;
                 } else {
-                    fromIndex = event.start;
-                    toIndex = Math.min(
-                        event.end + (top - (event.end - event.start)),
-                        this.totalRows
-                    );
+                    fromIndex = indexOfMissingItem;
+                    toIndex = Math.min(indexOfMissingItem + top, this.totalRows);
                 }
 
                 this.loadItems.emit({

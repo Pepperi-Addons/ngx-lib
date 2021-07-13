@@ -54,25 +54,19 @@
                 </div>
             </nav>
         </div>
-        <div #loadingSpinner pepRtlClass [ngStyle]="{ visibility: showLoading ? 'visible' : 'hidden' }"
-            id="loadingSpinnerModal">
+        <div id="loadingSpinnerModal" [hidden]="!showLoader" pepRtlClass>
             <div id="loadingSpinner">
                 <div class="pep-loading-spinner" *ngFor="let number of [0, 1, 2, 3, 4]"
                     [ngStyle]="{ 'background-color': customizationService?.getLoadingSpinnerColor() }"></div>
             </div>
         </div>
     </header>
-    <aside class="pep-side-layout">
-    </aside>
-    <main class="pep-main-layout">
-        <!-- <div #loadingSpinner pepRtlClass [ngStyle]="{ visibility: showLoading ? 'visible' : 'hidden' }"
-            id="loadingSpinnerModal">
-            <div id="loadingSpinner">
-                <div class="pep-loading-spinner" *ngFor="let number of [0, 1, 2, 3, 4]"
-                    [ngStyle]="{ 'background-color': customizationService?.getLoadingSpinnerColor() }"></div>
-            </div>
-        </div> -->
-        <router-outlet></router-outlet>
+    <main class="pep-main-layout" [ngClass]="{ 'add-padding': addPadding }">
+        <aside *ngIf="showSidebar" class="pep-side-layout">
+        </aside>
+        <div class="pep-center-layout">
+            <router-outlet></router-outlet>
+        </div>
     </main>
 </div>
 <pep-size-detector></pep-size-detector>

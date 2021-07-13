@@ -4,27 +4,26 @@
 .pep-page-layout {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: auto 1fr;
     grid-template-areas: 
-        // "navigation navigation"
-        "side       main";
+        "header-layout  header-layout"
+        "side-layout    main-layout";
 
     height: 100%;
     width: 100%;
     overflow: hidden;
 
-    // .pep-page-navigation-layout {
-    //     grid-area: navigation;
-    // }
+    .pep-page-header-layout {
+        grid-area: header-layout;
+    }
 
     .pep-page-side-layout {
-        grid-area: side;
-        // overflow: auto;
+        grid-area: side-layout;
         overflow: hidden;
     }
 
     .pep-page-main-layout {
-        grid-area: main;
+        grid-area: main-layout;
         overflow: auto;
         height: 100%;
         padding-inline: $content-padding;
@@ -37,7 +36,6 @@
 
         .pep-top-area {
             grid-area: top-area;
-            // overflow: auto;
         }
     
         .pep-main-area {

@@ -75,6 +75,13 @@
                 [additionalValue]="field.additionalValue" [layoutType]="layoutType">
             </pep-checkbox>
 
+            <pep-date *ngSwitchCase="'date'" [form]="form" [key]="field.key" [value]="field.value"
+                [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type"
+                [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+                [textColor]="field.textColor" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
+                [minValue]="field.minValue" [maxValue]="field.maxValue" [layoutType]="layoutType">
+            </pep-date>
+
             <pep-internal-button *ngSwitchCase="'button'" [form]="form" [key]="field.key" [value]="field.value"
                 [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type"
                 [disabled]="field.disabled" [readonly]="field.readonly" [xAlignment]="field.xAlignment"
