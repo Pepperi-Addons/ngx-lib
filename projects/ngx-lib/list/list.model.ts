@@ -26,11 +26,13 @@ export interface IPepListLoadItemsEvent {
     end: number;
     fromIndex: number;
     toIndex: number;
+    // updateItemsFunc: () => void; //() => any; 
 }
 
 export interface IPepListLoadPageEvent {
     pageIndex: number;
     pageSize: number;
+    // updatePageFunc: () => void; //() => any; 
 }
 
 export const DEFAULT_PAGE_SIZE = 50;

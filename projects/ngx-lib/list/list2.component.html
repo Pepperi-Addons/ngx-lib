@@ -21,36 +21,39 @@
         </div>
     </ng-template>
 </ng-container>
-<div *ngIf="totalRows > 0" [ngClass]="{ 'lock-events': lockEvents }">
-    <!-- <ng-container *ngIf="isTable; then tableBlock; else cardsBlock"></ng-container>
-    <ng-template #tableBlock>
-        <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
-        <ng-container *ngTemplateOutlet="listBody"></ng-container>
-        <ng-container *ngTemplateOutlet="tableTotal"></ng-container>
-        <ng-container *ngTemplateOutlet="listPager"></ng-container>
-    </ng-template>
-
-    <ng-template #cardsBlock>
-        <ng-container *ngTemplateOutlet="listBody"></ng-container>
-        <ng-container *ngTemplateOutlet="listPager"></ng-container>
-    </ng-template>
-
-    <ng-template #listBody>
-        <ng-container *ngIf="useVirtualScroll; then virtualScrollBlock; else noVirtualScrollBlock"></ng-container>
-        <ng-template #virtualScrollBlock> -->
-    <virtual-scroller #scroller [items]="items" (vsChange)="onVirtualScrollerChange($event)" [scrollDebounceTime]="0"
-        [parentScroll]="parentScroll ? parentScroll : nativeWindow"
-        [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
-
-        <div *ngIf="isTable" #header style="z-index: 2;">
+<ng-container *ngIf="totalRows > 0">
+    <ng-container *ngIf="pagerType === 'pages'; then pagerTemplate; else virtualScrollTemplate"></ng-container>
+    <ng-template #pagerTemplate>
+        <ng-container *ngIf="isTable">
             <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
-        </div>
-        <div #container style="z-index: 1;">
-            <ng-container *ngFor="let item of scroller.viewPortItems; let index; let isFirst = first;">
+        </ng-container>
+        <div #pagerWrpperContnainer
+            [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable, 'pager-scroll-container': pagerType === 'pages' && !parentScroll }">
+
+            <ng-container *ngFor="let item of scrollItems; let index; let isFirst = first;">
                 <ng-container *ngTemplateOutlet="listData; context: {item: item}"></ng-container>
             </ng-container>
         </div>
-    </virtual-scroller>
+        <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="loadingItemsFromApi"
+            [length]="totalRows" [pageSize]="pageSize" [pageIndex]="pageIndex" (pagerChange)="onPagerChange($event)">
+        </pep-list-pager>
+    </ng-template>
+    <ng-template #virtualScrollTemplate>
+        <virtual-scroller #scroller [items]="pagerType === 'pages' ? scrollItems : items" [scrollDebounceTime]="0"
+            [scrollThrottlingTime]="0" [parentScroll]="parentScroll" [disable]="loadingItemsFromApi"
+            [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }" (vsChange)="onVirtualScrollerChange($event)"
+            (vsLoad)="onListLoad()">
+
+            <div *ngIf="isTable" #header style="z-index: 2;">
+                <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
+            </div>
+            <div #container style="z-index: 1;">
+                <ng-container *ngFor="let item of scroller.viewPortItems; let index; let isFirst = first;">
+                    <ng-container *ngTemplateOutlet="listData; context: {item: item}"></ng-container>
+                </ng-container>
+            </div>
+        </virtual-scroller>
+    </ng-template>
 
     <div *ngIf="isTable && totalsRow?.length > 0 && totalsRow.length <= layout?.ControlFields.length"
         class="table-total">
@@ -63,38 +66,15 @@
             </div>
         </fieldset>
     </div>
+</ng-container>
 
-    <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="!showItems" [length]="totalRows"
-        [pageSize]="pageSize" [pageIndex]="pageIndex" (pagerChange)="onPagerChange($event)">
-    </pep-list-pager>
-    <!-- </ng-template>
-
-        <ng-template #noVirtualScrollBlock>
-            <div #noVirtualScrollContnainer
-                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable, 'no-virtual-scroll-container': pagerType === 'pages' }">
-
-                <ng-container *ngFor="let item of scrollItems; let index; let isFirst = first;">
-                    <ng-container *ngTemplateOutlet="listData; context: {item: item}"></ng-container>
-                </ng-container>
-            </div>
-        </ng-template>
-    </ng-template> 
-
-    <ng-template #listPager>
-        <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="!showItems" [length]="totalRows"
-            [pageSize]="pageSize" [pageIndex]="pageIndex" (pagerChange)="onPagerChange($event)">
-        </pep-list-pager>
-    </ng-template>-->
-</div>
-<!-- selected: getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type),  getIsDisabled(item)-->
 <ng-template #listData let-item="item">
-
     <ng-container *ngIf="isTable">
         <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)"
             (mouseleave)="onTableRowMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
                     selected: item | isItemSelected: selectionTypeForActions : selectedItemId : isAllSelected : selectedItems : unSelectedItems,
                     highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId
-                }" [ngStyle]="{ visibility: showItems || item ? 'visible' : 'hidden' }">
+                }" [ngStyle]="{ visibility: !loadingItemsFromApi || item ? 'visible' : 'hidden' }">
             <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
                 <mat-checkbox *ngIf="selectionTypeForActions == 'multi' || selectionTypeForActions == 'single-action'"
                     type="checkbox" class="pull-left flip row-selection"
@@ -132,7 +112,7 @@
                     'card-view': viewType === 'cards',
                     'line-view': viewType === 'lines'
                 }" class="pull-left flip"
-            [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
+            [ngStyle]="{ height: calculatedObjectHeight, visibility: !loadingItemsFromApi || item ? 'visible' : 'hidden' }">
             <mat-checkbox *ngIf="showCardSelection" class="pull-left flip card-selection"
                 [disabled]="item | isItemDisabled: lockItemInnerEvents"
                 [checked]="item | isItemSelected: selectionTypeForActions : selectedItemId : isAllSelected : selectedItems : unSelectedItems"
@@ -190,8 +170,6 @@
                         <div class="splitter"></div>
                     </div>
 
-                    <!-- The onListSortingChange moved to the column click -->
-                    <!-- (click)="onListSortingChange(field.ApiName, true)" -->
                     <div *ngIf="supportSorting" class="sorting-box pull-left flip"
                         [ngClass]="{ 'has-sorting': field.ApiName === sortBy }">
                         <mat-icon *ngIf="field.ApiName !== sortBy">

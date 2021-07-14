@@ -31,7 +31,7 @@
 .table-header {
     top:0;
 
-    &.below-header-and-top-bar {
-        top: calc(#{$header-height} + #{$top-bar-height});
-    }
+    // &.below-header-and-top-bar {
+    //     top: calc(#{$header-height} + #{$top-bar-height});
+    // }
 }

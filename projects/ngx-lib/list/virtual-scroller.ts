@@ -175,11 +175,29 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 			endIndex: pageInfo.endIndex || 0,
 			scrollStartPosition: pageInfo.scrollStartPosition || 0,
 			scrollEndPosition: pageInfo.scrollEndPosition || 0,
+			scrollDirection: pageInfo.scrollDirection || 'forward',
 			maxScrollPosition: pageInfo.maxScrollPosition || 0,
 			startIndexWithBuffer: pageInfo.startIndexWithBuffer || 0,
 			endIndexWithBuffer: pageInfo.endIndexWithBuffer || 0,
-			scrollDirection: pageInfo.scrollDirection || 'forward',
 		};
+	}
+
+	protected _disable: boolean = false;
+	@Input()
+	public get disable(): boolean {
+		return this._disable;
+	}
+	public set disable(value: boolean) {
+		if (this._disable === value) {
+			return;
+		}
+
+		this._disable = value;
+		if (this._disable) {
+			this.removeScrollEventHandlers();
+		} else {
+			this.addScrollEventHandlers();
+		}
 	}
 
 	@Input()
@@ -368,6 +386,9 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 			scrollElement.style['overflow-x'] = this.horizontal ? 'auto' : 'visible';
 		}
 	}
+
+	@Output()
+	public vsLoad: EventEmitter<void> = new EventEmitter<void>();
 
 	@Output()
 	public vsUpdate: EventEmitter<any[]> = new EventEmitter<any[]>();
@@ -862,6 +883,9 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 						this.zone.run(handleChanged);
 					}
 				} else {
+					// Added to know when the scroll is ready (UI elements are displayed already).
+					this.vsLoad.emit();
+
 					if (maxRunTimes > 0 && (scrollLengthChanged || paddingChanged)) {
 						this.refresh_internal(false, refreshCompletedCallback, maxRunTimes - 1);
 						return;
