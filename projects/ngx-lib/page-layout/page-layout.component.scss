@@ -41,9 +41,9 @@
         .pep-main-area {
             grid-area: main-area;
             overflow: auto;
+            height: inherit;
 
             ::ng-deep.list-container {
-                overflow: auto;
                 height: 100%;
             }
         }

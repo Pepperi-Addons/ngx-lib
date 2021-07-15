@@ -23,15 +23,15 @@
     }
 }
 
-::ng-deep .scrollable-content {
-    display: grid;
-}
-
-.pager-scroll-container {
+.virtual-scroller {
+    min-height: 5rem;
     height: inherit;
-    overflow: auto;
 }
 
-.table-header {
-    top:0;
-}
+// ::ng-deep .scrollable-content {
+//     display: grid;
+// }
+
+// .table-header {
+//     top:0;
+// }

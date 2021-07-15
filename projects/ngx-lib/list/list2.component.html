@@ -22,50 +22,24 @@
     </ng-template>
 </ng-container>
 <ng-container *ngIf="totalRows > 0">
-    <ng-container *ngIf="pagerType === 'pages'; then pagerTemplate; else virtualScrollTemplate"></ng-container>
-    <ng-template #pagerTemplate>
-        <ng-container *ngIf="isTable">
-            <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
+    <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
+
+    <virtual-scroller #scroller [items]="pagerType === 'pages' ? currentPageItems : items"
+        [scrollDebounceTime]="scrollDebounceTime" [scrollThrottlingTime]="scrollThrottlingTime"
+        [parentScroll]="parentScroll" [disable]="loadingItemsFromApi" class="virtual-scroller"
+        [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }" (vsChange)="onVirtualScrollerChange($event)"
+        (vsLoad)="onListLoad()">
+
+        <ng-container *ngFor="let item of scroller.viewPortItems; let index; let isFirst = first;">
+            <ng-container *ngTemplateOutlet="listData; context: {item: item}"></ng-container>
         </ng-container>
-        <div #pagerWrpperContnainer
-            [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable, 'pager-scroll-container': pagerType === 'pages' && !parentScroll }">
+    </virtual-scroller>
 
-            <ng-container *ngFor="let item of scrollItems; let index; let isFirst = first;">
-                <ng-container *ngTemplateOutlet="listData; context: {item: item}"></ng-container>
-            </ng-container>
-        </div>
-        <pep-list-pager *ngIf="pagerType === 'pages'" class="list-pager" [disabled]="loadingItemsFromApi"
-            [length]="totalRows" [pageSize]="pageSize" [pageIndex]="pageIndex" (pagerChange)="onPagerChange($event)">
-        </pep-list-pager>
-    </ng-template>
-    <ng-template #virtualScrollTemplate>
-        <virtual-scroller #scroller [items]="pagerType === 'pages' ? scrollItems : items" [scrollDebounceTime]="0"
-            [scrollThrottlingTime]="0" [parentScroll]="parentScroll" [disable]="loadingItemsFromApi"
-            [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }" (vsChange)="onVirtualScrollerChange($event)"
-            (vsLoad)="onListLoad()">
+    <pep-list-pager *ngIf="pagerType === 'pages'" class=" list-pager" [disabled]="loadingItemsFromApi"
+        [length]="totalRows" [pageSize]="pageSize" [pageIndex]="pageIndex" (pagerChange)="onPagerChange($event)">
+    </pep-list-pager>
 
-            <div *ngIf="isTable" #header style="z-index: 2;">
-                <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
-            </div>
-            <div #container style="z-index: 1;">
-                <ng-container *ngFor="let item of scroller.viewPortItems; let index; let isFirst = first;">
-                    <ng-container *ngTemplateOutlet="listData; context: {item: item}"></ng-container>
-                </ng-container>
-            </div>
-        </virtual-scroller>
-    </ng-template>
-
-    <div *ngIf="isTable && totalsRow?.length > 0 && totalsRow.length <= layout?.ControlFields.length"
-        class="table-total">
-        <fieldset class="table-header-fieldset">
-            <div *ngFor="let field of layout?.ControlFields; let j = index" class="total-column pull-left flip"
-                [ngStyle]="{ width: field.calcTitleColumnWidthString }">
-                <label class="total-label body-sm text-align-{{ field.Layout.XAlignment }}">
-                    {{ totalsRow[j] }}
-                </label>
-            </div>
-        </fieldset>
-    </div>
+    <ng-container *ngTemplateOutlet="tableTotal"></ng-container>
 </ng-container>
 
 <ng-template #listData let-item="item">
@@ -131,8 +105,9 @@
 </ng-template>
 
 <ng-template #tableHeader>
-    <div class="table-header" (mouseup)="onListResizeEnd($event)" (mouseenter)="onListHeaderMouseEnter($event)"
-        (mouseleave)="onListHeaderMouseLeave($event)" (mousemove)="onListResize($event)">
+    <div *ngIf="isTable" class="table-header" (mouseup)="onListResizeEnd($event)"
+        (mouseenter)="onListHeaderMouseEnter($event)" (mouseleave)="onListHeaderMouseLeave($event)"
+        (mousemove)="onListResize($event)">
 
         <div class="table-header-padding-top"></div>
         <fieldset class="table-header-fieldset">
@@ -193,7 +168,8 @@
 </ng-template>
 
 <ng-template #tableTotal>
-    <div *ngIf="totalsRow?.length > 0 && totalsRow.length <= layout?.ControlFields.length" class="table-total">
+    <div *ngIf="isTable && totalsRow?.length > 0 && totalsRow.length <= layout?.ControlFields.length"
+        class="table-total">
         <fieldset class="table-header-fieldset">
             <div *ngFor="let field of layout?.ControlFields; let j = index" class="total-column pull-left flip"
                 [ngStyle]="{ width: field.calcTitleColumnWidthString }">

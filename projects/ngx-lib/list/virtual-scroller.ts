@@ -77,7 +77,7 @@ export interface IDimensions {
 export type ScrollDirectionType = 'backward' | 'forward';
 
 export interface IPageInfo {
-	endIndex: number;
+	end: number;
 	endIndexWithBuffer: number;
 	maxScrollPosition: number;
 	scrollEndPosition: number;
@@ -172,7 +172,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		let pageInfo: IViewport = this.previousViewPort || <any>{};
 		return {
 			startIndex: pageInfo.startIndex || 0,
-			endIndex: pageInfo.endIndex || 0,
+			end: pageInfo.end || 0,
 			scrollStartPosition: pageInfo.scrollStartPosition || 0,
 			scrollEndPosition: pageInfo.scrollEndPosition || 0,
 			scrollDirection: pageInfo.scrollDirection || 'forward',
@@ -803,12 +803,12 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 				let viewport = this.calculateViewport();
 
 				let startChanged = itemsArrayModified || viewport.startIndex !== this.previousViewPort.startIndex;
-				let endChanged = itemsArrayModified || viewport.endIndex !== this.previousViewPort.endIndex;
+				let endChanged = itemsArrayModified || viewport.end !== this.previousViewPort.end;
 				let scrollLengthChanged = viewport.scrollLength !== this.previousViewPort.scrollLength;
 				let paddingChanged = viewport.padding !== this.previousViewPort.padding;
 				let scrollPositionChanged = viewport.scrollStartPosition !== this.previousViewPort.scrollStartPosition || viewport.scrollEndPosition !== this.previousViewPort.scrollEndPosition || viewport.maxScrollPosition !== this.previousViewPort.maxScrollPosition;
 
-				const scrollDirection: ScrollDirectionType = this.previousViewPort.endIndex <= viewport.endIndex ? 'forward' : 'backward';
+				const scrollDirection: ScrollDirectionType = this.previousViewPort.end <= viewport.end ? 'forward' : 'backward';
 				this.previousViewPort = viewport;
 
 				if (scrollLengthChanged) {
@@ -836,7 +836,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 
 				const changeEventArg: IPageInfo = (startChanged || endChanged) ? {
 					startIndex: viewport.startIndex,
-					endIndex: viewport.endIndex,
+					end: viewport.end,
 					scrollStartPosition: viewport.scrollStartPosition,
 					scrollEndPosition: viewport.scrollEndPosition,
 					scrollDirection: scrollDirection,
@@ -1314,7 +1314,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 
 		return {
 			startIndex: arrayStartIndex,
-			endIndex: arrayEndIndex,
+			end: arrayEndIndex,
 			startIndexWithBuffer: startIndexWithBuffer,
 			endIndexWithBuffer: endIndexWithBuffer,
 			scrollStartPosition: scrollPosition,
@@ -1341,7 +1341,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 
 		return {
 			startIndex: pageInfo.startIndex,
-			endIndex: pageInfo.endIndex,
+			end: pageInfo.end,
 			startIndexWithBuffer: pageInfo.startIndexWithBuffer,
 			endIndexWithBuffer: pageInfo.endIndexWithBuffer,
 			padding: Math.round(newPadding),
