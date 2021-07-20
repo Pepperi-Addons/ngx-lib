@@ -28,8 +28,8 @@ import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 
+import { PepListOldComponent } from './list_old.component';
 import { PepListComponent } from './list.component';
-import { PepList2Component } from './list2.component';
 import { PepListActionsComponent } from './list-actions.component';
 import { PepListCarouselComponent } from './list-carousel.component';
 import { PepListChooserComponent } from './list-chooser.component';
@@ -39,8 +39,8 @@ import { PepListTotalComponent } from './list-total.component';
 import { PepListViewsComponent } from './list-views.component';
 
 const listComponents = [
+    PepListOldComponent,
     PepListComponent,
-    PepList2Component,
     PepListActionsComponent,
     PepListCarouselComponent,
     PepListChooserComponent,
