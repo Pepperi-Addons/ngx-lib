@@ -3,6 +3,7 @@ import {
     ChangeDetectorRef,
     ContentChild,
     ElementRef,
+    Renderer2,
     ViewChild,
 } from '@angular/core';
 import {
@@ -29,15 +30,18 @@ export class PepPageLayoutComponent implements AfterViewInit, AfterContentInit {
     constructor(
         public customizationService: PepCustomizationService,
         public layoutService: PepLayoutService,
-        private cdRef: ChangeDetectorRef
-    ) { }
+        private cdRef: ChangeDetectorRef,
+        private hostElement: ElementRef,
+        private renderer: Renderer2,
+    ) {
+        this.renderer.addClass(this.hostElement.nativeElement, 'pep-page-layout');
+    }
 
     ngAfterViewInit(): void {
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
         });
 
-        // this.cdRef.detectChanges();
     }
 
     ngAfterContentInit() {

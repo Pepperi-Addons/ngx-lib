@@ -133,7 +133,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
             //         buffer.push(osd);
             //     }
             // }
-            debugger;
             const viewType: PepListViewType = this.isTableView()
                 ? 'table'
                 : 'lines';
