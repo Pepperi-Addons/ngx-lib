@@ -19,13 +19,13 @@
         (valueChange)="onValueChanged($event, field)" [isActive]="isActive">
     </pep-checkbox>
 
-    <pep-date *ngSwitchCase="'date'" [form]="form" [key]="field.key" [value]="field.value"
+    <!-- <pep-date *ngSwitchCase="'date'" [form]="form" [key]="field.key" [value]="field.value"
         [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type" [mandatory]="field.mandatory"
         [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [minValue]="field.minValue"
         [maxValue]="field.maxValue" [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
         (valueChange)="onValueChanged($event, field)" [isActive]="isActive">
-    </pep-date>
+    </pep-date> -->
 
     <pep-images-filmstrip *ngSwitchCase="'images'" [uid]="uid" [form]="form" [key]="field.key" [label]="field.label"
         [showTitle]="showTitle" [rowSpan]="field.rowSpan" [value]="field.value" [layoutType]="layoutType">

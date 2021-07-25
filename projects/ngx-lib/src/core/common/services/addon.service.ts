@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { PepSessionService } from './session.service';
+import { PepFileService } from './file.service';
 import { PepHttpService } from '../../http/services/http.service';
 import { PepLoaderService } from '../../http/services/loader.service';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
 /*
     This service is the webapp api for addon usege.
@@ -78,5 +81,26 @@ export class PepAddonService {
         return window.fetch(input, init).finally(() => {
             this.loaderService.hide();
         });
+    }
+
+    public static createDefaultMultiTranslateLoader(
+        http: HttpClient,
+        fileService: PepFileService,
+        addonService: PepAddonService
+    ) {
+        const addonStaticFolder = addonService.getAddonStaticFolder();
+        const translationsPath: string = fileService.getAssetsTranslationsPath();
+        const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
+
+        return new MultiTranslateHttpLoader(http, [
+            {
+                prefix: addonStaticFolder.length > 0 ? addonStaticFolder : translationsPath,
+                suffix: translationsSuffix,
+            },
+            {
+                prefix: addonStaticFolder.length > 0 ? addonStaticFolder : '/assets/i18n/',
+                suffix: '.json',
+            },
+        ]);
     }
 }

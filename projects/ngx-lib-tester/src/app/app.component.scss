@@ -32,7 +32,6 @@
     min-height: 100%;
 }
 
-
 #loadingSpinnerModal {
     z-index: $z-index-high + 101;
     height: 1rem;
@@ -133,11 +132,9 @@
 
 .pep-layout {
     display: grid;
-    grid-template-columns: auto 1fr;
     grid-template-rows: $header-height 1fr;
-    grid-template-areas: "header header"
-                         "side   page";
-                      // "footer footer";
+    grid-template-areas: "header"
+                         "main";
     height: 100vh;
     width: 100%;
     padding: 0;
@@ -148,23 +145,35 @@
         z-index: $z-index-high + 1;
     }
 
-    .pep-side-layout {
-        grid-area: side;
-        display: block;
-        overflow: auto;
-        width: auto;
-
-        // @media (max-width: $screen-max-size-md) {
-        //     // width: 0;
-        // }
-    }
-
     .pep-main-layout {
-        grid-area: page;
-        display: block;
-        overflow: auto;
-    }
+        grid-area: main;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas: "side   center";
+        overflow: hidden;
+        
+        &.add-padding {
+            padding-inline: $content-padding;
 
+            @media (max-width: $screen-max-size-xs) {
+                padding-inline: 0;
+            }
+        }
+
+        .pep-side-layout {
+            grid-area: side;
+            display: block;
+            overflow: hidden;
+            width: auto;
+        }
+
+        .pep-center-layout {
+            grid-area: center;
+            display: block;
+            overflow: hidden;
+        }
+    }
+    
     // .pep-footer-layout {
     //     grid-area: footer;
     //     display: block;

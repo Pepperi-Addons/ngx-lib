@@ -104,7 +104,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         public customizationService: PepCustomizationService,
         private elementRef: ElementRef,
         private changeDetectorRef: ChangeDetectorRef
-    ) {}
+    ) { }
 
     private fillData(isInDialog = false): void {
         const view = this.matrixTemplate.createEmbeddedView(null);
@@ -133,7 +133,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
             //         buffer.push(osd);
             //     }
             // }
-
             const viewType: PepListViewType = this.isTableView()
                 ? 'table'
                 : 'lines';
@@ -201,7 +200,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                     // + 16 is the 1rem margin outside card.
                     const rowSpanToAdd =
                         (childrenCount * (cardRowsHeight + 16)) /
-                            formRowHeight +
+                        formRowHeight +
                         rowsToAdd;
                     this.field.rowSpan = rowSpanToAdd;
                 } else {
@@ -441,10 +440,10 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                     if (
                         field.FieldType === FIELD_TYPE.NumberIntegerForMatrix ||
                         field.FieldType ===
-                            FIELD_TYPE.NumberIntegerQuantitySelector ||
+                        FIELD_TYPE.NumberIntegerQuantitySelector ||
                         field.FieldType === FIELD_TYPE.NumberRealForMatrix ||
                         field.FieldType ===
-                            FIELD_TYPE.NumberRealQuantitySelector ||
+                        FIELD_TYPE.NumberRealQuantitySelector ||
                         field.FieldType === FIELD_TYPE.CalculatedInt ||
                         field.FieldType === FIELD_TYPE.NumberInteger ||
                         field.FieldType === FIELD_TYPE.CalculatedReal ||
@@ -484,6 +483,13 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
 
     setValueCallback(id: any, res: any): void {
         if (res.Rows.length === 1) {
+            const field = res.Rows[0].Fields.find((f) => f.ApiName === 'ObjectMenu');
+            if (field) {
+                // HACK : Until "Enabled" returns from the server, we set PepMenu to be
+                //        Disabled in cart on regular items and not campign items.
+                field.Enabled = true;
+            }
+
             this.updateChanges(res.Rows[0]);
         }
 
@@ -507,49 +513,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                 this.setValueCallback(customizeObjectChangedData.id, res);
             }
         );
-
-        // let handledEvent = false;
-        // const boundSetValueCallback = this.setValueCallback.bind(this); // .bind() to have this in the bound function.
-
-        // // For the new custom form, the plus and minus events transform in the IPepFormFieldValueChangeEvent
-        // if (customizeObjectChangedData.controlType === 'qs') {
-        //     if (customizeObjectChangedData.value === '+') {
-        //         handledEvent = true;
-        //         this.internalPageService.childPlusClick(
-        //             customizeObjectChangedData.id,
-        //             customizeObjectChangedData.key,
-        //             (res: any) => {
-        //                 boundSetValueCallback(
-        //                     customizeObjectChangedData.id,
-        //                     res
-        //                 );
-        //             }
-        //         );
-        //     } else if (customizeObjectChangedData.value === '-') {
-        //         handledEvent = true;
-        //         this.internalPageService.childMinusClick(
-        //             customizeObjectChangedData.id,
-        //             customizeObjectChangedData.key,
-        //             (res: any) => {
-        //                 boundSetValueCallback(
-        //                     customizeObjectChangedData.id,
-        //                     res
-        //                 );
-        //             }
-        //         );
-        //     }
-        // }
-
-        // if (!handledEvent) {
-        //     this.internalPageService.childValueChanged(
-        //         customizeObjectChangedData.id,
-        //         customizeObjectChangedData.key,
-        //         customizeObjectChangedData.value,
-        //         (res: any) => {
-        //             boundSetValueCallback(customizeObjectChangedData.id, res);
-        //         }
-        //     );
-        // }
     }
 
     onCustomizeFieldClick(fieldClickEvent: IPepFormFieldClickEvent): void {

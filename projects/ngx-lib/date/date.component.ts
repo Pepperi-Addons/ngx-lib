@@ -31,26 +31,8 @@ import {
     PepDateFieldType,
     PepDateField,
 } from '@pepperi-addons/ngx-lib';
-import moment, { Moment } from 'moment';
-
-export const MY_DATE_FORMATS = {
-    parse: {
-        dateInput: 'L',
-        monthInput: 'MMMM',
-        timeInput: 'LT',
-        datetimeInput: 'L LT',
-    },
-    display: {
-        dateInput: 'L',
-        monthInput: 'MMMM',
-        timeInput: 'LT',
-        datetimeInput: 'L LT',
-        monthYearLabel: 'MMM YYYY',
-        dateA11yLabel: 'LL',
-        monthYearA11yLabel: 'MMMM YYYY',
-        popupHeaderDateLabel: 'ddd, DD MMM',
-    },
-};
+import { Moment, utc } from 'moment/moment';
+import { MomentUtcDateAdapter, MomentUtcDateTimeAdapter, MY_DATE_FORMATS } from './date.model';
 
 @Component({
     selector: 'pep-date',
@@ -68,9 +50,9 @@ export const MY_DATE_FORMATS = {
         // here, due to limitations of our example generation script.
         //{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         //{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: DateAdapter, useClass: MomentUtcDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-        { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
+        { provide: DatetimeAdapter, useClass: MomentUtcDateTimeAdapter },
         //{ provide: MAT_DATETIME_FORMATS, useValue: MAT_NATIVE_DATETIME_FORMATS }
         { provide: MAT_DATETIME_FORMATS, useValue: MY_DATE_FORMATS },
     ],
@@ -174,7 +156,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
 
     standAlone = false;
     isInEditMode = false;
-    dateModel: moment.Moment;
+    dateModel: Moment;
     minDate: Date;
     maxDate: Date;
     showDatepicker = false;
@@ -250,9 +232,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             this._value = '';
             this.dateModel = null;
         } else {
-            this.dateModel = moment(
-                this.utilitiesService.parseDate(this.value, this.showTime)
-            );
+            this.dateModel = utc(this.utilitiesService.parseDate(this.value, this.showTime));
         }
 
         this.setFormattedValueFromModel();
@@ -272,7 +252,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         }, 0);
     }
 
-    onDateChange(event: MatDatetimepickerInputEvent<moment.Moment>): void {
+    onDateChange(event: MatDatetimepickerInputEvent<Moment>): void {
         let value = '';
         if (event.value != null) {
             const date: Date = event.value.toDate();

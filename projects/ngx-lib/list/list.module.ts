@@ -28,6 +28,7 @@ import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 
+// import { PepListOldComponent } from './list_old.component';
 import { PepListComponent } from './list.component';
 import { PepListActionsComponent } from './list-actions.component';
 import { PepListCarouselComponent } from './list-carousel.component';
@@ -38,6 +39,7 @@ import { PepListTotalComponent } from './list-total.component';
 import { PepListViewsComponent } from './list-views.component';
 
 const listComponents = [
+    // PepListOldComponent,
     PepListComponent,
     PepListActionsComponent,
     PepListCarouselComponent,
@@ -48,8 +50,15 @@ const listComponents = [
     PepListViewsComponent,
 ];
 
-// import { VirtualScrollerModule } from 'ngx-virtual-scroller';
-import { PepVirtualScrollComponent } from './virtual-scroll.component';
+import { IsItemDisabledPipe, IsItemSelectedPipe } from './list.pipes';
+
+const listPipes = [
+    IsItemSelectedPipe,
+    IsItemDisabledPipe
+];
+
+import { VirtualScrollerModule } from './virtual-scroller';
+// import { PepVirtualScrollComponent } from './virtual-scroll.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -69,10 +78,10 @@ import { PepVirtualScrollComponent } from './virtual-scroll.component';
         PepFormModule,
         PepMenuModule,
         PepTextboxModule,
-        // VirtualScrollerModule
+        VirtualScrollerModule
     ],
     exports: [listComponents],
-    declarations: [PepVirtualScrollComponent, listComponents],
+    declarations: [listComponents, listPipes],
 })
 export class PepListModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
