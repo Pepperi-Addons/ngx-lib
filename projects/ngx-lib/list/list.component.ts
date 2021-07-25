@@ -26,10 +26,6 @@ import {
     IPepFormFieldValueChangeEvent,
     IPepFormFieldClickEvent,
 } from '@pepperi-addons/ngx-lib/form';
-import {
-    // PepVirtualScrollComponent,
-    IPepVirtualScrollChangeEvent,
-} from './virtual-scroll.component';
 
 import { VirtualScrollerComponent, IPageInfo } from './virtual-scroller';
 
@@ -43,6 +39,7 @@ import {
     PepListPagerType,
     IPepListLoadPageEvent,
     DEFAULT_PAGE_SIZE,
+    IPepListStartIndexChangeEvent,
 } from './list.model';
 import {
     IPepListPagerChangeEvent,
@@ -144,26 +141,38 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Output()
     itemClick: EventEmitter<IPepListItemClickEvent> = new EventEmitter<IPepListItemClickEvent>();
+
     @Output()
     fieldClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
+
     @Output()
     valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
+
     @Output()
     sortingChange: EventEmitter<IPepListSortingChangeEvent> = new EventEmitter<IPepListSortingChangeEvent>();
 
     @Output()
     selectedItemsChange: EventEmitter<number> = new EventEmitter<number>();
-    @Output() selectAllClick: EventEmitter<any> = new EventEmitter<any>();
-    @Output() singleActionClick: EventEmitter<any> = new EventEmitter<any>();
 
-    @Output() listLoad: EventEmitter<void> = new EventEmitter<void>();
+    @Output()
+    selectAllClick: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    singleActionClick: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    listLoad: EventEmitter<void> = new EventEmitter<void>();
+
     @Output()
     loadItems: EventEmitter<IPepListLoadItemsEvent> = new EventEmitter<IPepListLoadItemsEvent>();
+
     @Output()
     loadPage: EventEmitter<IPepListLoadPageEvent> = new EventEmitter<IPepListLoadPageEvent>();
 
+    @Output()
+    startIndexChange: EventEmitter<IPepListStartIndexChangeEvent> = new EventEmitter<IPepListStartIndexChangeEvent>();
+
     @ViewChild(VirtualScrollerComponent) private virtualScroller: VirtualScrollerComponent;
-    // @ViewChild(PepListPagerComponent) listPager: PepListPagerComponent;
     @ViewChild('selectAllCB') selectAllCB: any;
 
     private _layout: UIControl = null;
@@ -406,14 +415,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     private toggleLoadingItemsFropApi(loadingItemsFromApi: boolean): void {
         this._loadingItemsFromApi = loadingItemsFromApi;
 
-        // if (typeof this.virtualScroller !== 'undefined') {
-        //     this.disableScroll(loadingItemsFromApi);
-        // }
+        // this.disableScroll(loadingItemsFromApi);
     }
-
-    // private updateScrollItems(startIndex: number, endIndex: number): void {
-    //     this.scrollItems = this.items.slice(startIndex, endIndex);
-    // }
 
     private updateCurrentPageItems(startIndex: number, endIndex: number): void {
         this.currentPageItems = this.items.slice(startIndex, endIndex);
@@ -782,6 +785,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.hostElement.nativeElement.updateItem = this.updateItem.bind(this);
     }
 
+    raiseStartIndexChange(startIndex: number = 0) {
+        this.startIndexChange.emit({ startIndex });
+    }
+
     // getIsDisabled(item: ObjectsDataRow): boolean {
     //     return (
     //         this.lockItemInnerEvents || (item && !item.IsSelectableForActions)
@@ -866,31 +873,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
     }
-
-    // getIsItemSelected(
-    //     itemId: string,
-    //     isSelectableForActions: boolean,
-    //     itemType = ''
-    // ): boolean {
-    //     let isSelected = false;
-
-    //     if (this.selectionTypeForActions === 'single') {
-    //         isSelected =
-    //             this.selectedItemId === this.getUniqItemId(itemId, itemType);
-    //     } else if (this.selectionTypeForActions === 'single-action') {
-    //         isSelected =
-    //             (this.isAllSelected && !this.unSelectedItems.has(itemId)) ||
-    //             this.selectedItems.has(itemId);
-    //     } else if (this.selectionTypeForActions === 'multi') {
-    //         if (isSelectableForActions) {
-    //             isSelected =
-    //                 (this.isAllSelected && !this.unSelectedItems.has(itemId)) ||
-    //                 this.selectedItems.has(itemId);
-    //         }
-    //     }
-
-    //     return isSelected;
-    // }
 
     selectItemForActions(
         e: any,
@@ -1083,8 +1065,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             } else {
                 const numberOfStartItems = this.getNumberOfStartItems();
                 const event = {
-                    start: 0,
-                    end: numberOfStartItems,
                     fromIndex: 0,
                     toIndex: numberOfStartItems,
                 };
@@ -1095,6 +1075,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.setLayout();
+
+        setTimeout(() => {
+            this.onListLoad();
+        }, 0);
     }
 
     updateItems(
@@ -1110,7 +1094,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.cleanItems();
         }
 
-        const startIndex = event.fromIndex ? event.fromIndex : event.start;
+        const startIndex = event.fromIndex ?? 0;
 
         for (let i = 0; i < items.length; i++) {
             if (!this.items[i + startIndex]) {
@@ -1119,7 +1103,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        // this.updateScrollItems(event.start, event.end);
         this.toggleLoadingItemsFropApi(false);
     }
 
@@ -1144,7 +1127,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        // this.updateScrollItems(startIndex, endIndex);
         this.updateCurrentPageItems(startIndex, endIndex);
         this.toggleLoadingItemsFropApi(false);
     }
@@ -1165,6 +1147,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.updateItemProperties(this.virtualScroller.viewPortItems[index], data);
             this.checkForChanges = new Date().getTime();
         }
+    }
+
+    scrollToIndex(index: number, alignToBeginning: boolean = true, additionalOffset: number = 0, animationMilliseconds: number = undefined, animationCompletedCallback: () => void = undefined) {
+        this.virtualScroller?.scrollToIndex(index, alignToBeginning, additionalOffset, animationMilliseconds, animationCompletedCallback);
     }
 
     updateItemProperties(itemToUpdate: ObjectsDataRow, data: ObjectsDataRow) {
@@ -1247,9 +1233,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     refresh() {
-        if (typeof this.virtualScroller !== 'undefined') {
-            this.virtualScroller.refresh();
-        }
+        this.virtualScroller?.refresh();
     }
 
     // ---------------------------------------------------------------
@@ -1267,7 +1251,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.pressedColumn = columnKey;
         this.startX = event.x;
         this.startWidth = event.target.closest('.header-column').offsetWidth;
-        this.tableStartWidth = this.virtualScroller.contentElementRef.nativeElement.offsetWidth;
+        this.tableStartWidth = this.virtualScroller?.contentElementRef.nativeElement.offsetWidth;
     }
 
     onListResize(event): void {
@@ -1394,34 +1378,28 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         } else {
             setTimeout(() => {
-                // this.updateScrollItems(startIndex, endIndex);
                 this.updateCurrentPageItems(startIndex, endIndex);
             }, this.scrollAnimationTime);
         }
     }
 
     onVirtualScrollerChange(event: IPageInfo): void {
-        let pepEvent: IPepVirtualScrollChangeEvent = {};
-        pepEvent.start = event.startIndex;
-        pepEvent.end = event.end;
-        pepEvent.addAtStart = event.scrollDirection === 'backward';
-        this.onScrollChange(pepEvent);
-    }
+        this.raiseStartIndexChange(event.startIndex);
 
-    onScrollChange(event: IPepVirtualScrollChangeEvent): void {
         if (this.pagerType === 'scroll') {
             // For other events do nothing.
-            if (typeof event.start === 'undefined' || event.start < 0 ||
-                typeof event.end === 'undefined' || event.end < 0) {
+            if (typeof event.startIndex === 'undefined' || event.startIndex < 0 ||
+                typeof event.endIndex === 'undefined' || event.endIndex < 0) {
                 return;
             }
 
+            const addAtStart = event.scrollDirection === 'backward';
             let shouldGetItemsFromApi = false;
             let indexOfMissingItem: number;
 
-            if (event.addAtStart) {
-                indexOfMissingItem = event.end;
-                while (!shouldGetItemsFromApi && indexOfMissingItem >= event.start) {
+            if (addAtStart) {
+                indexOfMissingItem = event.endIndex;
+                while (!shouldGetItemsFromApi && indexOfMissingItem >= event.startIndex) {
                     if (!this.items[indexOfMissingItem]) {
                         shouldGetItemsFromApi = true;
                     }
@@ -1431,8 +1409,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     }
                 }
             } else {
-                indexOfMissingItem = event.start;
-                while (!shouldGetItemsFromApi && indexOfMissingItem <= event.end) {
+                indexOfMissingItem = event.startIndex;
+                while (!shouldGetItemsFromApi && indexOfMissingItem <= event.endIndex) {
                     if (!this.items[indexOfMissingItem]) {
                         shouldGetItemsFromApi = true;
                     }
@@ -1449,18 +1427,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     this.toggleLoadingItemsFropApi(true);
 
                     const top = this.getTopItems() - 1;
-                    const fromIndex = event.addAtStart ? Math.max(indexOfMissingItem - top, 0) : indexOfMissingItem;
-                    const toIndex = event.addAtStart ? indexOfMissingItem : Math.min(indexOfMissingItem + top, this.totalRows);
+                    const fromIndex = addAtStart ? Math.max(indexOfMissingItem - top, 0) : indexOfMissingItem;
+                    const toIndex = addAtStart ? indexOfMissingItem : Math.min(indexOfMissingItem + top, this.totalRows);
 
                     this.loadItems.emit({
-                        start: event.start,
-                        end: event.end,
                         fromIndex,
                         toIndex,
                     });
                 }
-            } else {
-                // this.updateScrollItems(event.start, event.end);
             }
         }
     }
@@ -1468,8 +1442,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     onListLoad(): void {
         this.listLoad.emit();
 
-        let dimensions = this.virtualScroller.calculateDimensions();
-        this.calculatedObjectHeight = dimensions?.childHeight + 'px';
+        if (this.virtualScroller) {
+            let dimensions = this.virtualScroller.calculateDimensions();
+            this.calculatedObjectHeight = dimensions?.childHeight + 'px';
+        }
     }
 
     onValueChanged(valueChange: IPepFormFieldValueChangeEvent): void {

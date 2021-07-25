@@ -1,4 +1,4 @@
-<ng-container *ngIf="totalRows == 0">
+<!-- <ng-container *ngIf="totalRows == 0">
     <ng-container *ngIf="noDataFoundMsg; then noDataMsgInputBlock; else noDataMsgDefaultBlock"></ng-container>
     <ng-template #noDataMsgInputBlock>
         <div class="pep-border-bottom">
@@ -45,14 +45,6 @@
                 [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
                 <ng-container *ngTemplateOutlet="listData"></ng-container>
             </pep-virtual-scroll>
-
-
-            <!-- <virtual-scroller #scroll [items]="items" (vsChange)="onVirtualScrollerChange($event)"
-                [parentScroll]="parentScroll ? parentScroll : nativeWindow"
-                [bufferAmount]="isReport ? (isTable ? 20 : 3) : isTable ? 10 : 3"
-                [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }">
-                <ng-container *ngTemplateOutlet="listData"></ng-container>
-            </virtual-scroller> -->
         </ng-template>
 
         <ng-template #noVirtualScrollBlock>
@@ -69,7 +61,7 @@
         </pep-list-pager>
     </ng-template>
 </div>
-<!-- selected: getIsItemSelected(item?.UID, item?.IsSelectableForActions, item?.Type),  getIsDisabled(item)-->
+
 <ng-template #listData>
     <ng-container *ngFor="let item of scrollItems; let index; let isFirst = first;">
         <ng-container *ngIf="isTable">
@@ -96,7 +88,7 @@
                         [checked]="item | isItemSelected: selectionTypeForActions : selectedItemId : isAllSelected : selectedItems : unSelectedItems"
                         (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                     </mat-radio-button>
-                    <!-- [canEditObject]="!disabled && item?.IsEditable"  -->
+                    
                     <pep-form [layoutType]="'table'" [checkForChanges]="checkForChanges" [layout]="layout"
                         [firstFieldAsLink]="firstFieldAsLink" [data]="item" [canEditObject]="!disabled"
                         [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
@@ -124,7 +116,7 @@
                     [checked]="item | isItemSelected: selectionTypeForActions : selectedItemId : isAllSelected : selectedItems : unSelectedItems"
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                 </mat-checkbox>
-                <!-- [canEditObject]="!disabled && item?.IsEditable" -->
+                
                 <pep-form [layoutType]="'card'" [firstFieldAsLink]="firstFieldAsLink"
                     [checkForChanges]="checkForChanges" [layout]="layout" [data]="item" [canEditObject]="!disabled"
                     [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
@@ -180,8 +172,6 @@
                         <div class="splitter"></div>
                     </div>
 
-                    <!-- The onListSortingChange moved to the column click -->
-                    <!-- (click)="onListSortingChange(field.ApiName, true)" -->
                     <div *ngIf="supportSorting" class="sorting-box pull-left flip"
                         [ngClass]="{ 'has-sorting': field.ApiName === sortBy }">
                         <mat-icon *ngIf="field.ApiName !== sortBy">
@@ -215,4 +205,4 @@
             </div>
         </fieldset>
     </div>
-</ng-template>
+</ng-template> -->

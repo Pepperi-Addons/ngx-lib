@@ -27,9 +27,8 @@
     <virtual-scroller #scroller [items]="pagerType === 'pages' ? currentPageItems : items"
         [scrollDebounceTime]="scrollDebounceTime" [scrollThrottlingTime]="scrollThrottlingTime"
         [parentScroll]="parentScroll" [disable]="loadingItemsFromApi" class="virtual-scroller"
-        [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }" (vsChange)="onVirtualScrollerChange($event)"
-        (vsLoad)="onListLoad()">
-
+        [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }" (vsChange)="onVirtualScrollerChange($event)">
+        <!-- (vsLoad)="onListLoad()" -->
         <ng-container *ngFor="let item of scroller.viewPortItems; let index; let isFirst = first;">
             <ng-container *ngTemplateOutlet="listData; context: {item: item}"></ng-container>
         </ng-container>

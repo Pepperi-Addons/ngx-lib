@@ -1,37 +1,37 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+// @import '../src/core/style/abstracts/variables';
+// @import '../src/core/style/abstracts/mixins';
 
-:host {
-    height: inherit;
-    display: flex;
-    flex-direction: column;
-}
+// :host {
+//     height: inherit;
+//     display: flex;
+//     flex-direction: column;
+// }
 
-.no-data {
-    margin: $spacing-2xl 0;
-}
+// .no-data {
+//     margin: $spacing-2xl 0;
+// }
 
-.no-data-suggestions {
-    .suggestions-title {
-        margin: $spacing-lg 0 $spacing-sm;
-    }
+// .no-data-suggestions {
+//     .suggestions-title {
+//         margin: $spacing-lg 0 $spacing-sm;
+//     }
 
-    .suggestions-list {
-        margin: 0;
-        padding: 0;
-        padding-inline-start: $spacing-2xl;
-    }
-}
+//     .suggestions-list {
+//         margin: 0;
+//         padding: 0;
+//         padding-inline-start: $spacing-2xl;
+//     }
+// }
 
-.no-virtual-scroll-container {
-    height: inherit;
-    overflow: auto;
-}
+// .no-virtual-scroll-container {
+//     height: inherit;
+//     overflow: auto;
+// }
 
-.table-header {
-    top:0;
+// .table-header {
+//     top:0;
 
-    // &.below-header-and-top-bar {
-    //     top: calc(#{$header-height} + #{$top-bar-height});
-    // }
-}
+//     // &.below-header-and-top-bar {
+//     //     top: calc(#{$header-height} + #{$top-bar-height});
+//     // }
+// }
