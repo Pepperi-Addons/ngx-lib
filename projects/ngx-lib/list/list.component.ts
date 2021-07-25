@@ -122,8 +122,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pageIndex = 0;
     @Input() scrollAnimationTime = 500;
 
-    @Input() scrollDebounceTime: number = 0;
-    @Input() scrollThrottlingTime: number = 0;
+    @Input() scrollDebounceTime = 0;
+    @Input() scrollThrottlingTime = 0;
 
     @Input() bufferAmount = -1;
 
@@ -299,7 +299,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         return this.parentScroll ? this.parentScroll : this.virtualScroller?.contentElementRef.nativeElement.parentElement;
     }
 
-    private scrollToTop(animate: boolean = true) {
+    private scrollToTop(animate = true) {
         const scrollingElement = this.getScrollingElement();
         if (scrollingElement) {
             const scrollTop = 0;
@@ -785,7 +785,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.hostElement.nativeElement.updateItem = this.updateItem.bind(this);
     }
 
-    raiseStartIndexChange(startIndex: number = 0) {
+    raiseStartIndexChange(startIndex = 0) {
         this.startIndexChange.emit({ startIndex });
     }
 
@@ -1052,7 +1052,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         if (items) {
             if (this.pagerType === 'pages') {
                 // If page index out of bounds - init to 0.
-                let numberOfPages = Math.ceil(totalRows / this.pageSize);
+                const numberOfPages = Math.ceil(totalRows / this.pageSize);
 
                 if (this.pageIndex >= numberOfPages) {
                     this.pageIndex = 0;
@@ -1149,7 +1149,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    scrollToIndex(index: number, alignToBeginning: boolean = true, additionalOffset: number = 0, animationMilliseconds: number = undefined, animationCompletedCallback: () => void = undefined) {
+    scrollToIndex(index: number, alignToBeginning = true, additionalOffset = 0, animationMilliseconds: number = undefined, animationCompletedCallback: () => void = undefined) {
         this.virtualScroller?.scrollToIndex(index, alignToBeginning, additionalOffset, animationMilliseconds, animationCompletedCallback);
     }
 
@@ -1443,7 +1443,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.listLoad.emit();
 
         if (this.virtualScroller) {
-            let dimensions = this.virtualScroller.calculateDimensions();
+            const dimensions = this.virtualScroller.calculateDimensions();
             this.calculatedObjectHeight = dimensions?.childHeight + 'px';
         }
     }
