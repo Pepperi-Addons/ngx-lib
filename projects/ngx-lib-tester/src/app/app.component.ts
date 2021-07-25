@@ -13,7 +13,10 @@ import {
 })
 export class AppComponent implements OnInit {
     footerHeight: number;
-    showLoading = false;
+    showLoader = false;
+    showHeader = true;
+    showSidebar = false;
+    addPadding = true;
 
     constructor(
         public customizationService: PepCustomizationService,
@@ -22,7 +25,7 @@ export class AppComponent implements OnInit {
     ) {
         // this.loaderService.show();
         this.loaderService.onChanged$.subscribe((show) => {
-            this.showLoading = show;
+            this.showLoader = show;
         });
     }
 

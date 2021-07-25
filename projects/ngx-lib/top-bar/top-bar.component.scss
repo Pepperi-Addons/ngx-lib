@@ -1,7 +1,7 @@
 @import '../src/core/style/abstracts/variables';
 @import '../src/core/style/abstracts/mixins';
 
-.top-bar-container {
+.pep-top-bar-container {
     display: grid;
     height: $top-bar-height;
     z-index: $z-index-medium + 1;

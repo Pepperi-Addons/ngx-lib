@@ -155,32 +155,32 @@ import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 //    return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 // }
 
-export function createTranslateLoader(
-    http: HttpClient,
-    fileService: PepFileService,
-    addonService: PepAddonService
-) {
-    const addonStaticFolder = addonService.getAddonStaticFolder();
-    const translationsPath: string = fileService.getAssetsTranslationsPath();
-    const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
+// export function createTranslateLoader(
+//     http: HttpClient,
+//     fileService: PepFileService,
+//     addonService: PepAddonService
+// ) {
+//     const addonStaticFolder = addonService.getAddonStaticFolder();
+//     const translationsPath: string = fileService.getAssetsTranslationsPath();
+//     const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
 
-    return new MultiTranslateHttpLoader(http, [
-        {
-            prefix:
-                addonStaticFolder.length > 0
-                    ? addonStaticFolder
-                    : translationsPath,
-            suffix: translationsSuffix,
-        },
-        {
-            prefix:
-                addonStaticFolder.length > 0
-                    ? addonStaticFolder
-                    : '/assets/i18n/',
-            suffix: '.json',
-        },
-    ]);
-}
+//     return new MultiTranslateHttpLoader(http, [
+//         {
+//             prefix:
+//                 addonStaticFolder.length > 0
+//                     ? addonStaticFolder
+//                     : translationsPath,
+//             suffix: translationsSuffix,
+//         },
+//         {
+//             prefix:
+//                 addonStaticFolder.length > 0
+//                     ? addonStaticFolder
+//                     : '/assets/i18n/',
+//             suffix: '.json',
+//         },
+//     ]);
+// }
 
 @NgModule({
     declarations: [],
@@ -191,7 +191,7 @@ export function createTranslateLoader(
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
-                useFactory: createTranslateLoader,
+                useFactory: PepAddonService.createDefaultMultiTranslateLoader,
                 deps: [HttpClient, PepFileService, PepAddonService],
             },
         }),

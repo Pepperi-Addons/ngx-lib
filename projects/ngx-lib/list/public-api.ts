@@ -3,6 +3,7 @@
  */
 export * from './list.module';
 export * from './list.model';
+// export * from './list_old.component';
 export * from './list.component';
 export * from './list-actions.component';
 export * from './list-carousel.component';

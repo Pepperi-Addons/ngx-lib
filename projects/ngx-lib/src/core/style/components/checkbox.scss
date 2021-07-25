@@ -275,6 +275,7 @@
     .mat-checkbox-frame {
         height: inherit;
         width: inherit;
+        display: flex;
         border-radius: $border-radius-md;
     }
 }

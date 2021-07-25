@@ -1,55 +1,61 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
-
+@import "../src/core/style/abstracts/variables";
+@import "../src/core/style/abstracts/mixins";
+ 
 .pep-side-bar-container {
-    $animition-time: 0.5s;
-    
+    $animation-time: 0.35s;
+    $animation-time-third: calc(#{$animation-time} / 3);
+
     .toggle-side-bar-container {
         display: grid;
         grid-auto-flow: column;
         height: calc(100vh - #{$header-height});
         // max-width: calc(#{$side-bar-width} + #{$double-content-padding} + 1px); // 1px is for the toggle-button-border width
-
-        transition: transform ease-out $animition-time, width ease-out $animition-time;
+        
+        transition: transform ease-out $animation-time, width ease-out $animation-time;
         transform: translateX(calc(var(--pep-one-multi-by-dir) * #{$side-bar-width}));
         width: calc((#{$spacing-lg} * 2) + 1px);
         
         &.is-open-state {
-            transition: transform ease-out $animition-time, width ease-out $animition-time;
+            transition: transform ease-out $animation-time, width ease-out $animation-time;
             transform: unset;
             width: $side-bar-width;
-
+            
             .toggle-button {
-                transition: margin-inline ease-out $animition-time, transform ease-out $animition-time;
+                transition: margin-inline ease-out $animation-time, transform ease-out $animation-time;
                 transform: rotate(180deg);
-                margin-inline: -4rem 0.25rem;
+                margin-inline: -3rem 0.25rem;
             }
             
             .toggle-button-border {
-                border: none;
+                transition: opacity calc(#{$animation-time-third} * 2) ease-out, margin-inline ease-out $animation-time;
+                opacity: 0;
+                margin-inline: -3rem 0.25rem;
             }
         }
-
+        
         .toggle-button {
             $half-button-width: 0.75rem;
-
+            
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: calc(#{$top-bar-height} - #{$half-button-width});
-            transition: margin-inline ease-out $animition-time, transform ease-out $animition-time;
+            transition: margin-inline ease-out $animation-time, transform ease-out $animation-time;
             transform: rotate(0deg);
             margin-inline: calc(-1 * #{$half-button-width}) 0.25rem;
         }
-
+        
         .toggle-button-border {
+            transition: opacity calc(#{$animation-time-third} * 2) ease-out $animation-time-third, margin-inline ease-out $animation-time;
+            opacity: 1;
+            margin-inline: unset;
             width: 1px;
             padding-inline-start: $content-padding;
             margin-top: $top-bar-spacing-top;
         }
     }
-
+    
     .mat-sidenav-container {
         position: absolute;
         bottom: 0;
@@ -62,50 +68,50 @@
         &.mat-drawer-opened {
             visibility: unset;
         }
-
+        
         .mat-sidenav {
             max-width: calc(#{$floating-side-bar-width} + #{$double-content-padding});
             padding-inline: $content-padding;
-
+            
             @media (max-width: $screen-max-size-xs) {
                 padding-inline: 0;
             }
-
+            
             .side-layout {
                 max-width: $floating-side-bar-width;
                 width: $floating-side-bar-width;
             }
         }
     }
-
+    
     .side-layout {
         $side-bar-width-less-padding: calc(#{$side-bar-width} - #{$double-content-padding});
-
+        
         display: grid;
         grid-auto-rows: auto 1fr auto;
         grid-auto-flow: row;
-
+        
         max-width: $side-bar-width;
         width: $side-bar-width;
         padding: 0 $content-padding;
         height: 100%;
         overflow: auto;
-
+        
         .header-content {
             height: $top-bar-height;
             padding-top: $top-bar-spacing-top;
-
+            
             .content {
                 height: $top-bar-height-with-no-top;
                 display: flex;
                 overflow: unset; // For showing the focus (if hidden the focus is cutted).
             }
         }
-
+        
         .footer-content {
             height: $top-bar-height;
         }
-
+        
         .main-content {
             overflow: auto;
             

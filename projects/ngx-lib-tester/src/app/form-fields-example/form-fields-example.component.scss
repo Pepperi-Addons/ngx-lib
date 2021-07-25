@@ -1,9 +1,8 @@
 .ui-test-container {
-    //   margin: 0 2rem;
-
     .main-content{
-    //   padding-top: .5rem;
-
+        overflow: hidden;
+        padding-inline: 1rem;
+        
         .content {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -18,12 +17,6 @@
             .child4 { grid-area: child4; }
         }
 
-    }
-
-    .header-content{
-        .content{
-        //   padding-bottom: 1rem;
-        }
     }
 }
 
