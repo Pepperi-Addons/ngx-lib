@@ -59,14 +59,14 @@
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
                 <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
                     <!-- [canEditObject]="!disabled && item?.IsEditable" -->
-                    <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl"
-                        [firstFieldAsLink]="firstFieldAsLink" [data]="item" [canEditObject]="!disabled"
-                        [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
-                        [lockEvents]="disableSelectionItems" [layoutType]="'table'" [listType]="listType" [isActive]="
+                    <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item"
+                        [canEditObject]="!disabled" [objectId]="objectId" [parentId]="parentId"
+                        [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="'table'"
+                        [isActive]="
                                 (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                                 item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                             " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
-                        (click)="itemClicked($event, item)" [pageType]="pageType">
+                        (click)="itemClicked($event, item)">
                     </pep-form>
                 </fieldset>
             </div>
@@ -84,11 +84,11 @@
                 <!-- [canEditObject]="!disabled && item?.IsEditable" -->
                 <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item"
                     [canEditObject]="!disabled" [objectId]=" objectId" [parentId]="parentId" [searchCode]="searchCode"
-                    [lockEvents]="disableSelectionItems" [layoutType]="'card'" [listType]="listType" [isActive]="
+                    [lockEvents]="disableSelectionItems" [layoutType]="'card'" [isActive]="
                             (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
-                    (click)="itemClicked($event, item)" [pageType]="pageType">
+                    (click)="itemClicked($event, item)">
                 </pep-form>
             </div>
         </ng-container>

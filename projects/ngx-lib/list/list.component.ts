@@ -71,21 +71,18 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     static MINIMUM_COLUMN_WIDTH = 48;
 
-    @Input() currentListTypeTranslation = '';
     @Input() noDataFoundMsg: string = null;
     @Input() selectionTypeForActions: PepListSelectionType = 'multi';
     @Input() hideAllSelectionInMulti = false;
 
-    @Input() top = -1;
-    @Input() listType = '';
+    // @Input() top = -1;
+    // @Input() listType = '';
     @Input() objectId = '0';
     @Input() parentId = '0';
     @Input() searchCode = '0';
     @Input() firstFieldAsLink = false;
     @Input() supportSorting = true;
     @Input() supportResizing = true;
-
-    parentContainer: Element | Window = null;
 
     private _parentScroll: Element | Window = null;
     @Input()

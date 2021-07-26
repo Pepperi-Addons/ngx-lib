@@ -67,7 +67,7 @@
                 <pep-form [layoutType]="'table'" [checkForChanges]="checkForChanges" [layout]="layout"
                     [firstFieldAsLink]="firstFieldAsLink" [data]="item" [canEditObject]="!disabled"
                     [objectId]="objectId" [parentId]="parentId" [searchCode]="searchCode"
-                    [lockEvents]="lockItemInnerEvents" [isReport]="isReport" [listType]="listType" [isActive]="
+                    [lockEvents]="lockItemInnerEvents" [isReport]="isReport" [isActive]="
                             (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
@@ -93,7 +93,7 @@
             </mat-checkbox>
             <pep-form [layoutType]="'card'" [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges"
                 [layout]="layout" [data]="item" [canEditObject]="!disabled" [objectId]="objectId" [parentId]="parentId"
-                [searchCode]="searchCode" [lockEvents]="lockItemInnerEvents" [listType]="listType" [isActive]="
+                [searchCode]="searchCode" [lockEvents]="lockItemInnerEvents" [isActive]="
                         (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                         item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                     " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
