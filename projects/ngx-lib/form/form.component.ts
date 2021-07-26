@@ -119,7 +119,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() showTitle = true;
     @Input() firstFieldAsLink = false;
     @Input() checkForChanges: any = null;
-    @Input() pageType = '';
 
     @Output()
     valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();

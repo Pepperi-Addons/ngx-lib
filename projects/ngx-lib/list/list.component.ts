@@ -115,7 +115,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() lockItemInnerEvents = false;
     @Input() isReport = false;
-    @Input() pageType = '';
     @Input() totalsRow = [];
     @Input() pagerType: PepListPagerType = 'scroll';
     @Input() pageSize: number = DEFAULT_PAGE_SIZE;
