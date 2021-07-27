@@ -83,7 +83,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     set viewType(value: PepListViewType) {
         this._viewType = value;
         this.isTable = value === 'table';
-        // this.calculateDimensions();
     }
     get viewType(): PepListViewType {
         return this._viewType;
@@ -294,13 +293,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         // }
 
         this.saveSortingToSession();
-    }
-
-    private calculateDimensions() {
-        if (this.virtualScroller) {
-            const dimensions = this.virtualScroller.calculateDimensions();
-            this.calculatedObjectHeight = dimensions?.childHeight + 'px';
-        }
     }
 
     private getScrollingElement() {
@@ -1436,11 +1428,15 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onListLoad(): void {
-        this.listLoad.emit();
-
         setTimeout(() => {
-            this.calculateDimensions();
-        }, 1000);
+            this.listLoad.emit();
+        }, 0);
+    }
+
+    onChildRectChange(event: ClientRect) {
+        setTimeout(() => {
+            this.calculatedObjectHeight = event?.height + 'px';
+        }, 0);
     }
 
     onValueChanged(valueChange: IPepFormFieldValueChangeEvent): void {
