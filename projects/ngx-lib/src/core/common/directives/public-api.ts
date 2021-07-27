@@ -8,3 +8,5 @@ export * from './data-qa.directive';
 export * from './menu-blur.directive';
 // export * from './debounce-click.directive';
 export * from './prevent-multi-click.directive';
+export * from './print.directive';
+

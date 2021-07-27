@@ -388,9 +388,6 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 	}
 
 	@Output()
-	public vsLoad: EventEmitter<void> = new EventEmitter<void>();
-
-	@Output()
 	public vsUpdate: EventEmitter<any[]> = new EventEmitter<any[]>();
 
 	@Output()
@@ -883,9 +880,6 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 						this.zone.run(handleChanged);
 					}
 				} else {
-					// Added to know when the scroll is ready (UI elements are displayed already).
-					this.vsLoad.emit();
-
 					if (maxRunTimes > 0 && (scrollLengthChanged || paddingChanged)) {
 						this.refresh_internal(false, refreshCompletedCallback, maxRunTimes - 1);
 						return;

@@ -47,6 +47,7 @@ import { PepMenuBlurDirective } from './core/common/directives/menu-blur.directi
 import { PepDataQaDirective } from './core/common/directives/data-qa.directive';
 // import { PreventDoubleClickDirective } from './core/common/directives/debounce-click.directive';
 import { PepPreventMultiClickDirective } from './core/common/directives/prevent-multi-click.directive';
+import { PepPrintDirective } from './core/common/directives/print.directive';
 
 const utilitiesList = [
     PepInputAutoWidthDirective,
@@ -56,6 +57,7 @@ const utilitiesList = [
     PepDataQaDirective,
     // PreventDoubleClickDirective,
     PepPreventMultiClickDirective,
+    PepPrintDirective,
 ];
 
 import { PepAttachDirective } from './core/portal/attach.directive';

@@ -73,10 +73,22 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() noDataFoundMsg: string = null;
     @Input() selectionTypeForActions: PepListSelectionType = 'multi';
+    @Input() showCardSelection = false;
     @Input() hideAllSelectionInMulti = false;
 
-    // @Input() top = -1;
-    // @Input() listType = '';
+    @Input() itemClass: string = '';
+
+    private _viewType: PepListViewType = '';
+    @Input()
+    set viewType(value: PepListViewType) {
+        this._viewType = value;
+        this.isTable = value === 'table';
+        // this.calculateDimensions();
+    }
+    get viewType(): PepListViewType {
+        return this._viewType;
+    }
+
     @Input() objectId = '0';
     @Input() parentId = '0';
     @Input() searchCode = '0';
@@ -177,7 +189,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     totalRows = -1;
-    itemClass: string;
     isTable = false;
     private hasColumnWidthOfTypePercentage = true;
 
@@ -187,10 +198,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private itemsCounter = 0;
-    showCardSelection = false;
 
-    viewType: PepListViewType;
-    // scrollItems: Array<ObjectsDataRow>;
     currentPageItems: Array<ObjectsDataRow>;
 
     SEPARATOR = ',';
@@ -198,7 +206,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     selectedItems = new Map<string, string>();
     unSelectedItems = new Map<string, string>();
 
-    // nativeWindow: any = null;
     private currentTween: any;
 
     selectedItemId = '';
@@ -214,8 +221,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     screenSize: PepScreenSizeType;
     deviceHasMouse = false;
-
-    // headerIsInFocus = false;
 
     // For resize
     pressedColumn = '';
@@ -289,6 +294,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         // }
 
         this.saveSortingToSession();
+    }
+
+    private calculateDimensions() {
+        if (this.virtualScroller) {
+            const dimensions = this.virtualScroller.calculateDimensions();
+            this.calculatedObjectHeight = dimensions?.childHeight + 'px';
+        }
     }
 
     private getScrollingElement() {
@@ -606,7 +618,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.itemsCounter = 0;
         this._items =
             this.totalRows > 0 ? Array<ObjectsDataRow>(this.totalRows) : [];
-        // this.scrollItems = [];
         this.currentPageItems = [];
         this.calculatedObjectHeight = '';
     }
@@ -781,10 +792,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.hostElement.nativeElement.updateItem = this.updateItem.bind(this);
     }
 
-    raiseStartIndexChange(startIndex = 0) {
-        this.startIndexChange.emit({ startIndex });
-    }
-
     // getIsDisabled(item: ObjectsDataRow): boolean {
     //     return (
     //         this.lockItemInnerEvents || (item && !item.IsSelectableForActions)
@@ -868,6 +875,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 this.selectAllClick.emit(false);
             }
         }
+    }
+
+    raiseStartIndexChange(startIndex = 0) {
+        this.startIndexChange.emit({ startIndex });
     }
 
     selectItemForActions(
@@ -1019,10 +1030,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     initListData(
         layout: UIControl,
         totalRows: number,
-        items: ObjectsDataRow[],
-        viewType: PepListViewType = '',
-        itemClass = '',
-        showCardSelection = false
+        items: ObjectsDataRow[]
     ): void {
         this.initVariablesFromSession(items);
         const currentList = this.isAllSelected
@@ -1033,12 +1041,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             : currentList.size;
         this.selectedItemsChange.emit(currentListCount);
 
-        this.viewType = viewType;
-        this.isTable = viewType === 'table';
-        // this.isCardView = viewType === 'cards' || viewType === 'lines';
-        this.showCardSelection = showCardSelection;
         this._layout = layout;
-        this.itemClass = itemClass;
         this.selectedItemId = '';
         this.totalRows = totalRows;
 
@@ -1071,10 +1074,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.setLayout();
-
-        setTimeout(() => {
-            this.onListLoad();
-        }, 0);
+        this.onListLoad();
     }
 
     updateItems(
@@ -1438,10 +1438,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     onListLoad(): void {
         this.listLoad.emit();
 
-        if (this.virtualScroller) {
-            const dimensions = this.virtualScroller.calculateDimensions();
-            this.calculatedObjectHeight = dimensions?.childHeight + 'px';
-        }
+        setTimeout(() => {
+            this.calculateDimensions();
+        }, 1000);
     }
 
     onValueChanged(valueChange: IPepFormFieldValueChangeEvent): void {
