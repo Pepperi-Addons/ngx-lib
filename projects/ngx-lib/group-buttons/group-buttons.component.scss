@@ -53,17 +53,18 @@
 
     .split-buttons {
         display: grid;
-        grid-template-columns: auto auto;
-        max-width: 100%;
+        grid-auto-flow: column;
 
         .first-button {
-            // margin-right: -1px;
             margin-inline-end: -1px;
-            max-width: unset;
         }
 
         .middle-button {
             border-radius: 0;
+        }
+
+        .last-button {
+            margin-inline-start: -1px;
         }
     }
 
