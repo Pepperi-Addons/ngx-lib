@@ -876,11 +876,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     getIsItemSelected(item: ObjectsDataRow): boolean {
         let isSelected = false;
 
-        if (this.selectionTypeForActions === 'single') {
-            isSelected = this.selectedItemId === this.getUniqItemId(item.UID, item.Type.toString());
-        } else if (this.selectionTypeForActions === 'multi') {
-            if (item.IsSelectableForActions) {
-                isSelected = (this.isAllSelected && !this.unSelectedItems.has(item.UID)) || this.selectedItems.has(item.UID);
+        if (item) {
+            if (this.selectionTypeForActions === 'single') {
+                isSelected = this.selectedItemId === this.getUniqItemId(item.UID, item.Type.toString());
+            } else if (this.selectionTypeForActions === 'multi') {
+                if (item.IsSelectableForActions) {
+                    isSelected = (this.isAllSelected && !this.unSelectedItems.has(item.UID)) || this.selectedItems.has(item.UID);
+                }
             }
         }
 

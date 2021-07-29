@@ -17,16 +17,16 @@
 
         .first-button,
         .first-button:after {
-            // border-radius: $border-radius-md 0 0 $border-radius-md;
-            border-start-start-radius: $border-radius-md;
-            border-start-end-radius: $border-radius-md;
+            border-radius: $border-radius-md 0 0 $border-radius-md;
+            // border-start-start-radius: $border-radius-md;
+            // border-start-end-radius: $border-radius-md;
         }
 
         .last-button,
         .last-button:after {
-            // border-radius: 0 $border-radius-md $border-radius-md 0;
-            border-start-end-radius: $border-radius-md;
-            border-end-end-radius: $border-radius-md;
+            border-radius: 0 $border-radius-md $border-radius-md 0;
+            // border-start-end-radius: $border-radius-md;
+            // border-end-end-radius: $border-radius-md;
         }
 
         .pepperi-button, .pep-button {
