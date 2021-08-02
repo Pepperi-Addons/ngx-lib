@@ -1136,7 +1136,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     updateItem(data: ObjectsDataRow): void {
-        let index = this.items.findIndex((i) => i && i?.UID === data?.UID);
+        const index = this.items.findIndex((i) => i && i?.UID === data?.UID);
         if (index >= 0 && index < this.items.length) {
             this.updateItemProperties(this.items[index], data);
         }

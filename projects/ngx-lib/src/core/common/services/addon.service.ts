@@ -33,7 +33,7 @@ export class PepAddonService {
             : this.ADDON_API_RELATIVE_PATH;
     }
 
-    getAddonStaticFolder(addonUUID: string = ''): string {
+    getAddonStaticFolder(addonUUID = ''): string {
         if (addonUUID.length > 0) {
             const addonsDictionary = this.sessionService.getObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY);
             return addonsDictionary && addonsDictionary[addonUUID] ? addonsDictionary[addonUUID] : '';
@@ -42,7 +42,7 @@ export class PepAddonService {
         }
     }
 
-    setAddonStaticFolder(path: string, addonUUID: string = ''): void {
+    setAddonStaticFolder(path: string, addonUUID = ''): void {
         if (addonUUID.length > 0) {
             const addonsDictionary = this.sessionService.getObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY) ?? {};
             addonsDictionary[addonUUID] = path;
@@ -50,15 +50,6 @@ export class PepAddonService {
         } else {
             return this.sessionService.setObject(this.ADDON_ASSETS_PATH_KEY, path);
         }
-    }
-
-    setAddonPath(uuid: string, url: string) {
-
-    }
-
-    getAddonPath(uuid: string) {
-        const addonsDictionary = this.sessionService.getObject('AddonsDictionary')
-        return addonsDictionary[uuid];
     }
 
     getAddonApiCall(
@@ -106,7 +97,7 @@ export class PepAddonService {
         http: HttpClient,
         fileService: PepFileService,
         addonService: PepAddonService,
-        addonUUID: string = ''
+        addonUUID = ''
     ) {
         const addonStaticFolder = addonService.getAddonStaticFolder(addonUUID);
         const translationsPath: string = fileService.getAssetsTranslationsPath();

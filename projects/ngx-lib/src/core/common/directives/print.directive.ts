@@ -26,14 +26,14 @@ export class PepPrintDirective {
      * 
      * @memberof PepPrintDirective
      */
-    @Input() printDelay: number = 0;
+    @Input() printDelay = 0;
 
     /**
      * @memberof PepPrintDirective
      */
     @Input()
     set printStyle(values: { [key: string]: { [key: string]: string } }) {
-        for (let key in values) {
+        for (const key in values) {
             if (values.hasOwnProperty(key)) {
                 this._printStyle.push((key + JSON.stringify(values[key])).replace(/['"]+/g, ''));
             }
@@ -67,12 +67,12 @@ export class PepPrintDirective {
      */
     @Input()
     set styleSheetFile(cssList: string) {
-        let linkTagFn = function (cssFileName) {
+        const linkTagFn = function (cssFileName) {
             return `<link rel="stylesheet" type="text/css" href="${cssFileName}">`;
         }
         if (cssList.indexOf(',') !== -1) {
             const valueArr = cssList.split(',');
-            for (let val of valueArr) {
+            for (const val of valueArr) {
                 this._styleSheetFile = this._styleSheetFile + linkTagFn(val);
             }
         } else {
@@ -103,7 +103,7 @@ export class PepPrintDirective {
      * 
      */
     private getFormData(data: any) {
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             data[i].defaultValue = data[i].value;
             if (data[i].checked) {
                 data[i].defaultChecked = true;
@@ -116,11 +116,11 @@ export class PepPrintDirective {
      * 
      */
     private getHtmlContents() {
-        let printContents = document.getElementById(this.printSectionId);
-        let innards = printContents.getElementsByTagName('input');
+        const printContents = document.getElementById(this.printSectionId);
+        const innards = printContents.getElementsByTagName('input');
         this.getFormData(innards);
 
-        let txt = printContents.getElementsByTagName('textarea');
+        const txt = printContents.getElementsByTagName('textarea');
         this.getFormData(txt);
 
         return printContents.innerHTML;
@@ -131,7 +131,7 @@ export class PepPrintDirective {
      */
     @HostListener('click')
     public print(): void {
-        let printContents, popupWin, styles = '', links = '';
+        let styles = '', links = '';
         const baseTag = this.getElementTag('base');
 
         if (this.useExistingCss) {
@@ -139,8 +139,8 @@ export class PepPrintDirective {
             links = this.getElementTag('link');
         }
 
-        printContents = this.getHtmlContents();
-        popupWin = window.open("", "_blank", "top=0,left=0,height=auto,width=auto");
+        const printContents = this.getHtmlContents();
+        const popupWin = window.open("", "_blank", "top=0,left=0,height=auto,width=auto");
         popupWin.document.open();
         popupWin.document.write(`
             <html>
