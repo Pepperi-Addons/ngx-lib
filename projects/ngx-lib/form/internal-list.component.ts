@@ -35,23 +35,19 @@ export type PepListViewType = 'cards' | 'lines' | 'table';
     },
 })
 export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
-    @Input() currentListTypeTranslation = '';
     @Input() noDataFoundMsg = 'Items not found';
     @Input() hideAllSelectionInMulti = false;
 
     @Input() top = -1;
-    @Input() listType = '';
     @Input() objectId = '0';
     @Input() parentId = '0';
     @Input() searchCode = '0';
     // @Input() showTopBorder = false;
-    @Input() firstFieldAsLink = false;
     @Input() supportResizing = true;
     @Input() parentScroll: Element | Window = null;
     @Input() disabled = false;
     @Input() disableEvents = false;
     @Input() disableSelectionItems = false;
-    @Input() pageType = '';
     @Input() totalsRow = [];
 
     // @Output()

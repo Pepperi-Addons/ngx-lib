@@ -8,7 +8,7 @@ on:
   push:
     branches-ignore:
       - "example" # 👈 Excludes the example branch
-      - "For_WebApp_16.55_SmartSearch"
+      - "OptimizePepList"
       
 # Event for the workflow
 on: pull_request

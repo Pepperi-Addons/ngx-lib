@@ -36,6 +36,7 @@
         .toggle-button {
             $half-button-width: 0.75rem;
             
+            z-index: $z-index-lowest + 1;
             border-radius: 50%;
             display: flex;
             align-items: center;

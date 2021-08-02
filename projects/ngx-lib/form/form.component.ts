@@ -22,7 +22,6 @@ import {
     PepDialogService,
     PepDialogData,
 } from '@pepperi-addons/ngx-lib/dialog';
-import { Subscription } from 'rxjs';
 import {
     IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
@@ -112,14 +111,13 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
     @Input() isActive = false;
     @Input() layoutType: PepLayoutType = 'card';
-    @Input() listType = '';
+    // @Input() listType = '';
     @Input() objectId = '0';
     @Input() parentId = '0';
     @Input() searchCode = '0';
     @Input() showTitle = true;
     @Input() firstFieldAsLink = false;
     @Input() checkForChanges: any = null;
-    @Input() pageType = '';
 
     @Output()
     valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
@@ -1394,41 +1392,20 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 return;
             }
 
-            // Remove this. (fix two matrix into one)
-            // if (matrixFields > 0 && this.isMatrixField(field.ApiName)) {
-            //     if (matrixFields > 1 && matrixAlreadyPlaced) {
-            //         return;
-            //     }
-
-            //     matrixAlreadyPlaced = true;
-
-            //     if (matrixFields > 1) {
-            //         this.matrixIsLast =
-            //             controlFields.length >= 2
-            //                 ? controlFields[controlFields.length - 2]
-            //                     .ApiName === field.ApiName
-            //                 : false;
-            //     } else {
-            //         this.matrixIsLast =
-            //             controlFields[controlFields.length - 1].ApiName ===
-            //             field.ApiName;
-            //     }
-            // }
-
             // Set type to link
-            if (this.firstFieldAsLink && index === 0) {
+            if (index === 0 && this.firstFieldAsLink) {
                 dataField.FieldType = FIELD_TYPE.InternalLink;
-                dataField.Value = this.getInternalLinkHref();
+                // dataField.Value = this.getInternalLinkHref();
             } else if (
                 dataField.Value.length > 0 &&
                 (field.FieldType === FIELD_TYPE.ReferenceType ||
                     field.FieldType === FIELD_TYPE.GuidReferenceType)
             ) {
-                const transactionUrl =
-                    this.data.MainAction === '2'
-                        ? 'transactions/scope_items/'
-                        : 'transactions/cart/';
-                dataField.Value = transactionUrl + dataField.Value;
+                // const transactionUrl =
+                //     this.data.MainAction === '2'
+                //         ? 'transactions/scope_items/'
+                //         : 'transactions/cart/';
+                // dataField.Value = transactionUrl + dataField.Value;
             }
 
             if (field.ApiName === 'ObjectMenu') {
@@ -1502,9 +1479,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     onFormValidationChanged(formValidationChange: any): void {
-        // if (this.layoutType === 'form' || this.layoutType === 'card') {
         this.formValidationChange.emit(formValidationChange);
-        // }
     }
 
     onClick(fieldClickEvent: IPepFieldClickEvent): void {
@@ -1566,24 +1541,24 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         }
     }
 
-    getInternalLinkHref(): string {
-        let hrefStr = '';
-        const uid = this.data.UID;
-        const transactionUrl =
-            this.data.MainAction === '2'
-                ? 'transactions/scope_items/'
-                : 'transactions/cart/';
-        // let isBuyer = sessionStorage.getItem('userRole') == 'Buyer' ? true : false;
+    // getInternalLinkHref(): string {
+    //     let hrefStr = '';
+    //     const uid = this.data.UID;
+    //     const transactionUrl =
+    //         this.data.MainAction === '2'
+    //             ? 'transactions/scope_items/'
+    //             : 'transactions/cart/';
+    //     // let isBuyer = sessionStorage.getItem('userRole') == 'Buyer' ? true : false;
 
-        if (this.listType === 'all_activities') {
-            hrefStr =
-                this.data.Type === 0
-                    ? transactionUrl + uid
-                    : 'activities/details/' + uid;
-        } else if (this.listType === 'accounts') {
-            hrefStr = 'accounts/home_page/' + uid;
-        }
+    //     if (this.listType === 'all_activities') {
+    //         hrefStr =
+    //             this.data.Type === 0
+    //                 ? transactionUrl + uid
+    //                 : 'activities/details/' + uid;
+    //     } else if (this.listType === 'accounts') {
+    //         hrefStr = 'accounts/home_page/' + uid;
+    //     }
 
-        return hrefStr;
-    }
+    //     return hrefStr;
+    // }
 }
