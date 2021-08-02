@@ -15,6 +15,7 @@ import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 })
 export class PepAddonService {
     private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
+    private readonly ADDONS_DICTIONARY_ASSETS_PATH_KEY = 'AddonsDictionaryAssetsPath';
     private readonly ADDON_API_RELATIVE_PATH = '/addons/api';
     private readonly ADDON_API_ASYNC_RELATIVE_PATH = `${this.ADDON_API_RELATIVE_PATH}/async`;
 
@@ -32,14 +33,32 @@ export class PepAddonService {
             : this.ADDON_API_RELATIVE_PATH;
     }
 
-    getAddonStaticFolder(): string {
-        // return this.assetsPath;
-        return this.sessionService.getObject(this.ADDON_ASSETS_PATH_KEY) || '';
+    getAddonStaticFolder(addonUUID: string = ''): string {
+        if (addonUUID.length > 0) {
+            const addonsDictionary = this.sessionService.getObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY);
+            return addonsDictionary && addonsDictionary[addonUUID] ? addonsDictionary[addonUUID] : '';
+        } else {
+            return this.sessionService.getObject(this.ADDON_ASSETS_PATH_KEY) || '';
+        }
     }
 
-    setAddonStaticFolder(path: string): void {
-        // this.assetsPath = path;
-        return this.sessionService.setObject(this.ADDON_ASSETS_PATH_KEY, path);
+    setAddonStaticFolder(path: string, addonUUID: string = ''): void {
+        if (addonUUID.length > 0) {
+            const addonsDictionary = this.sessionService.getObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY) ?? {};
+            addonsDictionary[addonUUID] = path;
+            this.sessionService.setObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY, addonsDictionary);
+        } else {
+            return this.sessionService.setObject(this.ADDON_ASSETS_PATH_KEY, path);
+        }
+    }
+
+    setAddonPath(uuid: string, url: string) {
+
+    }
+
+    getAddonPath(uuid: string) {
+        const addonsDictionary = this.sessionService.getObject('AddonsDictionary')
+        return addonsDictionary[uuid];
     }
 
     getAddonApiCall(
@@ -86,9 +105,10 @@ export class PepAddonService {
     public static createDefaultMultiTranslateLoader(
         http: HttpClient,
         fileService: PepFileService,
-        addonService: PepAddonService
+        addonService: PepAddonService,
+        addonUUID: string = ''
     ) {
-        const addonStaticFolder = addonService.getAddonStaticFolder();
+        const addonStaticFolder = addonService.getAddonStaticFolder(addonUUID);
         const translationsPath: string = fileService.getAssetsTranslationsPath();
         const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
 
