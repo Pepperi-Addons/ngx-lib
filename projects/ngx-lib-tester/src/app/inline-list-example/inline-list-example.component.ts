@@ -168,10 +168,7 @@ export class InlineListExampleComponent implements OnInit, AfterViewInit {
             this.customList.initListData(
                 uiControl,
                 rows.length,
-                rows,
-                'table',
-                '',
-                true
+                rows
             );
 
         }
