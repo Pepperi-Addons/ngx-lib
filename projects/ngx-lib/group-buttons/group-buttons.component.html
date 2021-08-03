@@ -34,14 +34,31 @@
     <div *ngIf="viewType == 'split'" class="split-buttons">
         <button *ngFor="let button of buttons; let index; let isFirst = first; let isLast = last"
             [pepDataQa]="button.value"
-            class="pep-button split-button mat-button {{ buttonsClass }} {{ button?.class }} pull-left flip"
-            [ngClass]="{'first-button': isFirst, 'middle-button': !isFirst && !isLast, 'last-button': isLast, 'icon-button': button?.icon}"
+            class="pep-button split-button mat-button {{ buttonsClass }} {{ button?.classNames }} pull-left flip"
+            [ngClass]="{'first-button': isFirst, 'middle-button': !isFirst && !isLast, 'last-button': isLast, 'icon-button': button?.iconName}"
             [disabled]="buttonsDisabled" mat-button (click)="onButtonClicked($event, button)">
-            <mat-icon *ngIf="button?.icon">
+
+            <ng-container *ngTemplateOutlet="contentTemplate; context: {button: button}"></ng-container>
+            <!-- <mat-icon *ngIf="button?.icon">
                 <pep-icon name="{{button?.icon}}">
                 </pep-icon>
-            </mat-icon>
-            <span *ngIf="button?.value" class="ellipsis" [title]="button?.value">{{ button?.value }}</span>
+            </mat-icon> -->
+            <!-- <span *ngIf="button?.value" class="ellipsis" [title]="button?.value">{{ button?.value }}</span> -->
         </button>
     </div>
 </div>
+
+<ng-template #contentTemplate let-button="button">
+    <mat-icon *ngIf="button.iconName && (!button.iconPosition || button.iconPosition === 'start')"
+        [ngClass]="{ 'pull-left flip': button.value }">
+        <pep-icon name="{{button.iconName}}"></pep-icon>
+    </mat-icon>
+    <span *ngIf="button.value" class="ellipsis pull-left flip"
+        [ngClass]="{ 'button-title-with-icon': button.iconName, 'icon-before': button.iconPosition === 'start' }"
+        [title]="button.value">
+        {{button.value}}
+    </span>
+    <mat-icon *ngIf="button.iconName && button.iconPosition === 'end'" [ngClass]="{ 'pull-left flip': button.value }">
+        <pep-icon name="{{button.iconName}}"></pep-icon>
+    </mat-icon>
+</ng-template>

@@ -42,10 +42,10 @@ export class TopBarExampleComponent implements OnInit {
             },
             {
                 key: 'del',
-                class: 'caution',
+                classNames: 'caution',
                 callback: (event: IPepButtonClickEvent) =>
                     this.onGroupButtonClicked(event),
-                icon: pepIconSystemBin.name,
+                iconName: pepIconSystemBin.name,
             },
         ];
     }

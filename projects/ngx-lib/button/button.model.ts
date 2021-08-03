@@ -1,8 +1,10 @@
 export class PepButton {
     key: string;
     value?: string;
-    class?: string;
-    icon?: string;
+    classNames?: string;
+    disabled?: boolean;
+    iconName?: string;
+    iconPosition?: 'start' | 'end';
     callback?: (action: IPepButtonClickEvent) => void;
 
     constructor(data: Partial<PepButton>) {

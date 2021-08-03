@@ -89,8 +89,8 @@ export class PepInternalButtonComponent
         {
             key: 'delete',
             callback: (action: IPepButtonClickEvent) => this.remove(),
-            class: 'caution',
-            icon: pepIconSystemBin.name,
+            classNames: 'caution',
+            iconName: pepIconSystemBin.name,
         },
     ];
 
@@ -98,7 +98,7 @@ export class PepInternalButtonComponent
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {
