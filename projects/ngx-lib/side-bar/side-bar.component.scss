@@ -115,9 +115,11 @@
         
         .main-content {
             overflow: auto;
+            height: inherit;
             
             .content {
                 overflow: hidden;
+                height: inherit;
             }
         }
     }
