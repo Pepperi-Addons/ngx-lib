@@ -35,7 +35,7 @@
         <button *ngFor="let button of buttons; let index; let isFirst = first; let isLast = last"
             [pepDataQa]="button.value"
             class="pep-button split-button mat-button {{ buttonsClass }} {{ button?.classNames }} pull-left flip"
-            [ngClass]="{'first-button': isFirst, 'middle-button': !isFirst && !isLast, 'last-button': isLast, 'icon-button': button?.iconName}"
+            [ngClass]="{'first-button': isFirst, 'middle-button': !isFirst && !isLast, 'last-button': isLast, 'icon-button': button?.iconName && !button?.value}"
             [disabled]="buttonsDisabled" mat-button (click)="onButtonClicked($event, button)">
 
             <ng-container *ngTemplateOutlet="contentTemplate; context: {button: button}"></ng-container>
