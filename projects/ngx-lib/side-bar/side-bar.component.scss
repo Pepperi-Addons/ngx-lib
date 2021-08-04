@@ -1,11 +1,16 @@
 @import "../src/core/style/abstracts/variables";
 @import "../src/core/style/abstracts/mixins";
+@import "../src/core/style/abstracts/functions";
  
 .pep-side-bar-container {
     $animation-time: 0.35s;
     $animation-time-third: calc(#{$animation-time} / 3);
 
     .toggle-side-bar-container {
+        &.show-shadow {
+            margin-inline-end: var(--pep-margin-inline-end-for-shadow);
+        }
+
         display: grid;
         grid-auto-flow: column;
         height: calc(100vh - #{$header-height});
@@ -114,11 +119,11 @@
         }
         
         .main-content {
-            overflow: auto;
+            overflow: hidden;
             height: inherit;
             
             .content {
-                overflow: hidden;
+                overflow: auto;
                 height: inherit;
             }
         }

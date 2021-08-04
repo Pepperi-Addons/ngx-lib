@@ -15,8 +15,12 @@
     <div class="main-content ">
         <div class="content spacing-top">
             <div class="child1 child-container">
-                <pep-group-buttons [buttons]="groupButtons" [buttonsClass]="'md regular'" [buttonsDisabled]="false"
-                    [viewType]="'split'">
+                <pep-group-buttons [buttons]="groupButtons" styleType="regular" [viewType]="'split'">
+                </pep-group-buttons>
+                <br />
+                <pep-group-buttons [buttons]="groupButtons2" styleType="weak" [viewType]="'toggle'"></pep-group-buttons>
+                <br />
+                <pep-group-buttons [buttons]="groupButtons2" styleType="regular" [viewType]="'toggle'">
                 </pep-group-buttons>
             </div>
 

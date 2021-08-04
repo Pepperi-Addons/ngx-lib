@@ -5,13 +5,15 @@ import {
     Output,
     EventEmitter,
 } from '@angular/core';
-import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
+import {
+    PepLayoutService, PepScreenSizeType, PepStyleType, PepSizeType
+} from '@pepperi-addons/ngx-lib';
 import {
     PepButton,
     IPepButtonClickEvent,
 } from '@pepperi-addons/ngx-lib/button';
 
-export type PepGroupButtonsViewType = 'regular' | 'dropdown' | 'split';
+export type PepGroupButtonsViewType = 'regular' | 'dropdown' | 'split' | 'toggle';
 @Component({
     selector: 'pep-group-buttons',
     templateUrl: './group-buttons.component.html',
@@ -22,12 +24,15 @@ export class PepGroupButtonsComponent implements OnDestroy {
     screenSize: PepScreenSizeType;
 
     @Input() viewType: PepGroupButtonsViewType = 'regular';
-    @Input() buttons: Array<PepButton>;
-    @Input() buttonsClass: string;
-    @Input() buttonsDisabled: boolean;
+    @Input() styleType: PepStyleType = 'weak';
+    @Input() sizeType: PepSizeType = 'md';
+    @Input() buttons: Array<PepButton> = [];
+    @Input() buttonsDisabled: boolean = false;
 
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
+
+    selectedButtonKey = '';
 
     constructor(public layoutService: PepLayoutService) {
         this.layoutService.onResize$.subscribe((size) => {
@@ -42,6 +47,8 @@ export class PepGroupButtonsComponent implements OnDestroy {
     }
 
     onButtonClicked(event: Event, button: PepButton): void {
+        this.selectedButtonKey = button?.key;
+
         const buttonClick = {
             source: button,
             event,
