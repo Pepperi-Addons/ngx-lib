@@ -19,7 +19,6 @@ import {
     PepLayoutType,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     PepCheckboxFieldType,
     PepCheckboxField,
 } from '@pepperi-addons/ngx-lib';
@@ -32,7 +31,7 @@ import {
 })
 export class PepCheckboxComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
-    @Input() value = '';
+    @Input() value: boolean = false;
     @Input() label = '';
 
     private _type: PepCheckboxFieldType = 'checkbox'; // || 'booleanText'
@@ -90,7 +89,7 @@ export class PepCheckboxComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     @Output()
-    valueChange: EventEmitter<string> = new EventEmitter<string>();
+    valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     standAlone = false;
 
@@ -163,9 +162,9 @@ export class PepCheckboxComponent implements OnInit, OnChanges, OnDestroy {
     toggleChecked(event: Event): void {
         if (!this.disabled) {
             const isChecked: boolean =
-                this.value === 'true' || this.value === '1' ? true : false;
+                this.value ? true : false;
             const newValue = !isChecked;
-            this.value = newValue.toString();
+            this.value = newValue;
             this.changeValue(newValue);
         }
     }
@@ -176,6 +175,6 @@ export class PepCheckboxComponent implements OnInit, OnChanges, OnDestroy {
             this.key,
             value
         );
-        this.valueChange.emit(value.toString());
+        this.valueChange.emit(value);
     }
 }

@@ -20,7 +20,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
     IPepOption,
     PepImageField,
@@ -106,8 +105,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
 
     @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();
-    // @Output()
-    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
+
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -122,7 +120,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         private renderer: Renderer2,
         private element: ElementRef,
         private translate: TranslateService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         if (this.form === null) {

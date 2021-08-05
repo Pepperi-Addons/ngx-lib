@@ -1,6 +1,6 @@
 <!-- <main> -->
 <pep-page-layout>
-    <pep-side-bar #sideNav>
+    <pep-side-bar #sideNav [showShadow]="true">
         <pep-smart-filters title="Test filters" [fields]="fields" [filters]="filters"
             (filtersChange)="onFiltersChange($event)">
         </pep-smart-filters>

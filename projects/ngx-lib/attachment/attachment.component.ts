@@ -17,7 +17,6 @@ import {
     PepLayoutType,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    // IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
     PepAttachmentField,
 } from '@pepperi-addons/ngx-lib';
@@ -121,9 +120,6 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() isActive = false;
 
-    // @Output()
-    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-
     @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -142,7 +138,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
         private renderer: Renderer2,
         public element: ElementRef,
         private fileService: PepFileService
-    ) {}
+    ) { }
 
     private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(

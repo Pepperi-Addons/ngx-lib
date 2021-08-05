@@ -27,7 +27,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
     PepQuantitySelectorFieldType,
     PepQuantitySelectorField,

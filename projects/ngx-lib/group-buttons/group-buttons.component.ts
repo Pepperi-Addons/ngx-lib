@@ -28,11 +28,11 @@ export class PepGroupButtonsComponent implements OnDestroy {
     @Input() sizeType: PepSizeType = 'md';
     @Input() buttons: Array<PepButton> = [];
     @Input() buttonsDisabled: boolean = false;
+    @Input() selectedButtonKey = '';
 
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
 
-    selectedButtonKey = '';
 
     constructor(public layoutService: PepLayoutService) {
         this.layoutService.onResize$.subscribe((size) => {

@@ -3,6 +3,7 @@ import {
     ChangeDetectorRef,
     ContentChild,
     ElementRef,
+    OnDestroy,
     ViewChild,
 } from '@angular/core';
 import {
@@ -40,7 +41,7 @@ import {
     templateUrl: './top-bar.component.html',
     styleUrls: ['./top-bar.component.scss'],
 })
-export class PepTopBarComponent implements AfterViewInit, AfterContentInit {
+export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnDestroy {
     @Input() inline = false;
     @Input() title: string = null;
 
@@ -60,7 +61,7 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit {
     listSortingComp: PepListSortingComponent;
     @ContentChild(PepListViewsComponent) listViewsComp: PepListViewsComponent;
 
-    showFooter = false;
+    hasFooterContent = null;
     isHidden = true;
     screenSize: PepScreenSizeType;
     // listActionsIsVisible = false;
@@ -73,15 +74,15 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit {
         public customizationService: PepCustomizationService,
         public layoutService: PepLayoutService,
         private cdRef: ChangeDetectorRef
-    ) {}
+    ) { }
 
     ngAfterViewInit(): void {
         if (!this.inline) {
-            this.showFooter =
+            this.hasFooterContent =
                 this.footerStartContent?.nativeElement?.children?.length > 0 ||
                 this.footerEndContent?.nativeElement?.children?.length > 0;
         }
-
+        debugger;
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
             this.setSearchIsOpenAndSmallDevice();
@@ -108,6 +109,12 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit {
         }
     }
 
+    ngOnDestroy(): void {
+        if (this.customizationService) {
+            this.customizationService.hideFooter();
+        }
+    }
+
     private setSearchIsOpenAndSmallDevice(): void {
         // check if search is open and the device size is small or extra small
         this.searchIsOpenAndSmallDevice =
@@ -117,7 +124,7 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit {
 
     private setFooterState() {
         const newFooterState: PepFooterStateType =
-            this.showFooter && this.screenSize >= PepScreenSizeType.MD
+            this.hasFooterContent && this.screenSize >= PepScreenSizeType.MD
                 ? 'visible'
                 : 'hidden';
 
@@ -125,6 +132,12 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit {
             this.footerState = newFooterState;
             this.cdRef.detectChanges();
             this.footerStateChange.emit({ state: this.footerState });
+
+            if (this.footerState === 'visible') {
+                this.customizationService.showFooter()
+            } else {
+                this.customizationService.hideFooter()
+            }
         }
     }
 }

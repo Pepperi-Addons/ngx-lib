@@ -1,7 +1,4 @@
 <div [formGroup]="form">
-    <!-- <pep-checkbox [form]="form" [key]="firstControlKey" [value]="firstControl.value?.toString()"
-        [label]="'SMART_FILTERS.IS_ON' | translate" [renderTitle]="false">
-    </pep-checkbox> -->
     <mat-radio-group class="radio-group" [formControlName]="firstControlKey">
         <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="true">
             {{ 'CHECKBOX.TRUE' | translate }}

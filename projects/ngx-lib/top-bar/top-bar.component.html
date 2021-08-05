@@ -20,7 +20,8 @@
         </div>
     </div>
 
-    <div #footer *ngIf="!inline" class="footer" [hidden]="!showFooter"
+    <!-- hasFooterContent === null is for the first load to see if there is data in the (footer-start-content || footer-end-content). -->
+    <div *ngIf="hasFooterContent === null || (hasFooterContent && footerState === 'visible')" class="footer"
         [style.height.rem]="customizationService.footerHeight">
         <div class="content pep-border-top">
             <div #footerStartContent class="left-container pep-spacing-element-negative flex-wrapper">
@@ -30,14 +31,14 @@
                 <ng-content select="[footer-end-content]"></ng-content>
             </div>
         </div>
-        <ng-container *ngIf="showFooter && screenSize >= PepScreenSizeType.MD; then footerBlock; else noFooterBlock">
+        <!-- <ng-container *ngIf="showFooter && screenSize >= PepScreenSizeType.MD; then footerBlock; else noFooterBlock">
         </ng-container>
         <ng-template #footerBlock>
             {{ customizationService.showFooter() }}
         </ng-template>
         <ng-template #noFooterBlock>
             {{ customizationService.hideFooter() }}
-        </ng-template>
+        </ng-template> -->
     </div>
 
 </div>

@@ -29,13 +29,17 @@
             overflow: hidden;
             // overflow: auto;
             height: 100%;
-            padding-inline: $content-padding;
+            
             padding-bottom: $footer-bar-height; // In case that the fixed footer is shown (the footer is in the top bar component).
             
             display: grid;
             grid-template-rows: auto 1fr;
             grid-template-areas: "top-area"
                                 "main-area";
+
+            &.add-padding {
+                padding-inline: $content-padding;
+            }
 
             .pep-top-area {
                 grid-area: top-area;

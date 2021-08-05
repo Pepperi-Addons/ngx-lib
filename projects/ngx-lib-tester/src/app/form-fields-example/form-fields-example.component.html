@@ -47,12 +47,11 @@
                     <pep-separator [key]="'sep1'" [label]="'separator'"></pep-separator>
 
                     <!-- Checkbox Exmaples -->
-                    <pep-checkbox [key]="'cb1'" [label]="'Pepperi Checkbox'" [value]="'true'" [xAlignment]="'left'"
+                    <pep-checkbox key="cb1" label="Pepperi Checkbox" value="true" xAlignment="left"
                         (valueChanged)="onValueChanged($event)">
                     </pep-checkbox>
-                    <pep-checkbox [key]="'bt1'" [label]="'Pepperi Emoji Checkbox'" [type]="'booleanText'"
-                        [value]="'true'" [additionalValue]='{ "CheckedText": "❤", "UncheckedText": "💛" }'
-                        [xAlignment]="'left'">
+                    <pep-checkbox key="bt1" label="Pepperi Emoji Checkbox" type="booleanText" value="true"
+                        [additionalValue]='{ "CheckedText": "❤", "UncheckedText": "💛" }' xAlignment="left">
                     </pep-checkbox>
 
                     <!-- Date Examples -->

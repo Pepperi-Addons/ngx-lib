@@ -91,10 +91,10 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         this.valueChange.emit(fieldValueChange);
     }
 
-    onValueChanged(value: string, field: PepFieldBase): void {
+    onValueChanged(value: any, field: PepFieldBase): void {
         const fieldValueChange = {
             key: field.key,
-            value: value,
+            value: value.toString(),
             controlType: field.controlType,
         };
         this.valueChange.emit(fieldValueChange);

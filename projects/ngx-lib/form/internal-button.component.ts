@@ -16,7 +16,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
     PepInternalButtonFieldType,
     PepInternalButtonField,

@@ -17,10 +17,9 @@
             <ng-container *ngIf="type == 'booleanText'; then booleanTextTemplate; else regularTemplate"></ng-container>
             <ng-template #booleanTextTemplate>
                 <div class="mat-checkbox-layout body-sm" (click)="toggleChecked($event)"
-                    [title]="(label.length > 0 ? label + ': ' : '') + ((value | lowercase) == 'true' || value == '1' ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))">
+                    [title]="(label.length > 0 ? label + ': ' : '') + (value ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))">
                     <button [id]="key" class="emoji-icon pull-left flip">
-                        {{ value.toLowerCase() == 'true' || value == '1' ? additionalValueObject?.CheckedText :
-                        additionalValueObject?.UncheckedText }}
+                        {{ value ? additionalValueObject?.CheckedText : additionalValueObject?.UncheckedText }}
                     </button>
                     <span *ngIf="label.length > 0 && layoutType !== 'table'" class="mat-checkbox-label emoji-title">{{
                         label }}</span>
@@ -28,8 +27,8 @@
             </ng-template>
             <ng-template #regularTemplate>
                 <mat-checkbox [name]="key" class="body-sm ellipsis" type="checkbox" (change)="onMaterialChange($event)"
-                    [title]="(label.length > 0 ? label + ': ' : '') + ((value | lowercase) == 'true' || value == '1' ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))"
-                    [checked]="(value | lowercase) == 'true' || value == '1' ? true : false" [disabled]="disabled">
+                    [title]="(label.length > 0 ? label + ': ' : '') + (value ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))"
+                    [checked]="value" [disabled]="disabled">
                     <span *ngIf="label.length > 0 && layoutType !== 'table'">{{ label }}</span>
                 </mat-checkbox>
             </ng-template>
@@ -51,7 +50,7 @@
         <ng-container *ngIf="key === 'ItemHasActiveCampaign'; then itemCampaignBlock; else checkboxBlock">
         </ng-container>
         <ng-template #itemCampaignBlock>
-            <ng-container *ngIf="(value | lowercase) == 'true' || value == '1'; then trueTemplate; else falseTemplate">
+            <ng-container *ngIf="value; then trueTemplate; else falseTemplate">
             </ng-container>
             <ng-template #trueTemplate>
                 <mat-icon class="has-active-campaign" title="{{ 'CHECKBOX.TRUE' | translate }}">

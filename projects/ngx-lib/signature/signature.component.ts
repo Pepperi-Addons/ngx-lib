@@ -21,7 +21,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    // IPepFieldValueChangeEvent,
     PepSignatureField,
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
@@ -71,9 +70,6 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     @Input() isActive = false;
-
-    // @Output()
-    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();

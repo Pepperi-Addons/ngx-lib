@@ -181,9 +181,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-    // @Output()
-    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

@@ -7,7 +7,7 @@ import {
     Input,
     Output,
 } from '@angular/core';
-import { IPepFieldValueChangeEvent, PepLayoutService, } from '@pepperi-addons/ngx-lib';
+import { PepLayoutService, } from '@pepperi-addons/ngx-lib';
 import { DEFAULT_PAGE_SIZE } from './list.model';
 
 export class IPepListPagerChangeEvent {
