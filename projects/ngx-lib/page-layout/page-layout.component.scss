@@ -22,6 +22,10 @@
             grid-area: side-layout;
             overflow: hidden;
             height: 100%;
+
+            &.show-shadow {
+                padding-inline-end: 1rem;
+            }
         }
 
         .pep-page-main-layout {

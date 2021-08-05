@@ -7,12 +7,6 @@
     $animation-time-third: calc(#{$animation-time} / 3);
 
     .toggle-side-bar-container {
-        &.show-shadow {
-            &.is-open-state {
-                margin-inline-end: var(--pep-margin-inline-end-for-shadow);
-            }
-        }
-
         display: grid;
         grid-auto-flow: column;
         height: calc(100vh - #{$header-height});
@@ -25,7 +19,8 @@
         &.is-open-state {
             transition: transform ease-out $animation-time, width ease-out $animation-time;
             transform: unset;
-            width: calc(#{$side-bar-width} + #{$content-padding});
+            width: $side-bar-width;
+            // width: calc(#{$side-bar-width} + #{$content-padding});
             
             .toggle-button {
                 transition: margin-inline ease-out $animation-time, transform ease-out $animation-time;

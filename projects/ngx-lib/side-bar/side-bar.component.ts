@@ -33,13 +33,11 @@ import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/ico
 @Injectable()
 export class PepSideBarComponent implements OnInit {
     static ONE_MULTI_BY_DIR_KEY = '--pep-one-multi-by-dir';
-    static MARGIN_INLINE_END_FOR_SHADOW = '--pep-margin-inline-end-for-shadow';
 
     // @Input() showOnLargeScreens = true;
     // @Input() sideBarButtons: Array<SideBarButton> = [];
     @Input() showHeader = true;
     @Input() showFooter = false;
-    @Input() showShadow = false;
 
     private _useAsWebComponent = false;
 
@@ -101,12 +99,6 @@ export class PepSideBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        const shadowOffset = document.documentElement.style.getPropertyValue(PepCustomizationService.SHADOW_MD_OFFSET_KEY);
-        const arr = shadowOffset.split(' ');
-        if (arr && arr.length > 2) {
-            document.documentElement.style.setProperty(PepSideBarComponent.MARGIN_INLINE_END_FOR_SHADOW, arr[2]);
-        }
-
         document.documentElement.style.setProperty(PepSideBarComponent.ONE_MULTI_BY_DIR_KEY, this.layoutService.isRtl() ? '1' : '-1');
         this.setState(this.isLargeScreen ? 'open' : 'close');
     }

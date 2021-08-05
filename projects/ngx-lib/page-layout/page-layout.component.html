@@ -1,7 +1,7 @@
 <div class="pep-page-header-layout">
     <ng-content select="[pep-header-area]"></ng-content>
 </div>
-<div class="pep-page-side-layout">
+<div class="pep-page-side-layout" [ngClass]="{ 'show-shadow': showShadow }">
     <ng-content select="pep-side-bar"></ng-content>
     <ng-content select="[pep-side-area]"></ng-content>
 </div>

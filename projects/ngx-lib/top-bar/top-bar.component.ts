@@ -82,7 +82,7 @@ export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnDe
                 this.footerStartContent?.nativeElement?.children?.length > 0 ||
                 this.footerEndContent?.nativeElement?.children?.length > 0;
         }
-        debugger;
+
         this.layoutService.onResize$.subscribe((size: PepScreenSizeType) => {
             this.screenSize = size;
             this.setSearchIsOpenAndSmallDevice();
