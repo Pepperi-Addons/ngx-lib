@@ -31,6 +31,7 @@ import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 export interface IPepFileChangeEvent {
     acceptedExtensions?: string;
     fileStr?: string;
+    fileName?: string;
     fileExt?: string;
 }
 
@@ -97,7 +98,9 @@ export class PepFilesUploaderComponent implements OnInit {
             const reader = new FileReader();
 
             reader.onload = (event: any) => {
-                const fileExt = item._file.name.split('.').pop();
+                const fileNameArray = item._file.name.split('.');
+                const fileName = fileNameArray[0];
+                const fileExt = fileNameArray[1]; // item._file.name.split('.').pop();
                 const target = event.target || event.srcElement;
                 const fileStr = target.result;
                 const errorMsg = this.isValidFile(
@@ -113,6 +116,7 @@ export class PepFilesUploaderComponent implements OnInit {
                     this.fileChange.emit({
                         acceptedExtensions: this.acceptedExtensions,
                         fileStr,
+                        fileName,
                         fileExt,
                     });
                 } else {

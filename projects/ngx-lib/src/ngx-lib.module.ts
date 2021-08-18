@@ -65,13 +65,8 @@ import { PepTargetDirective } from './core/portal/target.directive';
 
 const portalList = [PepAttachDirective, PepTargetDirective];
 
-import {
-    TranslateModule,
-    // TranslateLoader,
-    // TranslateService,
-    // MissingTranslationHandler,
-    // MissingTranslationHandlerParams
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 @NgModule({
     declarations: [
         pipeList,

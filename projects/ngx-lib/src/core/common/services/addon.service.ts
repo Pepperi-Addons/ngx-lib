@@ -6,6 +6,7 @@ import { PepLoaderService } from '../../http/services/loader.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
+import { TranslateService } from '@ngx-translate/core';
 
 /*
     This service is the webapp api for addon usege.
@@ -33,19 +34,19 @@ export class PepAddonService {
             : this.ADDON_API_RELATIVE_PATH;
     }
 
-    getAddonStaticFolder(addonUUID = ''): string {
-        if (addonUUID.length > 0) {
+    getAddonStaticFolder(subAddonUUID = ''): string {
+        if (subAddonUUID.length > 0) {
             const addonsDictionary = this.sessionService.getObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY);
-            return addonsDictionary && addonsDictionary[addonUUID] ? addonsDictionary[addonUUID] : '';
+            return addonsDictionary && addonsDictionary[subAddonUUID] ? addonsDictionary[subAddonUUID] : '';
         } else {
             return this.sessionService.getObject(this.ADDON_ASSETS_PATH_KEY) || '';
         }
     }
 
-    setAddonStaticFolder(path: string, addonUUID = ''): void {
-        if (addonUUID.length > 0) {
+    setAddonStaticFolder(path: string, subAddonUUID = ''): void {
+        if (subAddonUUID.length > 0) {
             const addonsDictionary = this.sessionService.getObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY) ?? {};
-            addonsDictionary[addonUUID] = path;
+            addonsDictionary[subAddonUUID] = path;
             this.sessionService.setObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY, addonsDictionary);
         } else {
             return this.sessionService.setObject(this.ADDON_ASSETS_PATH_KEY, path);
@@ -97,21 +98,44 @@ export class PepAddonService {
         http: HttpClient,
         fileService: PepFileService,
         addonService: PepAddonService,
-        addonUUID = ''
+        subAddonUUID = ''
     ) {
-        const addonStaticFolder = addonService.getAddonStaticFolder(addonUUID);
-        const translationsPath: string = fileService.getAssetsTranslationsPath();
+        const addonStaticFolder = addonService.getAddonStaticFolder(subAddonUUID);
+        const translationsPath: string = fileService.getAssetsTranslationsPath(addonStaticFolder);
         const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
+        const defaultSubFolder = 'assets/i18n/';
 
         return new MultiTranslateHttpLoader(http, [
             {
-                prefix: addonStaticFolder.length > 0 ? addonStaticFolder : translationsPath,
+                prefix: translationsPath,
                 suffix: translationsSuffix,
             },
             {
-                prefix: addonStaticFolder.length > 0 ? addonStaticFolder : '/assets/i18n/',
+                prefix: addonStaticFolder.length > 0 ? `${addonStaticFolder}${defaultSubFolder}` : `/${defaultSubFolder}`,
                 suffix: '.json',
             },
         ]);
     }
+
+    setDefaultTranslateLang(translate: TranslateService, urlLangParam = 'userLang') {
+        let userLang = 'en';
+        translate.setDefaultLang(userLang);
+        userLang = translate.getBrowserLang().split('-')[0]; // use navigator lang if available
+
+        if (urlLangParam.length > 0) {
+            const index = location.href.indexOf(urlLangParam);
+
+            if (index > -1) {
+                // urlLangParam=XX
+                const startIndex = index + urlLangParam.length + '='.length;
+                userLang = location.href.substring(startIndex, startIndex + 2);
+            }
+        }
+
+        // the lang to use, if the lang isn't available, it will use the current loader to get them
+        translate.use(userLang).subscribe((res: any) => {
+            // In here you can put the code you want. At this point the lang will be loaded
+        });
+    }
+
 }

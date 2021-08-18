@@ -155,6 +155,7 @@ export class PepCustomizationService {
         private fileService: PepFileService,
         public fb: FormBuilder
     ) {
+        this.hideFooter();
         //
     }
 

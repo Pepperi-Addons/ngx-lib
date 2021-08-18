@@ -1,5 +1,5 @@
 <div class="pep-side-bar-container">
-    <ng-container *ngIf="isLargeScreen; then largeScreensBlock; else notLargeScreensBlock">
+    <ng-container *ngIf="isLargeScreen || ignoreResize; then largeScreensBlock; else notLargeScreensBlock">
     </ng-container>
     <ng-template #largeScreensBlock>
         <div class="toggle-side-bar-container" [ngClass]="{ 'is-open-state': state === 'open'}">

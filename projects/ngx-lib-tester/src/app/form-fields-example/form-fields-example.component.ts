@@ -61,6 +61,10 @@ export class FormFieldsExampleComponent implements OnInit {
         alert(`${key}: value was changed`);
     }
 
+    imageChange(event: any) {
+        // console.log(event?.fileStr);
+    }
+
     elementClicked(event: IPepFieldClickEvent) {
         alert(`${event.key}: was clicked`);
     }

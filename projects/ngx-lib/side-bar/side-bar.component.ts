@@ -34,8 +34,7 @@ import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/ico
 export class PepSideBarComponent implements OnInit {
     static ONE_MULTI_BY_DIR_KEY = '--pep-one-multi-by-dir';
 
-    // @Input() showOnLargeScreens = true;
-    // @Input() sideBarButtons: Array<SideBarButton> = [];
+    @Input() ignoreResize = false;
     @Input() showHeader = true;
     @Input() showFooter = false;
 
@@ -59,11 +58,9 @@ export class PepSideBarComponent implements OnInit {
     stateChange: EventEmitter<IPepSideBarStateChangeEvent> = new EventEmitter<IPepSideBarStateChangeEvent>();
 
     @ViewChild('sidenav') sidenav: MatSidenav;
-    // @ViewChild('sidenavWrapper') sidenavWrapper: ElementRef;
 
     isMouseIn = false;
     sideBarHeight = '100%';
-    marginInlineEndValue = '0.25rem';
 
     screenSize: PepScreenSizeType;
     PepScreenSizeType = PepScreenSizeType;
@@ -77,7 +74,6 @@ export class PepSideBarComponent implements OnInit {
             this.screenSize = size;
             this.isLargeScreen = size < PepScreenSizeType.MD;
         });
-
     }
 
     private exportFunctionsOnHostElement() {

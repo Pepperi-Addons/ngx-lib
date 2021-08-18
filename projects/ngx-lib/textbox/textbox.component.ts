@@ -11,6 +11,7 @@ import {
     Renderer2,
     OnDestroy,
     ChangeDetectorRef,
+    HostBinding,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,12 +42,23 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
+
+    @HostBinding('attr.data-qa') dataQa = '';
+
+    private _key: string = '';
     /**
      * The text box key
      *
      * @memberof PepTextboxComponent
      */
-    @Input() key = '';
+    @Input()
+    set key(value) {
+        this._key = value;
+        this.dataQa = value;
+    }
+    get key(): string {
+        return this._key;
+    }
 
     private _value = null;
     /**
