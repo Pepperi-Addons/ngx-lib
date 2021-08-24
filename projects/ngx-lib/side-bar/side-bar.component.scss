@@ -103,7 +103,10 @@
         .header-content {
             height: $top-bar-height;
             padding-top: $top-bar-spacing-top;
-            
+            z-index: $z-index-lowest + 1;
+            position: sticky;
+            top: 0; 
+
             .content {
                 height: $top-bar-height-with-no-top;
                 display: flex;
@@ -116,11 +119,11 @@
         }
         
         .main-content {
-            overflow: hidden;
+            // overflow: hidden;
             height: inherit;
             
             .content {
-                overflow: auto;
+                // overflow: auto;
                 height: inherit;
             }
         }

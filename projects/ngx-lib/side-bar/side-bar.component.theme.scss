@@ -16,6 +16,10 @@
 
         .side-layout {
             background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+
+            .header-content {
+                background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+            }
         }
     }
 }

@@ -26,7 +26,7 @@
             z-index: 5;
 
             &.show-shadow {
-                padding-inline-end: 1rem;
+                padding-inline-end: $content-padding;
             }
         }
 
