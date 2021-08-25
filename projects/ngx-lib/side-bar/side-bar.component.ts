@@ -39,6 +39,7 @@ export class PepSideBarComponent implements OnInit {
     @Input() showFooter = false;
 
     private _useAsWebComponent = false;
+    private readonly _animationTime = 350; // milliseconds.
 
     state: PepSideBarStateType = 'open';
     toggleButtonArrowName: string = pepIconArrowRight.name;
@@ -153,11 +154,17 @@ export class PepSideBarComponent implements OnInit {
 
     toggleSideWrapper() {
         this.toggleState();
-        this.stateChange.emit({ state: this.state });
+        // Raise event after animation finish.
+        setTimeout(() => {
+            this.stateChange.emit({ state: this.state });
+        }, this._animationTime);
     }
 
     toggleSidenav(isOpen: boolean) {
         this.setState(isOpen ? 'open' : 'close');
-        this.stateChange.emit({ state: this.state });
+        // Raise event after animation finish.
+        setTimeout(() => {
+            this.stateChange.emit({ state: this.state });
+        }, this._animationTime);
     }
 }

@@ -167,8 +167,8 @@
                         $sliderSize: 18px;
                         width: $sliderSize;
                         height: $sliderSize;
-                        right: $sliderSize / 2 * -1;
-                        bottom: $sliderSize / 2 * -1;
+                        right: math.div($sliderSize, 2) * -1;
+                        bottom: math.div($sliderSize, 2) * -1;
                         transform: scale(.7) !important;
                         border-color: get-pep-color($pepperi-theme, color-system-primary-invert, color-base); //get-pep-color($pepperi-theme, color-system-primary, color-tran-50);
                         border-width: 5px;
