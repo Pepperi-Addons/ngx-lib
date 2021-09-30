@@ -46,7 +46,7 @@
         </button>
     </div>
 
-    <div *ngIf="viewType === 'toggle'" class="toggle-buttons">
+    <div *ngIf="viewType === 'toggle'" class="toggle-buttons" [ngClass]="{ 'stretch': stretch }">
         <button *ngFor="let button of buttons; let index; let isFirst = first; let isLast = last"
             [pepDataQa]="button?.value" mat-button pepButtonBlur
             class="pep-button {{ sizeType }} {{ styleType }} {{ button?.classNames }} pull-left flip"

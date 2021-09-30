@@ -49,7 +49,11 @@
     .toggle-buttons {
         display: grid;
         grid-auto-flow: column;
-        
+
+        &.stretch {
+            width: 100%;
+        }
+
         .pep-button {
             max-width: unset;
         }

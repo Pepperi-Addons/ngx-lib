@@ -28,6 +28,7 @@ import {
     PepLayoutType,
     FIELD_TYPE,
     PepCustomizationService,
+    PepLayoutService,
     UIControl,
     UIControlField,
     ObjectsDataRow,
@@ -161,6 +162,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     constructor(
         private dialogService: PepDialogService,
         private customizationService: PepCustomizationService,
+        private layoutService: PepLayoutService,
         private fb: FormBuilder,
         differs: KeyValueDiffers,
         private translate: TranslateService
@@ -489,7 +491,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             options.notificationInfo = dataField.NotificationInfo;
             customField = new PepQuantitySelectorField(options);
         } else {
-            // Hack need to remove this..
+            // HACK: need to remove this..
             if (
                 dataField.FieldType === FIELD_TYPE.Indicators &&
                 this.isMatrixField(dataField.ApiName)
@@ -1338,7 +1340,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         if (this.layoutType !== 'table') {
             this.setSpecialFields(controlFields, dataFields);
         } else {
-            // Hack: convert to center alignment if table view & special fields)
+            // HACK: convert to center alignment if table view & special fields)
             controlFields.forEach((field, index) => {
                 if (
                     field.ApiName === 'UnitsQuantity' ||
@@ -1358,6 +1360,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     field.FieldType === FIELD_TYPE.NumberRealForMatrix
                 ) {
                     field.Layout.XAlignment = X_ALIGNMENT_TYPE.Center;
+                } else {
+                    // HACK: align the rest of the fields by the culture.
+                    // field.Layout.XAlignment = this.layoutService.isRtl() ? X_ALIGNMENT_TYPE.Right : X_ALIGNMENT_TYPE.Left;
                 }
             });
         }

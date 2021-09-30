@@ -90,9 +90,12 @@
     .side-layout {
         $side-bar-width-less-padding: calc(#{$side-bar-width} - #{$double-content-padding});
         
-        display: grid;
-        grid-auto-rows: auto 1fr auto;
-        grid-auto-flow: row;
+        // display: grid;
+        // grid-auto-rows: auto 1fr auto;
+        // grid-auto-flow: row;
+        
+        // When the display is grid the max-width is not affected.
+        display: block;
         
         max-width: $side-bar-width;
         width: $side-bar-width;
