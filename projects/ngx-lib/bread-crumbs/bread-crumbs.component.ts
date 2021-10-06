@@ -53,7 +53,7 @@ export class PepBreadCrumbsComponent implements OnInit {
     shrinkItems = false;
     screenSize: PepScreenSizeType;
 
-    constructor(private layoutService: PepLayoutService) {}
+    constructor(private layoutService: PepLayoutService) { }
 
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {

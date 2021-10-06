@@ -2,7 +2,7 @@
     <ng-container *ngIf="viewType === 'regular'">
         <button *ngFor="let button of buttons" [pepDataQa]="button?.value"
             class="pep-button pep-spacing-element pull-left flip first-button {{ sizeType }} {{ styleType }}"
-            [disabled]="buttonsDisabled" mat-button (click)="onButtonClicked($event, button)">
+            [disabled]="buttonsDisabled || button.disabled" mat-button (click)="onButtonClicked($event, button)">
             <span [title]="button?.value">{{ button?.value }}</span>
         </button>
     </ng-container>
@@ -11,7 +11,8 @@
         [ngClass]="{dropup: screenSize >= PepScreenSizeType.MD}">
         <button [pepDataQa]="buttons[0]?.value"
             class="pep-button pull-left flip first-button {{ sizeType }} {{ styleType }}"
-            (click)="onButtonClicked($event, buttons[0])" [disabled]="buttonsDisabled" mat-button>
+            (click)="onButtonClicked($event, buttons[0])" [disabled]="buttonsDisabled || buttons[0].disabled"
+            mat-button>
             <span class="ellipsis" [title]="buttons[0]?.value">{{ buttons[0]?.value }}</span>
         </button>
         <button class="pep-button icon-button pull-right flip last-button {{ sizeType }} {{ styleType }}"
@@ -36,7 +37,7 @@
         <button *ngFor="let button of buttons; let index; let isFirst = first; let isLast = last"
             [pepDataQa]="button?.value" mat-button pepButtonBlur
             class="pep-button {{ sizeType }} {{ styleType }} {{ button?.classNames }} pull-left flip"
-            [disabled]="buttonsDisabled" [ngClass]="{
+            [disabled]="buttonsDisabled || button.disabled" [ngClass]="{
                 'first-button': isFirst, 
                 'middle-button': !isFirst && !isLast, 
                 'last-button': isLast, 
@@ -50,7 +51,7 @@
         <button *ngFor="let button of buttons; let index; let isFirst = first; let isLast = last"
             [pepDataQa]="button?.value" mat-button pepButtonBlur
             class="pep-button {{ sizeType }} {{ styleType }} {{ button?.classNames }} pull-left flip"
-            [disabled]="buttonsDisabled" [ngClass]="{
+            [disabled]="buttonsDisabled || button.disabled" [ngClass]="{
                 'first-button': isFirst && !isLast, 
                 'middle-button': !isFirst && !isLast, 
                 'last-button': isLast && !isFirst,
