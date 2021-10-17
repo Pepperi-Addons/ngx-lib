@@ -522,7 +522,7 @@
 // Override bootstrap css.
 // -----------------------------------------------------
 .modal {
-    z-index: $z-index-high + 1;
+    z-index: $z-index-high;
 }
 .modal-backdrop {
     z-index: $z-index-high - 2;

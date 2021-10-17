@@ -3,13 +3,15 @@
 @import "../src/core/style/abstracts/functions";
  
 .pep-side-bar-container {
+    height: 100%;
     $animation-time: 0.35s;
     $animation-time-third: calc(#{$animation-time} / 3);
 
     .toggle-side-bar-container {
+        height: inherit;
         display: grid;
         grid-auto-flow: column;
-        height: calc(100vh - #{$header-height});
+        // height: calc(100vh - #{$header-height});
         // max-width: calc(#{$side-bar-width} + #{$double-content-padding} + 1px); // 1px is for the toggle-button-border width
         
         transition: transform ease-out $animation-time, width ease-out $animation-time;
@@ -123,7 +125,9 @@
         
         .main-content {
             // overflow: hidden;
+            display: block;
             height: inherit;
+            max-width: $side-bar-width;
             
             .content {
                 // overflow: auto;
