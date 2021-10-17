@@ -97,12 +97,12 @@
         // grid-auto-flow: row;
         
         // When the display is grid the max-width is not affected.
+        // height: 100%;
         display: block;
         
         max-width: $side-bar-width;
         width: $side-bar-width;
         padding: 0 $content-padding;
-        height: 100%;
         overflow: auto;
         
         .header-content {
@@ -114,7 +114,10 @@
 
             .content {
                 height: $top-bar-height-with-no-top;
-                display: flex;
+                // When the display is flex the max-width is not affected.
+                // display: flex;
+                display: block;
+
                 overflow: unset; // For showing the focus (if hidden the focus is cutted).
             }
         }
