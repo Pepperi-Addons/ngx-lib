@@ -121,6 +121,9 @@ body {
 
 //  Font weight
 // ------------------------
+.normal {
+    font-weight: $font-weight-normal !important;
+}
 .bold {
     font-weight: $font-weight-bold !important;
 }

@@ -106,7 +106,7 @@
     $tabs-z-index: $z-index-lowest;
 
     .mat-tab-body-wrapper {
-        margin: 0 calc(#{$content-margin} * -1);
+        // margin: 0 calc(#{$content-margin} * -1);
 
         .mat-tab-body {
             z-index: $tabs-z-index - 1;

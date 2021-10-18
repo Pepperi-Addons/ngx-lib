@@ -114,10 +114,7 @@
 
             .content {
                 height: $top-bar-height-with-no-top;
-                // When the display is flex the max-width is not affected.
-                // display: flex;
-                display: block;
-
+                display: flex;
                 overflow: unset; // For showing the focus (if hidden the focus is cutted).
             }
         }
