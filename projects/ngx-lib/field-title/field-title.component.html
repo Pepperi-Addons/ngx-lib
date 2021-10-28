@@ -2,14 +2,14 @@
     <ng-container *ngIf="xAlignment == 'right' then rightTemplate else leftTemplate">
     </ng-container>
     <ng-template #rightTemplate>
-        <ng-container *ngTemplateOutlet="maxFieldCharactersTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="hintTemplate"></ng-container>
         <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
         <ng-container *ngTemplateOutlet="requiredTemplate"></ng-container>
     </ng-template>
     <ng-template #leftTemplate>
         <ng-container *ngTemplateOutlet="requiredTemplate"></ng-container>
         <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
-        <ng-container *ngTemplateOutlet="maxFieldCharactersTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="hintTemplate"></ng-container>
     </ng-template>
 
     <ng-template #requiredTemplate>
@@ -26,11 +26,20 @@
         <!-- For the grid template () -->
         <span *ngIf="!showTitle"></span>
     </ng-template>
-    <ng-template #maxFieldCharactersTemplate>
-        <span *ngIf="maxFieldCharacters > 0" class="body-xs">
-            &nbsp;{{ inputLength || 0 }}/{{ maxFieldCharacters }}
-        </span>
-        <!-- For the grid template () -->
-        <span *ngIf="maxFieldCharacters === 0"></span>
+    <ng-template #hintTemplate>
+        <ng-container *ngIf="hint?.length > 0 then hintTextTemplate else maxCharactersTemplate">
+        </ng-container>
+        <ng-template #hintTextTemplate>
+            <span class="body-xs">
+                &nbsp;{{ hint }}
+            </span>
+        </ng-template>
+        <ng-template #maxCharactersTemplate>
+            <span *ngIf="maxFieldCharacters > 0" class="body-xs">
+                &nbsp;{{ inputLength || 0 }}/{{ maxFieldCharacters }}
+            </span>
+            <!-- For the grid template () -->
+            <span *ngIf="maxFieldCharacters === 0"></span>
+        </ng-template>
     </ng-template>
 </div>

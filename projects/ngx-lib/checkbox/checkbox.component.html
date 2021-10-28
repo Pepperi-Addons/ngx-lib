@@ -26,7 +26,7 @@
                 </div>
             </ng-template>
             <ng-template #regularTemplate>
-                <mat-checkbox [name]="key" class="body-sm ellipsis" type="checkbox" (change)="onMaterialChange($event)"
+                <mat-checkbox [name]="key" class="body-sm" type="checkbox" (change)="onMaterialChange($event)"
                     [title]="(label.length > 0 ? label + ': ' : '') + (value ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))"
                     [checked]="value" [disabled]="disabled">
                     <span *ngIf="label.length > 0 && layoutType !== 'table'">{{ label }}</span>

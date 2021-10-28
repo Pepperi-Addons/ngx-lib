@@ -30,9 +30,29 @@ export class PepSeparatorComponent implements OnInit {
     @Input() form: FormGroup = null;
     @Input() layoutType: PepLayoutType = 'form';
 
+    private _visible = true;
+    @Input()
+    set visible(visible: boolean) {
+        this._visible = visible;
+        if (visible) {
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        }
+    }
+    get visible(): boolean {
+        return this._visible;
+    }
+
     standAlone = false;
 
-    constructor(private renderer: Renderer2, private element: ElementRef) {}
+    constructor(private renderer: Renderer2, private element: ElementRef) { }
 
     ngOnInit(): void {
         if (this.form === null) {

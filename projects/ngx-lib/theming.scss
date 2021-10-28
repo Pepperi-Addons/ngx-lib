@@ -65,6 +65,7 @@ $pep-typography: mat.define-typography-config(
 @import './separator/separator.component.theme';
 @import './side-bar/side-bar.component.theme';
 @import './signature/signature.component.theme';
+@import './slider/slider.component.theme';
 @import './smart-filters/smart-filters.component.theme';
 @import './textarea/textarea.component.theme';
 @import './textbox/textbox.component.theme';
@@ -158,6 +159,8 @@ $material-theme-for-pep: $material-default-theme;
         @include pep-separator-component-theme($pepperi-theme);
         @include pep-side-bar-component-theme($pepperi-theme);
         @include pep-signature-component-theme($pepperi-theme);
+        @include pep-slider-component-theme($pepperi-theme);
+
         @include pep-smart-filters-component-theme($pepperi-theme);
         @include pep-textarea-component-theme($pepperi-theme);
         @include pep-textbox-component-theme($pepperi-theme);

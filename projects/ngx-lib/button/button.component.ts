@@ -139,9 +139,9 @@ export class PepButtonComponent implements OnDestroy {
     constructor(private renderer: Renderer2, private element: ElementRef) { }
 
     ngOnDestroy(): void {
-        if (this.buttonClick) {
-            this.buttonClick.unsubscribe();
-        }
+        // if (this.buttonClick) {
+        //     this.buttonClick.unsubscribe();
+        // }
     }
 
     /**

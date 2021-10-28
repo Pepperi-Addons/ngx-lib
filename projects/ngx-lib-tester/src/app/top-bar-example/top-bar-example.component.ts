@@ -29,6 +29,17 @@ export class TopBarExampleComponent implements OnInit {
     searchString = '';
     searchAutoCompleteValues = [];
 
+    background = `
+        linear-gradient(to right,
+            hsl(0, 100%, 50%) 0%,
+            hsl(60, 100%, 50%) 17%,
+            hsl(120, 100%, 50%) 33%,
+            hsl(180, 100%, 50%) 50%,
+            hsl(240, 100%, 50%) 67%,
+            hsl(300, 100%, 50%) 83%,
+            hsl(360, 100%, 50%) 100%)
+    `;
+
     constructor(public layoutService: PepLayoutService) {
         this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
@@ -144,5 +155,9 @@ export class TopBarExampleComponent implements OnInit {
     onSearchAutocompleteChanged(value) {
         console.log(value);
         // debugger;
+    }
+
+    onSliderValueChange(value) {
+        console.log(value);
     }
 }
