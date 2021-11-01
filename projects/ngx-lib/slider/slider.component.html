@@ -1,7 +1,7 @@
 <div class="pep-slider-container">
     <pep-field-title [label]="label" [disabled]="disabled" [hint]="hint" [xAlignment]="xAlignment">
     </pep-field-title>
-    <mat-slider [min]="minValue" [max]="maxValue" [step]="step" [value]="value" [disabled]="disabled"
+    <mat-slider [min]="minValue" [max]="maxValue" [step]="step" [value]="value" [disabled]="disabled" [title]="value"
         (change)="onValueChange($event)">
     </mat-slider>
 </div>

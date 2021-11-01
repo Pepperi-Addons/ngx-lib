@@ -12,6 +12,8 @@ import { MatSliderModule } from '@angular/material/slider';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
+import { PepSliderModule } from '@pepperi-addons/ngx-lib/slider';
+
 import {
     PepIconModule,
     PepIconRegistry,
@@ -41,6 +43,7 @@ import { PepColorPickerComponent } from './color-picker.component';
         PepNgxLibModule,
         PepDialogModule,
         PepIconModule,
+        PepSliderModule,
         PepFieldTitleModule,
         PepTextboxModule,
     ],

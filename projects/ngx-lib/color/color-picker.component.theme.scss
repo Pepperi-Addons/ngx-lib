@@ -86,16 +86,8 @@
                     }
                 }
 
-                &.main {
-                    .mat-slider {
-                        .mat-slider-wrapper {
-                            background: linear-gradient(to right,
-                                hsl(var(--pep-color-picker-current-hue), 100%, 10%) 0%,
-                                hsl(var(--pep-color-picker-current-hue), 100%, 5%) 5%,
-                                hsl(var(--pep-color-picker-current-hue), 100%, 0.01%) 10%);
-                        }
-                    }
-                }
+                // &.main {
+                // }
                 &.success {
                     .mat-slider {
                         .mat-slider-wrapper {

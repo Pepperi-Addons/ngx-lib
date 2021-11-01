@@ -18,7 +18,7 @@
             <ng-template #booleanTextTemplate>
                 <div class="mat-checkbox-layout body-sm" (click)="toggleChecked($event)"
                     [title]="(label.length > 0 ? label + ': ' : '') + (value ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))">
-                    <button [id]="key" class="emoji-icon pull-left flip">
+                    <button [id]="key" class="emoji-icon ellipsis pull-left flip">
                         {{ value ? additionalValueObject?.CheckedText : additionalValueObject?.UncheckedText }}
                     </button>
                     <span *ngIf="label.length > 0 && layoutType !== 'table'" class="mat-checkbox-label emoji-title">{{
