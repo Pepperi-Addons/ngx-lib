@@ -29,7 +29,7 @@ export class PepSliderComponent implements OnInit {
     @Input() disabled = false;
     @Input() hint = '';
 
-    private _background = null;
+    private _background = '';
     @Input()
     set background(background: string) {
         if (!background) {
@@ -75,7 +75,7 @@ export class PepSliderComponent implements OnInit {
         }
 
         if (this.sliderWrapper) {
-            this.renderer.setStyle(this.sliderWrapper, 'background', this.background.length > 0 ? this.background : '#ccc');
+            this.renderer.setStyle(this.sliderWrapper, 'background', this.background?.length > 0 ? this.background : '#ccc');
         }
     }
 
