@@ -15,6 +15,7 @@ import {
 
 import { PepDefaultDialogComponent } from './default-dialog.component';
 import { PepDialogComponent } from './dialog.component';
+import { PepDialogService } from './dialog.service';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { PepDialogComponent } from './dialog.component';
     exports: [PepDialogComponent],
     declarations: [PepDefaultDialogComponent, PepDialogComponent],
     entryComponents: [PepDefaultDialogComponent],
+    providers: [PepDialogService]
 })
 export class PepDialogModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

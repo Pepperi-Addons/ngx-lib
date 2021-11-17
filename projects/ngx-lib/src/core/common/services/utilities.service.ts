@@ -52,7 +52,7 @@ export class PepUtilitiesService {
                     const year = Number(dateText[0]);
                     const month = Number(dateText[1]) - 1;
                     const day = Number(dateText[2]);
-                    retVal = new Date(year, month, day);
+                    retVal = new Date(year, month, day, 0, retVal.getTimezoneOffset() * -1);
                 }
             }
         }

@@ -65,7 +65,8 @@ import { PepTargetDirective } from './core/portal/target.directive';
 
 const portalList = [PepAttachDirective, PepTargetDirective];
 
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepLayoutService } from './core/index';
 
 @NgModule({
     declarations: [
@@ -74,10 +75,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
         clipboardList,
         layoutList,
         portalList,
-    ],
-    providers: [
-        httpInterceptorProviders,
-        // TranslateService
     ],
     imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
     exports: [
@@ -88,6 +85,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
         portalList,
         TranslateModule,
     ],
+    providers: [
+        httpInterceptorProviders,
+        PepHttpService,
+        PepAddonService,
+        PepFileService,
+        PepCustomizationService,
+        PepLayoutService
+    ]
 })
 export class PepNgxLibModule {
     // static forRoot(): ModuleWithProviders<PepNgxLibModule> {

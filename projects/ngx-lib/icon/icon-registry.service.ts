@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IPepIconData, PepIconType } from './icon-generated.model';
 
 @Injectable({
-    providedIn: 'platform',
+    providedIn: 'root',
 })
 export class PepIconRegistry {
     private registry = new Map<PepIconType, string>();
