@@ -106,6 +106,8 @@ export const allIcons = {
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8 15.5a2.5 2.5 0 012.292 1.5H20a1 1 0 010 2h-9.708a2.5 2.5 0 01-4.584 0H4a1 1 0 010-2h1.708A2.5 2.5 0 018 15.5zm8-6a2.5 2.5 0 012.292 1.5H20a1 1 0 010 2h-1.708a2.5 2.5 0 01-4.584 0H4a1 1 0 010-2h9.708A2.5 2.5 0 0116 9.5zm-8-6A2.5 2.5 0 0110.292 5H20a1 1 0 010 2h-9.708a2.5 2.5 0 01-4.584 0H4a1 1 0 110-2h1.708A2.5 2.5 0 018 3.5z"/></svg>',
   system_filter:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13.5 15a.5.5 0 01.5.5v2.86a.5.5 0 01-.621.485l-3-.75A.5.5 0 0110 17.61V15.5a.5.5 0 01.5-.5h3zm2.5-5a1 1 0 010 2H8a1 1 0 010-2h8zm3-5a1 1 0 010 2H5a1 1 0 110-2h14z"/></svg>',
+  system_folder:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M9.465 4a1 1 0 01.832.445l1.406 2.11a1 1 0 00.832.445H19a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h4.465zM17 9H7a1 1 0 00-1 1v5a1 1 0 001 1h10a1 1 0 001-1v-5a1 1 0 00-1-1z"/></svg>',
   system_full_screen:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M10.597 13.403a.961.961 0 010 1.36L7.36 18H9a1 1 0 010 2H5a1 1 0 01-1-1v-4a1 1 0 012 0v1.64l3.238-3.237a.961.961 0 011.36 0zM19 4a1 1 0 011 1v4a1 1 0 01-2 0V7.36l-3.238 3.237a.961.961 0 11-1.36-1.36L16.642 6H15a1 1 0 010-2h4z"/></svg>',
   system_heart:
