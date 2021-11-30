@@ -120,19 +120,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         }
 
         setTimeout(() => {
-            // const buffer = [];
-
-            // if (this.childData.Rows) {
-            //     // for (let i = 0; i < this.childData.Rows.length; i++) {
-            //     for (const childDataRow of this.childData.Rows) {
-            //         const osd = new ObjectSingleData(
-            //             this.uiControl,
-            //             childDataRow
-            //         );
-            //         osd.IsEditable = true;
-            //         buffer.push(osd);
-            //     }
-            // }
             const viewType: PepListViewType = this.isTableView()
                 ? 'table'
                 : 'lines';
@@ -256,16 +243,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         return this.isMatrixView() || this.isFlatMatrixView();
     }
 
-    // private getItemClass(): string {
-    //     let res = '';
-
-    //     if (!this.isTableView()) {
-    //         res = 'line-view';
-    //     }
-
-    //     return res;
-    // }
-
     changeChildrenViewType(viewTypeKey: string): void {
         this.rows = [];
         this.uiControl = null;
@@ -276,10 +253,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                 break;
             }
         }
-        // check if view type changed
-        // if (this.currentViewType.Key != viewTypeKey) {
-
-        // window.scroll(0, 0); //or document.body.scrollTop = 0; or document.querySelector('body').scrollTo(0,0)
 
         this.currentViewTypeTitle = this.currentViewType.Value;
 
@@ -317,9 +290,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         const config = this.dialogService.getDialogConfig(
             {
                 disableClose: false,
-                // minWidth: '50vw',
-                // maxWidth: '90vw',
-                // maxHeight: '90vh',
             },
             'large'
         );
@@ -391,14 +361,6 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.childChange) {
-        //     this.childChange.unsubscribe();
-        // }
-
-        // if (this.childClick) {
-        //     this.childClick.unsubscribe();
-        // }
-
         if (this.resize) {
             this.resize.unsubscribe();
         }

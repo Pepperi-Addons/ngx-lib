@@ -15,6 +15,7 @@ import {
     IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
 } from '@pepperi-addons/ngx-lib';
+import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.component';
 
 @Component({
     selector: 'pep-field-generator',
@@ -40,6 +41,11 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
     @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    formValueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
+    @Output()
+    formFieldClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
 
     get isValid(): boolean {
         if (this.field.readonly || this.field.disabled) {
@@ -114,6 +120,14 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
 
     onChildClick(childClick: any): void {
         this.childClick.emit(childClick);
+    }
+
+    onFormValueChanged(event: IPepFormFieldValueChangeEvent): void {
+        this.formValueChange.emit(event);
+    }
+
+    onFormFieldClick(event: IPepFormFieldClickEvent): void {
+        this.formFieldClick.emit(event);
     }
 
     ngOnChanges(changes: any): void {

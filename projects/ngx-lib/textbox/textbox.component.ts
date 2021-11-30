@@ -60,7 +60,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._key;
     }
 
-    private _value = null;
+    private _value = '';
     /**
      * The value of the text box.
      *

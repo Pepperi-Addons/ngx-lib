@@ -109,6 +109,10 @@
         (childClick)="onChildClick($event)" (childChange)="onChildChanged($event)">
     </pep-internal-page>
 
+    <pep-internal-carusel *ngSwitchCase="'internalCarusel'" [field]="field"
+        (formValueChange)="onFormValueChanged($event)" (formFieldClick)="onFormFieldClick($event)">
+    </pep-internal-carusel>
+
     <ng-container *ngSwitchCase="'placeholder'">
     </ng-container>
 </ng-container>

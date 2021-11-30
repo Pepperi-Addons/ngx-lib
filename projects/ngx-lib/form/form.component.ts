@@ -41,6 +41,7 @@ import {
     PepAddressField,
     PepIndicatorsField,
     PepInternalPageField,
+    PepInternalCaruselField,
     PepInternalButtonField,
     PepAttachmentField,
     PepSignatureField,
@@ -528,6 +529,15 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     } else {
                         // Not supported
                     }
+                    break;
+                }
+                case FIELD_TYPE.RelatedObjectsCards: {
+                    options.rowSpan = controlField.Layout.Height;
+                    // options.objectId = objectId;
+                    // options.parentId = parentId;
+                    // options.searchCode = searchCode;
+
+                    customField = new PepInternalCaruselField(options);
                     break;
                 }
                 case FIELD_TYPE.Link: {
@@ -1083,8 +1093,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         if (!isForUpdate) {
             const fields = [];
             for (const currentField of this.fields) {
-                // Add all fields except 'internalPage' type (for children).
-                if (currentField.controlType !== 'internalPage') {
+                // Add all fields except 'internalPage' && internalCarusel type (for children).
+                if (currentField.controlType !== 'internalPage' &&
+                    currentField.controlType !== 'internalCarusel') {
                     fields.push(currentField);
                 }
 
@@ -1097,7 +1108,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         } else {
             // Update form values if changed by calculated fields.
             for (const currentField of this.fields) {
-                if (currentField.controlType !== 'internalPage') {
+                if (currentField.controlType !== 'internalPage' &&
+                    currentField.controlType !== 'internalCarusel') {
                     if (
                         currentField.groupFields &&
                         currentField.groupFields.length > 0
@@ -1210,7 +1222,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     (f) => f.key === currentField.ApiName
                 )[0];
                 // Update all fields except 'internalPage' type (for children).
-                if (customField && customField.controlType !== 'internalPage') {
+                if (customField && (customField.controlType !== 'internalPage' && customField.controlType !== 'internalCarusel')) {
                     this.updateField(customField, currentField);
 
                     // Update the group fields.
@@ -1446,6 +1458,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         );
     }
 
+    onFormValidationChanged(formValidationChange: any): void {
+        this.formValidationChange.emit(formValidationChange);
+    }
+
     onValueChanged(event: IPepFieldValueChangeEvent): void {
         this.onFormValidationChanged(this.form.valid);
 
@@ -1473,18 +1489,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 controlType: event.controlType,
             });
         }
-    }
-
-    onChildClicked(childClick: any): void {
-        this.childClick.emit(childClick);
-    }
-
-    onChildChanged(childChange: any): void {
-        this.childChange.emit(childChange);
-    }
-
-    onFormValidationChanged(formValidationChange: any): void {
-        this.formValidationChange.emit(formValidationChange);
     }
 
     onClick(fieldClickEvent: IPepFieldClickEvent): void {
@@ -1546,24 +1550,23 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         }
     }
 
-    // getInternalLinkHref(): string {
-    //     let hrefStr = '';
-    //     const uid = this.data.UID;
-    //     const transactionUrl =
-    //         this.data.MainAction === '2'
-    //             ? 'transactions/scope_items/'
-    //             : 'transactions/cart/';
-    //     // let isBuyer = sessionStorage.getItem('userRole') == 'Buyer' ? true : false;
+    // This event is for handle the internal page events.
+    onChildClicked(childClick: any): void {
+        this.childClick.emit(childClick);
+    }
 
-    //     if (this.listType === 'all_activities') {
-    //         hrefStr =
-    //             this.data.Type === 0
-    //                 ? transactionUrl + uid
-    //                 : 'activities/details/' + uid;
-    //     } else if (this.listType === 'accounts') {
-    //         hrefStr = 'accounts/home_page/' + uid;
-    //     }
+    // This event is for handle the internal page events.
+    onChildChanged(childChange: any): void {
+        this.childChange.emit(childChange);
+    }
 
-    //     return hrefStr;
-    // }
+    // This event is for handle the related items change events.
+    onFormValueChanged(event: IPepFormFieldValueChangeEvent): void {
+        this.valueChange.emit(event);
+    }
+
+    // This event is for handle the related items change events.
+    onFormFieldClick(event: IPepFormFieldClickEvent): void {
+        this.fieldClick.emit(event);
+    }
 }

@@ -1,0 +1,22 @@
+<div class="carousel-container">
+    <ng-container *ngIf="items?.length > 0; then carouselBlock; else emptyBlock"></ng-container>
+    <ng-template #emptyBlock>
+        <!-- No items -->
+    </ng-template>
+    <ng-template #carouselBlock>
+        <pep-button *ngIf="screenSize <= PepScreenSizeType.SM" [iconName]="'arrow_left_alt'" [styleType]="'regular'"
+            [disabled]="prevDisabled" (click)="moveLeft()" class="carousel-arrow start-arrow">
+        </pep-button>
+        <pep-carousel #carousel [xWheelEnabled]="false" [snapDuration]="duration"
+            (reachesLeftBound)="onReachesLeftBound($event)" (reachesRightBound)="onReachesRightBound($event)">
+            <ng-container *ngFor="let item of items">
+                <pep-form pepCarouselItem [layout]="layout" [data]="item" [layoutType]="'card'" class="card-view "
+                    (valueChange)="onCustomizeObjectChanged($event)" (fieldClick)="onCustomizeFieldClick($event)">
+                </pep-form>
+            </ng-container>
+        </pep-carousel>
+        <pep-button *ngIf="screenSize <= PepScreenSizeType.SM" [iconName]="'arrow_right_alt'" [styleType]="'regular'"
+            [disabled]="nextDisabled" (click)="moveRight()" class="carousel-arrow end-arrow">
+        </pep-button>
+    </ng-template>
+</div>

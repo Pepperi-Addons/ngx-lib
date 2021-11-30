@@ -6,8 +6,9 @@
         <mat-grid-tile *ngFor="let field of fields" [rowspan]="field.rowSpan" [colspan]="field.colSpan">
             <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
                 [checkForChanges]="checkForChanges" [uid]="data?.UID" [field]="field" [showTitle]="showTitle"
-                (valueChange)="onValueChanged($event)" (childClick)="onChildClicked($event)"
-                (childChange)="onChildChanged($event)" (elementClick)="onClick($event)"
+                (valueChange)="onValueChanged($event)" (elementClick)="onClick($event)"
+                (childClick)="onChildClicked($event)" (childChange)="onChildChanged($event)"
+                (formValueChange)="onFormValueChanged($event)" (formFieldClick)="onFormFieldClick($event)"
                 (formValidationChange)="onFormValidationChanged($event)">
             </pep-field-generator>
         </mat-grid-tile>
@@ -21,8 +22,9 @@
             <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
                 [ngClass]="{ 'lock-events': lockEvents }" [isActive]="isActive" [checkForChanges]="checkForChanges"
                 [uid]="data?.UID" [field]="field" [showTitle]="showTitle" (valueChange)="onValueChanged($event)"
-                (childClick)="onChildClicked($event)" (childChange)="onChildChanged($event)"
-                (elementClick)="onClick($event)">
+                (elementClick)="onClick($event)" (childClick)="onChildClicked($event)"
+                (childChange)="onChildChanged($event)" (formValueChange)="onFormValueChanged($event)"
+                (formFieldClick)="onFormFieldClick($event)">
             </pep-field-generator>
         </mat-grid-tile>
     </mat-grid-list>
@@ -37,8 +39,9 @@
                 [ngClass]="['text-align-' + field.xAlignment]" style="height: 100%"
                 [ngStyle]="{ width: (layout?.ControlFields)[j]?.calcColumnWidthString}">
                 <pep-field-generator *ngIf="field.controlType != 'placeholder'" [checkForChanges]="checkForChanges"
-                    [uid]="data?.UID" [field]="field" (valueChange)="onValueChanged($event)"
-                    (elementClick)="onClick($event)" [form]="form" [layoutType]="layoutType" [showTitle]="false"
+                    [uid]="data?.UID" [field]="field" [form]="form" [layoutType]="layoutType" [showTitle]="false"
+                    (elementClick)="onClick($event)" (valueChange)="onValueChanged($event)"
+                    (formValueChange)="onFormValueChanged($event)" (formFieldClick)="onFormFieldClick($event)"
                     [isActive]="isActive">
                 </pep-field-generator>
             </div>

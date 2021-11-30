@@ -1,0 +1,40 @@
+@import '../src/core/style/abstracts/variables';
+@import '../src/core/style/abstracts/mixins';
+
+.carousel-container {
+    position: relative;
+    // margin: 0 calc(#{$spacing-sm} * -1);
+    margin: 0;
+    display: grid;
+    
+    .carousel-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translate(0%, -50%);
+        z-index: $z-index-lowest;
+
+        &.start-arrow { 
+            left: 0;
+            // left: -0.5rem;
+        }
+        
+        &.end-arrow {
+            right: 0;
+            // right: -0.5rem;
+        }
+    }
+
+    ::ng-deep.carousel-content {
+        .card-view {
+            padding: $spacing-sm 0 !important;
+            
+            &:first-child {
+                padding-inline-start: $spacing-sm !important;
+            }
+            &:last-child {
+                padding-inline-end: $spacing-sm !important;
+            }
+        }
+    }
+
+}

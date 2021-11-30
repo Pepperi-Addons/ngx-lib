@@ -27,6 +27,7 @@ import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 import { PepAddressModule } from '@pepperi-addons/ngx-lib/address';
 import { PepAttachmentModule } from '@pepperi-addons/ngx-lib/attachment';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { PepCarouselModule } from '@pepperi-addons/ngx-lib/carousel';
 import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { PepDateModule } from '@pepperi-addons/ngx-lib/date';
 import { PepImageModule } from '@pepperi-addons/ngx-lib/image';
@@ -46,6 +47,7 @@ const pepComponentsModules = [
     PepAddressModule,
     PepAttachmentModule,
     PepButtonModule,
+    PepCarouselModule,
     PepCheckboxModule,
     PepDateModule,
     PepImageModule,
@@ -66,6 +68,8 @@ import { PepInternalButtonComponent } from './internal-button.component';
 import { PepInternalListComponent } from './internal-list.component';
 import { PepInternalMenuComponent } from './internal-menu.component';
 import { PepInternalPageComponent } from './internal-page.component';
+import { PepInternalCaruselComponent } from './internal-carusel.component';
+
 
 @NgModule({
     imports: [
@@ -97,6 +101,7 @@ import { PepInternalPageComponent } from './internal-page.component';
         PepInternalListComponent,
         PepInternalMenuComponent,
         PepInternalPageComponent,
+        PepInternalCaruselComponent
     ],
 })
 export class PepFormModule {

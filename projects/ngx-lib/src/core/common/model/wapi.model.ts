@@ -71,6 +71,7 @@ export enum FIELD_TYPE {
     'Duration' = 51,
     'ListOfObjects' = 52,
     'Package' = 53, // Package Quantity Selector
+    'RelatedObjectsCards' = 54,
     'BooleanText' = 55, // Boolean that return a string defined by the user in case of true/false
     'RichTextHTML' = 56, // Html Text
 }
