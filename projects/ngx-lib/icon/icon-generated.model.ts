@@ -370,6 +370,13 @@ export const pepIconSystemFilter: {
   name: 'system_filter',
   data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13.5 15a.5.5 0 01.5.5v2.86a.5.5 0 01-.621.485l-3-.75A.5.5 0 0110 17.61V15.5a.5.5 0 01.5-.5h3zm2.5-5a1 1 0 010 2H8a1 1 0 010-2h8zm3-5a1 1 0 010 2H5a1 1 0 110-2h14z"/></svg>`
 };
+export const pepIconSystemFolder: {
+  name: 'system_folder';
+  data: string;
+} = {
+  name: 'system_folder',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M9.465 4a1 1 0 01.832.445l1.406 2.11a1 1 0 00.832.445H19a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h4.465zM17 9H7a1 1 0 00-1 1v5a1 1 0 001 1h10a1 1 0 001-1v-5a1 1 0 00-1-1z"/></svg>`
+};
 export const pepIconSystemFullScreen: {
   name: 'system_full_screen';
   data: string;
@@ -718,6 +725,7 @@ export type PepIconType =
   | 'system_file_upload'
   | 'system_filter_2'
   | 'system_filter'
+  | 'system_folder'
   | 'system_full_screen'
   | 'system_heart'
   | 'system_home'
