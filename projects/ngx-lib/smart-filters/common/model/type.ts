@@ -1,8 +1,12 @@
 export type PepSmartFilterComponentType =
-    // 'text' |
-    'number' | 'date' | 'multi-select' | 'boolean';
+    | 'text'
+    | 'number'
+    | 'date'
+    | 'multi-select'
+    | 'boolean';
 
 export type PepSmartFilterType =
+    | 'text'
     | 'boolean'
     | 'currency'
     | 'date'

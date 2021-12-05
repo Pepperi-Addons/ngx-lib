@@ -31,7 +31,7 @@ import {
 })
 export class PepCheckboxComponent implements OnInit, OnChanges, OnDestroy {
     @Input() key = '';
-    @Input() value: boolean = false;
+    @Input() value = false;
     @Input() label = '';
 
     private _type: PepCheckboxFieldType = 'checkbox'; // || 'booleanText'

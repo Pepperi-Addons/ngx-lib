@@ -1,6 +1,7 @@
 import {
     IPepSmartFilterField,
     PepSmartFilterBaseField,
+    PepSmartFilterTextField,
     PepSmartFilterBooleanField,
     PepSmartFilterDateField,
     PepSmartFilterMultiSelectField,
@@ -13,6 +14,10 @@ import {
 import { IPepSmartFilterData } from './filter';
 import { IPepSmartFilterOperator, IPepSmartFilterOperatorUnit } from './operator';
 import { PepSmartFilterType } from './type';
+
+function createTextSmartFilterField(data: IPepSmartFilterField) {
+    return new PepSmartFilterTextField(data);
+}
 
 function createBooleanSmartFilterField(data: IPepSmartFilterField) {
     return new PepSmartFilterBooleanField(data);
@@ -53,6 +58,9 @@ export function createSmartFilterField(
     let field: PepSmartFilterBaseField;
 
     switch (type) {
+        case 'text':
+            field = createTextSmartFilterField(data);
+            break;
         case 'boolean':
             field = createBooleanSmartFilterField(data);
             break;
@@ -77,7 +85,6 @@ export function createSmartFilterField(
         case 'percentage':
             field = createPercentageSmartFilterField(data);
             break;
-
         default:
             field = createMultiSelectSmartFilterField(data);
             break;

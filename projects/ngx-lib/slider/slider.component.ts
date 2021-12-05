@@ -43,7 +43,7 @@ export class PepSliderComponent implements OnInit {
         return this._background;
     }
 
-    @Input() step: number = 1;
+    @Input() step = 1;
     @Input() minValue = NaN;
     @Input() maxValue = NaN;
 

@@ -27,7 +27,7 @@ export class PepGroupButtonsComponent implements OnDestroy {
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
     @Input() buttons: Array<PepButton> = [];
-    @Input() buttonsDisabled: boolean = false;
+    @Input() buttonsDisabled = false;
     @Input() selectedButtonKey = '';
     @Input() stretch = false;
 

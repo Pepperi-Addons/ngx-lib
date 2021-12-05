@@ -56,6 +56,19 @@ export abstract class PepSmartFilterBaseField implements IPepSmartFilterField {
 
     protected abstract getType(): PepSmartFilterType;
 }
+// Text field
+// ------------------------------
+export class PepSmartFilterTextField extends PepSmartFilterBaseField {
+    constructor(field: IPepSmartFilterField) {
+        super(field);
+        this._componentType = 'text';
+    }
+
+    getType(): PepSmartFilterType {
+        return 'text';
+    }
+}
+
 
 // Boolean field
 // ------------------------------

@@ -45,7 +45,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     @HostBinding('attr.data-qa') dataQa = '';
 
-    private _key: string = '';
+    private _key = '';
     /**
      * The text box key
      *

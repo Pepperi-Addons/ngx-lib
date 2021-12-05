@@ -74,12 +74,12 @@ const NumberRange: IPepSmartFilterOperator = {
     componentType: ['number'],
 };
 
-// const Contains: Operator = {
-//     id: 'contains',
-//     name: 'Contains',
-//     short: 'Contains',
-//     type: ['text'],
-// };
+const Contains: IPepSmartFilterOperator = {
+    id: 'contains',
+    name: 'CONTAINS',
+    short: 'Contains',
+    componentType: ['text'],
+};
 
 // const BeginsWith: Operator = {
 //     id: 'beginsWith',
@@ -201,7 +201,7 @@ export const PepSmartFilterOperators = {
     GreaterThan: GreaterThan,
     // GreaterThanOrEquals: GreaterThanOrEquals,
     NumberRange: NumberRange,
-    // Contains: Contains,
+    Contains: Contains,
     // BeginsWith: BeginsWith,
     // EndsWith: EndsWith,
     // After: After,

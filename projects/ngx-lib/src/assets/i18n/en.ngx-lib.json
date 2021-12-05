@@ -75,7 +75,8 @@
             "GREATER_THEN": "Greater than",
             "GREATER_THEN_OR_EQUAL": "Greater than or equal to",
             "NUMBER_RANGE": "Between",
-            "In": "In"
+            "CONTAINS": "Contains",
+            "IN": "In"
         },
         "OPERATOR_UNITS": {
             "DAYS": "Days",

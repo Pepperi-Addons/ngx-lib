@@ -9,6 +9,7 @@ export * from './boolean-filter/boolean-filter.component';
 export * from './date-filter/date-filter.component';
 export * from './multi-select-filter/multi-select-filter.component';
 export * from './number-filter/number-filter.component';
+export * from './filter-builder/filter-builder.component';
 
 // Model
 export * from './common/model/creator';
