@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PepSmartFilterType } from '../../common/model/type';
 import { PepSmartFilterBaseField, IPepSmartFilterField } from '../../common/model/field';
 import { IPepSmartFilterData } from '../../common/model/filter';
@@ -12,32 +13,52 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
 export class FilterBuilderItemComponent {
     @Input()
     set selected(value: any) {
-        console.log('selected', value);
-        if (value) {
+        //console.log('selected', value);
+        /*if (value) {
             this._selectedField = value;
-        }
+        }*/
     }
     @Input()
     set fields(list: Array<IPepSmartFilterField>) {
-        if (list?.length > 0) {
-            this._fields = list;
-            console.log('_fields', this._fields);
-            this._options = list.map(field => {
+        /* if (list?.length > 0) {
+             this._fields = list;
+             //console.log('_fields', this._fields);
+             this._options = list.map(field => {
+                 return {
+                     key: field.id,
+                     value: field.name
+                 }
+             }) 
+             //console.log('this._options', this._options);
+         } */
+    };
+    @Input()
+    set filter(value: IPepSmartFilterData) {
+        //console.log('input filter', value);
+        /*if (value) {
+            this._filter = value;
+            //this.setupFilters(list);
+        } */
+    };
+    @Input()
+    set form(value: FormGroup) {
+        this._form = value;
+        console.log('item form', this._f);
+        //set selected field
+        this._selectedField = this._f.selected?.value;
+        //set fields
+        this._fields = this._f.fields?.value;
+        if (this._fields.length > 0) {
+            this._options = this._fields.map(field => {
                 return {
                     key: field.id,
                     value: field.name
                 }
             })
-            console.log('this._options', this._options);
         }
-    };
-    @Input()
-    set filter(value: IPepSmartFilterData) {
-        console.log('input filter', value);
-        if (value) {
-            this._filter = value;
-            //this.setupFilters(list);
-        }
+        //set filter
+        this._filter = this._f.filter?.value;
+
     };
 
     @Output()
@@ -45,6 +66,7 @@ export class FilterBuilderItemComponent {
         IPepSmartFilterData
     >();
 
+    _form: FormGroup;
     _fields: Array<any> = [];
     _filter: IPepSmartFilterData;
 
@@ -53,18 +75,29 @@ export class FilterBuilderItemComponent {
         IPepSmartFilterData
     >();
 
-
+    //form: FormGroup;
     _options: IPepOption[] = [];
     _selectedField: PepSmartFilterBaseField = null;
     //_selectedOption: any = null;
 
-    constructor() {
+    constructor(private fb: FormBuilder) {
+        //this.setupForm();
     }
 
     ngOnInit() {
-
+        //console.log('parent form', this.form);
     }
 
+    get _f() {
+        return this._form.controls;
+    }
+
+    /*setupForm() {
+        this.form = this.fb.group({
+            First: ''
+        });
+
+    } */
     /* no need
     private setupFilters(value: IPepSmartFilterData[]) {
         this._filtersDataMap.clear();
@@ -122,15 +155,15 @@ export class FilterBuilderItemComponent {
         this.filtersChange.emit(this._filter);
     }
 
-    onOperatorChanged(key) {
-        console.log('onOperatorChanged', key);
+    onFieldChanged(key) {
+        console.log('onFieldChanged', key);
         let item = this._fields.find(field => field.id === key);
         console.log('item', item);
         this._selectedField = item ? item : null;
         this._filter = null;
     }
 
-    onFilterChange(
+    onFilterChanged(
         field: PepSmartFilterBaseField,
         filterData: IPepSmartFilterData
     ) {

@@ -26,7 +26,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 })
 export class FilterBuilderExampleComponent implements OnInit {
     fields: Array<any>;
-    filters: Array<IPepSmartFilterData>;
+    //filters: Array<IPepSmartFilterData>;
 
     uiControl;
     items;
@@ -51,7 +51,43 @@ export class FilterBuilderExampleComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadFilterFields();
-        this.json = { //TEMP
+        this.json = {
+            "ComplexId": 3,
+            "Operation": "OR",
+            "LeftNode": {
+                "ComplexId": 2,
+                "Operation": "AND",
+                "LeftNode": {
+                    "ExpressionId": 1,
+                    "ApiName": "ActionDateTime",
+                    "Operation": "InTheLast",
+                    "Values": [
+                        "4",
+                        "Days"
+                    ]
+                },
+                "RightNode": {
+                    "ExpressionId": 2,
+                    "ApiName": "BillToState",
+                    "Operation": "In",
+                    "Values": [
+                        "Aargau",
+                        "Aberdeen City",
+                        "Acoruña",
+                        "Acre"
+                    ]
+                }
+            },
+            "RightNode": {
+                "ExpressionId": 3,
+                "ApiName": "Type",
+                "Operation": "IsEqual",
+                "Values": [
+                    "trtt"
+                ]
+            }
+        }
+        /*this.json = { 
             ComplexId: 4,
             Operation: 'AND',
             LeftNode: {
@@ -88,7 +124,7 @@ export class FilterBuilderExampleComponent implements OnInit {
                     5
                 ]
             }
-        }
+        } */
     }
 
     loadFilterFields() {
@@ -99,19 +135,20 @@ export class FilterBuilderExampleComponent implements OnInit {
 
         this.fields = [
             { ApiName: 'TSAAttachmentTest1', DisplayName: 'TSA Attachment Test', Type: 'String', Options: [] },
-            { ApiName: 'BillToState', DisplayName: 'Bill To State', Type: 'Date', Options: [] },
-            { ApiName: 'TSABudget113', DisplayName: 'TSA Budget 113', Type: 'String', Options: [] },
-            { ApiName: 'PlannedDuration', DisplayName: 'Planned Duration', Type: 'Integer', Options: [] },
-            { ApiName: 'GrandTotal', DisplayName: 'Grand Total', Type: 'Double', Options: [] },
+            { ApiName: 'AllowDecimal', DisplayName: 'Allow Decimal', Type: 'Bool', Options: [] },
+            { ApiName: 'CostPrice', DisplayName: 'Cost Price', Type: 'Integer', Options: [] },
+            { ApiName: 'CaseQuantity', DisplayName: 'Case Quantity', Type: 'Integer', Options: [] },
             { ApiName: 'CampaignName', DisplayName: 'Campaign Name', Type: 'String', Options: [] },
+            { ApiName: 'ActionDateTime', DisplayName: 'Action Date Time', Type: 'DateTime', Options: [] },
+            { ApiName: 'Type', DisplayName: 'Type', Type: 'String', Options: [] },
             {
-                ApiName: 'BillToCity', DisplayName: 'Bill To City', Type: 'MultipleStringValues', Options: [
-                    { Key: 'AAA', Value: 'Value 0' },
-                    { Key: 'BBB', Value: 'Value 1' },
-                    { Key: 'CCC', Value: 'Value 2' },
-                    { Key: 'DDD', Value: 'Value 3' },
-                    { Key: 'EEE', Value: 'Value 4' },
-                    { Key: 'FFF', Value: 'Value 5' }
+                ApiName: 'BillToState', DisplayName: 'Bill To State', Type: 'MultipleStringValues', Options: [
+                    { Key: 'AAA', Value: 'Aargau' },
+                    { Key: 'BBB', Value: 'Aberdeen City' },
+                    { Key: 'CCC', Value: 'City 2' },
+                    { Key: 'DDD', Value: 'Acoruña' },
+                    { Key: 'EEE', Value: 'City 4' },
+                    { Key: 'FFF', Value: 'Acre' }
                 ]
             }
 
@@ -126,12 +163,13 @@ export class FilterBuilderExampleComponent implements OnInit {
         ];
 
 
+        /*
         const selectedValues = ['value 1', 'value 5', 'value 10', 'value 11'];
         this.filters = [
             createSmartFilter('BillToState', PepSmartFilterOperators.DateRange, '2021-11-02T00:00:00', '2021-11-16T00:00:00'),
             createSmartFilter('filter3', PepSmartFilterOperators.DateRange, '2020-1-1', '2021-1-1'),
             createSmartFilter('filter4', PepSmartFilterOperators.In, selectedValues)
-        ];
+        ]; */
     }
 
 }

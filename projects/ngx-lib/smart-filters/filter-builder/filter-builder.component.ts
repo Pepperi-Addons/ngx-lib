@@ -156,6 +156,7 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit {
         //   console.log('ngAfterViewChecked');
     }
 
+    /*
     onFilterChanged(event, index) {
         console.log('event', event);
         console.log('index', index);
@@ -192,6 +193,22 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit {
 
     createItem(obj: any) {
         //create UI item
+    } */
+
+    onSaveFiltersClicked() {
+        this.filterBuilderService.saveFilterData();
+        //console.log('resolved', this.resolver.resolveComponentFactory(FilterBuilderComponent));
+        //console.log('filterRoot', this.filterRoot.element.nativeElement);
+        //let aaa = this.filterBuilderService.getHostView();
+        //let compType: any = aaa.componentType.prototype.getOperator();
+        //console.log('compType', compType);
+        //console.log('aaaa', aaa);
+        //console.log('filterRoot', this.filterBuilderService.getHostView());
+        /*for (let i = 0; i < this.filterRoot.length; i++) {
+            const elementRef = this.filterRoot.get(i);
+            console.log('elementRef', elementRef);
+            //elementRef.rootNodes
+        } */
     }
 
 

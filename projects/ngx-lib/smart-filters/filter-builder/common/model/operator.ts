@@ -120,6 +120,12 @@ const IsNotEmpty: IPepFilterBuilderOperator = {
     smartFilterId: 'isNotEmpty'
 };
 
+const In: IPepFilterBuilderOperator = {
+    apiId: 'In',
+    smartFilterId: 'in'
+};
+
+
 export const PepFilterBuilderOperators = [
     Equals,
     NotEqual,
@@ -143,7 +149,8 @@ export const PepFilterBuilderOperators = [
     NotDueIn,
     On,
     IsEmpty,
-    IsNotEmpty
+    IsNotEmpty,
+    //In
 ]
 
 export function getSmartBuilderOperator(operator: string): IPepSmartFilterOperator | null {

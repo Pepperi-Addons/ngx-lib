@@ -1,7 +1,8 @@
 import {
     Injectable, Renderer2, ViewContainerRef, RendererFactory2, ComponentFactoryResolver,
-    ComponentFactory
+    ComponentFactory, ComponentRef
 } from '@angular/core';
+import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { } from 'lodash';
 import { PepSmartFilterBaseField, IPepSmartFilterField } from '../common/model/field';
 import { IPepSmartFilterData } from '../common/model/filter';
@@ -29,9 +30,11 @@ export class FilterBuilderService {
     private _smartFilterFields: Array<IPepSmartFilterField>
     private _typeMapper: PepFilterBuilderTypeMap;
     private _operatorUnitMapper: PepFilterBuilderOperatorUnitMap;
+    private _hostView: ComponentRef<FilterBuilderSectionComponent>;
+    private _form: FormGroup;
     //private _filters: Array<IPepSmartFilterData>;
 
-    constructor(private rendererFactory: RendererFactory2, private resolver: ComponentFactoryResolver) {
+    constructor(private rendererFactory: RendererFactory2, private fb: FormBuilder, private resolver: ComponentFactoryResolver) {
         this.renderer = rendererFactory.createRenderer(null, null);
         this._typeMapper = new PepFilterBuilderTypeMap();
         this._operatorUnitMapper = new PepFilterBuilderOperatorUnitMap();
@@ -39,6 +42,10 @@ export class FilterBuilderService {
 
     hasProperty(obj, prop) {
         return Object.prototype.hasOwnProperty.call(obj, prop);
+    }
+
+    setupForm() {
+        this._form = this.fb.group({});
     }
 
     buildTree() {
@@ -88,31 +95,35 @@ export class FilterBuilderService {
         //filters: Array<IPepSmartFilterData>,        
         containerRef: ViewContainerRef
     ) {
+        this.setupForm();
         this._fields = fields;
         this._smartFilterFields = this.convertToSmartFilterFields(fields);
         //this._filters = filters;
-        //this._counter = 0;        
-        this.flatten(json, json.LeftNode, containerRef);
-        this.flatten(json, json.RightNode, containerRef);
+        //this._counter = 0;    
+        const result = this.createSection(json.Operation, containerRef, this._form);
+
+        this.flatten(json, json.LeftNode, result.containerRef, result.parentForm);
+        this.flatten(json, json.RightNode, result.containerRef, result.parentForm);
+
     }
 
-    flatten(parent: any, current: any, containerRef: ViewContainerRef) {
+    flatten(parent: any, current: any, containerRef: ViewContainerRef, parentForm: FormGroup) {
         if (this.hasProperty(current, 'ComplexId')) {
             if (parent.Operation === current.Operation) {
-                this.flatten(parent, current.LeftNode, containerRef);
-                this.flatten(parent, current.RightNode, containerRef);
+                this.flatten(parent, current.LeftNode, containerRef, parentForm);
+                this.flatten(parent, current.RightNode, containerRef, parentForm);
             } else {
                 /*let counter: number = 0;
                 Object.keys(ui).forEach(item => { if (item.includes('Node')) { counter++; } });
                 ui['Node' + counter] = {
                     Operator: current.Operation,
                 }; */
-                const sectionRef = this.createSection(current.Operation, containerRef);
-                this.flatten(current, current.LeftNode, sectionRef);
-                this.flatten(current, current.RightNode, sectionRef);
+                const result = this.createSection(current.Operation, containerRef, parentForm);
+                this.flatten(current, current.LeftNode, result.containerRef, result.parentForm);
+                this.flatten(current, current.RightNode, result.containerRef, result.parentForm);
             }
-        } else {
-            this.createItem(current, containerRef);
+        } else if (this.hasProperty(current, 'ExpressionId')) {
+            this.createItem(current, containerRef, parentForm);
             /*let counter: number = 0;
             Object.keys(ui).forEach(item => { if (item.includes('FIlter')) { counter++; } });
             ui['FIlter' + counter] = {
@@ -123,12 +134,32 @@ export class FilterBuilderService {
         }
     }
 
-    createSection(operator: string, containerRef: ViewContainerRef) {
+    createSection(operator: string, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory: ComponentFactory<FilterBuilderSectionComponent> = this.resolver.resolveComponentFactory(FilterBuilderSectionComponent);
         let componentRef = containerRef.createComponent(factory);
-        componentRef.instance.operator = operator;
 
-        return componentRef.instance.sectionContainer;
+        let sectionGroup = this.fb.group({
+            operator: this.fb.control(operator)
+        });
+
+        let counter = 1;
+        Object.keys(parentForm.controls).forEach(item => { if (item.includes('section')) { counter++; } });
+
+        parentForm.addControl('section' + counter, sectionGroup);
+        //parentForm.get('section' + containerRef.length);
+
+        componentRef.instance.operator = operator;
+        //componentRef.instance.index = containerRef.length;
+        componentRef.instance.form = sectionGroup;
+
+        /*let counter = 0;
+        Object.keys(containerRef).forEach(item => { if (item.includes('section')) { counter++; } });*/
+        //console.log('counter', containerRef.length);
+
+        return {
+            containerRef: componentRef.instance.sectionContainer,
+            parentForm: sectionGroup
+        };
         /*
         const section = this.renderer.createElement('div');
         this.renderer.setProperty(section, 'id', 'section-id-' + this._counter++);
@@ -136,12 +167,27 @@ export class FilterBuilderService {
         return section; */
     }
 
-    createItem(current: any, containerRef: ViewContainerRef) {
+    createItem(current: any, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory: ComponentFactory<FilterBuilderItemComponent> = this.resolver.resolveComponentFactory(FilterBuilderItemComponent);
         let componentRef = containerRef.createComponent(factory);
+
+        let itemGroup = this.fb.group({
+            fields: this.fb.control(this._smartFilterFields),
+            filter: this.fb.control(this.getFilter(current)),
+            selected: this.fb.control(this.getSelectedFilter(current))
+        });
+
+        let counter = 1;
+        Object.keys(parentForm.controls).forEach(item => { if (item.includes('item')) { counter++; } });
+
+        //console.log('containerRef', counter);
+
+        parentForm.addControl('item' + counter, itemGroup);
+
         componentRef.instance.fields = this._smartFilterFields;
         componentRef.instance.filter = this.getFilter(current);
         componentRef.instance.selected = this.getSelectedFilter(current);
+        componentRef.instance.form = itemGroup;
 
         /*const item = this.renderer.createElement('div');
         this.renderer.setProperty(item, 'id', 'item-id-' + this._counter++);
@@ -186,12 +232,16 @@ export class FilterBuilderService {
         if (operator?.componentType.includes('multi-select')) { //multi select 
             data.first = current?.Values?.length > 0 ? current.Values : null;
         } else if (
-            operator?.componentType.includes('date') && (
+            operator === PepSmartFilterOperators.InTheLast ||
+            operator === PepSmartFilterOperators.NotInTheLast ||
+            operator === PepSmartFilterOperators.DueIn ||
+            operator === PepSmartFilterOperators.NotDueIn
+            /*operator?.componentType.includes('date') && (
                 operator.id === 'inTheLast' ||
                 operator.id === 'notInTheLast' ||
                 operator.id === 'dueIn' ||
                 operator.id === 'notDueIn'
-            )
+        )*/
         ) { //operation unit
             data.first = current?.Values?.length > 0 ? current.Values[0] : null;
             if (current?.Values?.length === 2) {
@@ -219,6 +269,10 @@ export class FilterBuilderService {
         } else {
             return null;
         }
+    }
+
+    saveFilterData() {
+        console.log('form tree', this._form.value);
     }
 
 }

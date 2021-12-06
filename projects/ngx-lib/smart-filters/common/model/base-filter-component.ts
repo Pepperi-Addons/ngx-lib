@@ -71,11 +71,21 @@ export abstract class BaseFilterComponent
     get filter(): IPepSmartFilterData {
         return this._filter;
     }
+    @Input()
+    set parentForm(value: FormGroup) {
+        //console.log('ppf value', value);
+        if (value) {
+            this.addToParentForm(value);
+        }
+
+        //this.parentF = value;
+    };
 
     @Output() filterClear: EventEmitter<void> = new EventEmitter<void>();
     @Output()
     filterChange: EventEmitter<IPepSmartFilterData> = new EventEmitter<IPepSmartFilterData>();
 
+    parentF: FormGroup; //TEMP
     private _operator: IPepSmartFilterOperator;
     set operator(operator: IPepSmartFilterOperator) {
         if (operator?.id != this._operator?.id) {
@@ -233,6 +243,10 @@ export abstract class BaseFilterComponent
             this.operatorUnit = this.getDefaultOperatorUnit();
             this.clearFilter(false);
         }
+    }
+
+    private addToParentForm(parentForm: FormGroup) {
+        parentForm.addControl('values', this.form);
     }
 
     protected getDestroyer() {

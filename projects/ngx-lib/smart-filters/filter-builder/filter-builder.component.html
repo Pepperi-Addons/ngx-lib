@@ -6,6 +6,9 @@
 <pep-button [value]="'Add Item'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'pep-spacing-element'"
     (click)="addItem()">
 </pep-button> -->
-<div id="filter-container" #filterRoot>
-
+<div id="filter-container">
+    <ng-container #filterRoot></ng-container>
+    <pep-button [value]="'Save Filters'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'pep-spacing-element '"
+        (buttonClick)="onSaveFiltersClicked()">
+    </pep-button>
 </div>

@@ -1,3 +1,5 @@
 <div #sectionContainer>
-    <div>{{_operator}}</div>
+    <ng-container [formGroup]="form">
+        <input type="text" formControlName="operator">
+    </ng-container>
 </div>
