@@ -14,23 +14,23 @@ export class FilterBuilderItemComponent {
     @Input()
     set selected(value: any) {
         //console.log('selected', value);
-        /*if (value) {
+        if (value) {
             this._selectedField = value;
-        }*/
+        }
     }
     @Input()
     set fields(list: Array<IPepSmartFilterField>) {
-        /* if (list?.length > 0) {
-             this._fields = list;
-             //console.log('_fields', this._fields);
-             this._options = list.map(field => {
-                 return {
-                     key: field.id,
-                     value: field.name
-                 }
-             }) 
-             //console.log('this._options', this._options);
-         } */
+        if (list?.length > 0) {
+            this._fields = list;
+            //console.log('_fields', this._fields);
+            this._options = list.map(field => {
+                return {
+                    key: field.id,
+                    value: field.name
+                }
+            })
+            //console.log('this._options', this._options);
+        }
     };
     @Input()
     set filter(value: IPepSmartFilterData) {
@@ -44,19 +44,6 @@ export class FilterBuilderItemComponent {
     set form(value: FormGroup) {
         this._form = value;
         console.log('item form', this._f);
-        //set selected field
-        this._selectedField = this._f.selected?.value;
-        //set fields
-        this._fields = this._f.fields?.value;
-        if (this._fields.length > 0) {
-            this._options = this._fields.map(field => {
-                return {
-                    key: field.id,
-                    value: field.name
-                }
-            })
-        }
-        //set filter
         this._filter = this._f.filter?.value;
 
     };
@@ -92,56 +79,6 @@ export class FilterBuilderItemComponent {
         return this._form.controls;
     }
 
-    /*setupForm() {
-        this.form = this.fb.group({
-            First: ''
-        });
-
-    } */
-    /* no need
-    private setupFilters(value: IPepSmartFilterData[]) {
-        this._filtersDataMap.clear();
-        if (value) {
-            value.forEach((filter) => {
-                // Validate before add the filter into the map.
-                let currentField = null;
-
-                if (this._fields && this._fields.length > 0) {
-                    currentField = this._fields.find(
-                        (field) => field.id === filter.fieldId
-                    ) as PepSmartFilterBaseField;
-                }
-
-                if (currentField) {
-                    // Only if the operator is from the same type
-                    if (
-                        filter.operator.componentType.includes(
-                            currentField.componentType
-                        )
-                    ) {
-                        let isOperatorUnitValid = true;
-                        if (filter.operatorUnit) {
-                            // Only if the operator unit is not from the same type
-                            if (
-                                !filter.operatorUnit.componentType.includes(
-                                    currentField.componentType
-                                )
-                            ) {
-                                isOperatorUnitValid = false;
-                            }
-                        }
-
-                        // Add the filter.
-                        if (isOperatorUnitValid) {
-                            this._filtersDataMap.set(filter.fieldId, filter);
-                        }
-                    }
-                }
-            });
-        }
-        console.log('print map', this._filtersDataMap);
-    } */
-
     /*
     clearFilters() {
         this._filtersDataMap.clear();
@@ -163,15 +100,14 @@ export class FilterBuilderItemComponent {
         this._filter = null;
     }
 
-    onFilterChanged(
-        field: PepSmartFilterBaseField,
-        filterData: IPepSmartFilterData
+    onFilterChanged(filterData: IPepSmartFilterData
     ) {
-        console.log('onFilterChange key', field);
+        //console.log('onFilterChange key', field);
         console.log('onFilterChange value', filterData);
-        this.clearFilter(field.id);
+        this._f.filter.patchValue(filterData);
+        //this.clearFilter(field.id);
         //this._filtersDataMap.set(field.id, filterData);
-        this.raiseFiltersChange();
+        //this.raiseFiltersChange();
     }
 
     onFilterClear(field: PepSmartFilterBaseField) {

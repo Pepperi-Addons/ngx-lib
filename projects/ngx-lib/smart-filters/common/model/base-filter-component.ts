@@ -55,7 +55,7 @@ export abstract class BaseFilterComponent
     @Input()
     set field(value: PepSmartFilterBaseField) {
         this._field = value;
-        this._fieldIdWithNoDots = value ? value.id.replace(/./g, '_') : '';
+        this._fieldIdWithNoDots = value ? value.id.replace(/\./g, '_') : '';
         this.setupForm();
     }
     get field(): PepSmartFilterBaseField {
@@ -71,21 +71,13 @@ export abstract class BaseFilterComponent
     get filter(): IPepSmartFilterData {
         return this._filter;
     }
-    @Input()
-    set parentForm(value: FormGroup) {
-        //console.log('ppf value', value);
-        if (value) {
-            this.addToParentForm(value);
-        }
-
-        //this.parentF = value;
-    };
+    @Input() inline = false;
+    @Input() emitOnChange = false;
 
     @Output() filterClear: EventEmitter<void> = new EventEmitter<void>();
     @Output()
     filterChange: EventEmitter<IPepSmartFilterData> = new EventEmitter<IPepSmartFilterData>();
 
-    parentF: FormGroup; //TEMP
     private _operator: IPepSmartFilterOperator;
     set operator(operator: IPepSmartFilterOperator) {
         if (operator?.id != this._operator?.id) {
@@ -243,10 +235,6 @@ export abstract class BaseFilterComponent
             this.operatorUnit = this.getDefaultOperatorUnit();
             this.clearFilter(false);
         }
-    }
-
-    private addToParentForm(parentForm: FormGroup) {
-        parentForm.addControl('values', this.form);
     }
 
     protected getDestroyer() {

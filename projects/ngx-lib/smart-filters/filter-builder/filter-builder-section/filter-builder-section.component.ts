@@ -48,6 +48,13 @@ export class FilterBuilderSectionComponent implements AfterViewChecked {
         console.log('ngAfterViewChecked'); */
     }
 
+    addRuleClicked() {
+
+    }
+
+    addRuleSetClicked() {
+
+    }
 
     /*addToForm(parentForm: FormGroup) {
         //parentForm.addControl('section' + this.index, this._form);

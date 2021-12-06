@@ -1,5 +1,16 @@
-<div #sectionContainer>
-    <ng-container [formGroup]="form">
-        <input type="text" formControlName="operator">
+<div class="filter-section-container">
+    <ng-container #sectionContainer>
+        <ng-container [formGroup]="form">
+            <div class="action-buttons-wrapper">
+                <pep-button [value]="'Rule'" [sizeType]="'sm'" [styleType]="'regular'"
+                    [classNames]="'pep-spacing-element '" (buttonClick)="addRuleClicked()">
+                </pep-button>
+                <pep-button [value]="'Rule Set'" [sizeType]="'sm'" [styleType]="'regular'"
+                    [classNames]="'pep-spacing-element '" (buttonClick)="addRuleSetClicked()">
+                </pep-button>
+            </div>
+            <input type="text" formControlName="operator">
+
+        </ng-container>
     </ng-container>
 </div>

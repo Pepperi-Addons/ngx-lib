@@ -23,6 +23,13 @@ export class PepBooleanFilterComponent extends BaseFilterComponent {
         return filterValue;
     }
 
+    onRadioChanged() {
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
+
     // // Override
     // setFieldsStateAndValidators(): void {
     //     this.secondControl.disable();

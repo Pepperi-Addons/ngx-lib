@@ -7,8 +7,8 @@
     <div *ngIf="operator !== PepSmartFilterOperators.NumberRange">
         <!-- Amount -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
-            [renderError]="false" [type]="field.type" [formattedValue]="firstControl.value"
-            [value]="firstControl.value">
+            [renderError]="false" [type]="field.type" [formattedValue]="firstControl.value" [value]="firstControl.value"
+            (valueChange)="onValueChanged()">
         </pep-textbox>
     </div>
     <div *ngIf="operator === PepSmartFilterOperators.NumberRange" fxLayout="row" fxLayout.xs="column"
@@ -16,12 +16,12 @@
         <!-- Min number -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.MIN' | translate"
             [renderError]="false" fxFlex="50%" [type]="field.type" [formattedValue]="firstControl.value"
-            [value]="firstControl.value" [maxValue]="secondControl.value">
+            [value]="firstControl.value" [maxValue]="secondControl.value" (valueChange)="onValueChanged()">
         </pep-textbox>
         <!-- Max number -->
         <pep-textbox [form]="form" [key]="secondControlKey" [label]="'SMART_FILTERS.MAX' | translate"
             [renderError]="false" fxFlex="50%" [type]="field.type" [formattedValue]="secondControl.value"
-            [value]="secondControl.value" [minValue]="firstControl.value">
+            [value]="secondControl.value" [minValue]="firstControl.value" (valueChange)="onValueChanged()">
         </pep-textbox>
     </div>
 </div>

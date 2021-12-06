@@ -378,8 +378,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     onChange(e: any): void {
         const value = e.target ? e.target.value : e;
 
-        // TODO: uncomment
-        // this.valueChange.emit(value);
+        this.valueChange.emit(value);
     }
 
     onBlur(e: any): void {

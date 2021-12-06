@@ -74,4 +74,10 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
         );
         this.operator = operator;
     }
+
+    onValueChanged() {
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
 }

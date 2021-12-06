@@ -89,4 +89,10 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
         );
         this.operator = operator;
     }
+
+    onValueChanged() {
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
 }

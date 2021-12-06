@@ -172,9 +172,9 @@ export class FilterBuilderService {
         let componentRef = containerRef.createComponent(factory);
 
         let itemGroup = this.fb.group({
-            fields: this.fb.control(this._smartFilterFields),
+            //fields: this.fb.control(this._smartFilterFields),
             filter: this.fb.control(this.getFilter(current)),
-            selected: this.fb.control(this.getSelectedFilter(current))
+            //selected: this.fb.control(this.getSelectedFilter(current))
         });
 
         let counter = 1;
@@ -185,9 +185,10 @@ export class FilterBuilderService {
         parentForm.addControl('item' + counter, itemGroup);
 
         componentRef.instance.fields = this._smartFilterFields;
-        componentRef.instance.filter = this.getFilter(current);
+        //componentRef.instance.filter = this.getFilter(current);
         componentRef.instance.selected = this.getSelectedFilter(current);
         componentRef.instance.form = itemGroup;
+
 
         /*const item = this.renderer.createElement('div');
         this.renderer.setProperty(item, 'id', 'item-id-' + this._counter++);
@@ -229,7 +230,7 @@ export class FilterBuilderService {
             operationUnit: null
         };
 
-        if (operator?.componentType.includes('multi-select')) { //multi select 
+        if (operator === PepSmartFilterOperators.In) { //multi select 
             data.first = current?.Values?.length > 0 ? current.Values : null;
         } else if (
             operator === PepSmartFilterOperators.InTheLast ||

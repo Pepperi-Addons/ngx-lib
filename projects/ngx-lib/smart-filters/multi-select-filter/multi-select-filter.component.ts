@@ -164,5 +164,8 @@ export class PepMultiSelectFilterComponent
             this.options.filter((opt) => opt.selected).map((opt) => opt.value),
             { emitEvent: false }
         );
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
     }
 }

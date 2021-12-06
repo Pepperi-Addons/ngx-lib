@@ -1,5 +1,5 @@
 <div [formGroup]="form">
-    <mat-radio-group class="radio-group" [formControlName]="firstControlKey">
+    <mat-radio-group class="radio-group" [formControlName]="firstControlKey" (change)="onRadioChanged()">
         <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="true">
             {{ 'CHECKBOX.TRUE' | translate }}
         </mat-radio-button>

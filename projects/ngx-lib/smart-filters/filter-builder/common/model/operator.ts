@@ -36,7 +36,7 @@ const LessThanOrEquals: IPepFilterBuilderOperator = {
 };
 
 const NumberRange: IPepFilterBuilderOperator = {
-    apiId: 'In',
+    apiId: 'In2',
     smartFilterId: 'numberRange'
 };
 
@@ -150,7 +150,7 @@ export const PepFilterBuilderOperators = [
     On,
     IsEmpty,
     IsNotEmpty,
-    //In
+    In
 ]
 
 export function getSmartBuilderOperator(operator: string): IPepSmartFilterOperator | null {
