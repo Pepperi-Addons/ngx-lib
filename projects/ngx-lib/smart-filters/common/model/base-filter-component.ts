@@ -55,7 +55,7 @@ export abstract class BaseFilterComponent
     @Input()
     set field(value: PepSmartFilterBaseField) {
         this._field = value;
-        this._fieldIdWithNoDots = value ? value.id.replace(/./g, '_') : '';
+        this._fieldIdWithNoDots = value ? value.id.replace(/\./g, '_') : '';
         this.setupForm();
     }
     get field(): PepSmartFilterBaseField {
