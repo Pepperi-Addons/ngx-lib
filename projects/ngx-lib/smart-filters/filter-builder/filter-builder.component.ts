@@ -35,7 +35,7 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit {
 
     _items: Array<IPepSmartFilterData> = new Array<IPepSmartFilterData>();
 
-    constructor(private renderer: Renderer2, private resolver: ComponentFactoryResolver, private changeDetectionRef: ChangeDetectorRef, private filterBuilderService: FilterBuilderService) {
+    constructor(private renderer: Renderer2, private resolver: ComponentFactoryResolver, private changeDetectionRef: ChangeDetectorRef, public filterBuilderService: FilterBuilderService) {
         this._items.push({ item: '123' } as any);
     }
 

@@ -25,7 +25,7 @@ export class PepBooleanFilterComponent extends BaseFilterComponent {
 
     onRadioChanged() {
         if (this.emitOnChange) {
-            this.applyFilter();
+            this.applyParentForm();
         }
     }
 

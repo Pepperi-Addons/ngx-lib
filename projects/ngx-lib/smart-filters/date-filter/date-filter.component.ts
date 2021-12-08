@@ -114,8 +114,8 @@ export class PepDateFilterComponent extends BaseFilterComponent {
 
         this.operator = operator;
         this.operatorUnit = this.getDefaultOperatorUnit();
-        if (this.emitOnChange) {
-            this.applyFilter();
+        if (this._parentForm) {
+            this.updateParentForm();
         }
     }
 
@@ -124,20 +124,9 @@ export class PepDateFilterComponent extends BaseFilterComponent {
             (operatorUnit) => operatorUnit.id === value
         );
         this.operatorUnit = operatorUnit;
-        if (this.emitOnChange) {
-            this.applyFilter();
+        if (this._parentForm) {
+            this.updateParentForm();
         }
     }
 
-    onAmountChanged() {
-        if (this.emitOnChange) {
-            this.applyFilter();
-        }
-    }
-
-    onDateChanged() {
-        if (this.emitOnChange) {
-            this.applyFilter();
-        }
-    }
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FilterBuilderService } from '../filter-builder.service';
 import { PepSmartFilterType } from '../../common/model/type';
 import { PepSmartFilterBaseField, IPepSmartFilterField } from '../../common/model/field';
 import { IPepSmartFilterData } from '../../common/model/filter';
@@ -34,19 +35,26 @@ export class FilterBuilderItemComponent {
     };
     @Input()
     set filter(value: IPepSmartFilterData) {
-        //console.log('input filter', value);
-        /*if (value) {
+        console.log('input filter', value);
+        if (value) {
             this._filter = value;
             //this.setupFilters(list);
-        } */
+        }
     };
+    _parentForm: FormGroup;
     @Input()
-    set form(value: FormGroup) {
-        this._form = value;
-        console.log('item form', this._f);
-        this._filter = this._f.filter?.value;
+    set parentForm(value: FormGroup) {
+        console.log('parent from input', value);
+        if (value) {
+            this._parentForm = value;
+            //this._f = this._form;
+            this.addToParentForm();
+            console.log('item form', this._parentForm);
+        }
+        //this._filter = this._f.filter?.value;
 
     };
+    @Input() formKey: string;
 
     @Output()
     filtersChange: EventEmitter<IPepSmartFilterData> = new EventEmitter<
@@ -67,22 +75,29 @@ export class FilterBuilderItemComponent {
     _selectedField: PepSmartFilterBaseField = null;
     //_selectedOption: any = null;
 
-    constructor(private fb: FormBuilder) {
-        //this.setupForm();
+    constructor(private fb: FormBuilder, private _filterBuilderService: FilterBuilderService) {
+        this.setupForm();
     }
 
     ngOnInit() {
         //console.log('parent form', this.form);
     }
 
-    get _f() {
-        return this._form.controls;
+    setupForm() {
+        this._form = this.fb.group({
+            fieldId: this.fb.control(null),
+            operator: this.fb.control(null),
+            operatorUnit: this.fb.control(null),
+            value: this.fb.group({
+                first: this.fb.control(null),
+                second: this.fb.control(null)
+            }),
+        });
     }
 
-    /*
-    clearFilters() {
-        this._filtersDataMap.clear();
-    } */
+    addToParentForm() {
+        this._parentForm.setControl(this.formKey, this._form);
+    }
 
     clearFilter(fieldId: string) {
         //    this._filtersDataMap.delete(fieldId);
@@ -95,19 +110,21 @@ export class FilterBuilderItemComponent {
     onFieldChanged(key) {
         console.log('onFieldChanged', key);
         let item = this._fields.find(field => field.id === key);
-        console.log('item', item);
+        //console.log('item', item);
+        //this._f = this.fb.group({});
+        this.setupForm();
+        this.addToParentForm();
+
         this._selectedField = item ? item : null;
         this._filter = null;
+        //this._form.patchValue(this._filterBuilderService.createItemForm());
+
     }
 
-    onFilterChanged(filterData: IPepSmartFilterData
-    ) {
-        //console.log('onFilterChange key', field);
+    onFilterChanged(filterData: IPepSmartFilterData) {
         console.log('onFilterChange value', filterData);
-        this._f.filter.patchValue(filterData);
-        //this.clearFilter(field.id);
-        //this._filtersDataMap.set(field.id, filterData);
-        //this.raiseFiltersChange();
+        //this._f.filter.patchValue(filterData);
+
     }
 
     onFilterClear(field: PepSmartFilterBaseField) {

@@ -88,11 +88,14 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
             (operator) => operator.id === value
         );
         this.operator = operator;
+        if (this._parentForm) {
+            this.updateParentForm();
+        }
     }
 
     onValueChanged() {
         if (this.emitOnChange) {
-            this.applyFilter();
+            this.applyParentForm();
         }
     }
 }

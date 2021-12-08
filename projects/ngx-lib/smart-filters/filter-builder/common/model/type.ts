@@ -1,3 +1,8 @@
+export enum PepOperatorTypes {
+    And = 'and',
+    Or = 'or'
+}
+
 const Bool = {
     sp: 'boolean',
     api: 'Bool'

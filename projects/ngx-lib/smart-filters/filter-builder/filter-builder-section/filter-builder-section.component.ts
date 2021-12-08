@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef, AfterViewChecked, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FilterBuilderService } from '../filter-builder.service';
 import { PepSmartFilterType } from '../../common/model/type';
 import { PepSmartFilterBaseField, IPepSmartFilterField } from '../../common/model/field';
 import { IPepSmartFilterData } from '../../common/model/filter';
-
+import { PepOperatorTypes } from '../common/model/type';
 
 
 
@@ -32,7 +33,7 @@ export class FilterBuilderSectionComponent implements AfterViewChecked {
     _operator: string;
     //_form: FormGroup;
 
-    constructor(private changeDetectionRef: ChangeDetectorRef, public vccRef: ViewContainerRef, private fb: FormBuilder) {
+    constructor(private changeDetectionRef: ChangeDetectorRef, public vccRef: ViewContainerRef, private fb: FormBuilder, private _filterBuilderService: FilterBuilderService) {
         /*this._form = this.fb.group({
             operator: 'ANDDDAND'
         }) */
@@ -49,11 +50,11 @@ export class FilterBuilderSectionComponent implements AfterViewChecked {
     }
 
     addRuleClicked() {
-
+        this._filterBuilderService.createItem(null, this.sectionContainer, this.form);
     }
 
     addRuleSetClicked() {
-
+        this._filterBuilderService.createSection(PepOperatorTypes.And, this.sectionContainer, this.form);
     }
 
     /*addToForm(parentForm: FormGroup) {

@@ -17,6 +17,8 @@ import { FilterBuilderItemComponent } from './filter-builder-item/filter-builder
 import { PepFilterBuilderTypeMap } from './common/model/type-map';
 import { PepFilterBuilderOperatorUnitMap } from './common/model/operator-unit-map';
 import { IPepFilterBuilderValues } from './common/model/filter';
+import { PepOperatorTypes } from './common/model/type';
+
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +40,10 @@ export class FilterBuilderService {
         this.renderer = rendererFactory.createRenderer(null, null);
         this._typeMapper = new PepFilterBuilderTypeMap();
         this._operatorUnitMapper = new PepFilterBuilderOperatorUnitMap();
+    }
+
+    get Form(): FormGroup {
+        return this._form;
     }
 
     hasProperty(obj, prop) {
@@ -98,13 +104,14 @@ export class FilterBuilderService {
         this.setupForm();
         this._fields = fields;
         this._smartFilterFields = this.convertToSmartFilterFields(fields);
+        console.log('this._smartFilterFields', this._smartFilterFields);
         //this._filters = filters;
         //this._counter = 0;    
         const result = this.createSection(json.Operation, containerRef, this._form);
 
         this.flatten(json, json.LeftNode, result.containerRef, result.parentForm);
         this.flatten(json, json.RightNode, result.containerRef, result.parentForm);
-
+        console.log('base form', this._form);
     }
 
     flatten(parent: any, current: any, containerRef: ViewContainerRef, parentForm: FormGroup) {
@@ -134,7 +141,7 @@ export class FilterBuilderService {
         }
     }
 
-    createSection(operator: string, containerRef: ViewContainerRef, parentForm: FormGroup) {
+    createSection(operator: PepOperatorTypes, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory: ComponentFactory<FilterBuilderSectionComponent> = this.resolver.resolveComponentFactory(FilterBuilderSectionComponent);
         let componentRef = containerRef.createComponent(factory);
 
@@ -171,29 +178,28 @@ export class FilterBuilderService {
         const factory: ComponentFactory<FilterBuilderItemComponent> = this.resolver.resolveComponentFactory(FilterBuilderItemComponent);
         let componentRef = containerRef.createComponent(factory);
 
-        let itemGroup = this.fb.group({
-            //fields: this.fb.control(this._smartFilterFields),
-            filter: this.fb.control(this.getFilter(current)),
-            //selected: this.fb.control(this.getSelectedFilter(current))
-        });
+        let itemGroup = this.fb.group({});//this.createItemForm();
+        /*let itemGroup = this.fb.group({
+            //filter: this.fb.control(current ? this.getFilter(current) : null),
+            //filter: this.fb.group({})
+            fieldId: this.fb.control(null),
+            operator: this.fb.control(null),
+            operatorUnit: this.fb.control(null),
+            value: this.fb.group({})
+        }); */
 
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('item')) { counter++; } });
-
-        //console.log('containerRef', counter);
-
-        parentForm.addControl('item' + counter, itemGroup);
+        let formKey: string = `item${counter}`;
+        //parentForm.addControl(formKey, itemGroup);
 
         componentRef.instance.fields = this._smartFilterFields;
-        //componentRef.instance.filter = this.getFilter(current);
-        componentRef.instance.selected = this.getSelectedFilter(current);
-        componentRef.instance.form = itemGroup;
-
-
-        /*const item = this.renderer.createElement('div');
-        this.renderer.setProperty(item, 'id', 'item-id-' + this._counter++);
-        this.renderer.appendChild(parentUiElement, item);
-        return item; */
+        if (current) {
+            componentRef.instance.filter = this.getFilter(current);
+        }
+        componentRef.instance.selected = this.getSelectedFilter(current ? current : null);
+        componentRef.instance.formKey = formKey;
+        componentRef.instance.parentForm = parentForm;
     }
 
     getFilter(current: any): IPepSmartFilterData {
@@ -219,8 +225,14 @@ export class FilterBuilderService {
         } as IPepSmartFilterData*/
     }
 
-    getSelectedFilter(current: any): IPepSmartFilterField | undefined {
-        return this._smartFilterFields.find(field => field.id === current.ApiName);
+    private getSelectedFilter(current: any | null): IPepSmartFilterField | null {
+        if (current) {
+            let item = this._smartFilterFields.find(field => field.id === current.ApiName);
+            return item ? item : null;
+        } else {
+            return this._smartFilterFields[0];
+        }
+        //return this._smartFilterFields.find(field => field.id === current.ApiName);
     }
 
     getFilterValues(current: any, operator: IPepSmartFilterOperator) {
@@ -237,12 +249,6 @@ export class FilterBuilderService {
             operator === PepSmartFilterOperators.NotInTheLast ||
             operator === PepSmartFilterOperators.DueIn ||
             operator === PepSmartFilterOperators.NotDueIn
-            /*operator?.componentType.includes('date') && (
-                operator.id === 'inTheLast' ||
-                operator.id === 'notInTheLast' ||
-                operator.id === 'dueIn' ||
-                operator.id === 'notDueIn'
-        )*/
         ) { //operation unit
             data.first = current?.Values?.length > 0 ? current.Values[0] : null;
             if (current?.Values?.length === 2) {
@@ -273,6 +279,7 @@ export class FilterBuilderService {
     }
 
     saveFilterData() {
+        console.log('is form valid', this._form.valid);
         console.log('form tree', this._form.value);
     }
 
