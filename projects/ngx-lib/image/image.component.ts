@@ -25,9 +25,9 @@ import {
     PepImageField,
 } from '@pepperi-addons/ngx-lib';
 
-import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
-import { PepImagesFilmstripComponent } from '@pepperi-addons/ngx-lib/images-filmstrip';
 import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
+import { PepImageService } from './image.service';
+import { IPepFileChangeEvent } from '@pepperi-addons/ngx-lib/files-uploader';
 
 @Component({
     selector: 'pep-image',
@@ -114,7 +114,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     dataURI = null;
 
     constructor(
-        private dialogService: PepDialogService,
+        private imageService: PepImageService,
         private customizationService: PepCustomizationService,
         private fileService: PepFileService,
         private renderer: Renderer2,
@@ -193,7 +193,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    onFileChanged(fileData: any): void {
+    onFileChanged(fileData: IPepFileChangeEvent): void {
         this.dataURI = fileData;
         this.src = this.srcLarge =
             this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
@@ -226,7 +226,6 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             hasParentImage = false;
         }
 
-        this.openImageModal(hasParentImage);
         this.elementClick.emit(event);
     }
 
@@ -245,46 +244,62 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             hasParentImage = false;
         }
 
-        this.openImageModal(hasParentImage);
-    }
+        // this.openImageModal(hasParentImage);
+        // if (this.dataURI) {
+        //     this.imageService.openFromURI(this.dataURI);
+        // } else {
+        //     this.imageService.openImageDialog(this.srcLarge || this.src, this.options, this.label);
+        // }
 
-    openImageModal(hasParentImage: boolean): void {
-        if (this.dataURI) {
-            const fileStrArr = this.dataURI.fileStr.split(';');
-            if (fileStrArr.length === 2) {
-                const win = window.open('', '_blank');
-                const contentType = fileStrArr[0].split(':')[1];
-                const base64 = fileStrArr[1].split(',')[1];
-                const blob = this.fileService.convertFromb64toBlob(
-                    base64,
-                    contentType
-                );
-                const url = URL.createObjectURL(blob);
-                win.location.href = url;
+        this.elementClick.emit({
+            key: this.key,
+            controlType: this.controlType,
+            eventWhich: event.which,
+            otherData: {
+                imageSrc: this.srcLarge || this.src,
+                options: this.options,
+                title: this.label
             }
-        } else {
-            const arr = [this.srcLarge || this.src].concat(
-                (this.options || []).map((opt) => opt.value)
-            );
-            const imagesValue = arr.join(';');
-
-            // Show image in modal.
-            const config = this.dialogService.getDialogConfig({}, 'inline');
-            config.maxWidth = '75vw';
-            config.height = '95vh';
-
-            this.dialogService.openDialog(
-                PepImagesFilmstripComponent,
-                {
-                    currIndex: 0,
-                    key: this.key,
-                    value: imagesValue,
-                    label: this.label,
-                    uid: this.uid,
-                    showThumbnails: arr.length > 1,
-                },
-                config
-            );
-        }
+        });
     }
+
+    // openImageModal(hasParentImage: boolean): void {
+    //     if (this.dataURI) {
+    //         const fileStrArr = this.dataURI.fileStr.split(';');
+    //         if (fileStrArr.length === 2) {
+    //             const win = window.open('', '_blank');
+    //             const contentType = fileStrArr[0].split(':')[1];
+    //             const base64 = fileStrArr[1].split(',')[1];
+    //             const blob = this.fileService.convertFromb64toBlob(
+    //                 base64,
+    //                 contentType
+    //             );
+    //             const url = URL.createObjectURL(blob);
+    //             win.location.href = url;
+    //         }
+    //     } else {
+    //         const arr = [this.srcLarge || this.src].concat(
+    //             (this.options || []).map((opt) => opt.value)
+    //         );
+    //         const imagesValue = arr.join(';');
+
+    //         // Show image in modal.
+    //         const config = this.dialogService.getDialogConfig({}, 'inline');
+    //         config.maxWidth = '75vw';
+    //         config.height = '95vh';
+
+    //         this.dialogService.openDialog(
+    //             PepImagesFilmstripComponent,
+    //             {
+    //                 currIndex: 0,
+    //                 key: this.key,
+    //                 value: imagesValue,
+    //                 label: this.label,
+    //                 uid: this.uid,
+    //                 showThumbnails: arr.length > 1,
+    //             },
+    //             config
+    //         );
+    //     }
+    // }
 }

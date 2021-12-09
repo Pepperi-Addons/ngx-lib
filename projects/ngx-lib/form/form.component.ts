@@ -62,15 +62,18 @@ import {
     KeyValuePair,
     IPepOption,
 } from '@pepperi-addons/ngx-lib';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface IPepFormFieldValueChangeEvent {
     id: string;
+    uiObjectKey?: string;
     key: string;
     value: string;
     controlType?: string;
 }
 export interface IPepFormFieldClickEvent {
     id: string;
+    uiObjectKey?: string;
     key: string;
     value: any;
     controlType: string;
@@ -125,10 +128,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     valueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
-    @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
+
     @Output()
     fieldClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
+
+    @Output() internalFormFieldClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() internalFormFieldChange: EventEmitter<any> = new EventEmitter<any>();
 
     isLocked = false;
     formGutterSize;
@@ -142,6 +147,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     // payLoad = '';
     private rows: Array<PepFieldBase[]> = [];
     fields: PepFieldBase[] = [];
+
+    private _fieldsSubject: BehaviorSubject<PepFieldBase[]> = new BehaviorSubject<PepFieldBase[]>([]);
+    get fields$(): Observable<PepFieldBase[]> {
+        return this._fieldsSubject.asObservable();
+    }
+
     columns = 1;
 
     private hasMenuFloatingOnOtherField = false;
@@ -533,9 +544,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 }
                 case FIELD_TYPE.RelatedObjectsCards: {
                     options.rowSpan = controlField.Layout.Height;
-                    // options.objectId = objectId;
-                    // options.parentId = parentId;
-                    // options.searchCode = searchCode;
+                    options.searchCode = searchCode;
+                    options.pageInfo = dataField.UIPageInfo;
 
                     customField = new PepInternalCaruselField(options);
                     break;
@@ -814,6 +824,22 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         return this.fb.group(group);
     }
 
+    private createBaseField(uiControlField: UIControlField, dataField: any) {
+        const customField: PepFieldBase = this.convertToCustomField(
+            uiControlField,
+            dataField,
+            this.canEditObject,
+            this.menuDataField,
+            this.hasCampaignDataField,
+            this.indicatorsDataField,
+            this.objectId,
+            this.parentId,
+            this.searchCode
+        );
+
+        return customField;
+    }
+
     public showFormValidationMessage(): void {
         const fields: PepFieldBase[] = this.fields;
         let emptyMandatoryFieldsMsg = '';
@@ -910,21 +936,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // if (this.valueChange) {
-        //     this.valueChange.unsubscribe();
-        // }
-        // if (this.formValidationChange) {
-        //     this.formValidationChange.unsubscribe();
-        // }
-        // if (this.childClick) {
-        //     this.childClick.unsubscribe();
-        // }
-        // if (this.childChange) {
-        //     this.childChange.unsubscribe();
-        // }
-        // if (this.fieldClick) {
-        //     this.fieldClick.unsubscribe();
-        // }
     }
 
     getUiControlFields(): Array<UIControlField> {
@@ -961,6 +972,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 this.layoutType === 'table'
             ) {
                 this.fields = fields;
+                this._fieldsSubject.next(fields);
+
                 this.rows = [];
 
                 for (let i = 0; i <= maxRow; i++) {
@@ -1083,6 +1096,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                                     ? -1
                                     : 0
                 );
+                this._fieldsSubject.next(fields);
             }
         }
     }
@@ -1093,9 +1107,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         if (!isForUpdate) {
             const fields = [];
             for (const currentField of this.fields) {
-                // Add all fields except 'internalPage' && internalCarusel type (for children).
-                if (currentField.controlType !== 'internalPage' &&
-                    currentField.controlType !== 'internalCarusel') {
+                // Add all fields except 'internalPage' (for children).
+                if (currentField.controlType !== 'internalPage') {
                     fields.push(currentField);
                 }
 
@@ -1107,9 +1120,16 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             this.form = this.toControlGroup(fields);
         } else {
             // Update form values if changed by calculated fields.
-            for (const currentField of this.fields) {
-                if (currentField.controlType !== 'internalPage' &&
-                    currentField.controlType !== 'internalCarusel') {
+            for (let i = 0; i < this.fields.length; i++) {
+                let currentField = this.fields[i];
+
+                if (currentField.controlType === 'internalCarusel') {
+                    // Hack to override (update) the field.
+                    const uiControlField = this.getUiControlFields().find(cf => cf.ApiName === currentField.key);
+                    const dataField = this.data.Fields.find(df => df.ApiName === currentField.key);
+                    currentField = this.createBaseField(uiControlField, dataField);
+                    this._fieldsSubject.value[i] = currentField;
+                } else if (currentField.controlType !== 'internalPage') {
                     if (
                         currentField.groupFields &&
                         currentField.groupFields.length > 0
@@ -1210,6 +1230,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     value: options.formattedValue,
                 });
             }
+        } else if (customField instanceof PepInternalCaruselField) {
+            options.pageInfo = updatedField.UIPageInfo;
         }
 
         customField.update(options);
@@ -1222,7 +1244,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                     (f) => f.key === currentField.ApiName
                 )[0];
                 // Update all fields except 'internalPage' type (for children).
-                if (customField && (customField.controlType !== 'internalPage' && customField.controlType !== 'internalCarusel')) {
+                if (customField && customField.controlType !== 'internalPage') {
                     this.updateField(customField, currentField);
 
                     // Update the group fields.
@@ -1381,11 +1403,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         const fields: PepFieldBase[] = [];
 
-        // const matrixFields = controlFields.filter((cf) =>
-        //     this.isMatrixField(cf.ApiName)
-        // ).length;
-        // let matrixAlreadyPlaced = false;
-
         controlFields.forEach((field, index) => {
             const dataField = dataFields.filter(
                 (df) => df.ApiName === field.ApiName
@@ -1413,16 +1430,6 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             if (index === 0 && this.firstFieldAsLink) {
                 dataField.FieldType = FIELD_TYPE.InternalLink;
                 // dataField.Value = this.getInternalLinkHref();
-            } else if (
-                dataField.Value.length > 0 &&
-                (field.FieldType === FIELD_TYPE.ReferenceType ||
-                    field.FieldType === FIELD_TYPE.GuidReferenceType)
-            ) {
-                // const transactionUrl =
-                //     this.data.MainAction === '2'
-                //         ? 'transactions/scope_items/'
-                //         : 'transactions/cart/';
-                // dataField.Value = transactionUrl + dataField.Value;
             }
 
             if (field.ApiName === 'ObjectMenu') {
@@ -1430,18 +1437,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 // HACK : Until "Enabled" returns from the server, we set PepMenu to be
                 //        Disabled in cart on regular items and not campign items.
             }
-            const customField: PepFieldBase = this.convertToCustomField(
-                field,
-                dataField,
-                this.canEditObject,
-                this.menuDataField,
-                this.hasCampaignDataField,
-                this.indicatorsDataField,
-                this.objectId,
-                this.parentId,
-                this.searchCode
-            );
-
+            const customField: PepFieldBase = this.createBaseField(field, dataField);
             fields.push(customField);
         });
 
@@ -1484,6 +1480,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
             this.valueChange.emit({
                 id: this.data.UID.toString(),
+                uiObjectKey: this.data.Key,
                 key: event.key,
                 value: event.value,
                 controlType: event.controlType,
@@ -1498,48 +1495,22 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         const idType = this.data.Type ? this.data.Type.toString() : '';
 
         if (clickedUiControlField) {
-            if (
-                clickedUiControlField.FieldType === FIELD_TYPE.GuidReferenceType
-            ) {
-                this.fieldClick.emit({
-                    id: this.data.UID.toString(),
-                    key: fieldClickEvent.key,
-                    idType,
-                    which: fieldClickEvent.eventWhich,
-                    value: fieldClickEvent.value,
-                    controlType: fieldClickEvent.controlType,
-                    fieldType: clickedUiControlField.FieldType,
-                    otherData: fieldClickEvent.otherData,
-                });
-            } else if (
-                clickedUiControlField.FieldType === FIELD_TYPE.ListOfObjects
-            ) {
-                this.fieldClick.emit({
-                    id: this.data.UID.toString(),
-                    key: fieldClickEvent.key,
-                    idType,
-                    which: fieldClickEvent.eventWhich,
-                    value: fieldClickEvent.value,
-                    controlType: fieldClickEvent.controlType,
-                    fieldType: clickedUiControlField.FieldType,
-                    otherData: fieldClickEvent.otherData,
-                });
-            } else {
-                this.fieldClick.emit({
-                    id: this.data.UID.toString(),
-                    key: fieldClickEvent.key,
-                    idType,
-                    which: fieldClickEvent.eventWhich,
-                    value: fieldClickEvent.value,
-                    controlType: fieldClickEvent.controlType,
-                    fieldType: clickedUiControlField.FieldType,
-                    otherData: fieldClickEvent.otherData,
-                });
-            }
+            this.fieldClick.emit({
+                id: this.data.UID.toString(),
+                uiObjectKey: this.data.Key,
+                key: fieldClickEvent.key,
+                idType,
+                which: fieldClickEvent.eventWhich,
+                value: fieldClickEvent.value,
+                controlType: fieldClickEvent.controlType,
+                fieldType: clickedUiControlField.FieldType,
+                otherData: fieldClickEvent.otherData,
+            });
         } else {
             // For other api names (like enter children etc).
             this.fieldClick.emit({
                 id: this.data.UID.toString(),
+                uiObjectKey: this.data.Key,
                 key: fieldClickEvent.key,
                 idType,
                 which: fieldClickEvent.eventWhich,
@@ -1551,18 +1522,18 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     // This event is for handle the internal page events.
-    onChildClicked(childClick: any): void {
-        this.childClick.emit(childClick);
+    onInternalFormFieldClicked(internalFormFieldClick: any): void {
+        this.internalFormFieldClick.emit(internalFormFieldClick);
     }
 
     // This event is for handle the internal page events.
-    onChildChanged(childChange: any): void {
-        this.childChange.emit(childChange);
+    onInternalFormFieldChanged(internalFormFieldChange: any): void {
+        this.internalFormFieldChange.emit(internalFormFieldChange);
     }
 
     // This event is for handle the related items change events.
     onFormValueChanged(event: IPepFormFieldValueChangeEvent): void {
-        this.valueChange.emit(event);
+        // this.valueChange.emit(event);
     }
 
     // This event is for handle the related items change events.

@@ -472,24 +472,27 @@ export class PepInternalPageField extends PepFieldBase {
 
 
 interface IPepInternalCaruselFieldOptions extends IPepFieldBaseOptions {
-    objectId?: string;
-    // parentId?: string;
     searchCode?: string;
+    pageInfo?: any;
 }
 export class PepInternalCaruselField extends PepFieldBase {
     controlType = 'internalCarusel';
-    objectId = '';
-    // parentId = '';
     searchCode = '';
+    pageInfo;
 
     constructor(options: IPepInternalCaruselFieldOptions = {}) {
         super(options);
-        this.objectId = options.objectId || '';
-        // this.parentId = options.parentId || '';
         this.searchCode = options.searchCode || '';
+
+        this.update(options);
+    }
+
+    public update(options: IPepInternalCaruselFieldOptions): void {
+        super.update(options);
+
+        this.pageInfo = options.pageInfo;
     }
 }
-
 
 
 interface IPepInternalMenuFieldOptions extends IPepFieldBaseOptions {

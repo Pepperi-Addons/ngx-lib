@@ -52,9 +52,11 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
 
     @Input() field: any;
     @Input() layoutType: PepLayoutType = 'form';
-    @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
+
     @Output()
-    childClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
+    internalFormFieldChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    internalFormFieldClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
 
     @ViewChild('my1mm') my1mm: ElementRef;
     @ViewChild('mainViewCont') mainViewCont: ElementRef;
@@ -459,7 +461,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         this.checkForChanges = new Date();
 
         // DI-15985
-        this.childChange.emit(res);
+        this.internalFormFieldChange.emit(res);
 
         this.changeDetectorRef.markForCheck();
     }
@@ -506,7 +508,7 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
         }
 
         if (!handledEvent) {
-            this.childClick.emit(fieldClickEvent);
+            this.internalFormFieldClick.emit(fieldClickEvent);
         }
     }
 }

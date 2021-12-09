@@ -174,6 +174,7 @@ export class ObjectsDataRowCell {
     ReferenceObjectType?: string;
     TextColor?: string;
     UiPageKey?: string;
+    UIPageInfo?: any;
     // Type?: string; // This is in the object??
     Value: any;
     Visible?: boolean;
@@ -190,6 +191,7 @@ export class ObjectsDataRow {
     Profile?: any;
     Type: number;
     UID: any;
+    Key: string;
 }
 
 export class ObjectSingleData {
