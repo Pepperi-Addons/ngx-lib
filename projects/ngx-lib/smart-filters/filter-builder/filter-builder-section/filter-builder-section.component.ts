@@ -14,12 +14,18 @@ import { PepOperatorTypes } from '../common/model/type';
     styleUrls: ['./filter-builder-section.component.scss'],
 })
 export class FilterBuilderSectionComponent implements AfterViewChecked {
-    @Input() set operator(value: string) {
+    //@Input() operator = PepOperatorTypes.And; //default
+    /*@Input() set operator(value: string) {
         this._operator = value;
 
-    };
-    //@Input() index: number = 1;
+    };  */
+
     @Input() form: FormGroup;
+    @Input() isRoot = false;
+
+    @Output()
+    remove = new EventEmitter();
+
     /*@Input() set form(value: FormGroup) {
         console.log('section form', value);
         //this.addToForm(value);        
@@ -30,13 +36,8 @@ export class FilterBuilderSectionComponent implements AfterViewChecked {
 
     @ViewChild('sectionContainer', { read: ViewContainerRef, static: true }) sectionContainer: ViewContainerRef;
 
-    _operator: string;
-    //_form: FormGroup;
 
-    constructor(private changeDetectionRef: ChangeDetectorRef, public vccRef: ViewContainerRef, private fb: FormBuilder, private _filterBuilderService: FilterBuilderService) {
-        /*this._form = this.fb.group({
-            operator: 'ANDDDAND'
-        }) */
+    constructor(private changeDetectionRef: ChangeDetectorRef, public vccRef: ViewContainerRef, private _fb: FormBuilder, private _filterBuilderService: FilterBuilderService) {
     }
 
     ngOnInit() {
@@ -49,13 +50,18 @@ export class FilterBuilderSectionComponent implements AfterViewChecked {
         console.log('ngAfterViewChecked'); */
     }
 
-    addRuleClicked() {
+    onAddRuleClicked() {
         this._filterBuilderService.createItem(null, this.sectionContainer, this.form);
     }
 
-    addRuleSetClicked() {
+    onAddRuleSetClicked() {
         this._filterBuilderService.createSection(PepOperatorTypes.And, this.sectionContainer, this.form);
     }
+
+    onDeleteSectionClicked() {
+        this.remove.emit();
+    }
+
 
     /*addToForm(parentForm: FormGroup) {
         //parentForm.addControl('section' + this.index, this._form);

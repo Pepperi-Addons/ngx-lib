@@ -117,6 +117,9 @@ export class PepDateFilterComponent extends BaseFilterComponent {
         if (this._parentForm) {
             this.updateParentForm();
         }
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
     }
 
     onTimeUnitChanged(value: string) {
@@ -126,6 +129,15 @@ export class PepDateFilterComponent extends BaseFilterComponent {
         this.operatorUnit = operatorUnit;
         if (this._parentForm) {
             this.updateParentForm();
+        }
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
+    onDateValueChanged() {
+        if (this.emitOnChange) {
+            this.applyFilter();
         }
     }
 

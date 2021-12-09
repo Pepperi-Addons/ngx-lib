@@ -6,8 +6,8 @@
     </ng-container>
     <div>
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
-            [renderError]="false" [type]="field.type" [formattedValue]="firstControl.value"
-            [value]="firstControl.value">
+            [renderError]="false" [type]="field.type" [formattedValue]="firstControl.value" [value]="firstControl.value"
+            (valueChange)="onValueChanged()">
         </pep-textbox>
     </div>
 </div>

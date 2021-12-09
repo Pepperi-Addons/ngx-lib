@@ -76,6 +76,15 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
         if (this._parentForm) {
             this.updateParentForm();
         }
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
+    onValueChanged() {
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
     }
 
 }

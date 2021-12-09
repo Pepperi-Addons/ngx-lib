@@ -9,6 +9,6 @@
 <div id="filter-container">
     <ng-container #filterRoot></ng-container>
     <pep-button [value]="'Save Filters'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'pep-spacing-element '"
-        (buttonClick)="onSaveFiltersClicked()">
+        [disabled]="filterBuilderService?.Form?.invalid" (buttonClick)="onSaveFiltersClicked()">
     </pep-button>
 </div>

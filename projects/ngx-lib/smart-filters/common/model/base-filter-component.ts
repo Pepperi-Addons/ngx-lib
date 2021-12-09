@@ -76,11 +76,11 @@ export abstract class BaseFilterComponent
     set parentForm(form: FormGroup) {
         console.log('parentForm', form);
         this._parentForm = form;
-        //this.addToParentForm();
         this.updateParentForm();
     }
-    @Input() inline = false;
     @Input() emitOnChange = false;
+    @Input() inline = false;
+    @Input() showActionButtons = true;
 
     @Output() filterClear: EventEmitter<void> = new EventEmitter<void>();
     @Output()
@@ -177,18 +177,21 @@ export abstract class BaseFilterComponent
     }
 
     private setupForm() {
+        //console.log('setupForm');
         const formValue = {};
         formValue[this.firstControlKey] = [];
         formValue[this.secondControlKey] = [];
-        // this.form.patchValue(formValue);
-
+        // this.form.patchValue(formValue);        
         this.form = this.builder.group(formValue);
+
         // this.form[this.firstControlKey] = [];
         // this.form[this.secondControlKey] = [];
 
         this.setupOperators();
 
-        this.createActionsComponent();
+        if (this.showActionButtons) {
+            this.createActionsComponent();
+        }
     }
 
     private setupOperators() {
@@ -245,37 +248,7 @@ export abstract class BaseFilterComponent
         }
     }
 
-    private addToParentForm() {
-
-    }
-
     protected updateParentForm() {
-        /*this._parentForm.patchValue(this.builder.group({
-            fieldId: this.builder.control(this.field.id),
-            operator: this.builder.control(this.operator),
-            operatorUnit: this.builder.control(this.operatorUnit),
-            value: this.builder.group({
-                first: this.firstControl,
-                second: this.secondControl
-            }),
-        })); */
-        /*
-        this._parentForm.get('fieldId').patchValue(this.field.id);
-        this._parentForm.get('operator').patchValue(this.operator);
-        this._parentForm.get('operatorUnit').patchValue(this.operatorUnit);
-        this._parentForm.get('value').setValue(this.builder.group({
-            first: this.firstControl,
-            second: this.secondControl
-        })); */
-
-        //this._parentForm.get('value').get('first').patchValue(this.firstControl);
-        //this._parentForm.get('value').get('second').patchValue(this.secondControl);
-
-
-        /*onsole.log('fieldId', this.field.id);
-        console.log('operator', this.operator);
-        console.log('operatorUnit', this.operatorUnit);
-        console.log('value first key', this.firstControlKey);*/
         this._parentForm.setControl('fieldId', this.builder.control(this.field.id));
         this._parentForm.setControl('operator', this.builder.control(this.operator));
         this._parentForm.setControl('operatorUnit', this.builder.control(this.operatorUnit));
@@ -284,7 +257,6 @@ export abstract class BaseFilterComponent
             second: this.secondControl
         }));
         console.log('parent form init', this._parentForm);
-        //console.log('parent form', this._parentForm);
     }
 
     protected getDestroyer() {
@@ -349,15 +321,6 @@ export abstract class BaseFilterComponent
         }
     }
 
-    applyParentForm() {
-        console.log('applyParentForm');
-        /*if (this._parentForm) {
-            this._parentForm.get('fieldId').patchValue(this.field.id);
-            this._parentForm.get('operator').patchValue(this.operator);
-            this._parentForm.get('operatorUnit').patchValue(this.operatorUnit);
-        } */
-    }
-
     ngOnInit(): void {
         if (this.form) {
             this.updateValidity();
@@ -374,7 +337,9 @@ export abstract class BaseFilterComponent
         this._destroyed.next();
         this._destroyed.complete();
 
-        this.actionsContainerRef.destroy();
+        if (this.showActionButtons) {
+            this.actionsContainerRef.destroy();
+        }
     }
 
     // writeValue(value: IPepSmartFilterDataValue): void {

@@ -21,3 +21,21 @@ export function convertToSmartFilterFields(fields: Array<any>) {
     }
 
 }
+
+/**
+ * Legacy field
+ */
+export interface IPepField {
+    FieldID: string;
+    FieldType: string;
+    Title: string;
+    OptionalValues: IPepFieldOptionalValues[];
+}
+
+/**
+ * Legacy field's optional values
+ */
+export interface IPepFieldOptionalValues {
+    Key: string;
+    Value: string;
+}

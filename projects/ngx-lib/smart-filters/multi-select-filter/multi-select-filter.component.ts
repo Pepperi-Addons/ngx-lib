@@ -165,7 +165,7 @@ export class PepMultiSelectFilterComponent
             { emitEvent: false }
         );
         if (this.emitOnChange) {
-            this.applyParentForm();
+            this.applyFilter();
         }
     }
 }

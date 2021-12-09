@@ -51,7 +51,7 @@ export class FilterBuilderExampleComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadFilterFields();
-        this.json = {
+        /*this.json = {
             "ComplexId": 3,
             "Operation": "OR",
             "LeftNode": {
@@ -86,45 +86,51 @@ export class FilterBuilderExampleComponent implements OnInit {
                     "trtt"
                 ]
             }
-        }
-        /*this.json = { 
-            ComplexId: 4,
-            Operation: 'AND',
-            LeftNode: {
-                ComplexId: 3,
-                Operation: 'OR',
-                LeftNode: {
-                    ComplexId: 2,
-                    Operation: 'AND',
-                    LeftNode: {
-                        ExpressionId: 1,
-                        ApiName: 'CampaignName',
-                        Operation: 'Contains',
-                        Values: ['Pep']
+        } */
+        this.json = {
+            "ComplexId": 4,
+            "Operation": "AND",
+            "LeftNode": {
+                "ComplexId": 3,
+                "Operation": "OR",
+                "LeftNode": {
+                    "ComplexId": 2,
+                    "Operation": "AND",
+                    "LeftNode": {
+                        "ExpressionId": 1,
+                        "ApiName": "CampaignName",
+                        "Operation": "Contains",
+                        "Values": [
+                            "Pep"
+                        ]
                     },
-                    RightNode: {
-                        ExpressionId: 2,
-                        ApiName: 'AllowDecimal',
-                        Operation: 'IsEqual',
-                        Values: [true]
+                    "RightNode": {
+                        "ExpressionId": 2,
+                        "ApiName": "AllowDecimal",
+                        "Operation": "IsEqual",
+                        "Values": [
+                            "True"
+                        ]
                     }
                 },
-                RightNode: {
-                    ExpressionId: 3,
-                    ApiName: 'CostPrice',
-                    Operation: '>',
-                    Values: [5]
+                "RightNode": {
+                    "ExpressionId": 3,
+                    "ApiName": "CostPrice",
+                    "Operation": ">",
+                    "Values": [
+                        "5"
+                    ]
                 }
             },
-            RightNode: {
-                ExpressionId: 4,
-                ApiName: 'CaseQuantity',
-                Operation: '<',
-                Values: [
-                    5
+            "RightNode": {
+                "ExpressionId": 4,
+                "ApiName": "CaseQuantity",
+                "Operation": ">",
+                "Values": [
+                    "5"
                 ]
             }
-        } */
+        }
     }
 
     loadFilterFields() {
@@ -139,11 +145,11 @@ export class FilterBuilderExampleComponent implements OnInit {
             { ApiName: 'Type', DisplayName: 'Type', Type: 'String', Options: [] },
             {
                 ApiName: 'BillToState', DisplayName: 'Bill To State', Type: 'MultipleStringValues', Options: [
-                    { value: 'value 0', count: 0 },
-                    { value: 'value 1', count: 1 },
-                    { value: 'value 2', count: 2 },
-                    { value: 'value 3', count: 3 },
-                    { value: 'value 4', count: 4 },
+                    { value: 'value 0' },
+                    { value: 'value 1' },
+                    { value: 'value 2' },
+                    { value: 'value 3' },
+                    { value: 'value 4' },
                     { value: 'value 5', count: 5 },
                     { value: 'value 6', count: 6 },
                     { value: 'value 7', count: 7 },
@@ -153,6 +159,10 @@ export class FilterBuilderExampleComponent implements OnInit {
             }
         ];
 
+    }
+
+    getFilters(json: any) {
+        console.log('getFilters', json);
     }
 
 }

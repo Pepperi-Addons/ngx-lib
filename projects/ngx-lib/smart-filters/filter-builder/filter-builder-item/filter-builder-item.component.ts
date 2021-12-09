@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilterBuilderService } from '../filter-builder.service';
 import { PepSmartFilterType } from '../../common/model/type';
@@ -57,9 +57,10 @@ export class FilterBuilderItemComponent {
     @Input() formKey: string;
 
     @Output()
-    filtersChange: EventEmitter<IPepSmartFilterData> = new EventEmitter<
-        IPepSmartFilterData
-    >();
+    filterChange = new EventEmitter();
+    @Output()
+    remove = new EventEmitter();
+
 
     _form: FormGroup;
     _fields: Array<any> = [];
@@ -99,38 +100,34 @@ export class FilterBuilderItemComponent {
         this._parentForm.setControl(this.formKey, this._form);
     }
 
-    clearFilter(fieldId: string) {
-        //    this._filtersDataMap.delete(fieldId);
-    }
-
-    private raiseFiltersChange(): void {
-        this.filtersChange.emit(this._filter);
-    }
-
     onFieldChanged(key) {
         console.log('onFieldChanged', key);
         let item = this._fields.find(field => field.id === key);
-        //console.log('item', item);
-        //this._f = this.fb.group({});
+
         this.setupForm();
         this.addToParentForm();
 
-        this._selectedField = item ? item : null;
+        /**
+         * hack due to angular's change detection bug -
+         * ERROR Error: There is no FormControl instance attached to form control element with name: [formControlName]
+         */
+        this._selectedField = null;
+        setTimeout(() => {
+            this._selectedField = item ? item : null;
+        }, 0);
+
         this._filter = null;
-        //this._form.patchValue(this._filterBuilderService.createItemForm());
-
     }
 
-    onFilterChanged(filterData: IPepSmartFilterData) {
-        console.log('onFilterChange value', filterData);
-        //this._f.filter.patchValue(filterData);
-
+    onFilterChanged() {
+        if (this._form.valid) {
+            this.filterChange.emit();
+        }
     }
 
-    onFilterClear(field: PepSmartFilterBaseField) {
-        console.log('onFilterClear', field);
-        this.clearFilter(field.id);
-        this.raiseFiltersChange();
+
+    onDeleteItemClicked() {
+        this.remove.emit();
     }
 
 

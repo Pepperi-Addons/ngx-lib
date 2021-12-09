@@ -1,6 +1,6 @@
 export enum PepOperatorTypes {
-    And = 'and',
-    Or = 'or'
+    And = 'AND',
+    Or = 'OR'
 }
 
 const Bool = {

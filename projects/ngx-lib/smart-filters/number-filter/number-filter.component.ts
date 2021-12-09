@@ -91,11 +91,15 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
         if (this._parentForm) {
             this.updateParentForm();
         }
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
     }
 
     onValueChanged() {
         if (this.emitOnChange) {
-            this.applyParentForm();
+            this.applyFilter();
         }
     }
+
 }
