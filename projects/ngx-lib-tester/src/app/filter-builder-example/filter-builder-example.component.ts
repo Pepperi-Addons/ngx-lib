@@ -9,6 +9,7 @@ import {
     PepMenuItem,
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
+import { IPepField } from '@pepperi-addons/ngx-lib/smart-filters/filter-builder/common/model/legacy';
 import { createSmartFilterField, createSmartFilter } from 'projects/ngx-lib/smart-filters/common/model/creator';
 import {
     IPepSmartFilterFieldOption,
@@ -25,7 +26,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
     styleUrls: ['./filter-builder-example.component.scss'],
 })
 export class FilterBuilderExampleComponent implements OnInit {
-    fields: Array<any>;
+    fields: Array<IPepField>;
     //filters: Array<IPepSmartFilterData>;
 
     uiControl;
@@ -51,8 +52,8 @@ export class FilterBuilderExampleComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadFilterFields();
-        /*this.json = {
-            "ComplexId": 3,
+        this.json = {
+            "ComplexId": 1,
             "Operation": "OR",
             "LeftNode": {
                 "ComplexId": 2,
@@ -69,12 +70,12 @@ export class FilterBuilderExampleComponent implements OnInit {
                 "RightNode": {
                     "ExpressionId": 2,
                     "ApiName": "BillToState",
-                    "Operation": "In",
+                    "Operation": "IsEqual",
                     "Values": [
-                        "value 2",
-                        "value 4",
-                        "value 6",
-                        "value 8"
+                        "value2",
+                        "value4",
+                        "value6",
+                        "value8"
                     ]
                 }
             },
@@ -86,7 +87,8 @@ export class FilterBuilderExampleComponent implements OnInit {
                     "trtt"
                 ]
             }
-        } */
+        }
+        /*
         this.json = {
             "ComplexId": 4,
             "Operation": "AND",
@@ -130,31 +132,31 @@ export class FilterBuilderExampleComponent implements OnInit {
                     "5"
                 ]
             }
-        }
+        } */
     }
 
     loadFilterFields() {
 
         this.fields = [
-            { ApiName: 'TSAAttachmentTest1', DisplayName: 'TSA Attachment Test', Type: 'String', Options: [] },
-            { ApiName: 'AllowDecimal', DisplayName: 'Allow Decimal', Type: 'Bool', Options: [] },
-            { ApiName: 'CostPrice', DisplayName: 'Cost Price', Type: 'Integer', Options: [] },
-            { ApiName: 'CaseQuantity', DisplayName: 'Case Quantity', Type: 'Integer', Options: [] },
-            { ApiName: 'CampaignName', DisplayName: 'Campaign Name', Type: 'String', Options: [] },
-            { ApiName: 'ActionDateTime', DisplayName: 'Action Date Time', Type: 'DateTime', Options: [] },
-            { ApiName: 'Type', DisplayName: 'Type', Type: 'String', Options: [] },
+            { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String', OptionalValues: [] },
+            { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool', OptionalValues: [] },
+            { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer', OptionalValues: [] },
+            { FieldID: 'CaseQuantity', Title: 'Case Quantity', FieldType: 'Integer', OptionalValues: [] },
+            { FieldID: 'CampaignName', Title: 'Campaign Name', FieldType: 'String', OptionalValues: [] },
+            { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime', OptionalValues: [] },
+            { FieldID: 'Type', Title: 'Type', FieldType: 'String', OptionalValues: [] },
             {
-                ApiName: 'BillToState', DisplayName: 'Bill To State', Type: 'MultipleStringValues', Options: [
-                    { value: 'value 0' },
-                    { value: 'value 1' },
-                    { value: 'value 2' },
-                    { value: 'value 3' },
-                    { value: 'value 4' },
-                    { value: 'value 5', count: 5 },
-                    { value: 'value 6', count: 6 },
-                    { value: 'value 7', count: 7 },
-                    { value: 'value 8', count: 8 },
-                    { value: 'value 9', count: 9 },
+                FieldID: 'BillToState', Title: 'Bill To State', FieldType: 'MultipleStringValues', OptionalValues: [
+                    { Key: 'value0', Value: 'value 0' },
+                    { Key: 'value1', Value: 'value 1' },
+                    { Key: 'value2', Value: 'value 2' },
+                    { Key: 'value3', Value: 'value 3' },
+                    { Key: 'value4', Value: 'value 4' },
+                    { Key: 'value5', Value: 'value 5' },
+                    { Key: 'value6', Value: 'value 6' },
+                    { Key: 'value7', Value: 'value 7' },
+                    { Key: 'value8', Value: 'value 8' },
+                    { Key: 'value9', Value: 'value 9' },
                 ]
             }
         ];

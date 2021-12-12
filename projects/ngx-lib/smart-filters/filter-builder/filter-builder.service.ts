@@ -5,7 +5,8 @@ import {
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { } from 'lodash';
-import { PepSmartFilterBaseField, IPepSmartFilterField } from '../common/model/field';
+import { IPepField, IPepJSONSection, IPepJSONItem } from './common/model/legacy';
+import { PepSmartFilterBaseField, IPepSmartFilterField, IPepSmartFilterFieldOption } from '../common/model/field';
 import { IPepSmartFilterData } from '../common/model/filter';
 import { PepSmartFilterOperators, IPepSmartFilterOperator } from '../common/model/operator';
 import { PepSmartFilterType } from '../common/model/type'
@@ -17,6 +18,7 @@ import { FilterBuilderSectionComponent } from './filter-builder-section/filter-b
 import { FilterBuilderItemComponent } from './filter-builder-item/filter-builder-item.component';
 import { PepFilterBuilderTypeMap } from './common/model/type-map';
 import { PepFilterBuilderOperatorUnitMap } from './common/model/operator-unit-map';
+import { PepOutputFilterService } from './common/services/output-filter';
 import { IPepFilterBuilderValues } from './common/model/filter';
 import { PepOperatorTypes } from './common/model/type';
 
@@ -31,108 +33,70 @@ export class FilterBuilderService {
     private rootDiv: ViewContainerRef;
     private _counter: number;
     private _json: any;
-    private _fields: Array<any>;
+    //private _fields: Array<any>;
     private _smartFilterFields: Array<IPepSmartFilterField>
     private _typeMapper: PepFilterBuilderTypeMap;
     private _operatorUnitMapper: PepFilterBuilderOperatorUnitMap;
     private _hostView: ComponentRef<FilterBuilderSectionComponent>;
+
     private _form: FormGroup;
 
-    private _outputJson: any;
+    //private _outputJson: any;
     private _firstOutputItem: any;
+    private _complexIdCounter = 1;
+    private _expressionIdCounter = 1;
 
     public triggerOutputJson = this._outputJsonSubject.asObservable();
 
     //private _filters: Array<IPepSmartFilterData>;
 
-    constructor(private fb: FormBuilder, private resolver: ComponentFactoryResolver) {
+    constructor(private fb: FormBuilder, private resolver: ComponentFactoryResolver, private _outputJsonService: PepOutputFilterService) {
         this._typeMapper = new PepFilterBuilderTypeMap();
         this._operatorUnitMapper = new PepFilterBuilderOperatorUnitMap();
+
     }
 
     get Form(): FormGroup {
         return this._form;
     }
 
-    hasProperty(obj, prop) {
+    private hasProperty(obj, prop) {
         return Object.prototype.hasOwnProperty.call(obj, prop);
     }
 
-    /*
-    setupForm() {
-        this._form = this.fb.group({});
-    } */
-
-    buildTree() {
-    }
-
-    jsonParser(json: any) {
-        let parsed: any = {
-            Operator: json.Operation
-        }
-
-        this.treeFlatten(json, json.LeftNode, parsed);
-        this.treeFlatten(json, json.RightNode, parsed);
-
-        //console.log('parsed json', parsed);
-        return parsed;
-    }
-
-    treeFlatten(parent: any, current: any, ui: any) {
-        if (this.hasProperty(current, 'ComplexId')) {
-            if (parent.Operation === current.Operation) {
-                this.treeFlatten(parent, current.LeftNode, ui);
-                this.treeFlatten(parent, current.RightNode, ui);
-            } else {
-                let counter: number = 0;
-                Object.keys(ui).forEach(item => { if (item.includes('Node')) { counter++; } });
-                ui['Node' + counter] = {
-                    Operator: current.Operation,
-                };
-                this.treeFlatten(current, current.LeftNode, ui['Node' + counter]);
-                this.treeFlatten(current, current.RightNode, ui['Node' + counter]);
-            }
-        } else {
-            let counter: number = 0;
-            Object.keys(ui).forEach(item => { if (item.includes('Filter')) { counter++; } });
-            ui['Filter' + counter] = {
-                FieldName: current.ApiName,
-                Operation: current.Operation,
-                Values: current.Values
-            };
-        }
-    }
-
-
     createFilterTree(
-        json: any,
-        fields: Array<any>,
+        json: IPepJSONSection | null,
+        fields: Array<IPepField>,
         form: FormGroup,
         containerRef: ViewContainerRef
     ) {
         this._form = form;
-        this._fields = fields;
+        //this._fields = fields;
         this._smartFilterFields = this.convertToSmartFilterFields(fields);
         console.log('this._smartFilterFields', this._smartFilterFields);
-        const result = this.createSection(json.Operation, containerRef, this._form, true);
+        const result = this.createSection(json?.Operation ? json.Operation : PepOperatorTypes.And, containerRef, this._form, true);
 
-        this.flatten(json, json.LeftNode, result.containerRef, result.parentForm);
-        this.flatten(json, json.RightNode, result.containerRef, result.parentForm);
+        if (json) {
+            this.flatten(json, json.LeftNode, result.containerRef, result.parentForm);
+            this.flatten(json, json.RightNode, result.containerRef, result.parentForm);
+        }
+
         console.log('base form', this._form);
     }
 
-    flatten(parent: any, current: any, containerRef: ViewContainerRef, parentForm: FormGroup) {
+    private flatten(parent: IPepJSONSection, current: IPepJSONSection | IPepJSONItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
         if (this.hasProperty(current, 'ComplexId')) {
+            const section = current as IPepJSONSection;
             if (parent.Operation === current.Operation) {
-                this.flatten(parent, current.LeftNode, containerRef, parentForm);
-                this.flatten(parent, current.RightNode, containerRef, parentForm);
+                this.flatten(parent, section.LeftNode, containerRef, parentForm);
+                this.flatten(parent, section.RightNode, containerRef, parentForm);
             } else {
-                const result = this.createSection(current.Operation, containerRef, parentForm);
-                this.flatten(current, current.LeftNode, result.containerRef, result.parentForm);
-                this.flatten(current, current.RightNode, result.containerRef, result.parentForm);
+                const result = this.createSection(section.Operation, containerRef, parentForm);
+                this.flatten(section, section.LeftNode, result.containerRef, result.parentForm);
+                this.flatten(section, section.RightNode, result.containerRef, result.parentForm);
             }
         } else if (this.hasProperty(current, 'ExpressionId')) {
-            this.createItem(current, containerRef, parentForm);
+            this.createItem(current as IPepJSONItem, containerRef, parentForm);
         }
     }
 
@@ -162,7 +126,7 @@ export class FilterBuilderService {
         };
     }
 
-    createItem(current: any, containerRef: ViewContainerRef, parentForm: FormGroup) {
+    createItem(current: IPepJSONItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory = this.resolver.resolveComponentFactory(FilterBuilderItemComponent);
         let componentRef = containerRef.createComponent(factory);
 
@@ -171,16 +135,17 @@ export class FilterBuilderService {
         let formKey: string = `item${counter}`;
 
         componentRef.instance.fields = this._smartFilterFields;
-        if (current) {
-            componentRef.instance.filter = this.getFilter(current);
+        const selectedField = this.getSelectedField(current);
+        if (selectedField) {
+            componentRef.instance.selected = selectedField;
+            if (current) {
+                componentRef.instance.filter = this.getFilter(current, selectedField);
+            }
         }
-        componentRef.instance.selected = this.getSelectedFilter(current);
         componentRef.instance.formKey = formKey;
         componentRef.instance.parentForm = parentForm;
         componentRef.instance.filterChange.subscribe(() => {
-            console.log('filterChange event');
             if (this._form.valid) {
-                console.log('form in valid!');
                 this.createOutputJson();
             }
         });
@@ -191,32 +156,36 @@ export class FilterBuilderService {
         });
     }
 
-    getFilter(current: any): IPepSmartFilterData {
+    private getFilter(current: IPepJSONItem, field: any): IPepSmartFilterData {
         console.log('current item', current);
+        console.log('current field', field);
         //console.log('convertToSmartFilterFields', convertToSmartFilterFields(this._fields));
-        let operator: IPepSmartFilterOperator = getSmartBuilderOperator(current.Operation);
-        let filterValues: IPepFilterBuilderValues = this.getFilterValues(current, operator);
-        //console.log('smart filter', createSmartFilter(current.ApiName, operator, filterValues.first, filterValues.second, filterValues.operationUnit));
-        return createSmartFilter(
-            current.ApiName,
-            operator,
-            filterValues.first,
-            filterValues.second,
-            filterValues.operationUnit
-        );
+        let operator: IPepSmartFilterOperator = getSmartBuilderOperator(current.Operation, field.type);
+        if (operator) {
+            let filterValues: IPepFilterBuilderValues = this.getFilterValues(current, operator, field);
+            //console.log('smart filter', createSmartFilter(current.ApiName, operator, filterValues.first, filterValues.second, filterValues.operationUnit));
+            return createSmartFilter(
+                current.ApiName,
+                operator,
+                filterValues.first,
+                filterValues.second,
+                filterValues.operationUnit
+            );
+        } else {
+            return null;
+        }
     }
 
-    private getSelectedFilter(current: any): IPepSmartFilterField | null {
+    private getSelectedField(current: IPepJSONItem): IPepSmartFilterField | null {
         if (current) {
             let item = this._smartFilterFields.find(field => field.id === current.ApiName);
             return item ? item : null;
         } else {
             return this._smartFilterFields?.length > 0 ? this._smartFilterFields[0] : null;
         }
-        //return this._smartFilterFields.find(field => field.id === current.ApiName);
     }
 
-    getFilterValues(current: any, operator: IPepSmartFilterOperator) {
+    private getFilterValues(current: IPepJSONItem, operator: IPepSmartFilterOperator, field: any) {
         let data: IPepFilterBuilderValues = {
             first: null,
             second: null,
@@ -224,7 +193,10 @@ export class FilterBuilderService {
         };
 
         if (operator === PepSmartFilterOperators.In) { //multi select 
-            data.first = current?.Values?.length > 0 ? current.Values : null;
+            data.first = current?.Values?.length > 0 ? current.Values.map(value => {
+                const item = field.options.find((field) => field.key === value); // CHECK
+                return item?.value ? item.value : null;
+            }) : null;
         } else if (
             operator === PepSmartFilterOperators.InTheLast ||
             operator === PepSmartFilterOperators.NotInTheLast ||
@@ -243,66 +215,71 @@ export class FilterBuilderService {
         return data;
     }
 
-    convertToSmartFilterFields(fields: Array<any>) {
+    private convertToSmartFilterFields(fields: Array<IPepField>) {
         if (fields?.length > 0) {
             return fields.map((field) => {
                 return createSmartFilterField(
                     {
-                        id: field.ApiName,
-                        name: field.DisplayName,
-                        options: field.Options
+                        id: field.FieldID,
+                        name: field.Title,
+                        options: field.OptionalValues?.map(option => {
+                            return {
+                                key: option.Key,
+                                value: option.Value
+                            }
+                        })
                     } as IPepSmartFilterField
-                    , this._typeMapper.getSmartBuilderType(field.Type) as PepSmartFilterType)
+                    , this._typeMapper.getSmartBuilderType(field.FieldType) as PepSmartFilterType)
             })
         } else {
             return null;
         }
     }
 
-    saveFilterData() {
-        console.log('is form valid', this._form.valid);
-        console.log('form tree', this._form.value);
-
-        /*this.createOutputItem(this._form.value);
-        console.log('this._globalPairs', this._outputJson);
-        this._outputJson = undefined;
-        this._firstItem = undefined; */
+    private createOutputJson() {
+        //this.createOutputItem(this._form.value);
+        const json = this._outputJsonService.generateJson(this._form.value);
+        this._outputJsonSubject.next(json);
+        //this._outputJson = undefined;
+        //this._firstOutputItem = undefined;
     }
-
-    createOutputJson() {
-        this.createOutputItem(this._form.value);
-        this._outputJsonSubject.next(this._outputJson);
-        this._outputJson = undefined;
-        this._firstOutputItem = undefined;
-    }
-
-    createOutputItem(current: any) {
-        Object.keys(current).forEach(key => {
-            if (key.includes('item')) {
-                this.addToOutputJson({ itemId: current[key].fieldId }, current.operator);
-
-            } else if (key.includes('section')) {
-                this.createOutputItem(current[key]);
-            }
-        })
-
-
-    }
-
-    addToOutputJson(item: any, operator: string) {
-        //console.log('outputJson', item);
-        if (this._outputJson) {
-            this._outputJson = {
-                left: this._outputJson,
-                right: item,
-                operation: operator
-            };
-        } else if (this._firstOutputItem) {
-            this._outputJson = { left: this._firstOutputItem, right: item, operation: operator };
-        } else {
-            this._firstOutputItem = item;
+    /*
+        //TO DO
+        private createOutputItem(current: any) {
+            Object.keys(current).forEach(key => {
+                if (key.includes('item')) {
+                    this.addToOutputJson({
+                        ExpressionId: (this._expressionIdCounter++).toString(),
+                        ApiName: current[key].fieldId,
+                        //TODO - Operation and Values
+                    } as IPepJSONItem, current.operator);
+    
+                } else if (key.includes('section')) {
+                    this.createOutputItem(current[key]);
+                }
+            });
         }
-
-    }
+    
+        private addToOutputJson(item: any, operator: string) {
+            //console.log('outputJson', item);
+            if (this._outputJson) {
+                this._outputJson = {
+                    ComplexId: (this._complexIdCounter++).toString(),
+                    LeftNode: this._outputJson,
+                    RightNode: item,
+                    Operation: operator
+                };
+            } else if (this._firstOutputItem) {
+                this._outputJson = {
+                    ComplexId: (this._complexIdCounter++).toString(),
+                    LeftNode: this._firstOutputItem,
+                    RightNode: item,
+                    Operation: operator
+                };
+            } else {
+                this._firstOutputItem = item;
+            }
+    
+        } */
 
 }

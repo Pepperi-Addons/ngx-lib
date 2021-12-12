@@ -87,6 +87,7 @@ export class FilterBuilderItemComponent {
     setupForm() {
         this._form = this.fb.group({
             fieldId: this.fb.control(null),
+            fieldType: this.fb.control(null),
             operator: this.fb.control(null),
             operatorUnit: this.fb.control(null),
             value: this.fb.group({

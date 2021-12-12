@@ -1,4 +1,5 @@
 import { IPepSmartFilterOperatorUnit } from '../../../common/model/operator';
+import { IPepJSONItem } from './legacy';
 
 
 export interface IPepFilterBuilderValues {
@@ -20,4 +21,6 @@ export interface IPepLegacyJSONItem {
     Operation: string;
     Values?: any[];
 }
+
+
 

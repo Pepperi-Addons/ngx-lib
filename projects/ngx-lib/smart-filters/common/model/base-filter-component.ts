@@ -250,6 +250,7 @@ export abstract class BaseFilterComponent
 
     protected updateParentForm() {
         this._parentForm.setControl('fieldId', this.builder.control(this.field.id));
+        this._parentForm.setControl('fieldType', this.builder.control(this.field.type));
         this._parentForm.setControl('operator', this.builder.control(this.operator));
         this._parentForm.setControl('operatorUnit', this.builder.control(this.operatorUnit));
         this._parentForm.setControl('value', this.builder.group({

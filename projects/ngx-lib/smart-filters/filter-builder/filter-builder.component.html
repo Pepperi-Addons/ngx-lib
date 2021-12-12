@@ -1,14 +1,3 @@
-<!-- <ng-container *ngFor="let item of _items; let i = index">
-    <pep-filter-builder-item [selected]="fields[2]" [fields]="fields" [filters]="filters"
-        (filtersChange)="onFilterChanged($event, i)">
-    </pep-filter-builder-item>
-</ng-container>
-<pep-button [value]="'Add Item'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'pep-spacing-element'"
-    (click)="addItem()">
-</pep-button> -->
 <div id="filter-container">
     <ng-container #filterRoot></ng-container>
-    <pep-button [value]="'Save Filters'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'pep-spacing-element '"
-        [disabled]="filterBuilderService?.Form?.invalid" (buttonClick)="onSaveFiltersClicked()">
-    </pep-button>
 </div>

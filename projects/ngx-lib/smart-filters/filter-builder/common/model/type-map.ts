@@ -1,7 +1,7 @@
 import { PepSmartFilterType } from '../../../common/model/type';
 
 export class PepFilterBuilderTypeMap {
-    private map: Map<string, PepSmartFilterType>;
+    private readonly map: Map<string, PepSmartFilterType>;
 
     constructor() {
         this.map = new Map<string, PepSmartFilterType>();
@@ -17,8 +17,8 @@ export class PepFilterBuilderTypeMap {
     }
 
     /**
-     * Converts input Api field type to smart builder type
-     * @param type Api field type
+     * Converts Legacy field type to Smart builder type
+     * @param type Legacy type
      * @returns Smart builder field type
      */
     getSmartBuilderType(key: string): PepSmartFilterType | null {

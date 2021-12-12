@@ -1,144 +1,357 @@
 import { PepSmartFilterOperators, IPepSmartFilterOperator } from '../../../common/model/operator';
+import { PepSmartFilterType } from '../../../common/model/type';
 
 export interface IPepFilterBuilderOperator {
-    apiId: string;
-    smartFilterId: string;
+    //Legacy Operator
+    legacy: string,
+    //Smart filter Operator
+    smartFilter: IPepSmartFilterOperator,
+    //Smart filter type
+    type: PepSmartFilterType[]
+    /*legacy: {
+        operator: string,
+        type: string[] | null
+    },
+    smartFilter: {
+        item: IPepSmartFilterOperator,
+        type: PepSmartFilterType[] | null
+    } */
 }
 
 const Equals: IPepFilterBuilderOperator = {
-    apiId: 'IsEqual',
-    smartFilterId: 'eq'
+    legacy: 'IsEqual',
+    smartFilter: PepSmartFilterOperators.Equals,
+    type: ['boolean', 'int', 'text']
+    /*legacy: {
+        operator: 'IsEqual',
+        type: ['Boolean', 'Integer', 'Double', 'String']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.Equals,
+        type: ['boolean', 'int', 'text']
+    } */
 };
 
 const NotEqual: IPepFilterBuilderOperator = {
-    apiId: 'IsNotEqual',
-    smartFilterId: 'neq'
+    legacy: 'IsNotEqual',
+    smartFilter: PepSmartFilterOperators.NotEqual,
+    type: null
+    /*legacy: {
+        operator: 'IsNotEqual',
+        type: null
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.NotEqual,
+        type: null
+    } */
 };
 
 const LessThan: IPepFilterBuilderOperator = {
-    apiId: '<',
-    smartFilterId: 'lt'
+    legacy: '<',
+    smartFilter: PepSmartFilterOperators.LessThan,
+    type: null
+    /*legacy: {
+        operator: '<',
+        type: null//['Integer', 'Double']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.LessThan,
+        type: null//['int']
+    } */
 };
 
 const GreaterThan: IPepFilterBuilderOperator = {
-    apiId: '>',
-    smartFilterId: 'gt'
+    legacy: '>',
+    smartFilter: PepSmartFilterOperators.GreaterThan,
+    type: null
+    /*legacy: {
+        operator: '>',
+        type: null//['Integer', 'Double']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.GreaterThan,
+        type: null//['int']
+    } */
 };
 
+/*
 const GreaterThanOrEquals: IPepFilterBuilderOperator = {
-    apiId: '>=',
-    smartFilterId: 'gtoe'
+    legacy: {
+        operator: '>=',
+        type: 'Integer'
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.GreaterThanOrEquals,
+        type: 'int'
+    }
 };
 
 const LessThanOrEquals: IPepFilterBuilderOperator = {
-    apiId: '<=',
-    smartFilterId: 'ltoe'
-};
+    legacy: {
+        operator: '<=',
+        type: 'Integer'
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.LessThanOrEquals,
+        type: 'int',
+        type: 'Integer'
+    }
+}; */
 
 const NumberRange: IPepFilterBuilderOperator = {
-    apiId: 'In2',
-    smartFilterId: 'numberRange'
+    legacy: 'Between',
+    smartFilter: PepSmartFilterOperators.NumberRange,
+    type: ['int']
+    /*legacy: {
+        operator: 'Between',
+        type: ['Integer', 'Double']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.NumberRange,
+        type: ['int']
+    } */
 };
 
 const Contains: IPepFilterBuilderOperator = {
-    apiId: 'Contains',
-    smartFilterId: 'contains'
+    legacy: 'Contains',
+    smartFilter: PepSmartFilterOperators.Contains,
+    type: null
+    /*legacy: {
+        operator: 'Contains',
+        type: null//['String']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.Contains,
+        type: null//['text']
+    } */
 };
-
+/*
 const BeginsWith: IPepFilterBuilderOperator = {
-    apiId: 'BeginsWith',
-    smartFilterId: 'beginsWith'
+    legacy: {
+        operator: 'BeginsWith',
+        type: 'String'
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.BeginsWith,
+        type: 'text'
+    }
 };
 
 const EndsWith: IPepFilterBuilderOperator = {
-    apiId: 'EndsWith',
-    smartFilterId: 'endsWith'
-};
-
-const After: IPepFilterBuilderOperator = {
-    apiId: 'After',
-    smartFilterId: 'after'
+    legacy: {
+        operator: 'EndsWith',
+        type: 'String'
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.EndsWith,
+        type: 'text'
+    }
 };
 
 const Before: IPepFilterBuilderOperator = {
-    apiId: 'Before',
-    smartFilterId: 'before'
+    legacy: {
+        operator: 'Before',
+        type: 'Date'
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.Before,
+        type: 'date'
+    }
 };
 
+const After: IPepFilterBuilderOperator = {
+    legacy: {
+        operator: 'After',
+        type: 'Date'
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.After,
+        type: 'date'
+    }
+}; */
+
 const InTheLast: IPepFilterBuilderOperator = {
-    apiId: 'InTheLast',
-    smartFilterId: 'inTheLast'
+    legacy: 'InTheLast',
+    smartFilter: PepSmartFilterOperators.InTheLast,
+    type: null
+    /*legacy: {
+        operator: 'InTheLast',
+        type: null//['Date', 'Integer']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.InTheLast,
+        type: null//['date', 'int']
+    } */
 };
 
 const NotInTheLast: IPepFilterBuilderOperator = {
-    apiId: 'NotInTheLast',
-    smartFilterId: 'notInTheLast'
+    legacy: 'NotInTheLast',
+    smartFilter: PepSmartFilterOperators.NotInTheLast,
+    type: null
+    /*legacy: {
+        operator: 'NotInTheLast',
+        type: null//['Date', 'Integer']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.NotInTheLast,
+        type: null//['date', 'int']
+    } */
 };
 
 const Today: IPepFilterBuilderOperator = {
-    apiId: 'Today',
-    smartFilterId: 'today'
+    legacy: 'Today',
+    smartFilter: PepSmartFilterOperators.Today,
+    type: null
+    /*legacy: {
+        operator: 'Today',
+        type: null//['Date']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.Today,
+        type: null//['date']
+    } */
 };
 
 const ThisWeek: IPepFilterBuilderOperator = {
-    apiId: 'ThisWeek',
-    smartFilterId: 'thisWeek'
+    legacy: 'ThisWeek',
+    smartFilter: PepSmartFilterOperators.ThisWeek,
+    type: null
+    /*legacy: {
+        operator: 'ThisWeek',
+        type: null//['Date']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.ThisWeek,
+        type: null//['date']
+    } */
 };
 
 const ThisMonth: IPepFilterBuilderOperator = {
-    apiId: 'ThisMonth',
-    smartFilterId: 'thisMonth'
+    legacy: 'ThisMonth',
+    smartFilter: PepSmartFilterOperators.ThisMonth,
+    type: null
+    /*legacy: {
+        operator: 'ThisMonth',
+        type: null//['Date']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.ThisMonth,
+        type: null//['date']
+    } */
 };
 
 const DateRange: IPepFilterBuilderOperator = {
-    apiId: 'Between',
-    smartFilterId: 'dateRange'
+    legacy: 'Between',
+    smartFilter: PepSmartFilterOperators.DateRange,
+    type: ['date-time']
+    /*legacy: {
+        operator: 'Between',
+        type: ['DateTime']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.DateRange,
+        type: ['date-time']
+    } */
 };
 
 const DueIn: IPepFilterBuilderOperator = {
-    apiId: 'DueIn',
-    smartFilterId: 'dueIn'
+    legacy: 'DueIn',
+    smartFilter: PepSmartFilterOperators.DueIn,
+    type: null
+    /*legacy: {
+        operator: 'DueIn',
+        type: null//['Date', 'Integer']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.DueIn,
+        type: null//['date', 'int']
+    } */
 };
 
 const NotDueIn: IPepFilterBuilderOperator = {
-    apiId: 'NotDueIn',
-    smartFilterId: 'notDueIn'
+    legacy: 'NotDueIn',
+    smartFilter: PepSmartFilterOperators.NotDueIn,
+    type: null
+    /*legacy: {
+        operator: 'NotDueIn',
+        type: null//['Date', 'Integer']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.NotDueIn,
+        type: null//['date', 'int']
+    } */
 };
 
-const On: IPepFilterBuilderOperator = {
-    apiId: 'On',
-    smartFilterId: 'on'
+const On: IPepFilterBuilderOperator = { //vv
+    legacy: 'On',
+    smartFilter: PepSmartFilterOperators.On,
+    type: null
+    /*legacy: {
+        operator: 'On',
+        type: null//['Date']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.On,
+        type: null//['date']
+    } */
 };
 
 const IsEmpty: IPepFilterBuilderOperator = {
-    apiId: 'IsEmpty',
-    smartFilterId: 'isEmpty'
+    legacy: 'IsEmpty',
+    smartFilter: PepSmartFilterOperators.IsEmpty,
+    type: null
+    /*legacy: {
+        operator: 'IsEmpty',
+        type: null
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.IsEmpty,
+        type: null
+    } */
 };
 
 const IsNotEmpty: IPepFilterBuilderOperator = {
-    apiId: 'IsNotEmpty',
-    smartFilterId: 'isNotEmpty'
+    legacy: 'IsNotEmpty',
+    smartFilter: PepSmartFilterOperators.IsNotEmpty,
+    type: null
+    /*legacy: {
+        operator: 'IsNotEmpty',
+        type: null
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.IsNotEmpty,
+        type: null
+    } */
 };
 
 const In: IPepFilterBuilderOperator = {
-    apiId: 'In',
-    smartFilterId: 'in'
+    legacy: 'IsEqual',
+    smartFilter: PepSmartFilterOperators.In,
+    type: ['multi-select']
+    /*legacy: {
+        operator: 'IsEqual',
+        type: ['MultipleStringValues']
+    },
+    smartFilter: {
+        item: PepSmartFilterOperators.In,
+        type: ['multi-select']
+    } */
 };
 
 
-export const PepFilterBuilderOperators = [
+const PepFilterBuilderOperators = [
     Equals,
     NotEqual,
     LessThan,
-    LessThanOrEquals,
+    //   LessThanOrEquals,
     GreaterThan,
-    GreaterThanOrEquals,
+    //   GreaterThanOrEquals,
     NumberRange,
     Contains,
-    BeginsWith,
-    EndsWith,
-    After,
-    Before,
+    //   BeginsWith,
+    //   EndsWith,
+    //   After,
+    //   Before,
     InTheLast,
     NotInTheLast,
     Today,
@@ -153,14 +366,39 @@ export const PepFilterBuilderOperators = [
     In
 ]
 
-export function getSmartBuilderOperator(operator: string): IPepSmartFilterOperator | null {
+export function getSmartBuilderOperator(operator: string, type: PepSmartFilterType): IPepSmartFilterOperator | null {
+    const smartFilterOperator = PepFilterBuilderOperators.find(item =>
+        item.legacy === operator &&
+        (item.type === null || item.type.includes(type))
+    );
+    return smartFilterOperator ? smartFilterOperator.smartFilter : null;
+
+
+    //const smartFilterOperator = PepFilterBuilderOperators.find(item => item.legacy.operator === operator);
+    //return smartFilterOperator ? smartFilterOperator.smartFilter.item : null;
+
+
+    /*if (legacyOperator2) {
+
+    }
+    //
     let operators: Array<IPepSmartFilterOperator>;
-    let apiOperator = PepFilterBuilderOperators.find(item => item.apiId === operator);
-    if (apiOperator) {
+    let legacyOperator = PepFilterBuilderOperators.find(item => item.legacy.id === operator);
+    if (legacyOperator) {
         operators = Object.keys(PepSmartFilterOperators)
             .filter((key) => {
-                return PepSmartFilterOperators[key].id === apiOperator.smartFilterId;
+                return PepSmartFilterOperators[key].id === legacyOperator.smartFilter.id;
             }).map((key) => PepSmartFilterOperators[key]);
     }
-    return operators?.length === 1 ? operators[0] : null;
+    return operators?.length === 1 ? operators[0] : null; */
+}
+
+export function getLegacyOperator(operator: IPepSmartFilterOperator, type: PepSmartFilterType): string | null {
+    const legacyOperator = PepFilterBuilderOperators.find(item =>
+        item.smartFilter === operator &&
+        (item.type === null || item.type.includes(type))
+    );
+    return legacyOperator ? legacyOperator.legacy : null;
+    /*const legacyOperator = PepFilterBuilderOperators.find(item => item.smartFilter.item === operator && item.smartFilter.type === type);
+    return legacyOperator ? legacyOperator.legacy.operator : null; */
 }
