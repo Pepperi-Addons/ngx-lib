@@ -15,6 +15,7 @@ import {
     IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
 } from '@pepperi-addons/ngx-lib';
+import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.component';
 
 @Component({
     selector: 'pep-field-generator',
@@ -24,7 +25,15 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
-    @Input() field: any;
+    private _field: any;
+    @Input()
+    set field(value: any) {
+        this._field = value;
+    }
+    get field(): any {
+        return this._field;
+    }
+
     @Input() isActive = false;
     @Input() uid: any = null;
     @Input() form: FormGroup;
@@ -34,12 +43,18 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Input() checkForChanges: any = null;
     @Output()
     valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-    @Output() childChange: EventEmitter<any> = new EventEmitter<any>();
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
-    @Output() childClick: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output() internalFormFieldChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() internalFormFieldClick: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    formValueChange: EventEmitter<IPepFormFieldValueChangeEvent> = new EventEmitter<IPepFormFieldValueChangeEvent>();
+    @Output()
+    formFieldClick: EventEmitter<IPepFormFieldClickEvent> = new EventEmitter<IPepFormFieldClickEvent>();
 
     get isValid(): boolean {
         if (this.field.readonly || this.field.disabled) {
@@ -100,8 +115,8 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         this.valueChange.emit(fieldValueChange);
     }
 
-    onChildChanged(childChange: any): void {
-        this.childChange.emit(childChange);
+    onInternalFormFieldChanged(internalFormFieldChange: any): void {
+        this.internalFormFieldChange.emit(internalFormFieldChange);
     }
 
     onFormValidationChanged(formValidationChange: any): void {
@@ -112,8 +127,16 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         this.elementClick.emit(fieldClicked);
     }
 
-    onChildClick(childClick: any): void {
-        this.childClick.emit(childClick);
+    onInternalFormFieldClick(internalFormFieldClick: any): void {
+        this.internalFormFieldClick.emit(internalFormFieldClick);
+    }
+
+    onFormValueChanged(event: IPepFormFieldValueChangeEvent): void {
+        this.formValueChange.emit(event);
+    }
+
+    onFormFieldClick(event: IPepFormFieldClickEvent): void {
+        this.formFieldClick.emit(event);
     }
 
     ngOnChanges(changes: any): void {

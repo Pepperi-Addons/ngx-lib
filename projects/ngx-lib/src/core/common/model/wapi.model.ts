@@ -71,6 +71,7 @@ export enum FIELD_TYPE {
     'Duration' = 51,
     'ListOfObjects' = 52,
     'Package' = 53, // Package Quantity Selector
+    'RelatedObjectsCards' = 54,
     'BooleanText' = 55, // Boolean that return a string defined by the user in case of true/false
     'RichTextHTML' = 56, // Html Text
 }
@@ -173,6 +174,7 @@ export class ObjectsDataRowCell {
     ReferenceObjectType?: string;
     TextColor?: string;
     UiPageKey?: string;
+    UIPageInfo?: any;
     // Type?: string; // This is in the object??
     Value: any;
     Visible?: boolean;
@@ -189,6 +191,7 @@ export class ObjectsDataRow {
     Profile?: any;
     Type: number;
     UID: any;
+    Key: string;
 }
 
 export class ObjectSingleData {
