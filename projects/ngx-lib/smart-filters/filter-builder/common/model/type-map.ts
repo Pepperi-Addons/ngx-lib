@@ -17,9 +17,9 @@ export class PepFilterBuilderTypeMap {
     }
 
     /**
-     * Converts Legacy field type to Smart builder type
-     * @param type Legacy type
-     * @returns Smart builder field type
+     * Converts legacy field type to smart builder type
+     * @param type legacy type
+     * @returns smart builder field type
      */
     getSmartBuilderType(key: string): PepSmartFilterType | null {
         let item = this.map.get(key);

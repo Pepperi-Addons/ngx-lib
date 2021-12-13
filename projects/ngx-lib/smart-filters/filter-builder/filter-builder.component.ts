@@ -7,19 +7,12 @@ import {
     AfterViewInit,
     OnDestroy,
     ViewChild,
-    ElementRef,
-
     ViewContainerRef,
-    ComponentFactory,
     ChangeDetectorRef
 
 } from '@angular/core';
-import { IPepField, IPepJSONSection, IPepJSONItem } from './common/model/legacy';
-import { elementAt } from 'rxjs/operators';
-import { PepSmartFilterBaseField } from '../common/model/field';
-import { IPepSmartFilterData } from '../common/model/filter';//'@pepperi-addons/ngx-lib/smart-filters';
+import { IPepField, IPepJSONSection } from './common/model/legacy';
 import { FilterBuilderService } from './filter-builder.service';
-import { FilterBuilderSectionComponent } from './filter-builder-section/filter-builder-section.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -31,7 +24,7 @@ import { Subscription } from 'rxjs';
 export class FilterBuilderComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() json: IPepJSONSection = null;
     @Input() fields: Array<IPepField> = new Array<IPepField>();
-    @Input() form: FormGroup = this.fb.group({});
+    @Input() form: FormGroup = this._fb.group({});
 
     @Output() filters: EventEmitter<any> = new EventEmitter<any>();;
 
@@ -39,8 +32,8 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit, OnDestroy 
 
     filterSubscription$: Subscription;
 
-    constructor(private fb: FormBuilder, private changeDetectionRef: ChangeDetectorRef, public filterBuilderService: FilterBuilderService) {
-        this.filterSubscription$ = this.filterBuilderService.triggerOutputJson.subscribe((outputJson) => {
+    constructor(private _fb: FormBuilder, private _changeDetectionRef: ChangeDetectorRef, public _filterBuilderService: FilterBuilderService) {
+        this.filterSubscription$ = this._filterBuilderService.triggerOutputJson.subscribe((outputJson) => {
             this.filters.emit(outputJson);
         });
     }
@@ -49,11 +42,11 @@ export class FilterBuilderComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
     ngAfterViewInit() {
-        this.filterBuilderService.createFilterTree(this.json, this.fields, this.form, this.filterRoot);
+        this._filterBuilderService.createFilterTree(this.json, this.fields, this.form, this.filterRoot);
     }
 
     ngAfterViewChecked() {
-        this.changeDetectionRef.detectChanges();
+        this._changeDetectionRef.detectChanges();
     }
 
     ngOnDestroy() {

@@ -74,7 +74,6 @@ export abstract class BaseFilterComponent
     protected _parentForm: FormGroup;
     @Input()
     set parentForm(form: FormGroup) {
-        console.log('parentForm', form);
         this._parentForm = form;
         this.updateParentForm();
     }
@@ -177,7 +176,6 @@ export abstract class BaseFilterComponent
     }
 
     private setupForm() {
-        //console.log('setupForm');
         const formValue = {};
         formValue[this.firstControlKey] = [];
         formValue[this.secondControlKey] = [];
@@ -253,11 +251,10 @@ export abstract class BaseFilterComponent
         this._parentForm.setControl('fieldType', this.builder.control(this.field.type));
         this._parentForm.setControl('operator', this.builder.control(this.operator));
         this._parentForm.setControl('operatorUnit', this.builder.control(this.operatorUnit));
-        this._parentForm.setControl('value', this.builder.group({
+        this._parentForm.setControl('values', this.builder.group({
             first: this.firstControl,
             second: this.secondControl
         }));
-        console.log('parent form init', this._parentForm);
     }
 
     protected getDestroyer() {
