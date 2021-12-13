@@ -36,7 +36,6 @@ export class FilterBuilderItemComponent {
     _filter: IPepSmartFilterData;
     @Input()
     set filter(value: IPepSmartFilterData) {
-        //console.log('input filter', value);
         if (value) {
             this._filter = value;
         }
@@ -57,10 +56,6 @@ export class FilterBuilderItemComponent {
     remove = new EventEmitter();
 
     _form: FormGroup;
-    /*_filtersDataMap: Map<string, IPepSmartFilterData> = new Map<
-        string,
-        IPepSmartFilterData
-    >(); */
 
     constructor(private fb: FormBuilder, private _filterBuilderService: FilterBuilderService) {
         this.setupForm();
