@@ -63,6 +63,9 @@ export class PepSliderComponent implements OnInit {
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
 
+    @Output()
+    inputChange: EventEmitter<string> = new EventEmitter<string>();
+
     xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     sliderWrapper: any = null;
 
@@ -75,7 +78,13 @@ export class PepSliderComponent implements OnInit {
         }
 
         if (this.sliderWrapper) {
-            this.renderer.setStyle(this.sliderWrapper, 'background', this.background?.length > 0 ? this.background : '#ccc');
+            this.renderer.setStyle(this.sliderWrapper, 'background', this.background?.length > 0 ? this.background : '');
+
+            if (this.background?.length > 0) {
+                this.renderer.removeClass(this.sliderWrapper, 'background-color-dimmed');
+            } else {
+                this.renderer.addClass(this.sliderWrapper, 'background-color-dimmed');
+            }
         }
     }
 
@@ -86,5 +95,9 @@ export class PepSliderComponent implements OnInit {
 
     onValueChange(event) {
         this.valueChange.emit(event.value);
+    }
+
+    onInputChange(event) {
+        this.inputChange.emit(event.value);
     }
 }
