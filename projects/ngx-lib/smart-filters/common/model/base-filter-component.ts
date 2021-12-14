@@ -80,6 +80,7 @@ export abstract class BaseFilterComponent
     @Input() emitOnChange = false;
     @Input() inline = false;
     @Input() showActionButtons = true;
+    @Input() renderTitle = true;
 
     @Output() filterClear: EventEmitter<void> = new EventEmitter<void>();
     @Output()
@@ -181,7 +182,6 @@ export abstract class BaseFilterComponent
         formValue[this.secondControlKey] = [];
         // this.form.patchValue(formValue);        
         this.form = this.builder.group(formValue);
-
         // this.form[this.firstControlKey] = [];
         // this.form[this.secondControlKey] = [];
 

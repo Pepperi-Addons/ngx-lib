@@ -70,6 +70,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() isActive = false;
     @Input() showTitle = true;
     @Input() emptyOption = true;
+    @Input() renderTitle = true;
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();

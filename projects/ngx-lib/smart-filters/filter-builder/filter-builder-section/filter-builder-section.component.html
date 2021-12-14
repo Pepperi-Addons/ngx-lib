@@ -1,21 +1,23 @@
-<div class="filter-section-container">
-    <ng-container #sectionContainer>
-        <ng-container [formGroup]="form">
-            <div class="action-buttons-wrapper">
-                <pep-button [value]="'Rule'" [sizeType]="'sm'" [styleType]="'regular'"
-                    [classNames]="'pep-spacing-element '" (buttonClick)="onAddRuleClicked()">
-                </pep-button>
-                <pep-button [value]="'Rule Set'" [sizeType]="'sm'" [styleType]="'regular'"
-                    [classNames]="'pep-spacing-element '" (buttonClick)="onAddRuleSetClicked()">
-                </pep-button>
-                <ng-container *ngIf="!isRoot">
-                    <pep-button [value]="'Delete'" [sizeType]="'sm'" [styleType]="'regular'"
-                        [classNames]="'pep-spacing-element '" (buttonClick)="onDeleteSectionClicked()">
-                    </pep-button>
-                </ng-container>
+<div fxLayout="row" fxLayoutGap=".5rem">
+    <div class="filter-section-container" fxLayout="row" fxLayoutAlign="flex-start start" fxLayoutGap=".5rem">
+        <pep-select [value]="f.operator.value" xAlignment="left" [options]="operators" [renderTitle]="false"
+            [emptyOption]=false (valueChange)="onOperatorChanged($event)">
+        </pep-select>
+        <div fxLayout="column" fxLayoutGap=".5rem">
+            <ng-container #sectionContainer></ng-container>
+            <div fxLayout="row" fxLayoutGap=".5rem">
+                <pep-button value="Add Filter" styleType="weak" styleStateType="system" sizeType="md" classNames=""
+                    [disabled]="false" iconName="number_plus" iconPosition="end" [visible]="true"
+                    (buttonClick)="onAddRuleClicked()"></pep-button>
+                <pep-button value="Add Filter Group" styleType="weak" styleStateType="system" sizeType="md"
+                    classNames="" [disabled]="false" iconName="number_plus" iconPosition="end" [visible]="true"
+                    (buttonClick)="onAddRuleSetClicked()"></pep-button>
             </div>
-            <input type="text" formControlName="operator">
-
-        </ng-container>
+        </div>
+    </div>
+    <ng-container *ngIf="!isRoot">
+        <pep-button styleType="weak" styleStateType="system_bin" sizeType="md" classNames="" [disabled]="false"
+            iconName="system_bin" iconPosition="end" [visible]="true" (buttonClick)="onDeleteSectionClicked()">
+        </pep-button>
     </ng-container>
 </div>

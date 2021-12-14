@@ -1,13 +1,10 @@
-<div [formGroup]="form">
-    <ng-container>
-        <pep-select [key]="'typeOperator'" [value]="operator.id" [label]="'SMART_FILTERS.TYPE' | translate"
-            [emptyOption]="false" [options]="chooseTypeOptions" (valueChange)="onOperatorChanged($event)">
-        </pep-select>
-    </ng-container>
-    <div>
-        <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
-            [renderError]="false" [type]="field.type" [formattedValue]="firstControl.value" [value]="firstControl.value"
-            (valueChange)="onValueChanged()">
-        </pep-textbox>
-    </div>
+<div [formGroup]="form" [fxLayout]="inline ? 'row' : 'column'" [fxLayoutGap]="inline ? '.5rem' : '0rem'">
+    <pep-select [key]="'typeOperator'" [value]="operator.id" [label]="'SMART_FILTERS.TYPE' | translate"
+        [renderTitle]="renderTitle" [emptyOption]="false" [options]="chooseTypeOptions"
+        (valueChange)="onOperatorChanged($event)">
+    </pep-select>
+    <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
+        [renderError]="false" [renderTitle]="renderTitle" [type]="field.type" [formattedValue]="firstControl.value"
+        [value]="firstControl.value" (valueChange)="onValueChanged()">
+    </pep-textbox>
 </div>

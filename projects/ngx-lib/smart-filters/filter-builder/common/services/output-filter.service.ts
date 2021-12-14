@@ -29,7 +29,7 @@ export class PepOutputFilterService {
         this.initProperties();
         this._fields = fields;
         this.treeWalk(json);
-        return this._json ? this._json : null;
+        return this._json ? this._json : this._firstItem ? this._firstItem : null;
     }
 
     /**

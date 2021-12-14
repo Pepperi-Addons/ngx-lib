@@ -1,9 +1,13 @@
 import { PepSmartFilterType } from '../../../common/model/type';
 
 export class PepFilterBuilderTypeMap {
-    private readonly map: Map<string, PepSmartFilterType>;
+    private map: Map<string, PepSmartFilterType>;
 
     constructor() {
+        this.loadTypes();
+    }
+
+    private loadTypes() {
         this.map = new Map<string, PepSmartFilterType>();
         this.map.set('Bool', 'boolean');
         this.map.set('JsonBool', 'boolean');

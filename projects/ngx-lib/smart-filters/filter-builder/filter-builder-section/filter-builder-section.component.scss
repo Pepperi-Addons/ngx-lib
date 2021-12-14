@@ -3,6 +3,15 @@
 }
 
 .filter-section-container {
-    border: 1px solid;
-    margin: 20px;
+    border-radius: 4px;
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.08);
+    padding: .5rem;
 }
+
+:host::ng-deep {
+    .pep-field {
+        min-height: 0;
+        margin-bottom: 0;
+    }   
+} 

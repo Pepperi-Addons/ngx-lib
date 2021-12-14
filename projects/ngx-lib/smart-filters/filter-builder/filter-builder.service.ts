@@ -19,7 +19,7 @@ import { FilterBuilderItemComponent } from './filter-builder-item/filter-builder
 import { PepFilterBuilderTypeMap } from './common/model/type-map';
 import { getSmartBuilderOperationUnit } from './common/model/operator-unit';
 //import { PepFilterBuilderOperatorUnitMap } from './common/model/operator-unit-map';
-import { PepOutputFilterService } from './common/services/output-filter';
+import { PepOutputFilterService } from './common/services/output-filter.service';
 import { IPepFilterBuilderValues } from './common/model/filter';
 import { PepOperatorTypes } from './common/model/type';
 
@@ -131,6 +131,9 @@ export class FilterBuilderService {
             componentRef.destroy();
             this.createOutputJson();
         });
+        componentRef.instance.operatorChange.subscribe(() => {
+            this.createOutputJson();
+        });
 
         return {
             containerRef: componentRef.instance.sectionContainer,
@@ -152,6 +155,7 @@ export class FilterBuilderService {
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('item')) { counter++; } });
         let formKey: string = `item${counter}`;
 
+        componentRef.instance.formKey = formKey;
         componentRef.instance.fields = this._smartFilterFields;
         const selectedField = this.getSelectedField(current);
         if (selectedField) {
@@ -160,12 +164,9 @@ export class FilterBuilderService {
                 componentRef.instance.filter = this.getFilter(current, selectedField);
             }
         }
-        componentRef.instance.formKey = formKey;
         componentRef.instance.parentForm = parentForm;
         componentRef.instance.filterChange.subscribe(() => {
-            if (this._form.valid) {
-                this.createOutputJson();
-            }
+            this.createOutputJson();
         });
         componentRef.instance.remove.subscribe(() => {
             parentForm.removeControl(formKey);
@@ -278,8 +279,11 @@ export class FilterBuilderService {
      * creates a legacy output JSON 
      */
     private createOutputJson() {
-        const json = this._outputJsonService.generateJson(this._form.value, this._smartFilterFields);
-        this._outputJsonSubject.next(json);
+        console.log('createOutputJson', this._form);
+        if (this._form.valid) {
+            const json = this._outputJsonService.generateJson(this._form.value, this._smartFilterFields);
+            this._outputJsonSubject.next(json);
+        }
     }
 
 }

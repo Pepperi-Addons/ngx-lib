@@ -180,7 +180,7 @@ export class PepCustomizationService {
             if (parentFieldKey === null) {
                 formControl = form.controls[fieldKey];
             } else {
-                formControl = form.controls[parentFieldKey].get(fieldKey);
+                formControl = form.controls[parentFieldKey]?.get(fieldKey);
             }
         }
 

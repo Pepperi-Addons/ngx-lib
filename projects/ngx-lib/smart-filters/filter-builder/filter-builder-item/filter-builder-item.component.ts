@@ -40,15 +40,16 @@ export class FilterBuilderItemComponent {
             this._filter = value;
         }
     };
+    @Input() formKey: string;
     _parentForm: FormGroup;
     @Input()
     set parentForm(value: FormGroup) {
         if (value) {
+            //console.log('parentForm', value);
             this._parentForm = value;
             this.addToParentForm();
         }
     };
-    @Input() formKey: string;
 
     @Output()
     filterChange = new EventEmitter();
@@ -82,7 +83,6 @@ export class FilterBuilderItemComponent {
     }
 
     onFieldChanged(key) {
-        console.log('onFieldChanged', key);
         let item = this._fields.find(field => field.id === key);
 
         this.setupForm();
