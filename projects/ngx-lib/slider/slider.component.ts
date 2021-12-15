@@ -47,24 +47,20 @@ export class PepSliderComponent implements OnInit {
     @Input() minValue = NaN;
     @Input() maxValue = NaN;
 
-    private _value = null;
+    private _value: number = NaN;
     @Input()
-    set value(value: string) {
-        if (!value) {
-            value = '';
-        }
-
+    set value(value: number) {
         this._value = value;
     }
-    get value(): string {
+    get value(): number {
         return this._value;
     }
 
     @Output()
-    valueChange: EventEmitter<string> = new EventEmitter<string>();
+    valueChange: EventEmitter<number> = new EventEmitter<number>();
 
     @Output()
-    inputChange: EventEmitter<string> = new EventEmitter<string>();
+    inputChange: EventEmitter<number> = new EventEmitter<number>();
 
     xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     sliderWrapper: any = null;
