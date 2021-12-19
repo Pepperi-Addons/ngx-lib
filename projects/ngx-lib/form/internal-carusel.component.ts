@@ -89,6 +89,7 @@ export class PepInternalCaruselComponent implements OnInit, AfterViewInit {
     ) { }
 
     ngOnInit(): void {
+        //
     }
 
     ngAfterViewInit(): void {

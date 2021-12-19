@@ -1,6 +1,6 @@
 {
     "name": "@pepperi-addons/ngx-lib",
-    "version": "0.2.55",
+    "version": "0.2.58",
     "peerDependencies": {
         "@angular/animations": ">= 12.0.0",
         "@angular/cdk": ">= 12.0.0",
@@ -22,9 +22,6 @@
     "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.",
     "main": "karma.conf.js",
     "devDependencies": {},
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Pepperi-Addons/ngx-lib.git"

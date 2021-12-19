@@ -47,7 +47,7 @@ export class PepSliderComponent implements OnInit {
     @Input() minValue = NaN;
     @Input() maxValue = NaN;
 
-    private _value: number = NaN;
+    private _value = NaN;
     @Input()
     set value(value: number) {
         this._value = value;
