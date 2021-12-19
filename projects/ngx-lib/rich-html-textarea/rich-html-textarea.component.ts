@@ -96,6 +96,7 @@ export class PepRichHtmlTextareaComponent
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
+    @Input() renderTitle = true;
 
     private _layoutType: PepLayoutType = 'form';
     @Input()
@@ -172,6 +173,13 @@ export class PepRichHtmlTextareaComponent
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+
+            if (!this.renderTitle) {
+                this.renderer.addClass(
+                    this.element.nativeElement,
+                    PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+                );
+            }
         }
 
         this.quillContent = this.value;

@@ -2,7 +2,7 @@
     <ng-container>
         <pep-select [key]="'timeOperator'" [value]="operator.id" [label]="'SMART_FILTERS.CHOOSE_TIME' | translate"
             [renderTitle]="renderTitle" [emptyOption]="false" [options]="chooseTimeOptions"
-            (valueChange)="onOperatorChanged($event)">
+            [fxFlex]="inline ? operatorWidth : null" (valueChange)="onOperatorChanged($event)">
         </pep-select>
     </ng-container>
     <div *ngIf="operator === PepSmartFilterOperators.InTheLast ||
@@ -13,7 +13,8 @@
         <!-- Amount -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
             [renderError]="false" [renderTitle]="renderTitle" fxFlex="50%" [type]="'int'"
-            [formattedValue]="firstControl.value" [value]="firstControl.value" (valueChange)="onDateValueChanged()">
+            [formattedValue]="firstControl?.value || ''" [value]="firstControl?.value || ''"
+            (valueChange)="onDateValueChanged()">
         </pep-textbox>
         <!-- Time unit -->
         <pep-select [form]="form" [key]="'timeUnit'" [value]="operatorUnit?.id"
@@ -26,21 +27,21 @@
         <!-- Start date -->
         <pep-date [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.START_DATE' | translate"
             [renderError]="false" [renderTitle]="renderTitle" fxFlex="50%"
-            [type]="field.type === 'date' ? 'date' : 'datetime'" [value]="firstControl.value"
-            [maxDateValue]="secondControl.value" (valueChange)="onDateValueChanged()">
+            [type]="field.type === 'date' ? 'date' : 'datetime'" [value]="firstControl?.value || ''"
+            [maxDateValue]="secondControl?.value" (valueChange)="onDateValueChanged()">
         </pep-date>
         <!-- End date -->
         <pep-date [form]="form" [key]="secondControlKey" [label]="'SMART_FILTERS.END_DATE' | translate"
             [renderError]="false" [renderTitle]="renderTitle" fxFlex="50%"
-            [type]="field.type === 'date' ? 'date' : 'datetime'" [value]="secondControl.value"
-            [minDateValue]="firstControl.value" (valueChange)="onDateValueChanged()">
+            [type]="field.type === 'date' ? 'date' : 'datetime'" [value]="secondControl?.value || ''"
+            [minDateValue]="firstControl?.value" (valueChange)="onDateValueChanged()">
         </pep-date>
     </div>
     <ng-container *ngIf="operator === PepSmartFilterOperators.On">
         <!-- Choose a date -->
         <pep-date [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.CHOOSE_DATE' | translate"
             [renderError]="false" [renderTitle]="renderTitle" [type]="field.type === 'date' ? 'date' : 'datetime'"
-            [value]="firstControl.value" (valueChange)="onDateValueChanged()">
+            [value]="firstControl?.value || ''" (valueChange)="onDateValueChanged()">
         </pep-date>
     </ng-container>
 </div>

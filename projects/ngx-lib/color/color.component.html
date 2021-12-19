@@ -1,4 +1,5 @@
-<pep-field-title [label]="label" [disabled]="disabled" [xAlignment]="xAlignment" [showTitle]="showTitle">
+<pep-field-title *ngIf="renderTitle" [label]="label" [disabled]="disabled" [xAlignment]="xAlignment"
+    [showTitle]="showTitle">
 </pep-field-title>
 <div [id]="key" class="pep-color-container" [ngClass]="{ 'right-alignment': xAlignment == 'right' }">
     <div pepRtlDirection (click)="!disabled ? chooseColor() : ''" class="pep-color pep-input"

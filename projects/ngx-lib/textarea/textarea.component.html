@@ -3,9 +3,9 @@
         <div class="pep-textarea-container" [ngClass]="{ 'stand-alone': standAlone,
             'right-alignment': xAlignment == 'right', 'one-row': rowSpan === 1,
             'pep-textarea-card-container': layoutType === 'card'}">
-            <pep-field-title *ngIf="isFormView" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
-                [maxFieldCharacters]="disabled || readonly ? 0 : maxFieldCharacters" [xAlignment]="xAlignment"
-                [showTitle]="showTitle" [inputLength]="input.value?.length">
+            <pep-field-title *ngIf="renderTitle && isFormView" [label]="label" [mandatory]="mandatory"
+                [disabled]="disabled" [maxFieldCharacters]="disabled || readonly ? 0 : maxFieldCharacters"
+                [xAlignment]="xAlignment" [showTitle]="showTitle" [inputLength]="input.value?.length">
             </pep-field-title>
             <mat-form-field appearance="outline" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}"
                 [ngClass]="{ 'pep-table-textarea': layoutType === 'table' }">

@@ -12,8 +12,8 @@
         </ng-template>
 
         <ng-container *ngIf="layoutType === 'form'">
-            <pep-field-title [label]="label" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment"
-                [showTitle]="showTitle">
+            <pep-field-title *ngIf="renderTitle" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
+                [xAlignment]="xAlignment" [showTitle]="showTitle">
             </pep-field-title>
             <ng-container *ngIf="disabled || readonly; then disabledTemplate; else editableTemplate"></ng-container>
             <ng-template #disabledTemplate>

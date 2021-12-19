@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
     PepLayoutService,
     ObjectsDataRow,
@@ -10,13 +11,7 @@ import {
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
 import { IPepField } from '@pepperi-addons/ngx-lib/smart-filters/filter-builder/common/model/legacy';
-import { createSmartFilterField, createSmartFilter } from 'projects/ngx-lib/smart-filters/common/model/creator';
-import {
-    IPepSmartFilterFieldOption,
-    PepSmartFilterBaseField
-} from '../../../../ngx-lib/smart-filters/common/model/field';
-import { IPepSmartFilterData, PepSmartFilterOperators, PepSmartFilterOperatorUnits } from '@pepperi-addons/ngx-lib/smart-filters';
-//} from '@pepperi-addons/ngx-lib/smart-filters';
+
 
 import { PepBreadCrumbItem, IPepBreadCrumbItemClickEvent } from '@pepperi-addons/ngx-lib/bread-crumbs';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
@@ -44,7 +39,7 @@ export class FilterBuilderExampleComponent implements OnInit {
     menuItems: Array<PepMenuItem>;
     breadCrumbsItems: Array<PepBreadCrumbItem>;
 
-    constructor(public layoutService: PepLayoutService) {
+    constructor(public layoutService: PepLayoutService, private fb: FormBuilder) {
         this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
         });
@@ -52,7 +47,7 @@ export class FilterBuilderExampleComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadFilterFields();
-        this.json = {
+        /*this.json = {
             "ComplexId": 1,
             "Operation": "OR",
             "LeftNode": {
@@ -87,52 +82,45 @@ export class FilterBuilderExampleComponent implements OnInit {
                     "trtt"
                 ]
             }
-        }
-        /*
+        } */
+
         this.json = {
-            "ComplexId": 4,
-            "Operation": "AND",
+            "ComplexId": 3,
+            "Operation": "OR",
             "LeftNode": {
-                "ComplexId": 3,
-                "Operation": "OR",
+                "ComplexId": 2,
+                "Operation": "AND",
                 "LeftNode": {
-                    "ComplexId": 2,
-                    "Operation": "AND",
-                    "LeftNode": {
-                        "ExpressionId": 1,
-                        "ApiName": "CampaignName",
-                        "Operation": "Contains",
-                        "Values": [
-                            "Pep"
-                        ]
-                    },
-                    "RightNode": {
-                        "ExpressionId": 2,
-                        "ApiName": "AllowDecimal",
-                        "Operation": "IsEqual",
-                        "Values": [
-                            "True"
-                        ]
-                    }
+                    "ExpressionId": 1,
+                    "ApiName": "TSAboolll",
+                    "Operation": "IsEqual",
+                    "Values": [
+                        "True"
+                    ]
                 },
                 "RightNode": {
-                    "ExpressionId": 3,
-                    "ApiName": "CostPrice",
-                    "Operation": ">",
+                    "ExpressionId": 2,
+                    "ApiName": "BillToState",
+                    "Operation": "IsEqual",
                     "Values": [
-                        "5"
+                        "value2",
+                        "value4",
+                        "value16",
+                        "value8"
                     ]
                 }
             },
             "RightNode": {
-                "ExpressionId": 4,
+                "ExpressionId": 3,
                 "ApiName": "CaseQuantity",
-                "Operation": ">",
+                "Operation": "IsEqual",
                 "Values": [
-                    "5"
+                    "2"
                 ]
             }
-        } */
+        }
+
+
     }
 
     loadFilterFields() {
@@ -145,6 +133,8 @@ export class FilterBuilderExampleComponent implements OnInit {
             { FieldID: 'CampaignName', Title: 'Campaign Name', FieldType: 'String', OptionalValues: [] },
             { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime', OptionalValues: [] },
             { FieldID: 'Type', Title: 'Type', FieldType: 'String', OptionalValues: [] },
+            { FieldID: 'TSAboolll', Title: 'TSA boolll', FieldType: 'Bool', OptionalValues: [] },
+
             {
                 FieldID: 'BillToState', Title: 'Bill To State', FieldType: 'MultipleStringValues', OptionalValues: [
                     { Key: 'value0', Value: 'value 0' },
@@ -165,6 +155,11 @@ export class FilterBuilderExampleComponent implements OnInit {
 
     getFilters(json: any) {
         console.log('getFilters', json);
+
+    }
+
+    onStatusChanged(status: boolean) {
+        console.log('onStatusChanged', status);
     }
 
 }

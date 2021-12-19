@@ -1,4 +1,11 @@
-<div [formGroup]="form">
+<ng-container *ngIf="inline">
+    <pep-select [value]="firstControl?.value || ''" xAlignment="left" [options]="options" [renderTitle]="renderTitle"
+        [emptyOption]="true" (valueChange)="onValueChanged($event)">
+    </pep-select>
+
+</ng-container>
+
+<div *ngIf="!inline" [formGroup]="form">
     <mat-radio-group class="radio-group" [formControlName]="firstControlKey" (change)="onRadioChanged()">
         <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="true">
             {{ 'CHECKBOX.TRUE' | translate }}

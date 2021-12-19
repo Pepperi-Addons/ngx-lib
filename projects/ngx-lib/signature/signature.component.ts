@@ -78,6 +78,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() form: FormGroup = null;
     @Input() showTitle = true;
+    @Input() renderTitle = true;
 
     private _layoutType: PepLayoutType = 'form';
     @Input()
@@ -153,6 +154,13 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+
+            if (!this.renderTitle) {
+                this.renderer.addClass(
+                    this.element.nativeElement,
+                    PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+                );
+            }
         }
     }
 

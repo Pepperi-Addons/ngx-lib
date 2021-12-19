@@ -17,6 +17,8 @@ import { distinctUntilChanged } from 'rxjs/operators';
 export class PepNumberFilterComponent extends BaseFilterComponent implements OnInit {
     PepSmartFilterOperators = PepSmartFilterOperators;
     chooseTypeOptions: Array<IPepOption> = [];
+    operatorWidth = '38%';
+    firstControlWidth = '62%';
 
     ngOnInit() {
         this.firstControl.valueChanges
@@ -30,6 +32,7 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
             .subscribe(() => {
                 this.setFieldsStateAndValidators();
             });
+        this.setControlsWidth();
     }
 
     // Override
@@ -83,6 +86,14 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
         }
     }
 
+    setControlsWidth() {
+        if (this.operator === PepSmartFilterOperators.NumberRange) {
+            this.operatorWidth = '30%';
+        } else {
+            this.operatorWidth = '38%';
+        }
+    }
+
     onOperatorChanged(value: string) {
         const operator = Object.values(PepSmartFilterOperators).find(
             (operator) => operator.id === value
@@ -94,6 +105,7 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
         if (this.emitOnChange) {
             this.applyFilter();
         }
+        this.setControlsWidth();
     }
 
     onValueChanged() {

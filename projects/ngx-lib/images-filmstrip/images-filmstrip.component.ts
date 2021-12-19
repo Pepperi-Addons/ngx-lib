@@ -171,6 +171,7 @@ export class PepImagesFilmstripComponent
     @Input() form: FormGroup = null;
     @Input() uid = '0';
     @Input() showTitle = false;
+    @Input() renderTitle = true;
 
     private _layoutType: PepLayoutType = 'form';
     @Input()
@@ -287,6 +288,13 @@ export class PepImagesFilmstripComponent
                     this.element.nativeElement,
                     PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
                 );
+
+                if (!this.renderTitle) {
+                    this.renderer.addClass(
+                        this.element.nativeElement,
+                        PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+                    );
+                }
             }
         }
 
@@ -308,13 +316,13 @@ export class PepImagesFilmstripComponent
         this.config.dots = this.config.nav = this.items.length > 1;
         this.config.thumb =
             (this.key === 'ItemFilmstripImages' || this.showThumbnails) &&
-            this.items.length > 1
+                this.items.length > 1
                 ? true
                 : false;
         this.currIndex =
             this.key === 'ItemFilmstripImages' &&
-            this.currIndex === 0 &&
-            this.items.length > 1
+                this.currIndex === 0 &&
+                this.items.length > 1
                 ? Math.floor(this.items.length / 2) - 1
                 : this.currIndex;
     }
@@ -435,14 +443,14 @@ export class PepImagesFilmstripComponent
         this.config.thumbPosition = this.isVertical
             ? ThumbnailsPosition.Bottom
             : this.layoutService.isRtl()
-            ? ThumbnailsPosition.Right
-            : ThumbnailsPosition.Left;
+                ? ThumbnailsPosition.Right
+                : ThumbnailsPosition.Left;
         this.config.slidingDirection =
             this.key !== 'ItemFilmstripImages'
                 ? SlidingDirection.Horizontal
                 : this.isVertical
-                ? SlidingDirection.Horizontal
-                : SlidingDirection.Vertical;
+                    ? SlidingDirection.Horizontal
+                    : SlidingDirection.Vertical;
 
         this.config.imageSize = 'contain';
     }

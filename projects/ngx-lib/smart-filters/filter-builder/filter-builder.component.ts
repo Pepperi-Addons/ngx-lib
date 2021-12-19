@@ -21,36 +21,60 @@ import { Subscription } from 'rxjs';
     templateUrl: './filter-builder.component.html',
     styleUrls: ['./filter-builder.component.scss'],
 })
-export class FilterBuilderComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FilterBuilderComponent implements OnInit, OnDestroy {
     @Input() json: IPepJSONSection = null;
     @Input() fields: Array<IPepField> = new Array<IPepField>();
-    @Input() form: FormGroup = this._fb.group({});
 
-    @Output() filters: EventEmitter<any> = new EventEmitter<any>();;
+    @Output()
+    filters: EventEmitter<any> = new EventEmitter<any>();
+    @Output()
+    formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('filterRoot', { read: ViewContainerRef, static: true }) filterRoot: ViewContainerRef;
 
-    filterSubscription$: Subscription;
+    _formSubscription$: Subscription;
+    _outputJsonSubscription$: Subscription;
 
-    constructor(private _fb: FormBuilder, private _changeDetectionRef: ChangeDetectorRef, public _filterBuilderService: FilterBuilderService) {
-        this.filterSubscription$ = this._filterBuilderService.triggerOutputJson.subscribe((outputJson) => {
+    _isFormValid: boolean = true;
+
+    form: FormGroup;
+
+    constructor(private _fb: FormBuilder, /*private _changeDetectionRef: ChangeDetectorRef,*/ public _filterBuilderService: FilterBuilderService) {
+        this.setupForm();
+        this._formSubscription$ = this.form.valueChanges.subscribe((val) => {
+            if (this.form.valid !== this._isFormValid) {
+                this._isFormValid = this.form.valid;
+                this.formValidationChange.emit(this._isFormValid);
+            }
+        });
+        this._outputJsonSubscription$ = this._filterBuilderService.triggerOutputJson.subscribe((outputJson) => {
             this.filters.emit(outputJson);
         });
     }
 
-    ngOnInit() {
+    setupForm() {
+        this.form = this._fb.group({})
     }
-
-    ngAfterViewInit() {
+    ngOnInit() {
         this._filterBuilderService.createFilterTree(this.json, this.fields, this.form, this.filterRoot);
     }
 
-    ngAfterViewChecked() {
-        this._changeDetectionRef.detectChanges();
+    /*
+    ngAfterViewInit() {
+        //this._filterBuilderService.createFilterTree(this.json, this.fields, this.form, this.filterRoot);
     }
 
+    ngAfterViewChecked() {
+        //this._changeDetectionRef.detectChanges();
+    } */
+
     ngOnDestroy() {
-        this.filterSubscription$.unsubscribe();
+        if (this._formSubscription$) {
+            this._formSubscription$.unsubscribe();
+        }
+        if (this._outputJsonSubscription$) {
+            this._outputJsonSubscription$.unsubscribe();
+        }
     }
 
 

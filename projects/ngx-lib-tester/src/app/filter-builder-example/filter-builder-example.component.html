@@ -1,3 +1,5 @@
 <div class="addon-page-container ">
-    <pep-filter-builder [json]="json" [fields]="fields" (filters)="getFilters($event)"></pep-filter-builder>
+    <pep-filter-builder [json]="json" [fields]="fields" (filters)="getFilters($event)"
+        (formValidationChange)="onStatusChanged($event)">
+    </pep-filter-builder>
 </div>

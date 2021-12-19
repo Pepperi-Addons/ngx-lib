@@ -10,6 +10,7 @@ import { PepStyleType, PepFieldBase } from './customization.model';
 })
 export class PepCustomizationService {
     static STAND_ALONE_FIELD_CLASS_NAME = 'pep-field';
+    static STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME = 'pep-field-no-spacing';
 
     static REM_STRING = 'rem';
     static PX_STRING = 'px';

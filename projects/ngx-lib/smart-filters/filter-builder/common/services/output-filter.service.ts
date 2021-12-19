@@ -47,7 +47,6 @@ export class PepOutputFilterService {
      * @param current UI object represents either a section or filter component
      */
     private treeWalk(current: any) {
-        console.log('current tree walk', current);
         Object.keys(current).forEach(key => {
             if (key.includes('item')) {
                 this.createItem({
@@ -104,7 +103,7 @@ export class PepOutputFilterService {
 
         if (current?.values?.first) {
             if (current.operator === PepSmartFilterOperators.In) { //multi select 
-                values = this.getFieldKeys(current.values.first, current.fieldId);
+                values = current.values.first;
             } else if (
                 current.operator === PepSmartFilterOperators.InTheLast ||
                 current.operator === PepSmartFilterOperators.NotInTheLast ||

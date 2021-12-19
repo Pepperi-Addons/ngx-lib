@@ -2,7 +2,7 @@
 <ng-template #regularTemplate>
     <ng-container [formGroup]="form">
         <div class="images-filmstrip-container">
-            <pep-field-title [label]="label" [xAlignment]="xAlignment" [showTitle]="showTitle">
+            <pep-field-title *ngIf="renderTitle" [label]="label" [xAlignment]="xAlignment" [showTitle]="showTitle">
             </pep-field-title>
             <div #galleryCont class="img-wrapper" [ngClass]="isVertical ? 'vertical-gallery' : 'horizontal-gallery'"
                 [style.height]="fieldHeight">

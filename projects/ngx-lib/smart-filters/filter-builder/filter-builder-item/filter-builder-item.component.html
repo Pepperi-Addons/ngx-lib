@@ -1,50 +1,45 @@
 <div class="filter-item-container" fxLayout="column" fxLayoutGap=".5rem">
     <div fxLayout="row" fxLayoutGap=".5rem">
-        <!-- <pep-select [key]="'filtering'" [value]="_selectedField?.id" [label]="'Test Filter'" [emptyOption]="false"
-            [options]="_options" (valueChange)="onFieldChanged($event)">
-        </pep-select>         -->
-        <pep-select [value]="_selectedField?.id" xAlignment="left" [options]="_options" [renderTitle]="false"
-            (valueChange)="onFieldChanged($event)"></pep-select>
-
+        <pep-select fxFlex="25%" [value]="_selectedField?.id" xAlignment="left" [options]="_options"
+            [renderTitle]="false" (valueChange)="onFieldChanged($event)"></pep-select>
         <ng-container *ngIf="_selectedField?.componentType">
             <ng-container [ngSwitch]="_selectedField.componentType">
                 <ng-container *ngSwitchCase="'text'">
-                    <pep-text-filter [showActionButtons]="false" [field]="_selectedField" [filter]="_filter"
-                        [parentForm]="_form" [emitOnChange]="true" [inline]="true" [renderTitle]="false"
-                        (filterChange)="onFilterChanged()">
+                    <pep-text-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
+                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-text-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'boolean'">
-                    <pep-boolean-filter [showActionButtons]="false" [field]="_selectedField" [filter]="_filter"
-                        [parentForm]="_form" [emitOnChange]="true" [inline]="true" [renderTitle]="false"
-                        (filterChange)="onFilterChanged()">
+                    <pep-boolean-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
+                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-boolean-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'date'">
-                    <pep-date-filter [showActionButtons]="false" [field]="_selectedField" [filter]="_filter"
-                        [parentForm]="_form" [emitOnChange]="true" [inline]="true" [renderTitle]="false"
-                        (filterChange)="onFilterChanged()">
+                    <pep-date-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
+                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-date-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'multi-select'">
-                    <pep-multi-select-filter [showActionButtons]="false" [field]="_selectedField" [filter]="_filter"
-                        [parentForm]="_form" [emitOnChange]="true" [inline]="true" [renderTitle]="false"
-                        (filterChange)="onFilterChanged()">
+                    <pep-multi-select-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
+                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-multi-select-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'number'">
-                    <pep-number-filter [showActionButtons]="false" [field]="_selectedField" [filter]="_filter"
-                        [parentForm]="_form" [emitOnChange]="true" [inline]="true" [renderTitle]="false"
-                        (filterChange)="onFilterChanged()">
+                    <pep-number-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
+                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-number-filter>
                 </ng-container>
             </ng-container>
         </ng-container>
-        <!-- <pep-button [value]="'Delete'" [sizeType]="'sm'" [styleType]="'regular'" [classNames]="'pep-spacing-element '"
-            (buttonClick)="onDeleteItemClicked()">
-        </pep-button> -->
-        <pep-button styleType="weak" styleStateType="system_bin" sizeType="md" classNames="" [disabled]="false"
-            iconName="system_bin" iconPosition="end" [visible]="true" (buttonClick)="onDeleteItemClicked()">
-        </pep-button>
+        <div fxFlex="2.5em">
+            <pep-button styleType="weak" styleStateType="system_bin" sizeType="md" classNames="" [disabled]="false"
+                iconName="system_bin" iconPosition="end" [visible]="true" (buttonClick)="onDeleteItemClicked()">
+            </pep-button>
+        </div>
     </div>
 </div>

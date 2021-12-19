@@ -21,7 +21,32 @@ export class PepOperatorMapper {
             });
     })();
 
-    static getAll() {
+    static getAll(): IPepOption[] {
+        return this._operators;
+    }
+
+    static get(key) {
+        return this._operators.find(operator => operator.key === key);
+    }
+}
+
+export class PepBooleanMapper {
+    static _operators: IPepOption[] = [];
+
+    private static loadOperators = (() => {
+        PepBooleanMapper._operators.push(
+            {
+                key: 'True',
+                value: 'True'
+            });
+        PepBooleanMapper._operators.push(
+            {
+                key: 'False',
+                value: 'False'
+            });
+    })();
+
+    static getAll(): IPepOption[] {
         return this._operators;
     }
 

@@ -12,13 +12,7 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
     styleUrls: ['./filter-builder-item.component.scss'],
 })
 export class FilterBuilderItemComponent {
-    _selectedField: PepSmartFilterBaseField = null;
-    @Input()
-    set selected(value: any) {
-        if (value) {
-            this._selectedField = value;
-        }
-    }
+    @Input() formKey: string;
     _fields: Array<any> = [];
     _options: IPepOption[] = [];
     @Input()
@@ -33,6 +27,13 @@ export class FilterBuilderItemComponent {
             })
         }
     };
+    _selectedField: PepSmartFilterBaseField = null;
+    @Input()
+    set selected(value: any) {
+        if (value) {
+            this._selectedField = value;
+        }
+    }
     _filter: IPepSmartFilterData;
     @Input()
     set filter(value: IPepSmartFilterData) {
@@ -40,12 +41,10 @@ export class FilterBuilderItemComponent {
             this._filter = value;
         }
     };
-    @Input() formKey: string;
     _parentForm: FormGroup;
     @Input()
     set parentForm(value: FormGroup) {
         if (value) {
-            //console.log('parentForm', value);
             this._parentForm = value;
             this.addToParentForm();
         }
@@ -57,12 +56,16 @@ export class FilterBuilderItemComponent {
     remove = new EventEmitter();
 
     _form: FormGroup;
+    fieldWidth = 26;
+    filterWidth = 67.5;
+    binWidth = 6.5;
 
     constructor(private fb: FormBuilder, private _filterBuilderService: FilterBuilderService) {
         this.setupForm();
     }
 
     ngOnInit() {
+
     }
 
     setupForm() {

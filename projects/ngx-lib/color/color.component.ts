@@ -34,6 +34,8 @@ export class PepColorComponent implements OnInit, OnDestroy {
     @Input() type: PepColorType = 'any';
 
     @Input() showTitle = true;
+    @Input() renderTitle = true;
+
     @Input() showAAComplient = true;
     @Input() layoutType: PepLayoutType = 'form';
 
@@ -44,13 +46,20 @@ export class PepColorComponent implements OnInit, OnDestroy {
         private dialogService: PepDialogService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.renderer.addClass(
             this.element.nativeElement,
             PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
         );
+
+        if (!this.renderTitle) {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+            );
+        }
     }
 
     ngOnDestroy(): void {

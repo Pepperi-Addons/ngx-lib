@@ -189,6 +189,7 @@ export class PepQuantitySelectorComponent
 
     @Input() form: FormGroup = null;
     @Input() showTitle = true;
+    @Input() renderTitle = true;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() isActive = false;
 
@@ -293,6 +294,13 @@ export class PepQuantitySelectorComponent
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+
+            if (!this.renderTitle) {
+                this.renderer.addClass(
+                    this.element.nativeElement,
+                    PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+                );
+            }
         }
 
         this.qsWidthSubject

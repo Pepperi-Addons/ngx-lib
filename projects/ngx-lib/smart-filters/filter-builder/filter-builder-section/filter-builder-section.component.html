@@ -1,23 +1,24 @@
 <div fxLayout="row" fxLayoutGap=".5rem">
     <div class="filter-section-container" fxLayout="row" fxLayoutAlign="flex-start start" fxLayoutGap=".5rem">
-        <pep-select [value]="f.operator.value" xAlignment="left" [options]="operators" [renderTitle]="false"
+        <pep-select fxFlex="11" [value]="f.operator.value" xAlignment="left" [options]="operators" [renderTitle]="false"
             [emptyOption]=false (valueChange)="onOperatorChanged($event)">
         </pep-select>
-        <div fxLayout="column" fxLayoutGap=".5rem">
+        <div fxFlex="89" class="filter-section-wrapper" fxLayout="column" fxLayoutGap=".5rem">
             <ng-container #sectionContainer></ng-container>
             <div fxLayout="row" fxLayoutGap=".5rem">
-                <pep-button value="Add Filter" styleType="weak" styleStateType="system" sizeType="md" classNames=""
+                <pep-button value="Add Filter" styleType="weak" styleStateType="system" sizeType="sm" classNames=""
                     [disabled]="false" iconName="number_plus" iconPosition="end" [visible]="true"
                     (buttonClick)="onAddRuleClicked()"></pep-button>
-                <pep-button value="Add Filter Group" styleType="weak" styleStateType="system" sizeType="md"
-                    classNames="" [disabled]="false" iconName="number_plus" iconPosition="end" [visible]="true"
-                    (buttonClick)="onAddRuleSetClicked()"></pep-button>
+                <ng-container *ngIf="depth < filterBuilderService.maxDepth-1">
+                    <pep-button value="Add Filter Group" styleType="weak" styleStateType="system" sizeType="sm"
+                        classNames="" [disabled]="false" iconName="number_plus" iconPosition="end" [visible]="true"
+                        (buttonClick)="onAddRuleSetClicked()"></pep-button>
+                </ng-container>
             </div>
         </div>
     </div>
-    <ng-container *ngIf="!isRoot">
-        <pep-button styleType="weak" styleStateType="system_bin" sizeType="md" classNames="" [disabled]="false"
-            iconName="system_bin" iconPosition="end" [visible]="true" (buttonClick)="onDeleteSectionClicked()">
-        </pep-button>
-    </ng-container>
+    <pep-button *ngIf="depth > 0" styleType="weak" styleStateType="system_bin" sizeType="md" classNames=""
+        [disabled]="false" iconName="system_bin" iconPosition="end" [visible]="true"
+        (buttonClick)="onDeleteSectionClicked()">
+    </pep-button>
 </div>

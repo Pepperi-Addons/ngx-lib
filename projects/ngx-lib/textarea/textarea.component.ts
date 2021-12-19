@@ -77,6 +77,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     @Input() form: FormGroup = null;
     @Input() isActive = false;
     @Input() showTitle = true;
+    @Input() renderTitle = true;
 
     private _layoutType: PepLayoutType = 'form';
     @Input()
@@ -106,7 +107,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     private setFieldHeight(): void {
         this.fieldHeight = this.customizationService.calculateFieldHeight(
@@ -138,6 +139,13 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+
+            if (!this.renderTitle) {
+                this.renderer.addClass(
+                    this.element.nativeElement,
+                    PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+                );
+            }
         }
     }
 

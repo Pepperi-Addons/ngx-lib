@@ -16,6 +16,8 @@ import { IPepSmartFilterDataValue } from '../common/model/filter';
 })
 export class PepTextFilterComponent extends BaseFilterComponent implements OnInit {
     chooseTypeOptions: Array<IPepOption> = [];
+    operatorWidth = '38%';
+    firstControlWidth = '62%';
 
     ngOnInit() {
         this.firstControl.valueChanges

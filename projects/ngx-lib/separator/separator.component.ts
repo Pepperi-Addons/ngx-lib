@@ -29,6 +29,7 @@ export class PepSeparatorComponent implements OnInit {
 
     @Input() form: FormGroup = null;
     @Input() layoutType: PepLayoutType = 'form';
+    // @Input() renderTitle = true;
 
     private _visible = true;
     @Input()
@@ -62,6 +63,14 @@ export class PepSeparatorComponent implements OnInit {
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+
+            // There is no pep-title-field here
+            // if (!this.renderTitle) {
+            //     this.renderer.addClass(
+            //         this.element.nativeElement,
+            //         PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+            //     );
+            // }
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseFilterComponent } from '../common/model/base-filter-component';
 import {
     IPepSmartFilterOperator,
@@ -15,10 +15,17 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
     templateUrl: './date-filter.component.html',
     styleUrls: ['./date-filter.component.scss'],
 })
-export class PepDateFilterComponent extends BaseFilterComponent {
+export class PepDateFilterComponent extends BaseFilterComponent implements OnInit {
     PepSmartFilterOperators = PepSmartFilterOperators;
     chooseTimeOptions: Array<IPepOption> = [];
     chooseTimeUnitOptions: Array<IPepOption> = [];
+    operatorWidth: string;
+
+    ngOnInit() {
+        if (this.inline) {
+            this.setControlsWidth();
+        }
+    }
 
     // Override
     getDefaultOperator(): IPepSmartFilterOperator {
@@ -107,6 +114,18 @@ export class PepDateFilterComponent extends BaseFilterComponent {
         }
     }
 
+    setControlsWidth() {
+        if (
+            this.operator === PepSmartFilterOperators.Today ||
+            this.operator === PepSmartFilterOperators.ThisWeek ||
+            this.operator === PepSmartFilterOperators.ThisMonth
+        ) {
+            this.operatorWidth = 'auto';
+        } else {
+            this.operatorWidth = '30';
+        }
+    }
+
     onOperatorChanged(value: string) {
         const operator = Object.values(PepSmartFilterOperators).find(
             (operator) => operator.id === value
@@ -114,6 +133,7 @@ export class PepDateFilterComponent extends BaseFilterComponent {
 
         this.operator = operator;
         this.operatorUnit = this.getDefaultOperatorUnit();
+        this.setControlsWidth();
         if (this._parentForm) {
             this.updateParentForm();
         }

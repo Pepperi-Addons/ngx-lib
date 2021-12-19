@@ -1,30 +1,31 @@
 <div [formGroup]="form" [fxLayout]="inline ? 'row' : 'column'" [fxLayoutGap]="inline ? '.5rem' : '0rem'">
     <ng-container>
-        <pep-select [key]="'typeOperator'" [value]="operator.id" [label]="'SMART_FILTERS.TYPE' | translate"
-            [renderTitle]="renderTitle" [emptyOption]="false" [options]="chooseTypeOptions"
-            (valueChange)="onOperatorChanged($event)">
+        <pep-select [fxFlex]="inline ? operatorWidth : null" [key]="'typeOperator'" [value]="operator.id"
+            [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
+            [options]="chooseTypeOptions" (valueChange)="onOperatorChanged($event)">
         </pep-select>
     </ng-container>
-    <div *ngIf="operator !== PepSmartFilterOperators.NumberRange">
+    <div *ngIf="operator !== PepSmartFilterOperators.NumberRange" [fxFlex]="inline ? firstControlWidth : null">
         <!-- Amount -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
-            [renderError]="false" [renderTitle]="renderTitle" [type]="field.type" [formattedValue]="firstControl.value"
-            [value]="firstControl.value" (valueChange)="onValueChanged()">
+            [renderError]="false" [renderTitle]="renderTitle" [type]="field.type"
+            [formattedValue]="firstControl?.value || ''" [value]="firstControl?.value || ''"
+            (valueChange)="onValueChanged()">
         </pep-textbox>
     </div>
     <div *ngIf="operator === PepSmartFilterOperators.NumberRange" fxLayout="row" fxLayout.xs="column"
-        fxLayoutGap="1rem">
+        [fxLayoutGap]="inline ? '.5rem' : '1rem'">
         <!-- Min number -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.MIN' | translate"
-            [renderError]="false" [renderTitle]="renderTitle" fxFlex="50%" [type]="field.type"
-            [formattedValue]="firstControl.value" [value]="firstControl.value" [maxValue]="secondControl.value"
-            (valueChange)="onValueChanged()">
+            [renderError]="false" [renderTitle]="renderTitle" [type]="field.type" fxFlex="50%"
+            [formattedValue]="firstControl?.value || ''" [value]="firstControl?.value || ''"
+            [maxValue]="secondControl?.value || ''" (valueChange)="onValueChanged()">
         </pep-textbox>
         <!-- Max number -->
         <pep-textbox [form]="form" [key]="secondControlKey" [label]="'SMART_FILTERS.MAX' | translate"
-            [renderError]="false" [renderTitle]="renderTitle" fxFlex="50%" [type]="field.type"
-            [formattedValue]="secondControl.value" [value]="secondControl.value" [minValue]="firstControl.value"
-            (valueChange)="onValueChanged()">
+            [renderError]="false" [renderTitle]="renderTitle" [type]="field.type" fxFlex="50%"
+            [formattedValue]="secondControl?.value || ''" [value]="secondControl?.value || ''"
+            [minValue]="firstControl?.value || ''" (valueChange)="onValueChanged()">
         </pep-textbox>
     </div>
 </div>
