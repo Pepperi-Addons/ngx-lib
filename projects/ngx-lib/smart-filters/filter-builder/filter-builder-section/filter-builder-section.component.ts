@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { IPepOption } from '@pepperi-addons/ngx-lib';
+import { FormGroup } from '@angular/forms';
 import { FilterBuilderService } from '../filter-builder.service';
 import { PepOperatorTypes } from '../common/model/type';
-import { PepOperatorMapper } from '../common/model/type';
+import { PepTypeConvertorService } from '../common/services/type-convertor.service';
 
 
 @Component({
@@ -13,7 +12,6 @@ import { PepOperatorMapper } from '../common/model/type';
 })
 export class FilterBuilderSectionComponent {
     @Input() form: FormGroup;
-    //@Input() isRoot = false;
     @Input() depth: number;
 
     @Output()
@@ -23,13 +21,13 @@ export class FilterBuilderSectionComponent {
 
     @ViewChild('sectionContainer', { read: ViewContainerRef, static: true }) sectionContainer: ViewContainerRef;
 
-    operators: IPepOption[];
-
-    constructor(public filterBuilderService: FilterBuilderService) {
+    constructor(
+        public filterBuilderService: FilterBuilderService,
+        public typeConvertorService: PepTypeConvertorService
+    ) {
     }
 
     ngOnInit() {
-        this.operators = PepOperatorMapper.getAll();
     }
 
     get f() {

@@ -63,7 +63,7 @@ export class FilterBuilderItemComponent {
     filterWidth = 67.5;
     binWidth = 6.5;
 
-    constructor(private fb: FormBuilder, private _filterBuilderService: FilterBuilderService) {
+    constructor(private _fb: FormBuilder) {
         this.setupForm();
     }
 
@@ -72,14 +72,14 @@ export class FilterBuilderItemComponent {
     }
 
     setupForm() {
-        this._form = this.fb.group({
-            fieldId: this.fb.control(null),
-            fieldType: this.fb.control(null),
-            operator: this.fb.control(null),
-            operatorUnit: this.fb.control(null),
-            values: this.fb.group({
-                first: this.fb.control(null),
-                second: this.fb.control(null)
+        this._form = this._fb.group({
+            fieldId: this._fb.control(null),
+            fieldType: this._fb.control(null),
+            operator: this._fb.control(null),
+            operatorUnit: this._fb.control(null),
+            values: this._fb.group({
+                first: this._fb.control(null),
+                second: this._fb.control(null)
             }),
         });
     }

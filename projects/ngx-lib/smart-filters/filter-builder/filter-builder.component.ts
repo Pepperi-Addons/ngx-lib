@@ -39,7 +39,10 @@ export class FilterBuilderComponent implements OnInit, OnDestroy {
 
     form: FormGroup;
 
-    constructor(private _fb: FormBuilder, /*private _changeDetectionRef: ChangeDetectorRef,*/ public _filterBuilderService: FilterBuilderService) {
+    constructor(
+        private _fb: FormBuilder,
+        private _filterBuilderService: FilterBuilderService
+    ) {
         this.setupForm();
         this._formSubscription$ = this.form.valueChanges.subscribe((val) => {
             if (this.form.valid !== this._isFormValid) {
