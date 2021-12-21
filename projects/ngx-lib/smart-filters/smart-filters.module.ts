@@ -40,6 +40,8 @@ import { FilterBuilderComponent } from './filter-builder/filter-builder.componen
 import { FilterBuilderSectionComponent } from './filter-builder/filter-builder-section/filter-builder-section.component';
 import { FilterBuilderItemComponent } from './filter-builder/filter-builder-item/filter-builder-item.component';
 
+import { FilterItemCounterPipe } from './filter-builder/common/pipes/filter-item-counter.pipe';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -78,7 +80,8 @@ import { FilterBuilderItemComponent } from './filter-builder/filter-builder-item
         PepNumberFilterComponent,
         FilterBuilderComponent,
         FilterBuilderSectionComponent,
-        FilterBuilderItemComponent
+        FilterBuilderItemComponent,
+        FilterItemCounterPipe
     ],
 })
 export class PepSmartFiltersModule {

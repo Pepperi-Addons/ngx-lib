@@ -36,10 +36,10 @@
                 </ng-container>
             </ng-container>
         </ng-container>
-        <div fxFlex="2.5em">
-            <pep-button styleType="weak" styleStateType="system_bin" sizeType="md" classNames="" [disabled]="false"
-                iconName="system_bin" iconPosition="end" [visible]="true" (buttonClick)="onDeleteItemClicked()">
-            </pep-button>
-        </div>
+        <!-- <ng-container *ngIf="(_parentForm | filterItemCounter) > 1"> -->
+        <pep-button styleType="weak" styleStateType="system_bin" sizeType="md" classNames="" [disabled]="false"
+            iconName="system_bin" iconPosition="end" [visible]="true" (buttonClick)="onDeleteItemClicked()">
+        </pep-button>
+        <!-- </ng-container>         -->
     </div>
 </div>

@@ -1,23 +1,5 @@
-
-// .carousel-container {
-//     position: relative;
-//     padding: 1.5rem 0;
-
-//     .carousel-arrow {
-//         position: absolute;
-//         top: 50%;
-//         transform: translate(0%, -50%);
-//         z-index: 1;
-
-//         // state-weak-invert-active($pepperi-theme)
-
-//         &.start-arrow { 
-//             left: -0.5rem;
-//         }
-        
-//         &.end-arrow {
-//             right: -0.5rem;
-//         }   
-//     }
-
-// }
+.example-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}

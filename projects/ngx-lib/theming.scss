@@ -88,6 +88,8 @@ $pep-typography: mat.define-typography-config(
 @import './list/list-views.component.theme';
 @import './list/list.component.theme';
 
+@import './smart-filters/filter-builder/filter-builder-section/filter-builder-section.component.theme';
+
 // Use this import in a real project instead
 // @import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
 @import './src/core/style/themes/default-theme.scss';
@@ -182,6 +184,8 @@ $material-theme-for-pep: $material-default-theme;
         @include pep-list-total-component-theme($pepperi-theme);
         @include pep-list-views-component-theme($pepperi-theme);
         @include pep-list-component-theme($pepperi-theme);
+        
+        @include pep-filter-builder-section-theme($pepperi-theme);
     }
 }
 

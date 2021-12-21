@@ -20,6 +20,7 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
     chooseTimeOptions: Array<IPepOption> = [];
     chooseTimeUnitOptions: Array<IPepOption> = [];
     operatorWidth: string;
+    fieldsWidth: string;
 
     ngOnInit() {
         if (this.inline) {
@@ -118,11 +119,18 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
         if (
             this.operator === PepSmartFilterOperators.Today ||
             this.operator === PepSmartFilterOperators.ThisWeek ||
-            this.operator === PepSmartFilterOperators.ThisMonth
+            this.operator === PepSmartFilterOperators.ThisMonth ||
+            this.operator === PepSmartFilterOperators.IsEmpty ||
+            this.operator === PepSmartFilterOperators.IsNotEmpty
         ) {
             this.operatorWidth = 'auto';
+            this.fieldsWidth = '0%';
+        } else if (this.operator === PepSmartFilterOperators.On) {
+            this.operatorWidth = '38%';
+            this.fieldsWidth = '62%';
         } else {
-            this.operatorWidth = '30';
+            this.operatorWidth = '30%';
+            this.fieldsWidth = '70%';
         }
     }
 
@@ -133,7 +141,9 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
 
         this.operator = operator;
         this.operatorUnit = this.getDefaultOperatorUnit();
-        this.setControlsWidth();
+        if (this.inline) {
+            this.setControlsWidth();
+        }
         if (this._parentForm) {
             this.updateParentForm();
         }

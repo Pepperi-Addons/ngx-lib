@@ -55,6 +55,9 @@ export class FilterBuilderItemComponent {
     @Output()
     remove = new EventEmitter();
 
+
+    test: any = {};
+
     _form: FormGroup;
     fieldWidth = 26;
     filterWidth = 67.5;

@@ -24,20 +24,25 @@ export class FilterBuilderExampleComponent implements OnInit {
     fields: Array<IPepField>;
     //filters: Array<IPepSmartFilterData>;
 
-    uiControl;
-    items;
+    //uiControl;
+    //items;
     json: any;
+
+    isformValid: boolean = true;
 
     title = 'client-side';
 
     PepScreenSizeType = PepScreenSizeType;
     screenSize: PepScreenSizeType;
 
+    /*
     searchString = '';
     searchAutoCompleteValues = [];
 
     menuItems: Array<PepMenuItem>;
-    breadCrumbsItems: Array<PepBreadCrumbItem>;
+    breadCrumbsItems: Array<PepBreadCrumbItem>;*/
+
+
 
     constructor(public layoutService: PepLayoutService, private fb: FormBuilder) {
         this.layoutService.onResize$.pipe().subscribe((size) => {
@@ -160,6 +165,10 @@ export class FilterBuilderExampleComponent implements OnInit {
 
     onStatusChanged(status: boolean) {
         console.log('onStatusChanged', status);
+    }
+
+    onSaveClicked() {
+        console.log('onSaveClicked');
     }
 
 }

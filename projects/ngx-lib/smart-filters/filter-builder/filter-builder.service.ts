@@ -216,8 +216,8 @@ export class FilterBuilderService {
      */
     private getFilterValues(current: IPepJSONItem, operator: IPepSmartFilterOperator, field: any) {
         let data: IPepFilterBuilderValues = {
-            first: '',
-            second: '',
+            first: null,
+            second: null,
             operationUnit: null
         };
 
@@ -225,20 +225,20 @@ export class FilterBuilderService {
             //filter keys don't exist on field options
             data.first = current?.Values?.length > 0 ? current.Values.filter(item => {
                 return field.options.find(option => option.key === item);
-            }) : '';
+            }) : null;
         } else if (
             operator === PepSmartFilterOperators.InTheLast ||
             operator === PepSmartFilterOperators.NotInTheLast ||
             operator === PepSmartFilterOperators.DueIn ||
             operator === PepSmartFilterOperators.NotDueIn
         ) { //operation unit
-            data.first = current?.Values?.length > 0 ? current.Values[0] : '';
+            data.first = current?.Values?.length > 0 ? current.Values[0] : null;
             if (current?.Values?.length === 2) {
                 data.operationUnit = getSmartBuilderOperationUnit(current.Values[1]);
             }
         } else {
-            data.first = current?.Values?.length > 0 ? current.Values[0] : '';
-            data.second = current?.Values?.length === 2 ? current.Values[1] : '';
+            data.first = current?.Values?.length > 0 ? current.Values[0] : null;
+            data.second = current?.Values?.length === 2 ? current.Values[1] : null;
         }
 
         return data;

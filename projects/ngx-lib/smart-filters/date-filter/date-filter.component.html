@@ -9,7 +9,7 @@
                 operator === PepSmartFilterOperators.NotInTheLast ||
                 operator === PepSmartFilterOperators.DueIn ||
                 operator === PepSmartFilterOperators.NotDueIn" fxLayout="row" fxLayout.xs="column"
-        [fxLayoutGap]="inline ? '.5rem' : '1rem'">
+        [fxLayoutGap]="inline ? '.5rem' : '1rem'" [fxFlex]="inline ? fieldsWidth : null">
         <!-- Amount -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
             [renderError]="false" [renderTitle]="renderTitle" fxFlex="50%" [type]="'int'"
@@ -23,7 +23,7 @@
         </pep-select>
     </div>
     <div pepRtlDirection *ngIf="operator === PepSmartFilterOperators.DateRange" fxLayout="row" fxLayout.xs="column"
-        [fxLayoutGap]="inline ? '.5rem' : '1rem'">
+        [fxLayoutGap]="inline ? '.5rem' : '1rem'" [fxFlex]="inline ? fieldsWidth : null">
         <!-- Start date -->
         <pep-date [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.START_DATE' | translate"
             [renderError]="false" [renderTitle]="renderTitle" fxFlex="50%"
@@ -41,7 +41,8 @@
         <!-- Choose a date -->
         <pep-date [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.CHOOSE_DATE' | translate"
             [renderError]="false" [renderTitle]="renderTitle" [type]="field.type === 'date' ? 'date' : 'datetime'"
-            [value]="firstControl?.value || ''" (valueChange)="onDateValueChanged()">
+            [fxFlex]="inline ? fieldsWidth : null" [value]="firstControl?.value || ''"
+            (valueChange)="onDateValueChanged()">
         </pep-date>
     </ng-container>
 </div>
