@@ -47,21 +47,20 @@ export class PepSliderComponent implements OnInit {
     @Input() minValue = NaN;
     @Input() maxValue = NaN;
 
-    private _value = null;
+    private _value = NaN;
     @Input()
-    set value(value: string) {
-        if (!value) {
-            value = '';
-        }
-
+    set value(value: number) {
         this._value = value;
     }
-    get value(): string {
+    get value(): number {
         return this._value;
     }
 
     @Output()
-    valueChange: EventEmitter<string> = new EventEmitter<string>();
+    valueChange: EventEmitter<number> = new EventEmitter<number>();
+
+    @Output()
+    inputChange: EventEmitter<number> = new EventEmitter<number>();
 
     xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     sliderWrapper: any = null;
@@ -75,7 +74,13 @@ export class PepSliderComponent implements OnInit {
         }
 
         if (this.sliderWrapper) {
-            this.renderer.setStyle(this.sliderWrapper, 'background', this.background?.length > 0 ? this.background : '#ccc');
+            this.renderer.setStyle(this.sliderWrapper, 'background', this.background?.length > 0 ? this.background : '');
+
+            if (this.background?.length > 0) {
+                this.renderer.removeClass(this.sliderWrapper, 'background-color-dimmed');
+            } else {
+                this.renderer.addClass(this.sliderWrapper, 'background-color-dimmed');
+            }
         }
     }
 
@@ -86,5 +91,9 @@ export class PepSliderComponent implements OnInit {
 
     onValueChange(event) {
         this.valueChange.emit(event.value);
+    }
+
+    onInputChange(event) {
+        this.inputChange.emit(event.value);
     }
 }

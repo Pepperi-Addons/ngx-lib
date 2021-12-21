@@ -5,8 +5,9 @@ import { PepHttpService } from '../../http/services/http.service';
 import { PepLoaderService } from '../../http/services/loader.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { TranslateService } from '@ngx-translate/core';
+import { ITranslationResource } from 'ngx-translate-multi-http-loader';
+import { PepTranslateService } from './translate.service';
 
 /*
     This service is the webapp api for addon usege.
@@ -23,7 +24,9 @@ export class PepAddonService {
     constructor(
         private sessionService: PepSessionService,
         private httpService: PepHttpService,
-        private loaderService: PepLoaderService
+        private loaderService: PepLoaderService,
+        public translateService: PepTranslateService,
+        public fileService: PepFileService,
     ) {
         //
     }
@@ -94,48 +97,43 @@ export class PepAddonService {
         });
     }
 
+    getNgxLibTranslationResource(subAddonUUID = ''): ITranslationResource {
+        const addonStaticFolder = this.getAddonStaticFolder(subAddonUUID);
+        const translationsPath: string = this.fileService.getAssetsTranslationsPath(addonStaticFolder);
+        const translationsSuffix: string = this.fileService.getAssetsTranslationsSuffix();
+
+        return {
+            prefix: translationsPath,
+            suffix: translationsSuffix,
+        };
+    }
+
+    getAddonTranslationResource(subAddonUUID = ''): ITranslationResource {
+        const addonStaticFolder = this.getAddonStaticFolder(subAddonUUID);
+        const defaultSubFolder = 'assets/i18n/';
+
+        return {
+            prefix: addonStaticFolder.length > 0 ? `${addonStaticFolder}${defaultSubFolder}` : `/${defaultSubFolder}`,
+            suffix: '.json',
+        };
+    }
+
+    setDefaultTranslateLang(translate: TranslateService, urlLangParam = 'userLang') {
+        this.translateService.setDefaultTranslateLang(translate, urlLangParam);
+    }
+
     public static createDefaultMultiTranslateLoader(
         http: HttpClient,
         fileService: PepFileService,
         addonService: PepAddonService,
         subAddonUUID = ''
     ) {
-        const addonStaticFolder = addonService.getAddonStaticFolder(subAddonUUID);
-        const translationsPath: string = fileService.getAssetsTranslationsPath(addonStaticFolder);
-        const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
-        const defaultSubFolder = 'assets/i18n/';
+        const ngxLibTranslationResource = addonService.getNgxLibTranslationResource(subAddonUUID);
+        const addonTranslationResource = addonService.getAddonTranslationResource(subAddonUUID);
 
-        return new MultiTranslateHttpLoader(http, [
-            {
-                prefix: translationsPath,
-                suffix: translationsSuffix,
-            },
-            {
-                prefix: addonStaticFolder.length > 0 ? `${addonStaticFolder}${defaultSubFolder}` : `/${defaultSubFolder}`,
-                suffix: '.json',
-            },
+        return addonService.translateService.createMultiTranslateLoader([
+            ngxLibTranslationResource,
+            addonTranslationResource
         ]);
     }
-
-    setDefaultTranslateLang(translate: TranslateService, urlLangParam = 'userLang') {
-        let userLang = 'en';
-        translate.setDefaultLang(userLang);
-        userLang = translate.getBrowserLang().split('-')[0]; // use navigator lang if available
-
-        if (urlLangParam.length > 0) {
-            const index = location.href.indexOf(urlLangParam);
-
-            if (index > -1) {
-                // urlLangParam=XX
-                const startIndex = index + urlLangParam.length + '='.length;
-                userLang = location.href.substring(startIndex, startIndex + 2);
-            }
-        }
-
-        // the lang to use, if the lang isn't available, it will use the current loader to get them
-        translate.use(userLang).subscribe((res: any) => {
-            // In here you can put the code you want. At this point the lang will be loaded
-        });
-    }
-
 }
