@@ -18,7 +18,7 @@ export class PepImageService {
         private fileService: PepFileService,
     ) { }
 
-    openImageDialog(imageSrc: string, options: IPepOption[], title: string = ''): void {
+    openImageDialog(imageSrc: string, options: IPepOption[], title = ''): void {
         const arr = [imageSrc].concat(
             (options || []).map((opt) => opt.value)
         );
