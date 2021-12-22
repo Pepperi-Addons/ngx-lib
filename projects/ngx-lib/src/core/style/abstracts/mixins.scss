@@ -303,15 +303,15 @@
 // ******************************************************************************
 //                        General state declerations
 // ******************************************************************************
-@mixin focus($pepperi-theme, $add-important: false, $focus-color: null) {
+@mixin focus($pepperi-theme, $add-important: false, $focus-color: null, $focus-size: $spacing-xs) {
     @if ($focus-color == null) {
         $focus-color: get-pep-color($pepperi-theme, color-text, color-link-focus);
     }
   
     @if ($add-important) {
-        box-shadow: 0 0 0 $spacing-xs $focus-color !important;
+        box-shadow: 0 0 0 $focus-size $focus-color !important;
     } @else {
-        box-shadow: 0 0 0 $spacing-xs $focus-color;
+        box-shadow: 0 0 0 $focus-size $focus-color;
     }
 }
 
