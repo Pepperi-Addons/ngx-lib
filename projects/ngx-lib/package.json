@@ -22,9 +22,12 @@
     "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.",
     "main": "karma.conf.js",
     "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Pepperi-Addons/ngx-lib.git"
+        "url": "git+https://github.com/alonpepperi/-ngx-lib.git"
     },
     "keywords": [
         "Pepperi",
@@ -33,7 +36,7 @@
     "author": "Pepperi",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/Pepperi-Addons/ngx-lib/issues"
+        "url": "https://github.com/alonpepperi/-ngx-lib/issues"
     },
-    "homepage": "https://github.com/Pepperi-Addons/ngx-lib#readme"
+    "homepage": "https://github.com/alonpepperi/-ngx-lib#readme"
 }
