@@ -1,25 +1,18 @@
-import {
-    Injectable, ViewContainerRef, ComponentFactoryResolver,
-    ComponentFactory, ComponentRef
-} from '@angular/core';
-import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
+import { Injectable, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { } from 'lodash';
-import { PepSmartFiltersModule } from '../smart-filters.module';
 import { IPepField, IPepJSONSection, IPepJSONItem } from './common/model/legacy';
-import { PepSmartFilterBaseField, IPepSmartFilterField, IPepSmartFilterFieldOption } from '../common/model/field';
+import { IPepSmartFilterField } from '../common/model/field';
 import { IPepSmartFilterData } from '../common/model/filter';
 import { PepSmartFilterOperators, IPepSmartFilterOperator } from '../common/model/operator';
 import { PepSmartFilterType } from '../common/model/type'
 import { createSmartFilter, createSmartFilterField } from '../common/model/creator';
-//import { getSmartBuilderType } from './common/model/type';
-//import { convertToSmartFilterFields } from './common/model/field';
 import { getSmartBuilderOperator } from './common/model/operator';
 import { FilterBuilderSectionComponent } from './filter-builder-section/filter-builder-section.component';
 import { FilterBuilderItemComponent } from './filter-builder-item/filter-builder-item.component';
 import { PepFilterBuilderTypeMap } from './common/model/type-map';
 import { getSmartBuilderOperationUnit } from './common/model/operator-unit';
-//import { PepFilterBuilderOperatorUnitMap } from './common/model/operator-unit-map';
 import { PepOutputFilterService } from './common/services/output-filter.service';
 import { IPepFilterBuilderValues } from './common/model/filter';
 import { PepOperatorTypes } from './common/model/type';
@@ -146,7 +139,7 @@ export class FilterBuilderService {
     createItem(current: IPepJSONItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory = this._resolver.resolveComponentFactory(FilterBuilderItemComponent);
         let componentRef = containerRef.createComponent(factory);
-
+        console.log('containerRef', containerRef);
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('item')) { counter++; } });
         let formKey: string = `item${counter}`;

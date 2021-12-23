@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FilterBuilderService } from '../filter-builder.service';
-import { PepSmartFilterType } from '../../common/model/type';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { PepSmartFilterBaseField, IPepSmartFilterField } from '../../common/model/field';
 import { IPepSmartFilterData } from '../../common/model/filter';
 import { IPepOption } from '@pepperi-addons/ngx-lib';

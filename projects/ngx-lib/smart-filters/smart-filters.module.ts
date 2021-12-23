@@ -27,6 +27,7 @@ import {
     pepIconNumberMinus,
     pepIconNumberPlus,
 } from '@pepperi-addons/ngx-lib/icon';
+import { PepGroupButtonsModule } from '@pepperi-addons/ngx-lib/group-buttons';
 
 // import { BaseFilterComponent } from './common/model/base-filter-component';
 import { PepSmartFiltersComponent } from './smart-filters.component';
@@ -39,8 +40,6 @@ import { PepNumberFilterComponent } from './number-filter/number-filter.componen
 import { FilterBuilderComponent } from './filter-builder/filter-builder.component';
 import { FilterBuilderSectionComponent } from './filter-builder/filter-builder-section/filter-builder-section.component';
 import { FilterBuilderItemComponent } from './filter-builder/filter-builder-item/filter-builder-item.component';
-
-import { FilterItemCounterPipe } from './filter-builder/common/pipes/filter-item-counter.pipe';
 
 @NgModule({
     imports: [
@@ -67,6 +66,7 @@ import { FilterItemCounterPipe } from './filter-builder/common/pipes/filter-item
         PepSearchModule,
         PepIconModule,
         PepButtonModule,
+        PepGroupButtonsModule
     ],
     exports: [PepSmartFiltersComponent, FilterBuilderComponent],
     declarations: [
@@ -80,8 +80,7 @@ import { FilterItemCounterPipe } from './filter-builder/common/pipes/filter-item
         PepNumberFilterComponent,
         FilterBuilderComponent,
         FilterBuilderSectionComponent,
-        FilterBuilderItemComponent,
-        FilterItemCounterPipe
+        FilterBuilderItemComponent
     ],
 })
 export class PepSmartFiltersModule {

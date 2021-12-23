@@ -1,6 +1,6 @@
 <div class="example-form-container">
     <div style="font-weight: bold; text-decoration: underline; margin-top: 20px;">Parent Form Container</div>
-    <pep-filter-builder [json]="json" [fields]="fields" (filters)="getFilters($event)"
+    <pep-filter-builder [jsonFilter]="json" [fields]="fields" (filter)="getFilters($event)"
         (formValidationChange)="isformValid = $event">
     </pep-filter-builder>
 

@@ -4,12 +4,9 @@ import {
     Input,
     Output,
     OnInit,
-    AfterViewInit,
     OnDestroy,
     ViewChild,
-    ViewContainerRef,
-    ChangeDetectorRef
-
+    ViewContainerRef
 } from '@angular/core';
 import { IPepField, IPepJSONSection } from './common/model/legacy';
 import { FilterBuilderService } from './filter-builder.service';
@@ -22,11 +19,11 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./filter-builder.component.scss'],
 })
 export class FilterBuilderComponent implements OnInit, OnDestroy {
-    @Input() json: IPepJSONSection = null;
+    @Input() jsonFilter: IPepJSONSection = null;
     @Input() fields: Array<IPepField> = new Array<IPepField>();
 
     @Output()
-    filters: EventEmitter<any> = new EventEmitter<any>();
+    filter: EventEmitter<IPepJSONSection> = new EventEmitter<IPepJSONSection>();
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -51,7 +48,7 @@ export class FilterBuilderComponent implements OnInit, OnDestroy {
             }
         });
         this._outputJsonSubscription$ = this._filterBuilderService.triggerOutputJson.subscribe((outputJson) => {
-            this.filters.emit(outputJson);
+            this.filter.emit(outputJson);
         });
     }
 
@@ -59,17 +56,8 @@ export class FilterBuilderComponent implements OnInit, OnDestroy {
         this.form = this._fb.group({})
     }
     ngOnInit() {
-        this._filterBuilderService.createFilterTree(this.json, this.fields, this.form, this.filterRoot);
+        this._filterBuilderService.createFilterTree(this.jsonFilter, this.fields, this.form, this.filterRoot);
     }
-
-    /*
-    ngAfterViewInit() {
-        //this._filterBuilderService.createFilterTree(this.json, this.fields, this.form, this.filterRoot);
-    }
-
-    ngAfterViewChecked() {
-        //this._changeDetectionRef.detectChanges();
-    } */
 
     ngOnDestroy() {
         if (this._formSubscription$) {

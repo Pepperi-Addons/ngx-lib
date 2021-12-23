@@ -1,10 +1,9 @@
 <div fxLayout="row" fxLayoutGap=".5rem">
-    <div class="filter-section-container" fxLayout="row" fxLayoutAlign="flex-start start" fxLayoutGap=".5rem">
-        <pep-select fxFlex="11" [value]="f.operator.value" xAlignment="left" [options]="typeConvertorService.operators"
-            [renderTitle]="false" [emptyOption]=false (valueChange)="onOperatorChanged($event)">
-        </pep-select>
-        <div fxFlex="89" class="filter-section-wrapper" fxLayout="column" fxLayoutGap=".5rem">
-            <ng-container #sectionContainer></ng-container>
+    <div class="filter-section-container" fxLayout="column" fxLayoutGap=".5rem">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <pep-group-buttons [buttons]="toggleButtons" [selectedButtonKey]="f.operator?.value || ''" styleType="weak"
+                sizeType="sm" [viewType]="'toggle'">
+            </pep-group-buttons>
             <div fxLayout="row" fxLayoutGap=".5rem">
                 <pep-button value="Add Filter" styleType="weak" styleStateType="system" sizeType="sm" classNames=""
                     [disabled]="false" iconName="number_plus" iconPosition="end" [visible]="true"
@@ -16,6 +15,7 @@
                 </ng-container>
             </div>
         </div>
+        <ng-container #sectionContainer></ng-container>
     </div>
     <pep-button *ngIf="depth > 0" styleType="weak" styleStateType="system_bin" sizeType="md" classNames=""
         [disabled]="false" iconName="system_bin" iconPosition="end" [visible]="true"

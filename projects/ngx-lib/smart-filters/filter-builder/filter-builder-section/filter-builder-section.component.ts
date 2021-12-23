@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import {
+    IPepButtonClickEvent,
+    PepButton,
+} from '@pepperi-addons/ngx-lib/button';
+import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { FilterBuilderService } from '../filter-builder.service';
 import { PepOperatorTypes } from '../common/model/type';
 import { PepTypeConvertorService } from '../common/services/type-convertor.service';
@@ -21,22 +26,38 @@ export class FilterBuilderSectionComponent {
 
     @ViewChild('sectionContainer', { read: ViewContainerRef, static: true }) sectionContainer: ViewContainerRef;
 
+    toggleButtons: Array<PepButton>;
+
     constructor(
         public filterBuilderService: FilterBuilderService,
-        public typeConvertorService: PepTypeConvertorService
+        private _typeConvertorService: PepTypeConvertorService
     ) {
     }
 
     ngOnInit() {
+        this.initOperators();
     }
 
     get f() {
         return this.form.controls;
     }
 
-    onOperatorChanged(value) {
-        this.f.operator.setValue(value);
-        this.operatorChange.emit();
+    initOperators() {
+        this.toggleButtons = this._typeConvertorService.operators.map((operator: IPepOption) => {
+            return {
+                key: operator.key,
+                value: operator.value,
+                callback: (event: IPepButtonClickEvent) =>
+                    this.onOperatorChanged(event)
+            } as PepButton
+        });
+    }
+
+    onOperatorChanged(event) {
+        if (event?.source?.key) {
+            this.f.operator.setValue(event.source.key);
+            this.operatorChange.emit();
+        }
     }
 
     onAddRuleClicked() {
