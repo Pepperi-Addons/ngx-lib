@@ -24,7 +24,7 @@ export class FilterBuilderItemComponent {
                 }
             })
         }
-    };
+    }
     _selectedField: PepSmartFilterBaseField = null;
     @Input()
     set selected(value: any) {
@@ -38,7 +38,7 @@ export class FilterBuilderItemComponent {
         if (value) {
             this._filter = value;
         }
-    };
+    }
     _parentForm: FormGroup;
     @Input()
     set parentForm(value: FormGroup) {
@@ -46,7 +46,7 @@ export class FilterBuilderItemComponent {
             this._parentForm = value;
             this.addToParentForm();
         }
-    };
+    }
 
     @Output()
     filterChange = new EventEmitter();
@@ -66,7 +66,7 @@ export class FilterBuilderItemComponent {
     }
 
     ngOnInit() {
-
+        //
     }
 
     setupForm() {
@@ -87,7 +87,7 @@ export class FilterBuilderItemComponent {
     }
 
     onFieldChanged(key) {
-        let item = this._fields.find(field => field.id === key);
+        const item = this._fields.find(field => field.id === key);
 
         this.setupForm();
         this.addToParentForm();

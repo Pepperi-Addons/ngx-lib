@@ -32,7 +32,7 @@ export class FilterBuilderComponent implements OnInit, OnDestroy {
     _formSubscription$: Subscription;
     _outputJsonSubscription$: Subscription;
 
-    _isFormValid: boolean = true;
+    _isFormValid = true;
 
     form: FormGroup;
 

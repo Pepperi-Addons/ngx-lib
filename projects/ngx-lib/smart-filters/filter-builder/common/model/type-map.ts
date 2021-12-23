@@ -26,7 +26,7 @@ export class PepFilterBuilderTypeMap {
      * @returns smart builder field type
      */
     getSmartBuilderType(key: string): PepSmartFilterType | null {
-        let item = this.map.get(key);
+        const item = this.map.get(key);
         return item ? item : null;
     }
 

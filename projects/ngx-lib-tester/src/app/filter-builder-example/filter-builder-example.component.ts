@@ -28,7 +28,7 @@ export class FilterBuilderExampleComponent implements OnInit {
     //items;
     json: any;
 
-    isformValid: boolean = true;
+    isformValid = true;
 
     title = 'client-side';
 

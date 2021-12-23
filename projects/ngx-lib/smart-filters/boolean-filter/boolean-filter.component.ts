@@ -14,6 +14,7 @@ import { IPepSmartFilterDataValue } from '../common/model/filter';
 export class PepBooleanFilterComponent extends BaseFilterComponent implements OnInit {
 
     ngOnInit() {
+        //
     }
 
 
@@ -26,10 +27,6 @@ export class PepBooleanFilterComponent extends BaseFilterComponent implements On
     getFilterValue(): IPepSmartFilterDataValue {
         const filterValue = { first: this.firstControl.value || false };
         return filterValue;
-    }
-
-    onRadioChanged() {
-
     }
 
     onValueChanged(value) {

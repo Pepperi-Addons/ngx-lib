@@ -103,14 +103,14 @@ export class FilterBuilderService {
      */
     createSection(operator: PepOperatorTypes, containerRef: ViewContainerRef, parentForm: FormGroup, depth: number) {
         const factory = this._resolver.resolveComponentFactory(FilterBuilderSectionComponent);
-        let componentRef = containerRef.createComponent(factory);
+        const componentRef = containerRef.createComponent(factory);
 
-        let sectionGroup = this._fb.group({
+        const sectionGroup = this._fb.group({
             operator: this._fb.control(operator)
         });
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('section')) { counter++; } });
-        let formKey: string = `section${counter}`;
+        const formKey = `section${counter}`;
         parentForm.addControl(formKey, sectionGroup);
 
         componentRef.instance.depth = depth;
@@ -138,11 +138,11 @@ export class FilterBuilderService {
      */
     createItem(current: IPepJSONItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory = this._resolver.resolveComponentFactory(FilterBuilderItemComponent);
-        let componentRef = containerRef.createComponent(factory);
+        const componentRef = containerRef.createComponent(factory);
         console.log('containerRef', containerRef);
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('item')) { counter++; } });
-        let formKey: string = `item${counter}`;
+        const formKey = `item${counter}`;
 
         componentRef.instance.formKey = formKey;
         componentRef.instance.fields = this._smartFilterFields;
@@ -171,9 +171,9 @@ export class FilterBuilderService {
      * @returns smart filter object
      */
     private getFilter(current: IPepJSONItem, field: any): IPepSmartFilterData | null {
-        let operator: IPepSmartFilterOperator = getSmartBuilderOperator(current.Operation, field.type);
+        const operator: IPepSmartFilterOperator = getSmartBuilderOperator(current.Operation, field.type);
         if (operator) {
-            let filterValues: IPepFilterBuilderValues = this.getFilterValues(current, operator, field);
+            const filterValues: IPepFilterBuilderValues = this.getFilterValues(current, operator, field);
             return createSmartFilter(
                 current.ApiName,
                 operator,
@@ -193,7 +193,7 @@ export class FilterBuilderService {
      */
     private getSelectedField(current: IPepJSONItem): IPepSmartFilterField | null {
         if (current) {
-            let item = this._smartFilterFields.find(field => field.id === current.ApiName);
+            const item = this._smartFilterFields.find(field => field.id === current.ApiName);
             return item ? item : this._smartFilterFields?.length > 0 ? this._smartFilterFields[0] : null;
         } else {
             return this._smartFilterFields?.length > 0 ? this._smartFilterFields[0] : null;
@@ -208,7 +208,7 @@ export class FilterBuilderService {
      * @returns object contains the filter values data
      */
     private getFilterValues(current: IPepJSONItem, operator: IPepSmartFilterOperator, field: any) {
-        let data: IPepFilterBuilderValues = {
+        const data: IPepFilterBuilderValues = {
             first: null,
             second: null,
             operationUnit: null

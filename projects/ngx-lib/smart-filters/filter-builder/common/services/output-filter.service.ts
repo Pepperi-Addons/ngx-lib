@@ -17,7 +17,7 @@ export class PepOutputFilterService {
     private _expressionIdCounter: number;
 
     constructor() {
-
+        //
     }
 
     /**
@@ -135,7 +135,7 @@ export class PepOutputFilterService {
     private getFieldKeys(values: any[], id: string) {
         let keys: any[] = [];
 
-        let field = this._fields.find(item => item.id === id);
+        const field = this._fields.find(item => item.id === id);
         if (field) {
             keys = field?.options.filter(item => values.includes(item.value)).map((option: any) => option.key);
         }

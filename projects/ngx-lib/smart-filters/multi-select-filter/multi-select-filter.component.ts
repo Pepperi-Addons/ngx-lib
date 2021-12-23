@@ -39,7 +39,7 @@ export class PepMultiSelectFilterComponent
     filteredOptions$: Observable<any>;
     searchControl = new FormControl();
     //inline props
-    selected: string = '';
+    selected = '';
     inlineOptions: IPepOption[] = [];
 
     @ViewChild('optionsContainer')
