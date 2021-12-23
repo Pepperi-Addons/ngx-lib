@@ -3,7 +3,8 @@ import { IPepJSONItem } from '../model/legacy';
 import { getLegacyOperator } from '../model/operator';
 import { getLegacyOperationUnit } from '../model/operator-unit';
 import { PepSmartFilterOperators, IPepSmartFilterOperator } from '../../../common/model/operator';
-import { IPepSmartFilterField } from 'projects/ngx-lib/smart-filters';
+import { IPepSmartFilterField } from '../../../common/model/field';
+
 
 @Injectable({
     providedIn: 'root',

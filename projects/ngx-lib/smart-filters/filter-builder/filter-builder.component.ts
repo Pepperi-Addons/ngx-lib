@@ -8,9 +8,9 @@ import {
     ViewChild,
     ViewContainerRef
 } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { IPepField, IPepJSONSection } from './common/model/legacy';
 import { FilterBuilderService } from './filter-builder.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
