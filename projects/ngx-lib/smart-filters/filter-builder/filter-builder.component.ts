@@ -9,7 +9,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { IPepField, IPepJSONSection } from './common/model/legacy';
+import { IPepFilterBuilderField, IPepJSONSection } from './common/model/legacy';
 import { FilterBuilderService } from './filter-builder.service';
 import { Subscription } from 'rxjs';
 
@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 })
 export class FilterBuilderComponent implements OnInit, OnDestroy {
     @Input() jsonFilter: IPepJSONSection = null;
-    @Input() fields: Array<IPepField> = new Array<IPepField>();
+    @Input() fields: Array<IPepFilterBuilderField> = new Array<IPepFilterBuilderField>();
 
     @Output()
     filter: EventEmitter<IPepJSONSection> = new EventEmitter<IPepJSONSection>();

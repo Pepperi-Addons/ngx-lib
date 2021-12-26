@@ -1,17 +1,12 @@
 import { KeyValuePair } from '@pepperi-addons/ngx-lib';
 import { PepOperatorTypes } from './type';
 
-export interface IPepField {
+export interface IPepFilterBuilderField {
     FieldID: string;
     FieldType: string;
     Title: string;
     OptionalValues: Array<KeyValuePair<string>>;
 }
-
-// export interface IPepFieldOptionalValues {
-//     Key: string;
-//     Value: string;
-// }
 
 export interface IPepJSONSection {
     ComplexId: string;

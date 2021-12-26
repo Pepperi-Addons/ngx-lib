@@ -2,7 +2,7 @@ import { Injectable, ViewContainerRef, ComponentFactoryResolver } from '@angular
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { } from 'lodash';
-import { IPepField, IPepJSONSection, IPepJSONItem } from './common/model/legacy';
+import { IPepFilterBuilderField, IPepJSONSection, IPepJSONItem } from './common/model/legacy';
 import { IPepSmartFilterField } from '../common/model/field';
 import { IPepSmartFilterData } from '../common/model/filter';
 import { PepSmartFilterOperators, IPepSmartFilterOperator } from '../common/model/operator';
@@ -46,8 +46,8 @@ export class FilterBuilderService {
      * @param containerRef reference to root element
      */
     createFilterTree(
-        json: IPepJSONSection | null,
-        fields: Array<IPepField>,
+        json: IPepJSONSection,
+        fields: Array<IPepFilterBuilderField>,
         form: FormGroup,
         containerRef: ViewContainerRef
     ) {
@@ -139,7 +139,7 @@ export class FilterBuilderService {
     createItem(current: IPepJSONItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory = this._resolver.resolveComponentFactory(FilterBuilderItemComponent);
         const componentRef = containerRef.createComponent(factory);
-        console.log('containerRef', containerRef);
+
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('item')) { counter++; } });
         const formKey = `item${counter}`;
@@ -242,7 +242,7 @@ export class FilterBuilderService {
      * @param fields legacy fields array
      * @returns smart filter fields array
      */
-    private convertToSmartFilterFields(fields: Array<IPepField>) {
+    private convertToSmartFilterFields(fields: Array<IPepFilterBuilderField>) {
         if (fields?.length > 0) {
             const typeMapper = new PepFilterBuilderTypeMap();
             return fields.map((field) => {

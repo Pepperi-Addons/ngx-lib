@@ -10,7 +10,7 @@ import {
     PepMenuItem,
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
-import { IPepField } from '@pepperi-addons/ngx-lib/smart-filters/filter-builder/common/model/legacy';
+import { IPepFilterBuilderField } from '@pepperi-addons/ngx-lib/smart-filters/filter-builder/common/model/legacy';
 
 
 import { PepBreadCrumbItem, IPepBreadCrumbItemClickEvent } from '@pepperi-addons/ngx-lib/bread-crumbs';
@@ -21,7 +21,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
     styleUrls: ['./filter-builder-example.component.scss'],
 })
 export class FilterBuilderExampleComponent implements OnInit {
-    fields: Array<IPepField>;
+    fields: Array<IPepFilterBuilderField>;
     //filters: Array<IPepSmartFilterData>;
 
     //uiControl;
