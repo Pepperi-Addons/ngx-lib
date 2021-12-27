@@ -2,18 +2,13 @@ import { Injectable } from '@angular/core';
 import { IPepJSONItem } from '../model/legacy';
 import { getLegacyOperator } from '../model/operator';
 import { getLegacyOperationUnit } from '../model/operator-unit';
-import { PepSmartFilterOperators, IPepSmartFilterField } from '@pepperi-addons/ngx-lib/smart-filters';
-//import { PepSmartFilterOperators } from '../../../smart-filters/common/model/operator';
-//import { IPepSmartFilterField } from '../../../smart-filters/common/model/field';
+import { PepSmartFilterOperators } from '@pepperi-addons/ngx-lib/smart-filters';
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class PepOutputQueryService {
-    private _json: any;
-    private _fields: Array<IPepSmartFilterField>;
-    private _firstItem: any;
     private _complexIdCounter: number;
     private _expressionIdCounter: number;
 
@@ -22,69 +17,68 @@ export class PepOutputQueryService {
     }
 
     /**
-     * generates a legacy JSON 
-     * @param json UI smart filters structure
-     * @param fields smart filter field
+     * generates a legacy query structure 
+     * @param filters UI smart filters structure     
      * @returns legacy JSON
      */
-    generateJson(json: any, fields: Array<IPepSmartFilterField>) {
-        this.initProperties();
-        this._fields = fields;
-        this.treeWalk(json);
-        return this._json ? this._json : this._firstItem ? this._firstItem : null;
+    generateQuery(filters: any) {
+        this.initParams();
+
+        return this.sectionWalk(filters);
     }
 
     /**
      * reset properties
      */
-    private initProperties() {
-        this._json = undefined;
-        this._firstItem = undefined;
+    private initParams() {
         this._complexIdCounter = 1;
         this._expressionIdCounter = 1;
     }
 
     /**
-     * a recursive function dynamically builds legacy JSON structure
+     * a recursive function dynamically builds legacy query structure
      * @param current UI object represents either a section or filter component
+     * @returns section query data
      */
-    private treeWalk(current: any) {
+    private sectionWalk(current: any) {
+        let section: any;
+
         Object.keys(current).forEach(key => {
             if (key.includes('item')) {
-                this.createItem({
+                section = this.addToSection(section, {
                     ExpressionId: (this._expressionIdCounter++).toString(),
                     ApiName: current[key].fieldId,
                     Operation: getLegacyOperator(current[key].operator, current[key].fieldType),
                     Values: this.getItemValues(current[key])
                 } as IPepJSONItem, current.operator);
             } else if (key.includes('section')) {
-                this.treeWalk(current[key]);
+                const innerSection = this.sectionWalk(current[key]);
+                if (innerSection) {
+                    section = this.addToSection(section, innerSection, current.operator);
+                }
             }
         });
+
+        return section;
     }
 
     /**
-     * adds a filter to json and wrap it with complex operator
-     * @param item expression item
-     * @param operator complex operator 
+     * adds a legacy filter object to the current query structure
+     * @param section section query data
+     * @param item filter item
+     * @param operator query operator
+     * @returns 
      */
-    private createItem(item: any, operator: string) {
-        if (this._json) {
-            this._json = this.createSection(this._json, item, operator);
-        } else if (this._firstItem) {
-            this._json = this.createSection(this._firstItem, item, operator);
-        } else {
-            this._firstItem = item;
-        }
-
+    private addToSection(section: any, item: any, operator: string): any {
+        return section ? this.createSection(section, item, operator) : item;
     }
 
     /**
      * creates a legacy complex object
      * @param left LeftNode object
      * @param right RightNode object
-     * @param operator AND/OR operator
-     * @returns complex object
+     * @param operator query operator
+     * @returns legacy complex object
      */
     private createSection(left: any, right: any, operator: string) {
         return {
@@ -127,20 +121,4 @@ export class PepOutputQueryService {
         return values;
     }
 
-    /**
-     * generates an array of keys of multi-select control
-     * @param values an array of the selected values
-     * @param id filter's selected field
-     * @returns an array of keys
-     */
-    private getFieldKeys(values: any[], id: string) {
-        let keys: any[] = [];
-
-        const field = this._fields.find(item => item.id === id);
-        if (field) {
-            keys = field?.options.filter(item => values.includes(item.value)).map((option: any) => option.key);
-        }
-
-        return keys;
-    }
 }

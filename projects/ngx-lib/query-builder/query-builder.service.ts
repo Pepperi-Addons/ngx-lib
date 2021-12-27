@@ -29,10 +29,9 @@ import { PepOperatorTypes } from './common/model/type';
     providedIn: 'root'
 })
 export class PepQueryBuilderService {
-    //private readonly MAX_STRUCTURE_DEPTH: number = 3;
-
     private _outputJsonSubject = new BehaviorSubject<any>(null);
 
+    private _sectionIdCounter: number;
     private _smartFilterFields: Array<IPepSmartFilterField>;
     private _form: FormGroup;
 
@@ -41,10 +40,6 @@ export class PepQueryBuilderService {
     constructor(private _fb: FormBuilder, private _resolver: ComponentFactoryResolver, private _outputQueryService: PepOutputQueryService) {
 
     }
-
-    /*get maxDepth(): number {
-        return this.MAX_STRUCTURE_DEPTH;
-    } */
 
     /**
      * creates a dynamic filter structure
@@ -59,6 +54,7 @@ export class PepQueryBuilderService {
         form: FormGroup,
         containerRef: ViewContainerRef
     ) {
+        this.initParams();
         this._form = form;
         this._smartFilterFields = this.convertToSmartFilterFields(fields);
         const result = this.createSection(query?.Operation ? query.Operation : PepOperatorTypes.And, containerRef, this._form, 0);
@@ -66,6 +62,13 @@ export class PepQueryBuilderService {
             this.flatten(query, query.LeftNode, result.containerRef, result.parentForm, 1);
             this.flatten(query, query.RightNode, result.containerRef, result.parentForm, 1);
         }
+    }
+
+    /**
+     * reset params
+     */
+    initParams() {
+        this._sectionIdCounter = 1;
     }
 
     /**
@@ -114,6 +117,7 @@ export class PepQueryBuilderService {
         const componentRef = containerRef.createComponent(factory);
 
         const sectionGroup = this._fb.group({
+            id: this._sectionIdCounter++,
             operator: this._fb.control(operator)
         });
         let counter = 1;
@@ -284,11 +288,9 @@ export class PepQueryBuilderService {
      */
     private createOutputJson() {
         if (this._form.valid) {
-            const json = this._outputQueryService.generateJson(this._form.value, this._smartFilterFields);
+            const json = this._outputQueryService.generateQuery(this._form.value);
             this._outputJsonSubject.next(json);
         }
     }
-
-
 
 }

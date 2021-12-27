@@ -66,13 +66,10 @@ export class PepQueryBuilderSectionComponent {
 
     onAddRuleClicked() {
         this.createItem.emit();
-        //this.queryBuilderService.createItem(null, this.sectionContainer, this.form);
     }
 
     onAddRuleSetClicked() {
         this.createSection.emit();
-        //const result = this.queryBuilderService.createSection(PepOperatorTypes.And, this.sectionContainer, this.form, this.depth + 1);
-        //this.queryBuilderService.createItem(null, result.containerRef, result.parentForm);
     }
 
     onDeleteSectionClicked() {
