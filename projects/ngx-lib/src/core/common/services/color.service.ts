@@ -27,6 +27,115 @@ export class PepColorService {
     readonly SIX_DIGIT_HEX_COLOR_REGEX = /^[0-9a-fA-F]{6}$/;
     readonly SIX_DIGIT_HEX_COLOR_WITH_HASH_REGEX = /^#[0-9a-fA-F]{6}$/;
 
+    private contrast(str1: string, str2: string): number {
+        const L1 = this.relativeLuminance(this.hex2rgb(str1));
+        const L2 = this.relativeLuminance(this.hex2rgb(str2));
+
+        if (L1 < L2) {
+            return (L2 + 0.05) / (L1 + 0.05);
+        }
+
+        return (L1 + 0.05) / (L2 + 0.05);
+    }
+
+    private findClosestAccessibleDarkerColor(
+        adjustableColor: string,
+        otherColor: string,
+        contrastRatio: number
+    ): IPepClosestColor {
+        const { h, s, l } = this.hex2hsl(adjustableColor);
+
+        if (this.contrast(adjustableColor, otherColor) >= contrastRatio) {
+            return {
+                color: adjustableColor,
+                lightness: l,
+            };
+        }
+
+        let minColor = this.hsl2hex({ h, s, l: 0 });
+
+        if (this.contrast(minColor, otherColor) < contrastRatio) {
+            return null;
+        }
+
+        let min = 0;
+        let max = l;
+        let maxColor = this.hsl2hex({ h, s, l });
+        let lastMinColor;
+        let lastMaxColor;
+        let lTemp;
+
+        while (minColor !== lastMinColor || maxColor !== lastMaxColor) {
+            lastMinColor = minColor;
+            lastMaxColor = maxColor;
+
+            lTemp = (min + max) / 2;
+            adjustableColor = this.hsl2hex({ h, s, l: lTemp });
+
+            if (this.contrast(adjustableColor, otherColor) < contrastRatio) {
+                max = lTemp;
+                maxColor = this.hsl2hex({ h, s, l: lTemp });
+            } else {
+                min = lTemp;
+                minColor = this.hsl2hex({ h, s, l: lTemp });
+            }
+        }
+
+        return {
+            color: minColor,
+            lightness: min,
+        };
+    }
+
+    private findClosestAccessibleLighterColor(
+        adjustableColor: string,
+        otherColor: string,
+        contrastRatio: number
+    ): IPepClosestColor {
+        const { h, s, l } = this.hex2hsl(adjustableColor);
+
+        if (this.contrast(adjustableColor, otherColor) >= contrastRatio) {
+            return {
+                color: adjustableColor,
+                lightness: l,
+            };
+        }
+
+        let maxColor = this.hsl2hex({ h, s, l: 100 });
+
+        if (this.contrast(maxColor, otherColor) < contrastRatio) {
+            return null;
+        }
+
+        let min = l;
+        let max = 100;
+        let minColor = this.hsl2hex({ h, s, l });
+        let lastMinColor;
+        let lastMaxColor;
+        let lTemp;
+
+        while (minColor !== lastMinColor || maxColor !== lastMaxColor) {
+            lastMinColor = minColor;
+            lastMaxColor = maxColor;
+
+            lTemp = (min + max) / 2;
+            adjustableColor = this.hsl2hex({ h, s, l: lTemp });
+
+            if (this.contrast(adjustableColor, otherColor) < contrastRatio) {
+                min = lTemp;
+                minColor = this.hsl2hex({ h, s, l: lTemp });
+            } else {
+                max = lTemp;
+                maxColor = this.hsl2hex({ h, s, l: lTemp });
+            }
+        }
+
+        return {
+            color: maxColor,
+            lightness: max,
+        };
+    }
+
     /**
      * Convert hex string to 6 digits hex string.
      * @param str The string to convert.
@@ -62,6 +171,10 @@ export class PepColorService {
      * @param color The rgb color to convert.
      */
     rgb2sixDigitHex(color: IPepRgbColor): string {
+        if (!color) {
+            return null;
+        }
+
         color.r = color.r.toString(16);
         color.g = color.g.toString(16);
         color.b = color.b.toString(16);
@@ -86,6 +199,10 @@ export class PepColorService {
      * @param str The hex string to convert.
      */
     hex2rgb(str: string): IPepRgbColor {
+        if (!str) {
+            return null;
+        }
+
         const sixDigitHex = this.hex2sixDigitHex(str);
 
         if (sixDigitHex === null) {
@@ -100,6 +217,10 @@ export class PepColorService {
     }
 
     rgbString2hsl(str: string): IPepHslColor {
+        if (!str) {
+            return null;
+        }
+
         const sep = str.indexOf(',') > -1 ? ',' : ' ';
         const rgbArr = str.substr(4).split(')')[0].split(sep);
 
@@ -149,6 +270,10 @@ export class PepColorService {
     }
 
     hslString2hsl(str: string): IPepHslColor {
+        if (!str) {
+            return null;
+        }
+
         const sep = str.indexOf(',') > -1 ? ',' : ' ';
         const hslArr = str.substr(4).split(')')[0].split(sep);
 
@@ -249,6 +374,10 @@ export class PepColorService {
     }
 
     hex2hsl(str: string): IPepHslColor {
+        if (!str) {
+            return null;
+        }
+
         const sixDigitHex = this.hex2sixDigitHex(str);
 
         if (sixDigitHex === null) {
@@ -265,6 +394,10 @@ export class PepColorService {
     }
 
     hsl2hex(hsl: IPepHslColor): string {
+        if (!hsl) {
+            return null;
+        }
+
         const rgb = this.hsl2rgb(hsl);
 
         return this.rgb2sixDigitHex(rgb);
@@ -282,115 +415,6 @@ export class PepColorService {
         });
 
         return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    }
-
-    contrast(str1: string, str2: string): number {
-        const L1 = this.relativeLuminance(this.hex2rgb(str1));
-        const L2 = this.relativeLuminance(this.hex2rgb(str2));
-
-        if (L1 < L2) {
-            return (L2 + 0.05) / (L1 + 0.05);
-        }
-
-        return (L1 + 0.05) / (L2 + 0.05);
-    }
-
-    findClosestAccessibleDarkerColor(
-        adjustableColor: string,
-        otherColor: string,
-        contrastRatio: number
-    ): IPepClosestColor {
-        const { h, s, l } = this.hex2hsl(adjustableColor);
-
-        if (this.contrast(adjustableColor, otherColor) >= contrastRatio) {
-            return {
-                color: adjustableColor,
-                lightness: l,
-            };
-        }
-
-        let minColor = this.hsl2hex({ h, s, l: 0 });
-
-        if (this.contrast(minColor, otherColor) < contrastRatio) {
-            return null;
-        }
-
-        let min = 0;
-        let max = l;
-        let maxColor = this.hsl2hex({ h, s, l });
-        let lastMinColor;
-        let lastMaxColor;
-        let lTemp;
-
-        while (minColor !== lastMinColor || maxColor !== lastMaxColor) {
-            lastMinColor = minColor;
-            lastMaxColor = maxColor;
-
-            lTemp = (min + max) / 2;
-            adjustableColor = this.hsl2hex({ h, s, l: lTemp });
-
-            if (this.contrast(adjustableColor, otherColor) < contrastRatio) {
-                max = lTemp;
-                maxColor = this.hsl2hex({ h, s, l: lTemp });
-            } else {
-                min = lTemp;
-                minColor = this.hsl2hex({ h, s, l: lTemp });
-            }
-        }
-
-        return {
-            color: minColor,
-            lightness: min,
-        };
-    }
-
-    findClosestAccessibleLighterColor(
-        adjustableColor: string,
-        otherColor: string,
-        contrastRatio: number
-    ): IPepClosestColor {
-        const { h, s, l } = this.hex2hsl(adjustableColor);
-
-        if (this.contrast(adjustableColor, otherColor) >= contrastRatio) {
-            return {
-                color: adjustableColor,
-                lightness: l,
-            };
-        }
-
-        let maxColor = this.hsl2hex({ h, s, l: 100 });
-
-        if (this.contrast(maxColor, otherColor) < contrastRatio) {
-            return null;
-        }
-
-        let min = l;
-        let max = 100;
-        let minColor = this.hsl2hex({ h, s, l });
-        let lastMinColor;
-        let lastMaxColor;
-        let lTemp;
-
-        while (minColor !== lastMinColor || maxColor !== lastMaxColor) {
-            lastMinColor = minColor;
-            lastMaxColor = maxColor;
-
-            lTemp = (min + max) / 2;
-            adjustableColor = this.hsl2hex({ h, s, l: lTemp });
-
-            if (this.contrast(adjustableColor, otherColor) < contrastRatio) {
-                min = lTemp;
-                minColor = this.hsl2hex({ h, s, l: lTemp });
-            } else {
-                max = lTemp;
-                maxColor = this.hsl2hex({ h, s, l: lTemp });
-            }
-        }
-
-        return {
-            color: maxColor,
-            lightness: max,
-        };
     }
 
     findClosestAccessibleColor(

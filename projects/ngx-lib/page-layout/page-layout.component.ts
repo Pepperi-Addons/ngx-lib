@@ -25,6 +25,9 @@ import {
     styleUrls: ['./page-layout.component.scss'],
 })
 export class PepPageLayoutComponent implements AfterViewInit, AfterContentInit {
+    @Input() addPadding = true;
+    @Input() showShadow = false;
+
     screenSize: PepScreenSizeType;
 
     constructor(

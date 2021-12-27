@@ -40,8 +40,8 @@
     </ng-template>
 
     <ng-container *ngIf="layoutType === 'form'">
-        <pep-field-title *ngIf="!parentFieldKey" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
-            [xAlignment]="xAlignment" [showTitle]="showTitle">
+        <pep-field-title *ngIf="!parentFieldKey && renderTitle" [label]="label" [mandatory]="mandatory"
+            [disabled]="disabled" [xAlignment]="xAlignment" [showTitle]="showTitle">
         </pep-field-title>
         <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
     </ng-container>

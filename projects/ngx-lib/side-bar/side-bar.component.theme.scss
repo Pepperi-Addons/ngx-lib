@@ -1,9 +1,11 @@
 @mixin pep-side-bar-component-theme($pepperi-theme) {
     .pep-side-bar-container {
-        .toggle-button-border {
-            @include pep-border(border-inline-end, $pepperi-theme);
+        .toggle-side-bar-container {
+            .toggle-button-border {
+                @include pep-border(border-inline-end, $pepperi-theme);
+            }
         }
-    
+
         .mat-sidenav-container {
             // background-color: transparent;
 
@@ -14,6 +16,10 @@
 
         .side-layout {
             background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+
+            .header-content {
+                background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+            }
         }
     }
 }

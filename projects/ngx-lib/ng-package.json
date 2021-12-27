@@ -11,7 +11,8 @@
     "lib": {
         "entryFile": "src/public-api.ts",
         "umdModuleIds": {
-            "@ngx-translate/core": "translate"
+            "@ngx-translate/core": "translate",
+            "ngx-translate-multi-http-loader": "ngx-translate-multi-http-loader"
         },
         "styleIncludePaths": [
             "../shared"

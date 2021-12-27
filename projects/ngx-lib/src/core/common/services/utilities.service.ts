@@ -16,6 +16,24 @@ export class PepUtilitiesService {
         });
     }
 
+    private changeDecimalSeperator(value: string, reverse = false): string {
+        // If the decimal separator is ','
+        if (this.getDecimalSeparator() === ',') {
+            // If reverse change the number from '.' to ',' else do the opposite.
+            value = reverse ? value.replace('.', ',') : value.replace(',', '.');
+        }
+
+        return value;
+    }
+
+    private getDecimalSeparator() {
+        const numberWithDecimalSeparator = 1.1;
+
+        return numberWithDecimalSeparator
+            .toLocaleString(this.culture)
+            .substring(1, 2);
+    }
+
     parseDate(dateStr: string, showTime = false): Date {
         let retVal: Date = null;
         if (dateStr !== '') {
@@ -34,7 +52,7 @@ export class PepUtilitiesService {
                     const year = Number(dateText[0]);
                     const month = Number(dateText[1]) - 1;
                     const day = Number(dateText[2]);
-                    retVal = new Date(year, month, day);
+                    retVal = new Date(year, month, day, 0, retVal.getTimezoneOffset() * -1);
                 }
             }
         }
@@ -147,23 +165,5 @@ export class PepUtilitiesService {
         value = this.changeDecimalSeperator(value);
 
         return coerceNumberProperty(value, fallbackValue);
-    }
-
-    private changeDecimalSeperator(value: string, reverse = false): string {
-        // If the decimal separator is ','
-        if (this.getDecimalSeparator() === ',') {
-            // If reverse change the number from '.' to ',' else do the opposite.
-            value = reverse ? value.replace('.', ',') : value.replace(',', '.');
-        }
-
-        return value;
-    }
-
-    private getDecimalSeparator() {
-        const numberWithDecimalSeparator = 1.1;
-
-        return numberWithDecimalSeparator
-            .toLocaleString(this.culture)
-            .substring(1, 2);
     }
 }

@@ -11,6 +11,7 @@ import {
     Renderer2,
     OnDestroy,
     ChangeDetectorRef,
+    HostBinding,
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,14 +42,25 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
+
+    @HostBinding('attr.data-qa') dataQa = '';
+
+    private _key = '';
     /**
      * The text box key
      *
      * @memberof PepTextboxComponent
      */
-    @Input() key = '';
+    @Input()
+    set key(value) {
+        this._key = value;
+        this.dataQa = value;
+    }
+    get key(): string {
+        return this._key;
+    }
 
-    private _value = null;
+    private _value = '';
     /**
      * The value of the text box.
      *
@@ -181,9 +193,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-    // @Output()
-    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -281,6 +290,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+
+            if (!this.renderTitle) {
+                this.renderer.addClass(
+                    this.element.nativeElement,
+                    PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+                );
+            }
         }
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
@@ -369,8 +385,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     onChange(e: any): void {
         const value = e.target ? e.target.value : e;
 
-        // TODO: uncomment
-        // this.valueChange.emit(value);
+        this.valueChange.emit(value);
     }
 
     onBlur(e: any): void {

@@ -136,12 +136,12 @@ export class PepButtonComponent implements OnDestroy {
     @Output()
     buttonClick: EventEmitter<IPepButtonClickEvent> = new EventEmitter<IPepButtonClickEvent>();
 
-    constructor(private renderer: Renderer2, private element: ElementRef) {}
+    constructor(private renderer: Renderer2, private element: ElementRef) { }
 
     ngOnDestroy(): void {
-        if (this.buttonClick) {
-            this.buttonClick.unsubscribe();
-        }
+        // if (this.buttonClick) {
+        //     this.buttonClick.unsubscribe();
+        // }
     }
 
     /**
@@ -151,7 +151,6 @@ export class PepButtonComponent implements OnDestroy {
         const button = new PepButton({
             key: this.key,
             value: this.value,
-            // callback: this.callback
         });
 
         const buttonClick = {
@@ -159,10 +158,6 @@ export class PepButtonComponent implements OnDestroy {
             event,
         };
 
-        // if (this.callback) {
-        //     this.callback(buttonClick);
-        // } else {
         this.buttonClick.emit(buttonClick);
-        // }
     }
 }

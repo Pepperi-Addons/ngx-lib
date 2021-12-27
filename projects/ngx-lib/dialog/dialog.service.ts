@@ -23,7 +23,7 @@ export class PepDialogService {
     private fixConfigIfNeeded(data: PepDialogData, config: MatDialogConfig) {
         if (config.disableClose) {
             if (
-                ((!data.showClose || !data.showHeader) && !data.showFooter) ||
+                (((data.showClose !== undefined && !data.showClose) || (data.showHeader !== undefined && !data.showHeader)) && (data.showFooter !== undefined && !data.showFooter)) ||
                 (data.actionsType === 'custom' &&
                     (data.actionButtons === null ||
                         data.actionButtons.length === 0))

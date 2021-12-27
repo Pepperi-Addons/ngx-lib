@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseFilterComponent } from '../common/model/base-filter-component';
 import {
     IPepSmartFilterOperator,
@@ -15,10 +15,18 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
     templateUrl: './date-filter.component.html',
     styleUrls: ['./date-filter.component.scss'],
 })
-export class PepDateFilterComponent extends BaseFilterComponent {
+export class PepDateFilterComponent extends BaseFilterComponent implements OnInit {
     PepSmartFilterOperators = PepSmartFilterOperators;
     chooseTimeOptions: Array<IPepOption> = [];
     chooseTimeUnitOptions: Array<IPepOption> = [];
+    operatorWidth: string;
+    fieldsWidth: string;
+
+    ngOnInit() {
+        if (this.inline) {
+            this.setControlsWidth();
+        }
+    }
 
     // Override
     getDefaultOperator(): IPepSmartFilterOperator {
@@ -107,6 +115,25 @@ export class PepDateFilterComponent extends BaseFilterComponent {
         }
     }
 
+    setControlsWidth() {
+        if (
+            this.operator === PepSmartFilterOperators.Today ||
+            this.operator === PepSmartFilterOperators.ThisWeek ||
+            this.operator === PepSmartFilterOperators.ThisMonth ||
+            this.operator === PepSmartFilterOperators.IsEmpty ||
+            this.operator === PepSmartFilterOperators.IsNotEmpty
+        ) {
+            this.operatorWidth = 'auto';
+            this.fieldsWidth = '0%';
+        } else if (this.operator === PepSmartFilterOperators.On) {
+            this.operatorWidth = '38%';
+            this.fieldsWidth = '62%';
+        } else {
+            this.operatorWidth = '30%';
+            this.fieldsWidth = '70%';
+        }
+    }
+
     onOperatorChanged(value: string) {
         const operator = Object.values(PepSmartFilterOperators).find(
             (operator) => operator.id === value
@@ -114,6 +141,15 @@ export class PepDateFilterComponent extends BaseFilterComponent {
 
         this.operator = operator;
         this.operatorUnit = this.getDefaultOperatorUnit();
+        if (this.inline) {
+            this.setControlsWidth();
+        }
+        if (this._parentForm) {
+            this.updateParentForm();
+        }
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
     }
 
     onTimeUnitChanged(value: string) {
@@ -121,5 +157,18 @@ export class PepDateFilterComponent extends BaseFilterComponent {
             (operatorUnit) => operatorUnit.id === value
         );
         this.operatorUnit = operatorUnit;
+        if (this._parentForm) {
+            this.updateParentForm();
+        }
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
     }
+
+    onDateValueChanged() {
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
 }

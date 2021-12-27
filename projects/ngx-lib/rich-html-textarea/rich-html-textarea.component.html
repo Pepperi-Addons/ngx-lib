@@ -3,7 +3,8 @@
         <div class="pep-textarea-container pep-report-textarea" [ngClass]="{ 'stand-alone': standAlone,
             'right-alignment': xAlignment == 'right', 'one-row': !isFormView && rowSpan === 1,
             'pep-textarea-card-container': layoutType === 'card'}">
-            <pep-field-title *ngIf="isFormView" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
+            <pep-field-title *ngIf="renderTitle && isFormView" [label]="label" [mandatory]="mandatory"
+                [disabled]="disabled"
                 [maxFieldCharacters]="inlineMode && !disabled && !readonly ? maxFieldCharacters : 0"
                 [xAlignment]="xAlignment" [showTitle]="showTitle" [inputLength]="quillContent?.length">
             </pep-field-title>

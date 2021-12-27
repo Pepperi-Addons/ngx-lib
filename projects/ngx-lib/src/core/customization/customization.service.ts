@@ -10,6 +10,7 @@ import { PepStyleType, PepFieldBase } from './customization.model';
 })
 export class PepCustomizationService {
     static STAND_ALONE_FIELD_CLASS_NAME = 'pep-field';
+    static STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME = 'pep-field-no-spacing';
 
     static REM_STRING = 'rem';
     static PX_STRING = 'px';
@@ -155,6 +156,7 @@ export class PepCustomizationService {
         private fileService: PepFileService,
         public fb: FormBuilder
     ) {
+        this.hideFooter();
         //
     }
 
@@ -179,7 +181,7 @@ export class PepCustomizationService {
             if (parentFieldKey === null) {
                 formControl = form.controls[fieldKey];
             } else {
-                formControl = form.controls[parentFieldKey].get(fieldKey);
+                formControl = form.controls[parentFieldKey]?.get(fieldKey);
             }
         }
 

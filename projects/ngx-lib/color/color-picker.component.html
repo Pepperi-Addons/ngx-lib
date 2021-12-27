@@ -4,13 +4,26 @@
             <div class="color-chooser-content">
                 <div class="current-color" [ngStyle]="{ 'background': data?.value ? data.value : 'transparent' }"></div>
 
-                <div class="slider-box current-hue">
+                <pep-slider class="slider-box" [label]="'COLOR.CHANGE_HUE' | translate" [minValue]="currentHueMin"
+                    [maxValue]="currentHueMax" [value]="currentHue" [background]="currentHueBackground"
+                    (valueChange)="onHueChange($event)">
+                </pep-slider>
+                <pep-slider class="slider-box" [label]="'COLOR.CHANGE_SATURATION' | translate"
+                    [minValue]="currentSaturationMin" [maxValue]="currentSaturationMax" [value]="currentSaturation"
+                    [background]="currentSaturationBackground" (valueChange)="onSaturationChange($event)">
+                </pep-slider>
+                <pep-slider class="slider-box" [label]="'COLOR.CHANGE_LIGHTNESS' | translate"
+                    [minValue]="currentLightnessMin" [maxValue]="currentLightnessMax"
+                    [value]="currentLightnessMax - currentLightness + currentLightnessMin"
+                    [background]="currentLightnessBackground" (valueChange)="onLightnessChange($event)">
+                </pep-slider>
+                <!-- <div class="slider-box current-hue">
                     <mat-label class="body-xs ">{{ 'COLOR.CHANGE_HUE' | translate}}</mat-label>
                     <div [class]="data?.type">
                         <mat-slider [min]="currentHueMin" [max]="currentHueMax" step="1" [value]="currentHue"
                             (change)="onHueChange($event)"></mat-slider>
                     </div>
-                </div>
+                </div> 
                 <div class="slider-box current-saturation">
                     <mat-label class="body-xs ">{{ 'COLOR.CHANGE_SATURATION' | translate}}</mat-label>
                     <div [class]="data?.type">
@@ -25,7 +38,7 @@
                             [value]="currentLightnessMax - currentLightness + currentLightnessMin"
                             (change)="onLightnessChange($event)"></mat-slider>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="color-value-content">
                 <div class="color-value" [ngClass]="{ 'with-complient': checkAAComplient }">

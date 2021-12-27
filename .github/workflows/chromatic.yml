@@ -9,7 +9,7 @@ name: 'Chromatic'
 #     branches-ignore:
 #       - "example" # 👈 Excludes the example branch
 #       - "For_WebApp_16.55_SmartSearch"
-      
+
 # Event for the workflow
 on: pull_request
 

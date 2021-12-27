@@ -22,6 +22,7 @@ import { PepQuantitySelectorModule } from '@pepperi-addons/ngx-lib/quantity-sele
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
+import { PepSliderModule } from '@pepperi-addons/ngx-lib/slider';
 import { PepSeparatorModule } from '@pepperi-addons/ngx-lib/separator';
 import { PepSideBarModule } from '@pepperi-addons/ngx-lib/side-bar';
 import { PepSignatureModule } from '@pepperi-addons/ngx-lib/signature';
@@ -36,6 +37,7 @@ import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
 import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 
 import { PepSmartFiltersModule } from '@pepperi-addons/ngx-lib/smart-filters';
+import { PepQueryBuilderModule } from '@pepperi-addons/ngx-lib/query-builder';
 
 import {
     PepIconModule,
@@ -130,6 +132,7 @@ const pepperiComponentsModules = [
     PepSearchModule,
     PepSelectModule,
     PepSeparatorModule,
+    PepSliderModule,
     PepSideBarModule,
     PepSignatureModule,
     PepSizeDetectorModule,
@@ -140,6 +143,7 @@ const pepperiComponentsModules = [
     PepTopBarModule,
     PepPageLayoutModule,
     PepSmartFiltersModule,
+    PepQueryBuilderModule,
     PepFormModule
 ];
 
@@ -148,39 +152,6 @@ import {
     TranslateLoader,
     TranslateService,
 } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
-
-// export function createTranslateLoader(http: HttpClient) {
-//    return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
-// }
-
-// export function createTranslateLoader(
-//     http: HttpClient,
-//     fileService: PepFileService,
-//     addonService: PepAddonService
-// ) {
-//     const addonStaticFolder = addonService.getAddonStaticFolder();
-//     const translationsPath: string = fileService.getAssetsTranslationsPath();
-//     const translationsSuffix: string = fileService.getAssetsTranslationsSuffix();
-
-//     return new MultiTranslateHttpLoader(http, [
-//         {
-//             prefix:
-//                 addonStaticFolder.length > 0
-//                     ? addonStaticFolder
-//                     : translationsPath,
-//             suffix: translationsSuffix,
-//         },
-//         {
-//             prefix:
-//                 addonStaticFolder.length > 0
-//                     ? addonStaticFolder
-//                     : '/assets/i18n/',
-//             suffix: '.json',
-//         },
-//     ]);
-// }
 
 @NgModule({
     declarations: [],

@@ -21,8 +21,8 @@
 
 <ng-container *ngIf="layoutType === 'form'">
     <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone }">
-        <pep-field-title [label]="label" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment"
-            [showTitle]="showTitle">
+        <pep-field-title *ngIf="renderTitle" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
+            [xAlignment]="xAlignment" [showTitle]="showTitle">
         </pep-field-title>
         <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
     </div>

@@ -34,12 +34,12 @@ import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/ico
 export class PepSideBarComponent implements OnInit {
     static ONE_MULTI_BY_DIR_KEY = '--pep-one-multi-by-dir';
 
-    // @Input() showOnLargeScreens = true;
-    // @Input() sideBarButtons: Array<SideBarButton> = [];
+    @Input() ignoreResize = false;
     @Input() showHeader = true;
     @Input() showFooter = false;
 
     private _useAsWebComponent = false;
+    private readonly _animationTime = 350; // milliseconds.
 
     state: PepSideBarStateType = 'open';
     toggleButtonArrowName: string = pepIconArrowRight.name;
@@ -59,7 +59,6 @@ export class PepSideBarComponent implements OnInit {
     stateChange: EventEmitter<IPepSideBarStateChangeEvent> = new EventEmitter<IPepSideBarStateChangeEvent>();
 
     @ViewChild('sidenav') sidenav: MatSidenav;
-    // @ViewChild('sidenavWrapper') sidenavWrapper: ElementRef;
 
     isMouseIn = false;
     sideBarHeight = '100%';
@@ -155,11 +154,17 @@ export class PepSideBarComponent implements OnInit {
 
     toggleSideWrapper() {
         this.toggleState();
-        this.stateChange.emit({ state: this.state });
+        // Raise event after animation finish.
+        setTimeout(() => {
+            this.stateChange.emit({ state: this.state });
+        }, this._animationTime);
     }
 
     toggleSidenav(isOpen: boolean) {
         this.setState(isOpen ? 'open' : 'close');
-        this.stateChange.emit({ state: this.state });
+        // Raise event after animation finish.
+        setTimeout(() => {
+            this.stateChange.emit({ state: this.state });
+        }, this._animationTime);
     }
 }

@@ -4,16 +4,15 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
+import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import {
     PepIconModule,
     PepIconRegistry,
     pepIconArrowRight,
     pepIconArrowLeft,
 } from '@pepperi-addons/ngx-lib/icon';
-import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 
 import { PepBreadCrumbsComponent } from './bread-crumbs.component';
-import { from } from 'rxjs';
 
 @NgModule({
     imports: [
@@ -22,11 +21,11 @@ import { from } from 'rxjs';
         MatIconModule,
         MatMenuModule,
         // ngx-lib modules
-        PepIconModule,
-        // PepMenuModule
+        PepNgxLibModule,
+        PepIconModule
     ],
     exports: [PepBreadCrumbsComponent],
-    declarations: [PepBreadCrumbsComponent],
+    declarations: [PepBreadCrumbsComponent]
 })
 export class PepBreadCrumbsModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

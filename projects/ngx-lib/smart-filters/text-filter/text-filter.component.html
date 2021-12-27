@@ -1,0 +1,11 @@
+<div [formGroup]="form" [fxLayout]="inline ? 'row' : 'column'" [fxLayoutGap]="inline ? '.5rem' : '0rem'">
+    <pep-select [fxFlex]="inline ? operatorWidth : null" [key]="'typeOperator'" [value]="operator.id"
+        [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
+        [options]="chooseTypeOptions" (valueChange)="onOperatorChanged($event)">
+    </pep-select>
+    <pep-textbox [fxFlex]="inline ? firstControlWidth : null" [form]="form" [key]="firstControlKey"
+        [label]="'SMART_FILTERS.AMOUNT' | translate" [renderError]="false" [renderTitle]="renderTitle"
+        [type]="field.type" [formattedValue]="firstControl?.value || ''" [value]="firstControl?.value || ''"
+        (valueChange)="onValueChanged()">
+    </pep-textbox>
+</div>

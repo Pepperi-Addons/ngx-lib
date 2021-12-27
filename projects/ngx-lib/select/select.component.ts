@@ -70,6 +70,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() isActive = false;
     @Input() showTitle = true;
     @Input() emptyOption = true;
+    @Input() renderTitle = true;
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
@@ -168,6 +169,13 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+
+            if (!this.renderTitle) {
+                this.renderer.addClass(
+                    this.element.nativeElement,
+                    PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+                );
+            }
         }
     }
 

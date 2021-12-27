@@ -15,8 +15,12 @@
     <div class="main-content ">
         <div class="content spacing-top">
             <div class="child1 child-container">
-                <pep-group-buttons [buttons]="groupButtons" [buttonsClass]="'md regular'" [buttonsDisabled]="false"
-                    [viewType]="'split'">
+                <pep-group-buttons [buttons]="groupButtons" styleType="regular" [viewType]="'split'">
+                </pep-group-buttons>
+                <br />
+                <pep-group-buttons [buttons]="groupButtons2" styleType="weak" [viewType]="'toggle'"></pep-group-buttons>
+                <br />
+                <pep-group-buttons [buttons]="groupButtons2" styleType="regular" [viewType]="'toggle'">
                 </pep-group-buttons>
             </div>
 
@@ -42,6 +46,16 @@
                 <pep-color [key]="'color1'" [label]="'Pepperi Color Picker'" [value]="'hsl(77, 87%, 42%)'"
                     [xAlignment]="'right'" [showAAComplient]="true" [type]="'any'">
                 </pep-color>
+
+                <!-- Slider Example -->
+                <pep-slider [label]="'Pepperi slider Picker'" [hint]="'test'" [minValue]="0" [maxValue]="100"
+                    [disabled]="true" [background]="background" [value]="10"
+                    (valueChange)="onSliderValueChange($event)">
+                </pep-slider>
+
+                <pep-slider [label]="'Pepperi slider Picker2'" [hint]="'test2'" [minValue]="0" [maxValue]="100"
+                    [step]="5" [value]="10" (valueChange)="onSliderValueChange($event)">
+                </pep-slider>
             </div>
         </div>
     </div>

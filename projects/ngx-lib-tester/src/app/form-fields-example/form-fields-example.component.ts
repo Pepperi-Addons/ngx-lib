@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {
     PepLayoutService,
     IPepFieldClickEvent,
-    IPepFieldValueChangeEvent,
     PepScreenSizeType,
 } from '@pepperi-addons/ngx-lib';
 import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
@@ -58,8 +57,12 @@ export class FormFieldsExampleComponent implements OnInit {
         alert('menu clicked');
     }
 
-    onValueChanged(event: IPepFieldValueChangeEvent) {
-        alert(`${event.key}: value was changed to ${event.value}`);
+    onValueChanged(key: any) {
+        alert(`${key}: value was changed`);
+    }
+
+    imageChange(event: any) {
+        // console.log(event?.fileStr);
     }
 
     elementClicked(event: IPepFieldClickEvent) {

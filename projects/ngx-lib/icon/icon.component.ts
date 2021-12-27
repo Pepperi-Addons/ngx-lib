@@ -12,8 +12,8 @@ import {
 import { DOCUMENT } from '@angular/common';
 import {
     PepUtilitiesService,
-    PepColorService,
-    IPepHslColor,
+    // PepColorService,
+    // IPepHslColor,
 } from '@pepperi-addons/ngx-lib';
 import { PepIconRegistry } from './icon-registry.service';
 import { PepIconType } from './icon-generated.model';
@@ -112,10 +112,10 @@ export class PepIconComponent {
         private renderer: Renderer2,
         private element: ElementRef,
         private utilitiesService: PepUtilitiesService,
-        private colorService: PepColorService,
+        // private colorService: PepColorService,
         private iconRegistry: PepIconRegistry,
         @Optional() @Inject(DOCUMENT) private document: any
-    ) {}
+    ) { }
 
     /**
      * Set fill on the svg icon.

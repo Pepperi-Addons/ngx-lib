@@ -3,12 +3,13 @@ import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
 export type PepListSelectionType =
     | 'none'
     | 'single'
-    | 'single-action'
     | 'multi';
 
 export type PepListPagerType = 'pages' | 'scroll';
 
-export type PepListViewType = '' | 'cards' | 'lines' | 'table' | 'map';
+export type PepListViewType = '' | 'cards' | 'lines' | 'table'; // | 'map';
+
+export type PepListCardSizeType = 'sm' | 'md';
 
 export interface IPepListItemClickEvent {
     source: ObjectsDataRow;

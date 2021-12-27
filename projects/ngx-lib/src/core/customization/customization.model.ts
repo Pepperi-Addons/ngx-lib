@@ -470,6 +470,31 @@ export class PepInternalPageField extends PepFieldBase {
     }
 }
 
+
+interface IPepInternalCaruselFieldOptions extends IPepFieldBaseOptions {
+    searchCode?: string;
+    pageInfo?: any;
+}
+export class PepInternalCaruselField extends PepFieldBase {
+    controlType = 'internalCarusel';
+    searchCode = '';
+    pageInfo;
+
+    constructor(options: IPepInternalCaruselFieldOptions = {}) {
+        super(options);
+        this.searchCode = options.searchCode || '';
+
+        this.update(options);
+    }
+
+    public update(options: IPepInternalCaruselFieldOptions): void {
+        super.update(options);
+
+        this.pageInfo = options.pageInfo;
+    }
+}
+
+
 interface IPepInternalMenuFieldOptions extends IPepFieldBaseOptions {
     options?: IPepOption[];
 }

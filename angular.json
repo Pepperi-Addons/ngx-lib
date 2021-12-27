@@ -95,30 +95,6 @@
             }
           }
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ngx-lib-tester:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ngx-lib-tester/src/test.ts",
-            "polyfills": "projects/ngx-lib-tester/src/polyfills.ts",
-            "tsConfig": "projects/ngx-lib-tester/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-lib-tester/karma.conf.js",
-            "assets": [
-              "projects/ngx-lib-tester/src/favicon.ico",
-              "projects/ngx-lib-tester/src/assets"
-            ],
-            "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "projects/ngx-lib-tester/src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {}

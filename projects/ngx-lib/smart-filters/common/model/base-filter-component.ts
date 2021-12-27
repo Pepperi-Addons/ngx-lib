@@ -44,6 +44,7 @@ import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { PepFilterActionsComponent } from '../filter-actions.component';
 
+
 @Directive({})
 export abstract class BaseFilterComponent
     implements OnInit, OnChanges, OnDestroy {
@@ -55,7 +56,7 @@ export abstract class BaseFilterComponent
     @Input()
     set field(value: PepSmartFilterBaseField) {
         this._field = value;
-        this._fieldIdWithNoDots = value ? value.id.replace(/./g, '_') : '';
+        this._fieldIdWithNoDots = value ? value.id.replace(/\./g, '_') : '';
         this.setupForm();
     }
     get field(): PepSmartFilterBaseField {
@@ -71,6 +72,16 @@ export abstract class BaseFilterComponent
     get filter(): IPepSmartFilterData {
         return this._filter;
     }
+    protected _parentForm: FormGroup;
+    @Input()
+    set parentForm(form: FormGroup) {
+        this._parentForm = form;
+        this.updateParentForm();
+    }
+    @Input() emitOnChange = false;
+    @Input() inline = false;
+    @Input() showActionButtons = true;
+    @Input() renderTitle = true;
 
     @Output() filterClear: EventEmitter<void> = new EventEmitter<void>();
     @Output()
@@ -98,9 +109,7 @@ export abstract class BaseFilterComponent
     private _operatorUnit: IPepSmartFilterOperatorUnit;
     set operatorUnit(operatorUnit: IPepSmartFilterOperatorUnit) {
         // Validate operator unit
-        if (operatorUnit === undefined) {
-            this._operatorUnit = undefined;
-        } else {
+        if (operatorUnit) {
             const index = this.operatorUnits.findIndex(
                 (ou) => ou.id === operatorUnit.id
             );
@@ -109,6 +118,8 @@ export abstract class BaseFilterComponent
             } else {
                 this._operatorUnit = this.operatorUnits[0];
             }
+        } else {
+            this._operatorUnit = undefined;
         }
     }
     get operatorUnit(): IPepSmartFilterOperatorUnit {
@@ -170,15 +181,16 @@ export abstract class BaseFilterComponent
         const formValue = {};
         formValue[this.firstControlKey] = [];
         formValue[this.secondControlKey] = [];
-        // this.form.patchValue(formValue);
-
+        // this.form.patchValue(formValue);        
         this.form = this.builder.group(formValue);
         // this.form[this.firstControlKey] = [];
         // this.form[this.secondControlKey] = [];
 
         this.setupOperators();
 
-        this.createActionsComponent();
+        if (this.showActionButtons) {
+            this.createActionsComponent();
+        }
     }
 
     private setupOperators() {
@@ -233,6 +245,17 @@ export abstract class BaseFilterComponent
             this.operatorUnit = this.getDefaultOperatorUnit();
             this.clearFilter(false);
         }
+    }
+
+    protected updateParentForm() {
+        this._parentForm.setControl('fieldId', this.builder.control(this.field.id));
+        this._parentForm.setControl('fieldType', this.builder.control(this.field.type));
+        this._parentForm.setControl('operator', this.builder.control(this.operator));
+        this._parentForm.setControl('operatorUnit', this.builder.control(this.operatorUnit));
+        this._parentForm.setControl('values', this.builder.group({
+            first: this.firstControl,
+            second: this.secondControl
+        }));
     }
 
     protected getDestroyer() {
@@ -313,7 +336,9 @@ export abstract class BaseFilterComponent
         this._destroyed.next();
         this._destroyed.complete();
 
-        this.actionsContainerRef.destroy();
+        if (this.showActionButtons) {
+            this.actionsContainerRef.destroy();
+        }
     }
 
     // writeValue(value: IPepSmartFilterDataValue): void {

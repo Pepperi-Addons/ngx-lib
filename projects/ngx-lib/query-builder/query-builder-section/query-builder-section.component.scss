@@ -1,0 +1,10 @@
+//@import '../../../src/core//style/abstracts/variables';
+@import '../../src/core/style/abstracts/variables';
+
+
+.query-section-container {
+    border-radius: $border-radius-md;    
+    padding: .5rem;   
+    width: 100%;
+}
+

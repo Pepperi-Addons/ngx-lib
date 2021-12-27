@@ -4,7 +4,7 @@ import {
     IPepButtonClickEvent,
     PepButton,
 } from '@pepperi-addons/ngx-lib/button';
-import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconSystemBin, pepIconSystemSettings } from '@pepperi-addons/ngx-lib/icon';
 import {
     PepMenuItem,
     IPepMenuItemClickEvent,
@@ -18,6 +18,7 @@ import { IPepSearchStateChangeEvent } from '@pepperi-addons/ngx-lib/search';
 export class TopBarExampleComponent implements OnInit {
     title = 'client-side';
     groupButtons: Array<PepButton>;
+    groupButtons2: Array<PepButton>;
 
     menuItems: Array<PepMenuItem>;
     selectedMenuItem: PepMenuItem;
@@ -27,6 +28,17 @@ export class TopBarExampleComponent implements OnInit {
 
     searchString = '';
     searchAutoCompleteValues = [];
+
+    background = `
+        linear-gradient(to right,
+            hsl(0, 100%, 50%) 0%,
+            hsl(60, 100%, 50%) 17%,
+            hsl(120, 100%, 50%) 33%,
+            hsl(180, 100%, 50%) 50%,
+            hsl(240, 100%, 50%) 67%,
+            hsl(300, 100%, 50%) 83%,
+            hsl(360, 100%, 50%) 100%)
+    `;
 
     constructor(public layoutService: PepLayoutService) {
         this.layoutService.onResize$.pipe().subscribe((size) => {
@@ -42,12 +54,30 @@ export class TopBarExampleComponent implements OnInit {
             },
             {
                 key: 'del',
-                class: 'caution',
+                classNames: 'caution',
                 callback: (event: IPepButtonClickEvent) =>
                     this.onGroupButtonClicked(event),
-                icon: pepIconSystemBin.name,
+                iconName: pepIconSystemBin.name,
             },
         ];
+
+
+        this.groupButtons2 = [
+            {
+                key: 'action1',
+                value: 'test1',
+                callback: (event: IPepButtonClickEvent) =>
+                    this.onGroupButtonClicked(event),
+                iconName: pepIconSystemSettings.name
+            },
+            {
+                key: 'action2',
+                value: 'test2',
+                callback: (event: IPepButtonClickEvent) =>
+                    this.onGroupButtonClicked(event),
+                iconName: pepIconSystemSettings.name
+            },
+            ...this.groupButtons]
     }
 
     ngOnInit(): void {
@@ -110,7 +140,7 @@ export class TopBarExampleComponent implements OnInit {
     }
 
     onGroupButtonClicked(event: IPepButtonClickEvent): void {
-        alert(`${event.source.key}: was clicked`);
+        // alert(`${event.source.key}: was clicked`);
     }
 
     onSearchStateChanged(searchStateChangeEvent: IPepSearchStateChangeEvent) {
@@ -125,5 +155,9 @@ export class TopBarExampleComponent implements OnInit {
     onSearchAutocompleteChanged(value) {
         console.log(value);
         // debugger;
+    }
+
+    onSliderValueChange(value) {
+        console.log(value);
     }
 }

@@ -1,14 +1,17 @@
 @import "../src/core/style/abstracts/variables";
 @import "../src/core/style/abstracts/mixins";
+@import "../src/core/style/abstracts/functions";
  
 .pep-side-bar-container {
+    height: 100%;
     $animation-time: 0.35s;
     $animation-time-third: calc(#{$animation-time} / 3);
 
     .toggle-side-bar-container {
+        height: inherit;
         display: grid;
         grid-auto-flow: column;
-        height: calc(100vh - #{$header-height});
+        // height: calc(100vh - #{$header-height});
         // max-width: calc(#{$side-bar-width} + #{$double-content-padding} + 1px); // 1px is for the toggle-button-border width
         
         transition: transform ease-out $animation-time, width ease-out $animation-time;
@@ -19,6 +22,7 @@
             transition: transform ease-out $animation-time, width ease-out $animation-time;
             transform: unset;
             width: $side-bar-width;
+            // width: calc(#{$side-bar-width} + #{$content-padding});
             
             .toggle-button {
                 transition: margin-inline ease-out $animation-time, transform ease-out $animation-time;
@@ -36,6 +40,7 @@
         .toggle-button {
             $half-button-width: 0.75rem;
             
+            z-index: $z-index-lowest + 1;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -87,20 +92,26 @@
     .side-layout {
         $side-bar-width-less-padding: calc(#{$side-bar-width} - #{$double-content-padding});
         
-        display: grid;
-        grid-auto-rows: auto 1fr auto;
-        grid-auto-flow: row;
+        // display: grid;
+        // grid-auto-rows: auto 1fr auto;
+        // grid-auto-flow: row;
+        
+        // When the display is grid the max-width is not affected.
+        // height: 100%;
+        display: block;
         
         max-width: $side-bar-width;
         width: $side-bar-width;
         padding: 0 $content-padding;
-        height: 100%;
         overflow: auto;
         
         .header-content {
             height: $top-bar-height;
             padding-top: $top-bar-spacing-top;
-            
+            z-index: $z-index-lowest + 1;
+            position: sticky;
+            top: 0; 
+
             .content {
                 height: $top-bar-height-with-no-top;
                 display: flex;
@@ -113,10 +124,14 @@
         }
         
         .main-content {
-            overflow: auto;
+            // overflow: hidden;
+            display: block;
+            height: inherit;
+            max-width: $side-bar-width;
             
             .content {
-                overflow: hidden;
+                // overflow: auto;
+                height: inherit;
             }
         }
     }

@@ -20,20 +20,26 @@ import { PepDateModule } from '@pepperi-addons/ngx-lib/date';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import {
     PepIconModule,
     PepIconRegistry,
     pepIconNumberMinus,
     pepIconNumberPlus,
 } from '@pepperi-addons/ngx-lib/icon';
+import { PepGroupButtonsModule } from '@pepperi-addons/ngx-lib/group-buttons';
 
 // import { BaseFilterComponent } from './common/model/base-filter-component';
 import { PepSmartFiltersComponent } from './smart-filters.component';
 import { PepFilterActionsComponent } from './common/filter-actions.component';
+import { PepTextFilterComponent } from './text-filter/text-filter.component';
 import { PepBooleanFilterComponent } from './boolean-filter/boolean-filter.component';
 import { PepDateFilterComponent } from './date-filter/date-filter.component';
 import { PepMultiSelectFilterComponent } from './multi-select-filter/multi-select-filter.component';
 import { PepNumberFilterComponent } from './number-filter/number-filter.component';
+import { PepFilterBuilderComponent } from './filter-builder/filter-builder.component';
+import { PepFilterBuilderSectionComponent } from './filter-builder/filter-builder-section/filter-builder-section.component';
+import { PepFilterBuilderItemComponent } from './filter-builder/filter-builder-item/filter-builder-item.component';
 
 @NgModule({
     imports: [
@@ -59,16 +65,30 @@ import { PepNumberFilterComponent } from './number-filter/number-filter.componen
         PepTextboxModule,
         PepSearchModule,
         PepIconModule,
+        PepButtonModule,
+        PepGroupButtonsModule
     ],
-    exports: [PepSmartFiltersComponent],
+    exports: [
+        PepSmartFiltersComponent,
+        PepFilterBuilderComponent,
+        PepTextFilterComponent,
+        PepBooleanFilterComponent,
+        PepDateFilterComponent,
+        PepMultiSelectFilterComponent,
+        PepNumberFilterComponent
+    ],
     declarations: [
         // BaseFilterComponent,
         PepSmartFiltersComponent,
         PepFilterActionsComponent,
+        PepTextFilterComponent,
         PepBooleanFilterComponent,
         PepDateFilterComponent,
         PepMultiSelectFilterComponent,
         PepNumberFilterComponent,
+        PepFilterBuilderComponent,
+        PepFilterBuilderSectionComponent,
+        PepFilterBuilderItemComponent
     ],
 })
 export class PepSmartFiltersModule {

@@ -6,27 +6,21 @@
     border-radius: $border-radius-md;
 
     .dropdown-buttons,
-    .split-buttons {
-        // margin-top: $spacing-xs;
-
+    .split-buttons,
+    .toggle-buttons  {
         .first-button {
             // This is only for .dropdown-buttons override in .split-buttons class
-            // margin-right: 1px;
             margin-inline-end: 1px;
         }
 
         .first-button,
         .first-button:after {
-            // border-radius: $border-radius-md 0 0 $border-radius-md;
-            border-start-start-radius: $border-radius-md;
-            border-start-end-radius: $border-radius-md;
+            border-radius: $border-radius-md 0 0 $border-radius-md;
         }
 
         .last-button,
         .last-button:after {
-            // border-radius: 0 $border-radius-md $border-radius-md 0;
-            border-start-end-radius: $border-radius-md;
-            border-end-end-radius: $border-radius-md;
+            border-radius: 0 $border-radius-md $border-radius-md 0;
         }
 
         .pepperi-button, .pep-button {
@@ -51,45 +45,26 @@
         }
     }
 
-    .split-buttons {
+    .split-buttons,
+    .toggle-buttons {
         display: grid;
-        grid-template-columns: auto auto;
-        max-width: 100%;
+        grid-auto-flow: column;
+
+        &.stretch {
+            width: 100%;
+        }
+
+        .pep-button {
+            max-width: unset;
+        }
 
         .first-button {
-            // margin-right: -1px;
             margin-inline-end: -1px;
-            max-width: unset;
         }
 
         .middle-button {
             border-radius: 0;
+            margin-inline-end: -1px;
         }
     }
-
-    // &[dir='rtl'] {
-    //     .split-buttons,
-    //     .dropdown-buttons {
-    //         .first-button {
-    //             margin-right: unset;
-    //             margin-left: 1px;
-    //         }
-
-    //         .first-button,
-    //         .first-button:after {
-    //             border-radius: 0 $border-radius-md $border-radius-md 0;
-    //         }
-
-    //         .last-button,
-    //         .last-button:after {
-    //             border-radius: $border-radius-md 0 0 $border-radius-md;
-    //         }
-    //     }
-
-    //     .split-buttons {
-    //         .first-button {
-    //             margin-left: -1px;
-    //         }
-    //     }
-    // }
 }

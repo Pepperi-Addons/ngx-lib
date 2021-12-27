@@ -18,9 +18,11 @@ export class IsItemSelectedPipe implements PipeTransform {
 
         if (selectionTypeForActions === 'single') {
             isSelected = selectedItemId === this.getUniqItemId(item?.UID, item?.Type.toString());
-        } else if (selectionTypeForActions === 'single-action') {
-            isSelected = (isAllSelected && !unSelectedItems.has(item?.UID)) || selectedItems.has(item?.UID);
-        } else if (selectionTypeForActions === 'multi') {
+        }
+        // else if (selectionTypeForActions === 'single-action') {
+        //     isSelected = (isAllSelected && !unSelectedItems.has(item?.UID)) || selectedItems.has(item?.UID);
+        // }
+        else if (selectionTypeForActions === 'multi') {
             if (item?.IsSelectableForActions) {
                 isSelected = (isAllSelected && !unSelectedItems.has(item?.UID)) || selectedItems.has(item?.UID);
             }
@@ -34,9 +36,9 @@ export class IsItemSelectedPipe implements PipeTransform {
     name: 'isItemDisabled'
 })
 export class IsItemDisabledPipe implements PipeTransform {
-    transform(item: ObjectsDataRow, lockItemInnerEvents: boolean): any {
+    transform(item: ObjectsDataRow, lockItemInnerEvents: boolean, printMode: boolean): any {
         return (
-            lockItemInnerEvents || (item && !item.IsSelectableForActions)
+            printMode || lockItemInnerEvents || (item && !item.IsSelectableForActions)
         );
     }
 }

@@ -21,7 +21,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    // IPepFieldValueChangeEvent,
     PepSignatureField,
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
@@ -55,10 +54,31 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Input() signatureURL = '';
     // @Input() inDialog = false;
 
+    private _visible = true;
+    @Input()
+    set visible(visible: boolean) {
+        this._visible = visible;
+        if (visible) {
+            this.renderer.removeClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        } else {
+            this.renderer.addClass(
+                this.element.nativeElement,
+                'hidden-element'
+            );
+        }
+    }
+    get visible(): boolean {
+        return this._visible;
+    }
+
     controlType = 'signature';
 
     @Input() form: FormGroup = null;
     @Input() showTitle = true;
+    @Input() renderTitle = true;
 
     private _layoutType: PepLayoutType = 'form';
     @Input()
@@ -71,9 +91,6 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     @Input() isActive = false;
-
-    // @Output()
-    // valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
 
     @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();
@@ -137,6 +154,13 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
                 this.element.nativeElement,
                 PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
             );
+
+            if (!this.renderTitle) {
+                this.renderer.addClass(
+                    this.element.nativeElement,
+                    PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
+                );
+            }
         }
     }
 

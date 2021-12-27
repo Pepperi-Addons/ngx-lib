@@ -121,6 +121,9 @@ body {
 
 //  Font weight
 // ------------------------
+.normal {
+    font-weight: $font-weight-normal !important;
+}
 .bold {
     font-weight: $font-weight-bold !important;
 }
@@ -174,31 +177,59 @@ a {
     .color-user-primary {
         color: get-pep-color($pepperi-theme, color-user-primary, color-base);
     }
+    .background-color-user-primary {
+        background-color: get-pep-color($pepperi-theme, color-user-primary, color-base);
+    }
 
     .color-user-secondary {
         color: get-pep-color($pepperi-theme, color-user-secondary, color-base);
+    }
+    .background-color-user-secondary {
+        background-color: get-pep-color($pepperi-theme, color-user-secondary, color-base);
     }
 
     .color-system-primary,
     .color-main {
         color: get-pep-color($pepperi-theme, color-text, color-main);
     }
+    .background-color-main {
+        background-color: get-pep-color($pepperi-theme, color-text, color-main);
+    }
+
+    .color-invert {
+        color: get-pep-color($pepperi-theme, color-text, color-invert);
+    }
+    .background-color-invert {
+        background-color: get-pep-color($pepperi-theme, color-text, color-invert);
+    }
 
     .color-link {
         color: get-pep-color($pepperi-theme, color-text, color-link);
+    }
+    .background-color-link {
+        background-color: get-pep-color($pepperi-theme, color-text, color-link);
     }
 
     .red,
     .color-caution {
         color: get-pep-color($pepperi-theme, color-text, color-caution);
     }
+    .background-color-caution {
+        background-color: get-pep-color($pepperi-theme, color-text, color-caution);
+    }
 
     .color-success {
         color: get-pep-color($pepperi-theme, color-text, color-success);
     }
+    .background-color-success {
+        background-color: get-pep-color($pepperi-theme, color-text, color-success);
+    }
 
     .color-dimmed {
         color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+    }
+    .background-color-dimmed {
+        background-color: get-pep-color($pepperi-theme, color-text, color-dimmed);
     }
 
     a {

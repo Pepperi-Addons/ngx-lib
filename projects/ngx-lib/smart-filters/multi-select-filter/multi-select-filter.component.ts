@@ -12,6 +12,7 @@ import {
     IPepSmartFilterOperator,
     PepSmartFilterOperators,
 } from '../common/model/operator';
+import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { IPepSmartFilterDataValue } from '../common/model/filter';
 import { IPepSmartFilterFieldOption } from '../common/model/field';
 import { Observable } from 'rxjs';
@@ -37,6 +38,9 @@ export class PepMultiSelectFilterComponent
     options: PepMultiSelectFilterOption[] = [];
     filteredOptions$: Observable<any>;
     searchControl = new FormControl();
+    //inline props
+    selected = '';
+    inlineOptions: IPepOption[] = [];
 
     @ViewChild('optionsContainer')
     optionsContainer: ElementRef;
@@ -50,6 +54,30 @@ export class PepMultiSelectFilterComponent
     ngOnInit() {
         super.ngOnInit;
 
+        if (this.inline) {
+            this.inlineControlInit();
+        } else {
+            this.noneInlineControlInit();
+        }
+    }
+
+
+    ngAfterViewInit(): void {
+        // Calc for the first time.
+        this.calcOptionsHeight(this.options.length);
+    }
+
+    private inlineControlInit() {
+        //load options from field        
+        this.inlineOptions = this.field?.options?.length > 0 ? this.field.options as IPepOption[] : [];
+
+        // Init the selected values from first value.        
+        if (this.firstControl?.value?.length > 0) {
+            this.selected = this.firstControl.value.join(';');
+        }
+    }
+
+    private noneInlineControlInit() {
         if (this.field.options?.length > 0) {
             this.options = this.field.options.map((opt) => {
                 return { value: opt.value, count: opt.count, selected: false };
@@ -91,11 +119,7 @@ export class PepMultiSelectFilterComponent
                 }, 125);
             }
         );
-    }
 
-    ngAfterViewInit(): void {
-        // Calc for the first time.
-        this.calcOptionsHeight(this.options.length);
     }
 
     initOptionsSelectedValues(selectedValues: string[]): void {
@@ -139,14 +163,21 @@ export class PepMultiSelectFilterComponent
 
     // Override
     getFilterValue(): IPepSmartFilterDataValue {
-        const selectedValues = this.options
-            .filter((opt) => opt.selected)
-            .map((opt) => opt.value);
-        const filterValue = {
-            first: selectedValues,
-        };
+        if (this.inline) {
+            return {
+                first: this.firstControl.value
+            };
+        } else {
+            const selectedValues = this.options
+                .filter((opt) => opt.selected)
+                .map((opt) => opt.value);
+            const filterValue = {
+                first: selectedValues,
+            };
 
-        return selectedValues.length > 0 ? filterValue : null;
+            return selectedValues.length > 0 ? filterValue : null;
+        }
+
     }
 
     // Override
@@ -165,4 +196,18 @@ export class PepMultiSelectFilterComponent
             { emitEvent: false }
         );
     }
+
+    onMultiSelectChanged(value: string) {
+        if (value) {
+            const selected: string[] = value.split(';');
+            this.firstControl.setValue(selected);
+        } else {
+            this.firstControl.setValue(null);
+        }
+
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
 }

@@ -22,6 +22,7 @@ import {
 } from '@pepperi-addons/ngx-lib/images-filmstrip';
 
 import { PepImageComponent } from './image.component';
+import { PepImageService } from './image.service';
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import { PepImageComponent } from './image.component';
     exports: [PepImageComponent],
     declarations: [PepImageComponent],
     entryComponents: [PepImagesFilmstripComponent],
+    providers: [PepImageService]
 })
 export class PepImageModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

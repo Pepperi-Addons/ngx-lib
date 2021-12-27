@@ -1,2 +1,15 @@
 @mixin pep-group-buttons-component-theme($pepperi-theme) {
+    .group-buttons-container {
+        .toggle-buttons {
+            .is-selected {
+                &.weak {
+                    @include pep-button-states($pepperi-theme, regular);
+                }
+    
+                &.regular {
+                    @include pep-button-states($pepperi-theme, weak);
+                }
+            }
+        }
+    }
 }

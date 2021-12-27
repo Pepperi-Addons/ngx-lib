@@ -16,12 +16,18 @@
 
         .pep-page-header-layout {
             grid-area: header-layout;
+            z-index: 10;
         }
 
         .pep-page-side-layout {
             grid-area: side-layout;
             overflow: hidden;
             height: 100%;
+            z-index: 5;
+
+            &.show-shadow {
+                padding-inline-end: $content-padding;
+            }
         }
 
         .pep-page-main-layout {
@@ -29,13 +35,18 @@
             overflow: hidden;
             // overflow: auto;
             height: 100%;
-            padding-inline: $content-padding;
+            z-index: 1;
+            
             padding-bottom: $footer-bar-height; // In case that the fixed footer is shown (the footer is in the top bar component).
             
             display: grid;
             grid-template-rows: auto 1fr;
             grid-template-areas: "top-area"
                                 "main-area";
+
+            &.add-padding {
+                padding-inline: $content-padding;
+            }
 
             .pep-top-area {
                 grid-area: top-area;
@@ -54,8 +65,3 @@
         }
     }
 }
-
-// ::ng-deep.list-container {
-//     overflow: auto;
-//     height: 100%;
-// }

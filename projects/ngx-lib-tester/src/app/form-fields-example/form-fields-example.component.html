@@ -47,16 +47,15 @@
                     <pep-separator [key]="'sep1'" [label]="'separator'"></pep-separator>
 
                     <!-- Checkbox Exmaples -->
-                    <pep-checkbox [key]="'cb1'" [label]="'Pepperi Checkbox'" [value]="'true'" [xAlignment]="'left'"
+                    <pep-checkbox key="cb1" label="Pepperi Checkbox" value="true" xAlignment="left"
                         (valueChanged)="onValueChanged($event)">
                     </pep-checkbox>
-                    <pep-checkbox [key]="'bt1'" [label]="'Pepperi Emoji Checkbox'" [type]="'booleanText'"
-                        [value]="'true'" [additionalValue]='{ "CheckedText": "❤", "UncheckedText": "💛" }'
-                        [xAlignment]="'left'">
+                    <pep-checkbox key="bt1" label="Pepperi Emoji Checkbox" type="booleanText" value="true"
+                        [additionalValue]='{ "CheckedText": "❤", "UncheckedText": "💛" }' xAlignment="left">
                     </pep-checkbox>
 
                     <!-- Date Examples -->
-                    <pep-date [key]="'date1'" [mandatory]="true" [label]="'Pepperi Date'" [value]="dateString"
+                    <pep-date [key]="'date1'" [mandatory]="true" [label]="'Pepperi Date'" value="2018-06-18"
                         [minValue]="minDateValue" [maxValue]="maxDateValue" [xAlignment]="'left'"
                         (valueChanged)="onValueChanged($event)">
                     </pep-date>
@@ -93,7 +92,7 @@
                     </pep-image> -->
 
                     <pep-image [key]="'Image'" [label]="'Pepperi Image'" [xAlignment]="'center'" [rowSpan]="4"
-                        [disabled]="true"
+                        (fileChange)="imageChange($event)"
                         [src]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'"
                         (elementClicked)="elementClicked($event)">
                     </pep-image>

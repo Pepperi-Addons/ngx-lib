@@ -851,8 +851,10 @@ $sorting-width: 1rem;
 //  Custom field (added for stand alone field).
 // ---------------------------------------------
 .pepperi-field, .pep-field {
-    min-height: $form-row-height;
-    margin-bottom: $form-spacing;
+    &:not(.pep-field-no-spacing) {
+        min-height: $form-row-height;
+        margin-bottom: $form-spacing;
+    }
 }
 
 @mixin pep-general-theme($pepperi-theme) {

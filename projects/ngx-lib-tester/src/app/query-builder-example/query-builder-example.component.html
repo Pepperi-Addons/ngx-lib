@@ -1,0 +1,11 @@
+<div class="example-form-container">
+    <div style="font-weight: bold; text-decoration: underline; margin-top: 20px;">Parent Form Container</div>
+    <pep-query-builder [query]="json" [fields]="fields" (queryChange)="getFilters($event)"
+        (formValidationChange)="isformValid = $event">
+    </pep-query-builder>
+
+    <div style="display: flex;">
+        <pep-button value="Save" styleType="weak" styleStateType="system" sizeType="md" classNames=""
+            [disabled]="!isformValid" iconPosition="end" [visible]="true"></pep-button>
+    </div>
+</div>

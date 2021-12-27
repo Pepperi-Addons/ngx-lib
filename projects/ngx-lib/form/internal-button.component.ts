@@ -16,7 +16,6 @@ import {
     PepCustomizationService,
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
-    IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
     PepInternalButtonFieldType,
     PepInternalButtonField,
@@ -78,7 +77,7 @@ export class PepInternalButtonComponent
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-    standAlone = false;
+    // standAlone = false;
     createNewReference = false;
     referenceButtons: Array<PepButton> = [
         {
@@ -89,8 +88,8 @@ export class PepInternalButtonComponent
         {
             key: 'delete',
             callback: (action: IPepButtonClickEvent) => this.remove(),
-            class: 'caution',
-            icon: pepIconSystemBin.name,
+            classNames: 'caution',
+            iconName: pepIconSystemBin.name,
         },
     ];
 
@@ -98,27 +97,27 @@ export class PepInternalButtonComponent
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
-    ) {}
+    ) { }
 
     ngOnInit(): void {
-        if (this.form === null) {
-            this.standAlone = true;
-            // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled);
-            const pepField = new PepInternalButtonField({
-                key: this.key,
-                value: this.value,
-                mandatory: this.mandatory,
-                readonly: this.readonly,
-                disabled: this.disabled,
-            });
-            this.form = this.customizationService.getDefaultFromGroup(pepField);
+        // if (this.form === null) {
+        //     this.standAlone = true;
+        //     // this.form = this.customizationService.getDefaultFromGroup(this.key, this.value, this.mandatory, this.readonly, this.disabled);
+        //     const pepField = new PepInternalButtonField({
+        //         key: this.key,
+        //         value: this.value,
+        //         mandatory: this.mandatory,
+        //         readonly: this.readonly,
+        //         disabled: this.disabled,
+        //     });
+        //     this.form = this.customizationService.getDefaultFromGroup(pepField);
 
-            this.formattedValue = this.formattedValue || this.value;
-            this.renderer.addClass(
-                this.element.nativeElement,
-                PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
-            );
-        }
+        //     this.formattedValue = this.formattedValue || this.value;
+        //     this.renderer.addClass(
+        //         this.element.nativeElement,
+        //         PepCustomizationService.STAND_ALONE_FIELD_CLASS_NAME
+        //     );
+        // }
     }
 
     ngOnChanges(changes: any): void {

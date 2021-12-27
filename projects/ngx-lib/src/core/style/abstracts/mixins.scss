@@ -80,27 +80,6 @@
     }
 }
 
-// Function for calc a property for an element.
-// @mixin calc($property, $expression) {
-//     #{$property}: -moz-calc(#{$expression});
-//     #{$property}: -webkit-calc(#{$expression});
-//     #{$property}: calc(#{$expression});
-// }
-
-// @mixin box-sizing($box-model) {
-//     -webkit-box-sizing: $box-model; // Safari <= 5
-//     -moz-box-sizing: $box-model; // Firefox <= 19
-//     box-sizing: $box-model;
-// }
-
-// @mixin rotate($degrees) {
-//     -webkit-transform: rotate($degrees);
-//     -moz-transform: rotate($degrees);
-//     -ms-transform: rotate($degrees);
-//     -o-transform: rotate($degrees);
-//     transform: rotate($degrees);
-// }
-
 @mixin flex-grow($int: 1) {
     -webkit-box-flex: $int;
     -moz-box-flex: $int;
@@ -293,18 +272,46 @@
     line-height: $top-bar-field-height;
 }
 
+@mixin pep-cross-hatch($pepperi-theme, $hex-color: null) {
+    $color-low-opacity: null;
+    $color-high-opacity: null;
+
+    @if ($hex-color == null) {
+        $color-low-opacity: get-pep-color($pepperi-theme, color-system-caution, color-tran-0);
+        $color-high-opacity: get-pep-color($pepperi-theme, color-system-caution, color-tran-60);
+    } @else {
+        $color-low-opacity: rgba($hex-color, 0);
+        $color-high-opacity: rgba($hex-color, 0.32)
+    }
+
+    background: repeating-linear-gradient(
+        45deg,
+        $color-low-opacity,
+        $color-low-opacity .65rem,
+        $color-high-opacity .65rem,
+        $color-high-opacity 0.8rem,    
+    ),
+    repeating-linear-gradient(
+        -45deg,
+        $color-low-opacity,
+        $color-low-opacity .65rem,
+        $color-high-opacity 0.65rem,
+        $color-high-opacity 0.8rem,    
+    );
+}
+
 // ******************************************************************************
 //                        General state declerations
 // ******************************************************************************
-@mixin focus($pepperi-theme, $add-important: false, $focus-color: null) {
+@mixin focus($pepperi-theme, $add-important: false, $focus-color: null, $focus-size: $spacing-xs) {
     @if ($focus-color == null) {
         $focus-color: get-pep-color($pepperi-theme, color-text, color-link-focus);
     }
   
     @if ($add-important) {
-        box-shadow: 0 0 0 $spacing-xs $focus-color !important;
+        box-shadow: 0 0 0 $focus-size $focus-color !important;
     } @else {
-        box-shadow: 0 0 0 $spacing-xs $focus-color;
+        box-shadow: 0 0 0 $focus-size $focus-color;
     }
 }
 

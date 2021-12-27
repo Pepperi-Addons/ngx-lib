@@ -387,8 +387,10 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		}
 	}
 
+	private _lastChildRect: ClientRect;
+
 	@Output()
-	public vsLoad: EventEmitter<void> = new EventEmitter<void>();
+	public vsChildRectChange: EventEmitter<ClientRect> = new EventEmitter<ClientRect>();
 
 	@Output()
 	public vsUpdate: EventEmitter<any[]> = new EventEmitter<any[]>();
@@ -883,9 +885,6 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 						this.zone.run(handleChanged);
 					}
 				} else {
-					// Added to know when the scroll is ready (UI elements are displayed already).
-					this.vsLoad.emit();
-
 					if (maxRunTimes > 0 && (scrollLengthChanged || paddingChanged)) {
 						this.refresh_internal(false, refreshCompletedCallback, maxRunTimes - 1);
 						return;
@@ -1045,7 +1044,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		}
 	}
 
-	public calculateDimensions(): IDimensions {
+	protected calculateDimensions(): IDimensions {
 		const scrollElement = this.getScrollElement();
 
 		const maxCalculatedScrollBarSize = 25; // Note: Formula to auto-calculate doesn't work for ParentScroll, so we default to this if not set by consuming application
@@ -1087,6 +1086,13 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 				const clientRect = this.getElementSize(child);
 				this.minMeasuredChildWidth = Math.min(this.minMeasuredChildWidth, clientRect.width);
 				this.minMeasuredChildHeight = Math.min(this.minMeasuredChildHeight, clientRect.height);
+
+				// Added for getting the child height (for card view, return all the clientRect object).
+				if (this._lastChildRect?.height !== clientRect?.height ||
+					this._lastChildRect?.width !== clientRect?.width) {
+					this._lastChildRect = clientRect;
+					this.vsChildRectChange.emit(clientRect);
+				}
 			}
 
 			defaultChildWidth = this.childWidth || this.minMeasuredChildWidth || viewportWidth;

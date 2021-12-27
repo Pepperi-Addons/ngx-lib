@@ -47,6 +47,7 @@ import { PepMenuBlurDirective } from './core/common/directives/menu-blur.directi
 import { PepDataQaDirective } from './core/common/directives/data-qa.directive';
 // import { PreventDoubleClickDirective } from './core/common/directives/debounce-click.directive';
 import { PepPreventMultiClickDirective } from './core/common/directives/prevent-multi-click.directive';
+import { PepPrintDirective } from './core/common/directives/print.directive';
 
 const utilitiesList = [
     PepInputAutoWidthDirective,
@@ -56,6 +57,7 @@ const utilitiesList = [
     PepDataQaDirective,
     // PreventDoubleClickDirective,
     PepPreventMultiClickDirective,
+    PepPrintDirective,
 ];
 
 import { PepAttachDirective } from './core/portal/attach.directive';
@@ -63,13 +65,9 @@ import { PepTargetDirective } from './core/portal/target.directive';
 
 const portalList = [PepAttachDirective, PepTargetDirective];
 
-import {
-    TranslateModule,
-    // TranslateLoader,
-    // TranslateService,
-    // MissingTranslationHandler,
-    // MissingTranslationHandlerParams
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepLayoutService } from './core/index';
+
 @NgModule({
     declarations: [
         pipeList,
@@ -77,10 +75,6 @@ import {
         clipboardList,
         layoutList,
         portalList,
-    ],
-    providers: [
-        httpInterceptorProviders,
-        // TranslateService
     ],
     imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
     exports: [
@@ -91,6 +85,14 @@ import {
         portalList,
         TranslateModule,
     ],
+    providers: [
+        httpInterceptorProviders,
+        PepHttpService,
+        PepAddonService,
+        PepFileService,
+        PepCustomizationService,
+        PepLayoutService
+    ]
 })
 export class PepNgxLibModule {
     // static forRoot(): ModuleWithProviders<PepNgxLibModule> {

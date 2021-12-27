@@ -3,11 +3,13 @@
     <!-- New Form -->
     <mat-grid-list *ngIf="layoutType == 'form'" [cols]="columns" [rowHeight]="rowHeight + 'rem'"
         [gutterSize]="formGutterSize">
-        <mat-grid-tile *ngFor="let field of fields" [rowspan]="field.rowSpan" [colspan]="field.colSpan">
+        <mat-grid-tile *ngFor="let field of fields$ | async" [rowspan]="field.rowSpan" [colspan]="field.colSpan">
             <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
                 [checkForChanges]="checkForChanges" [uid]="data?.UID" [field]="field" [showTitle]="showTitle"
-                (valueChange)="onValueChanged($event)" (childClick)="onChildClicked($event)"
-                (childChange)="onChildChanged($event)" (elementClick)="onClick($event)"
+                (valueChange)="onValueChanged($event)" (elementClick)="onClick($event)"
+                (internalFormFieldClick)="onInternalFormFieldClicked($event)"
+                (internalFormFieldChange)="onInternalFormFieldChanged($event)"
+                (formValueChange)="onFormValueChanged($event)" (formFieldClick)="onFormFieldClick($event)"
                 (formValidationChange)="onFormValidationChanged($event)">
             </pep-field-generator>
         </mat-grid-tile>
@@ -16,13 +18,14 @@
     <!-- Thumbnails -->
     <mat-grid-list *ngIf="layoutType == 'card'" [cols]="columns" [rowHeight]="rowHeight + 'rem'"
         [gutterSize]="cardGutterSize" class="card-spacing">
-        <mat-grid-tile *ngFor="let field of fields" [rowspan]="field.rowSpan" [colspan]="field.colSpan"
+        <mat-grid-tile *ngFor="let field of fields$ | async" [rowspan]="field.rowSpan" [colspan]="field.colSpan"
             [ngStyle]="{ overflow: field.type == 'qs' ? 'unset' : 'hidden' }">
             <pep-field-generator *ngIf="field.controlType != 'placeholder'" [form]="form" [layoutType]="layoutType"
                 [ngClass]="{ 'lock-events': lockEvents }" [isActive]="isActive" [checkForChanges]="checkForChanges"
                 [uid]="data?.UID" [field]="field" [showTitle]="showTitle" (valueChange)="onValueChanged($event)"
-                (childClick)="onChildClicked($event)" (childChange)="onChildChanged($event)"
-                (elementClick)="onClick($event)">
+                (elementClick)="onClick($event)" (internalFormFieldClick)="onInternalFormFieldClicked($event)"
+                (internalFormFieldChange)="onInternalFormFieldChanged($event)"
+                (formValueChange)="onFormValueChanged($event)" (formFieldClick)="onFormFieldClick($event)">
             </pep-field-generator>
         </mat-grid-tile>
     </mat-grid-list>
@@ -33,12 +36,13 @@
             <ng-container *ngTemplateOutlet="report"></ng-container>
         </ng-template>
         <ng-template #notReportBlock>
-            <div *ngFor="let field of fields; let j = index" class="pull-left flip table-cell "
+            <div *ngFor="let field of fields$ | async; let j = index" class="pull-left flip table-cell "
                 [ngClass]="['text-align-' + field.xAlignment]" style="height: 100%"
                 [ngStyle]="{ width: (layout?.ControlFields)[j]?.calcColumnWidthString}">
                 <pep-field-generator *ngIf="field.controlType != 'placeholder'" [checkForChanges]="checkForChanges"
-                    [uid]="data?.UID" [field]="field" (valueChange)="onValueChanged($event)"
-                    (elementClick)="onClick($event)" [form]="form" [layoutType]="layoutType" [showTitle]="false"
+                    [uid]="data?.UID" [field]="field" [form]="form" [layoutType]="layoutType" [showTitle]="false"
+                    (elementClick)="onClick($event)" (valueChange)="onValueChanged($event)"
+                    (formValueChange)="onFormValueChanged($event)" (formFieldClick)="onFormFieldClick($event)"
                     [isActive]="isActive">
                 </pep-field-generator>
             </div>
@@ -52,7 +56,7 @@
 </fieldset>
 
 <ng-template #report>
-    <div *ngFor="let field of fields; let j = index" class="pull-left flip pep-report-fields"
+    <div *ngFor="let field of fields$ | async; let j = index" class="pull-left flip pep-report-fields"
         [ngStyle]="{ width: (layout?.ControlFields)[j]?.calcColumnWidthString }"
         [ngClass]="['text-align-' + field.xAlignment]">
         <ng-container [ngSwitch]="field.controlType">
@@ -69,8 +73,9 @@
                 [layoutType]="layoutType">
             </pep-signature>
 
-            <pep-checkbox *ngSwitchCase="'checkbox'" [form]="form" [key]="field.key" [value]="field.value"
-                [label]="field.label" [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled"
+            <pep-checkbox *ngSwitchCase="'checkbox'" [form]="form" [key]="field.key"
+                [value]="(field.value | lowercase) == 'true' || field.value == '1' ? true : false" [label]="field.label"
+                [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled"
                 [readonly]="field.readonly" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
                 [additionalValue]="field.additionalValue" [layoutType]="layoutType">
             </pep-checkbox>

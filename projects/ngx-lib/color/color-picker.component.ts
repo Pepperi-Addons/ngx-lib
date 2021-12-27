@@ -52,17 +52,38 @@ export class PepColorPickerComponent implements OnInit {
                 : PepContrastRatioType.AA;
     }
 
+    private defaultHueBackground = `linear-gradient(to right,
+        hsl(0, 100%, 50%) 0%,
+        hsl(60, 100%, 50%) 17%,
+        hsl(120, 100%, 50%) 33%,
+        hsl(180, 100%, 50%) 50%,
+        hsl(240, 100%, 50%) 67%,
+        hsl(300, 100%, 50%) 83%,
+        hsl(360, 100%, 50%) 100%)`;
+
     currentHue = 100;
     currentHueMin = 0;
     currentHueMax = 360;
+    currentHueBackground = this.defaultHueBackground;
+
+    private defaultSaturationBackground = `linear-gradient(to right,
+        hsl(var(--pep-color-picker-current-hue), 0.01%, 50%) 0%,
+        hsl(var(--pep-color-picker-current-hue), 100%, 50%) 100%)`;
 
     currentSaturation = 50;
     currentSaturationMin = 0;
     currentSaturationMax = 100;
+    currentSaturationBackground = this.defaultSaturationBackground;
+
+    private defaultLightnessBackground = `linear-gradient(to right,
+        hsl(var(--pep-color-picker-current-hue), 100%, 100%) 0%,
+        hsl(var(--pep-color-picker-current-hue), 100%, 50%) 50%,
+        hsl(var(--pep-color-picker-current-hue), 100%, 0.01%) 100%)`;
 
     currentLightness = 50;
     currentLightnessMin = 0;
     currentLightnessMax = 100;
+    currentLightnessBackground = this.defaultLightnessBackground;
 
     complientColor: string;
     isUserChooseAAComplientColor: boolean;
@@ -77,6 +98,9 @@ export class PepColorPickerComponent implements OnInit {
         if (this.data.type === 'main') {
             this.currentLightnessMax = 10;
             this.currentLightness = 5;
+            this.currentHueBackground = this.defaultHueBackground;
+            this.currentSaturationBackground = this.defaultSaturationBackground;
+            this.currentLightnessBackground = this.defaultLightnessBackground;
         } else if (this.data.type === 'success') {
             this.currentHueMin = 70;
             this.currentHueMax = 150;
@@ -89,6 +113,18 @@ export class PepColorPickerComponent implements OnInit {
             this.currentLightnessMin = 10;
             this.currentLightnessMax = 65;
             this.currentLightness = 50;
+
+            this.currentHueBackground = `linear-gradient(to right,
+                hsl(70, 100%, 50%) 0%,
+                hsl(150, 100%, 50%) 100%)`;
+            this.currentSaturationBackground = `linear-gradient(to right,
+                hsl(var(--pep-color-picker-current-hue), 50%, 50%) 50%,
+                hsl(var(--pep-color-picker-current-hue), 100%, 50%) 100%)`;
+            this.currentLightnessBackground = `linear-gradient(to right,
+                hsl(var(--pep-color-picker-current-hue), 100%, 65%) 10%,
+                hsl(var(--pep-color-picker-current-hue), 100%, 35%) 35%,
+                hsl(var(--pep-color-picker-current-hue), 100%, 10%) 65%)`;
+
         } else if (this.data.type === 'caution') {
             this.currentHueMin = -20;
             this.currentHueMax = 20;
@@ -101,6 +137,17 @@ export class PepColorPickerComponent implements OnInit {
             this.currentLightnessMin = 25;
             this.currentLightnessMax = 75;
             this.currentLightness = 50;
+
+            this.currentHueBackground = `linear-gradient(to right,
+                hsl(340, 100%, 50%) 0%,
+                hsl(20, 100%, 50%) 100%)`;
+            this.currentSaturationBackground = `linear-gradient(to right,
+                hsl(var(--pep-color-picker-current-hue), 75%, 50%) 75%,
+                hsl(var(--pep-color-picker-current-hue), 100%, 50%) 100%)`;
+            this.currentLightnessBackground = `linear-gradient(to right,
+                hsl(var(--pep-color-picker-current-hue), 100%, 75%) 25%,
+                hsl(var(--pep-color-picker-current-hue), 100%, 50%) 50%,
+                hsl(var(--pep-color-picker-current-hue), 100%, 25%) 75%)`;
         }
     }
 
@@ -155,13 +202,13 @@ export class PepColorPickerComponent implements OnInit {
 
         this.currentSaturation =
             hslColor.s >= this.currentSaturationMin &&
-            hslColor.s <= this.currentSaturationMax
+                hslColor.s <= this.currentSaturationMax
                 ? hslColor.s
                 : this.currentSaturation;
 
         this.currentLightness =
             hslColor.l >= this.currentLightnessMin &&
-            hslColor.l <= this.currentLightnessMax
+                hslColor.l <= this.currentLightnessMax
                 ? hslColor.l
                 : this.currentLightness;
 
@@ -188,22 +235,22 @@ export class PepColorPickerComponent implements OnInit {
         );
     }
 
-    onHueChange(event): void {
-        this.convertColorToValueString({ h: event.value });
+    onHueChange(value): void {
+        this.convertColorToValueString({ h: value });
         this.setCurrentHueInCss();
     }
 
-    onSaturationChange(event): void {
+    onSaturationChange(value): void {
         // this.currentSaturation = event.value;
-        this.convertColorToValueString({ s: event.value });
+        this.convertColorToValueString({ s: value });
     }
 
-    onLightnessChange(event): void {
+    onLightnessChange(value): void {
         // this.currentLightness = event.value;
         this.convertColorToValueString({
             l:
                 this.currentLightnessMax -
-                event.value +
+                value +
                 this.currentLightnessMin,
         });
     }

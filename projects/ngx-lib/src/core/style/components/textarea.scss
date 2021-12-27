@@ -9,6 +9,10 @@
     // Hide scroll
     .mat-form-field {
         .mat-form-field-wrapper {
+            .mat-form-field-flex {
+                display: flex;
+            }
+
             .mat-form-field-infix {
                 line-height: unset;
                 width: 100%;

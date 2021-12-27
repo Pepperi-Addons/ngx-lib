@@ -8,7 +8,7 @@
                 'matrix-qs': type === 'qsForMatrix',
                 'zero-quantity': formattedValue === '0'
             }">
-            <pep-field-title *ngIf="layoutType !== 'table' && layoutType !== 'card'" [label]="label"
+            <pep-field-title *ngIf="renderTitle && layoutType !== 'table' && layoutType !== 'card'" [label]="label"
                 [mandatory]="mandatory" [disabled]="disabled" [showTitle]="showTitle" [xAlignment]="xAlignment">
             </pep-field-title>
 

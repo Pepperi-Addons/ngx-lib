@@ -12,7 +12,8 @@ mat-select {
 
     .mat-select-value {
         max-width: inherit; // Default is 0
-        display: flex;
+        // display: flex; Put display: grid instead cause overflow oout of the container width.
+        display: grid;
         align-self: center;
     }
 
