@@ -18,7 +18,7 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
     PepSmartFilterOperators = PepSmartFilterOperators;
     chooseTypeOptions: Array<IPepOption> = [];
     operatorWidth = '38%';
-    firstControlWidth = '62%';
+    fieldsWidth = '70%';
 
     ngOnInit() {
         this.firstControl.valueChanges
@@ -89,8 +89,10 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
     setControlsWidth() {
         if (this.operator === PepSmartFilterOperators.NumberRange) {
             this.operatorWidth = '30%';
+            this.fieldsWidth = '70%';
         } else {
             this.operatorWidth = '38%';
+            this.fieldsWidth = '62%';
         }
     }
 

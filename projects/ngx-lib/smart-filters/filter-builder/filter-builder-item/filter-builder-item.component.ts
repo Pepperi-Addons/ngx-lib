@@ -9,7 +9,7 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
     templateUrl: './filter-builder-item.component.html',
     styleUrls: ['./filter-builder-item.component.scss'],
 })
-export class FilterBuilderItemComponent {
+export class PepFilterBuilderItemComponent {
     @Input() formKey: string;
     _fields: Array<any> = [];
     _options: IPepOption[] = [];

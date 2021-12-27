@@ -43,7 +43,7 @@ import { PepSmartFilterBaseField } from './field';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { PepFilterActionsComponent } from '../filter-actions.component';
-import { PepTypeConvertorService } from '../../filter-builder/common/services/type-convertor.service';
+
 
 @Directive({})
 export abstract class BaseFilterComponent
@@ -155,8 +155,7 @@ export abstract class BaseFilterComponent
         private builder: FormBuilder,
         protected translate: TranslateService,
         protected validator: PepValidatorService,
-        protected renderer: Renderer2,
-        public typeConvertorService: PepTypeConvertorService
+        protected renderer: Renderer2
     ) {
         this._destroyed = new Subject();
     }

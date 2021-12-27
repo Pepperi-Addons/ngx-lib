@@ -9,8 +9,8 @@ import { PepSmartFilterOperators, IPepSmartFilterOperator } from '../common/mode
 import { PepSmartFilterType } from '../common/model/type'
 import { createSmartFilter, createSmartFilterField } from '../common/model/creator';
 import { getSmartBuilderOperator } from './common/model/operator';
-import { FilterBuilderSectionComponent } from './filter-builder-section/filter-builder-section.component';
-import { FilterBuilderItemComponent } from './filter-builder-item/filter-builder-item.component';
+import { PepFilterBuilderSectionComponent } from './filter-builder-section/filter-builder-section.component';
+import { PepFilterBuilderItemComponent } from './filter-builder-item/filter-builder-item.component';
 import { PepFilterBuilderTypeMap } from './common/model/type-map';
 import { getSmartBuilderOperationUnit } from './common/model/operator-unit';
 import { PepOutputFilterService } from './common/services/output-filter.service';
@@ -102,7 +102,7 @@ export class FilterBuilderService {
      * @returns an object containing the current element and current form
      */
     createSection(operator: PepOperatorTypes, containerRef: ViewContainerRef, parentForm: FormGroup, depth: number) {
-        const factory = this._resolver.resolveComponentFactory(FilterBuilderSectionComponent);
+        const factory = this._resolver.resolveComponentFactory(PepFilterBuilderSectionComponent);
         const componentRef = containerRef.createComponent(factory);
 
         const sectionGroup = this._fb.group({
@@ -137,7 +137,7 @@ export class FilterBuilderService {
      * @param parentForm parent form
      */
     createItem(current: IPepJSONItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
-        const factory = this._resolver.resolveComponentFactory(FilterBuilderItemComponent);
+        const factory = this._resolver.resolveComponentFactory(PepFilterBuilderItemComponent);
         const componentRef = containerRef.createComponent(factory);
 
         let counter = 1;

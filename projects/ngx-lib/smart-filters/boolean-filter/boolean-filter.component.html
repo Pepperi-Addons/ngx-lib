@@ -1,6 +1,6 @@
 <ng-container *ngIf="inline">
-    <pep-select [value]="firstControl?.value || ''" xAlignment="left" [options]="typeConvertorService.booleans"
-        [renderTitle]="renderTitle" [emptyOption]="true" (valueChange)="onValueChanged($event)">
+    <pep-select [value]="firstControl?.value || ''" xAlignment="left" [options]="options" [renderTitle]="renderTitle"
+        [emptyOption]="true" (valueChange)="onValueChanged($event)">
     </pep-select>
 
 </ng-container>

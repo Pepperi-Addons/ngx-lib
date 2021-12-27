@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
     templateUrl: './filter-builder.component.html',
     styleUrls: ['./filter-builder.component.scss'],
 })
-export class FilterBuilderComponent implements OnInit, OnDestroy {
+export class PepFilterBuilderComponent implements OnInit, OnDestroy {
     @Input() jsonFilter: IPepJSONSection = null;
     @Input() fields: Array<IPepFilterBuilderField> = new Array<IPepFilterBuilderField>();
 

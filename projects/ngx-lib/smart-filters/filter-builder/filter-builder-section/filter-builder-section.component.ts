@@ -15,7 +15,7 @@ import { PepTypeConvertorService } from '../common/services/type-convertor.servi
     templateUrl: './filter-builder-section.component.html',
     styleUrls: ['./filter-builder-section.component.scss'],
 })
-export class FilterBuilderSectionComponent {
+export class PepFilterBuilderSectionComponent {
     @Input() form: FormGroup;
     @Input() depth: number;
 

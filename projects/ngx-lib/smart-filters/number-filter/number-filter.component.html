@@ -5,7 +5,7 @@
             [options]="chooseTypeOptions" (valueChange)="onOperatorChanged($event)">
         </pep-select>
     </ng-container>
-    <div *ngIf="operator !== PepSmartFilterOperators.NumberRange" [fxFlex]="inline ? firstControlWidth : null">
+    <div *ngIf="operator !== PepSmartFilterOperators.NumberRange" [fxFlex]="inline ? fieldsWidth : null">
         <!-- Amount -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
             [renderError]="false" [renderTitle]="renderTitle" [type]="field.type"
@@ -14,7 +14,7 @@
         </pep-textbox>
     </div>
     <div *ngIf="operator === PepSmartFilterOperators.NumberRange" fxLayout="row" fxLayout.xs="column"
-        [fxLayoutGap]="inline ? '.5rem' : '1rem'">
+        [fxLayoutGap]="inline ? '.5rem' : '1rem'" [fxFlex]="inline ? fieldsWidth : null">
         <!-- Min number -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.MIN' | translate"
             [renderError]="false" [renderTitle]="renderTitle" [type]="field.type" fxFlex="50%"

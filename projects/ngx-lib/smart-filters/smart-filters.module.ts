@@ -37,9 +37,9 @@ import { PepBooleanFilterComponent } from './boolean-filter/boolean-filter.compo
 import { PepDateFilterComponent } from './date-filter/date-filter.component';
 import { PepMultiSelectFilterComponent } from './multi-select-filter/multi-select-filter.component';
 import { PepNumberFilterComponent } from './number-filter/number-filter.component';
-import { FilterBuilderComponent } from './filter-builder/filter-builder.component';
-import { FilterBuilderSectionComponent } from './filter-builder/filter-builder-section/filter-builder-section.component';
-import { FilterBuilderItemComponent } from './filter-builder/filter-builder-item/filter-builder-item.component';
+import { PepFilterBuilderComponent } from './filter-builder/filter-builder.component';
+import { PepFilterBuilderSectionComponent } from './filter-builder/filter-builder-section/filter-builder-section.component';
+import { PepFilterBuilderItemComponent } from './filter-builder/filter-builder-item/filter-builder-item.component';
 
 @NgModule({
     imports: [
@@ -68,7 +68,15 @@ import { FilterBuilderItemComponent } from './filter-builder/filter-builder-item
         PepButtonModule,
         PepGroupButtonsModule
     ],
-    exports: [PepSmartFiltersComponent, FilterBuilderComponent],
+    exports: [
+        PepSmartFiltersComponent,
+        PepFilterBuilderComponent,
+        PepTextFilterComponent,
+        PepBooleanFilterComponent,
+        PepDateFilterComponent,
+        PepMultiSelectFilterComponent,
+        PepNumberFilterComponent
+    ],
     declarations: [
         // BaseFilterComponent,
         PepSmartFiltersComponent,
@@ -78,9 +86,9 @@ import { FilterBuilderItemComponent } from './filter-builder/filter-builder-item
         PepDateFilterComponent,
         PepMultiSelectFilterComponent,
         PepNumberFilterComponent,
-        FilterBuilderComponent,
-        FilterBuilderSectionComponent,
-        FilterBuilderItemComponent
+        PepFilterBuilderComponent,
+        PepFilterBuilderSectionComponent,
+        PepFilterBuilderItemComponent
     ],
 })
 export class PepSmartFiltersModule {

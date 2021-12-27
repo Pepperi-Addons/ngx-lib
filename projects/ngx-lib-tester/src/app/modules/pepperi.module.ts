@@ -37,6 +37,7 @@ import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
 import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 
 import { PepSmartFiltersModule } from '@pepperi-addons/ngx-lib/smart-filters';
+import { PepQueryBuilderModule } from '@pepperi-addons/ngx-lib/query-builder';
 
 import {
     PepIconModule,
@@ -142,6 +143,7 @@ const pepperiComponentsModules = [
     PepTopBarModule,
     PepPageLayoutModule,
     PepSmartFiltersModule,
+    PepQueryBuilderModule,
     PepFormModule
 ];
 
