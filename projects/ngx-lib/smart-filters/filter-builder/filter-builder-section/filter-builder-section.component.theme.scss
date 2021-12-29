@@ -1,6 +1,0 @@
-@mixin pep-query-builder-section-theme($pepperi-theme) {
-    .filter-section-container {
-        box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, soft);       
-        @include border(border, 1px, solid, get-pep-color($pepperi-theme, color-system-primary, color-tran-50)); 
-    }
-}

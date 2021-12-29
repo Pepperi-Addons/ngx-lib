@@ -21,9 +21,7 @@ import { PepOutputQueryService } from './common/services/output-query.service';
 import { IPepQueryBuilderValues } from './common/model/filter';
 import { PepOperatorTypes } from './common/model/type';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PepQueryBuilderService {
     private _outputQuery$ = new BehaviorSubject<any>(null);
 

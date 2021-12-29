@@ -5,9 +5,7 @@ import { getLegacyOperationUnit } from '../model/operator-unit';
 import { PepSmartFilterOperators } from '@pepperi-addons/ngx-lib/smart-filters';
 
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class PepOutputQueryService {
     private _complexIdCounter: number;
     private _expressionIdCounter: number;
@@ -41,7 +39,7 @@ export class PepOutputQueryService {
      * @returns section query data
      */
     private sectionWalk(current: any) {
-        let section: any;
+        let section: any = null;
 
         Object.keys(current).forEach(key => {
             if (key.includes('item')) {

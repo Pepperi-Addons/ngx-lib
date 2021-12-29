@@ -37,9 +37,7 @@ import { PepBooleanFilterComponent } from './boolean-filter/boolean-filter.compo
 import { PepDateFilterComponent } from './date-filter/date-filter.component';
 import { PepMultiSelectFilterComponent } from './multi-select-filter/multi-select-filter.component';
 import { PepNumberFilterComponent } from './number-filter/number-filter.component';
-import { PepFilterBuilderComponent } from './filter-builder/filter-builder.component';
-import { PepFilterBuilderSectionComponent } from './filter-builder/filter-builder-section/filter-builder-section.component';
-import { PepFilterBuilderItemComponent } from './filter-builder/filter-builder-item/filter-builder-item.component';
+
 
 @NgModule({
     imports: [
@@ -70,7 +68,6 @@ import { PepFilterBuilderItemComponent } from './filter-builder/filter-builder-i
     ],
     exports: [
         PepSmartFiltersComponent,
-        PepFilterBuilderComponent,
         PepTextFilterComponent,
         PepBooleanFilterComponent,
         PepDateFilterComponent,
@@ -85,10 +82,7 @@ import { PepFilterBuilderItemComponent } from './filter-builder/filter-builder-i
         PepBooleanFilterComponent,
         PepDateFilterComponent,
         PepMultiSelectFilterComponent,
-        PepNumberFilterComponent,
-        PepFilterBuilderComponent,
-        PepFilterBuilderSectionComponent,
-        PepFilterBuilderItemComponent
+        PepNumberFilterComponent
     ],
 })
 export class PepSmartFiltersModule {

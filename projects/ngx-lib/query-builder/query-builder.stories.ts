@@ -9,15 +9,17 @@ import { PepQueryBuilderComponent } from './query-builder.component';
 export default {
     title: 'Components/query-builder',
     component: PepQueryBuilderComponent,
+
     decorators: [
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
             imports: [PepQueryBuilderModule, SBNgxHelperModule]
         })
     ],
+
     argTypes: {
         query: {
-            description: 'legacy query data',
+            description: 'This is the legacy query',
             defaultValue: null,
             control: 'object',
             table: {
@@ -27,21 +29,15 @@ export default {
             }
         },
         fields: {
-            description: 'legacy fields',
-            defaultValue: null,
-            control: 'object',
+            description: 'This is the legacy fields array',
+            defaultValue: [],
+            control: 'array',
             table: {
                 type: {
                     summary: 'Array<IPepQueryBuilderField>'
                 }
             }
-        }/*,
-        queryChange: {
-            action: 'onQueryChange'
-        },
-        formValidationChange: {
-            action: 'onValidationChange'
-        } */
+        }
     },
     parameters: {
         controls: {
@@ -52,27 +48,23 @@ export default {
                 'formValidationChange'
             ],
         },
-    },
-
+    }
 
 } as Meta;
 
 // This creates a Story for the component
+
 const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponent) => ({
     props: {
-        ...args/*,
-        onQueryChange: action('queryChange'),
-        onValidationChange: action('formValidationChange'), */
+        queryChange: action('queryChange'),
+        formValidationChange: action('formValidationChange'),
     },
     template: `
-    <pep-query-builder [query]="query" [fields]="fields" (queryChange)="onQueryChange($event)"
-    (formValidationChange)="onValidationChange($event)"></pep-query-builder>
-`,
-
+    <pep-query-builder [query]="query" [fields]="fields" (queryChange)="queryChange($event)"
+    (formValidationChange)="formValidationChange($event)"></pep-query-builder>
+    `,
 });
 
 export const Base = Template.bind({});
 Base.storyName = "Basic";
-Base.args = {
-    label: 'query builder'
-};
+

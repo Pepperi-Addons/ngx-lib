@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class PepQueryBuilderConstantsService {
     private readonly MAX_STRUCTURE_DEPTH = 3;
 

@@ -12,7 +12,9 @@ export class QueryBuilderExampleComponent implements OnInit {
 
     isformValid = true;
 
-    constructor() { }
+    constructor() {
+        //
+    }
 
     ngOnInit(): void {
         this.loadFilterFields();
