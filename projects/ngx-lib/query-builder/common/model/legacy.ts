@@ -8,14 +8,14 @@ export interface IPepQueryBuilderField {
     OptionalValues: Array<KeyValuePair<string>>;
 }
 
-export interface IPepJSONSection {
+export interface IPepQuerySection {
     ComplexId: string;
     Operation: PepOperatorTypes;
-    LeftNode?: IPepJSONSection | IPepJSONItem;
-    RightNode?: IPepJSONSection | IPepJSONItem;
+    LeftNode?: IPepQuerySection | IPepQueryItem;
+    RightNode?: IPepQuerySection | IPepQueryItem;
 }
 
-export interface IPepJSONItem {
+export interface IPepQueryItem {
     ExpressionId: string;
     ApiName: string;
     Operation: string;

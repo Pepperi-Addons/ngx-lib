@@ -9,7 +9,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { IPepQueryBuilderField, IPepJSONSection } from './common/model/legacy';
+import { IPepQueryBuilderField, IPepQuerySection } from './common/model/legacy';
 import { PepQueryBuilderService } from './query-builder.service';
 import { Subscription } from 'rxjs';
 
@@ -19,18 +19,18 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./query-builder.component.scss'],
 })
 export class PepQueryBuilderComponent implements OnInit, OnDestroy {
-    @Input() query: IPepJSONSection = null;
+    @Input() query: IPepQuerySection = null;
     @Input() fields: Array<IPepQueryBuilderField> = new Array<IPepQueryBuilderField>();
 
     @Output()
-    queryChange: EventEmitter<IPepJSONSection> = new EventEmitter<IPepJSONSection>();
+    queryChange: EventEmitter<IPepQuerySection> = new EventEmitter<IPepQuerySection>();
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('queryRoot', { read: ViewContainerRef, static: true }) queryRoot: ViewContainerRef;
 
     _formSubscription$: Subscription;
-    _outputJsonSubscription$: Subscription;
+    _outputQuerySubscription$: Subscription;
 
     _isFormValid = true;
 
@@ -47,8 +47,8 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
                 this.formValidationChange.emit(this._isFormValid);
             }
         });
-        this._outputJsonSubscription$ = this._queryBuilderService.triggerOutputJson.subscribe((outputJson) => {
-            this.queryChange.emit(outputJson);
+        this._outputQuerySubscription$ = this._queryBuilderService.outputQuery$.subscribe((outputQuery) => {
+            this.queryChange.emit(outputQuery);
         });
     }
 
@@ -63,8 +63,8 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
         if (this._formSubscription$) {
             this._formSubscription$.unsubscribe();
         }
-        if (this._outputJsonSubscription$) {
-            this._outputJsonSubscription$.unsubscribe();
+        if (this._outputQuerySubscription$) {
+            this._outputQuerySubscription$.unsubscribe();
         }
     }
 

@@ -55,12 +55,12 @@ export class PepQueryBuilderItemComponent {
     remove = new EventEmitter();
 
 
-    test: any = {};
+    //test: any = {};
 
     _form: FormGroup;
-    fieldWidth = 26;
+    /*fieldWidth = 26;
     filterWidth = 67.5;
-    binWidth = 6.5;
+    binWidth = 6.5; */
 
     constructor(
         private _fb: FormBuilder,

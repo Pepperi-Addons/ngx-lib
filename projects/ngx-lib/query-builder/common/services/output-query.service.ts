@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPepJSONItem } from '../model/legacy';
+import { IPepQueryItem } from '../model/legacy';
 import { getLegacyOperator } from '../model/operator';
 import { getLegacyOperationUnit } from '../model/operator-unit';
 import { PepSmartFilterOperators } from '@pepperi-addons/ngx-lib/smart-filters';
@@ -19,7 +19,7 @@ export class PepOutputQueryService {
     /**
      * generates a legacy query structure 
      * @param filters UI smart filters structure     
-     * @returns legacy JSON
+     * @returns legacy query
      */
     generateQuery(filters: any) {
         this.initParams();
@@ -28,7 +28,7 @@ export class PepOutputQueryService {
     }
 
     /**
-     * reset properties
+     * init params
      */
     private initParams() {
         this._complexIdCounter = 1;
@@ -50,11 +50,11 @@ export class PepOutputQueryService {
                     ApiName: current[key].fieldId,
                     Operation: getLegacyOperator(current[key].operator, current[key].fieldType),
                     Values: this.getItemValues(current[key])
-                } as IPepJSONItem, current.operator);
+                } as IPepQueryItem, current.operator);
             } else if (key.includes('section')) {
-                const innerSection = this.sectionWalk(current[key]);
-                if (innerSection) {
-                    section = this.addToSection(section, innerSection, current.operator);
+                const childSection = this.sectionWalk(current[key]);
+                if (childSection) {
+                    section = this.addToSection(section, childSection, current.operator);
                 }
             }
         });

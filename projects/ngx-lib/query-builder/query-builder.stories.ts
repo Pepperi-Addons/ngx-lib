@@ -1,5 +1,6 @@
 import { Meta, Story, moduleMetadata } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
+import { action } from '@storybook/addon-actions';
 import { PepQueryBuilderModule } from './query-builder.module';
 import { PepQueryBuilderService } from './query-builder.service';
 import { PepQueryBuilderComponent } from './query-builder.component';
@@ -21,7 +22,7 @@ export default {
             control: 'object',
             table: {
                 type: {
-                    summary: null,//`Array<IPepQueryBuilderField>`
+                    summary: 'IPepQuerySection | IPepQueryItem'
                 }
             }
         },
@@ -31,10 +32,16 @@ export default {
             control: 'object',
             table: {
                 type: {
-                    summary: `Array<IPepQueryBuilderField>`
+                    summary: 'Array<IPepQueryBuilderField>'
                 }
             }
-        }
+        }/*,
+        queryChange: {
+            action: 'onQueryChange'
+        },
+        formValidationChange: {
+            action: 'onValidationChange'
+        } */
     },
     parameters: {
         controls: {
@@ -51,9 +58,11 @@ export default {
 } as Meta;
 
 // This creates a Story for the component
-const Template: Story<PepQueryBuilderComponent> = (args) => ({
+const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponent) => ({
     props: {
-        ...args
+        ...args/*,
+        onQueryChange: action('queryChange'),
+        onValidationChange: action('formValidationChange'), */
     },
     template: `
     <pep-query-builder [query]="query" [fields]="fields" (queryChange)="onQueryChange($event)"

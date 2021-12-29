@@ -2,7 +2,7 @@ import { Injectable, ViewContainerRef, ComponentFactoryResolver } from '@angular
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { } from 'lodash';
-import { IPepQueryBuilderField, IPepJSONSection, IPepJSONItem } from './common/model/legacy';
+import { IPepQueryBuilderField, IPepQuerySection, IPepQueryItem } from './common/model/legacy';
 import {
     IPepSmartFilterField,
     IPepSmartFilterData,
@@ -12,10 +12,6 @@ import {
     createSmartFilter,
     createSmartFilterField
 } from '@pepperi-addons/ngx-lib/smart-filters';
-//import { IPepSmartFilterData } from '../smart-filters/common/model/filter';
-//import { PepSmartFilterOperators, IPepSmartFilterOperator } from '../smart-filters/common/model/operator';
-//import { PepSmartFilterType } from '../smart-filters/common/model/type'
-//import { createSmartFilter, createSmartFilterField } from '../smart-filters/common/model/creator';
 import { getSmartBuilderOperator } from './common/model/operator';
 import { PepQueryBuilderSectionComponent } from './query-builder-section/query-builder-section.component';
 import { PepQueryBuilderItemComponent } from './query-builder-item/query-builder-item.component';
@@ -29,32 +25,30 @@ import { PepOperatorTypes } from './common/model/type';
     providedIn: 'root'
 })
 export class PepQueryBuilderService {
-    private _outputJsonSubject = new BehaviorSubject<any>(null);
+    private _outputQuery$ = new BehaviorSubject<any>(null);
 
-    private _sectionIdCounter: number;
     private _smartFilterFields: Array<IPepSmartFilterField>;
     private _form: FormGroup;
 
-    public triggerOutputJson = this._outputJsonSubject.asObservable();
+    public outputQuery$ = this._outputQuery$.asObservable();
 
     constructor(private _fb: FormBuilder, private _resolver: ComponentFactoryResolver, private _outputQueryService: PepOutputQueryService) {
 
     }
 
     /**
-     * creates a dynamic filter structure
+     * creates a dynamic UI filter structure
      * might has a different structure than the input's due to merge of parent-child elements
-     * @param json legacy JSON
+     * @param query legacy query
      * @param fields an array of legacy fields     
      * @param containerRef reference to root element
      */
     createFilterTree(
-        query: IPepJSONSection,
+        query: IPepQuerySection,
         fields: Array<IPepQueryBuilderField>,
         form: FormGroup,
         containerRef: ViewContainerRef
     ) {
-        this.initParams();
         this._form = form;
         this._smartFilterFields = this.convertToSmartFilterFields(fields);
         const result = this.createSection(query?.Operation ? query.Operation : PepOperatorTypes.And, containerRef, this._form, 0);
@@ -62,13 +56,6 @@ export class PepQueryBuilderService {
             this.flatten(query, query.LeftNode, result.containerRef, result.parentForm, 1);
             this.flatten(query, query.RightNode, result.containerRef, result.parentForm, 1);
         }
-    }
-
-    /**
-     * reset params
-     */
-    initParams() {
-        this._sectionIdCounter = 1;
     }
 
     /**
@@ -82,15 +69,15 @@ export class PepQueryBuilderService {
     }
 
     /**
-     * a recursive function dynamically builds filters structure
+     * a recursive function dynamically builds UI filters structure
      * @param parent legacy complex object
      * @param current child legacy object (either another complex or expression type)
      * @param containerRef parent element
      * @param parentForm parent form
      */
-    private flatten(parent: IPepJSONSection, current: IPepJSONSection | IPepJSONItem, containerRef: ViewContainerRef, parentForm: FormGroup, depth: number) {
+    private flatten(parent: IPepQuerySection, current: IPepQuerySection | IPepQueryItem, containerRef: ViewContainerRef, parentForm: FormGroup, depth: number) {
         if (this.hasProperty(current, 'ComplexId')) {
-            const section = current as IPepJSONSection;
+            const section = current as IPepQuerySection;
             if (parent.Operation === current.Operation) {
                 this.flatten(parent, section.LeftNode, containerRef, parentForm, depth);
                 this.flatten(parent, section.RightNode, containerRef, parentForm, depth);
@@ -100,7 +87,7 @@ export class PepQueryBuilderService {
                 this.flatten(section, section.RightNode, result.containerRef, result.parentForm, depth + 1);
             }
         } else if (this.hasProperty(current, 'ExpressionId')) {
-            this.createItem(current as IPepJSONItem, containerRef, parentForm);
+            this.createItem(current as IPepQueryItem, containerRef, parentForm);
         }
     }
 
@@ -117,7 +104,6 @@ export class PepQueryBuilderService {
         const componentRef = containerRef.createComponent(factory);
 
         const sectionGroup = this._fb.group({
-            id: this._sectionIdCounter++,
             operator: this._fb.control(operator)
         });
         let counter = 1;
@@ -137,10 +123,10 @@ export class PepQueryBuilderService {
         componentRef.instance.remove.subscribe(() => {
             parentForm.removeControl(formKey);
             componentRef.destroy();
-            this.createOutputJson();
+            this.createOutputQuery();
         });
         componentRef.instance.operatorChange.subscribe(() => {
-            this.createOutputJson();
+            this.createOutputQuery();
         });
 
         return {
@@ -155,7 +141,7 @@ export class PepQueryBuilderService {
      * @param containerRef parent element
      * @param parentForm parent form
      */
-    createItem(current: IPepJSONItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
+    createItem(current: IPepQueryItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory = this._resolver.resolveComponentFactory(PepQueryBuilderItemComponent);
         const componentRef = containerRef.createComponent(factory);
 
@@ -174,12 +160,12 @@ export class PepQueryBuilderService {
         }
         componentRef.instance.parentForm = parentForm;
         componentRef.instance.filterChange.subscribe(() => {
-            this.createOutputJson();
+            this.createOutputQuery();
         });
         componentRef.instance.remove.subscribe(() => {
             parentForm.removeControl(formKey);
             componentRef.destroy();
-            this.createOutputJson();
+            this.createOutputQuery();
         });
     }
 
@@ -189,7 +175,7 @@ export class PepQueryBuilderService {
      * @param field filter's selected field
      * @returns smart filter object
      */
-    private getFilter(current: IPepJSONItem, field: any): IPepSmartFilterData | null {
+    private getFilter(current: IPepQueryItem, field: any): IPepSmartFilterData | null {
         const operator: IPepSmartFilterOperator = getSmartBuilderOperator(current.Operation, field.type);
         if (operator) {
             const filterValues: IPepQueryBuilderValues = this.getFilterValues(current, operator, field);
@@ -210,7 +196,7 @@ export class PepQueryBuilderService {
      * @param current filter legacy element
      * @returns smart filter field, if not found returns the first fields
      */
-    private getSelectedField(current: IPepJSONItem): IPepSmartFilterField | null {
+    private getSelectedField(current: IPepQueryItem): IPepSmartFilterField | null {
         if (current) {
             const item = this._smartFilterFields.find(field => field.id === current.ApiName);
             return item ? item : this._smartFilterFields?.length > 0 ? this._smartFilterFields[0] : null;
@@ -226,7 +212,7 @@ export class PepQueryBuilderService {
      * @param field filter's selected field
      * @returns object contains the filter values data
      */
-    private getFilterValues(current: IPepJSONItem, operator: IPepSmartFilterOperator, field: any) {
+    private getFilterValues(current: IPepQueryItem, operator: IPepSmartFilterOperator, field: any) {
         const data: IPepQueryBuilderValues = {
             first: null,
             second: null,
@@ -284,12 +270,12 @@ export class PepQueryBuilderService {
     }
 
     /**
-     * creates a legacy output JSON 
+     * creates a legacy output query 
      */
-    private createOutputJson() {
+    private createOutputQuery() {
         if (this._form.valid) {
-            const json = this._outputQueryService.generateQuery(this._form.value);
-            this._outputJsonSubject.next(json);
+            const query = this._outputQueryService.generateQuery(this._form.value);
+            this._outputQuery$.next(query);
         }
     }
 

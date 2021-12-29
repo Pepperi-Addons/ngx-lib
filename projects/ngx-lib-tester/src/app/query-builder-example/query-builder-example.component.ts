@@ -16,78 +16,70 @@ export class QueryBuilderExampleComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadFilterFields();
-        /*this.json = {
-            "ComplexId": 1,
-            "Operation": "OR",
-            "LeftNode": {
-                "ComplexId": 2,
-                "Operation": "AND",
-                "LeftNode": {
-                    "ExpressionId": 1,
-                    "ApiName": "ActionDateTime",
-                    "Operation": "InTheLast",
-                    "Values": [
-                        "4",
-                        "Days"
-                    ]
-                },
-                "RightNode": {
-                    "ExpressionId": 2,
-                    "ApiName": "BillToState",
-                    "Operation": "IsEqual",
-                    "Values": [
-                        "value2",
-                        "value4",
-                        "value6",
-                        "value8"
-                    ]
-                }
-            },
-            "RightNode": {
-                "ExpressionId": 3,
-                "ApiName": "Type",
-                "Operation": "IsEqual",
-                "Values": [
-                    "trtt"
-                ]
-            }
-        } */
-
         this.json = {
-            "ComplexId": 3,
-            "Operation": "OR",
+            "ComplexId": "5",
             "LeftNode": {
-                "ComplexId": 2,
-                "Operation": "AND",
+                "ComplexId": "4",
                 "LeftNode": {
-                    "ExpressionId": 1,
-                    "ApiName": "TSAboolll",
-                    "Operation": "IsEqual",
-                    "Values": [
-                        "True"
-                    ]
+                    "ComplexId": "3",
+                    "LeftNode":
+                    {
+                        "ComplexId": "1",
+                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAboolll', "Operation": 'IsEqual', "Values": ["True"] },
+                        "Operation": "OR",
+                        "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'value4', 'value8'] }
+                    },
+                    "Operation": "OR",
+                    "RightNode": {
+                        "ComplexId": "2",
+                        "LeftNode": { "ExpressionId": '3', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ["abc"] },
+                        "Operation": "AND",
+                        "RightNode": { "ExpressionId": '4', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ['sss'] }
+                    }
                 },
-                "RightNode": {
-                    "ExpressionId": 2,
-                    "ApiName": "BillToState",
-                    "Operation": "IsEqual",
-                    "Values": [
-                        "value2",
-                        "value4",
-                        "value16",
-                        "value8"
-                    ]
-                }
+                "Operation": "OR",
+                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "InTheLast", "Values": ["9", "Months"] },
             },
-            "RightNode": {
-                "ExpressionId": 3,
-                "ApiName": "CaseQuantity",
-                "Operation": "IsEqual",
-                "Values": [
-                    "2"
-                ]
-            }
+            "RightNode": { "ExpressionId": '6', "ApiName": "CaseQuantity", "Operation": "IsEqual", "Values": ["2"] },
         }
+
+
+        /*
+                this.json = {
+                    "ComplexId": 3,
+                    "Operation": "OR",
+                    "LeftNode": {
+                        "ComplexId": 2,
+                        "Operation": "AND",
+                        "LeftNode": {
+                            "ExpressionId": 1,
+                            "ApiName": "TSAboolll",
+                            "Operation": "IsEqual",
+                            "Values": [
+                                "True"
+                            ]
+                        },
+                        "RightNode": {
+                            "ExpressionId": 2,
+                            "ApiName": "BillToState",
+                            "Operation": "IsEqual",
+                            "Values": [
+                                "value2",
+                                "value4",
+                                "value16",
+                                "value8"
+                            ]
+                        }
+                    },
+                    "RightNode": {
+                        "ExpressionId": 3,
+                        "ApiName": "CaseQuantity",
+                        "Operation": "IsEqual",
+                        "Values": [
+                            "2"
+                        ]
+                    }
+                } */
 
 
     }
