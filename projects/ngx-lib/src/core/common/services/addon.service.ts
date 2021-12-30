@@ -97,10 +97,10 @@ export class PepAddonService {
         });
     }
 
-    getNgxLibTranslationResource(subAddonUUID = ''): ITranslationResource {
+    getNgxLibTranslationResource(subAddonUUID = '', libName = 'ngx-lib'): ITranslationResource {
         const addonStaticFolder = this.getAddonStaticFolder(subAddonUUID);
-        const translationsPath: string = this.fileService.getAssetsTranslationsPath(addonStaticFolder);
-        const translationsSuffix: string = this.fileService.getAssetsTranslationsSuffix();
+        const translationsPath: string = this.fileService.getAssetsTranslationsPath(addonStaticFolder, libName);
+        const translationsSuffix: string = this.fileService.getAssetsTranslationsSuffix(libName);
 
         return {
             prefix: translationsPath,
@@ -122,6 +122,7 @@ export class PepAddonService {
         this.translateService.setDefaultTranslateLang(translate, urlLangParam);
     }
 
+    // Deprecated need to delete in next major.
     public static createDefaultMultiTranslateLoader(
         http: HttpClient,
         fileService: PepFileService,
@@ -133,6 +134,28 @@ export class PepAddonService {
 
         return addonService.translateService.createMultiTranslateLoader([
             ngxLibTranslationResource,
+            addonTranslationResource
+        ]);
+    }
+
+    public static createMultiTranslateLoader(
+        addonService: PepAddonService,
+        libsName = ['ngx-lib'],
+        subAddonUUID = ''
+    ) {
+        const ngxLibTranslationResources = [];
+
+        if (libsName?.length > 0) {
+            for (let index = 0; index < libsName.length; index++) {
+                const libName = libsName[index];
+                ngxLibTranslationResources.push(addonService.getNgxLibTranslationResource(subAddonUUID, libName));
+            }
+        }
+
+        const addonTranslationResource = addonService.getAddonTranslationResource(subAddonUUID);
+
+        return addonService.translateService.createMultiTranslateLoader([
+            ...ngxLibTranslationResources,
             addonTranslationResource
         ]);
     }
