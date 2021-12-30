@@ -236,22 +236,22 @@ export class PepFileService {
         return blob;
     }
 
-    getAssetsPath(assetsDomain = ''): string {
+    getAssetsPath(assetsDomain = '', libName = 'ngx-lib'): string {
         const concatChar =
             assetsDomain === '' || assetsDomain.endsWith('/') ? '' : '/';
-        return `${assetsDomain}${concatChar}assets/ngx-lib/`;
+        return `${assetsDomain}${concatChar}assets/${libName}/`;
     }
 
-    getAssetsTranslationsSuffix(): string {
-        return '.ngx-lib.json';
+    getAssetsTranslationsSuffix(libName = 'ngx-lib'): string {
+        return `.${libName}.json`;
     }
 
-    getAssetsTranslationsPath(assetsDomain = ''): string {
-        return `${this.getAssetsPath(assetsDomain)}i18n/`;
+    getAssetsTranslationsPath(assetsDomain = '', libName = 'ngx-lib'): string {
+        return `${this.getAssetsPath(assetsDomain, libName)}i18n/`;
     }
 
-    getAssetsImagesPath(assetsDomain = '', image = ''): string {
-        return `${this.getAssetsPath(assetsDomain)}images/${image}`;
+    getAssetsImagesPath(assetsDomain = '', image = '', libName = 'ngx-lib'): string {
+        return `${this.getAssetsPath(assetsDomain, libName)}images/${image}`;
     }
 
     getSvgAsImageSrc(svg: string): string {
