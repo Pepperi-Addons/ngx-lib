@@ -2,16 +2,16 @@
     <div class="query-section-container" fxLayout="column" fxLayoutGap=".5rem">
         <div fxLayout="row" fxLayoutAlign="space-between">
             <pep-group-buttons [buttons]="toggleButtons" [selectedButtonKey]="f.operator?.value || ''" styleType="weak"
-                sizeType="sm" [viewType]="'toggle'">
+                sizeType="sm" [viewType]="'toggle'" [buttonsDisabled]="!hasFields">
             </pep-group-buttons>
             <div fxLayout="row" fxLayoutGap=".5rem">
                 <pep-button value="Add Filter" styleType="weak" styleStateType="system" sizeType="sm" classNames=""
-                    [disabled]="!queryBuilderService.hasFields" iconName="number_plus" iconPosition="end"
-                    [visible]="true" (buttonClick)="onAddRuleClicked()"></pep-button>
+                    [disabled]="!hasFields" iconName="number_plus" iconPosition="end" [visible]="true"
+                    (buttonClick)="onAddRuleClicked()"></pep-button>
                 <ng-container *ngIf="depth.current < depth.max-1">
                     <pep-button value="Add Filter Group" styleType="weak" styleStateType="system" sizeType="sm"
-                        classNames="" [disabled]="!queryBuilderService.hasFields" iconName="number_plus"
-                        iconPosition="end" [visible]="true" (buttonClick)="onAddRuleSetClicked()"></pep-button>
+                        classNames="" [disabled]="!hasFields" iconName="number_plus" iconPosition="end" [visible]="true"
+                        (buttonClick)="onAddRuleSetClicked()"></pep-button>
                 </ng-container>
             </div>
         </div>

@@ -5,11 +5,9 @@ import {
     Output,
     OnInit,
     OnDestroy,
-    ViewChild,
-    ViewContainerRef,
-    Renderer2
+    ViewChild
 } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { PepQueryBuilderSectionComponent } from './query-builder-section/query-builder-section.component';
 import { IPepQueryBuilderField, IPepQuerySection } from './common/model/legacy';
 import { PepQueryBuilderService } from './query-builder.service';
@@ -28,10 +26,11 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     set query(object: IPepQuerySection) {
         this._query = object;
         this.loadQuery()
-    };
+    }
     @Input()
     set fields(list: Array<IPepQueryBuilderField>) {
         this.queryBuilderService.fields = list;
+        this.hasFields = this.queryBuilderService.hasFields;
         this.loadQuery();
     }
     @Input()
@@ -48,12 +47,9 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
 
     _formSubscription$: Subscription;
     _outputQuerySubscription$: Subscription;
-
     _lastFormValidStatus = true;
-
-    //form: FormGroup;
     depth: IPepQueryDepth;
-    //sectionContainer;
+    hasFields = false;
 
     constructor(
         private _fb: FormBuilder,
@@ -73,8 +69,7 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        //console.log('this.queryRoot.get()', this.root.sectionContainer);
-        // this.queryBuilderService.createFilterTree(this.query, this.fields, this.form, this.queryRoot);
+        //
     }
 
     setupForm() {
@@ -91,7 +86,7 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * builds UI query structure as soon both the fields and query loads
+     * builds UI query structure as soon as both the fields and query loads
      */
     loadQuery() {
         if (
@@ -106,17 +101,14 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     onCreateSection() {
         const section = this.queryBuilderService.createSection(PepOperatorTypes.And, this.root.sectionContainer, this.queryBuilderService.form, 1);
         this.queryBuilderService.createItem(null, section.containerRef, section.parentForm);
-        //console.log('onCreateSection outer');
     }
 
     onCreateItem() {
         this.queryBuilderService.createItem(null, this.root.sectionContainer, this.queryBuilderService.form);
-        //console.log('onCreateItem outer');
     }
 
     onOperatorChange() {
         this.queryBuilderService.createOutputQuery();
-        //console.log('onOperatorChange outer');
     }
 
     ngOnDestroy() {
@@ -127,6 +119,5 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
             this._outputQuerySubscription$.unsubscribe();
         }
     }
-
 
 }

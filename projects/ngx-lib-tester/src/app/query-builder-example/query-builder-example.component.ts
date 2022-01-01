@@ -124,6 +124,10 @@ export class QueryBuilderExampleComponent implements OnInit {
 
     }
 
+    onFormValidationChanged(status: boolean) {
+        console.log('this.isformValid', status);
+        this.isformValid = status;
+    }
 
 
 }

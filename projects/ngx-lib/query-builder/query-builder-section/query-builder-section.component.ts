@@ -1,11 +1,17 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+    ViewChild,
+    ViewContainerRef
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
     IPepButtonClickEvent,
     PepButton,
 } from '@pepperi-addons/ngx-lib/button';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
-import { PepQueryBuilderService } from '../query-builder.service';
 import { PepTypeConvertorService } from '../common/services/type-convertor.service';
 import { IPepQueryDepth } from '../common/model/structure';
 
@@ -17,6 +23,7 @@ import { IPepQueryDepth } from '../common/model/structure';
 export class PepQueryBuilderSectionComponent {
     @Input() form: FormGroup;
     @Input() depth: IPepQueryDepth;
+    @Input() hasFields = true;
 
     @Output()
     createSection = new EventEmitter();
@@ -31,10 +38,7 @@ export class PepQueryBuilderSectionComponent {
 
     toggleButtons: Array<PepButton>;
 
-    constructor(
-        public queryBuilderService: PepQueryBuilderService,
-        private _typeConvertorService: PepTypeConvertorService
-    ) {
+    constructor(private _typeConvertorService: PepTypeConvertorService) {
     }
 
     ngOnInit() {
@@ -57,7 +61,6 @@ export class PepQueryBuilderSectionComponent {
     }
 
     onOperatorChanged(event) {
-        console.log('onOperatorChanged', event);
         if (event?.source?.key) {
             this.f.operator.setValue(event.source.key);
             this.operatorChange.emit();
@@ -65,12 +68,10 @@ export class PepQueryBuilderSectionComponent {
     }
 
     onAddRuleClicked() {
-        console.log('onAddRuleClicked');
         this.createItem.emit();
     }
 
     onAddRuleSetClicked() {
-        console.log('onAddRuleSetClicked');
         this.createSection.emit();
     }
 

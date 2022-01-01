@@ -6,32 +6,32 @@
             <ng-container [ngSwitch]="_selectedField.componentType">
                 <ng-container *ngSwitchCase="'text'">
                     <pep-text-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
-                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [filter]="_filter" [parentForm]="form" [emitOnChange]="true" [inline]="true"
                         [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-text-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'boolean'">
                     <pep-boolean-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
-                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [filter]="_filter" [parentForm]="form" [emitOnChange]="true" [inline]="true"
                         [options]="typeConvertorService.booleans" [renderTitle]="false"
                         (filterChange)="onFilterChanged()">
                     </pep-boolean-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'date'">
                     <pep-date-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
-                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [filter]="_filter" [parentForm]="form" [emitOnChange]="true" [inline]="true"
                         [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-date-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'multi-select'">
                     <pep-multi-select-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
-                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [filter]="_filter" [parentForm]="form" [emitOnChange]="true" [inline]="true"
                         [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-multi-select-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'number'">
                     <pep-number-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
-                        [filter]="_filter" [parentForm]="_form" [emitOnChange]="true" [inline]="true"
+                        [filter]="_filter" [parentForm]="form" [emitOnChange]="true" [inline]="true"
                         [renderTitle]="false" (filterChange)="onFilterChanged()">
                     </pep-number-filter>
                 </ng-container>

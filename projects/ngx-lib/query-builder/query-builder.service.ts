@@ -20,7 +20,6 @@ import { getSmartBuilderOperationUnit } from './common/model/operator-unit';
 import { PepOutputQueryService } from './common/services/output-query.service';
 import { IPepQueryBuilderValues } from './common/model/filter';
 import { PepOperatorTypes } from './common/model/type';
-import { IPepQueryDepth } from './common/model/structure';
 
 const MAX_STRUCTURE_DEPTH = 3;
 
@@ -141,8 +140,7 @@ export class PepQueryBuilderService {
             current: depth,
             max: this._maxStructureDepth
         };
-        componentRef.instance.createSection.subscribe((sectionContainer) => {
-            console.log('sectionContainer', sectionContainer);
+        componentRef.instance.createSection.subscribe(() => {
             const section = this.createSection(PepOperatorTypes.And, componentRef.instance.sectionContainer, sectionGroup, depth + 1);
             this.createItem(null, section.containerRef, section.parentForm);
         });

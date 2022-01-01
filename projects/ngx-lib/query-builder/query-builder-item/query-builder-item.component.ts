@@ -54,13 +54,7 @@ export class PepQueryBuilderItemComponent {
     @Output()
     remove = new EventEmitter();
 
-
-    //test: any = {};
-
-    _form: FormGroup;
-    /*fieldWidth = 26;
-    filterWidth = 67.5;
-    binWidth = 6.5; */
+    form: FormGroup;
 
     constructor(
         private _fb: FormBuilder,
@@ -74,7 +68,7 @@ export class PepQueryBuilderItemComponent {
     }
 
     setupForm() {
-        this._form = this._fb.group({
+        this.form = this._fb.group({
             fieldId: this._fb.control(null),
             fieldType: this._fb.control(null),
             operator: this._fb.control(null),
@@ -87,7 +81,7 @@ export class PepQueryBuilderItemComponent {
     }
 
     addToParentForm() {
-        this._parentForm.setControl(this.formKey, this._form);
+        this._parentForm.setControl(this.formKey, this.form);
     }
 
     onFieldChanged(key) {
@@ -109,7 +103,7 @@ export class PepQueryBuilderItemComponent {
     }
 
     onFilterChanged() {
-        if (this._form.valid) {
+        if (this.form.valid) {
             this.filterChange.emit();
         }
     }
