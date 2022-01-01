@@ -20,13 +20,19 @@ import { getSmartBuilderOperationUnit } from './common/model/operator-unit';
 import { PepOutputQueryService } from './common/services/output-query.service';
 import { IPepQueryBuilderValues } from './common/model/filter';
 import { PepOperatorTypes } from './common/model/type';
+import { IPepQueryDepth } from './common/model/structure';
 
-@Injectable()
+const MAX_STRUCTURE_DEPTH = 3;
+
+@Injectable({
+    providedIn: 'root'
+})
 export class PepQueryBuilderService {
     private _outputQuery$ = new BehaviorSubject<any>(null);
 
     private _smartFilterFields: Array<IPepSmartFilterField>;
     private _form: FormGroup;
+    private _maxStructureDepth = MAX_STRUCTURE_DEPTH;
 
     public outputQuery$ = this._outputQuery$.asObservable();
 
@@ -34,26 +40,47 @@ export class PepQueryBuilderService {
 
     }
 
+    set maxDepth(value) {
+        this._maxStructureDepth = value;
+    }
+
+    get maxDepth() {
+        return this._maxStructureDepth;
+    }
+
+    set fields(list: Array<IPepQueryBuilderField>) {
+        this._smartFilterFields = this.convertToSmartFilterFields(list);
+    }
+
+    get hasFields(): boolean {
+        return this._smartFilterFields?.length > 0;
+    }
+
+    set form(value: FormGroup) {
+        this._form = value;
+    }
+
+    get form() {
+        return this._form;
+    }
+
     /**
-     * creates a dynamic UI filter structure
-     * might has a different structure than the input's due to merge of parent-child elements
-     * @param query legacy query
-     * @param fields an array of legacy fields     
+     * builds a dynamic UI query structure
+     * might has a different structure than the query's due to parent-child elements merge
+     * @param query legacy query     
      * @param containerRef reference to root element
      */
-    createFilterTree(
+    buildQueryStructure(
         query: IPepQuerySection,
-        fields: Array<IPepQueryBuilderField>,
-        form: FormGroup,
         containerRef: ViewContainerRef
     ) {
-        this._form = form;
-        this._smartFilterFields = this.convertToSmartFilterFields(fields);
-        const result = this.createSection(query?.Operation ? query.Operation : PepOperatorTypes.And, containerRef, this._form, 0);
-        if (query) {
-            this.flatten(query, query.LeftNode, result.containerRef, result.parentForm, 1);
-            this.flatten(query, query.RightNode, result.containerRef, result.parentForm, 1);
+        //update root operator        
+        if (this.hasProperty(query, 'ComplexId') &&
+            query?.Operation &&
+            query.Operation !== this._form.get('operator').value) {
+            this._form.get('operator').setValue(query.Operation);
         }
+        this.flatten(null, query, containerRef, this._form, 1);
     }
 
     /**
@@ -76,7 +103,7 @@ export class PepQueryBuilderService {
     private flatten(parent: IPepQuerySection, current: IPepQuerySection | IPepQueryItem, containerRef: ViewContainerRef, parentForm: FormGroup, depth: number) {
         if (this.hasProperty(current, 'ComplexId')) {
             const section = current as IPepQuerySection;
-            if (parent.Operation === current.Operation) {
+            if (parent?.Operation === current.Operation) {
                 this.flatten(parent, section.LeftNode, containerRef, parentForm, depth);
                 this.flatten(parent, section.RightNode, containerRef, parentForm, depth);
             } else {
@@ -102,16 +129,20 @@ export class PepQueryBuilderService {
         const componentRef = containerRef.createComponent(factory);
 
         const sectionGroup = this._fb.group({
-            operator: this._fb.control(operator)
+            operator: this._fb.control(operator || PepOperatorTypes.And)
         });
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('section')) { counter++; } });
         const formKey = `section${counter}`;
         parentForm.addControl(formKey, sectionGroup);
 
-        componentRef.instance.depth = depth;
         componentRef.instance.form = sectionGroup;
-        componentRef.instance.createSection.subscribe(() => {
+        componentRef.instance.depth = {
+            current: depth,
+            max: this._maxStructureDepth
+        };
+        componentRef.instance.createSection.subscribe((sectionContainer) => {
+            console.log('sectionContainer', sectionContainer);
             const section = this.createSection(PepOperatorTypes.And, componentRef.instance.sectionContainer, sectionGroup, depth + 1);
             this.createItem(null, section.containerRef, section.parentForm);
         });
@@ -270,7 +301,7 @@ export class PepQueryBuilderService {
     /**
      * creates a legacy output query 
      */
-    private createOutputQuery() {
+    createOutputQuery() {
         if (this._form.valid) {
             const query = this._outputQueryService.generateQuery(this._form.value);
             this._outputQuery$.next(query);

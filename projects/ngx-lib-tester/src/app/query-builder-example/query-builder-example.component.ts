@@ -17,33 +17,8 @@ export class QueryBuilderExampleComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loadQuery();
         this.loadFilterFields();
-        this.json = {
-            "ComplexId": "5",
-            "LeftNode": {
-                "ComplexId": "4",
-                "LeftNode": {
-                    "ComplexId": "3",
-                    "LeftNode":
-                    {
-                        "ComplexId": "1",
-                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAboolll', "Operation": 'IsEqual', "Values": ["True"] },
-                        "Operation": "OR",
-                        "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'value4', 'value8'] }
-                    },
-                    "Operation": "OR",
-                    "RightNode": {
-                        "ComplexId": "2",
-                        "LeftNode": { "ExpressionId": '3', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ["abc"] },
-                        "Operation": "AND",
-                        "RightNode": { "ExpressionId": '4', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ['sss'] }
-                    }
-                },
-                "Operation": "OR",
-                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "InTheLast", "Values": ["9", "Months"] },
-            },
-            "RightNode": { "ExpressionId": '6', "ApiName": "CaseQuantity", "Operation": "IsEqual", "Values": ["2"] },
-        }
 
 
         /*
@@ -84,6 +59,34 @@ export class QueryBuilderExampleComponent implements OnInit {
                 } */
 
 
+    }
+    loadQuery() {
+        this.json = {
+            "ComplexId": "5",
+            "LeftNode": {
+                "ComplexId": "4",
+                "LeftNode": {
+                    "ComplexId": "3",
+                    "LeftNode":
+                    {
+                        "ComplexId": "1",
+                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAboolll', "Operation": 'IsEqual', "Values": ["True"] },
+                        "Operation": "OR",
+                        "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'value4', 'value8'] }
+                    },
+                    "Operation": "OR",
+                    "RightNode": {
+                        "ComplexId": "2",
+                        "LeftNode": { "ExpressionId": '3', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ["abc"] },
+                        "Operation": "AND",
+                        "RightNode": { "ExpressionId": '4', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ['sss'] }
+                    }
+                },
+                "Operation": "OR",
+                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "InTheLast", "Values": ["9", "Months"] },
+            },
+            "RightNode": { "ExpressionId": '6', "ApiName": "CaseQuantity", "Operation": "IsEqual", "Values": ["2"] },
+        }
     }
 
     loadFilterFields() {

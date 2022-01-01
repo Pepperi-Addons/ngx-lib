@@ -6,18 +6,18 @@
             </pep-group-buttons>
             <div fxLayout="row" fxLayoutGap=".5rem">
                 <pep-button value="Add Filter" styleType="weak" styleStateType="system" sizeType="sm" classNames=""
-                    [disabled]="false" iconName="number_plus" iconPosition="end" [visible]="true"
-                    (buttonClick)="onAddRuleClicked()"></pep-button>
-                <ng-container *ngIf="depth < constantsService.maxDepth-1">
+                    [disabled]="!queryBuilderService.hasFields" iconName="number_plus" iconPosition="end"
+                    [visible]="true" (buttonClick)="onAddRuleClicked()"></pep-button>
+                <ng-container *ngIf="depth.current < depth.max-1">
                     <pep-button value="Add Filter Group" styleType="weak" styleStateType="system" sizeType="sm"
-                        classNames="" [disabled]="false" iconName="number_plus" iconPosition="end" [visible]="true"
-                        (buttonClick)="onAddRuleSetClicked()"></pep-button>
+                        classNames="" [disabled]="!queryBuilderService.hasFields" iconName="number_plus"
+                        iconPosition="end" [visible]="true" (buttonClick)="onAddRuleSetClicked()"></pep-button>
                 </ng-container>
             </div>
         </div>
         <ng-container #sectionContainer></ng-container>
     </div>
-    <pep-button *ngIf="depth > 0" styleType="weak" styleStateType="system_bin" sizeType="md" classNames=""
+    <pep-button *ngIf="depth.current > 0" styleType="weak" styleStateType="system_bin" sizeType="md" classNames=""
         [disabled]="false" iconName="system_bin" iconPosition="end" [visible]="true"
         (buttonClick)="onDeleteSectionClicked()">
     </pep-button>

@@ -4,5 +4,6 @@
 export * from './query-builder.module';
 export * from './query-builder.component';
 export * from './query-builder.service';
+export * from './common/model/legacy';
 
 

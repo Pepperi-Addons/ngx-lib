@@ -1,1 +1,3 @@
-<ng-container #queryRoot></ng-container>
+<pep-query-builder-section #rootContainer [form]="queryBuilderService.form" [depth]="depth"
+    (createSection)="onCreateSection()" (createItem)="onCreateItem()" (operatorChange)="onOperatorChange()">
+</pep-query-builder-section>

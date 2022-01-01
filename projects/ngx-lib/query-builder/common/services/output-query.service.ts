@@ -5,7 +5,9 @@ import { getLegacyOperationUnit } from '../model/operator-unit';
 import { PepSmartFilterOperators } from '@pepperi-addons/ngx-lib/smart-filters';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PepOutputQueryService {
     private _complexIdCounter: number;
     private _expressionIdCounter: number;

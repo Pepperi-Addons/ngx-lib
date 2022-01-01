@@ -5,10 +5,9 @@ import {
     PepButton,
 } from '@pepperi-addons/ngx-lib/button';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
-//import { PepQueryBuilderService } from '../query-builder.service';
-import { PepQueryBuilderConstantsService } from '../common/services/constants.service';
-//import { PepOperatorTypes } from '../common/model/type';
+import { PepQueryBuilderService } from '../query-builder.service';
 import { PepTypeConvertorService } from '../common/services/type-convertor.service';
+import { IPepQueryDepth } from '../common/model/structure';
 
 @Component({
     selector: 'pep-query-builder-section',
@@ -17,7 +16,7 @@ import { PepTypeConvertorService } from '../common/services/type-convertor.servi
 })
 export class PepQueryBuilderSectionComponent {
     @Input() form: FormGroup;
-    @Input() depth: number;
+    @Input() depth: IPepQueryDepth;
 
     @Output()
     createSection = new EventEmitter();
@@ -33,7 +32,7 @@ export class PepQueryBuilderSectionComponent {
     toggleButtons: Array<PepButton>;
 
     constructor(
-        public constantsService: PepQueryBuilderConstantsService,
+        public queryBuilderService: PepQueryBuilderService,
         private _typeConvertorService: PepTypeConvertorService
     ) {
     }
@@ -58,6 +57,7 @@ export class PepQueryBuilderSectionComponent {
     }
 
     onOperatorChanged(event) {
+        console.log('onOperatorChanged', event);
         if (event?.source?.key) {
             this.f.operator.setValue(event.source.key);
             this.operatorChange.emit();
@@ -65,10 +65,12 @@ export class PepQueryBuilderSectionComponent {
     }
 
     onAddRuleClicked() {
+        console.log('onAddRuleClicked');
         this.createItem.emit();
     }
 
     onAddRuleSetClicked() {
+        console.log('onAddRuleSetClicked');
         this.createSection.emit();
     }
 

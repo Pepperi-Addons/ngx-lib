@@ -35,6 +35,22 @@ export default {
             table: {
                 type: {
                     summary: 'Array<IPepQueryBuilderField>'
+                },
+                defaultValue: {
+                    summary: null
+                }
+            }
+        },
+        maxDepth: {
+            description: 'This is the maximum structure depth',
+            defaultValue: 3,
+            control: 'number',
+            table: {
+                type: {
+                    summary: 'number'
+                },
+                defaultValue: {
+                    summary: '3'
                 }
             }
         }
@@ -44,6 +60,7 @@ export default {
             include: [
                 'query',
                 'fields',
+                'maxDepth',
                 'queryChange',
                 'formValidationChange'
             ],
@@ -60,7 +77,7 @@ const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponen
         formValidationChange: action('formValidationChange'),
     },
     template: `
-    <pep-query-builder [query]="query" [fields]="fields" (queryChange)="queryChange($event)"
+    <pep-query-builder [query]="query" [fields]="fields" [maxDepth]="maxDepth" (queryChange)="queryChange($event)"
     (formValidationChange)="formValidationChange($event)"></pep-query-builder>
     `,
 });
