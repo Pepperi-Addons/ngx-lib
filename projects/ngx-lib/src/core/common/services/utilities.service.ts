@@ -56,7 +56,7 @@ export class PepUtilitiesService {
                 }
             } else {
                 retVal = new Date(
-                    retVal.getFullYear(), retVal.getMonth(), retVal.getDay(), retVal.getHours(),
+                    retVal.getFullYear(), retVal.getMonth(), retVal.getDate(), retVal.getHours(),
                     retVal.getMinutes() + retVal.getTimezoneOffset() * -1, retVal.getSeconds());
             }
         }
