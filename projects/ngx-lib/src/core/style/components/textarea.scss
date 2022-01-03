@@ -1,3 +1,6 @@
+@use '../abstracts/mixins';
+@use '../abstracts/functions';
+
 // -----------------------------------------------------
 //  Textarea & Override material style
 // -----------------------------------------------------
@@ -30,7 +33,7 @@
                 width: calc(100% + 3rem);
                 max-width: unset;
                 overflow-y: scroll;
-                // @include box-sizing(border-box);
+                // @include mixins.box-sizing(border-box);
                 box-sizing: border-box;
             }
         }
@@ -86,7 +89,7 @@
         width: calc(100% + 3rem);
         max-width: unset;
         overflow-y: scroll;
-        // @include box-sizing(border-box);
+        // @include mixins.box-sizing(border-box);
         box-sizing: border-box;
     }
 
@@ -123,7 +126,7 @@
     &.card-flex-container {
         height: inherit;
         display: flex;
-        @include ellipsis();
+        @include mixins.ellipsis();
         white-space: unset;
         // padding: 0.5rem 1.5rem 0.5rem 0;
         padding: 0.25rem;
@@ -136,7 +139,7 @@
 
         span {
             &.value {
-                @include ellipsis();
+                @include mixins.ellipsis();
                 white-space: unset;
             }
         }
@@ -186,7 +189,7 @@
     }
 }
 
-@mixin pep-textarea-theme($pepperi-theme) {
+@mixin pep-textarea-theme() {
     .pepperi-report-textarea, .pep-report-textarea {
         .mat-form-field-flex {
             background: transparent !important;

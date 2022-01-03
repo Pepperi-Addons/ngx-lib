@@ -26,7 +26,7 @@ import {
 @Component({
     selector: 'pep-checkbox',
     templateUrl: './checkbox.component.html',
-    styleUrls: ['./checkbox.component.scss'],
+    styleUrls: ['./checkbox.component.scss', './checkbox.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepCheckboxComponent implements OnInit, OnChanges, OnDestroy {

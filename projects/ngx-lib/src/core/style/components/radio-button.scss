@@ -1,4 +1,7 @@
-@import '../abstracts/mixins';
+@use '../abstracts/variables';
+@use '../abstracts/mixins';
+@use '../abstracts/functions';
+
 
 @mixin pep-radio-button-size($size) {
     @if $size == 'xl' {
@@ -50,7 +53,7 @@
 
     &.mat-radio-button {
         .mat-radio-label {
-            @include fix-inline-z-index();
+            @include mixins.fix-inline-z-index();
             margin: 0;
         }
 
@@ -62,44 +65,44 @@
     }
 }
 
-@mixin pep-radio-button-theme($pepperi-theme) {
+@mixin pep-radio-button-theme() {
     .pepperi-radio-button, .pep-radio-button {
-        // @include state-weak-default($pepperi-theme);
+        // @include mixins.state-weak-default();
         // &.no-default-background {
         //     background: unset;
         // }
         
         // &:hover:not(.disable) {
-        //     @include state-weak-hover($pepperi-theme);
+        //     @include mixins.state-weak-hover();
         // }
         // &:focus:not(.disable) {
-        //     @include state-weak-focus($pepperi-theme);
+        //     @include mixins.state-weak-focus();
         // }
         // // &:active {
-        // //     @include state-weak-active($pepperi-theme);
+        // //     @include mixins.state-weak-active();
         // // }
         // &.disable,
         // &:disabled {
-        //     @include state-weak-disable($pepperi-theme);
+        //     @include mixins.state-weak-disable();
         // }
         
         &.mat-radio-button {
             .mat-radio-inner-circle,
             .mat-radio-outer-circle {
-                @include state-regular-default($pepperi-theme, true);
+                @include mixins.state-regular-default(true);
             }
 
             &:hover {
                 .mat-radio-inner-circle,
                 .mat-radio-outer-circle {
-                    @include state-regular-hover($pepperi-theme, true);
+                    @include mixins.state-regular-hover(true);
                 }
             }
 
             &:active {
                 .mat-radio-inner-circle,
                 .mat-radio-outer-circle {
-                    @include state-regular-active($pepperi-theme, true);
+                    @include mixins.state-regular-active(true);
                 }
             }
 
@@ -107,21 +110,21 @@
             &.mat-radio-checked {
                 .mat-radio-inner-circle {
                     border: unset;
-                    background: get-pep-color($pepperi-theme, color-system-primary, color-flat-l-10);
+                    background: functions.get-pep-color(color-system-primary, color-flat-l-10);
                 }
 
                 .mat-radio-outer-circle {
-                    @include state-regular-active($pepperi-theme, true);
-                    background: get-pep-color($pepperi-theme, color-system-primary, color-flat-r-30);
+                    @include mixins.state-regular-active(true);
+                    background: functions.get-pep-color(color-system-primary, color-flat-r-30);
                 }
 
                 &:hover {
                     .mat-radio-outer-circle {
-                        @include state-regular-hover($pepperi-theme, true);
+                        @include mixins.state-regular-hover(true);
                     }
 
                     .mat-radio-inner-circle {
-                        background: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                        background: functions.get-pep-color(color-text, color-dimmed);
                     }
                 }
             }
@@ -130,24 +133,24 @@
             &.cdk-focused {
                 &:hover {
                     .mat-radio-outer-circle {
-                        @include state-regular-hover($pepperi-theme, true);
-                        // @include focus($pepperi-theme);
+                        @include mixins.state-regular-hover(true);
+                        // @include mixins.focus();
                     }
 
                     .mat-radio-inner-circle {
-                        background: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                        background: functions.get-pep-color(color-text, color-dimmed);
                     }
                 }
 
                 &:active {
                     .mat-radio-outer-circle {
-                        @include state-regular-active($pepperi-theme, true);
-                        // @include focus($pepperi-theme);
+                        @include mixins.state-regular-active(true);
+                        // @include mixins.focus();
                     }
                 }
 
                 .mat-radio-outer-circle {
-                    @include state-regular-focus($pepperi-theme, true);
+                    @include mixins.state-regular-focus(true);
                 }
             }
 
@@ -156,11 +159,11 @@
                 pointer-events: none;
 
                 .mat-radio-inner-circle {
-                    background: get-pep-color($pepperi-theme, color-text, color-disabled);
+                    background: functions.get-pep-color(color-text, color-disabled);
                 }
 
                 .mat-radio-outer-circle {
-                    @include state-regular-disable($pepperi-theme, true);
+                    @include mixins.state-regular-disable(true);
                 }
             }
         }

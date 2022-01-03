@@ -1,25 +1,26 @@
-@mixin pep-side-bar-component-theme($pepperi-theme) {
-    .pep-side-bar-container {
-        .toggle-side-bar-container {
-            .toggle-button-border {
-                @include pep-border(border-inline-end, $pepperi-theme);
-            }
+@use '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/functions';
+
+.pep-side-bar-container {
+    .toggle-side-bar-container {
+        .toggle-button-border {
+            @include mixins.pep-border(border-inline-end);
         }
+    }
 
-        .mat-sidenav-container {
-            // background-color: transparent;
+    .mat-sidenav-container {
+        // background-color: transparent;
 
-            .mat-drawer-backdrop.mat-drawer-shown {
-                background-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-50);
-            }
+        .mat-drawer-backdrop.mat-drawer-shown {
+            background-color: functions.get-pep-color(color-system-primary, color-tran-50);
         }
+    }
 
-        .side-layout {
-            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+    .side-layout {
+        background: functions.get-pep-color(color-system-primary-invert, color-base);
 
-            .header-content {
-                background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
-            }
+        .header-content {
+            background: functions.get-pep-color(color-system-primary-invert, color-base);
         }
     }
 }

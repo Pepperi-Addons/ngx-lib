@@ -17,7 +17,7 @@ export type PepGroupButtonsViewType = 'regular' | 'dropdown' | 'split' | 'toggle
 @Component({
     selector: 'pep-group-buttons',
     templateUrl: './group-buttons.component.html',
-    styleUrls: ['./group-buttons.component.scss'],
+    styleUrls: ['./group-buttons.component.scss', './group-buttons.component.theme.scss'],
 })
 export class PepGroupButtonsComponent implements OnDestroy {
     PepScreenSizeType = PepScreenSizeType;

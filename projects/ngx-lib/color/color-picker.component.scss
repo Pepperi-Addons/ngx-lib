@@ -1,4 +1,4 @@
-@import '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/variables';
 
 .mat-slider-track-background {
     // height: 0 !important;
@@ -14,10 +14,10 @@
     $color-width: 9.25rem;
 
     ::ng-deep.mat-dialog-content {
-        // padding-left: $spacing-sm;
-        // padding-right: $spacing-sm;
-        // padding-bottom: $spacing-sm;
-        padding: $spacing-sm $spacing-sm 0;
+        // padding-left: variables.$spacing-sm;
+        // padding-right: variables.$spacing-sm;
+        // padding-bottom: variables.$spacing-sm;
+        padding: variables.$spacing-sm variables.$spacing-sm 0;
     }
 
     .color-chooser-content {
@@ -25,14 +25,14 @@
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         grid-template-rows: repeat(3, 1fr);
-        grid-column-gap: $spacing-xl;
-        grid-row-gap: $spacing-sm;
-        margin-top: $spacing-sm;
+        grid-column-gap: variables.$spacing-xl;
+        grid-row-gap: variables.$spacing-sm;
+        margin-top: variables.$spacing-sm;
 
         .current-color {
             grid-row: 1 / span 3;
             grid-column: 6 / span 4;
-            border-radius: $border-radius-md;
+            border-radius: variables.$border-radius-md;
             width: $color-width;
             height: $color-width;
         }
@@ -48,8 +48,8 @@
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         grid-template-rows: repeat(1, 1fr);
-        grid-column-gap: $spacing-xl;
-        grid-row-gap: $spacing-sm;
+        grid-column-gap: variables.$spacing-xl;
+        grid-row-gap: variables.$spacing-sm;
         margin-top: 1.5rem;
 
         .color-value {
@@ -68,7 +68,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border-radius: $border-radius-md;
+                border-radius: variables.$border-radius-md;
                 height: var(--pep-form-field-height, 2.5rem);
                 width: $color-width;
             }

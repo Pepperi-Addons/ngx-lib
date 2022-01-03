@@ -39,7 +39,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'pep-quantity-selector',
     templateUrl: './quantity-selector.component.html',
-    styleUrls: ['./quantity-selector.component.scss'],
+    styleUrls: ['./quantity-selector.component.scss', './quantity-selector.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
         trigger('showHide', [

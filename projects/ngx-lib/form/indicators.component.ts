@@ -4,7 +4,7 @@ import { PepLayoutType } from '@pepperi-addons/ngx-lib';
 @Component({
     selector: 'pep-indicators',
     templateUrl: './indicators.component.html',
-    styleUrls: ['./indicators.component.scss'],
+    styleUrls: ['./indicators.component.scss', './indicators.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepIndicatorsComponent {

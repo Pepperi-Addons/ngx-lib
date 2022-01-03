@@ -28,7 +28,7 @@ import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/ico
 @Component({
     selector: 'pep-side-bar',
     templateUrl: './side-bar.component.html',
-    styleUrls: ['./side-bar.component.scss']
+    styleUrls: ['./side-bar.component.scss', './side-bar.component.theme.scss']
 })
 @Injectable()
 export class PepSideBarComponent implements OnInit {

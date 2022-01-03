@@ -1,8 +1,7 @@
-@import 'ngx-lib/src/core/style/abstracts/mixins';
-@import 'ngx-lib/src/core/style/abstracts/variables';
+@use 'ngx-lib/src/core/style/abstracts/variables';
 
 #header {
-    height: $header-height;
+    height: variables.$header-height;
 
     .navbar {
         // border: none !important;
@@ -11,13 +10,13 @@
         box-sizing: border-box;
         height: inherit;
         width: 100%;
-        padding: $spacing-lg $double-content-padding;
+        padding: variables.$spacing-lg variables.$double-content-padding;
         margin: 0;
-        max-width: $max-scr-width;
+        max-width: variables.$max-scr-width;
 
-        @media (max-width: $screen-max-size-xs) {
-            padding-left: $content-padding;
-            padding-right: $content-padding;
+        @media (max-width: variables.$screen-max-size-xs) {
+            padding-left: variables.$content-padding;
+            padding-right: variables.$content-padding;
         }
 
         .navbar-default {
@@ -33,7 +32,7 @@
 }
 
 #loadingSpinnerModal {
-    z-index: $z-index-high + 101;
+    z-index: variables.$z-index-high + 101;
     height: 1rem;
     width: 100%;
     // position: fixed;
@@ -44,12 +43,12 @@
     overflow: hidden;
 
     &.no-top-bar {
-        top: $header-height !important;
+        top: variables.$header-height !important;
     }
 }
 
 #loadingSpinner {
-    z-index: $z-index-high;
+    z-index: variables.$z-index-high;
     width: 100%;
     margin-top: 5px;
 
@@ -132,7 +131,7 @@
 
 .pep-layout {
     display: grid;
-    grid-template-rows: $header-height 1fr;
+    grid-template-rows: variables.$header-height 1fr;
     grid-template-areas: "header"
                          "main";
     height: 100vh;
@@ -142,7 +141,7 @@
     .pep-header-layout {
         grid-area: header;
         display: block;
-        z-index: $z-index-high + 1;
+        z-index: variables.$z-index-high + 1;
     }
 
     .pep-main-layout {
@@ -153,9 +152,9 @@
         overflow: hidden;
         
         &.add-padding {
-            padding-inline: $content-padding;
+            padding-inline: variables.$content-padding;
 
-            @media (max-width: $screen-max-size-xs) {
+            @media (max-width: variables.$screen-max-size-xs) {
                 padding-inline: 0;
             }
         }

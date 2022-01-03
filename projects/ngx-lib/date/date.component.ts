@@ -37,7 +37,7 @@ import { MomentUtcDateAdapter, MomentUtcDateTimeAdapter, MY_DATE_FORMATS } from 
 @Component({
     selector: 'pep-date',
     templateUrl: './date.component.html',
-    styleUrls: ['./date.component.scss'],
+    styleUrls: ['./date.component.scss', './date.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         // CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,

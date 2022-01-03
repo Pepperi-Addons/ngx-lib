@@ -47,7 +47,7 @@ export interface IPepRichHtmlTextareaToolbarOptions {
 @Component({
     selector: 'pep-rich-html-textarea',
     templateUrl: './rich-html-textarea.component.html',
-    styleUrls: ['./rich-html-textarea.component.scss'],
+    styleUrls: ['./rich-html-textarea.component.scss', './rich-html-textarea.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepRichHtmlTextareaComponent

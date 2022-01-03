@@ -1,5 +1,4 @@
-@import '../src/core/style/abstracts/mixins';
-@import '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/variables';
 
 :host {
     height: inherit;
@@ -8,25 +7,18 @@
 
 .pepperi-textarea-container, .pep-textarea-container {
     ::ng-deep.mat-form-field-infix {
-        margin-left: calc(#{$spacing-md} * -1);
+        margin-left: calc(#{variables.$spacing-md} * -1);
     }
 
     &.right-alignment {
         ::ng-deep.mat-form-field-infix {
             margin-left: unset;
-            margin-right: calc(#{$spacing-md} * -1);
+            margin-right: calc(#{variables.$spacing-md} * -1);
         }
     }
 }
 
 .vertical-separator {
     display: none;
-    // display: inline;
-    // border-style: dashed;
-    // margin: 0 4px;
-    // border-top-width: 0;
-    // border-bottom-width: 0;
-    // border-right-width: 0;
-    // border-left-width: 1px;
 }
 

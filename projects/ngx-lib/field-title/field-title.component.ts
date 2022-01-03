@@ -7,7 +7,7 @@ import {
 @Component({
     selector: 'pep-field-title',
     templateUrl: './field-title.component.html',
-    styleUrls: ['./field-title.component.scss'],
+    styleUrls: ['./field-title.component.scss', './field-title.component.theme.scss'],
 })
 export class PepFieldTitleComponent {
     @Input() label = '';

@@ -1,5 +1,4 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
 
 .pep-search-container {
     .pep-search-input {
@@ -8,7 +7,7 @@
         }
 
         .pep-v-separator {
-            padding: $spacing-xs 0;
+            padding: variables.$spacing-xs 0;
             height: 100%;
         }
 
@@ -24,11 +23,11 @@
         // justify-content: flex-start;
 
         &.pep-is-action-button-visable {
-            width: calc(100% - (#{$spacing-sm} * 2 + #{$spacing-xl})); // content spacing in both sides + 1.5 rem is the action-button width.
+            width: calc(100% - (#{variables.$spacing-sm} * 2 + #{variables.$spacing-xl})); // content spacing in both sides + 1.5 rem is the action-button width.
         }
     }
 
-    @media (max-width: $screen-max-size-xs) {
+    @media (max-width: variables.$screen-max-size-xs) {
         ::ng-deep .mat-button-wrapper {
             max-width: 3.125rem;
         }

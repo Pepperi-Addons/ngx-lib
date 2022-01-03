@@ -1,11 +1,11 @@
-@import '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/variables';
 
 :host {
     display: grid;
 }
 
 .bread-crumbs-label {
-    height: $top-bar-height-with-no-top;
+    height: variables.$top-bar-height-with-no-top;
     display: flex;
     flex-flow: wrap;
     align-items: center;

@@ -1,5 +1,4 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
 
 :host {
     &.pep-page-layout {
@@ -26,18 +25,17 @@
             z-index: 5;
 
             &.show-shadow {
-                padding-inline-end: $content-padding;
+                padding-inline-end: variables.$content-padding;
             }
         }
 
         .pep-page-main-layout {
             grid-area: main-layout;
             overflow: hidden;
-            // overflow: auto;
             height: 100%;
             z-index: 1;
             
-            padding-bottom: $footer-bar-height; // In case that the fixed footer is shown (the footer is in the top bar component).
+            padding-bottom: variables.$footer-bar-height; // In case that the fixed footer is shown (the footer is in the top bar component).
             
             display: grid;
             grid-template-rows: auto 1fr;
@@ -45,7 +43,7 @@
                                 "main-area";
 
             &.add-padding {
-                padding-inline: $content-padding;
+                padding-inline: variables.$content-padding;
             }
 
             .pep-top-area {

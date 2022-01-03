@@ -1,4 +1,7 @@
-@import '../abstracts/mixins';
+@use '../abstracts/variables';
+@use '../abstracts/mixins';
+@use '../abstracts/functions';
+
 // -----------------------------------------------------
 //  Checkbox
 // -----------------------------------------------------
@@ -39,7 +42,7 @@
 .mat-checkbox-checked {
     .mat-checkbox-layout {
         .mat-checkbox-background {
-            border-radius: $border-radius-md;
+            border-radius: variables.$border-radius-md;
         }
     }
 }
@@ -79,7 +82,7 @@
     align-items: center;
 
     .mat-checkbox {
-        @include fix-inline-z-index();
+        @include mixins.fix-inline-z-index();
         height: inherit;
         display: flex;
         align-items: center;
@@ -99,7 +102,7 @@
 
     .emoji-icon {
         line-height: 1rem;
-        border-radius: $border-radius-md;
+        border-radius: variables.$border-radius-md;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         padding: 0;
         background: transparent;
@@ -194,11 +197,11 @@
         // padding: 0 0.25rem;
         // padding: 0;
         padding-top: 0;
-        height: $card-field-height; // 1.5rem;
+        height: variables.$card-field-height; // 1.5rem;
         line-height: 1rem;
 
         &.no-title {
-            width: $card-field-height !important; // 1.5rem !important;
+            width: variables.$card-field-height !important; // 1.5rem !important;
 
             .mat-checkbox-inner-container {
                 // margin: auto 0.5rem auto 0rem !important;
@@ -218,7 +221,7 @@
             // margin-left: 0.25rem;
             height: 1rem;
             width: 1rem;
-            @include font-size($fs-xs);
+            @include mixins.font-size(variables.$fs-xs);
         }
 
         .mat-checkbox-layout {
@@ -226,7 +229,7 @@
         }
 
         .mat-checkbox-inner-container {
-            border-radius: $border-radius-md;
+            border-radius: variables.$border-radius-md;
 
             @include pep-checkbox-size('sm');
         }
@@ -243,7 +246,7 @@
 }
 
 .mat-checkbox-layout {
-    @include fix-inline-z-index();
+    @include mixins.fix-inline-z-index();
     // height: inherit;
     margin-bottom: unset; // Cancel bootstrap defaults for Label.
     width: fit-content;
@@ -255,7 +258,7 @@
     grid-auto-flow: column;
 
     .mat-checkbox-inner-container {
-        border-radius: $border-radius-md;
+        border-radius: variables.$border-radius-md;
 
         @include pep-checkbox-size('lg');
 
@@ -266,7 +269,7 @@
 
     .mat-checkbox-label {
         display: block;
-        @include ellipsis();
+        @include mixins.ellipsis();
         span {
             margin: 0 0.25rem;
         }
@@ -276,7 +279,7 @@
         height: inherit;
         width: inherit;
         display: flex;
-        border-radius: $border-radius-md;
+        border-radius: variables.$border-radius-md;
     }
 }
 
@@ -314,25 +317,25 @@
     }
 }
 
-@mixin pep-checkbox-theme($pepperi-theme) {
+@mixin pep-checkbox-theme() {
     .pepperi-checkbox-container, .pep-checkbox-container {
-        @include state-weak-default($pepperi-theme);
+        @include mixins.state-weak-default();
         &.no-default-background {
             background: unset;
         }
         
         &:hover:not(.disable) {
-            @include state-weak-hover($pepperi-theme);
+            @include mixins.state-weak-hover();
         }
         &:focus:not(.disable) {
-            @include state-weak-focus($pepperi-theme);
+            @include mixins.state-weak-focus();
         }
         // &:active {
-        //     @include state-weak-active($pepperi-theme);
+        //     @include mixins.state-weak-active();
         // }
         &.disable,
         &:disabled {
-            @include state-weak-disable($pepperi-theme);
+            @include mixins.state-weak-disable();
         }
 
         .emoji-icon {
@@ -341,13 +344,13 @@
         &:not(.disable) {
             .emoji-icon {
                 &:focus {
-                    @include focus($pepperi-theme);
+                    @include mixins.focus();
                 }
             }
         }
 
         &.pepperi-card-checkbox, &.pep-card-checkbox {
-            background: get-pep-color($pepperi-theme, color-weak, color-tran-10);
+            background: functions.get-pep-color(color-weak, color-tran-10);
         }
 
     }
@@ -357,7 +360,7 @@
         justify-content: center;
 
         .svg-icon {
-            fill: get-pep-color($pepperi-theme, color-system-caution, color-base);
+            fill: functions.get-pep-color(color-system-caution, color-base);
         }
     }
 
@@ -367,19 +370,19 @@
     .mat-checkbox-layout {
         &:hover {
             .mat-checkbox-frame {
-                @include state-regular-hover($pepperi-theme, true);
+                @include mixins.state-regular-hover(true);
             }
         }
 
         &:active {
             .mat-checkbox-frame {
-                @include state-regular-active($pepperi-theme, true);
+                @include mixins.state-regular-active(true);
             }
         }
 
         .mat-checkbox-frame {
             // border: unset;
-            @include state-regular-default($pepperi-theme, true);
+            @include mixins.state-regular-default(true);
         }
     }
 
@@ -389,26 +392,26 @@
         .mat-checkbox-layout {
             &:hover {
                 .mat-checkbox-background {
-                    @include state-regular-hover($pepperi-theme, true);
+                    @include mixins.state-regular-hover(true);
                     opacity: 0.7;
                 }
             }
 
             &:active {
                 .mat-checkbox-background {
-                    @include state-regular-active($pepperi-theme, true);
+                    @include mixins.state-regular-active(true);
                 }
             }
 
             .mat-checkbox-background {
-                @include state-regular-default($pepperi-theme, true);
+                @include mixins.state-regular-default(true);
             }
         }
     }
 
     .mat-checkbox-indeterminate {
         .mat-checkbox-mixedmark {
-            background: get-pep-color($pepperi-theme, color-text, color-dimmed) !important;
+            background: functions.get-pep-color(color-text, color-dimmed) !important;
         }
     }
 
@@ -417,20 +420,20 @@
         .mat-checkbox-layout {
             &:hover {
                 .mat-checkbox-frame {
-                    @include state-regular-hover($pepperi-theme, true);
-                    @include focus($pepperi-theme);
+                    @include mixins.state-regular-hover(true);
+                    @include mixins.focus();
                 }
             }
 
             &:active {
                 .mat-checkbox-frame {
-                    @include state-regular-active($pepperi-theme, true);
-                    @include focus($pepperi-theme);
+                    @include mixins.state-regular-active(true);
+                    @include mixins.focus();
                 }
             }
 
             .mat-checkbox-frame {
-                @include state-regular-focus($pepperi-theme, true);
+                @include mixins.state-regular-focus(true);
             }
         }
     }
@@ -440,7 +443,7 @@
         .mat-checkbox-layout {
             &:hover {
                 .mat-checkbox-background {
-                    @include state-regular-disable($pepperi-theme, true);
+                    @include mixins.state-regular-disable(true);
                     box-shadow: unset;
                     opacity: 0.35;
                 }
@@ -448,25 +451,25 @@
 
             &:active {
                 .mat-checkbox-background {
-                    @include state-regular-disable($pepperi-theme, true);
+                    @include mixins.state-regular-disable(true);
                     box-shadow: unset;
                     opacity: 0.35;
                 }
             }
 
             .mat-checkbox-frame {
-                @include state-regular-disable($pepperi-theme, true);
+                @include mixins.state-regular-disable(true);
                 box-shadow: unset;
             }
 
             .mat-checkbox-background {
-                @include state-regular-disable($pepperi-theme, true);
+                @include mixins.state-regular-disable(true);
                 box-shadow: unset;
                 opacity: 0.35;
             }
 
             .mat-checkbox-label {
-                color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                color: functions.get-pep-color(color-text, color-dimmed);
             }
         }
     }

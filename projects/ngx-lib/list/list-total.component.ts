@@ -4,7 +4,7 @@ import { PepSizeType } from '@pepperi-addons/ngx-lib';
 @Component({
     selector: 'pep-list-total',
     templateUrl: './list-total.component.html',
-    styleUrls: ['./list-total.component.scss'],
+    styleUrls: ['./list-total.component.scss', './list-total.component.theme.scss'],
 })
 @Injectable()
 export class PepListTotalComponent {

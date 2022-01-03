@@ -1,18 +1,18 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/mixins';
 
 .pep-top-bar-container {
     display: grid;
-    height: $top-bar-height;
-    z-index: $z-index-medium + 1;
+    height: variables.$top-bar-height;
+    z-index: variables.$z-index-medium + 1;
     
     .title {
-        @include align-center();
+        @include mixins.align-center();
     }
 
     .header-content {
-        height: $top-bar-height-with-no-top;
-        margin-top: $top-bar-spacing-top;
+        height: variables.$top-bar-height-with-no-top;
+        margin-top: variables.$top-bar-spacing-top;
         
         .main-layout {
             width: inherit;
@@ -38,18 +38,18 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: $footer-bar-height;
+        height: variables.$footer-bar-height;
 
         .content {
             display: flex;
             justify-content: space-between;
-            margin-inline: $double-content-margin;
-            padding-top: $footer-bar-spacing-top;
+            margin-inline: variables.$double-content-margin;
+            padding-top: variables.$footer-bar-spacing-top;
         }
 
-        @media (max-width: $screen-max-size-xs) {
+        @media (max-width: variables.$screen-max-size-xs) {
             .content {
-                margin-inline: $content-margin;
+                margin-inline: variables.$content-margin;
             }
         }
     }
@@ -73,7 +73,7 @@
 
     .list-actions-wrapper {
         ::ng-deep.pep-button {
-            @include pep-spacing-element(false);
+            @include mixins.pep-spacing-element(false);
         }
     }
 
@@ -81,18 +81,18 @@
         ::ng-deep .pepperi-button,
         ::ng-deep .pep-button,
         .pepperi-button, .pep-button {
-            @include pep-top-bar-button();
+            @include mixins.pep-top-bar-button();
         }
     }
 
     &.inline {
         position: inherit;
-        height: calc(#{$top-bar-spacing-bottom} + #{$top-bar-field-height});
+        height: calc(#{variables.$top-bar-spacing-bottom} + #{variables.$top-bar-field-height});
         width: 100%;
         
         .header-content {
             margin-top: 0;
-            height: $top-bar-field-height;
+            height: variables.$top-bar-field-height;
             padding: 0;
             position: inherit;
             width: inherit;

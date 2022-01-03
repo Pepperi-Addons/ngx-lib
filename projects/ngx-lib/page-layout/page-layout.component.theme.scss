@@ -1,7 +1,7 @@
-@mixin pep-page-layout-component-theme($pepperi-theme) {
-    .pep-page-side-layout {
-        &.show-shadow {
-            box-shadow: get-pep-shadow($pepperi-theme, shadow-md, hard);
-        }
+@use '../src/core/style/abstracts/functions';
+
+.pep-page-side-layout {
+    &.show-shadow {
+        box-shadow: functions.get-pep-shadow(shadow-md, hard);
     }
 }

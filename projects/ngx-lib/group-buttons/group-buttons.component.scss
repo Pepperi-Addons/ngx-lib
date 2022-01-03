@@ -1,9 +1,8 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
 
 .group-buttons-container {
     display: flex; // inline-flex;
-    border-radius: $border-radius-md;
+    border-radius: variables.$border-radius-md;
 
     .dropdown-buttons,
     .split-buttons,
@@ -15,23 +14,23 @@
 
         .first-button,
         .first-button:after {
-            border-radius: $border-radius-md 0 0 $border-radius-md;
+            border-radius: variables.$border-radius-md 0 0 variables.$border-radius-md;
         }
 
         .last-button,
         .last-button:after {
-            border-radius: 0 $border-radius-md $border-radius-md 0;
+            border-radius: 0 variables.$border-radius-md variables.$border-radius-md 0;
         }
 
         .pepperi-button, .pep-button {
             margin-top: 0 !important; // override material defaults.
 
             &.cdk-focused {
-                z-index: $z-index-lowest + 1;
+                z-index: variables.$z-index-lowest + 1;
             }
         }
 
-        @media (max-width: $screen-max-size-xs) {
+        @media (max-width: variables.$screen-max-size-xs) {
             &.dropup {
                 .first-button {
                     max-width: 200px;

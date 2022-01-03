@@ -16,7 +16,7 @@ import { IPepSmartFilterData } from './common/model/filter';
 @Component({
     selector: 'pep-smart-filters',
     templateUrl: './smart-filters.component.html',
-    styleUrls: ['./smart-filters.component.scss'],
+    styleUrls: ['./smart-filters.component.scss', './smart-filters.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepSmartFiltersComponent {

@@ -1,3 +1,6 @@
+@use '../abstracts/variables';
+@use '../abstracts/mixins';
+
 // -----------------------------------------------------
 //  Button
 // -----------------------------------------------------
@@ -78,35 +81,35 @@
             width: $button-icon-height;
             // height: $button-icon-height !important;
             // width: $button-icon-height !important;
-            @include align-center();
+            @include mixins.align-center();
         }
     }
 }
 
-@mixin pep-button-state-none($pepperi-theme) {
-    @include pep-button-states($pepperi-theme, none);
+@mixin pep-button-state-none() {
+    @include mixins.pep-button-states(none);
 }
 
-@mixin pep-button-state-weak-invert($pepperi-theme) {
-    @include pep-button-states($pepperi-theme, weak-invert);
+@mixin pep-button-state-weak-invert() {
+    @include mixins.pep-button-states(weak-invert);
 }
 
-@mixin pep-button-state-weak($pepperi-theme, $color: null) {
-    @include pep-button-states($pepperi-theme, weak, $color);
+@mixin pep-button-state-weak($color: null) {
+    @include mixins.pep-button-states(weak, $color);
 }
 
-@mixin pep-button-state-regular($pepperi-theme, $color: null) {
-    @include pep-button-states($pepperi-theme, regular, $color);
+@mixin pep-button-state-regular($color: null) {
+    @include mixins.pep-button-states(regular, $color);
 }
 
-@mixin pep-button-state-strong($pepperi-theme, $color: null) {
-    @include pep-button-states($pepperi-theme, strong, $color);
+@mixin pep-button-state-strong($color: null) {
+    @include mixins.pep-button-states(strong, $color);
 }
 
 .pepperi-button, .pep-button {
-    @include fix-inline-z-index();
+    @include mixins.fix-inline-z-index();
     transition: all 0.25s;
-    border-radius: $border-radius-md;
+    border-radius: variables.$border-radius-md;
     border: none;
     text-align: center;
     text-decoration: none;
@@ -116,25 +119,20 @@
     padding-top: 0;
 
     .button-title {
-        @include ellipsis();
-        // @include calc(max-width, '100%'); // For none icon
+        @include mixins.ellipsis();
         max-width: calc(100%); // For none icon
     }
 
     .button-title-with-icon {
-        margin-inline-end: $spacing-sm;
-        @include ellipsis();
-        // @include calc(max-width, '100% - 1rem'); // For icon if exist
-        // max-width: calc(100% - 1rem); // For icon if exist
+        margin-inline-end: variables.$spacing-sm;
+        @include mixins.ellipsis();
 
         &.icon-before {
             margin-inline-end: unset;
-            margin-inline-start: $spacing-sm;
+            margin-inline-start: variables.$spacing-sm;
         }
     }
-    // Default size
-    // @include pep-button-size('md');
-
+    
     &.chip {
         border-radius: 2rem !important;
     }
@@ -143,7 +141,7 @@
         max-width: 11.25rem;
     }
 
-    @media (max-width: $screen-max-size-sm) {
+    @media (max-width: variables.$screen-max-size-sm) {
         &.pepperi-button-limited-width, &.pep-button-limited-width {
             max-width: 8.25rem;
         }
@@ -153,11 +151,11 @@
         @include pep-button-size('xl');
 
         .button-title-with-icon {
-            margin-inline-end: $spacing-md;
+            margin-inline-end: variables.$spacing-md;
             
             &.icon-before {
                 margin-inline-end: unset;
-                margin-inline-start: $spacing-md;
+                margin-inline-start: variables.$spacing-md;
             }
         }
     }
@@ -174,11 +172,11 @@
         @include pep-button-size('xs');
 
         .button-title-with-icon {
-            margin-inline-end: $spacing-xs;
+            margin-inline-end: variables.$spacing-xs;
             
             &.icon-before {
                 margin-inline-end: unset;
-                margin-inline-start: $spacing-xs;
+                margin-inline-start: variables.$spacing-xs;
             }
         }
     }
@@ -203,14 +201,14 @@
     //  Override material style
     // -----------------------------------------------------
     &.mat-button {
-        border-radius: $border-radius-md; // override material.
+        border-radius: variables.$border-radius-md; // override material.
 
         span {
             &.mat-button-wrapper {
                 // display: block !important;
                 display: grid!important;
                 grid-auto-flow: column;
-                @include ellipsis();
+                @include mixins.ellipsis();
                 max-width: inherit;
             }
         }
@@ -220,10 +218,10 @@
             height: 100%;
             width: 100%;
 
-            @include align-center();
+            @include mixins.align-center();
 
             .mat-icon {
-                @include align-center();
+                @include mixins.align-center();
                 vertical-align: unset; // Init material middle style
                 line-height: inherit;
                 height: inherit;
@@ -231,112 +229,111 @@
         }
 
         .mat-badge-content {
-            @include mat-badge-content();
+            @include mixins.mat-badge-content();
         }
 
         &.right-alignment {
             .mat-badge-content {
-                left: calc(#{$spacing-xs} * -1) !important;
+                left: calc(#{variables.$spacing-xs} * -1) !important;
             }
         }
 
         &.left-alignment {
             .mat-badge-content {
-                right: calc(#{$spacing-xs} * -1) !important;
+                right: calc(#{variables.$spacing-xs} * -1) !important;
             }
         }
 
         &.mat-badge-small {
             .mat-badge-content {
                 font-size: 70%;
-                // @include calc(max-width, '100% + .5rem');
                 max-width: calc(100% + .5rem);
             }
         }
     }
 }
 
-@mixin pep-button-theme($pepperi-theme) {
+@mixin pep-button-theme() {
     .pepperi-button, .pep-button {
         outline: unset;
 
         &.weak {
-            @include pep-button-state-weak($pepperi-theme);
+            @include pep-button-state-weak();
 
             &.system-primary {
-                @include pep-button-state-weak($pepperi-theme, color-system-primary);
+                @include pep-button-state-weak(color-system-primary);
             }
             &.user-primary {
-                @include pep-button-state-weak($pepperi-theme, color-user-primary);
+                @include pep-button-state-weak(color-user-primary);
             }
             &.user-secondary {
-                @include pep-button-state-weak($pepperi-theme, color-user-secondary);
+                @include pep-button-state-weak(color-user-secondary);
             }
             &.caution {
-                @include pep-button-state-weak($pepperi-theme, color-system-caution);
+                @include pep-button-state-weak(color-system-caution);
             }
             &.success {
-                @include pep-button-state-weak($pepperi-theme, color-system-success);
+                @include pep-button-state-weak(color-system-success);
             }
             &.invert {
-                @include pep-button-state-weak-invert($pepperi-theme);
+                @include pep-button-state-weak-invert();
             }
         }
 
         &.weak-invert {
-            @include pep-button-state-weak-invert($pepperi-theme);
+            @include pep-button-state-weak-invert();
         }
 
         &.regular {
-            @include pep-button-state-regular($pepperi-theme);
+            @include pep-button-state-regular();
 
             &.system-primary {
-                @include pep-button-state-regular($pepperi-theme, color-system-primary);
+                @include pep-button-state-regular(color-system-primary);
             }
             &.user-primary {
-                @include pep-button-state-regular($pepperi-theme, color-user-primary);
+                @include pep-button-state-regular(color-user-primary);
             }
             &.user-secondary {
-                @include pep-button-state-regular($pepperi-theme, color-user-secondary);
+                @include pep-button-state-regular(color-user-secondary);
             }
             &.caution {
-                @include pep-button-state-regular($pepperi-theme, color-system-caution);
+                @include pep-button-state-regular(color-system-caution);
             }
             &.success {
-                @include pep-button-state-regular($pepperi-theme, color-system-success);
+                @include pep-button-state-regular(color-system-success);
             }
         }
 
         &.strong {
-            @include pep-button-state-strong($pepperi-theme);
+            @include pep-button-state-strong();
 
             &.system-primary {
-                @include pep-button-state-strong($pepperi-theme, color-system-primary);
+                @include pep-button-state-strong(color-system-primary);
             }
             &.user-primary {
-                @include pep-button-state-strong($pepperi-theme, color-user-primary);
+                @include pep-button-state-strong(color-user-primary);
             }
             &.user-secondary {
-                @include pep-button-state-strong($pepperi-theme, color-user-secondary);
+                @include pep-button-state-strong(color-user-secondary);
             }
             &.caution {
-                @include pep-button-state-strong($pepperi-theme, color-system-caution);
+                @include pep-button-state-strong(color-system-caution);
             }
             &.success {
-                @include pep-button-state-strong($pepperi-theme, color-system-success);
+                @include pep-button-state-strong(color-system-success);
             }
         }
 
         &.none {
-            @include pep-button-state-none($pepperi-theme);
+            @include pep-button-state-none();
         }
 
         &.focused {
-            @include focus($pepperi-theme, true);
+            @include mixins.focus(true);
         }
 
         &.mat-button {
-            @include pep-badge($pepperi-theme);
+            @include mixins.pep-badge();
 
             &:hover {
                 .mat-button-focus-overlay {

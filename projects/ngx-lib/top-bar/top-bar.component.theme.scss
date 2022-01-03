@@ -1,9 +1,9 @@
-@mixin pep-top-bar-component-theme($pepperi-theme) {
-    .pep-top-bar-container {
-        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+@use '../src/core/style/abstracts/functions';
 
-        .footer {
-            background-color: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
-        }
+.pep-top-bar-container {
+    background: functions.get-pep-color(color-system-primary-invert, color-base);
+
+    .footer {
+        background-color: functions.get-pep-color(color-system-primary-invert, color-base);
     }
 }

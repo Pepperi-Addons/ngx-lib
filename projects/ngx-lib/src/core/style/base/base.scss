@@ -1,13 +1,15 @@
-@import '../abstracts/variables';
+@use '../abstracts/variables';
+@use '../abstracts/mixins';
+@use '../abstracts/functions';
 
 //  Spacing
 // ------------------------
 .pep-spacing-element-negative {
-    @include pep-spacing-element-negative();
+    @include mixins.pep-spacing-element-negative();
 }
 
 .pep-spacing-element {
-    @include pep-spacing-element();
+    @include mixins.pep-spacing-element();
 }
 //  Floating alignment
 // ------------------------
@@ -55,22 +57,22 @@
 //  Roundness
 // ------------------------
 .roundness-sm {
-    border-radius: $border-radius-sm;
+    border-radius: variables.$border-radius-sm;
 }
 
 .roundness-md {
-    border-radius: $border-radius-md;
+    border-radius: variables.$border-radius-md;
 }
 
 .roundness-lg {
-    border-radius: $border-radius-lg;
+    border-radius: variables.$border-radius-lg;
 }
 
 //  Modal - General
 // -----------------------------------------------------
 .modal-footer {
     .pepperi-button, .pep-button {
-        margin: 0 $spacing-xs;
+        margin: 0 variables.$spacing-xs;
     }
 }
 
@@ -87,30 +89,30 @@
 .mat-tab-group {
     .mat-tab-header {
         .mat-tab-labels {
-            height: $tabs-labels-height;
+            height: variables.$tabs-labels-height;
             box-sizing: content-box;
 
             .mat-tab-label {
                 height: inherit;
                 opacity: unset;
                 min-width: unset;
-                padding: 0 $spacing-2xl;
+                padding: 0 variables.$spacing-2xl;
 
                 &.mat-tab-label-active {
-                    font-weight: $font-weight-bold;
+                    font-weight: variables.$font-weight-bold;
                 }
             }
         }
     }
 
-    $tabs-z-index: $z-index-lowest;
+    $tabs-z-index: variables.$z-index-lowest;
 
     .mat-tab-body-wrapper {
-        // margin: 0 calc(#{$content-margin} * -1);
+        // margin: 0 calc(#{variables.$content-margin} * -1);
 
         .mat-tab-body {
             z-index: $tabs-z-index - 1;
-            padding-top: $content-padding;
+            padding-top: variables.$content-padding;
 
             &:not(.mat-tab-body-active) {
                 .mat-tab-body-content {
@@ -122,7 +124,7 @@
                 z-index: $tabs-z-index;
 
                 .mat-tab-body-content {
-                    padding: 0 $content-padding $content-padding;
+                    padding: 0 variables.$content-padding variables.$content-padding;
                     line-height: normal;
                 }
             }
@@ -135,11 +137,11 @@
             position: unset;
             z-index: $tabs-z-index + 1;
             width: 100%;
-            // @include mat-tabs-fixed-header-width($side-bar-width);
+            // @include mixins.mat-tabs-fixed-header-width(variables.$side-bar-width);
         }
 
         .mat-tab-body-wrapper {
-            // margin-top: $tabs-labels-height;
+            // margin-top: variables.$tabs-labels-height;
             margin-top: unset;
         }
     }
@@ -155,25 +157,25 @@
 
 .pepperi-accordion, .pep-accordion {
     &.mat-accordion .mat-expansion-panel {
-        padding: 0 $content-padding;
-        margin: 0 calc(#{$content-padding} * -1);
+        padding: 0 variables.$content-padding;
+        margin: 0 calc(#{variables.$content-padding} * -1);
 
         &:first-child {
             .mat-expansion-panel-header {
-                border-radius: $spacing-xs $spacing-xs 0 0;
+                border-radius: variables.$spacing-xs variables.$spacing-xs 0 0;
             }
         }
 
         .mat-expansion-panel-header {
             flex-flow: row-reverse;
-            height: $spacing-5xl;
-            padding: $spacing-lg $spacing-sm $spacing-sm;
+            height: variables.$spacing-5xl;
+            padding: variables.$spacing-lg variables.$spacing-sm variables.$spacing-sm;
 
             .mat-expansion-panel-header-title {
                 display: flex;
                 align-items: center;
                 margin: 0;
-                padding: $spacing-xs $spacing-lg;
+                padding: variables.$spacing-xs variables.$spacing-lg;
             }
 
             .mat-expansion-indicator {
@@ -182,13 +184,13 @@
                 transform: scale(1.25) !important;
 
                 &:after {
-                    @include select-arrow();
+                    @include mixins.select-arrow();
                     border-style: unset;
                     display: unset;
                     border-width: unset;
                     transform: unset;
                     padding: unset;
-                    padding-top: $spacing-xs;
+                    padding-top: variables.$spacing-xs;
                 }
             }
 
@@ -198,14 +200,14 @@
                 }
 
                 .mat-expansion-panel-header-title {
-                    font-weight: $font-weight-bold;
+                    font-weight: variables.$font-weight-bold;
                 }
             }
         }
 
         .mat-expansion-panel-content {
             .mat-expansion-panel-body {
-                padding: $content-padding 0;
+                padding: variables.$content-padding 0;
             }
         }
 
@@ -218,38 +220,38 @@
 
 .pepperi-accordion2, .pep-accordion2 {
     &.mat-accordion .mat-expansion-panel {
-        // padding: 0 $content-padding;
-        // margin: 0 calc(#{$content-padding} * -1);
+        // padding: 0 variables.$content-padding;
+        // margin: 0 calc(#{variables.$content-padding} * -1);
 
         .mat-expansion-panel-header {
             flex-flow: row-reverse;
-            height: $spacing-4xl;
-            // padding: $spacing-lg 0 $spacing-sm;
+            height: variables.$spacing-4xl;
+            // padding: variables.$spacing-lg 0 variables.$spacing-sm;
             padding: 0;
 
             .mat-expansion-panel-header-title {
                 display: flex;
                 align-items: center;
                 margin: 0;
-                padding: $spacing-xs 0;
+                padding: variables.$spacing-xs 0;
 
                 .mat-icon {
                     height: 1rem;
                     width: 1rem;
-                    @include align-center();
+                    @include mixins.align-center();
                 }
             }
 
             // &.mat-expanded {
             //     .mat-expansion-panel-header-title {
-            //         font-weight: $font-weight-bold;
+            //         font-weight: variables.$font-weight-bold;
             //     }
             // }
         }
 
         .mat-expansion-panel-content {
             .mat-expansion-panel-body {
-                padding: $spacing-sm $spacing-xs;
+                padding: variables.$spacing-sm variables.$spacing-xs;
             }
         }
 
@@ -262,10 +264,10 @@
 
 .pepperi-chips, .pep-chips {
     &.mat-accordion .mat-expansion-panel {
-        $shadow-bottom: $spacing-xl;
+        $shadow-bottom: variables.$spacing-xl;
 
-        margin: calc(#{$spacing-sm} * -1) calc(#{$spacing-lg} * -1) $spacing-md !important;
-        // margin-bottom: $spacing-md;
+        margin: calc(#{variables.$spacing-sm} * -1) calc(#{variables.$spacing-lg} * -1) variables.$spacing-md !important;
+        // margin-bottom: variables.$spacing-md;
         border-radius: unset;
 
         &.mat-expansion-panel-spacing {
@@ -282,24 +284,24 @@
             .mat-expansion-panel-header-title {
                 flex-grow: 0;
                 width: fit-content;
-                height: $spacing-3xl;
-                border-radius: 1.5rem; // $border-radius-md;
-                padding: 0 $spacing-xl;
-                margin: $spacing-sm $spacing-lg 0; // For the shadow
+                height: variables.$spacing-3xl;
+                border-radius: 1.5rem; // variables.$border-radius-md;
+                padding: 0 variables.$spacing-xl;
+                margin: variables.$spacing-sm variables.$spacing-lg 0; // For the shadow
                 display: grid;
                 align-items: center;
-                // margin-bottom: $shadow-bottom;
+                // margin-bottom: variables.$shadow-bottom;
             }
 
             &.mat-expanded {
                 .mat-expansion-panel-header-title {
                     position: absolute;
-                    font-weight: $font-weight-bold;
+                    font-weight: variables.$font-weight-bold;
                 }
             }
 
             &.separator {
-                height: $spacing-sm;
+                height: variables.$spacing-sm;
 
                 .mat-expansion-panel-header-title {
                     width: 100%;
@@ -310,22 +312,22 @@
 
         .mat-expansion-panel-content {
             .mat-expansion-panel-body {
-                padding: 0 calc(#{$content-padding} + #{$spacing-md});
+                padding: 0 calc(#{variables.$content-padding} + #{variables.$spacing-md});
 
                 .expansion-content {
                     padding: 0;
-                    margin-top: $spacing-md;
+                    margin-top: variables.$spacing-md;
                     margin-bottom: 0;
                     list-style-type: disc;
                     list-style-position: inside;
 
                     li {
-                        margin-bottom: $spacing-sm;
+                        margin-bottom: variables.$spacing-sm;
 
                         &:hover,
                         &.active {
                             cursor: pointer;
-                            font-weight: $font-weight-bold;
+                            font-weight: variables.$font-weight-bold;
                         }
                     }
                 }
@@ -337,8 +339,8 @@
 // Auto complete.
 // -----------------------------------------------------
 .mat-autocomplete-panel {
-    margin-top: $spacing-sm;
-    border-radius: $border-radius-md;
+    margin-top: variables.$spacing-sm;
+    border-radius: variables.$border-radius-md;
 
     .mat-option:active {
         transition: 0.3ms;
@@ -354,7 +356,7 @@
         padding: 0 !important;
 
         .mat-menu-item {
-            padding: 0 $content-padding;
+            padding: 0 variables.$content-padding;
             display: flex;
             align-items: center;
         }
@@ -365,8 +367,8 @@
             padding: 0 !important;
 
             .mat-menu-item {
-                height: $spacing-4xl;
-                padding: 0 $spacing-md;
+                height: variables.$spacing-4xl;
+                padding: 0 variables.$spacing-md;
                 border-radius: unset;
             }
         }    
@@ -375,12 +377,12 @@
     &.pep-action-menu,
     &.pep-action-select-menu {
         .mat-menu-content {
-            padding: $spacing-sm !important;
+            padding: variables.$spacing-sm !important;
             
             .mat-menu-item {
-                height: $spacing-3xl;
-                padding: 0 $spacing-sm;
-                border-radius: $border-radius-md;
+                height: variables.$spacing-3xl;
+                padding: 0 variables.$spacing-sm;
+                border-radius: variables.$border-radius-md;
             }
         }
     }
@@ -389,34 +391,34 @@
 //  Dialog
 // -------------------------------------------------
 .mat-dialog-container {
-    border-radius: 0.25rem !important; // $border-radius-md
+    border-radius: 0.25rem !important; // variables.$border-radius-md
 }
 
 .pepperi-dialog, .pep-dialog {
     max-width: 90vw;
     min-width: 18rem;
 
-    $dialog-content-padding: $content-padding;
+    $dialog-content-padding: variables.$content-padding;
 
     .mat-dialog-container {
-        border-radius: 0.25rem !important; // $border-radius-md
-        padding: $content-padding;
+        border-radius: 0.25rem !important;
+        padding: variables.$content-padding;
 
         .dialog-header-container {
-            height: $dialog-header-height;
+            height: variables.$dialog-header-height;
             margin-bottom: 0;
             display: grid;
             grid-template-columns: 1fr auto;
             grid-template-areas: "title close";
 
             .dialog-title {
-                @include ellipsis();
+                @include mixins.ellipsis();
                 grid-area: title;
 
                 &:after {
                     content: ' ';
                     display: block;
-                    width: $spacing-sm;
+                    width: variables.$spacing-sm;
                 }
             }
 
@@ -426,8 +428,8 @@
         }
 
         .mat-dialog-content {
-            padding: $dialog-content-padding $spacing-sm;
-            margin: 0 calc(#{$spacing-sm} * -1);
+            padding: $dialog-content-padding variables.$spacing-sm;
+            margin: 0 calc(#{variables.$spacing-sm} * -1);
             // margin: 0;
             border: none;
             display: grid;
@@ -435,7 +437,7 @@
             -webkit-overflow-scrolling: touch;
             min-height: 5rem;
             max-height: 65vh;
-            // @include box-sizing(border-box);
+            // @include mixins.box-sizing(border-box);
             box-sizing: border-box;
             // grid-row: mat-dialog-content;
             // max-height: unset; // This is cause a bug in the email dialog that the actions buttons are not displayed.
@@ -445,7 +447,7 @@
             justify-content: flex-end;
             grid-row: mat-dialog-actions;
             margin-bottom: 0;
-            padding: $spacing-md 0 0; // override material padding.
+            padding: variables.$spacing-md 0 0; // override material padding.
             min-height: unset;
         }
 
@@ -470,7 +472,7 @@
         .mat-dialog-container {
             .mat-dialog-content {
                 $border-size: 1px;
-                max-height: calc(90vh - (#{$dialog-header-height} + (#{$content-padding} * 2) + (#{$border-size} * 2))); 
+                max-height: calc(90vh - (#{variables.$dialog-header-height} + (#{variables.$content-padding} * 2) + (#{$border-size} * 2))); 
             }
         }
     }
@@ -485,7 +487,6 @@
 
         .mat-dialog-container {
             .mat-dialog-content {
-                // $height: calc(100vh - (#{$dialog-header-height} + (#{$dialog-padding} * 2) + #{$dialog-actions-height}));
                 $height: calc(100% - ((#{$dialog-content-padding} * 2)));
                 height: $height;
                 max-height: $height;
@@ -522,36 +523,36 @@
 // Override bootstrap css.
 // -----------------------------------------------------
 .modal {
-    z-index: $z-index-high;
+    z-index: variables.$z-index-high;
 }
 .modal-backdrop {
-    z-index: $z-index-high - 2;
+    z-index: variables.$z-index-high - 2;
 }
 
-@mixin declare-system-base-theme($pepperi-theme) {
+@mixin declare-system-base-theme() {
     .header-content {
-        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+        background: functions.get-pep-color(color-system-primary-invert, color-base);
     }
 
     .settings-bar-container {
-        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+        background: functions.get-pep-color(color-system-primary-invert, color-base);
     }
 
     .splitter {
         height: 1px;
-        @include pep-border(border-bottom, $pepperi-theme);
+        @include mixins.pep-border(border-bottom);
     }
 
     .pepperi-border-top, .pep-border-top {
-        @include pep-border(border-top, $pepperi-theme);
+        @include mixins.pep-border(border-top);
     }
 
     .pepperi-border-bottom, .pep-border-bottom {
-        @include pep-border(border-bottom, $pepperi-theme);
+        @include mixins.pep-border(border-bottom);
     }
 
     .pepperi-loading-spinner, .pep-loading-spinner {
-        background-color: get-pep-color($pepperi-theme, color-top-header, color-base);
+        background-color: functions.get-pep-color(color-top-header, color-base);
     }
 
     //  Tabs.
@@ -564,32 +565,32 @@
 
         .mat-tab-header {
             .mat-tab-labels {
-                @include pep-border(border-bottom, $pepperi-theme);
+                @include mixins.pep-border(border-bottom);
 
                 .mat-tab-label {
-                    color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                    color: functions.get-pep-color(color-text, color-dimmed);
 
                     &:hover {
-                        @include state-weak-hover($pepperi-theme);
+                        @include mixins.state-weak-hover();
                     }
 
                     // Focused
                     &.cdk-focused {
                         background-color: unset;
-                        @include state-weak-active($pepperi-theme);
+                        @include mixins.state-weak-active();
                     }
 
                     &.mat-tab-label-active {
-                        @include state-weak-default($pepperi-theme);
-                        color: get-pep-color($pepperi-theme, color-text, color-main);
+                        @include mixins.state-weak-default();
+                        color: functions.get-pep-color(color-text, color-main);
 
                         &:hover {
-                            @include state-weak-hover($pepperi-theme);
+                            @include mixins.state-weak-hover();
                         }
                     }
 
                     &.mat-tab-disabled {
-                        @include state-weak-disable($pepperi-theme);
+                        @include mixins.state-weak-disable();
                     }
                 }
             }
@@ -609,7 +610,7 @@
 
         &.fixed-header {
             .mat-tab-header {
-                background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+                background: functions.get-pep-color(color-system-primary-invert, color-base);
             }
         }
     }
@@ -621,25 +622,25 @@
             box-shadow: unset;
 
             .mat-expansion-panel-header {
-                @include pep-border(border-top, $pepperi-theme);
+                @include mixins.pep-border(border-top);
 
                 &.mat-expanded {
-                    @include pep-border(border-bottom, $pepperi-theme);
+                    @include mixins.pep-border(border-bottom);
 
                     .mat-expansion-panel-header-title {
-                        color: get-pep-color($pepperi-theme, color-text, color-main);
+                        color: functions.get-pep-color(color-text, color-main);
                     }
                 }
 
                 .mat-expansion-panel-header-title {
-                    color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                    color: functions.get-pep-color(color-text, color-dimmed);
                 }
             }
 
             .mat-expansion-panel-header.cdk-keyboard-focused,
             .mat-expansion-panel-header.cdk-program-focused,
             .mat-expansion-panel-header:hover {
-                @include state-weak-hover($pepperi-theme);
+                @include mixins.state-weak-hover();
             }
 
             &:first-child {
@@ -650,7 +651,7 @@
 
             &:last-child {
                 .mat-expansion-panel-header {
-                    @include pep-border(border-bottom, $pepperi-theme);
+                    @include mixins.pep-border(border-bottom);
                 }
             }
         }
@@ -661,21 +662,21 @@
             box-shadow: unset;
 
             .mat-expansion-panel-header {
-                @include pep-border(border-top, $pepperi-theme);
+                @include mixins.pep-border(border-top);
 
                 .mat-expansion-panel-header-title {
-                    color: get-pep-color($pepperi-theme, color-text, color-main);
+                    color: functions.get-pep-color(color-text, color-main);
                 }
             }
 
             .mat-expansion-panel-header.cdk-keyboard-focused,
             .mat-expansion-panel-header.cdk-program-focused,
             .mat-expansion-panel-header:hover {
-                @include state-weak-hover($pepperi-theme);
+                @include mixins.state-weak-hover();
             }
 
             &:last-child {
-                @include pep-border(border-bottom, $pepperi-theme);
+                @include mixins.pep-border(border-bottom);
             }
         }
     }
@@ -693,26 +694,26 @@
 
                 &.mat-expanded {
                     .mat-expansion-panel-header-title {
-                        @include state-weak-active($pepperi-theme);
-                        background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
-                        @include inline(get-pep-color($pepperi-theme, color-text, color-main));
-                        box-shadow: get-pep-shadow($pepperi-theme, shadow-md, soft);
+                        @include mixins.state-weak-active();
+                        background: functions.get-pep-color(color-system-primary-invert, color-base);
+                        @include mixins.inline(functions.get-pep-color(color-text, color-main));
+                        box-shadow: functions.get-pep-shadow(shadow-md, soft);
 
                         &:hover {
-                            @include state-weak-hover($pepperi-theme);
+                            @include mixins.state-weak-hover();
                         }
 
                         &:after {
-                            z-index: $z-index-lowest !important;
+                            z-index: variables.$z-index-lowest !important;
                         }
                     }
                 }
 
                 .mat-expansion-panel-header-title {
-                    @include state-weak-default($pepperi-theme);
+                    @include mixins.state-weak-default();
 
                     &:hover {
-                        @include state-weak-hover($pepperi-theme);
+                        @include mixins.state-weak-hover();
                     }
                 }
             }
@@ -720,11 +721,11 @@
             .mat-expansion-panel-body {
                 .expansion-content {
                     li {
-                        color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                        color: functions.get-pep-color(color-text, color-dimmed);
 
                         &:hover,
                         &.active {
-                            color: get-pep-color($pepperi-theme, color-text, color-main);
+                            color: functions.get-pep-color(color-text, color-main);
                         }
                     }
                 }
@@ -735,45 +736,45 @@
     // Auto complete.
     // -------------------------------------------------
     .mat-autocomplete-panel {
-        @include pep-border(border, $pepperi-theme);
+        @include mixins.pep-border(border);
 
         .mat-option:active {
-            background: get-pep-color($pepperi-theme, color-system-primary, color-tran-40) !important;
+            background: functions.get-pep-color(color-system-primary, color-tran-40) !important;
         }
     }
 
     // Modals overlay pane
     // -------------------------------------------------
     // .cdk-overlay-pane {
-    //     // box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
+    //     // box-shadow: functions.get-pep-shadow(shadow-sm, hard);
     // }
 
     //  Menu
     // -------------------------------------------------
     .mat-menu-panel {
-        box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
-        border: 1px solid get-pep-color($pepperi-theme, color-system-primary, color-base);
+        box-shadow: functions.get-pep-shadow(shadow-sm, hard);
+        border: 1px solid functions.get-pep-color(color-system-primary, color-base);
         
         max-width: 30rem;
         min-height: unset;
         
         .mat-menu-item {
-            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+            background: functions.get-pep-color(color-system-primary-invert, color-base);
 
             &:hover {
-                @include state-weak-hover($pepperi-theme);
+                @include mixins.state-weak-hover();
             }
             &:active {
-                @include state-weak-active($pepperi-theme, color-weak, false);
-                background: get-pep-color($pepperi-theme, color-weak, color-tran-50) !important;
+                @include mixins.state-weak-active(color-weak, false);
+                background: functions.get-pep-color(color-weak, color-tran-50) !important;
             }
             &:disabled {
-                @include state-weak-disable($pepperi-theme);
+                @include mixins.state-weak-disable();
                 background: unset !important;
             }
 
             &.selected {
-                background: get-pep-color($pepperi-theme, color-system-success, color-tran-20);
+                background: functions.get-pep-color(color-system-success, color-tran-20);
             }
         }
     }
@@ -782,18 +783,18 @@
     // -------------------------------------------------
     .mat-dialog-container {
         box-shadow: unset;
-        // box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
-        border: 1px solid get-pep-color($pepperi-theme, color-system-primary, color-base);
+        // box-shadow: functions.get-pep-shadow(shadow-sm, hard);
+        border: 1px solid functions.get-pep-color(color-system-primary, color-base);
 
         .dialog-header-container {
-            @include pep-border(border-bottom, $pepperi-theme);
+            @include mixins.pep-border(border-bottom);
         }
     }
 
     /*----------------- ngx Overrides ---------------------*/
     // Temporary until we'll write it again.
     #cartSummary {
-        $border-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-50);
+        $border-color: functions.get-pep-color(color-system-primary, color-tran-50);
 
         .carousel-indicators {
             margin-bottom: 0px;
@@ -806,7 +807,7 @@
                 margin: 0 0.25rem;
 
                 &.active {
-                    background-color: get-pep-color($pepperi-theme, color-system-primary, color-tran-60);
+                    background-color: functions.get-pep-color(color-system-primary, color-tran-60);
                 }
             }
         }

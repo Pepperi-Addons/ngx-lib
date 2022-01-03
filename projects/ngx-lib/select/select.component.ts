@@ -26,7 +26,7 @@ import {
 @Component({
     selector: 'pep-select',
     templateUrl: './select.component.html',
-    styleUrls: ['./select.component.scss'],
+    styleUrls: ['./select.component.scss', './select.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {

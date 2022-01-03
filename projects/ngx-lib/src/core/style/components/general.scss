@@ -1,9 +1,13 @@
+@use '../abstracts/variables';
+@use '../abstracts/mixins';
+@use '../abstracts/functions';
+
 .pepperi-report-fields, .pep-report-fields {
     height: inherit;
 
     span {
         display: block;
-        @include ellipsis();
+        @include mixins.ellipsis();
     }
 }
 
@@ -12,8 +16,8 @@
 // -----------------------------------------------------
 .mat-form-title {
     margin: 0;
-    padding: $spacing-2xs 0;
-    height: $form-field-title-height;
+    padding: variables.$spacing-2xs 0;
+    height: variables.$form-field-title-height;
     line-height: 1rem;
     // display: block;
     display: grid;
@@ -27,7 +31,7 @@
     }
 
     mat-label {
-        @include ellipsis();
+        @include mixins.ellipsis();
         display: inline-block; // WAS UNSET , CAUSE TO LABEL TO BE LONGER THEN THE CONTAINER - AVNER ,
         // Than was blocked - cause the label to catch 100% of the row -> prob whith limited line
         vertical-align: top;
@@ -50,27 +54,27 @@
 
 @mixin pep-field-icon($inside-button: false) {
     .mat-icon {
-        height: calc(#{$form-field-button-size});
-        width: calc(#{$form-field-button-size});
+        height: calc(#{variables.$form-field-button-size});
+        width: calc(#{variables.$form-field-button-size});
 
         .svg-icon {
-            height: $form-field-button-icon-size; // 1rem;
-            width: $form-field-button-icon-size; // 1rem;
+            height: variables.$form-field-button-icon-size; // 1rem;
+            width: variables.$form-field-button-icon-size; // 1rem;
         }
     }
 
     @if ($inside-button) {
         &.regular {
             .mat-icon {
-                height: calc(#{$form-field-button-size} - 2px); // - 2px is the border size of the regular
-                width: calc(#{$form-field-button-size} - 2px); // - 2px is the border size of the regular
+                height: calc(#{variables.$form-field-button-size} - 2px); // - 2px is the border size of the regular
+                width: calc(#{variables.$form-field-button-size} - 2px); // - 2px is the border size of the regular
             }
         }
     }
 }
 
 .mat-form-field {
-    @include fix-inline-z-index();
+    @include mixins.fix-inline-z-index();
     display: flow-root !important;
     width: 100%;
 
@@ -80,10 +84,10 @@
         padding-bottom: 0;
 
         .mat-form-field-flex {
-            padding-left: $spacing-md;
-            padding-right: $spacing-md;
+            padding-left: variables.$spacing-md;
+            padding-right: variables.$spacing-md;
             margin: 0;
-            min-height: $form-field-height; // 2.5rem;
+            min-height: variables.$form-field-height; // 2.5rem;
             align-items: center;
 
             .mat-form-field-outline {
@@ -95,7 +99,7 @@
                 top: 0; // Override material default.
                 display: flex;
                 align-self: center;
-                z-index: $z-index-lowest + 1;
+                z-index: variables.$z-index-lowest + 1;
                 
                 @include pep-field-icon();
 
@@ -104,8 +108,8 @@
                     line-height: unset;
                     padding: unset;
 
-                    height: $form-field-button-size; // 1.5rem;
-                    width: $form-field-button-size; // 1.5rem;
+                    height: variables.$form-field-button-size; // 1.5rem;
+                    width: variables.$form-field-button-size; // 1.5rem;
 
                     @include pep-field-icon(true);
                 }
@@ -120,7 +124,7 @@
 
                 .mat-input-element {
                     // vertical-align: unset;
-                    z-index: $z-index-lowest;
+                    z-index: variables.$z-index-lowest;
                     margin-top: unset;
                     text-overflow: ellipsis;
                 }
@@ -135,42 +139,42 @@
             position: relative;
             margin-top: 0;
             padding: 0;
-            font-weight: $font-weight-bold;
-            z-index: $z-index-medium - 4;
-            border-radius: $border-radius-md;
+            font-weight: variables.$font-weight-bold;
+            z-index: variables.$z-index-medium - 4;
+            border-radius: variables.$border-radius-md;
 
             .mat-error {
-                padding: $spacing-xs $spacing-sm;
+                padding: variables.$spacing-xs variables.$spacing-sm;
             }
         }
     }
 
     .mat-form-field-flex {
-        border-radius: $border-radius-md;
+        border-radius: variables.$border-radius-md;
     }
 
 }
 
 @mixin pep-field-size($size: 'md') {
     // Default is md
-    $field-height: $spacing-3xl;
-    $field-padding: $spacing-md;
+    $field-height: variables.$spacing-3xl;
+    $field-padding: variables.$spacing-md;
 
     @if $size == 'xl' {
-        $field-height: $spacing-5xl;
-        $field-padding: $spacing-xl;
+        $field-height: variables.$spacing-5xl;
+        $field-padding: variables.$spacing-xl;
     }
     @else if $size == 'lg' {
-        $field-height: $spacing-4xl;
-        $field-padding: $spacing-lg;
+        $field-height: variables.$spacing-4xl;
+        $field-padding: variables.$spacing-lg;
     }
     @else if $size == 'sm' {
-        $field-height: $spacing-2xl;
-        $field-padding: $spacing-sm;
+        $field-height: variables.$spacing-2xl;
+        $field-padding: variables.$spacing-sm;
     }
     @else if $size == 'xs' {
-        $field-height: $spacing-xl;
-        $field-padding: $spacing-xs;
+        $field-height: variables.$spacing-xl;
+        $field-padding: variables.$spacing-xs;
     }
 
     .mat-form-field .mat-form-field-wrapper {
@@ -212,8 +216,8 @@
 //  Form view
 // ------------------------
 .form-view {
-    margin-top: $content-margin;
-    margin-bottom: $content-margin;
+    margin-top: variables.$content-margin;
+    margin-bottom: variables.$content-margin;
     margin-inline: 0.25rem;
 }
 
@@ -223,41 +227,41 @@ $sorting-width: 1rem;
 
 // .below-sticky-top-bar {
 //     .table-header {
-//         top: calc(#{$top-bar-height});
+//         top: calc(#{variables.$top-bar-height});
 //     }
 // }
 
 .table-header {
     position: sticky;
-    z-index: $z-index-medium - 5;
-    // @include box-sizing(border-box);
+    z-index: variables.$z-index-medium - 5;
+    // @include mixins.box-sizing(border-box);
     box-sizing: border-box;
     width: inherit;
-    height: calc(#{$table-field-height} + #{$table-spacing} + #{$table-half-spacing});
+    height: calc(#{variables.$table-field-height} + #{variables.$table-spacing} + #{variables.$table-half-spacing});
 
     .table-header-padding-top {
-        height: $table-spacing;
+        height: variables.$table-spacing;
         width: 100%;
     }
 
     .row-selection {
-        margin: 0 calc(#{$spacing-sm} + calc(#{$spacing-xs} / 2)); // 0 0.625rem;
+        margin: 0 calc(#{variables.$spacing-sm} + calc(#{variables.$spacing-xs} / 2)); // 0 0.625rem;
         height: inherit;
         display: flex;
         align-items: center;
     }
 
     .table-header-fieldset {
-        border-radius: $table-border-radius;
-        height: $table-field-height; // 2rem;
-        margin-bottom: $table-half-spacing; // 0.25rem;
+        border-radius: variables.$table-border-radius;
+        height: variables.$table-field-height; // 2rem;
+        margin-bottom: variables.$table-half-spacing; // 0.25rem;
 
         fieldset {
             height: inherit;
         }
 
         .header-column {
-            padding: 0 $spacing-sm;
+            padding: 0 variables.$spacing-sm;
             box-sizing: border-box;
             //cursor: pointer;
             height: inherit;
@@ -266,12 +270,12 @@ $sorting-width: 1rem;
 
             .header-label {
                 width: 100%;
-                // @include box-sizing(border-box);
+                // @include mixins.box-sizing(border-box);
                 box-sizing: border-box;
                 user-select: none;
-                // @include calc(max-width, '100% - 0');
+                // @include mixins.calc(max-width, '100% - 0');
                 max-width: 100%;
-                @include ellipsis();
+                @include mixins.ellipsis();
                 font-weight: 600 !important;
                 line-height: 2rem !important;
                 margin-bottom: 0;
@@ -324,15 +328,15 @@ $sorting-width: 1rem;
             .resize-box {
                 display: none;
                 cursor: w-resize;
-                margin-inline-end: calc((#{$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
-                height: $table-field-height; // 2rem;
+                margin-inline-end: calc((#{variables.$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
+                height: variables.$table-field-height; // 2rem;
                 align-items: center;
 
                 // .mat-icon,
                 .splitter {
                     width: 0.125rem;
                     height: 1rem;
-                    line-height: $table-field-height; // 2rem;
+                    line-height: variables.$table-field-height; // 2rem;
                     // padding: 0 0.625rem 0 0.375rem;
 
                     padding-inline-end: 0.425rem;
@@ -371,22 +375,22 @@ $sorting-width: 1rem;
             }
 
             &.is-first {
-                // border-radius: $table-border-radius 0 0 $table-border-radius;
-                border-start-start-radius: $table-border-radius;
-                border-start-end-radius: $table-border-radius;
+                // border-radius: variables.$table-border-radius 0 0 variables.$table-border-radius;
+                border-start-start-radius: variables.$table-border-radius;
+                border-start-end-radius: variables.$table-border-radius;
             }
 
             &.is-last {
-                // border-radius: 0 $table-border-radius $table-border-radius 0;
-                border-start-end-radius: $table-border-radius;
-                border-end-end-radius: $table-border-radius;
+                // border-radius: 0 variables.$table-border-radius variables.$table-border-radius 0;
+                border-start-end-radius: variables.$table-border-radius;
+                border-end-end-radius: variables.$table-border-radius;
                 
                 &:hover {
                     .resize-box {
                         // width: 1rem;
-                        // border-radius: 0 $table-border-radius $table-border-radius 0;
-                        border-start-end-radius: $table-border-radius;
-                        border-end-end-radius: $table-border-radius;
+                        // border-radius: 0 variables.$table-border-radius variables.$table-border-radius 0;
+                        border-start-end-radius: variables.$table-border-radius;
+                        border-end-end-radius: variables.$table-border-radius;
                     }
                 }
             }
@@ -399,77 +403,23 @@ $sorting-width: 1rem;
         }
     }
 }
-[dir='rtl'] {
-    .table-header {
-        .table-header-fieldset {
-            .header-column {
-                // .resize-box {
-                //     // margin-right: unset;
-                //     // margin-left: calc((#{$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
-
-                //     // .mat-icon,
-                //     .splitter {
-                //         // padding-right: unset;
-                //         // padding-left: 0.425rem;
-
-                //         // border:none;
-                //         // border-left-width: 1px;
-                //         // border-left-style: dashed;
-                //     }
-                // }
-
-                // &:hover {
-                //     &.support-sorting {
-                //         .header-label {
-                //             padding-right: unset;
-                //             padding-left: 1rem;
-                //         }
-                //     }
-                // }
-
-                // &.has-sorting {
-                //     &.support-sorting {
-                //         .header-label {
-                //             padding-right: unset;
-                //             padding-left: 1rem;
-                //         }
-                //     }
-                // }
-
-                // &.is-first {
-                //     border-radius: 0 $table-border-radius $table-border-radius 0;
-                // }
-
-                // &.is-last {
-                //     border-radius: $table-border-radius 0 0 $table-border-radius;
-
-                //     &:hover {
-                //         .resize-box {
-                //             border-radius: $table-border-radius 0 0 $table-border-radius;
-                //         }
-                //     }
-                // }
-            }
-        }
-    }
-}
 
 .table-body {
     width: inherit;
     position: relative;
 
     .table-row {
-        // @include box-sizing(border-box);
+        // @include mixins.box-sizing(border-box);
         box-sizing: border-box;
         width: inherit;
-        height: $table-row-height; // 3rem;
-        padding: $table-half-spacing 0; // 0.25rem 0;
-        // padding: $table-half-spacing $spacing-sm; // 0.25rem 0.5rem;
-        border-radius: $table-border-radius;
+        height: variables.$table-row-height; // 3rem;
+        padding: variables.$table-half-spacing 0; // 0.25rem 0;
+        // padding: variables.$table-half-spacing variables.$spacing-sm; // 0.25rem 0.5rem;
+        border-radius: variables.$table-border-radius;
 
         .row-selection {
-            margin: 0 calc(#{$spacing-sm} + #{$spacing-2xs});
-            height: $table-row-fieldset-height; // 2.5rem;
+            margin: 0 calc(#{variables.$spacing-sm} + #{variables.$spacing-2xs});
+            height: variables.$table-row-fieldset-height; // 2.5rem;
             display: flex;
             align-items: center;
 
@@ -479,27 +429,27 @@ $sorting-width: 1rem;
         }
 
         fieldset {
-            height: $table-row-fieldset-height; // 2.5rem;
-            border-radius: $table-border-radius;
-            // padding: 0 $spacing-2xs;
+            height: variables.$table-row-fieldset-height; // 2.5rem;
+            border-radius: variables.$table-border-radius;
+            // padding: 0 variables.$spacing-2xs;
             .table-cell {
                 box-sizing: border-box;
-                padding: 0 $spacing-2xs;
+                padding: 0 variables.$spacing-2xs;
 
                 &:first-of-type {
-                    // padding: 0 $spacing-2xs 0 $spacing-xs;
-                    padding-inline: $spacing-xs $spacing-2xs;
+                    // padding: 0 variables.$spacing-2xs 0 variables.$spacing-xs;
+                    padding-inline: variables.$spacing-xs variables.$spacing-2xs;
                 }
 
                 &:last-of-type {
-                    // padding: 0 $spacing-xs 0 $spacing-2xs;
-                    padding-inline: $spacing-2xs $spacing-xs;
+                    // padding: 0 variables.$spacing-xs 0 variables.$spacing-2xs;
+                    padding-inline: variables.$spacing-2xs variables.$spacing-xs;
                 }
             }
 
             .pepperi-input, .pep-input {
-                padding: 0 $spacing-md;
-                height: $table-field-height; // 2rem;
+                padding: 0 variables.$spacing-md;
+                height: variables.$table-field-height; // 2rem;
             }
 
             // -----------------------------------------------------
@@ -507,14 +457,14 @@ $sorting-width: 1rem;
             // -----------------------------------------------------
             .mat-form-field .mat-form-field-wrapper {
                 .mat-form-field-flex {
-                    min-height: $table-field-height; // 2rem;
-                    height: $table-field-height; // 2rem;
-                    padding: 0 $spacing-xs;
+                    min-height: variables.$table-field-height; // 2rem;
+                    height: variables.$table-field-height; // 2rem;
+                    padding: 0 variables.$spacing-xs;
                 }
 
                 // .mat-select-arrow {
-                //     margin-right: $spacing-xs;
-                //     margin-left: $spacing-xs;
+                //     margin-right: variables.$spacing-xs;
+                //     margin-left: variables.$spacing-xs;
                 // }
             }
         }
@@ -524,25 +474,7 @@ $sorting-width: 1rem;
         &:active,
         &.selected {
             .pepperi-form, .pep-form {
-                z-index: $z-index-lowest + 1;
-            }
-        }
-    }
-}
-
-[dir='rtl'] {
-    .table-body {
-        .table-row {
-            fieldset {
-                .table-cell {
-                    // &:first-of-type {
-                    //     padding: 0 $spacing-xs 0 $spacing-2xs;
-                    // }
-
-                    // &:last-of-type {
-                    //     padding: 0 $spacing-2xs 0 $spacing-xs;
-                    // }
-                }
+                z-index: variables.$z-index-lowest + 1;
             }
         }
     }
@@ -550,34 +482,34 @@ $sorting-width: 1rem;
 
 .table-total {
     position: sticky;
-    z-index: $z-index-medium - 5;
-    // @include box-sizing(border-box);
+    z-index: variables.$z-index-medium - 5;
+    // @include mixins.box-sizing(border-box);
     box-sizing: border-box;
     width: inherit;
-    height: calc(#{$table-field-height} + #{$table-spacing} + #{$table-half-spacing});
-    padding-top: $table-half-spacing;
+    height: calc(#{variables.$table-field-height} + #{variables.$table-spacing} + #{variables.$table-half-spacing});
+    padding-top: variables.$table-half-spacing;
 
     .table-header-fieldset {
-        border-radius: $table-border-radius;
-        height: $table-field-height; // 2rem;
-        margin-bottom: $table-half-spacing; // 0.25rem;
+        border-radius: variables.$table-border-radius;
+        height: variables.$table-field-height; // 2rem;
+        margin-bottom: variables.$table-half-spacing; // 0.25rem;
 
         .total-column {
-            padding: 0 $spacing-sm;
+            padding: 0 variables.$spacing-sm;
             height: inherit;
             display: flex;
             align-items: center;
 
             .total-label {
                 width: 100%;
-                // @include box-sizing(border-box);
+                // @include mixins.box-sizing(border-box);
                 box-sizing: border-box;
                 user-select: none;
-                // @include calc(max-width, '100% - 0');
+                // @include mixins.calc(max-width, '100% - 0');
                 max-width: 100%;
-                @include ellipsis();
-                font-weight: $font-weight-bold !important;
-                line-height: $table-field-height; // 2rem !important;
+                @include mixins.ellipsis();
+                font-weight: variables.$font-weight-bold !important;
+                line-height: variables.$table-field-height; // 2rem !important;
                 margin-bottom: 0;
             }
         }
@@ -588,7 +520,7 @@ $sorting-width: 1rem;
     .pager-container {
         position: sticky;
         bottom: 0;
-        z-index: $z-index-medium - 5;
+        z-index: variables.$z-index-medium - 5;
         width: inherit;
         height: auto;
     }
@@ -599,8 +531,8 @@ $sorting-width: 1rem;
 // ------------------------
 .cards-body {
     position: relative;
-    margin: 0 (calc(#{$content-margin} * -1) / 2); // -0.5rem;
-    padding-bottom: $content-padding;
+    margin: 0 (calc(#{variables.$content-margin} * -1) / 2); // -0.5rem;
+    padding-bottom: variables.$content-padding;
 }
 
 .line-view,
@@ -609,22 +541,22 @@ $sorting-width: 1rem;
     padding: 0 !important;
 
     .card-selection {
-        // margin: $spacing-xs calc(#{$content-margin} * -1) 0 $spacing-xs;
-        margin-top: $spacing-xs;
-        margin-inline: $spacing-xs calc(#{$content-margin} * -1);
+        // margin: variables.$spacing-xs calc(#{variables.$content-margin} * -1) 0 variables.$spacing-xs;
+        margin-top: variables.$spacing-xs;
+        margin-inline: variables.$spacing-xs calc(#{variables.$content-margin} * -1);
         height: 1rem;
         width: 1rem;
         position: relative;
-        z-index: $z-index-lowest;
+        z-index: variables.$z-index-lowest;
     }
 
     fieldset {
-        border-radius: $card-border-radius;
-        margin: $spacing-md; // spacing between cards.
+        border-radius: variables.$card-border-radius;
+        margin: variables.$spacing-md; // spacing between cards.
         position: relative;
 
         .card-spacing {
-            margin: $spacing-lg !important; // spacing inside card.
+            margin: variables.$spacing-lg !important; // spacing inside card.
         }
 
         // Showing two labels in the same row with ellipsis.
@@ -640,8 +572,8 @@ $sorting-width: 1rem;
             .title {
                 // flex-grow: 0;
                 flex-shrink: 5000;
-                @include ellipsis();
-                // padding: $spacing-2xs;
+                @include mixins.ellipsis();
+                // padding: variables.$spacing-2xs;
                 height: inherit;
 
                 &.no-shrink {
@@ -654,8 +586,8 @@ $sorting-width: 1rem;
             .value {
                 // flex-grow: 0;
                 flex-shrink: 1;
-                margin: 0 $spacing-xs;
-                @include ellipsis();
+                margin: 0 variables.$spacing-xs;
+                @include mixins.ellipsis();
                 height: inherit;
 
                 &.wrap {
@@ -664,12 +596,12 @@ $sorting-width: 1rem;
             }
 
             .card-edit-button {
-                flex-basis: $card-field-button-size;
+                flex-basis: variables.$card-field-button-size;
                 flex-shrink: 0;
 
-                width: $card-field-button-size;
-                height: $card-field-button-size;
-                line-height: $card-field-button-size;
+                width: variables.$card-field-button-size;
+                height: variables.$card-field-button-size;
+                line-height: variables.$card-field-button-size;
                 min-width: unset;
                 padding: 0;
                 pointer-events: none;
@@ -681,11 +613,11 @@ $sorting-width: 1rem;
 
                 .mat-icon {
                     // line-height: 0.5rem !important;
-                    width: $card-field-button-icon-size;
+                    width: variables.$card-field-button-icon-size;
 
                     .svg-icon {
-                        width: $card-field-button-icon-size; // $card-field-button-size - 0.25rem !important;
-                        // height: $card-field-button-size - 0.25rem !important;
+                        width: variables.$card-field-button-icon-size; // variables.$card-field-button-size - 0.25rem !important;
+                        // height: variables.$card-field-button-size - 0.25rem !important;
                     }
                 }
             }
@@ -700,27 +632,27 @@ $sorting-width: 1rem;
             }
 
             .pepperi-button:not(.card-edit-button), .pep-button:not(.card-edit-button) {
-                // height: $card-field-height !important; // 1.5rem !important;
+                // height: variables.$card-field-height !important; // 1.5rem !important;
                 // line-height: 1.5rem !important;
-                padding: 0 $spacing-xs;
+                padding: 0 variables.$spacing-xs;
             }
 
             .mat-form-field .mat-form-field-wrapper {
                 .mat-form-field-flex {
-                    height: $card-field-height !important; // 1.5rem !important;
-                    min-height: $card-field-height; // 1.5rem;
-                    padding: 0 $spacing-xs;
+                    height: variables.$card-field-height !important; // 1.5rem !important;
+                    min-height: variables.$card-field-height; // 1.5rem;
+                    padding: 0 variables.$spacing-xs;
                 }
 
                 .pepperi-button, .pep-button,
                 .mat-select-trigger,
                 .mat-form-field-infix {
-                    height: $card-field-height !important; // 1.5rem !important;
-                    // line-height: $card-field-height !important;
+                    height: variables.$card-field-height !important; // 1.5rem !important;
+                    // line-height: variables.$card-field-height !important;
                 }
 
                 .mat-input-element {
-                    font-size: $fs-sm !important;
+                    font-size: variables.$fs-sm !important;
                     // line-height: inherit !important;
                 }
             }
@@ -748,105 +680,87 @@ $sorting-width: 1rem;
     $screen-almost-full-width: 99.99%;
 
     /* > XLarge */
-    @media (min-width: $screen-max-size-xl) {
-        // @include calc(min-width, $screen-almost-full-width + ' / 6');
+    @media (min-width: variables.$screen-max-size-xl) {
         min-width: calc(#{$screen-almost-full-width} / 6);
 
         &.small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 8');
             min-width: calc(#{$screen-almost-full-width} / 8);
         }
 
         &.x-small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 9');
             min-width: calc(#{$screen-almost-full-width} / 9);
         }
     }
     /* Large - XLarge */
-    @media (max-width: $screen-max-size-xl) and (min-width: $screen-max-size-lg) {
-        // @include calc(min-width, $screen-almost-full-width + ' / 4');
+    @media (max-width: variables.$screen-max-size-xl) and (min-width: variables.$screen-max-size-lg) {
         min-width: calc(#{$screen-almost-full-width} / 4);
 
         &.small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 6');
             min-width: calc(#{$screen-almost-full-width} / 6);
         }
 
         &.x-small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 7');
             min-width: calc(#{$screen-almost-full-width} / 7);
         }
     }
     /* Medium - Large */
-    @media (max-width: $screen-max-size-lg) and (min-width: $screen-max-size-md) {
-        // @include calc(min-width, $screen-almost-full-width + ' / 3');
+    @media (max-width: variables.$screen-max-size-lg) and (min-width: variables.$screen-max-size-md) {
         min-width: calc(#{$screen-almost-full-width} / 3);
 
         &.small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 4');
             min-width: calc(#{$screen-almost-full-width} / 4);
         }
 
         &.x-small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 5');
             min-width: calc(#{$screen-almost-full-width} / 5);
         }
     }
     /* Small - Medium */
-    @media (max-width: $screen-max-size-md) and (min-width: $screen-max-size-sm) {
-        // @include calc(min-width, $screen-almost-full-width + ' / 3');
+    @media (max-width: variables.$screen-max-size-md) and (min-width: variables.$screen-max-size-sm) {
         min-width: calc(#{$screen-almost-full-width} / 3);
 
         &.small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 3');
             min-width: calc(#{$screen-almost-full-width} / 3);
         }
 
         &.x-small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 4');
             min-width: calc(#{$screen-almost-full-width} / 4);
         }
     }
     /* Extra small - Small */
-    @media (max-width: $screen-max-size-sm) and (min-width: $screen-max-size-xs) {
-        // @include calc(min-width, $screen-almost-full-width + ' / 2');
+    @media (max-width: variables.$screen-max-size-sm) and (min-width: variables.$screen-max-size-xs) {
         min-width: calc(#{$screen-almost-full-width} / 2);
 
         &.small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 2');
             min-width: calc(#{$screen-almost-full-width} / 2);
         }
 
         &.x-small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 2');
             min-width: calc(#{$screen-almost-full-width} / 2);
         }
     }
     /* < Extra small */
-    @media (max-width: $screen-max-size-xs) {
-        // @include calc(min-width, $screen-almost-full-width + ' / 1');
+    @media (max-width: variables.$screen-max-size-xs) {
         min-width: calc(#{$screen-almost-full-width} / 1);
 
         &.small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 1');
             min-width: calc(#{$screen-almost-full-width} / 1);
         }
 
         &.x-small-card {
-            // @include calc(min-width, $screen-almost-full-width + ' / 1');
             min-width: calc(#{$screen-almost-full-width} / 1);
         }
     }
 }
 
-[dir='rtl'] {
-    .line-view,
-    .card-view {
+// [dir='rtl'] {
+//     .line-view,
+//     .card-view {
         // .card-selection {
-        //     margin: $spacing-xs $spacing-xs 0 calc(#{$content-margin} * -1);
+        //     margin: variables.$spacing-xs variables.$spacing-xs 0 calc(#{variables.$content-margin} * -1);
         // }
-    }
-}
+//     }
+// }
 
 //  Custom field (added for stand alone field).
 // ---------------------------------------------
@@ -857,18 +771,18 @@ $sorting-width: 1rem;
     }
 }
 
-@mixin pep-general-theme($pepperi-theme) {
+@mixin pep-general-theme() {
     .required,
     .mandatory {
-        color: get-pep-color($pepperi-theme, color-system-caution, color-base);
+        color: functions.get-pep-color(color-system-caution, color-base);
 
         .svg-icon {
-            fill: get-pep-color($pepperi-theme, color-system-caution, color-base);
+            fill: functions.get-pep-color(color-system-caution, color-base);
         }
     }
 
     .svg-icon {
-        @include state-icon($pepperi-theme);
+        @include mixins.state-icon();
     }
 
     .pepperi-report-fields, .pep-report-fields {
@@ -882,7 +796,7 @@ $sorting-width: 1rem;
     // -----------------------------------------------------
     .mat-form-title {
         &.disable {
-            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+            color: functions.get-pep-color(color-text, color-dimmed);
         }
     }
 
@@ -900,51 +814,51 @@ $sorting-width: 1rem;
         .mat-form-field-wrapper {
             .mat-form-field-prefix,
             .mat-form-field-suffix {
-                color: get-pep-color($pepperi-theme, color-weak, color-flat-r-20);
+                color: functions.get-pep-color(color-weak, color-flat-r-20);
 
                 // For non icons symbols.
                 .pep-text-icon {
-                    color: get-pep-color($pepperi-theme, color-weak, color-flat-r-20);
+                    color: functions.get-pep-color(color-weak, color-flat-r-20);
                 }
             }
 
             .mat-form-field-infix {
                 .mat-input-element {
                     &:disabled {
-                        color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                        color: functions.get-pep-color(color-text, color-dimmed);
                     }
                 }
             }
         }
 
         .mat-form-field-flex {
-            border-radius: $border-radius-md;
+            border-radius: variables.$border-radius-md;
         }
 
-        @include pep-form-field-states($pepperi-theme);
+        @include mixins.pep-form-field-states();
 
         // Invalid (Error)
         &.mat-form-field-invalid {
             .mat-form-field-wrapper {
-                @include state-error-wrapper($pepperi-theme);
+                @include mixins.state-error-wrapper();
 
                 .mat-form-field-flex {
-                    @include state-error($pepperi-theme);
+                    @include mixins.state-error();
                 }
 
                 .mat-form-field-subscript-wrapper {
-                    background: get-pep-color($pepperi-theme, color-system-caution, color-base);
+                    background: functions.get-pep-color(color-system-caution, color-base);
 
                     .mat-error {
-                        color: get-pep-color($pepperi-theme, color-text, color-invert);
+                        color: functions.get-pep-color(color-text, color-invert);
                     }
                 }
             }
 
             // Focused & Error
             &.mat-focused .mat-form-field-wrapper {
-                @include focus($pepperi-theme);
-                z-index: $z-index-medium - 3; // To show error on table above the next row element.
+                @include mixins.focus();
+                z-index: variables.$z-index-medium - 3; // To show error on table above the next row element.
 
                 .mat-form-field-flex {
                     box-shadow: unset !important;
@@ -957,48 +871,48 @@ $sorting-width: 1rem;
     // ------------------------
     .table-total,
     .table-header {
-        // @include state-list-body-default($pepperi-theme);
+        // @include mixins.state-list-body-default();
         background: transparent;
 
         .table-header-padding-top {
-            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+            background: functions.get-pep-color(color-system-primary-invert, color-base);
         }
 
         .table-header-fieldset {
-            background-color: get-pep-color($pepperi-theme, color-weak, color-flat-r-30);
-            color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+            background-color: functions.get-pep-color(color-weak, color-flat-r-30);
+            color: functions.get-pep-color(color-text, color-dimmed);
 
             .header-column {
                 .sorting-box {
                     .mat-icon {
                         .svg-icon {
-                            fill: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                            fill: functions.get-pep-color(color-text, color-dimmed);
                         }
                     }
                 }
 
                 .resize-box {
                     .splitter {
-                        border-color: get-pep-color($pepperi-theme, color-weak, color-tran-50);
+                        border-color: functions.get-pep-color(color-weak, color-tran-50);
                     }
                 }
 
                 &:hover {
-                    color: get-pep-color($pepperi-theme, color-weak, color-tran-80);
-                    background-color: get-pep-color($pepperi-theme, color-weak, color-tran-20);
+                    color: functions.get-pep-color(color-weak, color-tran-80);
+                    background-color: functions.get-pep-color(color-weak, color-tran-20);
 
                     .resize-box {
-                        background: get-pep-color($pepperi-theme, color-text, color-link-highlight);
+                        background: functions.get-pep-color(color-text, color-link-highlight);
 
                         .splitter {
-                            border-color: get-pep-color($pepperi-theme, color-weak, color-tran-80);
+                            border-color: functions.get-pep-color(color-weak, color-tran-80);
                         }
 
                         &:hover {
-                            background: get-pep-color($pepperi-theme, color-text, color-link-focus);
+                            background: functions.get-pep-color(color-text, color-link-focus);
 
                             .splitter {
-                                border-color: get-pep-color($pepperi-theme, color-weak, color-base);
+                                border-color: functions.get-pep-color(color-weak, color-base);
                             }
                         }
                     }
@@ -1009,39 +923,39 @@ $sorting-width: 1rem;
 
     .list-pager {
         .pager-container {
-            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+            background: functions.get-pep-color(color-system-primary-invert, color-base);
         }
     }
     // .table-header {
     //     .table-header-fieldset {
-    //         box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, soft);
+    //         box-shadow: functions.get-pep-shadow(shadow-sm, soft);
     //     }
     // }
 
     .table-body {
-        @include state-list-body-default($pepperi-theme);
+        @include mixins.state-list-body-default();
 
         .table-row {
             .table-row-fieldset {
-                @include state-table-row-default($pepperi-theme);
+                @include mixins.state-table-row-default();
             }
 
             &:hover,
             &.highlighted {
                 .table-row-fieldset {
-                    @include state-table-row-hover($pepperi-theme);
+                    @include mixins.state-table-row-hover();
                 }
             }
 
             &:active {
                 .table-row-fieldset {
-                    @include state-table-row-active($pepperi-theme);
+                    @include mixins.state-table-row-active();
                 }
             }
 
             &.selected {
                 .table-row-fieldset {
-                    @include state-table-row-selected($pepperi-theme);
+                    @include mixins.state-table-row-selected();
                 }
             }
         }
@@ -1051,27 +965,27 @@ $sorting-width: 1rem;
     // ------------------------
     .line-view,
     .card-view {
-        @include state-list-body-default($pepperi-theme);
+        @include mixins.state-list-body-default();
 
         fieldset {
-            @include state-card-default($pepperi-theme);
+            @include mixins.state-card-default();
 
             &:hover {
-                @include state-card-hover($pepperi-theme);
+                @include mixins.state-card-hover();
             }
 
             &:active {
-                @include state-card-active($pepperi-theme);
+                @include mixins.state-card-active();
             }
 
             .title {
-                color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                color: functions.get-pep-color(color-text, color-dimmed);
             }
         }
 
         &.selected {
             fieldset {
-                @include state-card-selected($pepperi-theme);
+                @include mixins.state-card-selected();
             }
         }
 
@@ -1079,7 +993,7 @@ $sorting-width: 1rem;
         // &.selectable {
         //     fieldset {
         //         &:active {
-        //             @include state-card-active($pepperi-theme);
+        //             @include mixins.state-card-active();
         //         }
         //     }
         // }

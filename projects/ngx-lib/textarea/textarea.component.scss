@@ -1,5 +1,3 @@
-// @import '../src/core/style/abstracts/variables';
-
 :host {
     height: inherit;
     display: grid;
@@ -29,10 +27,7 @@
         resize: none;
         width: 25rem;
         height: 13rem;
-        // margin: 0;
-        // padding:0;
-        // padding: $content-padding $spacing-sm;
-
+        
         &:focus {
             outline: none;
         }

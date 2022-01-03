@@ -1,5 +1,4 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
 
 .pager-container {
     $pager-size: 2rem;
@@ -7,9 +6,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(#{$pager-size} + calc(#{$spacing-sm} * 2));
-    padding: $spacing-sm;
-    // margin-top: $content-margin;
+    height: calc(#{$pager-size} + calc(#{variables.$spacing-sm} * 2));
+    padding: variables.$spacing-sm;
+    // margin-top: variables.$content-margin;
 
     .page-index {
         min-height: unset;

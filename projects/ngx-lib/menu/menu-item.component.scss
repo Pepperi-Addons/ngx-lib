@@ -1,5 +1,4 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
 
 .mat-menu-item-submenu-trigger::after {
     display: none;
@@ -8,15 +7,14 @@
 .mat-menu-item {
     
     .title {
-        margin: 0 $spacing-xs;
+        margin: 0 variables.$spacing-xs;
 
         &.spacing-from-icon {
-            margin: 0 $spacing-sm;
+            margin: 0 variables.$spacing-sm;
         }
 
         &.spacing-from-submenu-trigger {
-            // padding-right: $spacing-lg;
-            padding-inline-end: $spacing-lg;
+            padding-inline-end: variables.$spacing-lg;
         }
     }
 
@@ -26,31 +24,23 @@
 
     .submenu-trigger {
         position: absolute;
-        right: $spacing-sm;
+        right: variables.$spacing-sm;
         width: 1rem;
     
         &.rotate {
-            // @include rotate(180deg);
             transform: rotate(180deg);
         }
     }
 
     &.splitter {
         height: 1px !important;
-        margin: $spacing-sm 0;
+        margin: variables.$spacing-sm 0;
     }
 
     &[dir='rtl'] {
-        // .title {
-        //     &.spacing-from-submenu-trigger {
-        //         padding-right: unset;
-        //         padding-left: $spacing-lg;
-        //     }
-        // }
-
         .submenu-trigger {
             right: unset;
-            left: $spacing-sm;
+            left: variables.$spacing-sm;
             transform: rotate(180deg);
 
             &.rotate {

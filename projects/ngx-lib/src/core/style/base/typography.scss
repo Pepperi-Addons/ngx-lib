@@ -1,3 +1,7 @@
+@use '../abstracts/variables';
+@use '../abstracts/mixins';
+@use '../abstracts/functions';
+
 // -----------------------------------------------------------------------------
 // Typography style - This file contains all @font-face declarations, if any.
 // -----------------------------------------------------------------------------
@@ -5,91 +9,91 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=David+Libre:wght@400;500;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 //    Calculation
-@media screen and (max-width: $screen-max-size-2xs) {
+@media screen and (max-width: variables.$screen-max-size-2xs) {
     //    Smaller then XXS
     .body-2xs {
-        @include font-body($fs-2xs, $lh-2xs);
+        @include mixins.font-body(variables.$fs-2xs, variables.$lh-2xs);
     }
     .body-xs {
-        @include font-body($fs-xs, $lh-xs);
+        @include mixins.font-body(variables.$fs-xs, variables.$lh-xs);
     }
     .body-sm {
-        @include font-body($fs-sm, $lh-sm);
+        @include mixins.font-body(variables.$fs-sm, variables.$lh-sm);
     }
     .body-md {
-        @include font-body($fs-md, $lh-md);
+        @include mixins.font-body(variables.$fs-md, variables.$lh-md);
     }
     .body-lg {
-        @include font-body($fs-lg, $lh-lg);
+        @include mixins.font-body(variables.$fs-lg, variables.$lh-lg);
     }
     .body-xl {
-        @include font-body($fs-xl, $lh-xl);
+        @include mixins.font-body(variables.$fs-xl, variables.$lh-xl);
     }
     .body-2xl {
-        @include font-body($fs-2xl, $lh-2xl);
+        @include mixins.font-body(variables.$fs-2xl, variables.$lh-2xl);
     }
 
     .title-xs {
-        @include font-title($fs-xs, $lh-xs);
+        @include mixins.font-title(variables.$fs-xs, variables.$lh-xs);
     }
     .title-sm {
-        @include font-title($fs-sm, $lh-sm);
+        @include mixins.font-title(variables.$fs-sm, variables.$lh-sm);
     }
     .title-md {
-        @include font-title($fs-md, $lh-md);
+        @include mixins.font-title(variables.$fs-md, variables.$lh-md);
     }
     .title-lg {
-        @include font-title($fs-lg, $lh-lg);
+        @include mixins.font-title(variables.$fs-lg, variables.$lh-lg);
     }
     .title-xl {
-        @include font-title($fs-xl, $lh-xl);
+        @include mixins.font-title(variables.$fs-xl, variables.$lh-xl);
     }
     .title-2xl {
-        @include font-title($fs-2xl, $lh-2xl);
+        @include mixins.font-title(variables.$fs-2xl, variables.$lh-2xl);
     }
 }
 
-@media screen and (min-width: $screen-max-size-2xs) {
+@media screen and (min-width: variables.$screen-max-size-2xs) {
     //    Bigger then XXS
     .body-2xs {
-        @include font-body($fs-2xs, $lh-2xs);
+        @include mixins.font-body(variables.$fs-2xs, variables.$lh-2xs);
     }
     .body-xs {
-        @include font-body($fs-xs, $lh-xs);
+        @include mixins.font-body(variables.$fs-xs, variables.$lh-xs);
     }
     .body-sm {
-        @include font-body($fs-sm, $lh-sm);
+        @include mixins.font-body(variables.$fs-sm, variables.$lh-sm);
     }
     .body-md {
-        @include font-body($fs-md, $lh-md);
+        @include mixins.font-body(variables.$fs-md, variables.$lh-md);
     }
     .body-lg {
-        @include font-body($fs-lg, $lh-lg);
+        @include mixins.font-body(variables.$fs-lg, variables.$lh-lg);
     }
     .body-xl {
-        @include font-body($fs-xl, $lh-xl);
+        @include mixins.font-body(variables.$fs-xl, variables.$lh-xl);
     }
     .body-2xl {
-        @include font-body($fs-2xl, $lh-2xl);
+        @include mixins.font-body(variables.$fs-2xl, variables.$lh-2xl);
     }
 
     .title-xs {
-        @include font-title($fs-xs, $lh-xs);
+        @include mixins.font-title(variables.$fs-xs, variables.$lh-xs);
     }
     .title-sm {
-        @include font-title($fs-sm, $lh-sm);
+        @include mixins.font-title(variables.$fs-sm, variables.$lh-sm);
     }
     .title-md {
-        @include font-title($fs-md, $lh-md);
+        @include mixins.font-title(variables.$fs-md, variables.$lh-md);
     }
     .title-lg {
-        @include font-title($fs-lg, $lh-lg);
+        @include mixins.font-title(variables.$fs-lg, variables.$lh-lg);
     }
     .title-xl {
-        @include font-title($fs-xl, $lh-xl);
+        @include mixins.font-title(variables.$fs-xl, variables.$lh-xl);
     }
     .title-2xl {
-        @include font-title($fs-2xl, $lh-2xl);
+        @include mixins.font-title(variables.$fs-2xl, variables.$lh-2xl);
     }
 }
 
@@ -104,15 +108,15 @@ html,
 body {
     $font-size: 16px;
 
-    font-family: $font-family-body;
-    font-weight: $font-weight-normal;
+    font-family: variables.$font-family-body;
+    font-weight: variables.$font-weight-normal;
     font-size: $font-size;
 
     // Override default user agent stylesheet
     button {
-        font: $font-weight-normal $font-size $font-family-body;
+        font: variables.$font-weight-normal $font-size variables.$font-family-body;
     }
-    // line-height: $lh-md;
+    // line-height: variables.$lh-md;
 
     /*.lang-he {
         font-family: 'Open Sans Hebrew' !important;
@@ -122,17 +126,17 @@ body {
 //  Font weight
 // ------------------------
 .normal {
-    font-weight: $font-weight-normal !important;
+    font-weight: variables.$font-weight-normal !important;
 }
 .bold {
-    font-weight: $font-weight-bold !important;
+    font-weight: variables.$font-weight-bold !important;
 }
 .bolder {
-    font-weight: $font-weight-bolder !important;
+    font-weight: variables.$font-weight-bolder !important;
 }
 
 .ellipsis {
-    @include ellipsis();
+    @include mixins.ellipsis();
 }
 
 h6,
@@ -141,7 +145,7 @@ h4,
 h3,
 h2,
 h1 {
-    font-family: $font-family-title;
+    font-family: variables.$font-family-title;
 }
 
 /**
@@ -154,9 +158,9 @@ a {
         display: block;
         text-anchor: end;
         text-decoration: underline;
-        // @include box-sizing(border-box);
+        // @include mixins.box-sizing(border-box);
         box-sizing: border-box;
-        @include ellipsis();
+        @include mixins.ellipsis();
     }
 
     &.disable,
@@ -164,92 +168,92 @@ a {
         pointer-events: none;
     }
 
-    @include on-event {
+    @include mixins.on-event {
         text-decoration: underline;
     }
 }
 
-@mixin declare-system-typography-theme($pepperi-theme) {
+@mixin declare-system-typography-theme() {
     body {
-        color: get-pep-color($pepperi-theme, color-text, color-main);
+        color: functions.get-pep-color(color-text, color-main);
     }
 
     .color-user-primary {
-        color: get-pep-color($pepperi-theme, color-user-primary, color-base);
+        color: functions.get-pep-color(color-user-primary, color-base);
     }
     .background-color-user-primary {
-        background-color: get-pep-color($pepperi-theme, color-user-primary, color-base);
+        background-color: functions.get-pep-color(color-user-primary, color-base);
     }
 
     .color-user-secondary {
-        color: get-pep-color($pepperi-theme, color-user-secondary, color-base);
+        color: functions.get-pep-color(color-user-secondary, color-base);
     }
     .background-color-user-secondary {
-        background-color: get-pep-color($pepperi-theme, color-user-secondary, color-base);
+        background-color: functions.get-pep-color(color-user-secondary, color-base);
     }
 
     .color-system-primary,
     .color-main {
-        color: get-pep-color($pepperi-theme, color-text, color-main);
+        color: functions.get-pep-color(color-text, color-main);
     }
     .background-color-main {
-        background-color: get-pep-color($pepperi-theme, color-text, color-main);
+        background-color: functions.get-pep-color(color-text, color-main);
     }
 
     .color-invert {
-        color: get-pep-color($pepperi-theme, color-text, color-invert);
+        color: functions.get-pep-color(color-text, color-invert);
     }
     .background-color-invert {
-        background-color: get-pep-color($pepperi-theme, color-text, color-invert);
+        background-color: functions.get-pep-color(color-text, color-invert);
     }
 
     .color-link {
-        color: get-pep-color($pepperi-theme, color-text, color-link);
+        color: functions.get-pep-color(color-text, color-link);
     }
     .background-color-link {
-        background-color: get-pep-color($pepperi-theme, color-text, color-link);
+        background-color: functions.get-pep-color(color-text, color-link);
     }
 
     .red,
     .color-caution {
-        color: get-pep-color($pepperi-theme, color-text, color-caution);
+        color: functions.get-pep-color(color-text, color-caution);
     }
     .background-color-caution {
-        background-color: get-pep-color($pepperi-theme, color-text, color-caution);
+        background-color: functions.get-pep-color(color-text, color-caution);
     }
 
     .color-success {
-        color: get-pep-color($pepperi-theme, color-text, color-success);
+        color: functions.get-pep-color(color-text, color-success);
     }
     .background-color-success {
-        background-color: get-pep-color($pepperi-theme, color-text, color-success);
+        background-color: functions.get-pep-color(color-text, color-success);
     }
 
     .color-dimmed {
-        color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+        color: functions.get-pep-color(color-text, color-dimmed);
     }
     .background-color-dimmed {
-        background-color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+        background-color: functions.get-pep-color(color-text, color-dimmed);
     }
 
     a {
         // &.color-link {
-        //     color: get-pep-color($pepperi-theme, color-text, color-link);
+        //     color: functions.get-pep-color(color-text, color-link);
         // }
 
         &.disable,
         &:disabled {
-            @include state-weak-disable($pepperi-theme);
+            @include mixins.state-weak-disable();
             background: transparent !important;
         }
     }
 
     ::selection {
-        background: get-pep-color($pepperi-theme, color-text, color-link-focus);
+        background: functions.get-pep-color(color-text, color-link-focus);
     }
 
     .mat-drawer-container {
         background-color: transparent !important;
-        color: get-pep-color($pepperi-theme, color-text, color-main);
+        color: functions.get-pep-color(color-text, color-main);
     }
 }

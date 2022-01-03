@@ -1,5 +1,3 @@
-@import '../src/core/style/abstracts/variables';
-
 :host {
     height: inherit;
     display: grid;
@@ -30,29 +28,5 @@
                 padding: 0;
             }
         }
-
-        // .pepperi-button, .pep-button,
-        // ::ng-deep .pepperi-button, ::ng-deep .pep-button {
-        //     .mat-button-wrapper {
-        //         display: grid !important;
-        //         grid-auto-flow: column;
-        //         grid-template-rows: auto;
-        //     }
-
-        //     mat-icon {
-        //         margin-left: $spacing-md;
-
-        //         &.rtl {
-        //             margin-left: unset;
-        //             margin-right: $spacing-md;
-        //         }
-        //     }
-
-        //     &.last-button {
-        //         mat-icon {
-        //             margin: 0;
-        //         }
-        //     }
-        // }
     }
 }

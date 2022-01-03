@@ -28,7 +28,7 @@ interface IPepColorPickerDialogData {
 
 @Component({
     templateUrl: './color-picker.component.html',
-    styleUrls: ['./color-picker.component.scss'],
+    styleUrls: ['./color-picker.component.scss', './color-picker.component.theme.scss'],
 })
 export class PepColorPickerComponent implements OnInit {
     static CURRENT_HUE = '--pep-color-picker-current-hue';

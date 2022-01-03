@@ -18,7 +18,6 @@
 
 .multi-rows-text {
     display: -webkit-box; 
-    // -webkit-line-clamp: 2 or more - set this in the html by the rowSpan inout; 
     -webkit-box-orient: vertical; 
     overflow: hidden; 
     text-overflow: ellipsis;

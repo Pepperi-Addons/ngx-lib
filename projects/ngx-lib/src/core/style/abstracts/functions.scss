@@ -1,3 +1,7 @@
+@use 'variables.scss';
+@use 'sass:map';
+// @use "sass:math";
+
 // *****************************************************************************************
 //                      Private function (for use only in this file)
 // *****************************************************************************************
@@ -6,24 +10,24 @@
 @function get-pep-color-system-primary-invert() {
     @return (
         // Transparent colors.
-        color-base: $color-system-primary-invert-base,
-        color-tran-90: $color-system-primary-invert-tran-90,
-        color-tran-80: $color-system-primary-invert-tran-80,
-        color-tran-70: $color-system-primary-invert-tran-70,
-        color-tran-60: $color-system-primary-invert-tran-60,
-        color-tran-50: $color-system-primary-invert-tran-50,
-        color-tran-40: $color-system-primary-invert-tran-40,
-        color-tran-30: $color-system-primary-invert-tran-30,
-        color-tran-20: $color-system-primary-invert-tran-20,
-        color-tran-10: $color-system-primary-invert-tran-10,
-        color-tran-0: $color-system-primary-invert-tran-0,
+        color-base: variables.$color-system-primary-invert-base,
+        color-tran-90: variables.$color-system-primary-invert-tran-90,
+        color-tran-80: variables.$color-system-primary-invert-tran-80,
+        color-tran-70: variables.$color-system-primary-invert-tran-70,
+        color-tran-60: variables.$color-system-primary-invert-tran-60,
+        color-tran-50: variables.$color-system-primary-invert-tran-50,
+        color-tran-40: variables.$color-system-primary-invert-tran-40,
+        color-tran-30: variables.$color-system-primary-invert-tran-30,
+        color-tran-20: variables.$color-system-primary-invert-tran-20,
+        color-tran-10: variables.$color-system-primary-invert-tran-10,
+        color-tran-0: variables.$color-system-primary-invert-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-system-primary-invert-flat-l-20,
-        color-flat-l-10: $color-system-primary-invert-flat-l-10,
-        color-flat-r-10: $color-system-primary-invert-flat-r-10,
-        color-flat-r-20: $color-system-primary-invert-flat-r-20,
-        color-flat-r-30: $color-system-primary-invert-flat-r-30,
-        color-flat-r-40: $color-system-primary-invert-flat-r-40,
+        color-flat-l-20: variables.$color-system-primary-invert-flat-l-20,
+        color-flat-l-10: variables.$color-system-primary-invert-flat-l-10,
+        color-flat-r-10: variables.$color-system-primary-invert-flat-r-10,
+        color-flat-r-20: variables.$color-system-primary-invert-flat-r-20,
+        color-flat-r-30: variables.$color-system-primary-invert-flat-r-30,
+        color-flat-r-40: variables.$color-system-primary-invert-flat-r-40,
     );
 }
 
@@ -31,24 +35,24 @@
 @function get-pep-color-system-primary() {
     @return (
         // Transparent colors.
-        color-base: $color-system-primary-base,
-        color-tran-90: $color-system-primary-tran-90,
-        color-tran-80: $color-system-primary-tran-80,
-        color-tran-70: $color-system-primary-tran-70,
-        color-tran-60: $color-system-primary-tran-60,
-        color-tran-50: $color-system-primary-tran-50,
-        color-tran-40: $color-system-primary-tran-40,
-        color-tran-30: $color-system-primary-tran-30,
-        color-tran-20: $color-system-primary-tran-20,
-        color-tran-10: $color-system-primary-tran-10,
-        color-tran-0: $color-system-primary-tran-0,
+        color-base: variables.$color-system-primary-base,
+        color-tran-90: variables.$color-system-primary-tran-90,
+        color-tran-80: variables.$color-system-primary-tran-80,
+        color-tran-70: variables.$color-system-primary-tran-70,
+        color-tran-60: variables.$color-system-primary-tran-60,
+        color-tran-50: variables.$color-system-primary-tran-50,
+        color-tran-40: variables.$color-system-primary-tran-40,
+        color-tran-30: variables.$color-system-primary-tran-30,
+        color-tran-20: variables.$color-system-primary-tran-20,
+        color-tran-10: variables.$color-system-primary-tran-10,
+        color-tran-0: variables.$color-system-primary-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-system-primary-flat-l-20,
-        color-flat-l-10: $color-system-primary-flat-l-10,
-        color-flat-r-10: $color-system-primary-flat-r-10,
-        color-flat-r-20: $color-system-primary-flat-r-20,
-        color-flat-r-30: $color-system-primary-flat-r-30,
-        color-flat-r-40: $color-system-primary-flat-r-40,
+        color-flat-l-20: variables.$color-system-primary-flat-l-20,
+        color-flat-l-10: variables.$color-system-primary-flat-l-10,
+        color-flat-r-10: variables.$color-system-primary-flat-r-10,
+        color-flat-r-20: variables.$color-system-primary-flat-r-20,
+        color-flat-r-30: variables.$color-system-primary-flat-r-30,
+        color-flat-r-40: variables.$color-system-primary-flat-r-40,
     );
 }
 
@@ -56,24 +60,24 @@
 @function get-pep-color-system-success() {
     @return (
         // Transparent colors.
-        color-base: $color-system-success-base,
-        color-tran-90: $color-system-success-tran-90,
-        color-tran-80: $color-system-success-tran-80,
-        color-tran-70: $color-system-success-tran-70,
-        color-tran-60: $color-system-success-tran-60,
-        color-tran-50: $color-system-success-tran-50,
-        color-tran-40: $color-system-success-tran-40,
-        color-tran-30: $color-system-success-tran-30,
-        color-tran-20: $color-system-success-tran-20,
-        color-tran-10: $color-system-success-tran-10,
-        color-tran-0: $color-system-success-tran-0,
+        color-base: variables.$color-system-success-base,
+        color-tran-90: variables.$color-system-success-tran-90,
+        color-tran-80: variables.$color-system-success-tran-80,
+        color-tran-70: variables.$color-system-success-tran-70,
+        color-tran-60: variables.$color-system-success-tran-60,
+        color-tran-50: variables.$color-system-success-tran-50,
+        color-tran-40: variables.$color-system-success-tran-40,
+        color-tran-30: variables.$color-system-success-tran-30,
+        color-tran-20: variables.$color-system-success-tran-20,
+        color-tran-10: variables.$color-system-success-tran-10,
+        color-tran-0: variables.$color-system-success-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-system-success-flat-l-20,
-        color-flat-l-10: $color-system-success-flat-l-10,
-        color-flat-r-10: $color-system-success-flat-r-10,
-        color-flat-r-20: $color-system-success-flat-r-20,
-        color-flat-r-30: $color-system-success-flat-r-30,
-        color-flat-r-40: $color-system-success-flat-r-40,
+        color-flat-l-20: variables.$color-system-success-flat-l-20,
+        color-flat-l-10: variables.$color-system-success-flat-l-10,
+        color-flat-r-10: variables.$color-system-success-flat-r-10,
+        color-flat-r-20: variables.$color-system-success-flat-r-20,
+        color-flat-r-30: variables.$color-system-success-flat-r-30,
+        color-flat-r-40: variables.$color-system-success-flat-r-40,
     );
 }
 
@@ -81,24 +85,24 @@
 @function get-pep-color-system-caution() {
     @return (
         // Transparent colors.
-        color-base: $color-system-caution-base,
-        color-tran-90: $color-system-caution-tran-90,
-        color-tran-80: $color-system-caution-tran-80,
-        color-tran-70: $color-system-caution-tran-70,
-        color-tran-60: $color-system-caution-tran-60,
-        color-tran-50: $color-system-caution-tran-50,
-        color-tran-40: $color-system-caution-tran-40,
-        color-tran-30: $color-system-caution-tran-30,
-        color-tran-20: $color-system-caution-tran-20,
-        color-tran-10: $color-system-caution-tran-10,
-        color-tran-0: $color-system-caution-tran-0,
+        color-base: variables.$color-system-caution-base,
+        color-tran-90: variables.$color-system-caution-tran-90,
+        color-tran-80: variables.$color-system-caution-tran-80,
+        color-tran-70: variables.$color-system-caution-tran-70,
+        color-tran-60: variables.$color-system-caution-tran-60,
+        color-tran-50: variables.$color-system-caution-tran-50,
+        color-tran-40: variables.$color-system-caution-tran-40,
+        color-tran-30: variables.$color-system-caution-tran-30,
+        color-tran-20: variables.$color-system-caution-tran-20,
+        color-tran-10: variables.$color-system-caution-tran-10,
+        color-tran-0: variables.$color-system-caution-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-system-caution-flat-l-20,
-        color-flat-l-10: $color-system-caution-flat-l-10,
-        color-flat-r-10: $color-system-caution-flat-r-10,
-        color-flat-r-20: $color-system-caution-flat-r-20,
-        color-flat-r-30: $color-system-caution-flat-r-30,
-        color-flat-r-40: $color-system-caution-flat-r-40,
+        color-flat-l-20: variables.$color-system-caution-flat-l-20,
+        color-flat-l-10: variables.$color-system-caution-flat-l-10,
+        color-flat-r-10: variables.$color-system-caution-flat-r-10,
+        color-flat-r-20: variables.$color-system-caution-flat-r-20,
+        color-flat-r-30: variables.$color-system-caution-flat-r-30,
+        color-flat-r-40: variables.$color-system-caution-flat-r-40,
     );
 }
 
@@ -106,24 +110,24 @@
 @function get-pep-color-user-primary() {
     @return (
         // Transparent colors.
-        color-base: $color-user-primary-base,
-        color-tran-90: $color-user-primary-tran-90,
-        color-tran-80: $color-user-primary-tran-80,
-        color-tran-70: $color-user-primary-tran-70,
-        color-tran-60: $color-user-primary-tran-60,
-        color-tran-50: $color-user-primary-tran-50,
-        color-tran-40: $color-user-primary-tran-40,
-        color-tran-30: $color-user-primary-tran-30,
-        color-tran-20: $color-user-primary-tran-20,
-        color-tran-10: $color-user-primary-tran-10,
-        color-tran-0: $color-user-primary-tran-0,
+        color-base: variables.$color-user-primary-base,
+        color-tran-90: variables.$color-user-primary-tran-90,
+        color-tran-80: variables.$color-user-primary-tran-80,
+        color-tran-70: variables.$color-user-primary-tran-70,
+        color-tran-60: variables.$color-user-primary-tran-60,
+        color-tran-50: variables.$color-user-primary-tran-50,
+        color-tran-40: variables.$color-user-primary-tran-40,
+        color-tran-30: variables.$color-user-primary-tran-30,
+        color-tran-20: variables.$color-user-primary-tran-20,
+        color-tran-10: variables.$color-user-primary-tran-10,
+        color-tran-0: variables.$color-user-primary-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-user-primary-flat-l-20,
-        color-flat-l-10: $color-user-primary-flat-l-10,
-        color-flat-r-10: $color-user-primary-flat-r-10,
-        color-flat-r-20: $color-user-primary-flat-r-20,
-        color-flat-r-30: $color-user-primary-flat-r-30,
-        color-flat-r-40: $color-user-primary-flat-r-40,
+        color-flat-l-20: variables.$color-user-primary-flat-l-20,
+        color-flat-l-10: variables.$color-user-primary-flat-l-10,
+        color-flat-r-10: variables.$color-user-primary-flat-r-10,
+        color-flat-r-20: variables.$color-user-primary-flat-r-20,
+        color-flat-r-30: variables.$color-user-primary-flat-r-30,
+        color-flat-r-40: variables.$color-user-primary-flat-r-40,
     );
 }
 
@@ -131,24 +135,24 @@
 @function get-pep-color-user-secondary() {
     @return (
         // Transparent colors.
-        color-base: $color-user-secondary-base,
-        color-tran-90: $color-user-secondary-tran-90,
-        color-tran-80: $color-user-secondary-tran-80,
-        color-tran-70: $color-user-secondary-tran-70,
-        color-tran-60: $color-user-secondary-tran-60,
-        color-tran-50: $color-user-secondary-tran-50,
-        color-tran-40: $color-user-secondary-tran-40,
-        color-tran-30: $color-user-secondary-tran-30,
-        color-tran-20: $color-user-secondary-tran-20,
-        color-tran-10: $color-user-secondary-tran-10,
-        color-tran-0: $color-user-secondary-tran-0,
+        color-base: variables.$color-user-secondary-base,
+        color-tran-90: variables.$color-user-secondary-tran-90,
+        color-tran-80: variables.$color-user-secondary-tran-80,
+        color-tran-70: variables.$color-user-secondary-tran-70,
+        color-tran-60: variables.$color-user-secondary-tran-60,
+        color-tran-50: variables.$color-user-secondary-tran-50,
+        color-tran-40: variables.$color-user-secondary-tran-40,
+        color-tran-30: variables.$color-user-secondary-tran-30,
+        color-tran-20: variables.$color-user-secondary-tran-20,
+        color-tran-10: variables.$color-user-secondary-tran-10,
+        color-tran-0: variables.$color-user-secondary-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-user-secondary-flat-l-20,
-        color-flat-l-10: $color-user-secondary-flat-l-10,
-        color-flat-r-10: $color-user-secondary-flat-r-10,
-        color-flat-r-20: $color-user-secondary-flat-r-20,
-        color-flat-r-30: $color-user-secondary-flat-r-30,
-        color-flat-r-40: $color-user-secondary-flat-r-40,
+        color-flat-l-20: variables.$color-user-secondary-flat-l-20,
+        color-flat-l-10: variables.$color-user-secondary-flat-l-10,
+        color-flat-r-10: variables.$color-user-secondary-flat-r-10,
+        color-flat-r-20: variables.$color-user-secondary-flat-r-20,
+        color-flat-r-30: variables.$color-user-secondary-flat-r-30,
+        color-flat-r-40: variables.$color-user-secondary-flat-r-40,
     );
 }
 
@@ -156,24 +160,24 @@
 @function get-pep-color-weak() {
     @return (
         // Transparent colors.
-        color-base: $color-weak-base,
-        color-tran-90: $color-weak-tran-90,
-        color-tran-80: $color-weak-tran-80,
-        color-tran-70: $color-weak-tran-70,
-        color-tran-60: $color-weak-tran-60,
-        color-tran-50: $color-weak-tran-50,
-        color-tran-40: $color-weak-tran-40,
-        color-tran-30: $color-weak-tran-30,
-        color-tran-20: $color-weak-tran-20,
-        color-tran-10: $color-weak-tran-10,
-        color-tran-0: $color-weak-tran-0,
+        color-base: variables.$color-weak-base,
+        color-tran-90: variables.$color-weak-tran-90,
+        color-tran-80: variables.$color-weak-tran-80,
+        color-tran-70: variables.$color-weak-tran-70,
+        color-tran-60: variables.$color-weak-tran-60,
+        color-tran-50: variables.$color-weak-tran-50,
+        color-tran-40: variables.$color-weak-tran-40,
+        color-tran-30: variables.$color-weak-tran-30,
+        color-tran-20: variables.$color-weak-tran-20,
+        color-tran-10: variables.$color-weak-tran-10,
+        color-tran-0: variables.$color-weak-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-weak-flat-l-20,
-        color-flat-l-10: $color-weak-flat-l-10,
-        color-flat-r-10: $color-weak-flat-r-10,
-        color-flat-r-20: $color-weak-flat-r-20,
-        color-flat-r-30: $color-weak-flat-r-30,
-        color-flat-r-40: $color-weak-flat-r-40,
+        color-flat-l-20: variables.$color-weak-flat-l-20,
+        color-flat-l-10: variables.$color-weak-flat-l-10,
+        color-flat-r-10: variables.$color-weak-flat-r-10,
+        color-flat-r-20: variables.$color-weak-flat-r-20,
+        color-flat-r-30: variables.$color-weak-flat-r-30,
+        color-flat-r-40: variables.$color-weak-flat-r-40,
     );
 }
 
@@ -181,24 +185,24 @@
 @function get-pep-color-regular() {
     @return (
         // Transparent colors.
-        color-base: $color-regular-base,
-        color-tran-90: $color-regular-tran-90,
-        color-tran-80: $color-regular-tran-80,
-        color-tran-70: $color-regular-tran-70,
-        color-tran-60: $color-regular-tran-60,
-        color-tran-50: $color-regular-tran-50,
-        color-tran-40: $color-regular-tran-40,
-        color-tran-30: $color-regular-tran-30,
-        color-tran-20: $color-regular-tran-20,
-        color-tran-10: $color-regular-tran-10,
-        color-tran-0: $color-regular-tran-0,
+        color-base: variables.$color-regular-base,
+        color-tran-90: variables.$color-regular-tran-90,
+        color-tran-80: variables.$color-regular-tran-80,
+        color-tran-70: variables.$color-regular-tran-70,
+        color-tran-60: variables.$color-regular-tran-60,
+        color-tran-50: variables.$color-regular-tran-50,
+        color-tran-40: variables.$color-regular-tran-40,
+        color-tran-30: variables.$color-regular-tran-30,
+        color-tran-20: variables.$color-regular-tran-20,
+        color-tran-10: variables.$color-regular-tran-10,
+        color-tran-0: variables.$color-regular-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-regular-flat-l-20,
-        color-flat-l-10: $color-regular-flat-l-10,
-        color-flat-r-10: $color-regular-flat-r-10,
-        color-flat-r-20: $color-regular-flat-r-20,
-        color-flat-r-30: $color-regular-flat-r-30,
-        color-flat-r-40: $color-regular-flat-r-40,
+        color-flat-l-20: variables.$color-regular-flat-l-20,
+        color-flat-l-10: variables.$color-regular-flat-l-10,
+        color-flat-r-10: variables.$color-regular-flat-r-10,
+        color-flat-r-20: variables.$color-regular-flat-r-20,
+        color-flat-r-30: variables.$color-regular-flat-r-30,
+        color-flat-r-40: variables.$color-regular-flat-r-40,
     );
 }
 
@@ -206,24 +210,24 @@
 @function get-pep-color-strong() {
     @return (
         // Transparent colors.
-        color-base: $color-strong-base,
-        color-tran-90: $color-strong-tran-90,
-        color-tran-80: $color-strong-tran-80,
-        color-tran-70: $color-strong-tran-70,
-        color-tran-60: $color-strong-tran-60,
-        color-tran-50: $color-strong-tran-50,
-        color-tran-40: $color-strong-tran-40,
-        color-tran-30: $color-strong-tran-30,
-        color-tran-20: $color-strong-tran-20,
-        color-tran-10: $color-strong-tran-10,
-        color-tran-0: $color-strong-tran-0,
+        color-base: variables.$color-strong-base,
+        color-tran-90: variables.$color-strong-tran-90,
+        color-tran-80: variables.$color-strong-tran-80,
+        color-tran-70: variables.$color-strong-tran-70,
+        color-tran-60: variables.$color-strong-tran-60,
+        color-tran-50: variables.$color-strong-tran-50,
+        color-tran-40: variables.$color-strong-tran-40,
+        color-tran-30: variables.$color-strong-tran-30,
+        color-tran-20: variables.$color-strong-tran-20,
+        color-tran-10: variables.$color-strong-tran-10,
+        color-tran-0: variables.$color-strong-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-strong-flat-l-20,
-        color-flat-l-10: $color-strong-flat-l-10,
-        color-flat-r-10: $color-strong-flat-r-10,
-        color-flat-r-20: $color-strong-flat-r-20,
-        color-flat-r-30: $color-strong-flat-r-30,
-        color-flat-r-40: $color-strong-flat-r-40,
+        color-flat-l-20: variables.$color-strong-flat-l-20,
+        color-flat-l-10: variables.$color-strong-flat-l-10,
+        color-flat-r-10: variables.$color-strong-flat-r-10,
+        color-flat-r-20: variables.$color-strong-flat-r-20,
+        color-flat-r-30: variables.$color-strong-flat-r-30,
+        color-flat-r-40: variables.$color-strong-flat-r-40,
     );
 }
 
@@ -231,63 +235,63 @@
 @function get-pep-color-top-header() {
     @return (
         // Transparent colors.
-        color-base: $color-top-header-base,
-        color-tran-90: $color-top-header-tran-90,
-        color-tran-80: $color-top-header-tran-80,
-        color-tran-70: $color-top-header-tran-70,
-        color-tran-60: $color-top-header-tran-60,
-        color-tran-50: $color-top-header-tran-50,
-        color-tran-40: $color-top-header-tran-40,
-        color-tran-30: $color-top-header-tran-30,
-        color-tran-20: $color-top-header-tran-20,
-        color-tran-10: $color-top-header-tran-10,
-        color-tran-0: $color-top-header-tran-0,
+        color-base: variables.$color-top-header-base,
+        color-tran-90: variables.$color-top-header-tran-90,
+        color-tran-80: variables.$color-top-header-tran-80,
+        color-tran-70: variables.$color-top-header-tran-70,
+        color-tran-60: variables.$color-top-header-tran-60,
+        color-tran-50: variables.$color-top-header-tran-50,
+        color-tran-40: variables.$color-top-header-tran-40,
+        color-tran-30: variables.$color-top-header-tran-30,
+        color-tran-20: variables.$color-top-header-tran-20,
+        color-tran-10: variables.$color-top-header-tran-10,
+        color-tran-0: variables.$color-top-header-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-top-header-flat-l-20,
-        color-flat-l-10: $color-top-header-flat-l-10,
-        color-flat-r-10: $color-top-header-flat-r-10,
-        color-flat-r-20: $color-top-header-flat-r-20,
-        color-flat-r-30: $color-top-header-flat-r-30,
-        color-flat-r-40: $color-top-header-flat-r-40,
+        color-flat-l-20: variables.$color-top-header-flat-l-20,
+        color-flat-l-10: variables.$color-top-header-flat-l-10,
+        color-flat-r-10: variables.$color-top-header-flat-r-10,
+        color-flat-r-20: variables.$color-top-header-flat-r-20,
+        color-flat-r-30: variables.$color-top-header-flat-r-30,
+        color-flat-r-40: variables.$color-top-header-flat-r-40,
     );
 }
 /// Gets color-qs
 @function get-pep-color-qs() {
     @return (
         // Transparent colors.
-        color-base: $color-qs-base,
-        color-tran-90: $color-qs-tran-90,
-        color-tran-80: $color-qs-tran-80,
-        color-tran-70: $color-qs-tran-70,
-        color-tran-60: $color-qs-tran-60,
-        color-tran-50: $color-qs-tran-50,
-        color-tran-40: $color-qs-tran-40,
-        color-tran-30: $color-qs-tran-30,
-        color-tran-20: $color-qs-tran-20,
-        color-tran-10: $color-qs-tran-10,
-        color-tran-0: $color-qs-tran-0,
+        color-base: variables.$color-qs-base,
+        color-tran-90: variables.$color-qs-tran-90,
+        color-tran-80: variables.$color-qs-tran-80,
+        color-tran-70: variables.$color-qs-tran-70,
+        color-tran-60: variables.$color-qs-tran-60,
+        color-tran-50: variables.$color-qs-tran-50,
+        color-tran-40: variables.$color-qs-tran-40,
+        color-tran-30: variables.$color-qs-tran-30,
+        color-tran-20: variables.$color-qs-tran-20,
+        color-tran-10: variables.$color-qs-tran-10,
+        color-tran-0: variables.$color-qs-tran-0,
         // Flat colors.
-        color-flat-l-20: $color-qs-flat-l-20,
-        color-flat-l-10: $color-qs-flat-l-10,
-        color-flat-r-10: $color-qs-flat-r-10,
-        color-flat-r-20: $color-qs-flat-r-20,
-        color-flat-r-30: $color-qs-flat-r-30,
-        color-flat-r-40: $color-qs-flat-r-40,
+        color-flat-l-20: variables.$color-qs-flat-l-20,
+        color-flat-l-10: variables.$color-qs-flat-l-10,
+        color-flat-r-10: variables.$color-qs-flat-r-10,
+        color-flat-r-20: variables.$color-qs-flat-r-20,
+        color-flat-r-30: variables.$color-qs-flat-r-30,
+        color-flat-r-40: variables.$color-qs-flat-r-40,
     );
 }
 
 /// Gets color-text
 @function get-pep-color-text() {
     @return (
-        color-main: $color-text-main,
-        color-dimmed: $color-text-dimmed,
-        color-disabled: $color-text-disabled,
-        color-invert: $color-text-invert,
-        color-link: $color-text-link,
-        color-link-highlight: $color-text-link-highlight,
-        color-link-focus: $color-text-link-focus,
-        color-success: $color-text-success,
-        color-caution: $color-text-caution,
+        color-main: variables.$color-text-main,
+        color-dimmed: variables.$color-text-dimmed,
+        color-disabled: variables.$color-text-disabled,
+        color-invert: variables.$color-text-invert,
+        color-link: variables.$color-text-link,
+        color-link-highlight: variables.$color-text-link-highlight,
+        color-link-focus: variables.$color-text-link-focus,
+        color-success: variables.$color-text-success,
+        color-caution: variables.$color-text-caution,
     );
 }
 
@@ -316,20 +320,20 @@
         //                            Shadows
         //*********************************************************************************
         // none
-        shadow-none: (xsoft: $shadow-none-xsoft, soft: $shadow-none-soft, regular: $shadow-none-regular, hard: $shadow-none-hard),
+        shadow-none: (xsoft: variables.$shadow-none-xsoft, soft: variables.$shadow-none-soft, regular: variables.$shadow-none-regular, hard: variables.$shadow-none-hard),
         // x-small
-        shadow-xs: (xsoft: $shadow-xs-xsoft, soft: $shadow-xs-soft, regular: $shadow-xs-regular, hard: $shadow-xs-hard),
+        shadow-xs: (xsoft: variables.$shadow-xs-xsoft, soft: variables.$shadow-xs-soft, regular: variables.$shadow-xs-regular, hard: variables.$shadow-xs-hard),
         // small
-        shadow-sm: (xsoft: $shadow-sm-xsoft, soft: $shadow-sm-soft, regular: $shadow-sm-regular, hard: $shadow-sm-hard),
+        shadow-sm: (xsoft: variables.$shadow-sm-xsoft, soft: variables.$shadow-sm-soft, regular: variables.$shadow-sm-regular, hard: variables.$shadow-sm-hard),
         // medium
-        shadow-md: (xsoft: $shadow-md-xsoft, soft: $shadow-md-soft, regular: $shadow-md-regular, hard: $shadow-md-hard),
+        shadow-md: (xsoft: variables.$shadow-md-xsoft, soft: variables.$shadow-md-soft, regular: variables.$shadow-md-regular, hard: variables.$shadow-md-hard),
         // large
-        shadow-lg: (xsoft: $shadow-lg-xsoft, soft: $shadow-lg-soft, regular: $shadow-lg-regular, hard: $shadow-lg-hard),
+        shadow-lg: (xsoft: variables.$shadow-lg-xsoft, soft: variables.$shadow-lg-soft, regular: variables.$shadow-lg-regular, hard: variables.$shadow-lg-hard),
         // x-large
-        shadow-xl: (xsoft: $shadow-xl-xsoft, soft: $shadow-xl-soft, regular: $shadow-xl-regular, hard: $shadow-xl-hard),
+        shadow-xl: (xsoft: variables.$shadow-xl-xsoft, soft: variables.$shadow-xl-soft, regular: variables.$shadow-xl-regular, hard: variables.$shadow-xl-hard),
 
         // Card
-        shadow-card: (xsoft: $shadow-card-xsoft, soft: $shadow-card-soft, regular: $shadow-card-regular, hard: $shadow-card-hard),
+        shadow-card: (xsoft: variables.$shadow-card-xsoft, soft: variables.$shadow-card-soft, regular: variables.$shadow-card-regular, hard: variables.$shadow-card-hard),
     );
 }
 
@@ -351,9 +355,12 @@
 /// @param {String} $color-map - the colors map 
 /// @param {String} $color-name - the color name
 /// @return {color} - wanted color
-@function get-pep-color($pepperi-theme, $color-map, $color-name) {
-    $colors: map-get($pepperi-theme, colors);
-    @return map-get(map-get($colors, $color-map), $color-name);
+// @function get-pep-color($pepperi-theme, $color-map, $color-name) {
+//     $colors: map.get($pepperi-theme, colors);
+//     @return map.get(map.get($colors, $color-map), $color-name);
+// }
+@function get-pep-color($color-map, $color-name) {
+    @return map.get($_pepperi-theme, colors, $color-map, $color-name);
 }
 
 /// Gets shadow from pep theme
@@ -361,9 +368,13 @@
 /// @param {String} $shadow-map - the shadow map 
 /// @param {String} $shadow-name - the shadow name
 /// @return {shadow} - wanted shadow
-@function get-pep-shadow($pepperi-theme, $shadow-map, $shadow-name) {
-    $shadows: map-get($pepperi-theme, shadows);
-    @return map-get(map-get($shadows, $shadow-map), $shadow-name);
+// @function get-pep-shadow($pepperi-theme, $shadow-map, $shadow-name) {
+//     $shadows: map.get($pepperi-theme, shadows);
+//     @return map.get(map.get($shadows, $shadow-map), $shadow-name);
+// }
+
+@function get-pep-shadow($shadow-map, $shadow-name) {
+    @return map.get($_pepperi-theme, shadows, $shadow-map, $shadow-name);
 }
 
 /// Replace `$search` with `$replace` in `$string`
@@ -372,13 +383,13 @@
 /// @param {String} $replace ('') - New value
 /// @return {String} - Updated string
 @function str-replace($string, $search, $replace: '') {
-  $index: str-index($string, $search);
-  
-  @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-  }
-  
-  @return $string;
+    $index: str-index($string, $search);
+    
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+    
+    @return $string;
 }
 
 // /// Native `url(..)` function wrapper
@@ -420,3 +431,9 @@
     //Default font size on html element is 100%, equivalent to 16px;
     @return #{$numSize};
 }
+
+// Get the theme object.
+$_pepperi-theme: (
+    colors: get-pep-colors-for-theme(),
+    shadows: get-pep-shadows-for-theme(),
+);

@@ -19,7 +19,7 @@ import {
 @Component({
     selector: 'pep-bread-crumbs',
     templateUrl: './bread-crumbs.component.html',
-    styleUrls: ['./bread-crumbs.component.scss'],
+    styleUrls: ['./bread-crumbs.component.scss', './bread-crumbs.component.theme.scss'],
 })
 @Injectable()
 export class PepBreadCrumbsComponent implements OnInit {

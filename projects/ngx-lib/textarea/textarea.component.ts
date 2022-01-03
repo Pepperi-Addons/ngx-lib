@@ -26,7 +26,7 @@ import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 @Component({
     selector: 'pep-textarea',
     templateUrl: './textarea.component.html',
-    styleUrls: ['./textarea.component.scss'],
+    styleUrls: ['./textarea.component.scss', './textarea.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {

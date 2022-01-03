@@ -1,99 +1,50 @@
 @charset 'UTF-8';
 @use '~@angular/material' as mat;
 
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
 // 1. Configuration and helpers
-@import './src/core/style/abstracts/breakpoints', 
-        './src/core/style/abstracts/functions', 
-        './src/core/style/abstracts/variables', 
-        './src/core/style/abstracts/mixins';
+@use './src/core/style/abstracts/breakpoints';
+@use './src/core/style/abstracts/functions';
+@use './src/core/style/abstracts/variables';
+@use './src/core/style/abstracts/mixins';
 
 // 2. Vendors
-@import './src/core/style/vendors/normalize';
+@use './src/core/style/vendors/normalize';
 
 // 3. Base stuff
-@import './src/core/style/base/helpers', 
-        './src/core/style/base/grids', 
-        './src/core/style/base/base', 
-        './src/core/style/base/typography';
-
-// 4. theme
-
-// Override material font.
-$pep-typography: mat.define-typography-config(
-    $font-family: $font-family-body
-);
-@include mat.core($pep-typography);
+@use './src/core/style/base/helpers';
+@use './src/core/style/base/grids';
+@use './src/core/style/base/base';
+@use './src/core/style/base/typography';
 
 /*************************************************************************************************************/
 /* Here we add the system + component's themes (all the colors definitions that change by the theme) - Start */
 /*************************************************************************************************************/
-// @import '../app/shared/header/header.component.theme';
-
-@import './src/core/style/components/general', 
-        './src/core/style/components/button', 
-        './src/core/style/components/checkbox', 
-        './src/core/style/components/radio-button', 
-        './src/core/style/components/datetime', 
-        './src/core/style/components/file', 
-        './src/core/style/components/input', 
-        './src/core/style/components/select',
-        './src/core/style/components/signature', 
-        './src/core/style/components/splitter', 
-        './src/core/style/components/textarea', 
-        './src/core/style/components/quantity-selector';
-
-@import './address/address.component.theme';
-@import './attachment/attachment.component.theme';
-@import './bread-crumbs/bread-crumbs.component.theme';
-@import './button/button.component.theme';
-@import './checkbox/checkbox.component.theme';
-@import './color/color.component.theme';
-@import './color/color-picker.component.theme';
-@import './date/date.component.theme';
-@import './dialog/dialog.component.theme';
-@import './field-title/field-title.component.theme';
-@import './files-uploader/files-uploader.component.theme';
-@import './group-buttons/group-buttons.component.theme';
-@import './image/image.component.theme';
-@import './images-filmstrip/images-filmstrip.component.theme';
-@import './quantity-selector/quantity-selector.component.theme';
-@import './rich-html-textarea/rich-html-textarea.component.theme';
-@import './search/search.component.theme';
-@import './select/select.component.theme';
-@import './separator/separator.component.theme';
-@import './side-bar/side-bar.component.theme';
-@import './signature/signature.component.theme';
-@import './slider/slider.component.theme';
-@import './smart-filters/smart-filters.component.theme';
-@import './textarea/textarea.component.theme';
-@import './textbox/textbox.component.theme';
-@import './textbox-icon/textbox-icon.component.theme';
-@import './top-bar/top-bar.component.theme';
-@import './page-layout/page-layout.component.theme';
-
-@import './form/indicators.component.theme';
-// @import './form/internal-button.component.theme';
-// @import './form/internal-menu.component.theme';
-// @import './form/internal-page.component.theme';
-@import './form/form.component.theme';
-
-@import './list/list-actions.component.theme';
-@import './list/list-carousel.component.theme';
-@import './list/list-chooser.component.theme';
-@import './list/list-pager.component.theme';
-@import './list/list-sorting.component.theme';
-@import './list/list-total.component.theme';
-@import './list/list-views.component.theme';
-@import './list/list.component.theme';
-
-@import './query-builder/query-builder-section/query-builder-section.component.theme';
+@use './src/core/style/components/general';
+@use './src/core/style/components/button';
+@use './src/core/style/components/checkbox';
+@use './src/core/style/components/radio-button' as radio;
+@use './src/core/style/components/datetime';
+@use './src/core/style/components/file';
+@use './src/core/style/components/input';
+@use './src/core/style/components/select';
+@use './src/core/style/components/signature';
+@use './src/core/style/components/splitter';
+@use './src/core/style/components/textarea';
+@use './src/core/style/components/quantity-selector' as qs;
 
 // Use this import in a real project instead
-// @import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
-@import './src/core/style/themes/default-theme.scss';
-$material-theme-for-pep: $material-default-theme;
+// @use '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
+@use './src/core/style/themes/default-theme.scss';
+
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+// Override material font.
+$pep-typography: mat.define-typography-config(
+    $font-family: variables.$font-family-body
+);
+@include mat.core($pep-typography);
+
+$material-theme-for-pep: default-theme.$material-default-theme;
 
 @mixin material-theme($material-theme) {
 
@@ -120,72 +71,22 @@ $material-theme-for-pep: $material-default-theme;
         // Add material theme.
         @include material-theme($material-theme);
 
-        // Declare the system globals.
-        $pepperi-theme: get-pepperi-theme();
-
-        @include declare-system-base-theme($pepperi-theme);
-        @include declare-system-typography-theme($pepperi-theme);
+        @include base.declare-system-base-theme();
+        @include typography.declare-system-typography-theme();
 
         // Add global components themes (from ./src/core/style).
-        @include pep-general-theme($pepperi-theme);
-        @include pep-button-theme($pepperi-theme);
-        @include pep-checkbox-theme($pepperi-theme);
-        @include pep-radio-button-theme($pepperi-theme);
-        @include pep-datetime-theme($pepperi-theme);
-        @include pep-file-theme($pepperi-theme);
-        @include pep-input-theme($pepperi-theme);
-        @include pep-select-theme($pepperi-theme);
-        @include pep-signature-theme($pepperi-theme);
-        @include pep-splitter-theme($pepperi-theme);
-        @include pep-textarea-theme($pepperi-theme);
-        
-        // Add components themes (from lib).
-        @include pep-address-component-theme($pepperi-theme);
-        @include pep-attachment-component-theme($pepperi-theme);
-        @include pep-bread-crumbs-component-theme($pepperi-theme);
-        @include pep-button-component-theme($pepperi-theme);
-        @include pep-checkbox-component-theme($pepperi-theme);
-        @include pep-color-component-theme($pepperi-theme);
-        @include pep-color-picker-component-theme($pepperi-theme);
-        @include pep-date-component-theme($pepperi-theme);
-        @include pep-dialog-component-theme($pepperi-theme);
-        @include pep-field-title-component-theme($pepperi-theme);
-        @include pep-files-uploader-component-theme($pepperi-theme);
-        @include pep-group-buttons-component-theme($pepperi-theme);
-        @include pep-image-component-theme($pepperi-theme);
-        @include pep-images-filmstrip-component-theme($pepperi-theme);
-        @include pep-quantity-selector-component-theme($pepperi-theme);
-        @include pep-rich-html-textarea-component-theme($pepperi-theme);
-        @include pep-search-component-theme($pepperi-theme);
-        @include pep-select-component-theme($pepperi-theme);
-        @include pep-separator-component-theme($pepperi-theme);
-        @include pep-side-bar-component-theme($pepperi-theme);
-        @include pep-signature-component-theme($pepperi-theme);
-        @include pep-slider-component-theme($pepperi-theme);
-
-        @include pep-smart-filters-component-theme($pepperi-theme);
-        @include pep-textarea-component-theme($pepperi-theme);
-        @include pep-textbox-component-theme($pepperi-theme);
-        @include pep-textbox-icon-component-theme($pepperi-theme);
-        @include pep-top-bar-component-theme($pepperi-theme);
-        @include pep-page-layout-component-theme($pepperi-theme);
-        
-        @include pep-indicators-component-theme($pepperi-theme);
-        // @include pep-internal-button-component-theme($pepperi-theme);
-        // @include pep-internal-menu-component-theme($pepperi-theme);
-        // @include pep-internal-page-component-theme($pepperi-theme);
-        @include pep-form-component-theme($pepperi-theme);
-        
-        @include pep-list-actions-component-theme($pepperi-theme);
-        @include pep-list-carousel-component-theme($pepperi-theme);
-        @include pep-list-chooser-component-theme($pepperi-theme);
-        @include pep-list-pager-component-theme($pepperi-theme);
-        @include pep-list-sorting-component-theme($pepperi-theme);
-        @include pep-list-total-component-theme($pepperi-theme);
-        @include pep-list-views-component-theme($pepperi-theme);
-        @include pep-list-component-theme($pepperi-theme);
-        
-        @include pep-query-builder-section-theme($pepperi-theme);
+        @include button.pep-button-theme();
+        @include checkbox.pep-checkbox-theme();
+        @include datetime.pep-datetime-theme();
+        @include file.pep-file-theme();
+        @include general.pep-general-theme();
+        @include input.pep-input-theme();
+        @include qs.pep-quantity-selector-theme();
+        @include radio.pep-radio-button-theme();
+        @include select.pep-select-theme();
+        @include signature.pep-signature-theme();
+        @include splitter.pep-splitter-theme();
+        @include textarea.pep-textarea-theme();
     }
 }
 
@@ -193,7 +94,7 @@ $material-theme-for-pep: $material-default-theme;
 /* Here we add the system + component's themes (all the colors definitions that change by the theme) - End   */
 /*************************************************************************************************************/
 
-// @import './src/core/style/themes/default-theme.scss';
+// @use './src/core/style/themes/default-theme.scss';
 // .default-theme {
 //     $material-theme: $material-default-theme;
 //     @include pepperi-theme($material-theme);
@@ -205,19 +106,19 @@ $material-theme-for-pep: $material-default-theme;
 //     }
 // }
 
-// @import './src/core/style/themes/light-theme.scss';
+// @use './src/core/style/themes/light-theme.scss';
 // .light-theme {
 //     $material-theme: $material-light-theme;
 //     @include pepperi-theme($material-theme);// , $user-light-theme-color);
 // }
 
-// @import './src/core/style/themes/black-theme.scss';
+// @use './src/core/style/themes/black-theme.scss';
 // .black-theme {
 //     $material-theme: $material-black-theme;
 //     @include pepperi-theme($material-theme);// , $user-black-theme-color);
 // }
 
-// @import './src/core/style/themes/nature-theme.scss';
+// @use './src/core/style/themes/nature-theme.scss';
 // .nature-theme {
 //     $material-theme: $material-nature-theme;
 //     @include pepperi-theme($material-theme);// , $user-nature-theme-color);

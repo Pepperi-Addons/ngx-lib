@@ -1,8 +1,7 @@
-@import '../../src/core/style/abstracts/variables';
-@import '../../src/core/style/abstracts/mixins';
+@use '../../src/core/style/abstracts/variables';
 
 .filter-actions {
-    margin: $content-margin 0 calc(#{$content-margin} / 2);
+    margin: variables.$content-margin 0 calc(#{variables.$content-margin} / 2);
     display: flex;
     justify-content: flex-end;
 }

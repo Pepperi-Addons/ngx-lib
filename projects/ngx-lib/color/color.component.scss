@@ -1,4 +1,4 @@
-@import '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/variables';
 :host {
     display: grid;
 }
@@ -8,10 +8,10 @@
         display: grid;
 
         .btn-edit {
-            width: $form-field-button-size;
+            width: variables.$form-field-button-size;
             min-width: unset;
             padding: 0;
-            margin: 0 $spacing-md;
+            margin: 0 variables.$spacing-md;
             justify-self: end;
             align-self: center;
         }

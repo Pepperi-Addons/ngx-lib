@@ -1,5 +1,4 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
 
 :host {
     width: 100%;
@@ -12,8 +11,6 @@
 }
 
 .gallery-dialog {
-    // display: grid;
-    // grid-template-rows: $dialog-header-height auto;
     height: inherit;
 }
 
@@ -65,12 +62,12 @@ gallery {
 }
 
 ::ng-deep gallery-thumbs {
-    margin: 0 $spacing-lg 0 $spacing-sm;
+    margin: 0 variables.$spacing-lg 0 variables.$spacing-sm;
 
     gallery-thumb {
         padding: 0 !important;
-        border-radius: $border-radius-md;
-        margin: $spacing-sm 0;
+        border-radius: variables.$border-radius-md;
+        margin: variables.$spacing-sm 0;
 
         .g-image-item {
             background-size: cover !important;
@@ -81,7 +78,7 @@ gallery {
 ::ng-deep gallery-item {
     gallery-image {
         .g-image-item {
-            border-radius: $border-radius-lg;
+            border-radius: variables.$border-radius-lg;
         }
     }
 
@@ -92,7 +89,7 @@ gallery {
 
 ::ng-deep gallery-dots {
     position: absolute !important;
-    border-radius: $border-radius-md;
+    border-radius: variables.$border-radius-md;
 
     &.pepperi-button, &.pep-button {
         display: flex !important;
@@ -109,7 +106,7 @@ gallery {
     width: 2rem !important;
     height: 2rem !important;
     padding: 0.25rem;
-    border-radius: $border-radius-md;
+    border-radius: variables.$border-radius-md;
 
     .mat-icon {
         display: inline-block !important;
@@ -123,10 +120,10 @@ gallery {
 
 .vertical-gallery {
     ::ng-deep gallery-thumbs {
-        margin: $spacing-lg 0 $spacing-sm 0; /* todo set on horizental mode */
+        margin: variables.$spacing-lg 0 variables.$spacing-sm 0; /* todo set on horizental mode */
 
         gallery-thumb {
-            margin: 0 $spacing-sm;
+            margin: 0 variables.$spacing-sm;
         }
     }
 }

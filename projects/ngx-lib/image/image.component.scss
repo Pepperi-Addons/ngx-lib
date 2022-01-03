@@ -1,5 +1,4 @@
-@import '../src/core/style/abstracts/mixins';
-@import '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/variables';
 
 :host {
     width: 100%;
@@ -39,7 +38,6 @@
     height: 100%;
 
     .img-wrapper {
-        // @include calc(height, '100% - 1.5rem');
         height: calc(100% - 1.5rem);
     }
 
@@ -67,7 +65,7 @@
 .floating-field {
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: $border-radius-md;
+    border-radius: variables.$border-radius-md;
     padding: 0.5rem;
     // margin: 0.5rem 0;
     cursor: pointer;

@@ -1,5 +1,4 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
 
 :host {
     height: inherit;
@@ -8,18 +7,18 @@
 }
 
 .no-data {
-    margin: $spacing-2xl 0;
+    margin: variables.$spacing-2xl 0;
 }
 
 .no-data-suggestions {
     .suggestions-title {
-        margin: $spacing-lg 0 $spacing-sm;
+        margin: variables.$spacing-lg 0 variables.$spacing-sm;
     }
 
     .suggestions-list {
         margin: 0;
         padding: 0;
-        padding-inline-start: $spacing-2xl;
+        padding-inline-start: variables.$spacing-2xl;
     }
 }
 
@@ -27,11 +26,3 @@
     min-height: 5rem;
     height: inherit;
 }
-
-// ::ng-deep .scrollable-content {
-//     display: grid;
-// }
-
-// .table-header {
-//     top:0;
-// }

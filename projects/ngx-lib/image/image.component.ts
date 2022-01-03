@@ -32,7 +32,7 @@ import { IPepFileChangeEvent } from '@pepperi-addons/ngx-lib/files-uploader';
 @Component({
     selector: 'pep-image',
     templateUrl: './image.component.html',
-    styleUrls: ['./image.component.scss'],
+    styleUrls: ['./image.component.scss', './image.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepImageComponent implements OnChanges, OnInit, OnDestroy {

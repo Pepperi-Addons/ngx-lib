@@ -39,7 +39,7 @@ import {
 @Component({
     selector: 'pep-top-bar',
     templateUrl: './top-bar.component.html',
-    styleUrls: ['./top-bar.component.scss'],
+    styleUrls: ['./top-bar.component.scss', './top-bar.component.theme.scss'],
 })
 export class PepTopBarComponent implements AfterViewInit, AfterContentInit, OnDestroy {
     @Input() inline = false;

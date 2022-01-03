@@ -1,3 +1,6 @@
+@use '../abstracts/variables';
+@use '../abstracts/mixins';
+
 // -----------------------------------------------------
 //  Splitter
 // -----------------------------------------------------
@@ -16,8 +19,8 @@
 
         .small-block-with-text {
             display: block;
-            font-weight: $font-weight-bold;
-            @include ellipsis();
+            font-weight: variables.$font-weight-bold;
+            @include mixins.ellipsis();
         }
     }
 
@@ -27,7 +30,7 @@
         .block-with-text {
             width: 100%;
             margin-bottom: 0.5rem;
-            font-weight: $font-weight-bold;
+            font-weight: variables.$font-weight-bold;
             align-self: flex-end;
             max-height: inherit;
         }
@@ -37,7 +40,7 @@
         &.align-0,
         &.align-1 {
             .block-with-text {
-                @include multi-line-ellipsis(1);
+                @include mixins.multi-line-ellipsis(1);
             }
         }
 
@@ -45,7 +48,7 @@
         &.align-right,
         &.align-2 {
             .block-with-text {
-                @include multi-line-ellipsis(2);
+                @include mixins.multi-line-ellipsis(2);
             }
         }
 
@@ -53,12 +56,12 @@
         &.align-center,
         &.align-3 {
             .block-with-text {
-                @include multi-line-ellipsis(3);
+                @include mixins.multi-line-ellipsis(3);
             }
         }
     }
 }
 
-@mixin pep-splitter-theme($pepperi-theme) {
+@mixin pep-splitter-theme() {
 
 }

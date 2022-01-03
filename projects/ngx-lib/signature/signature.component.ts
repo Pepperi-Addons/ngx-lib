@@ -28,7 +28,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'pep-signature',
-    styleUrls: ['./signature.component.scss'],
+    styleUrls: ['./signature.component.scss', './signature.component.theme.scss'],
     templateUrl: './signature.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

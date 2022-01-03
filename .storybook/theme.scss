@@ -1,11 +1,8 @@
 // Define pep lib theme and include theme styles for pep components.
-// @import '~@pepperi-addons/ngx-lib/theming';
-@import './../projects/ngx-lib/theming';
+// @use '~@pepperi-addons/ngx-lib/theming';
+@use './../projects/ngx-lib/theming';
 @include pepperi-theme();
 
-// Get the theme object.
-// $pepperi-theme: get-pepperi-theme();
-
 body {
-    // background-color: get-pep-color($pepperi-theme, color-text, color-link);
+    // background-color: get-pep-color(color-text, color-link);
 }

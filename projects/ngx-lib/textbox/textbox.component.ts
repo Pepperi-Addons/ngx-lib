@@ -38,7 +38,7 @@ import {
 @Component({
     selector: 'pep-textbox',
     templateUrl: './textbox.component.html',
-    styleUrls: ['./textbox.component.scss'],
+    styleUrls: ['./textbox.component.scss', './textbox.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {

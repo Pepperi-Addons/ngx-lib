@@ -21,7 +21,7 @@ import {
 @Component({
     selector: 'pep-address',
     templateUrl: './address.component.html',
-    styleUrls: ['./address.component.scss'],
+    styleUrls: ['./address.component.scss', './address.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepAddressComponent implements OnChanges, OnInit, OnDestroy {

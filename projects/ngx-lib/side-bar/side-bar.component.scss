@@ -1,6 +1,4 @@
-@import "../src/core/style/abstracts/variables";
-@import "../src/core/style/abstracts/mixins";
-@import "../src/core/style/abstracts/functions";
+@use "../src/core/style/abstracts/variables";
  
 .pep-side-bar-container {
     height: 100%;
@@ -11,18 +9,15 @@
         height: inherit;
         display: grid;
         grid-auto-flow: column;
-        // height: calc(100vh - #{$header-height});
-        // max-width: calc(#{$side-bar-width} + #{$double-content-padding} + 1px); // 1px is for the toggle-button-border width
         
         transition: transform ease-out $animation-time, width ease-out $animation-time;
-        transform: translateX(calc(var(--pep-one-multi-by-dir) * #{$side-bar-width}));
-        width: calc((#{$spacing-lg} * 2) + 1px);
+        transform: translateX(calc(var(--pep-one-multi-by-dir) * #{variables.$side-bar-width}));
+        width: calc((#{variables.$spacing-lg} * 2) + 1px);
         
         &.is-open-state {
             transition: transform ease-out $animation-time, width ease-out $animation-time;
             transform: unset;
-            width: $side-bar-width;
-            // width: calc(#{$side-bar-width} + #{$content-padding});
+            width: variables.$side-bar-width;
             
             .toggle-button {
                 transition: margin-inline ease-out $animation-time, transform ease-out $animation-time;
@@ -40,12 +35,12 @@
         .toggle-button {
             $half-button-width: 0.75rem;
             
-            z-index: $z-index-lowest + 1;
+            z-index: variables.$z-index-lowest + 1;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: calc(#{$top-bar-height} - #{$half-button-width});
+            margin-top: calc(#{variables.$top-bar-height} - #{$half-button-width});
             transition: margin-inline ease-out $animation-time, transform ease-out $animation-time;
             transform: rotate(0deg);
             margin-inline: calc(-1 * #{$half-button-width}) 0.25rem;
@@ -56,8 +51,8 @@
             opacity: 1;
             margin-inline: unset;
             width: 1px;
-            padding-inline-start: $content-padding;
-            margin-top: $top-bar-spacing-top;
+            padding-inline-start: variables.$content-padding;
+            margin-top: variables.$top-bar-spacing-top;
         }
     }
     
@@ -66,8 +61,8 @@
         bottom: 0;
         left: 0;
         right: 0;
-        z-index: $z-index-high;
-        height: calc(100vh - #{$header-height});
+        z-index: variables.$z-index-high;
+        height: calc(100vh - #{variables.$header-height});
         visibility: hidden;
         
         &.mat-drawer-opened {
@@ -75,22 +70,22 @@
         }
         
         .mat-sidenav {
-            max-width: calc(#{$floating-side-bar-width} + #{$double-content-padding});
-            padding-inline: $content-padding;
+            max-width: calc(#{variables.$floating-side-bar-width} + #{variables.$double-content-padding});
+            padding-inline: variables.$content-padding;
             
-            @media (max-width: $screen-max-size-xs) {
+            @media (max-width: variables.$screen-max-size-xs) {
                 padding-inline: 0;
             }
             
             .side-layout {
-                max-width: $floating-side-bar-width;
-                width: $floating-side-bar-width;
+                max-width: variables.$floating-side-bar-width;
+                width: variables.$floating-side-bar-width;
             }
         }
     }
     
     .side-layout {
-        $side-bar-width-less-padding: calc(#{$side-bar-width} - #{$double-content-padding});
+        $side-bar-width-less-padding: calc(#{variables.$side-bar-width} - #{variables.$double-content-padding});
         
         // display: grid;
         // grid-auto-rows: auto 1fr auto;
@@ -100,34 +95,34 @@
         // height: 100%;
         display: block;
         
-        max-width: $side-bar-width;
-        width: $side-bar-width;
-        padding: 0 $content-padding;
+        max-width: variables.$side-bar-width;
+        width: variables.$side-bar-width;
+        padding: 0 variables.$content-padding;
         overflow: auto;
         
         .header-content {
-            height: $top-bar-height;
-            padding-top: $top-bar-spacing-top;
-            z-index: $z-index-lowest + 1;
+            height: variables.$top-bar-height;
+            padding-top: variables.$top-bar-spacing-top;
+            z-index: variables.$z-index-lowest + 1;
             position: sticky;
             top: 0; 
 
             .content {
-                height: $top-bar-height-with-no-top;
+                height: variables.$top-bar-height-with-no-top;
                 display: flex;
                 overflow: unset; // For showing the focus (if hidden the focus is cutted).
             }
         }
         
         .footer-content {
-            height: $top-bar-height;
+            height: variables.$top-bar-height;
         }
         
         .main-content {
             // overflow: hidden;
             display: block;
             height: inherit;
-            max-width: $side-bar-width;
+            max-width: variables.$side-bar-width;
             
             .content {
                 // overflow: auto;

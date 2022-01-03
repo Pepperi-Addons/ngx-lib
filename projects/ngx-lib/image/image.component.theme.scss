@@ -1,35 +1,33 @@
-// -----------------------------------------------------
-//  Override material style
-// -----------------------------------------------------
-@mixin pep-image-component-theme($pepperi-theme) {
-    .indicators-container {
-        .circle {
-            box-shadow: get-pep-shadow($pepperi-theme, shadow-xs, soft);
-            @include inline(get-pep-color($pepperi-theme, color-system-primary, color-flat-r-10), 1px, solid, true);
-        }
-    }
-    
-    .floating-field {
-        &.has-active-campaign {
-            .svg-icon {
-                fill: get-pep-color($pepperi-theme, color-system-caution, color-base);
-            }
-        }
+@use '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/functions';
 
-        &.indicators-container {
-            @include state-weak-invert-default($pepperi-theme);
-            
-            &:hover {
-                cursor: inherit;
-            }
+.indicators-container {
+    .circle {
+        box-shadow: functions.get-pep-shadow(shadow-xs, soft);
+        @include mixins.inline(functions.get-pep-color(color-system-primary, color-flat-r-10), 1px, solid, true);
+    }
+}
+
+.floating-field {
+    &.has-active-campaign {
+        .svg-icon {
+            fill: functions.get-pep-color(color-system-caution, color-base);
         }
     }
 
-    .image-container {
-        .mat-form-field-disabled { 
-            .mat-form-field-flex {
-                background: transparent !important;
-            }
+    &.indicators-container {
+        @include mixins.state-weak-invert-default();
+        
+        &:hover {
+            cursor: inherit;
+        }
+    }
+}
+
+.image-container {
+    .mat-form-field-disabled { 
+        .mat-form-field-flex {
+            background: transparent !important;
         }
     }
 }

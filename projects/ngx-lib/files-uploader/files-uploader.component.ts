@@ -38,7 +38,7 @@ export interface IPepFileChangeEvent {
 @Component({
     selector: 'pep-files-uploader',
     templateUrl: './files-uploader.component.html',
-    styleUrls: ['./files-uploader.component.scss'],
+    styleUrls: ['./files-uploader.component.scss', './files-uploader.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 @Injectable()

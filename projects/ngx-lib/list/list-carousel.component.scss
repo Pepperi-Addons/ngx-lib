@@ -1,16 +1,15 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
 
 .carousel-container {
     position: relative;
-    margin: 0 calc(#{$spacing-sm} * -1);
+    margin: 0 calc(#{variables.$spacing-sm} * -1);
     display: grid;
     
     .carousel-arrow {
         position: absolute;
         top: 50%;
         transform: translate(0%, -50%);
-        z-index: $z-index-lowest;
+        z-index: variables.$z-index-lowest;
 
         &.start-arrow { 
             left: 0;
@@ -25,13 +24,13 @@
 
     ::ng-deep.carousel-content {
         .card-view {
-            padding: $spacing-sm 0 !important;
+            padding: variables.$spacing-sm 0 !important;
             
             &:first-child {
-                padding-inline-start: $spacing-sm !important;
+                padding-inline-start: variables.$spacing-sm !important;
             }
             &:last-child {
-                padding-inline-end: $spacing-sm !important;
+                padding-inline-end: variables.$spacing-sm !important;
             }
         }
     }

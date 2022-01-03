@@ -1,5 +1,5 @@
-@import '../src/core/style/abstracts/variables';
-@import '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/mixins';
 
 :host {
     height: inherit;
@@ -15,12 +15,12 @@
     width: 100%;
     height: inherit;
 
-    @include hide-spin-buttons();
+    @include mixins.hide-spin-buttons();
 
     .mat-input-element {
         padding: 0 0.25rem;
         text-align: center;
-        font-weight: $font-weight-bold;
+        font-weight: variables.$font-weight-bold;
         width: 100%;
     }
 
@@ -65,22 +65,22 @@
 
         .additional-value {
             height: 1.25rem;
-            top: calc(#{$spacing-xs} * -1);
+            top: calc(#{variables.$spacing-xs} * -1);
             transform: unset !important; // Override material default.
             display: flex;
             align-self: flex-start;
             justify-content: flex-end;
 
             &.prefix {
-                left: calc(#{$spacing-sm} * -1) !important;
+                left: calc(#{variables.$spacing-sm} * -1) !important;
             }
 
             &.suffix {
-                right: calc(#{$spacing-sm} * -1) !important;
+                right: calc(#{variables.$spacing-sm} * -1) !important;
             }
 
             .mat-badge-content {
-                @include mat-badge-content();
+                @include mixins.mat-badge-content();
             }
         }
 

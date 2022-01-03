@@ -1,9 +1,9 @@
-@mixin pep-bread-crumbs-component-theme($pepperi-theme) {
-    .bread-crumbs-label {
-        color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+@use '../src/core/style/abstracts/functions';
 
-        .current {
-            color: get-pep-color($pepperi-theme, color-text, color-main);
-        }
+.bread-crumbs-label {
+    color: functions.get-pep-color(color-text, color-dimmed);
+
+    .current {
+        color: functions.get-pep-color(color-text, color-main);
     }
 }

@@ -1,9 +1,8 @@
-@import '../src/core/style/abstracts/mixins';
-@import '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/variables';
 
 .smart-filters-container {
     .title {
-        height: $top-bar-height-with-no-top;
+        height: variables.$top-bar-height-with-no-top;
         display: flex;
         flex-flow: wrap;
         align-items: center;
@@ -14,8 +13,8 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            margin: 0 $spacing-xs;
-            padding:0 $spacing-md;
+            margin: 0 variables.$spacing-xs;
+            padding:0 variables.$spacing-md;
 
             &:after {
                 background-color: transparent;
@@ -40,7 +39,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            margin-inline-end: $spacing-sm;
+            margin-inline-end: variables.$spacing-sm;
             
             &:after {
                 background-color: transparent;

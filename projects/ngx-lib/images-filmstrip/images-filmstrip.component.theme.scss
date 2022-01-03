@@ -1,32 +1,33 @@
-@mixin pep-images-filmstrip-component-theme($pepperi-theme) {
+@use '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/functions';
 
-    gallery {
-        background-color: transparent;
-    }
-    
-    gallery-thumb {
-        box-shadow: get-pep-shadow($pepperi-theme, shadow-sm, hard);
-    }
-    
-    .g-nav-prev,
-    .g-nav-next  {
-        @include state-weak-invert-default($pepperi-theme);
-                
-        &:hover {
-            @include state-weak-invert-hover($pepperi-theme);
-        }
-        &:focus {
-            @include state-weak-invert-focus($pepperi-theme);
-        }
-        &:active {
-            @include state-weak-invert-active($pepperi-theme);
-        }
-        &:disabled {
-            @include state-weak-invert-disable($pepperi-theme);
-        }
+gallery {
+    background-color: transparent;
+}
 
+gallery-thumb {
+    box-shadow: functions.get-pep-shadow(shadow-sm, hard);
+}
+
+.g-nav-prev,
+.g-nav-next  {
+    @include mixins.state-weak-invert-default();
+            
+    &:hover {
+        @include mixins.state-weak-invert-hover();
     }
-    gallery-dots {
-        @include state-weak-default($pepperi-theme);
+    &:focus {
+        @include mixins.state-weak-invert-focus();
     }
+    &:active {
+        @include mixins.state-weak-invert-active();
+    }
+    &:disabled {
+        @include mixins.state-weak-invert-disable();
+    }
+
+}
+
+gallery-dots {
+    @include mixins.state-weak-default();
 }

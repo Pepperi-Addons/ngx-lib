@@ -1,9 +1,11 @@
+// @use 'sass:map';
+
 /// Breakpoints map
 /// @prop {String} keys - Keys are identifiers mapped to a given length
 /// @prop {Map} values - Values are actual breakpoints expressed in pixels
-/// Use `map-get` to select a breackpoint
+/// Use `map.get` to select a breackpoint
 /// Like so:
-/// max-width: map-get($breakpoints, SM)
+/// max-width: map.get($breakpoints, SM)
 
 // Not in use there are variables in variables.scss file
 // $breakpoints: (

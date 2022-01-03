@@ -22,7 +22,7 @@ import { PepLayoutService, DEFAULT_HORIZONTAL_ALIGNMENT, PepHorizontalAlignment 
 @Component({
     selector: 'pep-slider',
     templateUrl: './slider.component.html',
-    styleUrls: ['./slider.component.scss'],
+    styleUrls: ['./slider.component.scss', './slider.component.theme.scss'],
 })
 export class PepSliderComponent implements OnInit {
     @Input() label = '';

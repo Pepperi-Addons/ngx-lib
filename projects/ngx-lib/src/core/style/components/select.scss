@@ -1,4 +1,6 @@
-@import '../abstracts/mixins';
+@use '../abstracts/variables';
+@use '../abstracts/mixins';
+@use '../abstracts/functions';
 
 // -----------------------------------------------------
 //  Override material style
@@ -28,7 +30,7 @@ mat-select {
         justify-content: center;
 
         &:after {
-            @include select-arrow();
+            @include mixins.select-arrow();
             cursor: pointer;
             width: 1rem;
             height: 1rem;
@@ -67,7 +69,7 @@ mat-select {
     .mat-pseudo-checkbox::after {
         width: 0;
         height: 0;
-        // @include box-sizing(border-box);
+        // @include mixins.box-sizing(border-box);
         // top: 0.3rem;
         // left: 0.2rem;
         // width: 0.5rem;
@@ -80,7 +82,7 @@ mat-select {
 }
 
 
-@mixin pep-select-theme($pepperi-theme) {
+@mixin pep-select-theme() {
     // -----------------------------------------------------
     //  Override material style
     // -----------------------------------------------------
@@ -89,7 +91,7 @@ mat-select {
 
         &.mat-select-disabled {
             .mat-select-value {
-                color: get-pep-color($pepperi-theme, color-text, color-dimmed);
+                color: functions.get-pep-color(color-text, color-dimmed);
             }
         }
     }
@@ -106,7 +108,7 @@ mat-select {
             border: 0;
 
             &:after {
-                color: get-pep-color($pepperi-theme, color-system-primary, color-base);
+                color: functions.get-pep-color(color-system-primary, color-base);
             }
         }
     }
@@ -117,69 +119,69 @@ mat-select {
         }
 
         .mat-option {
-            background: get-pep-color($pepperi-theme, color-system-primary-invert, color-base);
+            background: functions.get-pep-color(color-system-primary-invert, color-base);
 
             //&.mat-active,
             &:hover {
-                @include state-weak-hover($pepperi-theme);
+                @include mixins.state-weak-hover();
             }
             &:active {
-                @include state-weak-active($pepperi-theme, color-weak, false);
-                background: get-pep-color($pepperi-theme, color-weak, color-tran-50) !important;
+                @include mixins.state-weak-active(color-weak, false);
+                background: functions.get-pep-color(color-weak, color-tran-50) !important;
             }
             &:disabled {
-                @include state-weak-disable($pepperi-theme);
+                @include mixins.state-weak-disable();
             }
         }
         .mat-option.mat-selected {
-            @include state-weak-default($pepperi-theme);
-            // box-shadow: get-pep-shadow($pepperi-theme, shadow-xs, soft);
+            @include mixins.state-weak-default();
+            // box-shadow: functions.get-pep-shadow(shadow-xs, soft);
 
             //&.mat-active,
             &:hover {
-                @include state-weak-hover($pepperi-theme);
+                @include mixins.state-weak-hover();
             }
             &:active {
-                @include state-weak-active($pepperi-theme, color-weak, false);
-                background: get-pep-color($pepperi-theme, color-weak, color-tran-50) !important;
+                @include mixins.state-weak-active(color-weak, false);
+                background: functions.get-pep-color(color-weak, color-tran-50) !important;
             }
             &:disabled {
-                @include state-weak-disable($pepperi-theme);
+                @include mixins.state-weak-disable();
             }
         }
 
         .mat-pseudo-checkbox {
-            @include state-regular-default($pepperi-theme, true);
+            @include mixins.state-regular-default(true);
 
             &:hover {
-                @include state-regular-hover($pepperi-theme, true);
+                @include mixins.state-regular-hover(true);
             }
             &:active {
-                @include state-regular-active($pepperi-theme, true);
+                @include mixins.state-regular-active(true);
             }
             &:disabled {
-                @include state-regular-disable($pepperi-theme, true);
+                @include mixins.state-regular-disable(true);
             }
         }
 
         .mat-pseudo-checkbox.mat-pseudo-checkbox-checked,
         .mat-pseudo-checkbox.mat-pseudo-checkbox-indeterminate {
-            @include state-regular-default($pepperi-theme, true);
-            @include inline(get-pep-color($pepperi-theme, color-system-primary, color-flat-r-10), 1px, solid, true);
+            @include mixins.state-regular-default(true);
+            @include mixins.inline(functions.get-pep-color(color-system-primary, color-flat-r-10), 1px, solid, true);
 
             &:hover {
-                @include state-regular-hover($pepperi-theme, true);
+                @include mixins.state-regular-hover(true);
             }
             &:active {
-                @include state-regular-active($pepperi-theme, true);
+                @include mixins.state-regular-active(true);
             }
             &:disabled {
-                @include state-regular-disable($pepperi-theme, true);
+                @include mixins.state-regular-disable(true);
             }
         }
 
         .mat-pseudo-checkbox::after {
-            color: get-pep-color($pepperi-theme, color-text, color-main) !important;
+            color: functions.get-pep-color(color-text, color-main) !important;
         }
     }
 }

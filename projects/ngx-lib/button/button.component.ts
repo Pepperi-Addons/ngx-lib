@@ -26,7 +26,7 @@ import { PepButton, IPepButtonClickEvent } from './button.model';
 @Component({
     selector: 'pep-button',
     templateUrl: './button.component.html',
-    styleUrls: ['./button.component.scss'],
+    styleUrls: ['./button.component.scss', './button.component.theme.scss'],
 })
 export class PepButtonComponent implements OnDestroy {
     /**

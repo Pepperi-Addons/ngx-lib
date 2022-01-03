@@ -24,7 +24,7 @@ import {
 @Component({
     selector: 'pep-attachment',
     templateUrl: './attachment.component.html',
-    styleUrls: ['./attachment.component.scss'],
+    styleUrls: ['./attachment.component.scss', './attachment.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {

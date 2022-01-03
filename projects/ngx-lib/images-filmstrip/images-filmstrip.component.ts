@@ -137,7 +137,7 @@ export function createViewerConfig(
 @Component({
     selector: 'pep-images-filmstrip',
     templateUrl: './images-filmstrip.component.html',
-    styleUrls: ['./images-filmstrip.component.scss'],
+    styleUrls: ['./images-filmstrip.component.scss', './images-filmstrip.component.theme.scss'],
     // animations: [slideInAnimation],
     providers: [
         {

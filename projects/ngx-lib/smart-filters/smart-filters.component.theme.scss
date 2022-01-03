@@ -1,11 +1,10 @@
-@mixin pep-smart-filters-component-theme($pepperi-theme) {
-    
-    .smart-filters-container {
-        .clear-filter {
+@use '../src/core/style/abstracts/mixins';
 
-            &.weak {
-                @include pep-button-states($pepperi-theme, weak);
-            }
+.smart-filters-container {
+    .clear-filter {
+
+        &.weak {
+            @include mixins.pep-button-states(weak);
         }
     }
 }
