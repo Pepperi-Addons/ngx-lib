@@ -4,6 +4,7 @@ import { PepSmartFilterBaseField, IPepSmartFilterField } from '@pepperi-addons/n
 import { IPepSmartFilterData } from '@pepperi-addons/ngx-lib/smart-filters';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { PepTypeConvertorService } from '../common/services/type-convertor.service';
+import { IPepQueryBuilderFieldContainer } from '../common/model/field';
 
 @Component({
     selector: 'pep-query-builder-item',
@@ -12,25 +13,26 @@ import { PepTypeConvertorService } from '../common/services/type-convertor.servi
 })
 export class PepQueryBuilderItemComponent {
     @Input() formKey: string;
-    _fields: Array<any> = [];
+    _fields: Array<IPepQueryBuilderFieldContainer> = [];
     _options: IPepOption[] = [];
     @Input()
-    set fields(list: Array<IPepSmartFilterField>) {
+    set fields(list: Array<IPepQueryBuilderFieldContainer>) {
         if (list?.length > 0) {
             this._fields = list;
             this._options = list.map(field => {
                 return {
-                    key: field.id,
-                    value: field.name
+                    key: field.smart.id,
+                    value: field.smart.name
                 }
             })
         }
     }
     _selectedField: PepSmartFilterBaseField = null;
     @Input()
-    set selected(value: any) {
+    set selected(value: IPepQueryBuilderFieldContainer) {
         if (value) {
-            this._selectedField = value;
+            this._selectedField = value.smart;
+            this.queryForm.fieldType.setValue(value.query.fieldType);
         }
     }
     _filter: IPepSmartFilterData;
@@ -67,16 +69,29 @@ export class PepQueryBuilderItemComponent {
         //
     }
 
+    get f() {
+        return this.form.controls;
+    }
+
+    get queryForm() {
+        return (this.f.query as FormGroup).controls;
+    }
+
     setupForm() {
         this.form = this._fb.group({
-            fieldId: this._fb.control(null),
-            fieldType: this._fb.control(null),
-            operator: this._fb.control(null),
-            operatorUnit: this._fb.control(null),
-            values: this._fb.group({
-                first: this._fb.control(null),
-                second: this._fb.control(null)
+            smart: this._fb.group({
+                fieldId: this._fb.control(null),
+                fieldType: this._fb.control(null),
+                operator: this._fb.control(null),
+                operatorUnit: this._fb.control(null),
+                values: this._fb.group({
+                    first: this._fb.control(null),
+                    second: this._fb.control(null)
+                })
             }),
+            query: this._fb.group({
+                fieldType: this._fb.control(null)
+            })
         });
     }
 
@@ -85,9 +100,10 @@ export class PepQueryBuilderItemComponent {
     }
 
     onFieldChanged(key) {
-        const item = this._fields.find(field => field.id === key);
+        const item = this._fields.find(field => field.smart.id === key);
 
         this.setupForm();
+        this.queryForm.fieldType.setValue(item.query.fieldType);
         this.addToParentForm();
 
         /**
@@ -96,7 +112,7 @@ export class PepQueryBuilderItemComponent {
          */
         this._selectedField = null;
         setTimeout(() => {
-            this._selectedField = item ? item : null;
+            this._selectedField = item ? item.smart : null;
         }, 0);
 
         this._filter = null;

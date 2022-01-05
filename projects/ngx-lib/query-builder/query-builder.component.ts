@@ -9,8 +9,10 @@ import {
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { PepQueryBuilderSectionComponent } from './query-builder-section/query-builder-section.component';
-import { IPepQueryBuilderField, IPepQuerySection } from './common/model/legacy';
+import { IPepQueryBuilderField, IPepQuerySection, IPepQueryItem } from './common/model/legacy';
 import { PepQueryBuilderService } from './query-builder.service';
+import { PepTypeConvertorService } from './common/services/type-convertor.service';
+import { PepOutputQueryService } from './common/services/output-query.service';
 import { IPepQueryDepth } from './common/model/structure';
 import { PepOperatorTypes } from './common/model/type';
 import { Subscription } from 'rxjs';
@@ -19,11 +21,12 @@ import { Subscription } from 'rxjs';
     selector: 'pep-query-builder',
     templateUrl: './query-builder.component.html',
     styleUrls: ['./query-builder.component.scss'],
+    providers: [PepQueryBuilderService, PepTypeConvertorService, PepOutputQueryService]
 })
 export class PepQueryBuilderComponent implements OnInit, OnDestroy {
-    _query: IPepQuerySection = null;
+    _query: IPepQuerySection | IPepQueryItem = null;
     @Input()
-    set query(object: IPepQuerySection) {
+    set query(object: IPepQuerySection | IPepQueryItem) {
         this._query = object;
         this.loadQuery()
     }
@@ -39,7 +42,7 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     }
 
     @Output()
-    queryChange: EventEmitter<IPepQuerySection> = new EventEmitter<IPepQuerySection>();
+    queryChange: EventEmitter<IPepQuerySection | IPepQueryItem> = new EventEmitter<IPepQuerySection | IPepQueryItem>();
     @Output()
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

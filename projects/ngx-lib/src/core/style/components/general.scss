@@ -766,8 +766,8 @@ $sorting-width: 1rem;
 // ---------------------------------------------
 .pepperi-field, .pep-field {
     &:not(.pep-field-no-spacing) {
-        min-height: $form-row-height;
-        margin-bottom: $form-spacing;
+        min-height: variables.$form-row-height;
+        margin-bottom: variables.$form-spacing;
     }
 }
 
