@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IPepQueryItem } from '../model/legacy';
+import { IPepQuerySection, IPepQueryItem } from '../model/legacy';
 import { getLegacyOperator } from '../model/operator';
+import { PepOperatorTypes } from '../model/type';
 import { getLegacyOperationUnit } from '../model/operator-unit';
 import { PepSmartFilterOperators } from '@pepperi-addons/ngx-lib/smart-filters';
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PepOutputQueryService {
     private _complexIdCounter: number;
     private _expressionIdCounter: number;
@@ -41,15 +40,16 @@ export class PepOutputQueryService {
      * @returns section query data
      */
     private sectionWalk(current: any) {
-        let section: any = null;
+        let section: IPepQuerySection | IPepQueryItem = null;
 
         Object.keys(current).forEach(key => {
             if (key.includes('item')) {
                 section = this.addToSection(section, {
                     ExpressionId: (this._expressionIdCounter++).toString(),
-                    ApiName: current[key].fieldId,
-                    Operation: getLegacyOperator(current[key].operator, current[key].fieldType),
-                    Values: this.getItemValues(current[key])
+                    ApiName: current[key].smart.fieldId,
+                    FieldType: current[key].query.fieldType,
+                    Operation: getLegacyOperator(current[key].smart.operator, current[key].smart.fieldType),
+                    Values: this.getItemValues(current[key].smart)
                 } as IPepQueryItem, current.operator);
             } else if (key.includes('section')) {
                 const childSection = this.sectionWalk(current[key]);
@@ -80,12 +80,12 @@ export class PepOutputQueryService {
      * @param operator query operator
      * @returns legacy complex object
      */
-    private createSection(left: any, right: any, operator: string) {
+    private createSection(left: any, right: any, operator: string): IPepQuerySection {
         return {
             ComplexId: (this._complexIdCounter++).toString(),
             LeftNode: left,
             RightNode: right,
-            Operation: operator
+            Operation: <PepOperatorTypes>operator
         }
     }
 

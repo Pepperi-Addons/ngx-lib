@@ -61,8 +61,9 @@ export class QueryBuilderExampleComponent implements OnInit {
 
     }
     loadQuery() {
-        this.json = {
+        /*this.json = {
             "ComplexId": "5",
+            "Operation": "AND",
             "LeftNode": {
                 "ComplexId": "4",
                 "LeftNode": {
@@ -86,6 +87,23 @@ export class QueryBuilderExampleComponent implements OnInit {
                 "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "InTheLast", "Values": ["9", "Months"] },
             },
             "RightNode": { "ExpressionId": '6', "ApiName": "CaseQuantity", "Operation": "IsEqual", "Values": ["2"] },
+        } */
+        this.json = {
+            "ComplexId": "1",
+            "Operation": "AND",
+            "LeftNode": {
+                "Values": ["123"],
+                "Operation": "Contains",
+                "ApiName": "Account.ExternalID",
+                "ExpressionId": "1"
+            }
+            , "RightNode":
+            {
+                "Values": ["5132"],
+                "Operation": "Contains",
+                "ApiName": "Account.ExternalID",
+                "ExpressionId": "2"
+            }
         }
     }
 

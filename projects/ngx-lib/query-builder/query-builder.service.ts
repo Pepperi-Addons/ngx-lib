@@ -10,11 +10,13 @@ import {
     IPepSmartFilterOperator,
     PepSmartFilterType,
     createSmartFilter,
-    createSmartFilterField
+    createSmartFilterField,
+    PepSmartFilterBaseField
 } from '@pepperi-addons/ngx-lib/smart-filters';
 import { getSmartBuilderOperator } from './common/model/operator';
 import { PepQueryBuilderSectionComponent } from './query-builder-section/query-builder-section.component';
 import { PepQueryBuilderItemComponent } from './query-builder-item/query-builder-item.component';
+import { IPepQueryBuilderFieldContainer } from './common/model/field';
 import { PepQueryBuilderTypeMap } from './common/model/type-map';
 import { getSmartBuilderOperationUnit } from './common/model/operator-unit';
 import { PepOutputQueryService } from './common/services/output-query.service';
@@ -23,13 +25,11 @@ import { PepOperatorTypes } from './common/model/type';
 
 const MAX_STRUCTURE_DEPTH = 3;
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PepQueryBuilderService {
-    private _outputQuery$ = new BehaviorSubject<any>(null);
+    private _outputQuery$ = new BehaviorSubject<IPepQuerySection | IPepQueryItem>(null);
 
-    private _smartFilterFields: Array<IPepSmartFilterField>;
+    private _smartFilterFields: Array<IPepQueryBuilderFieldContainer>;
     private _form: FormGroup;
     private _maxStructureDepth = MAX_STRUCTURE_DEPTH;
 
@@ -70,7 +70,7 @@ export class PepQueryBuilderService {
      * @param containerRef reference to root element
      */
     buildQueryStructure(
-        query: IPepQuerySection,
+        query: IPepQuerySection | IPepQueryItem,
         containerRef: ViewContainerRef
     ) {
         //update root operator        
@@ -79,7 +79,7 @@ export class PepQueryBuilderService {
             query.Operation !== this._form.get('operator').value) {
             this._form.get('operator').setValue(query.Operation);
         }
-        this.flatten(null, query, containerRef, this._form, 1);
+        this.flatten(this._form.get('operator').value, query, containerRef, this._form, 0);
     }
 
     /**
@@ -94,21 +94,21 @@ export class PepQueryBuilderService {
 
     /**
      * a recursive function dynamically builds UI filters structure
-     * @param parent legacy complex object
+     * @param parentOperator parent legacy complex operator
      * @param current child legacy object (either another complex or expression type)
      * @param containerRef parent element
      * @param parentForm parent form
      */
-    private flatten(parent: IPepQuerySection, current: IPepQuerySection | IPepQueryItem, containerRef: ViewContainerRef, parentForm: FormGroup, depth: number) {
+    private flatten(parentOperator: string, current: IPepQuerySection | IPepQueryItem, containerRef: ViewContainerRef, parentForm: FormGroup, depth: number) {
         if (this.hasProperty(current, 'ComplexId')) {
             const section = current as IPepQuerySection;
-            if (parent?.Operation === current.Operation) {
-                this.flatten(parent, section.LeftNode, containerRef, parentForm, depth);
-                this.flatten(parent, section.RightNode, containerRef, parentForm, depth);
+            if (parentOperator === current.Operation) {
+                this.flatten(current.Operation, section.LeftNode, containerRef, parentForm, depth);
+                this.flatten(current.Operation, section.RightNode, containerRef, parentForm, depth);
             } else {
                 const result = this.createSection(section.Operation, containerRef, parentForm, depth);
-                this.flatten(section, section.LeftNode, result.containerRef, result.parentForm, depth + 1);
-                this.flatten(section, section.RightNode, result.containerRef, result.parentForm, depth + 1);
+                this.flatten(section.Operation, section.LeftNode, result.containerRef, result.parentForm, depth + 1);
+                this.flatten(section.Operation, section.RightNode, result.containerRef, result.parentForm, depth + 1);
             }
         } else if (this.hasProperty(current, 'ExpressionId')) {
             this.createItem(current as IPepQueryItem, containerRef, parentForm);
@@ -128,7 +128,7 @@ export class PepQueryBuilderService {
         const componentRef = containerRef.createComponent(factory);
 
         const sectionGroup = this._fb.group({
-            operator: this._fb.control(operator || PepOperatorTypes.And)
+            operator: this._fb.control(operator)
         });
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('section')) { counter++; } });
@@ -182,7 +182,7 @@ export class PepQueryBuilderService {
         if (selectedField) {
             componentRef.instance.selected = selectedField;
             if (current) {
-                componentRef.instance.filter = this.getFilter(current, selectedField);
+                componentRef.instance.filter = this.getFilter(current, selectedField.smart);
             }
         }
         componentRef.instance.parentForm = parentForm;
@@ -202,7 +202,7 @@ export class PepQueryBuilderService {
      * @param field filter's selected field
      * @returns smart filter object
      */
-    private getFilter(current: IPepQueryItem, field: any): IPepSmartFilterData | null {
+    private getFilter(current: IPepQueryItem, field: PepSmartFilterBaseField): IPepSmartFilterData | null {
         const operator: IPepSmartFilterOperator = getSmartBuilderOperator(current.Operation, field.type);
         if (operator) {
             const filterValues: IPepQueryBuilderValues = this.getFilterValues(current, operator, field);
@@ -221,11 +221,11 @@ export class PepQueryBuilderService {
     /**
      * get smart filter field
      * @param current filter legacy element
-     * @returns smart filter field, if not found returns the first fields
+     * @returns smart filter field, if not found returns the first field
      */
-    private getSelectedField(current: IPepQueryItem): IPepSmartFilterField | null {
+    private getSelectedField(current: IPepQueryItem): IPepQueryBuilderFieldContainer | null {
         if (current) {
-            const item = this._smartFilterFields.find(field => field.id === current.ApiName);
+            const item = this._smartFilterFields.find(field => field.smart.id === current.ApiName);
             return item ? item : this._smartFilterFields?.length > 0 ? this._smartFilterFields[0] : null;
         } else {
             return this._smartFilterFields?.length > 0 ? this._smartFilterFields[0] : null;
@@ -274,22 +274,27 @@ export class PepQueryBuilderService {
      * @param fields legacy fields array
      * @returns smart filter fields array
      */
-    private convertToSmartFilterFields(fields: Array<IPepQueryBuilderField>) {
+    private convertToSmartFilterFields(fields: Array<IPepQueryBuilderField>): Array<IPepQueryBuilderFieldContainer> {
         if (fields?.length > 0) {
             const typeMapper = new PepQueryBuilderTypeMap();
+
             return fields.map((field) => {
-                return createSmartFilterField(
-                    {
-                        id: field.FieldID,
-                        name: field.Title,
-                        options: field.OptionalValues?.map(option => {
-                            return {
-                                key: option.Key,
-                                value: option.Value
-                            }
-                        })
-                    } as IPepSmartFilterField
-                    , typeMapper.getSmartBuilderType(field.FieldType) as PepSmartFilterType)
+                return {
+                    smart: createSmartFilterField(
+                        {
+                            id: field.FieldID,
+                            name: field.Title,
+                            options: field.OptionalValues?.map(option => {
+                                return {
+                                    key: option.Key,
+                                    value: option.Value
+                                }
+                            })
+                        }, typeMapper.getSmartBuilderType(field.FieldType) as PepSmartFilterType),
+                    query: {
+                        fieldType: field.FieldType
+                    }
+                }
             })
         } else {
             return [];

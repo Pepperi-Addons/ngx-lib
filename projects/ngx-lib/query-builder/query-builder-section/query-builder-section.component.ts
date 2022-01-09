@@ -18,7 +18,7 @@ import { IPepQueryDepth } from '../common/model/structure';
 @Component({
     selector: 'pep-query-builder-section',
     templateUrl: './query-builder-section.component.html',
-    styleUrls: ['./query-builder-section.component.scss'],
+    styleUrls: ['./query-builder-section.component.scss', './query-builder-section.component.theme.scss'],
 })
 export class PepQueryBuilderSectionComponent {
     @Input() form: FormGroup;

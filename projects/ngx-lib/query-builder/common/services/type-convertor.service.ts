@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PepTypeConvertorService {
     private readonly _operators: IPepOption[] = [];
     private readonly _booleans: IPepOption[] = [];
