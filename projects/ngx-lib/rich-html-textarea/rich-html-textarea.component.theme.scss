@@ -14,7 +14,7 @@ $add-width-for-hide-scroll: 1rem;
 
 .right-alignment {
     quill-editor {
-        &.inline-quill {
+        &.inline-quill::ng-deep {
             .ql-container {
                 .ql-editor {
                     padding-right: unset;
@@ -26,7 +26,7 @@ $add-width-for-hide-scroll: 1rem;
 }
 
 quill-editor {
-    &.inline-quill {
+    &.inline-quill::ng-deep {
         .ql-container {
             .ql-editor {
                 width: calc(100% + #{$add-width-for-hide-scroll});
@@ -35,206 +35,208 @@ quill-editor {
         }
     }
 
-    .ql-toolbar {
-        display: flex;
-        padding: 0px !important;
-        // height: 3rem;
-        // border-top: unset;
-        // border-right: unset;
-        // border-left: unset;
-        border: unset;
-        
-        .ql-transparent {
-            opacity: 0.9;
-        }
-        
-        .ql-formats {
-            margin-right: 0 !important;
-            margin-bottom: 0.5rem;
-
-            button { 
-                height: 2.5rem;
-
-                svg {
-                    width: 1.25rem !important;  
-                    float: unset !important;
-                }
-
-                &.ql-active {
-                    @include mixins.state-weak-active(color-weak);
-                }
-
-                &:focus {
-                    @include mixins.state-weak-active(color-weak);
-                }
-                &:active {
-                    @include mixins.state-weak-active(color-weak);
-                }
+    ::ng-deep {
+        .ql-toolbar {
+            display: flex;
+            padding: 0px !important;
+            // height: 3rem;
+            // border-top: unset;
+            // border-right: unset;
+            // border-left: unset;
+            border: unset;
+            
+            .ql-transparent {
+                opacity: 0.9;
             }
             
-            .ql-stroke {
-                stroke: functions.get-pep-color(color-weak, color-tran-80);
-            }
-            .ql-fill {
-                fill: functions.get-pep-color(color-weak, color-tran-80);
-            }
-
-            .ql-picker:not(.ql-color-picker) {
-                .ql-picker-options {
-                    .ql-picker-item {
-                        outline: unset !important;
-                        width: 100%;
-                        height: auto;
-                        padding: variables.$spacing-xs variables.$spacing-sm;
-                        display: grid;
-                        // background: functions.get-pep-color(color-system-primary-invert, color-base);
-            
-                        &:hover {
-                            @include mixins.state-weak-hover();
-                        }
-                        &:active {
-                            @include mixins.state-weak-active(color-weak, false);
-                            background: functions.get-pep-color(color-weak, color-tran-50) !important;
-                        }
-                        &:disabled {
-                            @include mixins.state-weak-disable();
-                        }
-                    }
-                }
-            }
-            
-            .ql-picker {
-                &.ql-color-picker,
-                &.ql-icon-picker {
-                    width: unset;
-                }
-
-                .ql-picker-label {
-                    // display: flex;
-                    // justify-content: center;
-                    outline: none;
-                    display: grid;
-                    grid-auto-flow: column;
-                    align-items: center;
-                    line-height: 1rem;
-                    border: unset;
-
+            .ql-formats {
+                margin-right: 0 !important;
+                margin-bottom: 0.5rem;
+    
+                button { 
+                    height: 2.5rem;
+    
                     svg {
-                        width: 1.5rem;
+                        width: 1.25rem !important;  
+                        float: unset !important;
                     }
-
-                    &:after {
-                        @include mixins.select-arrow();
-                        cursor: pointer;
-                        display: grid;
-                        height: inherit;
-                        justify-content: center;
-                        align-content: center;
+    
+                    &.ql-active {
+                        @include mixins.state-weak-active(color-weak);
                     }
-
-                }
-
-                &.select-arrow {
-                    .ql-picker-label {
-                        &::before {
-                            line-height: unset;
-                        }
-
-                        svg {
-                            display: none;
-                        }
+    
+                    &:focus {
+                        @include mixins.state-weak-active(color-weak);
+                    }
+                    &:active {
+                        @include mixins.state-weak-active(color-weak);
                     }
                 }
-
-                .ql-picker-options {
-                    border-radius: variables.$border-radius-md;
-                    box-sizing: content-box;
-                    padding: unset;
-                    box-shadow: functions.get-pep-shadow(shadow-sm, hard);
-                    border: 1px solid functions.get-pep-color(color-system-primary, color-base);
+                
+                .ql-stroke {
+                    stroke: functions.get-pep-color(color-weak, color-tran-80);
                 }
-            
-                &.ql-color-picker {
+                .ql-fill {
+                    fill: functions.get-pep-color(color-weak, color-tran-80);
+                }
+    
+                .ql-picker:not(.ql-color-picker) {
                     .ql-picker-options {
-                        padding: variables.$spacing-xs variables.$spacing-sm;
-                        width: 140px;
-
-                        &:focus {
-                            outline: unset !important;
-                        }
-
                         .ql-picker-item {
-                            &:focus {
-                                outline: unset !important;
+                            outline: unset !important;
+                            width: 100%;
+                            height: auto;
+                            padding: variables.$spacing-xs variables.$spacing-sm;
+                            display: grid;
+                            // background: functions.get-pep-color(color-system-primary-invert, color-base);
+                
+                            &:hover {
+                                @include mixins.state-weak-hover();
+                            }
+                            &:active {
+                                @include mixins.state-weak-active(color-weak, false);
+                                background: functions.get-pep-color(color-weak, color-tran-50) !important;
+                            }
+                            &:disabled {
+                                @include mixins.state-weak-disable();
                             }
                         }
                     }
                 }
-
-                &.ql-expanded {
-                    @include mixins.state-weak-active(color-weak);
-                    
-                    .ql-picker-label {
-                        .ql-stroke {
-                            stroke: functions.get-pep-color(color-text, color-link);
-                        }
-                        .ql-fill {
-                            fill: functions.get-pep-color(color-text, color-link);
-                        }
+                
+                .ql-picker {
+                    &.ql-color-picker,
+                    &.ql-icon-picker {
+                        width: unset;
                     }
-
+    
                     .ql-picker-label {
+                        // display: flex;
+                        // justify-content: center;
+                        outline: none;
+                        display: grid;
+                        grid-auto-flow: column;
+                        align-items: center;
+                        line-height: 1rem;
                         border: unset;
+    
+                        svg {
+                            width: 1.5rem;
+                        }
+    
+                        &:after {
+                            @include mixins.select-arrow();
+                            cursor: pointer;
+                            display: grid;
+                            height: inherit;
+                            justify-content: center;
+                            align-content: center;
+                        }
+    
                     }
+    
+                    &.select-arrow {
+                        .ql-picker-label {
+                            &::before {
+                                line-height: unset;
+                            }
+    
+                            svg {
+                                display: none;
+                            }
+                        }
+                    }
+    
+                    .ql-picker-options {
+                        border-radius: variables.$border-radius-md;
+                        box-sizing: content-box;
+                        padding: unset;
+                        box-shadow: functions.get-pep-shadow(shadow-sm, hard);
+                        border: 1px solid functions.get-pep-color(color-system-primary, color-base);
+                    }
+                
+                    &.ql-color-picker {
+                        .ql-picker-options {
+                            padding: variables.$spacing-xs variables.$spacing-sm;
+                            width: 140px;
+    
+                            &:focus {
+                                outline: unset !important;
+                            }
+    
+                            .ql-picker-item {
+                                &:focus {
+                                    outline: unset !important;
+                                }
+                            }
+                        }
+                    }
+    
+                    &.ql-expanded {
+                        @include mixins.state-weak-active(color-weak);
+                        
+                        .ql-picker-label {
+                            .ql-stroke {
+                                stroke: functions.get-pep-color(color-text, color-link);
+                            }
+                            .ql-fill {
+                                fill: functions.get-pep-color(color-text, color-link);
+                            }
+                        }
+    
+                        .ql-picker-label {
+                            border: unset;
+                        }
+                    }
+    
                 }
-
+            }
+    
+            .vertical-separator {
+                border-color: functions.get-pep-color(color-system-primary, color-tran-50);
+            }
+    
+            @media (max-width: 568px) { // Hack - only for iphone5 - don't put inside medium size cause of bigger iphone devices - avner
+                .ql-list{
+                    display:none;
+                }
+            }
+            @media (max-width: variables.$screen-max-size-xs) {
+                .ql-italic,
+                .ql-underline {
+                    display: none;
+                }
+            }
+            @media (max-width: variables.$screen-max-size-2xs) {
+                .ql-italic,
+                .ql-image,
+                .ql-underline,
+                .ql-list,
+                // .ql-link,
+                .ql-header {
+                    display: none;
+                }
             }
         }
-
-        .vertical-separator {
-            border-color: functions.get-pep-color(color-system-primary, color-tran-50);
-        }
-
-        @media (max-width: 568px) { // Hack - only for iphone5 - don't put inside medium size cause of bigger iphone devices - avner
-            .ql-list{
-                display:none;
+    
+        .ql-container {
+            height: 16rem;
+            border: unset;
+            @include mixins.pep-border(border-top, solid, true);
+    
+            .ql-editor {
+                $side-padding: 0; // $spacing-sm;
+                padding: variables.$spacing-sm $side-padding;
+    
+                &.ql-blank::before {
+                    right: $side-padding;
+                    left: $side-padding;
+                }
             }
-        }
-        @media (max-width: variables.$screen-max-size-xs) {
-            .ql-italic,
-            .ql-underline {
-                display: none;
+    
+            .ql-tooltip.ql-flip {
+                left: 0 !important;
             }
-        }
-        @media (max-width: variables.$screen-max-size-2xs) {
-            .ql-italic,
-            .ql-image,
-            .ql-underline,
-            .ql-list,
-            // .ql-link,
-            .ql-header {
-                display: none;
-            }
-        }
-    }
-
-    .ql-container {
-        height: 16rem;
-        border: unset;
-        @include mixins.pep-border(border-top, solid, true);
-
-        .ql-editor {
-            $side-padding: 0; // $spacing-sm;
-            padding: variables.$spacing-sm $side-padding;
-
-            &.ql-blank::before {
-                right: $side-padding;
-                left: $side-padding;
-            }
-        }
-
-        .ql-tooltip.ql-flip {
-            left: 0 !important;
         }
     }
 }
