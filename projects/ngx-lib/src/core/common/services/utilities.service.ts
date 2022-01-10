@@ -54,6 +54,10 @@ export class PepUtilitiesService {
                     const day = Number(dateText[2]);
                     retVal = new Date(year, month, day, 0, retVal.getTimezoneOffset() * -1);
                 }
+            } else {
+                retVal = new Date(
+                    retVal.getFullYear(), retVal.getMonth(), retVal.getDate(), retVal.getHours(),
+                    retVal.getMinutes() + retVal.getTimezoneOffset() * -1, retVal.getSeconds());
             }
         }
         if (retVal && isNaN(retVal.getTime())) {
@@ -80,33 +84,6 @@ export class PepUtilitiesService {
         } else {
             return '';
         }
-
-        // if (date) {
-        //     const dateText = [];
-        //     dateText.push(
-        //         date.getFullYear(),
-        //         '-',
-        //         date.getMonth() + 1,
-        //         '-',
-        //         date.getDate()
-        //     );
-
-        //     if (showTime) {
-        //         dateText.push(
-        //             'T',
-        //             (date.getHours() < 10 ? '0' : '') + date.getHours(),
-        //             ':',
-        //             (date.getMinutes() < 10 ? '0' : '') + date.getMinutes(),
-        //             ':',
-        //             (date.getSeconds() < 10 ? '0' : '') + date.getSeconds(),
-        //             'Z'
-        //         );
-        //     }
-
-        //     return dateText.join('');
-        // } else {
-        //     return '';
-        // }
     }
 
     isValueHtml(value: string): boolean {

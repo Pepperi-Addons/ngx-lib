@@ -239,7 +239,8 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             this._value = '';
             this.dateModel = null;
         } else {
-            this.dateModel = utc(this.utilitiesService.parseDate(this.value, this.showTime));
+            const parseDate = this.utilitiesService.parseDate(this.value, this.showTime);
+            this.dateModel = utc(parseDate);
         }
 
         this.setFormattedValueFromModel();
