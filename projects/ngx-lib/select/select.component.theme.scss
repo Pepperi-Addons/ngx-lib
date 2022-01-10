@@ -1,0 +1,98 @@
+@use '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/functions';
+
+// -----------------------------------------------------
+//  Override material style
+// -----------------------------------------------------
+mat-select {
+    outline: none;
+}
+
+::ng-deep {
+    .mat-select-disabled {
+        .mat-select-value {
+            color: functions.get-pep-color(color-text, color-dimmed);
+        }
+    }
+
+    .mat-select-arrow-wrapper {
+        transform: unset !important;
+        vertical-align: middle; // unset;
+
+        .mat-select-arrow {
+            border: 0;
+
+            &:after {
+                color: functions.get-pep-color(color-system-primary, color-base);
+            }
+        }
+    }
+
+    .mat-select-panel {
+        .mat-option {
+            background: functions.get-pep-color(color-system-primary-invert, color-base);
+
+            //&.mat-active,
+            &:hover {
+                @include mixins.state-weak-hover();
+            }
+            &:active {
+                @include mixins.state-weak-active(color-weak, false);
+                background: functions.get-pep-color(color-weak, color-tran-50) !important;
+            }
+            &:disabled {
+                @include mixins.state-weak-disable();
+            }
+        }
+        .mat-option.mat-selected {
+            @include mixins.state-weak-default();
+            // box-shadow: functions.get-pep-shadow(shadow-xs, soft);
+
+            //&.mat-active,
+            &:hover {
+                @include mixins.state-weak-hover();
+            }
+            &:active {
+                @include mixins.state-weak-active(color-weak, false);
+                background: functions.get-pep-color(color-weak, color-tran-50) !important;
+            }
+            &:disabled {
+                @include mixins.state-weak-disable();
+            }
+        }
+
+        .mat-pseudo-checkbox {
+            @include mixins.state-regular-default(true);
+
+            &:hover {
+                @include mixins.state-regular-hover(true);
+            }
+            &:active {
+                @include mixins.state-regular-active(true);
+            }
+            &:disabled {
+                @include mixins.state-regular-disable(true);
+            }
+        }
+
+        .mat-pseudo-checkbox.mat-pseudo-checkbox-checked,
+        .mat-pseudo-checkbox.mat-pseudo-checkbox-indeterminate {
+            @include mixins.state-regular-default(true);
+            @include mixins.inline(functions.get-pep-color(color-system-primary, color-flat-r-10), 1px, solid, true);
+
+            &:hover {
+                @include mixins.state-regular-hover(true);
+            }
+            &:active {
+                @include mixins.state-regular-active(true);
+            }
+            &:disabled {
+                @include mixins.state-regular-disable(true);
+            }
+        }
+
+        .mat-pseudo-checkbox::after {
+            color: functions.get-pep-color(color-text, color-main) !important;
+        }
+    }
+}

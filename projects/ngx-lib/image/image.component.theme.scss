@@ -1,5 +1,8 @@
 @use '../src/core/style/abstracts/mixins';
 @use '../src/core/style/abstracts/functions';
+@use '../src/core/style/components/file';
+
+@include file.pep-file-theme();
 
 .indicators-container {
     .circle {

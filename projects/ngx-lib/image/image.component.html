@@ -35,28 +35,10 @@
 
         <ng-container *ngIf="layoutType === 'card'">
             <ng-container *ngTemplateOutlet="readonlyTemplate"></ng-container>
-            <!-- <div class="img-wrapper"
-                [ngClass]="{
-                    'left-alignment': xAlignment == 'left',
-                    'right-alignment': xAlignment == 'right',
-                    'center-alignment': xAlignment == 'center'
-                }">
-                <img [id]="key" [style.max-height]="fieldHeight" class="pep-report-file" [alt]="label" [src]="src"
-                    (click)="itemImageClick($event)" (error)="errorHandler($event)" />
-            </div> -->
         </ng-container>
 
         <ng-container *ngIf="layoutType === 'table'">
             <ng-container *ngTemplateOutlet="readonlyTemplate"></ng-container>
-            <!-- <div class="img-wrapper" [ngClass]="{
-                    'left-alignment': xAlignment == 'left',
-                    'right-alignment': xAlignment == 'right',
-                    'center-alignment': xAlignment == 'center'
-                }">
-                <img [id]="key" [style.max-height]="fieldHeight" class="pep-report-file pep-report-img"
-                    [ngClass]="['text-align-' + xAlignment]" [alt]="label" [src]="src" (click)="itemImageClick($event)"
-                    (error)="errorHandler($event)" (load)="onImageLoad($event)" />
-            </div> -->
         </ng-container>
     </ng-container>
 

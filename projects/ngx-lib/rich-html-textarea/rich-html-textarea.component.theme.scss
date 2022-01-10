@@ -1,8 +1,10 @@
 @use '../src/core/style/abstracts/variables';
 @use '../src/core/style/abstracts/mixins';
 @use '../src/core/style/abstracts/functions';
+@use '../src/core/style/components/textarea';
 
-// @mixin pep-rich-html-textarea-component-theme() {
+@include textarea.pep-textarea-theme();
+
 .mat-form-field {
     // Disabled - remove the default disabled
     &.mat-form-field-disabled .mat-form-field-flex {
@@ -240,4 +242,3 @@ quill-editor {
         }
     }
 }
-// }

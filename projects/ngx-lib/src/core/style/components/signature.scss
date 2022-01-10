@@ -1,14 +1,14 @@
-@use '../abstracts/functions';
+// @use '../abstracts/functions';
 
-// -----------------------------------------------------
-//  Signature
-// -----------------------------------------------------
-@mixin pep-signature-theme() {
-    .pepperi-file-container, .pep-file-container {
-        .modal-dialog {
-            .modal-content {
-                color: functions.get-pep-color(color-text, color-dimmed);
-            }
-        }
-    }
-}
+// // -----------------------------------------------------
+// //  Signature
+// // -----------------------------------------------------
+// @mixin pep-signature-theme() {
+//     .pepperi-file-container, .pep-file-container {
+//         .modal-dialog {
+//             .modal-content {
+//                 color: functions.get-pep-color(color-text, color-dimmed);
+//             }
+//         }
+//     }
+// }

@@ -1,3 +1,4 @@
+@use "sass:math";
 @use '../src/core/style/abstracts/variables';
 @use '../src/core/style/abstracts/functions';
 
@@ -29,7 +30,7 @@
             $wrapperHeight: 0.375rem;
             height: $wrapperHeight;
             position: relative;
-            top: calc(#{$wrapperHeight} / 2 * -1);
+            top: calc(math.div(#{$wrapperHeight}, 2) * -1);
             left: unset;
             right: unset;
             border-radius: variables.$border-radius-md;
@@ -51,8 +52,8 @@
                     $sliderSize: 18px;
                     width: $sliderSize;
                     height: $sliderSize;
-                    right: calc($sliderSize / 2 * -1);
-                    bottom: calc($sliderSize / 2 * -1);
+                    right: calc(math.div($sliderSize, 2) * -1);
+                    bottom: calc(math.div($sliderSize, 2) * -1);
                     transform: scale(.7) !important;
                     border-color: functions.get-pep-color(color-system-primary-invert, color-base); //functions.get-pep-color(color-system-primary, color-tran-50);
                     border-width: 5px;

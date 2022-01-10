@@ -225,16 +225,9 @@
 // ------------------------
 $sorting-width: 1rem;
 
-// .below-sticky-top-bar {
-//     .table-header {
-//         top: calc(#{variables.$top-bar-height});
-//     }
-// }
-
 .table-header {
     position: sticky;
     z-index: variables.$z-index-medium - 5;
-    // @include mixins.box-sizing(border-box);
     box-sizing: border-box;
     width: inherit;
     height: calc(#{variables.$table-field-height} + #{variables.$table-spacing} + #{variables.$table-half-spacing});
@@ -270,17 +263,15 @@ $sorting-width: 1rem;
 
             .header-label {
                 width: 100%;
-                // @include mixins.box-sizing(border-box);
                 box-sizing: border-box;
                 user-select: none;
-                // @include mixins.calc(max-width, '100% - 0');
                 max-width: 100%;
                 @include mixins.ellipsis();
                 font-weight: 600 !important;
                 line-height: 2rem !important;
                 margin-bottom: 0;
                 // cursor: text;
-                display: flex;
+                display: block; // flex; with flex the ellipsis is not working.
                 align-items: center;
     
                 .required,
@@ -337,8 +328,7 @@ $sorting-width: 1rem;
                     width: 0.125rem;
                     height: 1rem;
                     line-height: variables.$table-field-height; // 2rem;
-                    // padding: 0 0.625rem 0 0.375rem;
-
+                    
                     padding-inline-end: 0.425rem;
                     border:none;
                     border-inline-end-width: 1px;
@@ -375,20 +365,16 @@ $sorting-width: 1rem;
             }
 
             &.is-first {
-                // border-radius: variables.$table-border-radius 0 0 variables.$table-border-radius;
                 border-start-start-radius: variables.$table-border-radius;
                 border-start-end-radius: variables.$table-border-radius;
             }
 
             &.is-last {
-                // border-radius: 0 variables.$table-border-radius variables.$table-border-radius 0;
                 border-start-end-radius: variables.$table-border-radius;
                 border-end-end-radius: variables.$table-border-radius;
                 
                 &:hover {
                     .resize-box {
-                        // width: 1rem;
-                        // border-radius: 0 variables.$table-border-radius variables.$table-border-radius 0;
                         border-start-end-radius: variables.$table-border-radius;
                         border-end-end-radius: variables.$table-border-radius;
                     }
@@ -753,15 +739,6 @@ $sorting-width: 1rem;
     }
 }
 
-// [dir='rtl'] {
-//     .line-view,
-//     .card-view {
-        // .card-selection {
-        //     margin: variables.$spacing-xs variables.$spacing-xs 0 calc(#{variables.$content-margin} * -1);
-        // }
-//     }
-// }
-
 //  Custom field (added for stand alone field).
 // ---------------------------------------------
 .pepperi-field, .pep-field {
@@ -926,11 +903,6 @@ $sorting-width: 1rem;
             background: functions.get-pep-color(color-system-primary-invert, color-base);
         }
     }
-    // .table-header {
-    //     .table-header-fieldset {
-    //         box-shadow: functions.get-pep-shadow(shadow-sm, soft);
-    //     }
-    // }
 
     .table-body {
         @include mixins.state-list-body-default();

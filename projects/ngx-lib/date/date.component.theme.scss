@@ -1,0 +1,163 @@
+@use '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/functions';
+
+// -----------------------------------------------------
+//  Override material style
+// -----------------------------------------------------
+
+::ng-deep {
+    .mat-datetimepicker-dialog {
+        max-width: 90vw !important;
+    }
+
+    .mat-datetimepicker-content {
+        border-radius: inherit;
+
+        .mat-datetimepicker-calendar-header {
+            @include mixins.state-strong-default();
+        }
+
+        .mat-datetimepicker-calendar-content {
+            .mat-month-content {
+                .mat-datetimepicker-calendar-controls {
+                    color: functions.get-pep-color(color-text, color-main);
+
+                    .mat-datetimepicker-calendar-previous-button {
+                        @include mixins.select-arrow();
+                        transform: rotate(90deg);
+
+                        svg {
+                            @include mixins.state-icon();
+                        }
+                    }
+
+                    // .mat-datetimepicker-calendar-period-button {
+                    // }
+
+                    .mat-datetimepicker-calendar-next-button {
+                        @include mixins.select-arrow();
+                        transform: rotate(-90deg);
+
+                        svg {
+                            @include mixins.state-icon();
+                        }
+                    }
+                }
+            }
+
+            mat-datetimepicker-year-view,
+            mat-datetimepicker-month-view {
+                .mat-datetimepicker-calendar-table {
+                    // Days string (sun, mon...)
+                    .mat-datetimepicker-calendar-table-header {
+                        color: functions.get-pep-color(color-text, color-dimmed);
+                    }
+
+                    // Days numbers
+                    .mat-datetimepicker-calendar-body {
+                        color: functions.get-pep-color(color-text, color-main);
+
+                        .mat-datetimepicker-calendar-body-label {
+                            color: functions.get-pep-color(color-text, color-dimmed);
+                        }
+
+                        .mat-datetimepicker-calendar-body-cell {
+                            // @include mixins.state-weak-default();
+
+                            &:hover {
+                                .mat-datetimepicker-calendar-body-cell-content {
+                                    @include mixins.state-weak-hover();
+                                }
+                            }
+
+                            &:active {
+                                .mat-datetimepicker-calendar-body-cell-content {
+                                    @include mixins.state-weak-active(color-weak, true, true);
+                                }
+                            }
+
+                            // Regular cell
+                            .mat-datetimepicker-calendar-body-cell-content {
+                                
+                                // Today cell
+                                &.mat-datetimepicker-calendar-body-today {
+                                    @include mixins.state-regular-default(true);
+
+                                    &:hover {
+                                        @include mixins.state-regular-hover(true);
+                                    }
+
+                                    &:active {
+                                        @include mixins.state-regular-focus(true);
+                                    }
+                                }
+
+                                // Active cell
+                                &.mat-datetimepicker-calendar-body-selected {
+                                    // color:white ;
+                                    @include mixins.state-strong-default();
+
+                                    &:hover {
+                                        @include mixins.state-strong-hover();
+                                    }
+
+                                    &:active {
+                                        @include mixins.state-strong-focus();
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            mat-datetimepicker-clock {
+                .mat-datetimepicker-clock {
+                    // background-color: yellowgreen;
+                    @include mixins.state-weak-default();
+
+                    .mat-datetimepicker-clock-center {
+                        // background-color: yellow;
+                        @include mixins.state-strong-default();
+                    }
+
+                    .mat-datetimepicker-clock-hand {
+                        // color: blue;
+                        // background-color: yellow;
+                        @include mixins.state-strong-default();
+
+                        &::before {
+                            // background-color: yellow;
+                            @include mixins.state-strong-default();
+                        }
+                    }
+
+                    .mat-datetimepicker-clock-hours,
+                    .mat-datetimepicker-clock-minutes {
+                        .mat-datetimepicker-clock-cell {
+                            color: functions.get-pep-color(color-text, color-main);
+
+                            &:hover {
+                                @include mixins.state-weak-hover();
+                            }
+
+                            &.mat-datetimepicker-clock-cell-selected {
+                                @include mixins.state-strong-default();
+
+                                &:hover {
+                                    @include mixins.state-strong-hover();
+                                }
+
+                                &:active {
+                                    @include mixins.state-strong-focus();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

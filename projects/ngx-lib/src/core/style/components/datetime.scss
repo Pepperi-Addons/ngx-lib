@@ -1,182 +1,182 @@
-@use '../abstracts/variables';
-@use '../abstracts/mixins';
-@use '../abstracts/functions';
+// @use '../abstracts/variables';
+// @use '../abstracts/mixins';
+// @use '../abstracts/functions';
 
-// -----------------------------------------------------
-//  Date time
-// -----------------------------------------------------
+// // -----------------------------------------------------
+// //  Date time
+// // -----------------------------------------------------
 
-// -----------------------------------------------------
-//  Override material style
-// -----------------------------------------------------
-.mat-form-field {
-    .mat-form-field-wrapper {
-        .mat-form-field-prefix,
-        .mat-form-field-suffix {
-            .mat-datetimepicker-toggle {
-                &.mat-button {
-                    padding: 0;
-                }
-            }
-        }
-    }
-}
+// // -----------------------------------------------------
+// //  Override material style
+// // -----------------------------------------------------
+// .mat-form-field {
+//     .mat-form-field-wrapper {
+//         .mat-form-field-prefix,
+//         .mat-form-field-suffix {
+//             .mat-datetimepicker-toggle {
+//                 &.mat-button {
+//                     padding: 0;
+//                 }
+//             }
+//         }
+//     }
+// }
 
-@mixin pep-datetime-theme() {
-    // -----------------------------------------------------
-    //  Override material style
-    // -----------------------------------------------------
-    .mat-datetimepicker-dialog {
-        max-width: 90vw !important;
-    }
+// @mixin pep-datetime-theme() {
+//     // -----------------------------------------------------
+//     //  Override material style
+//     // -----------------------------------------------------
+//     .mat-datetimepicker-dialog {
+//         max-width: 90vw !important;
+//     }
 
-    .mat-datetimepicker-content {
-        border-radius: inherit;
+//     .mat-datetimepicker-content {
+//         border-radius: inherit;
 
-        .mat-datetimepicker-calendar-header {
-            @include mixins.state-strong-default();
-        }
+//         .mat-datetimepicker-calendar-header {
+//             @include mixins.state-strong-default();
+//         }
 
-        .mat-datetimepicker-calendar-content {
-            .mat-month-content {
-                .mat-datetimepicker-calendar-controls {
-                    color: functions.get-pep-color(color-text, color-main);
+//         .mat-datetimepicker-calendar-content {
+//             .mat-month-content {
+//                 .mat-datetimepicker-calendar-controls {
+//                     color: functions.get-pep-color(color-text, color-main);
 
-                    .mat-datetimepicker-calendar-previous-button {
-                        @include mixins.select-arrow();
-                        transform: rotate(90deg);
+//                     .mat-datetimepicker-calendar-previous-button {
+//                         @include mixins.select-arrow();
+//                         transform: rotate(90deg);
 
-                        svg {
-                            @include mixins.state-icon();
-                        }
-                    }
+//                         svg {
+//                             @include mixins.state-icon();
+//                         }
+//                     }
 
-                    // .mat-datetimepicker-calendar-period-button {
-                    // }
+//                     // .mat-datetimepicker-calendar-period-button {
+//                     // }
 
-                    .mat-datetimepicker-calendar-next-button {
-                        @include mixins.select-arrow();
-                        transform: rotate(-90deg);
+//                     .mat-datetimepicker-calendar-next-button {
+//                         @include mixins.select-arrow();
+//                         transform: rotate(-90deg);
 
-                        svg {
-                            @include mixins.state-icon();
-                        }
-                    }
-                }
-            }
+//                         svg {
+//                             @include mixins.state-icon();
+//                         }
+//                     }
+//                 }
+//             }
 
-            mat-datetimepicker-year-view,
-            mat-datetimepicker-month-view {
-                .mat-datetimepicker-calendar-table {
-                    // Days string (sun, mon...)
-                    .mat-datetimepicker-calendar-table-header {
-                        color: functions.get-pep-color(color-text, color-dimmed);
-                    }
+//             mat-datetimepicker-year-view,
+//             mat-datetimepicker-month-view {
+//                 .mat-datetimepicker-calendar-table {
+//                     // Days string (sun, mon...)
+//                     .mat-datetimepicker-calendar-table-header {
+//                         color: functions.get-pep-color(color-text, color-dimmed);
+//                     }
 
-                    // Days numbers
-                    .mat-datetimepicker-calendar-body {
-                        color: functions.get-pep-color(color-text, color-main);
+//                     // Days numbers
+//                     .mat-datetimepicker-calendar-body {
+//                         color: functions.get-pep-color(color-text, color-main);
 
-                        .mat-datetimepicker-calendar-body-label {
-                            color: functions.get-pep-color(color-text, color-dimmed);
-                        }
+//                         .mat-datetimepicker-calendar-body-label {
+//                             color: functions.get-pep-color(color-text, color-dimmed);
+//                         }
 
-                        .mat-datetimepicker-calendar-body-cell {
-                            // @include mixins.state-weak-default();
+//                         .mat-datetimepicker-calendar-body-cell {
+//                             // @include mixins.state-weak-default();
 
-                            &:hover {
-                                .mat-datetimepicker-calendar-body-cell-content {
-                                    @include mixins.state-weak-hover();
-                                }
-                            }
+//                             &:hover {
+//                                 .mat-datetimepicker-calendar-body-cell-content {
+//                                     @include mixins.state-weak-hover();
+//                                 }
+//                             }
 
-                            &:active {
-                                .mat-datetimepicker-calendar-body-cell-content {
-                                    @include mixins.state-weak-active(color-weak, true, true);
-                                }
-                            }
+//                             &:active {
+//                                 .mat-datetimepicker-calendar-body-cell-content {
+//                                     @include mixins.state-weak-active(color-weak, true, true);
+//                                 }
+//                             }
 
-                            // Regular cell
-                            .mat-datetimepicker-calendar-body-cell-content {
+//                             // Regular cell
+//                             .mat-datetimepicker-calendar-body-cell-content {
                                 
-                                // Today cell
-                                &.mat-datetimepicker-calendar-body-today {
-                                    @include mixins.state-regular-default(true);
+//                                 // Today cell
+//                                 &.mat-datetimepicker-calendar-body-today {
+//                                     @include mixins.state-regular-default(true);
 
-                                    &:hover {
-                                        @include mixins.state-regular-hover(true);
-                                    }
+//                                     &:hover {
+//                                         @include mixins.state-regular-hover(true);
+//                                     }
 
-                                    &:active {
-                                        @include mixins.state-regular-focus(true);
-                                    }
-                                }
+//                                     &:active {
+//                                         @include mixins.state-regular-focus(true);
+//                                     }
+//                                 }
 
-                                // Active cell
-                                &.mat-datetimepicker-calendar-body-selected {
-                                    // color:white ;
-                                    @include mixins.state-strong-default();
+//                                 // Active cell
+//                                 &.mat-datetimepicker-calendar-body-selected {
+//                                     // color:white ;
+//                                     @include mixins.state-strong-default();
 
-                                    &:hover {
-                                        @include mixins.state-strong-hover();
-                                    }
+//                                     &:hover {
+//                                         @include mixins.state-strong-hover();
+//                                     }
 
-                                    &:active {
-                                        @include mixins.state-strong-focus();
-                                    }
-                                }
-                            }
+//                                     &:active {
+//                                         @include mixins.state-strong-focus();
+//                                     }
+//                                 }
+//                             }
 
-                        }
-                    }
-                }
-            }
+//                         }
+//                     }
+//                 }
+//             }
 
-            mat-datetimepicker-clock {
-                .mat-datetimepicker-clock {
-                    // background-color: yellowgreen;
-                    @include mixins.state-weak-default();
+//             mat-datetimepicker-clock {
+//                 .mat-datetimepicker-clock {
+//                     // background-color: yellowgreen;
+//                     @include mixins.state-weak-default();
 
-                    .mat-datetimepicker-clock-center {
-                        // background-color: yellow;
-                        @include mixins.state-strong-default();
-                    }
+//                     .mat-datetimepicker-clock-center {
+//                         // background-color: yellow;
+//                         @include mixins.state-strong-default();
+//                     }
 
-                    .mat-datetimepicker-clock-hand {
-                        // color: blue;
-                        // background-color: yellow;
-                        @include mixins.state-strong-default();
+//                     .mat-datetimepicker-clock-hand {
+//                         // color: blue;
+//                         // background-color: yellow;
+//                         @include mixins.state-strong-default();
 
-                        &::before {
-                            // background-color: yellow;
-                            @include mixins.state-strong-default();
-                        }
-                    }
+//                         &::before {
+//                             // background-color: yellow;
+//                             @include mixins.state-strong-default();
+//                         }
+//                     }
 
-                    .mat-datetimepicker-clock-hours,
-                    .mat-datetimepicker-clock-minutes {
-                        .mat-datetimepicker-clock-cell {
-                            color: functions.get-pep-color(color-text, color-main);
+//                     .mat-datetimepicker-clock-hours,
+//                     .mat-datetimepicker-clock-minutes {
+//                         .mat-datetimepicker-clock-cell {
+//                             color: functions.get-pep-color(color-text, color-main);
 
-                            &:hover {
-                                @include mixins.state-weak-hover();
-                            }
+//                             &:hover {
+//                                 @include mixins.state-weak-hover();
+//                             }
 
-                            &.mat-datetimepicker-clock-cell-selected {
-                                @include mixins.state-strong-default();
+//                             &.mat-datetimepicker-clock-cell-selected {
+//                                 @include mixins.state-strong-default();
 
-                                &:hover {
-                                    @include mixins.state-strong-hover();
-                                }
+//                                 &:hover {
+//                                     @include mixins.state-strong-hover();
+//                                 }
 
-                                &:active {
-                                    @include mixins.state-strong-focus();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+//                                 &:active {
+//                                     @include mixins.state-strong-focus();
+//                                 }
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }

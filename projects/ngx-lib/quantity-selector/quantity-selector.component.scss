@@ -7,107 +7,113 @@
     // width: inherit;
 }
 
-.pepperi-quantity-selector-container, .pep-quantity-selector-container {
-    display: flex;
-    flex-flow: wrap;
-    align-items: center;
-    min-width: 2rem;
-    width: 100%;
-    height: inherit;
-
-    @include mixins.hide-spin-buttons();
-
-    .mat-input-element {
-        padding: 0 0.25rem;
-        text-align: center;
-        font-weight: variables.$font-weight-bold;
+::ng-deep {
+    .pepperi-quantity-selector-container, .pep-quantity-selector-container {
+        display: flex;
+        flex-flow: wrap;
+        align-items: center;
+        min-width: 2rem;
         width: 100%;
-    }
+        height: inherit;
 
-    .mat-form-field {
-        .mat-form-field-wrapper {
-            .mat-form-field-subscript-wrapper {
-                height: unset;
-            }
-        }
-    }
+        @include mixins.hide-spin-buttons();
 
-    .pepperi-button, .pep-button {
-        width: 100%;
-
-        &.qs-action {
-            min-width: 2rem;
-            line-height: 2rem;
-            width: 2rem !important;
-            height: 2rem !important;
-
-            .mat-icon {
-                height: inherit;
-                width: inherit;
-            }
-        }
-    }
-
-    .qs-error {
-        display: block;
-    }
-
-    &.hide-qs-actions {
-        .pepperi-button, .pep-button {
-            &.qs-action {
-                display: none;
-            }
-        }
-    }
-
-    &.matrix-qs {
-        // margin: 0 0.125rem;
-
-        .additional-value {
-            height: 1.25rem;
-            top: calc(#{variables.$spacing-xs} * -1);
-            transform: unset !important; // Override material default.
-            display: flex;
-            align-self: flex-start;
-            justify-content: flex-end;
-
-            &.prefix {
-                left: calc(#{variables.$spacing-sm} * -1) !important;
-            }
-
-            &.suffix {
-                right: calc(#{variables.$spacing-sm} * -1) !important;
-            }
-
-            .mat-badge-content {
-                @include mixins.mat-badge-content();
-            }
-        }
-
-        .disable {
-            min-width: 0.5rem;
+        .mat-input-element {
             padding: 0 0.25rem;
-        }
-    }
-
-    &.pepperi-table-quantity-selector, &.pep-table-quantity-selector {
-        .pepperi-button:not(.qs-action), .pep-button:not(.qs-action) {
-            // margin-top: 0.25rem;
-            height: 2rem;
-            line-height: 2rem;
+            text-align: center;
+            font-weight: variables.$font-weight-bold;
+            width: 100%;
         }
 
+        .mat-form-field {
+            .mat-form-field-wrapper {
+                .mat-form-field-subscript-wrapper {
+                    height: unset;
+                }
+
+                .mat-form-field-flex {
+                    padding: 0 0.25rem !important;
+                }
+            }
+        }
+        
         .pepperi-button, .pep-button {
+            width: 100%;
+
             &.qs-action {
-                min-width: 1.5rem;
-                line-height: 1.5rem;
-                width: 1.5rem !important;
-                height: 1.5rem !important;
+                min-width: 2rem;
+                line-height: 2rem;
+                width: 2rem !important;
+                height: 2rem !important;
+
+                .mat-icon {
+                    height: inherit;
+                    width: inherit;
+                }
             }
         }
 
-        // .mat-form-field .mat-form-field-wrapper {
-        //     margin-top: 0 !important;
-        // }
+        .qs-error {
+            display: block;
+        }
+
+        &.hide-qs-actions {
+            .pepperi-button, .pep-button {
+                &.qs-action {
+                    display: none;
+                }
+            }
+        }
+
+        &.matrix-qs {
+            // margin: 0 0.125rem;
+
+            .additional-value {
+                height: 1.25rem;
+                top: calc(#{variables.$spacing-xs} * -1);
+                transform: unset !important; // Override material default.
+                display: flex;
+                align-self: flex-start;
+                justify-content: flex-end;
+
+                &.prefix {
+                    left: calc(#{variables.$spacing-sm} * -1) !important;
+                }
+
+                &.suffix {
+                    right: calc(#{variables.$spacing-sm} * -1) !important;
+                }
+
+                .mat-badge-content {
+                    @include mixins.mat-badge-content();
+                }
+            }
+
+            .disable {
+                min-width: 0.5rem;
+                padding: 0 0.25rem;
+            }
+        }
+
+        &.pepperi-table-quantity-selector, &.pep-table-quantity-selector {
+            .pepperi-button:not(.qs-action), .pep-button:not(.qs-action) {
+                // margin-top: 0.25rem;
+                height: 2rem;
+                line-height: 2rem;
+            }
+
+            .pepperi-button, .pep-button {
+                &.qs-action {
+                    min-width: 1.5rem;
+                    line-height: 1.5rem;
+                    width: 1.5rem !important;
+                    height: 1.5rem !important;
+                }
+            }
+
+            .mat-form-field .mat-form-field-wrapper {
+                margin-top: 0 !important;
+            }
+        }
     }
 }

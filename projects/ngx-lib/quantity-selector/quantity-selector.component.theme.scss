@@ -34,44 +34,44 @@
     }
 }
 
-// @mixin pep-quantity-selector-component-theme() {
-.pepperi-quantity-selector-container, .pep-quantity-selector-container {
-    &:not(.strong) {
-        .mat-form-field {
-            .mat-input-element {
-                color: functions.get-pep-color(color-text, color-main);
-            }
-        }
-
-        &.zero-quantity {
+::ng-deep {
+    .pepperi-quantity-selector-container, .pep-quantity-selector-container {
+        &:not(.strong) {
             .mat-form-field {
                 .mat-input-element {
-                    color: functions.get-pep-color(color-text, color-dimmed);
+                    color: functions.get-pep-color(color-text, color-main);
                 }
             }
 
-            button {
-                color: functions.get-pep-color(color-text, color-dimmed);
+            &.zero-quantity {
+                .mat-form-field {
+                    .mat-input-element {
+                        color: functions.get-pep-color(color-text, color-dimmed);
+                    }
+                }
+
+                button {
+                    color: functions.get-pep-color(color-text, color-dimmed);
+                }
+            }
+        }
+
+        &.weak {
+            @include pep-qs-states(weak);
+        }
+
+        &.regular {
+            @include pep-qs-states(regular);
+        }
+
+        &.strong {
+            @include pep-qs-states(strong);
+        }
+
+        &.matrix-qs {
+            .additional-value {
+                @include mixins.pep-badge();
             }
         }
     }
-
-    &.weak {
-        @include pep-qs-states(weak);
-    }
-
-    &.regular {
-        @include pep-qs-states(regular);
-    }
-
-    &.strong {
-        @include pep-qs-states(strong);
-    }
-
-    &.matrix-qs {
-        .additional-value {
-            @include mixins.pep-badge();
-        }
-    }
 }
-// }

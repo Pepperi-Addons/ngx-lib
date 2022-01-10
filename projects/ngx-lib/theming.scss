@@ -23,14 +23,14 @@
 @use './src/core/style/components/button';
 @use './src/core/style/components/checkbox';
 @use './src/core/style/components/radio-button' as radio;
-@use './src/core/style/components/datetime';
-@use './src/core/style/components/file';
+// @use './src/core/style/components/datetime';
+// @use './src/core/style/components/file';
 @use './src/core/style/components/input';
-@use './src/core/style/components/select';
-@use './src/core/style/components/signature';
-@use './src/core/style/components/splitter';
-@use './src/core/style/components/textarea';
-@use './src/core/style/components/quantity-selector' as qs;
+// @use './src/core/style/components/select';
+// @use './src/core/style/components/signature';
+// @use './src/core/style/components/splitter';
+// @use './src/core/style/components/textarea';
+// @use './src/core/style/components/quantity-selector' as qs;
 
 // Use this import in a real project instead
 // @use '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
@@ -77,16 +77,17 @@ $material-theme-for-pep: default-theme.$material-default-theme;
         // Add global components themes (from ./src/core/style).
         @include button.pep-button-theme();
         @include checkbox.pep-checkbox-theme();
-        @include datetime.pep-datetime-theme();
-        @include file.pep-file-theme();
         @include general.pep-general-theme();
         @include input.pep-input-theme();
-        @include qs.pep-quantity-selector-theme();
         @include radio.pep-radio-button-theme();
-        @include select.pep-select-theme();
-        @include signature.pep-signature-theme();
-        @include splitter.pep-splitter-theme();
-        @include textarea.pep-textarea-theme();
+        
+        // @include datetime.pep-datetime-theme();
+        // @include file.pep-file-theme();
+        // @include qs.pep-quantity-selector-theme();
+        // @include select.pep-select-theme();
+        // @include signature.pep-signature-theme();
+        // @include splitter.pep-splitter-theme();
+        // @include textarea.pep-textarea-theme();
     }
 }
 

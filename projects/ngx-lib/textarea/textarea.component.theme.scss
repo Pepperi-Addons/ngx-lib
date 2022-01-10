@@ -1,2 +1,3 @@
-@mixin pep-textarea-component-theme() {
-}
+@use '../src/core/style/components/textarea';
+
+@include textarea.pep-textarea-theme();

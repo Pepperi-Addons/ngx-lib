@@ -8,9 +8,7 @@
 .pepperi-input, .pep-input {
     border-radius: variables.$border-radius-md;
     min-width: 1.5rem;
-    // width: 100%;
     width: inherit;
-    // padding: 0.5rem 0.75rem;
     padding: 0 0.75rem;
     height: variables.$form-field-height; // 2.5rem;
 
@@ -33,23 +31,19 @@
 .pepperi-card-input, .pep-card-input {
     &:not(.multi-rows) {
         @include mixins.ellipsis();
+        align-items: center;
     }
 
     padding: 0.125rem 0.25rem;
 }
 
 .pepperi-report-input, .pep-report-input {
-    // padding: 0.7rem 0.75rem;
     padding: 0 0.25rem;
     height: variables.$table-row-fieldset-height; // 2.5rem;
     line-height: variables.$table-row-fieldset-height !important; // 2.5rem !important;
     vertical-align: middle;
     display: block;
     @include mixins.ellipsis();
-
-    &.readonly {
-        // padding: 0.7rem 0.5rem;
-    }
 }
 
 @mixin pep-input-theme() {

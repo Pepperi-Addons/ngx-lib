@@ -67,25 +67,6 @@
 
 @mixin pep-radio-button-theme() {
     .pepperi-radio-button, .pep-radio-button {
-        // @include mixins.state-weak-default();
-        // &.no-default-background {
-        //     background: unset;
-        // }
-        
-        // &:hover:not(.disable) {
-        //     @include mixins.state-weak-hover();
-        // }
-        // &:focus:not(.disable) {
-        //     @include mixins.state-weak-focus();
-        // }
-        // // &:active {
-        // //     @include mixins.state-weak-active();
-        // // }
-        // &.disable,
-        // &:disabled {
-        //     @include mixins.state-weak-disable();
-        // }
-        
         &.mat-radio-button {
             .mat-radio-inner-circle,
             .mat-radio-outer-circle {

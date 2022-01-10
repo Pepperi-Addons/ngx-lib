@@ -1,3 +1,7 @@
+@use '../src/core/style/components/file';
+
+@include file.pep-file-theme();
+
 // -----------------------------------------------------
 //  Override material style
 // -----------------------------------------------------

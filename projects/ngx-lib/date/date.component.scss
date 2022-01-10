@@ -6,3 +6,21 @@
 :host > * { 
     align-self: center; // instead of  align-items: center; in the :host
 }
+
+// -----------------------------------------------------
+//  Override material style
+// -----------------------------------------------------
+::ng-deep {
+    .mat-form-field {
+        .mat-form-field-wrapper {
+            .mat-form-field-prefix,
+            .mat-form-field-suffix {
+                .mat-datetimepicker-toggle {
+                    &.mat-button {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+}
