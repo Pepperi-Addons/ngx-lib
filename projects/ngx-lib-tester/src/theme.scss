@@ -3,8 +3,6 @@
 @use 'ngx-lib/theming';
 @include theming.pepperi-theme();
 
-@import './app/app.component.theme.scss';
-
 body {
-    @include addon-theme();
+    
 }
