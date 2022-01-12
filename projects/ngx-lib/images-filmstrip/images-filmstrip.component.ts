@@ -42,10 +42,10 @@ import {
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
     PepImagesField,
+    PepUtilitiesService
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
-import { pepIconArrowRightAlt } from '@pepperi-addons/ngx-lib/icon';
-import { pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
+import { pepIconArrowRightAlt, pepIconArrowLeftAlt, PepIconRegistry, pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
 import 'hammerjs';
 
@@ -74,6 +74,7 @@ import {
     ImageViewerConfig,
     createButtonConfig,
 } from '@hallysonh/ngx-imageviewer';
+import { DOCUMENT } from '@angular/common';
 
 export function createViewerConfig(
     translate: TranslateService
@@ -212,10 +213,13 @@ export class PepImagesFilmstripComponent
         private dialogService: PepDialogService,
         private layoutService: PepLayoutService,
         private fileService: PepFileService,
+        private iconRegistry: PepIconRegistry,
+        private utilitiesService: PepUtilitiesService,
         private gallery: Gallery,
         private renderer: Renderer2,
         private element: ElementRef,
         private cd: ChangeDetectorRef,
+        @Optional() @Inject(DOCUMENT) private document: any,
         @Optional()
         private dialogRef: MatDialogRef<PepImagesFilmstripComponent>,
         @Optional()
@@ -234,8 +238,8 @@ export class PepImagesFilmstripComponent
         }
 
         this.config = {
-            // nav: false, // Show navigation buttons
-            navIcon: pepIconArrowRightAlt.data,
+            nav: false, // Show navigation buttons
+            // navIcon: pepIconArrowRightAlt.data,
             // loop: true,
             // zoomOut: 0,
             // dots: false,
@@ -253,7 +257,7 @@ export class PepImagesFilmstripComponent
             // playerInterval: 3000,
             // thumbMode: ThumbnailsMode.Free,
             // thumbPosition: ThumbnailsPosition.Bottom,
-            loadingStrategy: LoadingStrategy.Default,
+            loadingStrategy: LoadingStrategy.Preload,
             // slidingDirection: SlidingDirection.Horizontal,
         };
     }
@@ -276,6 +280,23 @@ export class PepImagesFilmstripComponent
         });
         this.form = this.customizationService.getDefaultFromGroup(pepField);
     }
+
+    // private renderNavIcon(galleryContainer, isLeft: boolean) {
+    //     let iconName = isLeft ? pepIconArrowLeftAlt.name : pepIconArrowRightAlt.name;
+    //     const svgData = this.iconRegistry.getIcon(iconName);
+    //     const svgIcon = this.utilitiesService.getSvgElementFromString(
+    //         this.document,
+    //         svgData
+    //     );
+
+    //     const elementNameToFind = isLeft ? 'g-nav-prev' : 'g-nav-next'
+
+    //     const elementArr = galleryContainer.nativeElement.querySelectorAll(`.${elementNameToFind}`);
+    //     if (elementArr && elementArr.length > 0) {
+    //         elementArr[0].appendChild(svgIcon);
+    //         this.renderer.addClass(svgIcon, 'svg-icon');
+    //     }
+    // }
 
     ngOnInit(): void {
         if (!this.inDialog) {
@@ -359,6 +380,8 @@ export class PepImagesFilmstripComponent
             // Set thumbnails position and sliding direction
             this.setThumbnailDimension(galleryContainer);
             galleryRef.setConfig(this.config);
+            // this.renderNavIcon(galleryContainer, true);
+            // this.renderNavIcon(galleryContainer, false);
         }, 0);
 
         const currentIndex = this.currIndex;

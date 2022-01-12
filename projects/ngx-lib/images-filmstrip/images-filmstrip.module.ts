@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import {
     PepIconModule,
     PepIconRegistry,
@@ -55,6 +56,7 @@ import { PepImagesFilmstripComponent } from './images-filmstrip.component';
         // }),
         // ngx-lib modules
         PepNgxLibModule,
+        PepButtonModule,
         PepIconModule,
         PepFieldTitleModule,
         PepDialogModule,

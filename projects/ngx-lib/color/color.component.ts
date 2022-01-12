@@ -22,7 +22,7 @@ import { PepColorType } from './color.model';
 @Component({
     selector: 'pep-color',
     templateUrl: './color.component.html',
-    styleUrls: ['./color.component.scss', './color.component.theme.scss'],
+    styleUrls: ['./color.component.scss'],
 })
 export class PepColorComponent implements OnInit, OnDestroy {
     @Input() key = '';

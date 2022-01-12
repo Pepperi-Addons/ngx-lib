@@ -5,29 +5,31 @@ gallery {
     background-color: transparent;
 }
 
-gallery-thumb {
-    box-shadow: functions.get-pep-shadow(shadow-sm, hard);
-}
-
-.g-nav-prev,
-.g-nav-next  {
-    @include mixins.state-weak-invert-default();
-            
-    &:hover {
-        @include mixins.state-weak-invert-hover();
-    }
-    &:focus {
-        @include mixins.state-weak-invert-focus();
-    }
-    &:active {
-        @include mixins.state-weak-invert-active();
-    }
-    &:disabled {
-        @include mixins.state-weak-invert-disable();
+::ng-deep {
+    gallery-thumb {
+        box-shadow: functions.get-pep-shadow(shadow-sm, hard);
     }
 
-}
+    .g-nav-prev,
+    .g-nav-next  {
+        @include mixins.state-weak-invert-default();
+                
+        &:hover {
+            @include mixins.state-weak-invert-hover();
+        }
+        &:focus {
+            @include mixins.state-weak-invert-focus();
+        }
+        &:active {
+            @include mixins.state-weak-invert-active();
+        }
+        &:disabled {
+            @include mixins.state-weak-invert-disable();
+        }
 
-gallery-dots {
-    @include mixins.state-weak-default();
+    }
+
+    gallery-dots {
+        @include mixins.state-weak-default();
+    }
 }

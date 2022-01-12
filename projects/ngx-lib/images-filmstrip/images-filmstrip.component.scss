@@ -1,5 +1,22 @@
 @use '../src/core/style/abstracts/variables';
 
+@mixin gallery-arrows() {
+    .gallery-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translate(0%, -50%);
+        z-index: variables.$z-index-lowest + 1;
+
+        &.start-arrow { 
+            left: 0;
+        }
+        
+        &.end-arrow {
+            right: 0;
+        }
+    }
+}
+
 :host {
     width: 100%;
     height: inherit;
@@ -19,7 +36,14 @@
 
     .img-wrapper {
         height: 100%;
+        position: relative;
     }
+
+    .gallery-arrow {
+        padding: 0.5rem;
+    }
+    
+    @include gallery-arrows();
 }
 
 gallery {
@@ -27,14 +51,12 @@ gallery {
     direction: ltr;
     height: 100%;
     min-height: 100%;
-
 }
 
 .gallery-dialog-content {
-    // min-height: 80vh;
-    // max-height: 100% !important;
-    // height: 100% !important;
-    // padding-bottom: 0 !important;
+    position: relative;
+
+    @include gallery-arrows();
 
     gallery {
         min-width:  65vw;
@@ -101,22 +123,33 @@ gallery {
     align-items: center;
 }
 
-::ng-deep .g-nav-prev,
-::ng-deep .g-nav-next {
-    width: 2rem !important;
-    height: 2rem !important;
-    padding: 0.25rem;
-    border-radius: variables.$border-radius-md;
-
-    .mat-icon {
-        display: inline-block !important;
-    }
+::ng-deep gallery-nav {
+    display: none;
 }
+// ::ng-deep .g-nav-prev,
+// ::ng-deep .g-nav-next {
+//     width: 2rem !important;
+//     height: 2rem !important;
+//     padding: 0.25rem;
+//     border-radius: variables.$border-radius-md;
 
-::ng-deep .g-nav-prev {
-    -webkit-transform: translateY(-50%) perspective(1px) scale(-1,1) !important;
-    transform: translateY(-50%) perspective(1px) scale(-1,1) !important;
-}
+//     .mat-icon {
+//         display: inline-block !important;
+//     }
+
+//     svg:not(.svg-icon) {
+//         display: none;
+//     }
+
+//     svg {
+//         filter: unset;
+//         opacity: unset;
+//     }
+// }
+
+// ::ng-deep .g-nav-prev {
+//     transform: translateY(-50%) perspective(1px) !important;
+// }
 
 .vertical-gallery {
     ::ng-deep gallery-thumbs {

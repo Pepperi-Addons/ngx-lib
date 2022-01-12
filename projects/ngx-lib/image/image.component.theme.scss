@@ -28,7 +28,7 @@
 }
 
 .image-container {
-    .mat-form-field-disabled { 
+    ::ng-deep.mat-form-field-disabled { 
         .mat-form-field-flex {
             background: transparent !important;
         }

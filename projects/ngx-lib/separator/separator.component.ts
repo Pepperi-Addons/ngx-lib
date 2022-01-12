@@ -17,7 +17,7 @@ import {
 @Component({
     selector: 'pep-separator',
     templateUrl: './separator.component.html',
-    styleUrls: ['./separator.component.scss', './separator.component.theme.scss'],
+    styleUrls: ['./separator.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepSeparatorComponent implements OnInit {

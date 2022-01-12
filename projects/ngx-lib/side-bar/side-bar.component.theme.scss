@@ -10,8 +10,7 @@
 
     .mat-sidenav-container {
         // background-color: transparent;
-
-        .mat-drawer-backdrop.mat-drawer-shown {
+        ::ng-deep.mat-drawer-backdrop.mat-drawer-shown {
             background-color: functions.get-pep-color(color-system-primary, color-tran-50);
         }
     }
