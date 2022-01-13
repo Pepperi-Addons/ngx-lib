@@ -42,11 +42,11 @@
     </ng-container>
 
     <ng-container pep-main-area>
-        <div #listContainer class="list-container">
-            <pep-list [supportSorting]="false" [supportResizing]="false" [pagerType]="'pages'" [pageSize]="10"
-                [selectionTypeForActions]="'multi'" [parentScroll]="listContainer" [viewType]="'table'"
-                (fieldClick)="onCustomizeFieldClick($event)" (selectedItemsChange)="selectedRowsChanged($event)">
-            </pep-list>
-        </div>
+        <!-- <div #listContainer class="list-container"> -->
+        <pep-list [supportSorting]="false" [supportResizing]="false" [pagerType]="'pages'" [pageSize]="10"
+            [selectionTypeForActions]="'multi'" [viewType]="'table'" (fieldClick)="onCustomizeFieldClick($event)"
+            (selectedItemsChange)="selectedRowsChanged($event)">
+        </pep-list>
+        <!-- </div> -->
     </ng-container>
 </pep-page-layout>
