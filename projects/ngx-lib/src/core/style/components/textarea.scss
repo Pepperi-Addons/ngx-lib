@@ -10,8 +10,8 @@
     align-items: center;
 
     // Hide scroll
-    ::ng-deep {
-        .mat-form-field {
+    .mat-form-field {
+        ::ng-deep {
             .mat-form-field-wrapper {
                 .mat-form-field-flex {
                     display: flex;
@@ -49,8 +49,8 @@
     }
 
     &.one-row {
-        ::ng-deep {
-            .mat-form-field {
+        .mat-form-field {
+            ::ng-deep {
                 .mat-form-field-wrapper {
                     .mat-form-field-infix {
                         .mat-input-element {
@@ -71,11 +71,10 @@
                         }
                     }
                 }
-
-                &.pepperi-table-textarea, &.pep-table-textarea {
-                    .mat-input-element {
-                        padding-top: 0.135rem !important;
-                    }
+            }
+            &.pepperi-table-textarea, &.pep-table-textarea {
+                ::ng-deep.mat-input-element {
+                    padding-top: 0.135rem !important;
                 }
             }
         }
@@ -98,8 +97,8 @@
     }
 
     &.right-alignment {
-        ::ng-deep {
-            .mat-form-field {
+        .mat-form-field {
+            ::ng-deep {
                 .mat-form-field-wrapper {
                     .mat-input-element {
                         padding: 0.5rem 0 0.5rem 1.5rem;
@@ -115,8 +114,8 @@
 }
 
 .pepperi-textarea-card-container, .pep-textarea-card-container {
-    ::ng-deep {
-        .mat-form-field {
+    .mat-form-field {
+        ::ng-deep {
             .mat-form-field-wrapper {
 
                 .mat-form-field-flex {
@@ -155,8 +154,8 @@
     }
 
     &.one-row {
-        ::ng-deep {
-            .mat-form-field {
+        .mat-form-field {
+            ::ng-deep {
                 .mat-form-field-wrapper {
                     .mat-form-field-infix {
                         line-height: 0 !important;
@@ -172,8 +171,8 @@
     }
 
     &.right-alignment {
-        ::ng-deep {
-            .mat-form-field {
+        .mat-form-field {
+            ::ng-deep {
                 .mat-form-field-wrapper {
                     .mat-input-element {
                         padding: 0.25rem 0 0.5rem 1.5rem;
@@ -185,14 +184,18 @@
 }
 
 .pepperi-report-textarea, .pep-report-textarea {
-    .mat-form-field-suffix {
-        right: 0 !important;
+    ::ng-deep {
+        .mat-form-field-suffix {
+            right: 0 !important;
+        }
     }
 
     &.readonly {
-        .mat-form-field-wrapper {
-            .mat-form-field-flex {
-                padding: 0;
+        ::ng-deep {
+            .mat-form-field-wrapper {
+                .mat-form-field-flex {
+                    padding: 0;
+                }
             }
         }
     }

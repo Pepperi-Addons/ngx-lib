@@ -45,7 +45,9 @@
               "projects/ngx-lib-tester/src/theme.scss",
               "projects/ngx-lib-tester/src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/quill/dist/quill.core.js"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,

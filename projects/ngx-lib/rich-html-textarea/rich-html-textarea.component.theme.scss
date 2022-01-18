@@ -7,8 +7,10 @@
 
 .mat-form-field {
     // Disabled - remove the default disabled
-    &.mat-form-field-disabled .mat-form-field-flex {
-        color: functions.get-pep-color(color-text, color-main);
+    &.mat-form-field-disabled {
+        ::ng-deep.mat-form-field-flex {
+            color: functions.get-pep-color(color-text, color-main);
+        }
     }
 }
 
