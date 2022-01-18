@@ -26,7 +26,7 @@ import {
 import {
     IPepFormFieldClickEvent,
     IPepFormFieldValueChangeEvent,
-} from './form.component';
+} from './form.model';
 import { PepQuantitySelectorComponent } from '@pepperi-addons/ngx-lib/quantity-selector';
 import { PepCarouselComponent } from '@pepperi-addons/ngx-lib/carousel';
 

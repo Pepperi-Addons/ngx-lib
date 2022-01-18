@@ -22,7 +22,7 @@ import {
 import {
     IPepFormFieldClickEvent,
     IPepFormFieldValueChangeEvent,
-} from './form.component';
+} from './form.model';
 
 export type PepListViewType = 'cards' | 'lines' | 'table';
 

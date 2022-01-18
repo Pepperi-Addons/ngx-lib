@@ -15,11 +15,11 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import {
-    MatDatetimepickerModule,
-    MatNativeDatetimeModule,
-} from '@mat-datetimepicker/core';
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+// import {
+//     MatDatetimepickerModule,
+//     MatNativeDatetimeModule,
+// } from '@mat-datetimepicker/core';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -57,8 +57,8 @@ const matComponentsModules = [
     MatCheckboxModule,
     MatChipsModule,
     MatStepperModule,
-    MatDatepickerModule,
-    MatDatetimepickerModule,
+    // MatDatepickerModule,
+    // MatDatetimepickerModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
@@ -68,7 +68,7 @@ const matComponentsModules = [
     MatListModule,
     MatMenuModule,
     MatNativeDateModule,
-    MatNativeDatetimeModule,
+    // MatNativeDatetimeModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,

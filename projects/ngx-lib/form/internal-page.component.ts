@@ -31,7 +31,7 @@ import {
 import {
     IPepFormFieldClickEvent,
     IPepFormFieldValueChangeEvent,
-} from './form.component';
+} from './form.model';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';

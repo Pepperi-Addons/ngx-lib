@@ -15,7 +15,7 @@ import {
     IPepFieldValueChangeEvent,
     IPepFieldClickEvent,
 } from '@pepperi-addons/ngx-lib';
-import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.component';
+import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.model';
 
 @Component({
     selector: 'pep-field-generator',
