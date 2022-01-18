@@ -22,7 +22,7 @@ import {
 @Component({
     selector: 'pep-page-layout',
     templateUrl: './page-layout.component.html',
-    styleUrls: ['./page-layout.component.scss'],
+    styleUrls: ['./page-layout.component.scss', './page-layout.component.theme.scss'],
 })
 export class PepPageLayoutComponent implements AfterViewInit, AfterContentInit {
     @Input() addPadding = true;
