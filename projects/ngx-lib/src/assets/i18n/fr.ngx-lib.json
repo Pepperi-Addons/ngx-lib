@@ -74,6 +74,6 @@
         "INFO_LOADING_FILE": "Chargement en cours",
         "INFO_MISSING_FILE": "Fichier manquant",
         "INFO_MISSING_IMAGE": "Image manquante",
-        "INFO_MISSING_SIGNATURE": "Signature manquante"
+        "INFO_MISSING_SIGNATURE": "Signature requise"
     }
 }

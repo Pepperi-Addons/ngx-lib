@@ -66,7 +66,7 @@ import { PepTargetDirective } from './core/portal/target.directive';
 const portalList = [PepAttachDirective, PepTargetDirective];
 
 import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
-import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepLayoutService } from './core/index';
+import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepLayoutService, PepTranslateService } from './core/index';
 
 @NgModule({
     declarations: [
@@ -91,7 +91,8 @@ import { PepHttpService, PepAddonService, PepFileService, PepCustomizationServic
         PepAddonService,
         PepFileService,
         PepCustomizationService,
-        PepLayoutService
+        PepLayoutService,
+        PepTranslateService
     ]
 })
 export class PepNgxLibModule {

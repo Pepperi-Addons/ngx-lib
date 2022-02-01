@@ -42,7 +42,8 @@ import {
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
     PepImagesField,
-    PepUtilitiesService
+    PepUtilitiesService,
+    PepGuid
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { pepIconArrowRightAlt, pepIconArrowLeftAlt, PepIconRegistry, pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
@@ -207,6 +208,7 @@ export class PepImagesFilmstripComponent
     isVertical = false;
     galleryRef: GalleryRef;
     dialogGalleryRef: GalleryRef;
+    guid: string;
 
     constructor(
         private customizationService: PepCustomizationService,
@@ -260,6 +262,8 @@ export class PepImagesFilmstripComponent
             loadingStrategy: LoadingStrategy.Preload,
             // slidingDirection: SlidingDirection.Horizontal,
         };
+
+        this.guid = PepGuid.newGuid();
     }
 
     private setFieldHeight(): void {
@@ -353,7 +357,7 @@ export class PepImagesFilmstripComponent
             this.afterDialogOpened();
         } else {
             this.galleryRef = this.gallery.ref(
-                `${this.key}-${this.uid}-gallery`
+                `${this.guid}-gallery`
             );
             this.initGalleryStyle(this.galleryCont, this.galleryRef);
         }
@@ -429,7 +433,7 @@ export class PepImagesFilmstripComponent
 
     afterDialogOpened(): void {
         this.dialogGalleryRef = this.gallery.ref(
-            `${this.key}-${this.uid}-dlgGallery`
+            `${this.guid}-dlgGallery`
         );
         this.initGalleryStyle(this.galleryDialogCont, this.dialogGalleryRef);
     }

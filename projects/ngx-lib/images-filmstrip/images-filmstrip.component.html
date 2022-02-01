@@ -6,13 +6,13 @@
             </pep-field-title>
             <div #galleryCont class="img-wrapper" [ngClass]="isVertical ? 'vertical-gallery' : 'horizontal-gallery'"
                 [style.height]="fieldHeight">
-                <pep-button iconName="arrow_left_alt" styleType="weak-invert" sizeType="sm" (click)="formGallery.prev()"
-                    class="gallery-arrow start-arrow">
+                <pep-button *ngIf="items?.length > 1" iconName="arrow_left_alt" styleType="weak-invert" sizeType="sm"
+                    (click)="formGallery.prev()" class="gallery-arrow start-arrow">
                 </pep-button>
-                <gallery #formGallery id="{{key}}-{{uid}}-gallery" (itemClick)="enlargeImage($event);"
-                    [imageSize]="'contain'" (indexChange)="indexChange($event)" (error)="onError($event)">
+                <gallery #formGallery id="{{guid}}-gallery" (itemClick)="enlargeImage($event);" [imageSize]="'contain'"
+                    (indexChange)="indexChange($event)" (error)="onError($event)">
                 </gallery>
-                <pep-button iconName="arrow_right_alt" styleType="weak-invert" sizeType="sm"
+                <pep-button *ngIf="items?.length > 1" iconName="arrow_right_alt" styleType="weak-invert" sizeType="sm"
                     (click)="formGallery.next()" class="gallery-arrow end-arrow">
                 </pep-button>
             </div>
@@ -25,14 +25,14 @@
         <pep-dialog [title]="label" [showFooter]="false">
             <div pep-dialog-content #galleryDialogCont class="gallery-dialog-content"
                 [ngClass]="isVertical ? 'vertical-gallery' : 'horizontal-gallery'">
-                <pep-button iconName="arrow_left_alt" styleType="weak-invert" (click)="dialogGallery.prev()"
-                    class="gallery-arrow start-arrow">
+                <pep-button *ngIf="items?.length > 1" iconName="arrow_left_alt" styleType="weak-invert"
+                    (click)="dialogGallery.prev()" class="gallery-arrow start-arrow">
                 </pep-button>
-                <gallery #dialogGallery id="{{key}}-{{uid}}-dlgGallery" [imageSize]="'contain'"
+                <gallery #dialogGallery id="{{guid}}-dlgGallery" [imageSize]="'contain'"
                     (indexChange)="indexChange($event)" (error)="onError($event)">
                 </gallery>
-                <pep-button iconName="arrow_right_alt" styleType="weak-invert" (click)="dialogGallery.next()"
-                    class="gallery-arrow end-arrow">
+                <pep-button *ngIf="items?.length > 1" iconName="arrow_right_alt" styleType="weak-invert"
+                    (click)="dialogGallery.next()" class="gallery-arrow end-arrow">
                 </pep-button>
             </div>
         </pep-dialog>
