@@ -39,7 +39,7 @@
     },
     "ACTIONS": {
         "CONTINUE": "Continue",
-        "DELETE": "Delete",
+        "DELETE": "Borrar",
         "CANCEL": "Cancelar",
         "CLEAR": "Borrar",
         "CLEAR_ALL": "Borrar todo",
