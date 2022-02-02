@@ -45,8 +45,8 @@
         }
 
         .mat-checkbox-layout {
-            @include ngx-mixins.font-body(ngx-variables.$fs-xl, ngx-variables.$lh-xl);
-            font-weight: ngx-variables.$font-weight-bold !important;
+            @include mixins.font-body(variables.$fs-xl, variables.$lh-xl);
+            font-weight: variables.$font-weight-bold !important;
 
             .mat-checkbox-label span {
                 margin: 0 0.5rem;
@@ -57,8 +57,8 @@
     // &.sub-title {
     //     .pep-checkbox-container {
     //         .mat-checkbox-layout {
-    //             @include ngx-mixins.font-body(ngx-variables.$fs-xl, ngx-variables.$lh-xl);
-    //             font-weight: ngx-variables.$font-weight-bold !important;
+    //             @include mixins.font-body(variables.$fs-xl, variables.$lh-xl);
+    //             font-weight: variables.$font-weight-bold !important;
     
     //             .mat-checkbox-label span {
     //                 margin: 0 0.5rem;
