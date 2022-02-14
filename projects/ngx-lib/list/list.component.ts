@@ -1154,11 +1154,17 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         const res = new PepSelectionData();
 
         if (this.selectionTypeForActions === 'single') {
-            const tmp = this.selectedItemId.split(this.SEPARATOR);
-
             res.selectionType = 1;
-            res.rows = [tmp[0]];
-            res.rowTypes = [tmp[1]];
+
+            if (this.selectedItemId.length > 0) {
+                const tmp = this.selectedItemId.split(this.SEPARATOR);
+
+                res.rows = [tmp[0]];
+                res.rowTypes = [tmp[1]];
+            } else {
+                res.rows = [];
+                res.rowTypes = [];
+            }
         } else if (this.selectionTypeForActions === 'multi') {
             const items = [];
             const itemTypes = [];
