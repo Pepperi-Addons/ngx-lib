@@ -1153,22 +1153,17 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     getSelectedItemsData(isForEdit = false): PepSelectionData {
         const res = new PepSelectionData();
 
-        if (this.selectionTypeForActions === 'single') {
-            res.selectionType = 1;
+        let selectionType = 1;
+        const items = [];
+        const itemTypes = [];
 
+        if (this.selectionTypeForActions === 'single') {
             if (this.selectedItemId.length > 0) {
                 const tmp = this.selectedItemId.split(this.SEPARATOR);
-
-                res.rows = [tmp[0]];
-                res.rowTypes = [tmp[1]];
-            } else {
-                res.rows = [];
-                res.rowTypes = [];
+                items.push(tmp[0]);
+                itemTypes.push(tmp[1]);
             }
         } else if (this.selectionTypeForActions === 'multi') {
-            const items = [];
-            const itemTypes = [];
-            let selectionType = 1;
             let currentList = [];
 
             // For edit - only the selected items.
@@ -1210,10 +1205,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             });
 
-            res.selectionType = selectionType;
-            res.rows = items;
-            res.rowTypes = itemTypes;
         }
+
+        res.selectionType = selectionType;
+        res.rows = items;
+        res.rowTypes = itemTypes;
 
         return res;
     }
