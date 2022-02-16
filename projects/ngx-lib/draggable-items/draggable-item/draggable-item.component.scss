@@ -1,0 +1,41 @@
+@use '../../src/core/style/abstracts/variables';
+@use '../../src/core/style/abstracts/functions';
+@use '../../src/core/style/abstracts/mixins';
+
+:host {
+    display: block;
+}
+
+.pep-draggable-item-container {
+    // opacity: 0.75;
+    height: variables.$draggable-item-height;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    border-radius: variables.$border-radius-md;
+    padding-inline: variables.$spacing-sm;
+    
+    @include mixins.state-regular-default(true);
+    box-shadow: functions.get-pep-shadow(shadow-xs, regular);
+    
+    &.disable {
+        // @include mixins.state-regular-disable(true);
+        opacity: 0.35;
+        pointer-events: none;
+    }
+    
+    .title-container {
+        overflow-x: hidden;
+        margin-inline: variables.$spacing-sm;
+
+        .title {
+            display: block;
+        }
+    }
+
+    .actions {
+        display: inline-flex;
+        gap: variables.$spacing-xs;
+    }
+}

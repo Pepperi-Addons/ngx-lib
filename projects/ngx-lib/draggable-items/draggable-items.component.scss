@@ -1,0 +1,46 @@
+@use '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/functions';
+@use '../src/core/style/abstracts/mixins';
+
+$spacing-bottom: variables.$spacing-sm;
+
+.draggble-item {
+    margin-bottom: $spacing-bottom;
+
+    cursor: grab; 
+
+    &.cdk-drag-disabled { 
+        cursor: not-allowed; 
+    }
+}
+
+// .cdk-drag-placeholder {
+//     opacity: 0;
+// }
+
+.title-container {
+    height: 2.5rem;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+
+    &.pep-border-bottom {
+        margin-bottom: variables.$content-margin;
+    }
+}
+
+.placeholder-item {
+    height: variables.$draggable-item-height;
+    border-radius: variables.$border-radius-md;
+    width: 100%;
+    margin-bottom: $spacing-bottom;
+
+    &.none {
+        opacity: 0;
+    }
+
+    &.weak {
+        @include mixins.state-weak-default();
+    }
+
+}

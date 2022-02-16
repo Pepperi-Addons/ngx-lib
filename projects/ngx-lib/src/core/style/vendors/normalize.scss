@@ -25,6 +25,12 @@ html {
     -webkit-text-size-adjust: 100%; /* 3 */
 }
 
+html {
+    body.inheritCursors * {
+        cursor: inherit !important;
+    }
+}
+
 /* Sections
    ========================================================================== */
 

@@ -1,0 +1,40 @@
+<div class="addon-page-container ui-test-container">
+    <pep-top-bar [title]="'Top bar title'">
+        <div header-start-content>
+
+        </div>
+        <div header-end-content>
+
+        </div>
+    </pep-top-bar>
+    <div class="main-content ">
+        <div class="content spacing-top">
+            <div class="child1 child-container">
+                <pep-draggable-items [items]="draggableItems" title="Available slugs" titleType="with-bottom-border"
+                    itemPlaceholderType="weak" [showSearch]="true" [dropAreaIds]="['dropArea1']">
+                </pep-draggable-items>
+            </div>
+
+            <div class="child2 child-container">
+                <div cdkDropList id="dropArea1" class="drop-area1" [cdkDropListData]="dropArea"
+                    (cdkDropListDropped)="drop($event)">
+
+                    <pep-draggable-item *ngFor="let item of dropArea" cdkDrag (cdkDropListDropped)="drop($event)"
+                        [title]="item.title" [data]="item.data" [disabled]="false">
+                    </pep-draggable-item>
+                </div>
+            </div>
+
+            <div class="child3 child-container">
+                <pep-draggable-items [items]="draggableItems2" title="Available slugs 2" titleType="regular"
+                    [dropAreaIds]="['dropArea1']">
+
+                </pep-draggable-items>
+            </div>
+
+            <div class="child4 child-container">
+
+            </div>
+        </div>
+    </div>
+</div>

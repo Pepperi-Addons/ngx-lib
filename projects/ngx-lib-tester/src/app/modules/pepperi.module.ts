@@ -38,6 +38,7 @@ import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
 
 import { PepSmartFiltersModule } from '@pepperi-addons/ngx-lib/smart-filters';
 import { PepQueryBuilderModule } from '@pepperi-addons/ngx-lib/query-builder';
+import { PepDraggableItemsModule } from '@pepperi-addons/ngx-lib/draggable-items';
 
 import {
     PepIconModule,
@@ -144,6 +145,7 @@ const pepperiComponentsModules = [
     PepPageLayoutModule,
     PepSmartFiltersModule,
     PepQueryBuilderModule,
+    PepDraggableItemsModule,
     PepFormModule
 ];
 

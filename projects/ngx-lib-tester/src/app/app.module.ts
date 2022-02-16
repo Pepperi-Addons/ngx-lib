@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CarouselExampleComponent } from './carousel-example/carousel-example.component';
+import { DraggableExampleComponent } from './draggable-example/draggable-example.component';
 import { QueryBuilderExampleComponent } from './query-builder-example/query-builder-example.component';
 import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component';
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
@@ -19,6 +20,7 @@ import { MaterialModule } from './modules/material.module';
     declarations: [
         AppComponent,
         CarouselExampleComponent,
+        DraggableExampleComponent,
         QueryBuilderExampleComponent,
         FormFieldsExampleComponent,
         InlineListExampleComponent,

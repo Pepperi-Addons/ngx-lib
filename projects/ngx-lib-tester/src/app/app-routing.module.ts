@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CarouselExampleComponent } from './carousel-example/carousel-example.component';
+import { DraggableExampleComponent } from './draggable-example/draggable-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
 import { QueryBuilderExampleComponent } from './query-builder-example/query-builder-example.component';
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
@@ -12,6 +13,10 @@ const routes: Routes = [
     {
         path: `carousel-example`,
         component: CarouselExampleComponent,
+    },
+    {
+        path: `draggable-example`,
+        component: DraggableExampleComponent,
     },
     {
         path: `form-fields-example`,
