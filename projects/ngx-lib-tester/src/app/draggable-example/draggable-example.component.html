@@ -8,6 +8,15 @@
         </div>
     </pep-top-bar>
     <div class="main-content ">
+        <div class="content1 spacing-top">
+            <pep-profile-data-views-list [profileDataViewsList]="profileDataViewsList"
+                [configurationPerScreenSize]="false" [availableProfiles]="availableProfiles"
+                [defaultProfile]="defaultProfile" (dataViewEditClick)="onDataViewEditClicked($event)"
+                (dataViewDeleteClick)="onDataViewDeleteClicked($event)">
+
+            </pep-profile-data-views-list>
+
+        </div>
         <div class="content spacing-top">
             <div class="child1 child-container">
                 <pep-draggable-items [items]="draggableItems" title="Available slugs" titleType="with-bottom-border"

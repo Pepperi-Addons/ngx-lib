@@ -1,0 +1,32 @@
+<div class="profile-data-views-list-container">
+    <pep-profile-data-views-card *ngFor="let profileDataViews of profileDataViewsList"
+        [configurationPerScreenSize]="configurationPerScreenSize" [title]="profileDataViews.title"
+        [profileId]="profileDataViews.profileId" [dataViews]="profileDataViews.dataViews"
+        [isDefault]="profileDataViews.profileId === defaultProfile?.profileId"
+        (dataViewEditClick)="onDataViewEditClicked($event)" (dataViewDeleteClick)="onDataViewDeleteClicked($event)">
+    </pep-profile-data-views-card>
+
+    <pep-button *ngIf="nonExistingProfiles?.length > 0" [value]="'PROFILE_DATA_VIEWS_LIST.ADD_PROFILE' | translate"
+        iconName="number_plus" sizeType="lg" (buttonClick)="onAddProfileClicked($event)"></pep-button>
+</div>
+
+<ng-template #selectProfileTemplate let-data>
+    <pep-dialog [title]="'PROFILE_DATA_VIEWS_LIST.SELECT_PROFILE_DIALOG_TITLE' | translate">
+        <ng-container pep-dialog-content>
+            <pep-select [label]="'PROFILE_DATA_VIEWS_LIST.SELECT_PROFILE' | translate" [options]="data.options"
+                [emptyOption]="false" (valueChange)="setSelectedNewProfileId($event)">
+            </pep-select>
+        </ng-container>
+        <ng-container pep-dialog-actions>
+            <div class="pep-spacing-element-negative">
+                <button mat-button class="pep-spacing-element pep-button md weak" (click)="closeDialog()">
+                    {{ 'Cancel' | translate}}
+                </button>
+                <button mat-button class="pep-spacing-element pep-button md strong" (click)="saveNewProfile()"
+                    [disabled]="selectedNewProfileId === ''">
+                    {{ 'Save' | translate}}
+                </button>
+            </div>
+        </ng-container>
+    </pep-dialog>
+</ng-template>

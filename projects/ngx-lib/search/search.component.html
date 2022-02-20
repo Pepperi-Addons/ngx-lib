@@ -1,6 +1,6 @@
 ﻿<!-- <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: false, hasParent: false }">
 </ng-container> -->
-<ng-container *ngIf="shrinkInSmallScreen; then shrinkBlock; else staticBlock"></ng-container>
+<ng-container *ngIf="shrink !== 'never'; then shrinkBlock; else staticBlock"></ng-container>
 <ng-template #shrinkBlock>
     <div pepRtlClass class="pep-search-container {{ sizeType }}" [ngClass]="{ 'pep-floating-search': isFloating}"
         [@fadeInOut]="fadeState">

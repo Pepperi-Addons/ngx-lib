@@ -8,7 +8,7 @@ import { IPepDraggableItem, PepDraggableItemPlaceholderType, PepDraggableItemsTi
 @Component({
     selector: 'pep-draggable-items',
     templateUrl: './draggable-items.component.html',
-    styleUrls: ['./draggable-items.component.scss']
+    styleUrls: ['./draggable-items.component.scss', './draggable-items.component.theme.scss']
 })
 export class DraggableItemsComponent implements OnInit, OnDestroy {
 
@@ -16,7 +16,6 @@ export class DraggableItemsComponent implements OnInit, OnDestroy {
     @Input() showSearch = false;
     @Input() title = '';
     @Input() titleType: PepDraggableItemsTitleType = 'regular';
-    @Input() allowMultiple = '';
 
     @Input() itemPlaceholderType: PepDraggableItemPlaceholderType = 'none';
 
@@ -42,7 +41,7 @@ export class DraggableItemsComponent implements OnInit, OnDestroy {
 
     filteredItems$: Observable<any>;
     searchControl = new FormControl();
-    numberItemsToShowSearch = 3;
+    numberItemsToShowSearch = 5;
     private readonly _destroyed: Subject<void>;
 
     constructor() {

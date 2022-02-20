@@ -1,0 +1,22 @@
+@use '../../src/core/style/abstracts/variables';
+@use '../../src/core/style/abstracts/mixins';
+
+.profile-data-views-card-container {
+    padding: variables.$content-padding;
+    border-radius: variables.$border-radius-md;
+    min-width: 180px;
+
+    .card-top-bar {
+        height: variables.$top-bar-field-height;
+        margin-bottom: variables.$spacing-md;
+        display: flex;
+        justify-content: space-between;
+        
+        .title {
+            display: block;
+            max-width: 240px;
+            height: calc(#{variables.$top-bar-field-height} - #{variables.$spacing-sm});
+            align-self: center;
+        }
+    }
+}

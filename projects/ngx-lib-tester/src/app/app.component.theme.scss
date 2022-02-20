@@ -7,15 +7,15 @@
     .navbar {
         box-shadow: functions.get-pep-shadow(shadow-sm, regular);
         
-        &.weak {
+        &.weak ::ng-deep {
             @include mixins.state-weak-default(color-top-header);
         }
         
-        &.regular {
+        &.regular ::ng-deep {
             @include mixins.state-regular-default(true, color-top-header);
         }
         
-        &.strong {
+        &.strong ::ng-deep {
             @include mixins.state-strong-default(color-top-header);
         }
         

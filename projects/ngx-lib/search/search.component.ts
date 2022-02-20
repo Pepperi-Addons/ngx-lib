@@ -30,6 +30,7 @@ import {
     IPepSearchStateChangeEvent,
     PepSearchType,
     PepSearchTriggerType,
+    PepSearchShrinkType,
 } from './search.model';
 
 @Component({
@@ -95,7 +96,17 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         return this._autoCompleteValues;
     }
 
-    @Input() shrinkInSmallScreen = true;
+    // @Input() shrinkInSmallScreen = true;
+
+    private _shrink: PepSearchShrinkType = 'small-screen';
+    @Input()
+    set shrink(value: PepSearchShrinkType) {
+        this._shrink = value;
+        this.setIsFloating()
+    }
+    get shrink(): PepSearchShrinkType {
+        return this._shrink;
+    }
 
     @Input()
     set value(val: string) {
@@ -160,13 +171,20 @@ export class PepSearchComponent implements OnInit, OnDestroy {
         //
     }
 
+    private setIsFloating() {
+        if (this.shrink === 'small-screen') {
+            this.isFloating = this.screenSize > PepScreenSizeType.SM;
+        } else if (this.shrink === 'always') {
+            this.isFloating = true;
+        } else { // never
+            this.isFloating = false;
+        }
+    }
+
     ngOnInit(): void {
         this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
-
-            if (this.shrinkInSmallScreen) {
-                this.isFloating = this.screenSize > PepScreenSizeType.SM;
-            }
+            this.setIsFloating();
 
             // Just for the smoote animation
             if (this.isFloating) {

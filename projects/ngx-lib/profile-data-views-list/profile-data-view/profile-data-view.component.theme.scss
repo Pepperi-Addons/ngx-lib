@@ -1,0 +1,7 @@
+@use '../../src/core/style/abstracts/mixins';
+@use '../../src/core/style/abstracts/functions';
+
+.data-view-container {
+    @include mixins.state-regular-default(true);
+    background: functions.get-pep-color(color-system-primary-invert, color-base);
+}

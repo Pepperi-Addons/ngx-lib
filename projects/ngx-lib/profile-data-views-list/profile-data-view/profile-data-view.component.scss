@@ -1,0 +1,35 @@
+@use '../../src/core/style/abstracts/variables';
+@use '../../src/core/style/abstracts/mixins';
+
+.data-view-title-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: variables.$spacing-sm;
+
+    .title {
+        display: block;
+        max-width: 240px;
+        align-self: center;
+    }
+}
+
+.data-view-container {
+    padding: variables.$spacing-sm;
+    border-radius: variables.$border-radius-md;
+    position: relative;
+    
+    .fields-container {
+        margin-bottom: variables.$spacing-sm;
+        margin-inline-end: 2rem;
+
+        .data-view-field {
+            display: block;
+        }
+    }
+
+    .edit-button {
+        position: absolute;
+        right: variables.$spacing-sm;
+        bottom: variables.$spacing-sm;
+    }
+}

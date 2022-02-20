@@ -1,0 +1,5 @@
+@use '../../src/core/style/abstracts/mixins';
+
+.profile-data-views-card-container {
+    @include mixins.state-regular-default(true);
+}

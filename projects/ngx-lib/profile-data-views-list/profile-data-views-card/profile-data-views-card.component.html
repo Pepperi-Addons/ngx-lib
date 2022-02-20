@@ -1,0 +1,18 @@
+<div class="profile-data-views-card-container">
+    <div class="card-top-bar pep-border-bottom">
+        <div *ngIf="title?.length > 0" class="title ellipsis"
+            [title]="title + ' ' + (isDefault ? ('PROFILE_DATA_VIEWS_LIST.DEFAULT_PROFILE' | translate) : '')">
+            <span class="title-md">{{title}}&nbsp;</span>
+            <span *ngIf="isDefault" class="color-dimmed">{{('PROFILE_DATA_VIEWS_LIST.DEFAULT_PROFILE' |
+                translate)}}&nbsp;
+            </span>
+        </div>
+        <pep-menu sizeType="sm" [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
+        </pep-menu>
+    </div>
+
+    <pep-profile-data-view *ngFor="let dataView of dataViews" [dataViewId]="dataView.dataViewId"
+        [title]="configurationPerScreenSize ? dataView.viewType : ''" [fields]="dataView.fields"
+        (editClick)="onDataViewEditClicked($event)" (deleteClick)="onDataViewDeleteClicked($event)">
+    </pep-profile-data-view>
+</div>

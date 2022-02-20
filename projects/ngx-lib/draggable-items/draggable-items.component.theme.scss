@@ -1,0 +1,12 @@
+@use '../src/core/style/abstracts/mixins';
+
+.placeholder-item {
+    &.none {
+        opacity: 0;
+    }
+
+    &.weak {
+        @include mixins.state-weak-default();
+    }
+
+}

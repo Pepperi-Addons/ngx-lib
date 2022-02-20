@@ -6,7 +6,7 @@
 </ng-container>
 <div *ngIf="!inline" [formGroup]="form">
     <pep-search *ngIf="options?.length > numberOptionsToShowSearch" [searchControl]="searchControl"
-        [triggerOn]="'keydown'" [shrinkInSmallScreen]="false"></pep-search>
+        [triggerOn]="'keydown'" shrink="never"></pep-search>
     <div pepRtlClass class="multi-select-options pep-border-top pep-border-bottom"
         [ngClass]="{'with-no-search': options?.length <= numberOptionsToShowSearch}">
         <div #optionsContainer class="flip-scroll" pepRtlClass>

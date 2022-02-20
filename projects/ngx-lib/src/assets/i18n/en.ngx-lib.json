@@ -26,6 +26,13 @@
     "INTERNAL_PAGE": {
         "CLICK_TO_ORDER": "Click to order"
     },
+    "PROFILE_DATA_VIEWS_LIST": {
+        "ADD_PROFILE": "Add profile",
+        "SELECT_PROFILE_DIALOG_TITLE": "Select profile",
+        "SELECT_PROFILE": "Select a profile",
+        "DEFAULT_PROFILE": "(Default profile)",
+        "NO_FIELDS_ARE_ASSIGN": "No fields are assigned"
+    },
     "RICH_TEXTAREA": {
         "HINT": "Enter Text"
     },

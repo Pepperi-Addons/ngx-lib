@@ -12,6 +12,7 @@ import {
 } from '@pepperi-addons/ngx-lib/menu';
 import { IPepSearchStateChangeEvent } from '@pepperi-addons/ngx-lib/search';
 import { IPepDraggableItem } from 'ngx-lib/draggable-items/draggable-items.model';
+import { IPepProfileDataViewsCard, IPepProfile, IPepProfileDataView, IPepProfileDataViewClickEvent } from 'ngx-lib/profile-data-views-list/profile-data-views-list.model';
 
 @Component({
     templateUrl: './draggable-example.component.html',
@@ -21,6 +22,10 @@ export class DraggableExampleComponent implements OnInit {
     all = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     even = [10];
     title = 'client-side';
+
+    defaultProfile: IPepProfileDataViewsCard;
+    profileDataViewsList: Array<IPepProfileDataViewsCard> = [];
+    availableProfiles: Array<IPepProfile> = [];
 
     draggableItems: Array<IPepDraggableItem> = [];
     draggableItems2: Array<IPepDraggableItem> = [];
@@ -33,6 +38,48 @@ export class DraggableExampleComponent implements OnInit {
         this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
         });
+    }
+
+    private setProfiles() {
+        const repDataViews: IPepProfileDataView[] = [{
+            dataViewId: '1',
+            fields: ['field1', 'field2'],
+            viewType: 'Landscape'
+        }];
+
+        this.defaultProfile = {
+            profileId: '123',
+            title: 'Rep 1',
+            dataViews: repDataViews
+        };
+
+        const buyerDataViews: IPepProfileDataView[] = [{
+            dataViewId: '2',
+            fields: [],
+            viewType: 'Landscape'
+        }];
+
+        const profile2 = {
+            profileId: '345',
+            title: 'Buyer 1',
+            dataViews: buyerDataViews
+        };
+
+        this.profileDataViewsList = [this.defaultProfile, profile2];
+
+        this.availableProfiles = [{
+            id: '123',
+            name: 'Rep'
+        }, {
+            id: '1234',
+            name: 'Rep Agent'
+        }, {
+            id: '345',
+            name: 'Buyer'
+        }, {
+            id: '678',
+            name: 'Admin'
+        }]
     }
 
     private getDraggableItems(): any[] {
@@ -53,8 +100,19 @@ export class DraggableExampleComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.setProfiles();
+
         this.draggableItems = this.getDraggableItems();
         this.draggableItems2 = this.getDraggableItems();
+    }
+
+
+    onDataViewEditClicked(event: IPepProfileDataViewClickEvent): void {
+        alert(`edit on ${event.dataViewId} was clicked`);
+    }
+
+    onDataViewDeleteClicked(event: IPepProfileDataViewClickEvent): void {
+        alert(`delete on ${event.dataViewId} was clicked`);
     }
 
     drop(event: CdkDragDrop<IPepDraggableItem[]>) {
@@ -82,4 +140,5 @@ export class DraggableExampleComponent implements OnInit {
             }
         }
     }
+
 }

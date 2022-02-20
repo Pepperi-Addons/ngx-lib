@@ -4,8 +4,8 @@
     <div *ngIf="titleType !== 'none'" class="title-container"
         [ngClass]="{ 'pep-border-bottom': titleType === 'with-bottom-border'}">
         <label class="body-xl bold ellipsis">{{title}}</label>
-        <pep-search *ngIf="showSearch && items?.length > numberItemsToShowSearch" sizeType="sm"
-            [searchControl]="searchControl" triggerOn="keydown" [shrinkInSmallScreen]="true"></pep-search>
+        <pep-search *ngIf="showSearch && items?.length > numberItemsToShowSearch" sizeType="sm" shrink="always"
+            [searchControl]="searchControl" triggerOn="keydown"></pep-search>
     </div>
 
     <pep-draggable-item *ngFor="let item of filteredItems$ | async; let i=index;" class="draggble-item"
