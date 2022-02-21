@@ -76,7 +76,7 @@ export class DraggableExampleComponent implements OnInit {
             );
 
 
-            let item = this.draggableItems.find(item => item === event.container.data[event.currentIndex]);
+            const item = this.draggableItems.find(item => item === event.container.data[event.currentIndex]);
             if (item) {
                 item.disabled = true;
             }

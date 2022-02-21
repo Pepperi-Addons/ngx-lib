@@ -208,7 +208,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         return this._calculateFormattedValue;
     }
 
-    controlType = 'textbox';
+    controlType = 'link';
 
     standAlone = false;
     isInEditMode = false;
@@ -423,8 +423,13 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    onClick(event: IPepFieldClickEvent) {
-        this.elementClick.emit(event);
+    onClick() {
+        const output: IPepFieldClickEvent = {
+            key: this.key,
+            value: this.value,
+            controlType: this.controlType
+        }
+        this.elementClick.emit(output);
     }
 
     anchorClicked(): void {
@@ -438,10 +443,12 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
                     window.open('tel:' + currentValue, 'tel');
                     break;
                 case 'link':
-                    this.elementClick.emit({
+                    const output: IPepFieldClickEvent = {
                         key: this.key,
-                        value: this.value
-                    });
+                        value: this.value,
+                        controlType: this.controlType
+                    }
+                    this.elementClick.emit(output);
                     if (this.isUrlPipe.transform(currentValue)) {
                         window.open(currentValue);
                     }

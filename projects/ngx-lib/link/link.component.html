@@ -109,12 +109,12 @@
                         <a *ngIf="formattedValue != null && (value ? value : formattedValue) | isUrl" [id]="key"
                             class="color-link body-sm pep-report-input"
                             [ngClass]="{'disable': (disabled && value === '')}" title="{{ formattedValue }}"
-                            target="_blank" href="{{ value ? value : formattedValue }}" (click)="onClick($event)">{{
+                            target="_blank" href="{{ value ? value : formattedValue }}" (click)="onClick()">{{
                             formattedValue }}</a>
                         <a *ngIf="formattedValue != null && !((value ? value : formattedValue) | isUrl)" [id]="key"
                             class="color-link body-sm pep-report-input"
                             [ngClass]="{'disable': (disabled && value === '')}" title="{{ formattedValue }}"
-                            href="javascript:void(0)" (click)="onClick($event)">{{
+                            href="javascript:void(0)" (click)="onClick()">{{
                             formattedValue }}</a>
                     </ng-container>
                     <ng-container *ngSwitchDefault>

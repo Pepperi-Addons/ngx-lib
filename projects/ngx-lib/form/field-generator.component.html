@@ -97,8 +97,8 @@
         [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
         [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
-        (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
-        [isActive]="isActive" [visible]="field.visible">
+        (valueChange)="onValueChanged($event, field)" [isActive]="isActive" [visible]="field.visible"
+        (formValidationChange)="onFormValidationChanged($event)" (elementClick)="onClick($event)">
     </pep-link>
 
     <pep-indicators *ngSwitchCase="'indicators'" [key]="field.key" [value]="field.value" [layoutType]="layoutType">
