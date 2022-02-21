@@ -47,6 +47,7 @@ import {
     PepSignatureField,
     PepImageField,
     PepImagesField,
+    PepLinkField,
     PepTextareaField,
     PepRichHtmlTextareaField,
     PepDateField,
@@ -533,7 +534,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 }
                 case FIELD_TYPE.Link: {
                     options.type = 'link';
-                    customField = new PepTextboxField(options);
+                    customField = new PepLinkField(options);
                     break;
                 }
                 case FIELD_TYPE.InternalLink:
@@ -587,12 +588,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 }
                 case FIELD_TYPE.Email: {
                     options.type = 'email';
-                    customField = new PepTextboxField(options);
+                    customField = new PepLinkField(options);
                     break;
                 }
                 case FIELD_TYPE.Phone: {
                     options.type = 'phone';
-                    customField = new PepTextboxField(options);
+                    customField = new PepLinkField(options);
                     break;
                 }
                 case FIELD_TYPE.Duration: {

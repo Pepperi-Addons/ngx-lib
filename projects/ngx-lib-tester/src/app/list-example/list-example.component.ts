@@ -50,6 +50,7 @@ import { FakeData } from './fake-data';
 import { PepSideBarComponent } from '@pepperi-addons/ngx-lib/side-bar';
 import { createSmartFilter, createSmartFilterField } from 'projects/ngx-lib/smart-filters/common/model/creator';
 
+
 @Component({
     templateUrl: './list-example.component.html',
     styleUrls: ['./list-example.component.scss'],
@@ -243,7 +244,9 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
             ColumnWidth: 10,
             AdditionalValue: '',
             OptionalValues: [],
-            FieldType: FIELD_TYPE.TextBox,
+            FieldType: FIELD_TYPE.Link,
+            Enabled: false,
+            ReadOnly: true
         };
 
         switch (key) {

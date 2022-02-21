@@ -92,6 +92,15 @@
         [isActive]="isActive" [visible]="field.visible">
     </pep-textbox>
 
+    <pep-link *ngSwitchCase="'link'" [form]="form" [key]="field.key" [value]="field.value"
+        [formattedValue]="field.formattedValue" [label]="field.label" [placeholder]="field.placeholder"
+        [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
+        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
+        (valueChange)="onValueChanged($event, field)" [isActive]="isActive" [visible]="field.visible"
+        (formValidationChange)="onFormValidationChanged($event)" (elementClick)="onClick($event)">
+    </pep-link>
+
     <pep-indicators *ngSwitchCase="'indicators'" [key]="field.key" [value]="field.value" [layoutType]="layoutType">
     </pep-indicators>
     <pep-internal-button *ngSwitchCase="'button'" [form]="form" [key]="field.key" [value]="field.value"
