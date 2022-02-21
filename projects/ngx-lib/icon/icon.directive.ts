@@ -22,6 +22,8 @@ export class PepIconDirective implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.pepIconService.appendSvgIcon(this.element, this.iconName);
+        const svgIcon = this.pepIconService.getSvgIcon(this.iconName);
+        this.element.nativeElement.appendChild(svgIcon);
+
     }
 }

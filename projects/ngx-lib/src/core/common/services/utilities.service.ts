@@ -105,6 +105,7 @@ export class PepUtilitiesService {
 
     getSvgElementFromString(document, svgContent: string): SVGElement {
         const div = document.createElement('DIV');
+        div.className = 'svg-icon';
         div.innerHTML = svgContent;
         return (
             div.querySelector('svg') ||

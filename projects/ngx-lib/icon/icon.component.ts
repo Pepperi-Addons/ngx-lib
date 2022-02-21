@@ -78,9 +78,10 @@ export class PepIconComponent {
             this.element.nativeElement.removeChild(this.svgIcon);
         }
 
-        this.svgIcon = this.pepIconService.appendSvgIcon(this.element, iconName);
+        this.svgIcon = this.pepIconService.getSvgIcon(iconName);
         
         if (this.svgIcon) {
+            this.element.nativeElement.appendChild(this.svgIcon);
             this.setFill();
             this.setSpin();
         }
