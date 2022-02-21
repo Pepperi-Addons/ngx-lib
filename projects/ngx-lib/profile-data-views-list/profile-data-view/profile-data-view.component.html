@@ -3,13 +3,13 @@
         <span class="title-md">{{title}}</span>
     </div>
     <pep-button class="delete-button" sizeType="xs" (buttonClick)="onDeleteClicked($event)"
-        [value]="'ACTIONS.DELETE' | translate">
+        [value]="'ACTIONS.REMOVE' | translate">
     </pep-button>
 </div>
 <div class="data-view-container">
     <div class="fields-container">
         <span class="color-caution body-xs ellipsis data-view-field" *ngIf="fields === null || fields.length === 0">
-            {{('PROFILE_DATA_VIEWS_LIST.NO_FIELDS_ARE_ASSIGN' | translate)}}</span>
+            {{('PROFILE_DATA_VIEWS_LIST.NO_FIELDS_ASSIGNED' | translate)}}</span>
         <span class="color-dimmed body-xs ellipsis data-view-field" *ngFor="let field of fields">{{field}}</span>
     </div>
     <pep-button class="edit-button" iconName="system_edit" sizeType="xs" (buttonClick)="onEditClicked($event)">

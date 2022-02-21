@@ -31,7 +31,7 @@
         "SELECT_PROFILE_DIALOG_TITLE": "Select profile",
         "SELECT_PROFILE": "Select a profile",
         "DEFAULT_PROFILE": "(Default profile)",
-        "NO_FIELDS_ARE_ASSIGN": "No fields are assigned"
+        "NO_FIELDS_ASSIGNED": "No fields were assigned"
     },
     "RICH_TEXTAREA": {
         "HINT": "Enter Text"
@@ -103,6 +103,7 @@
         "DELETE": "Delete",
         "DONE": "Done",
         "OK": "Ok",
+        "REMOVE": "Remove",
         "SAVE": "Save"
     },
     "LIST": {

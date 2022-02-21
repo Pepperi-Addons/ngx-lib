@@ -24,11 +24,11 @@ export class ProfileDataViewsCardComponent implements OnInit {
     constructor(private translate: TranslateService) { }
 
     private loadMenuItems(): void {
+        const removeKey = 'ACTIONS.REMOVE';
         // Load translation before get the options in the children.
-        this.translate.get(['ACTIONS.DELETE']).subscribe((res) => {
+        this.translate.get([removeKey]).subscribe((res) => {
             this.menuItems = [
-                { key: 'delete', text: this.translate.instant(res['ACTIONS.DELETE']) },
-                // { key: 'edit', text: this.translate.instant('ACTIONS.EDIT') },
+                { key: 'delete', text: this.translate.instant(res[removeKey]) }
             ];
         });
     }
