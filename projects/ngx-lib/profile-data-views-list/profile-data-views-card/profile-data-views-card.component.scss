@@ -4,7 +4,8 @@
 .profile-data-views-card-container {
     padding: variables.$content-padding;
     border-radius: variables.$border-radius-md;
-    min-width: 180px;
+    width: 320px;
+    max-width: 320px;
 
     .card-top-bar {
         height: variables.$top-bar-field-height;
@@ -14,7 +15,6 @@
         
         .title {
             display: block;
-            max-width: 240px;
             height: calc(#{variables.$top-bar-field-height} - #{variables.$spacing-sm});
             align-self: center;
         }

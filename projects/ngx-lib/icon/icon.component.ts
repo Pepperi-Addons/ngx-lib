@@ -9,14 +9,9 @@ import {
     ViewEncapsulation,
     Renderer2,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import {
-    PepUtilitiesService,
-    // PepColorService,
-    // IPepHslColor,
-} from '@pepperi-addons/ngx-lib';
-import { PepIconRegistry } from './icon-registry.service';
+
 import { PepIconType } from './icon-generated.model';
+import { PepIconService } from './icon.service';
 
 @Component({
     selector: 'pep-icon',
@@ -82,14 +77,10 @@ export class PepIconComponent {
         if (this.svgIcon) {
             this.element.nativeElement.removeChild(this.svgIcon);
         }
-        const svgData = this.iconRegistry.getIcon(iconName);
-        this.svgIcon = this.utilitiesService.getSvgElementFromString(
-            this.document,
-            svgData
-        );
+
+        this.svgIcon = this.pepIconService.appendSvgIcon(this.element, iconName);
+        
         if (this.svgIcon) {
-            this.element.nativeElement.appendChild(this.svgIcon);
-            this.renderer.addClass(this.svgIcon, 'svg-icon');
             this.setFill();
             this.setSpin();
         }
@@ -111,10 +102,7 @@ export class PepIconComponent {
     constructor(
         private renderer: Renderer2,
         private element: ElementRef,
-        private utilitiesService: PepUtilitiesService,
-        // private colorService: PepColorService,
-        private iconRegistry: PepIconRegistry,
-        @Optional() @Inject(DOCUMENT) private document: any
+        private pepIconService: PepIconService
     ) { }
 
     /**

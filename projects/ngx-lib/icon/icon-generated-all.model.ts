@@ -38,6 +38,8 @@ export const allIcons = {
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M20 3a2 2 0 012 2v10a2 2 0 01-2 2h-7v2h4a1 1 0 010 2H7a1 1 0 010-2h4v-2H4a2 2 0 01-2-2V5a2 2 0 012-2h16zm-1 2H5a1 1 0 00-1 1v8a1 1 0 001 1h14a1 1 0 001-1V6a1 1 0 00-1-1z"/></svg>',
   device_mobile:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M16 3a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h8zm-1 2H9a1 1 0 00-1 1v12a1 1 0 001 1h6a1 1 0 001-1V6a1 1 0 00-1-1zm-1 11a1 1 0 010 2h-4a1 1 0 010-2h4z"/></svg>',
+  device_responsive:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13 3a2 2 0 012 2v4h4a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h8zm0 8H5v7a1 1 0 00.883.993L6 19h7v-8zm5 0h-3v8h3a1 1 0 00.993-.883L19 18v-6a1 1 0 00-1-1zm-6-6H6a1 1 0 00-.993.883L5 6v3h8V6a1 1 0 00-1-1z"/></svg>',
   device_tablet:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M18 2a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2h12zm0 16H6v1a1 1 0 00.883.993L7 20h10a1 1 0 001-1v-1zM17 4H7a1 1 0 00-1 1v11h12V5a1 1 0 00-.883-.993L17 4z"/></svg>',
   indicator_dot_placeholder:
