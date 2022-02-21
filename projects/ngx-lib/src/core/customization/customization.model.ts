@@ -246,6 +246,28 @@ export class PepTextboxField extends PepFieldBase {
     }
 }
 
+export class PepLinkField extends PepFieldBase {
+    controlType = 'link';
+    type: PepTextboxFieldType = 'link';
+
+    constructor(options: IPepFieldBaseOptions = {}) {
+        super(options);
+
+        this.update(options);
+    }
+
+    public update(options: IPepTextboxFieldOptions): void {
+        super.update(options);
+
+        // DI-11292 - add changes for link field for the "Read Only display value" prop
+        this.formattedValue =
+            this.disabled && this.formattedValue && this.value
+                ? this.formattedValue
+                : this.value;
+
+    }
+}
+
 export class PepTextareaField extends PepFieldBase {
     controlType = 'textarea';
 
