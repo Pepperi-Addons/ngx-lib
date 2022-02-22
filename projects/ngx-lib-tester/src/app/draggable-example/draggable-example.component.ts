@@ -11,8 +11,8 @@ import {
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
 import { IPepSearchStateChangeEvent } from '@pepperi-addons/ngx-lib/search';
-import { IPepDraggableItem } from 'ngx-lib/draggable-items/draggable-items.model';
-import { IPepProfileDataViewsCard, IPepProfile, IPepProfileDataView, IPepProfileDataViewClickEvent } from 'ngx-lib/profile-data-views-list/profile-data-views-list.model';
+import { IPepDraggableItem } from '@pepperi-addons/ngx-lib/draggable-items';
+import { IPepProfileDataViewsCard, IPepProfile, IPepProfileDataView, IPepProfileDataViewClickEvent } from '@pepperi-addons/ngx-lib/profile-data-views-list';
 
 @Component({
     templateUrl: './draggable-example.component.html',
