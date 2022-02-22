@@ -24,6 +24,10 @@ $spacing-bottom: variables.$spacing-sm;
     flex-flow: row;
     justify-content: space-between;
 
+    .title {
+        align-self:center;
+    }
+
     &.pep-border-bottom {
         margin-bottom: variables.$content-margin;
     }
