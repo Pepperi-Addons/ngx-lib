@@ -4,22 +4,22 @@
 
 $spacing-bottom: variables.$spacing-sm;
 
-.draggble-item {
-    margin-bottom: $spacing-bottom;
+.dragable-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-bottom;
 
-    cursor: grab; 
-
-    &.cdk-drag-disabled { 
-        cursor: not-allowed; 
+    .draggble-item {
+        cursor: grab; 
+    
+        &.cdk-drag-disabled { 
+            cursor: not-allowed; 
+        }
     }
 }
 
-// .cdk-drag-placeholder {
-//     opacity: 0;
-// }
-
 .title-container {
-    height: 2.5rem;
+    height: variables.$top-bar-field-height;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
@@ -37,8 +37,7 @@ $spacing-bottom: variables.$spacing-sm;
     height: variables.$draggable-item-height;
     border-radius: variables.$border-radius-md;
     width: 100%;
-    margin-bottom: $spacing-bottom;
-
+    
     &.none {
         opacity: 0;
     }
