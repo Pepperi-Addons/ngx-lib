@@ -13,7 +13,7 @@ import { IPepProfile, IPepProfileDataViewClickEvent, IPepProfileDataViewsCard } 
     styleUrls: ['./profile-data-views-list.component.scss']
 })
 export class ProfileDataViewsListComponent implements OnInit {
-    @Input() defaultProfile: IPepProfileDataViewsCard = null;
+    @Input() defaultProfileId: string = '';
 
     private _availableProfiles: Array<IPepProfile> = [];
     @Input()

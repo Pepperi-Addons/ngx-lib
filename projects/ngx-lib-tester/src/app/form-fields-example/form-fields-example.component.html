@@ -19,7 +19,7 @@
                     <!-- Textbox Examples -->
                     <pep-textbox [key]="'Texbox'" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
                         [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
-                        [value]="'Pepperi Textbox'" (valueChanged)="onValueChanged($event)">
+                        [value]="'Pepperi Textbox'" (valueChange)="onValueChanged($event)">
                     </pep-textbox>
                     <pep-textbox [key]="'float'" [label]="'Pepperi float'" [type]="'real'" [xAlignment]="'left'"
                         [value]="'9399371'" [mandatory]="true" [disabled]="false">
@@ -48,7 +48,7 @@
 
                     <!-- Checkbox Exmaples -->
                     <pep-checkbox key="cb1" label="Pepperi Checkbox" value="true" xAlignment="left"
-                        (valueChanged)="onValueChanged($event)">
+                        (valueChange)="onValueChanged($event)">
                     </pep-checkbox>
                     <pep-checkbox key="bt1" label="Pepperi Emoji Checkbox" type="booleanText" value="true"
                         [additionalValue]='{ "CheckedText": "❤", "UncheckedText": "💛" }' xAlignment="left">
@@ -57,7 +57,7 @@
                     <!-- Date Examples -->
                     <pep-date [key]="'date1'" [mandatory]="true" [label]="'Pepperi Date'" value="2018-06-18"
                         [minValue]="minDateValue" [maxValue]="maxDateValue" [xAlignment]="'left'"
-                        (valueChanged)="onValueChanged($event)">
+                        (valueChange)="onValueChanged($event)">
                     </pep-date>
                     <pep-date [key]="'dateTime1'" [label]="'Pepperi Date Time'" [type]="'datetime'" [value]="dateString"
                         [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
@@ -69,12 +69,12 @@
                     <pep-signature [key]="'sig1'"
                         [src]="'https://i.ibb.co/VMHwLkm/58957776-8700-4c6a-b9bc-a171b84d8080.png'"
                         [label]="'Pepperi Signature'" [xAlignment]="'center'" [rowSpan]="4"
-                        (valueChanged)="onValueChanged($event)">
+                        (valueChange)="onValueChanged($event)">
                     </pep-signature>
 
                     <!-- Attachment Example -->
                     <pep-attachment [key]="'attachment1'" [label]="'Pepperi Attachment'" [xAlignment]="'center'"
-                        [rowSpan]="2" (valueChanged)="onValueChanged($event)">
+                        [rowSpan]="2" (valueChange)="onValueChanged($event)">
                     </pep-attachment>
 
                     <!-- Icons Examples -->
@@ -117,19 +117,19 @@
                     </pep-quantity-selector>
 
                     <pep-quantity-selector [key]="'qs2'" [label]="'Pepperi Quantity Selector 1'" [type]="'button'"
-                        [value]="'55'" [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
+                        [value]="'55'" [xAlignment]="'left'" (valueChange)="onValueChanged($event)">
                     </pep-quantity-selector>
 
                     <!-- Select Example -->
                     <pep-select [key]="'select1'" [label]="'Pepperi Select'" [value]="'val2'" [xAlignment]="'right'"
                         [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }]'
-                        (valueChanged)="onValueChanged($event)">
+                        (valueChange)="onValueChanged($event)">
                     </pep-select>
 
                     <pep-select [key]="'multi1'" [label]="'Pepperi Multi Select'" [type]="'multi'" [value]="'val1;val2'"
                         [xAlignment]="'right'"
                         [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
-                        (valueChanged)="onValueChanged($event)">
+                        (valueChange)="onValueChanged($event)">
                     </pep-select>
 
                     <!-- Textarea Example -->

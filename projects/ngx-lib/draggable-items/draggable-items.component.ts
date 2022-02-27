@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 import { IPepDraggableItem, PepDraggableItemPlaceholderType, PepDraggableItemsTitleType } from './draggable-items.model';
-
+import { PepSizeType } from '@pepperi-addons/ngx-lib';
 @Component({
     selector: 'pep-draggable-items',
     templateUrl: './draggable-items.component.html',
@@ -16,6 +16,7 @@ export class DraggableItemsComponent implements OnInit, OnDestroy {
     @Input() showSearch = false;
     @Input() title = '';
     @Input() titleType: PepDraggableItemsTitleType = 'regular';
+    @Input() titleSizeType: PepSizeType = 'xl';
 
     @Input() itemPlaceholderType: PepDraggableItemPlaceholderType = 'none';
 

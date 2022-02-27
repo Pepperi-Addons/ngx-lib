@@ -132,6 +132,13 @@ export const pepIconDeviceMobile: {
   name: 'device_mobile',
   data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M16 3a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h8zm-1 2H9a1 1 0 00-1 1v12a1 1 0 001 1h6a1 1 0 001-1V6a1 1 0 00-1-1zm-1 11a1 1 0 010 2h-4a1 1 0 010-2h4z"/></svg>`
 };
+export const pepIconDeviceResponsive: {
+  name: 'device_responsive';
+  data: string;
+} = {
+  name: 'device_responsive',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13 3a2 2 0 012 2v4h4a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h8zm0 8H5v7a1 1 0 00.883.993L6 19h7v-8zm5 0h-3v8h3a1 1 0 00.993-.883L19 18v-6a1 1 0 00-1-1zm-6-6H6a1 1 0 00-.993.883L5 6v3h8V6a1 1 0 00-1-1z"/></svg>`
+};
 export const pepIconDeviceTablet: {
   name: 'device_tablet';
   data: string;
@@ -691,6 +698,7 @@ export type PepIconType =
   | 'barnd_pepperi'
   | 'device_desktop'
   | 'device_mobile'
+  | 'device_responsive'
   | 'device_tablet'
   | 'indicator_dot_placeholder'
   | 'misc_excel'
