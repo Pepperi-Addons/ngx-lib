@@ -2,7 +2,7 @@
     <pep-profile-data-views-card *ngFor="let profileDataViews of profileDataViewsList"
         [configurationPerScreenSize]="configurationPerScreenSize" [title]="profileDataViews.title"
         [profileId]="profileDataViews.profileId" [dataViews]="profileDataViews.dataViews"
-        [isDefault]="profileDataViews.profileId === defaultProfile?.profileId"
+        [isDefault]="profileDataViews.profileId === defaultProfileId"
         (dataViewEditClick)="onDataViewEditClicked($event)" (dataViewDeleteClick)="onDataViewDeleteClicked($event)">
     </pep-profile-data-views-card>
 
