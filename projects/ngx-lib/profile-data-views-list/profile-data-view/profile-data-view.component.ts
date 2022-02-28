@@ -15,9 +15,12 @@ export class ProfileDataViewComponent implements OnInit {
     @Output() editClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
     @Output() deleteClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
 
-    constructor() { }
+    constructor() {
+        //
+     }
 
     ngOnInit() {
+        //
     }
 
     onEditClicked(event: IPepButtonClickEvent): void {
