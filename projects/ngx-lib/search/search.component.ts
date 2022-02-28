@@ -271,9 +271,10 @@ export class PepSearchComponent implements OnInit, OnDestroy {
 
         event.preventDefault();
 
+        /*
         if (this.isFloating) {
             this.showFloatingButton();
-        }
+        } */
     }
 
     onSearchClicked() {
@@ -285,6 +286,13 @@ export class PepSearchComponent implements OnInit, OnDestroy {
             } else {
                 this.state = 'open';
             }
+        }
+    }
+
+    onFocusout() {
+        console.log('onFocusOut');
+        if (this.isFloating && this.searchControl.value?.length === 0) {
+            this.showFloatingButton();
         }
     }
 
