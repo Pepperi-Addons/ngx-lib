@@ -1,8 +1,10 @@
 @use '../src/core/style/abstracts/variables';
+:host {
+    height: 100%;
+}
 
 .total-items-container {
-    height: variables.$top-bar-height-with-no-top;
+    height: inherit;
     display: flex;
     align-items: center;
-
 }

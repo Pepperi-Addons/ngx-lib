@@ -35,7 +35,7 @@ export class ProfileDataViewsListComponent implements OnInit {
         return this._profileDataViewsList;
     }
 
-    @Input() configurationPerScreenSize: boolean = false;
+    @Input() configurationPerScreenSize = false;
 
     @Output() saveNewProfileClick: EventEmitter<string> = new EventEmitter<string>();
     @Output() dataViewEditClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
@@ -57,6 +57,7 @@ export class ProfileDataViewsListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        //
     }
 
     setSelectedNewProfileId(value: string) {

@@ -72,10 +72,9 @@
         </div>
     </mat-form-field>
 </ng-template>
-
 <ng-template #triggerOnClickBlock>
     <!-- <ng-container *ngIf="(state == 'open' && searchControl.value?.length > 0)"> -->
-    <ng-container *ngIf="(state == 'open')">
+     <ng-container *ngIf="state == 'open' && (isFloating || searchControl.value?.length > 0)"> 
         <mat-icon class="pep-text-icon pep-pointer" (click)="onClearClicked($event)">
             <pep-icon name="system_close"></pep-icon>
         </mat-icon>
