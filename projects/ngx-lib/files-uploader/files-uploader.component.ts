@@ -98,9 +98,10 @@ export class PepFilesUploaderComponent implements OnInit {
             const reader = new FileReader();
 
             reader.onload = (event: any) => {
-                const fileNameArray = item._file.name.split('.');
-                const fileName = fileNameArray[0];
-                const fileExt = fileNameArray[1]; // item._file.name.split('.').pop();
+                // fix for DI-19376 - when there is a dot on the file name (not include the extantion one)
+                //const fileNameArray = item._file.name.split('.');
+                const fileName = this.getFileName(item._file.name); //fileNameArray[0];
+                const fileExt = this.getFileExtension(item._file.name); //fileNameArray[1]; // item._file.name.split('.').pop();
                 const target = event.target || event.srcElement;
                 const fileStr = target.result;
                 const errorMsg = this.isValidFile(
@@ -134,6 +135,17 @@ export class PepFilesUploaderComponent implements OnInit {
         };
     }
 
+    getFileName(filename){
+        // get file name
+        const fileName = filename.substring(0,filename.lastIndexOf('.'));
+        return fileName;
+    }
+
+    getFileExtension(filename){
+        // get file extension
+        const extension = filename.substring(filename.lastIndexOf('.') + 1, filename.length);
+        return extension;
+    }
     ngOnInit(): void {
         /*this.uploader.onCompleteAll = () => {
             this.fileInput.nativeElement.value = '';
