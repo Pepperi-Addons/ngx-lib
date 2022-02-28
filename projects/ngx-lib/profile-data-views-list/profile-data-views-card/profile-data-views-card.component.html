@@ -7,12 +7,12 @@
                 translate)}}&nbsp;
             </span>
         </div>
-        <pep-menu sizeType="sm" [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
+        <pep-menu *ngIf="!configurationPerScreenSize && !isDefault" sizeType="sm" [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
         </pep-menu>
     </div>
 
     <pep-profile-data-view *ngFor="let dataView of dataViews" [dataViewId]="dataView.dataViewId"
-        [title]="configurationPerScreenSize ? dataView.viewType : ''" [fields]="dataView.fields"
+        [title]="configurationPerScreenSize ? dataView.viewType : ''" [fields]="dataView.fields" [canDelete]="!(isDefault && dataView.viewType === 'Tablet')"
         (editClick)="onDataViewEditClicked($event)" (deleteClick)="onDataViewDeleteClicked($event)">
     </pep-profile-data-view>
 </div>
