@@ -290,7 +290,6 @@ export class PepSearchComponent implements OnInit, OnDestroy {
     }
 
     onFocusout() {
-        console.log('onFocusOut');
         if (this.isFloating && this.searchControl.value?.length === 0) {
             this.showFloatingButton();
         }
