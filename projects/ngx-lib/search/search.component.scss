@@ -16,6 +16,9 @@
                 cursor: pointer;
             }
         }
+        .hide-clear-icon { 
+            visibility: hidden;
+        }
     }
 
     &.pep-floating-search {

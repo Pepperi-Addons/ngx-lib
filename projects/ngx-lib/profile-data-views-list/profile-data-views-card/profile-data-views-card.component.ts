@@ -10,10 +10,10 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./profile-data-views-card.component.scss', './profile-data-views-card.component.theme.scss']
 })
 export class ProfileDataViewsCardComponent implements OnInit {
-    @Input() profileId: string = '';
-    @Input() title: string = '';
+    @Input() profileId = '';
+    @Input() title = '';
     @Input() dataViews: IPepProfileDataView[] = [];
-    @Input() configurationPerScreenSize: boolean = false;
+    @Input() configurationPerScreenSize = false;
     @Input() isDefault = false;
 
     @Output() dataViewEditClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
