@@ -37,13 +37,5 @@ $spacing-bottom: variables.$spacing-sm;
     height: variables.$draggable-item-height;
     border-radius: variables.$border-radius-md;
     width: 100%;
-    
-    &.none {
-        opacity: 0;
-    }
-
-    &.weak {
-        @include mixins.state-weak-default();
-    }
-
+   
 }
