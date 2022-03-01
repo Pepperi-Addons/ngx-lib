@@ -23,7 +23,7 @@ export class DraggableExampleComponent implements OnInit {
     even = [10];
     title = 'client-side';
 
-    defaultProfile: IPepProfileDataViewsCard;
+    defaultProfileId: string;
     profileDataViewsList: Array<IPepProfileDataViewsCard> = [];
     availableProfiles: Array<IPepProfile> = [];
 
@@ -47,7 +47,7 @@ export class DraggableExampleComponent implements OnInit {
             viewType: 'Landscape'
         }];
 
-        this.defaultProfile = {
+        const repProfile = {
             profileId: '123',
             title: 'Rep 1',
             dataViews: repDataViews
@@ -65,7 +65,8 @@ export class DraggableExampleComponent implements OnInit {
             dataViews: buyerDataViews
         };
 
-        this.profileDataViewsList = [this.defaultProfile, profile2];
+        this.defaultProfileId = repProfile.profileId;
+        this.profileDataViewsList = [repProfile, profile2];
 
         this.availableProfiles = [{
             id: '123',
