@@ -162,6 +162,14 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         this.form = this.customizationService.getDefaultFromGroup(pepField);
     }
 
+    private getOtherData() {
+        return {
+            imageSrc: this.srcLarge || this.src,
+            options: this.options,
+            title: this.label
+        };
+    }
+
     ngOnChanges(changes: any): void {
         if (this.standAlone) {
             this.setDefaultForm();
@@ -234,6 +242,9 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             hasParentImage = false;
         }
 
+        // Add the other data object for let the client open the image dialog eazy.
+        event.otherData = this.getOtherData();
+
         this.elementClick.emit(event);
     }
 
@@ -258,17 +269,13 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         // } else {
         //     this.imageService.openImageDialog(this.srcLarge || this.src, this.options, this.label);
         // }
-
-        this.elementClick.emit({
+        const eventToRaise: IPepFieldClickEvent = {
             key: this.key,
             controlType: this.controlType,
-            eventWhich: event.which,
-            otherData: {
-                imageSrc: this.srcLarge || this.src,
-                options: this.options,
-                title: this.label
-            }
-        });
+            eventWhich: event.which
+        };
+        eventToRaise.otherData = this.getOtherData();
+        this.elementClick.emit(eventToRaise);
     }
 
     // openImageModal(hasParentImage: boolean): void {
