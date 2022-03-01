@@ -358,7 +358,6 @@ export class PepQuantitySelectorField extends PepFieldBase {
         super(options);
 
         this.updatedDataCount = 0;
-        this.allowDecimal = options.allowDecimal || false;
         this.type = options.type || 'qs';
 
         this.update(options);
@@ -366,7 +365,8 @@ export class PepQuantitySelectorField extends PepFieldBase {
 
     public update(options: IPepQuantitySelectorFieldOptions): void {
         super.update(options);
-
+        
+        this.allowDecimal = options.allowDecimal || false;
         this.notificationInfo = options.notificationInfo;
         this.updatedDataCount += 1;
     }
