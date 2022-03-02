@@ -1202,6 +1202,18 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         if (customField instanceof PepQuantitySelectorField) {
             const notificationInfo = updatedField.NotificationInfo;
             options.notificationInfo = notificationInfo;
+
+            // Change type if it's change (only for allowDecimal).
+            let allowDecimal = false;
+            if (updatedField.FieldType === FIELD_TYPE.NumberRealQuantitySelector ||
+                updatedField.FieldType === FIELD_TYPE.NumberReal ||
+                updatedField.FieldType === FIELD_TYPE.NumberRealForMatrix
+            ) {
+                allowDecimal = true;
+            } 
+            
+            options.allowDecimal = allowDecimal;
+
         } else if (customField instanceof PepSelectField) {
             options.options = this.convertOptionalValues(
                 updatedField.OptionalValues
