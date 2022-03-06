@@ -139,6 +139,14 @@ body {
     @include mixins.ellipsis();
 }
 
+.font-family-title {
+    font-family: variables.$font-family-title;
+}
+
+.font-family-body {
+    font-family: variables.$font-family-body;
+}
+
 h6,
 h5,
 h4,

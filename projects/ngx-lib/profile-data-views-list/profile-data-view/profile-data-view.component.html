@@ -2,7 +2,7 @@
     <div class="title ellipsis" [title]="title">
         <span class="title-md">{{title}}</span>
     </div>
-    <pep-button class="delete-button" sizeType="xs" (buttonClick)="onDeleteClicked($event)"
+    <pep-button *ngIf="canDelete" class="delete-button" sizeType="xs" (buttonClick)="onDeleteClicked($event)"
         [value]="'ACTIONS.REMOVE' | translate">
     </pep-button>
 </div>

@@ -11,13 +11,17 @@ export class ProfileDataViewComponent implements OnInit {
     @Input() dataViewId: string;
     @Input() title: string;
     @Input() fields: string[];
+    @Input() canDelete = true;
 
     @Output() editClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
     @Output() deleteClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
 
-    constructor() { }
+    constructor() {
+        //
+     }
 
     ngOnInit() {
+        //
     }
 
     onEditClicked(event: IPepButtonClickEvent): void {
