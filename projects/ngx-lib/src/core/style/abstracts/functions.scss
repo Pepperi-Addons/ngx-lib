@@ -351,29 +351,29 @@
 
 /// Gets color from pep theme
 /// @param {Map} $pepperi-theme - the pep theme map 
-/// @param {String} $color-map - the colors map 
+/// @param {String} $color-map-key - the colors map key
 /// @param {String} $color-name - the color name
 /// @return {color} - wanted color
-// @function get-pep-color($pepperi-theme, $color-map, $color-name) {
+// @function get-pep-color($pepperi-theme, $color-map-key, $color-name) {
 //     $colors: map.get($pepperi-theme, colors);
-//     @return map.get(map.get($colors, $color-map), $color-name);
+//     @return map.get(map.get($colors, $color-map-key), $color-name);
 // }
-@function get-pep-color($color-map, $color-name) {
-    @return map.get($_pepperi-theme, colors, $color-map, $color-name);
+@function get-pep-color($color-map-key, $color-name) {
+    @return map.get($_pepperi-theme, colors, $color-map-key, $color-name);
 }
 
 /// Gets shadow from pep theme
 /// @param {Map} $pepperi-theme - the pep theme map 
-/// @param {String} $shadow-map - the shadow map 
+/// @param {String} $shadow-map-key - the shadow map key
 /// @param {String} $shadow-name - the shadow name
 /// @return {shadow} - wanted shadow
-// @function get-pep-shadow($pepperi-theme, $shadow-map, $shadow-name) {
+// @function get-pep-shadow($pepperi-theme, $shadow-map-key, $shadow-name) {
 //     $shadows: map.get($pepperi-theme, shadows);
-//     @return map.get(map.get($shadows, $shadow-map), $shadow-name);
+//     @return map.get(map.get($shadows, $shadow-map-key), $shadow-name);
 // }
 
-@function get-pep-shadow($shadow-map, $shadow-name) {
-    @return map.get($_pepperi-theme, shadows, $shadow-map, $shadow-name);
+@function get-pep-shadow($shadow-map-key, $shadow-name) {
+    @return map.get($_pepperi-theme, shadows, $shadow-map-key, $shadow-name);
 }
 
 /// Replace `$search` with `$replace` in `$string`

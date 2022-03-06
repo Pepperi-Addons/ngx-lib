@@ -387,69 +387,69 @@
 // ******************************************************************************
 //                       State weak declerations
 // ******************************************************************************
-@mixin pep-state-default($style: weak, $color-name: null, $regularBorder: false) {
+@mixin pep-state-default($style: weak, $color-map-key: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-default();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-default();
     } @else if ($style == 'weak') {
-        @include state-weak-default($color-name);
+        @include state-weak-default($color-map-key);
     } @else if ($style == 'strong') {
-        @include state-strong-default($color-name);
+        @include state-strong-default($color-map-key);
     } @else { // regular.
-        @include state-regular-default($regularBorder, $color-name);
+        @include state-regular-default($regularBorder, $color-map-key);
     }
 }
-@mixin pep-state-disable($style: weak, $color-name: null, $regularBorder: false) {
+@mixin pep-state-disable($style: weak, $color-map-key: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-disable();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-disable();
     } @else if ($style == 'weak') {
-        @include state-weak-disable($color-name);
+        @include state-weak-disable($color-map-key);
     } @else if ($style == 'strong') {
-        @include state-strong-disable($color-name);
+        @include state-strong-disable($color-map-key);
     } @else { // regular.
-        @include state-regular-disable($regularBorder, $color-name);
+        @include state-regular-disable($regularBorder, $color-map-key);
     }
 }
-@mixin pep-state-hover($style: weak, $color-name: null, $regularBorder: false) {
+@mixin pep-state-hover($style: weak, $color-map-key: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-hover();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-hover();
     } @else if ($style == 'weak') {
-        @include state-weak-hover($color-name);
+        @include state-weak-hover($color-map-key);
     } @else if ($style == 'strong') {
-        @include state-strong-hover($color-name);
+        @include state-strong-hover($color-map-key);
     } @else { // regular.
-        @include state-regular-hover($regularBorder, $color-name);
+        @include state-regular-hover($regularBorder, $color-map-key);
     }
 }
-@mixin pep-state-active($style: weak, $color-name: null, $regularBorder: false) {
+@mixin pep-state-active($style: weak, $color-map-key: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-active();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-active();
     } @else if ($style == 'weak') {
-        @include state-weak-active($color-name);
+        @include state-weak-active($color-map-key);
     } @else if ($style == 'strong') {
-        @include state-strong-active($color-name);
+        @include state-strong-active($color-map-key);
     } @else { // regular.
-        @include state-regular-active($regularBorder, $color-name);
+        @include state-regular-active($regularBorder, $color-map-key);
     }
 }
-@mixin pep-state-focus($style: weak, $color-name: null, $regularBorder: false) {
+@mixin pep-state-focus($style: weak, $color-map-key: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-focus();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-focus();
     } @else if ($style == 'weak') {
-        @include state-weak-focus($color-name);
+        @include state-weak-focus($color-map-key);
     } @else if ($style == 'strong') {
-        @include state-strong-focus($color-name);
+        @include state-strong-focus($color-map-key);
     } @else { // regular.
-        @include state-regular-focus($regularBorder, $color-name);
+        @include state-regular-focus($regularBorder, $color-map-key);
     }
 }
 
@@ -458,46 +458,46 @@
 // ******************************************************************************
 //  Weak - default
 // -----------------------------------------------------------------------------
-@mixin state-weak-default($color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-weak;
+@mixin state-weak-default($color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-weak;
     }
-    background: functions.get-pep-color($color-map-name, color-tran-30);
+    background: functions.get-pep-color($color-map-key, color-tran-30);
 }
-@mixin state-weak-disable($color-map-name: null) {
+@mixin state-weak-disable($color-map-key: null) {
     @include state-disabled();
 
-    @if ($color-map-name == null) {
-        $color-map-name: color-weak;
+    @if ($color-map-key == null) {
+        $color-map-key: color-weak;
     }
     color:functions.get-pep-color(color-text, color-disabled) !important;
-    background: functions.get-pep-color($color-map-name, color-tran-10) !important;
+    background: functions.get-pep-color($color-map-key, color-tran-10) !important;
 }
-@mixin state-weak-hover($color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-weak;
+@mixin state-weak-hover($color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-weak;
     }
-    background: functions.get-pep-color($color-map-name, color-tran-40);
+    background: functions.get-pep-color($color-map-key, color-tran-40);
 }
-@mixin state-weak-active($color-map-name: null, $add-inline: true, $regularBorder: false) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-weak;
+@mixin state-weak-active($color-map-key: null, $add-inline: true, $regularBorder: false) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-weak;
     }
 
     &:not(.keep-background-on-focus) {
-        // background: functions.get-pep-color($color-map-name, color-tran-0); // TODO: In Table view is gray so what sould we do ask Yonatan.
+        // background: functions.get-pep-color($color-map-key, color-tran-0); // TODO: In Table view is gray so what sould we do ask Yonatan.
         background: functions.get-pep-color(color-system-primary-invert, color-base);
     }
 
     box-shadow: functions.get-pep-shadow(shadow-xs, soft);
     
     @if ($add-inline) {
-        @include inline(functions.get-pep-color($color-map-name, color-base), 1px, solid, $regularBorder);
+        @include inline(functions.get-pep-color($color-map-key, color-base), 1px, solid, $regularBorder);
     }
 }
-@mixin state-weak-focus($color-map-name: null, $add-inline: true, $regularBorder: false) {
+@mixin state-weak-focus($color-map-key: null, $add-inline: true, $regularBorder: false) {
     // box-shadow: functions.get-pep-shadow(shadow-xs, soft);
-    @include state-weak-active($color-map-name, $add-inline, $regularBorder);
+    @include state-weak-active($color-map-key, $add-inline, $regularBorder);
     @include focus();
 }
 
@@ -538,54 +538,54 @@
 // ******************************************************************************
 //  Regular - default
 // -----------------------------------------------------------------------------
-@mixin state-regular-default($regularBorder: false, $color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-regular;
+@mixin state-regular-default($regularBorder: false, $color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-regular;
     }
-    background: functions.get-pep-color($color-map-name, color-flat-r-40);
+    background: functions.get-pep-color($color-map-key, color-flat-r-40);
     box-shadow: functions.get-pep-shadow(shadow-xs, soft);
-    @include inline(functions.get-pep-color($color-map-name, color-flat-r-20), 1px, solid, $regularBorder);
+    @include inline(functions.get-pep-color($color-map-key, color-flat-r-20), 1px, solid, $regularBorder);
 }
-@mixin state-regular-hover($regularBorder: false, $color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-regular;
+@mixin state-regular-hover($regularBorder: false, $color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-regular;
     }
-    background: functions.get-pep-color($color-map-name, color-flat-r-40);
+    background: functions.get-pep-color($color-map-key, color-flat-r-40);
     box-shadow: functions.get-pep-shadow(shadow-xs, regular);
-    @include inline(functions.get-pep-color($color-map-name, color-flat-r-10), 1px, solid, $regularBorder);
+    @include inline(functions.get-pep-color($color-map-key, color-flat-r-10), 1px, solid, $regularBorder);
 }
-@mixin state-regular-active($regularBorder: false, $color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-regular;
+@mixin state-regular-active($regularBorder: false, $color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-regular;
     }
-    background: functions.get-pep-color($color-map-name, color-flat-r-30);
+    background: functions.get-pep-color($color-map-key, color-flat-r-30);
     box-shadow: functions.get-pep-shadow(shadow-xs, hard);
-    @include inline(functions.get-pep-color($color-map-name, color-base), 1px, solid, $regularBorder);
+    @include inline(functions.get-pep-color($color-map-key, color-base), 1px, solid, $regularBorder);
 
     // @if $regularBorder {
     // } @else {
     //     @include focus();
     // }
 }
-@mixin state-regular-focus($regularBorder: false, $color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-regular;
+@mixin state-regular-focus($regularBorder: false, $color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-regular;
     }
-    background: functions.get-pep-color($color-map-name, color-flat-r-30);
+    background: functions.get-pep-color($color-map-key, color-flat-r-30);
     box-shadow: functions.get-pep-shadow(shadow-xs, regular);
-    @include inline(functions.get-pep-color($color-map-name, color-base), 1px, solid, $regularBorder);
+    @include inline(functions.get-pep-color($color-map-key, color-base), 1px, solid, $regularBorder);
     @include focus();
 }
-@mixin state-regular-disable($regularBorder: false, $color-map-name: null) {
+@mixin state-regular-disable($regularBorder: false, $color-map-key: null) {
     @include state-disabled();
     
-    @if ($color-map-name == null) {
-        $color-map-name: color-regular;
+    @if ($color-map-key == null) {
+        $color-map-key: color-regular;
     }
     color:functions.get-pep-color(color-text, color-disabled) !important;
-    background: functions.get-pep-color($color-map-name, color-flat-r-30) !important;
+    background: functions.get-pep-color($color-map-key, color-flat-r-30) !important;
     box-shadow: functions.get-pep-shadow(shadow-xs, xsoft) !important;
-    @include inline(functions.get-pep-color($color-map-name, color-tran-20), 1px, solid, $regularBorder);
+    @include inline(functions.get-pep-color($color-map-key, color-tran-20), 1px, solid, $regularBorder);
 }
 
 // ******************************************************************************
@@ -593,13 +593,13 @@
 // ******************************************************************************
 //  Strong - default
 // -----------------------------------------------------------------------------
-@mixin state-strong-default($color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-strong;
+@mixin state-strong-default($color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-strong;
     }
 
     font-weight: variables.$font-weight-bold;
-    background: functions.get-pep-color($color-map-name, color-base);
+    background: functions.get-pep-color($color-map-key, color-base);
     box-shadow: functions.get-pep-shadow(shadow-sm, soft);
 
     $color: functions.get-pep-color(color-text, color-invert);
@@ -609,13 +609,13 @@
         @include svg-icon-color($color);
     }
 }
-@mixin state-strong-disable($color-map-name: null) {
+@mixin state-strong-disable($color-map-key: null) {
     @include state-disabled();
     
-    @if ($color-map-name == null) {
-        $color-map-name: color-strong;
+    @if ($color-map-key == null) {
+        $color-map-key: color-strong;
     }
-    background: functions.get-pep-color($color-map-name, color-base) !important;
+    background: functions.get-pep-color($color-map-key, color-base) !important;
     opacity: 0.5 !important;
     
     $color: functions.get-pep-color(color-text, color-invert);
@@ -625,25 +625,25 @@
         @include svg-icon-color($color);
     }
 }
-@mixin state-strong-hover($color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-strong;
+@mixin state-strong-hover($color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-strong;
     }
-    background: functions.get-pep-color($color-map-name, color-flat-l-10);
+    background: functions.get-pep-color($color-map-key, color-flat-l-10);
     box-shadow: functions.get-pep-shadow(shadow-sm, regular);
 }
-@mixin state-strong-active($color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-strong;
+@mixin state-strong-active($color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-strong;
     }
-    background: functions.get-pep-color($color-map-name, color-flat-l-20);
+    background: functions.get-pep-color($color-map-key, color-flat-l-20);
     box-shadow: functions.get-pep-shadow(shadow-sm, hard);
 }
-@mixin state-strong-focus($color-map-name: null) {
-    @if ($color-map-name == null) {
-        $color-map-name: color-strong;
+@mixin state-strong-focus($color-map-key: null) {
+    @if ($color-map-key == null) {
+        $color-map-key: color-strong;
     }
-    background: functions.get-pep-color($color-map-name, color-flat-l-20);
+    background: functions.get-pep-color($color-map-key, color-flat-l-20);
     box-shadow: functions.get-pep-shadow(shadow-sm, soft);
     @include focus();
 }
@@ -673,20 +673,20 @@
 // ******************************************************************************
 //                       Buttons states declerations
 // ******************************************************************************
-@mixin pep-button-states($style: weak, $color-name: null) {
-    @include pep-state-default($style, $color-name, true);
+@mixin pep-button-states($style: weak, $color-map-key: null) {
+    @include pep-state-default($style, $color-map-key, true);
     &:hover {
-        @include pep-state-hover($style, $color-name, true);
+        @include pep-state-hover($style, $color-map-key, true);
     }
     &:focus {
-        @include pep-state-focus($style, $color-name, true);
+        @include pep-state-focus($style, $color-map-key, true);
     }
     &:active {
-        @include pep-state-active($style, $color-name, true);
+        @include pep-state-active($style, $color-map-key, true);
     }
     &:disabled {
         &:not(.ignore-disabled) {
-            @include pep-state-disable($style, $color-name, true);
+            @include pep-state-disable($style, $color-map-key, true);
         }
     }
 }
@@ -694,10 +694,10 @@
 // ******************************************************************************
 //                       Form field states declerations
 // ******************************************************************************
-@mixin pep-form-field-states($style: weak, $color-name: null) {
+@mixin pep-form-field-states($style: weak, $color-map-key: null) {
     // Default
     .mat-form-field-flex {
-        @include pep-state-default($style, $color-name);
+        @include pep-state-default($style, $color-map-key);
     }
 
     // Hover
@@ -705,7 +705,7 @@
         .ignore-disabled,
         &:not(.mat-form-field-disabled) {
             .mat-form-field-flex {
-                @include pep-state-hover($style, $color-name);
+                @include pep-state-hover($style, $color-map-key);
             }
         }
     }
@@ -715,7 +715,7 @@
         .ignore-disabled,
         &:not(.mat-form-field-disabled) {
             .mat-form-field-flex {
-                @include pep-state-focus($style, $color-name);
+                @include pep-state-focus($style, $color-map-key);
             }
         }
     }
@@ -726,7 +726,7 @@
         .ignore-disabled,
         &:not(.mat-form-field-disabled) {
             .mat-form-field-flex {
-                @include pep-state-active($style, $color-name);
+                @include pep-state-active($style, $color-map-key);
             }
         }
     }
@@ -735,7 +735,7 @@
     &.mat-form-field-disabled {
         &:not(.ignore-disabled) {
             .mat-form-field-flex {
-                @include pep-state-disable($style, $color-name);
+                @include pep-state-disable($style, $color-map-key);
             }
         }
     }
