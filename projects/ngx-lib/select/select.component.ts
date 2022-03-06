@@ -143,9 +143,9 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         } else {
             const selectedOpt = this.options.find((opt) => opt.key === value);
 
-            if (selectedOpt) {
-                this.fieldFormattedValue = selectedOpt.value;
-            }
+            // fix DI-19371 - can't select none as option : avner
+            this.fieldFormattedValue = selectedOpt ? selectedOpt.value : '';
+
         }
     }
 
