@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import {
     DatetimeAdapter,
     MatDatetimepickerInputEvent,
@@ -34,6 +34,12 @@ import {
 import { Moment, utc } from 'moment/moment';
 import { MomentUtcDateAdapter, MomentUtcDateTimeAdapter, MY_DATE_FORMATS } from './date.model';
 
+// Set the calture for the adapter.
+export function getCalture(layoutService: PepLayoutService) {
+    const culture = layoutService.getCurrentLanguage();
+    return culture;
+}
+
 @Component({
     selector: 'pep-date',
     templateUrl: './date.component.html',
@@ -43,7 +49,8 @@ import { MomentUtcDateAdapter, MomentUtcDateTimeAdapter, MY_DATE_FORMATS } from 
         // CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR,
         // The locale would typically be provided on the root module of your application. We do it at
         // the component level here, due to limitations of our example generation script.
-        //{ provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+        // { provide: MAT_DATE_LOCALE, useValue: 'he' },
+        { provide: MAT_DATE_LOCALE, useFactory: getCalture, deps:[PepLayoutService] },
 
         // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
         // `MatMomentDateModule` in your applications root module. We provide it at the component level
@@ -200,8 +207,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        const culture = this.layoutService.getCurrentLanguage();
-        this.adapter.setLocale(culture);
+        // This is not working for the dateModel so I use set calure in the useFactory: getCalture function.
+        // const culture = this.layoutService.getCurrentLanguage();
+        // this.adapter.setLocale(culture);
 
         this.setDateModel();
     }

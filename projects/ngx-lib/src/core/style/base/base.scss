@@ -2,8 +2,43 @@
 @use '../abstracts/mixins';
 @use '../abstracts/functions';
 
+//  Roundness 
+// ---------------------------
+.border-radius-sm { border-radius: variables.$border-radius-sm; }
+.border-radius-md { border-radius: variables.$border-radius-md; }
+.border-radius-lg { border-radius: variables.$border-radius-lg; }
+
+//  Shadows 
+// ---------------------------
+.shadow-none { box-shadow: none; }
+
+.shadow-xs-xsoft { box-shadow: functions.get-pep-shadow(shadow-xs, xsoft); }
+.shadow-xs-soft { box-shadow: functions.get-pep-shadow(shadow-xs, soft); }
+.shadow-xs-regular { box-shadow: functions.get-pep-shadow(shadow-xs, regular); }
+.shadow-xs-hard { box-shadow: functions.get-pep-shadow(shadow-xs, hard); }
+
+.shadow-sm-xsoft { box-shadow: functions.get-pep-shadow(shadow-sm, xsoft); }
+.shadow-sm-soft { box-shadow: functions.get-pep-shadow(shadow-sm, soft); }
+.shadow-sm-regular { box-shadow: functions.get-pep-shadow(shadow-sm, regular); }
+.shadow-sm-hard { box-shadow: functions.get-pep-shadow(shadow-sm, hard); }
+
+.shadow-md-xsoft { box-shadow: functions.get-pep-shadow(shadow-md, xsoft); }
+.shadow-md-soft { box-shadow: functions.get-pep-shadow(shadow-md, soft); }
+.shadow-md-regular { box-shadow: functions.get-pep-shadow(shadow-md, regular); }
+.shadow-md-hard { box-shadow: functions.get-pep-shadow(shadow-md, hard); }
+
+.shadow-lg-xsoft { box-shadow: functions.get-pep-shadow(shadow-lg, xsoft); }
+.shadow-lg-soft { box-shadow: functions.get-pep-shadow(shadow-lg, soft); }
+.shadow-lg-regular { box-shadow: functions.get-pep-shadow(shadow-lg, regular); }
+.shadow-lg-hard { box-shadow: functions.get-pep-shadow(shadow-lg, hard); }
+
+.shadow-xl-xsoft { box-shadow: functions.get-pep-shadow(shadow-xl, xsoft); }
+.shadow-xl-soft { box-shadow: functions.get-pep-shadow(shadow-xl, soft); }
+.shadow-xl-regular { box-shadow: functions.get-pep-shadow(shadow-xl, regular); }
+.shadow-xl-hard { box-shadow: functions.get-pep-shadow(shadow-xl, hard); }
+
 //  Spacing
-// ------------------------
+// ---------------------------
 .pep-spacing-element-negative {
     @include mixins.pep-spacing-element-negative();
 }
@@ -11,6 +46,7 @@
 .pep-spacing-element {
     @include mixins.pep-spacing-element();
 }
+
 //  Floating alignment
 // ------------------------
 .pull-right {
@@ -52,20 +88,6 @@
     text-align: left !important;
     justify-self: left !important;
     justify-content: left !important;
-}
-
-//  Roundness
-// ------------------------
-.roundness-sm {
-    border-radius: variables.$border-radius-sm;
-}
-
-.roundness-md {
-    border-radius: variables.$border-radius-md;
-}
-
-.roundness-lg {
-    border-radius: variables.$border-radius-lg;
 }
 
 //  Modal - General
