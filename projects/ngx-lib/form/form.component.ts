@@ -73,6 +73,7 @@ import { IPepFormFieldValueChangeEvent, IPepFormFieldClickEvent } from './form.m
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
+    @Input() isInternal = true;
     @Input() isReport = false;
     @Input() layout: UIControl;
     @Input() lockEvents = false;
@@ -1159,7 +1160,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         this.onFormValidationChanged(isFormValid);
 
         // Set it to false to enable all fields.
-        this.isLocked = false;
+        if (this.isLocked) {
+            this.isLocked = false;
+        }
     }
 
     initForm(): void {
@@ -1463,7 +1466,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         if (isValid) {
             // Set it to false to disable all fields.
-            if (this.layoutType === 'form') {
+            if (this.isInternal && this.layoutType === 'form') {
                 this.isLocked = true;
             }
 
