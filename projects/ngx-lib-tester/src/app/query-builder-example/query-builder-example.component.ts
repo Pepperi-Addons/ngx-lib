@@ -103,7 +103,7 @@ export class QueryBuilderExampleComponent implements OnInit {
                 "Operation": "Contains",
                 "ApiName": "Account.ExternalID",
                 "ExpressionId": "2"
-            }
+            } 
         }
     }
 
