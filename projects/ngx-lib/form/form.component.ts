@@ -1163,7 +1163,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         this.onFormValidationChanged(isFormValid);
 
         // Set it to false to enable all fields.
-        if (this.isLocked) {
+        if (this.isInternal && this.isLocked) {
             this.isLocked = false;
         }
     }
