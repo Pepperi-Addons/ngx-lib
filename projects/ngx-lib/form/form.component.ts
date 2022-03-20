@@ -76,7 +76,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() isInternal = true;
     @Input() isReport = false;
     @Input() layout: UIControl;
-    @Input() lockEvents = false;
+    @Input() lockEvents = false;   
     @Input() canEditObject = true;
 
     private _data: ObjectsDataRow = null;
@@ -96,7 +96,10 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     get data(): ObjectsDataRow {
         return this._data;
     }
-
+    @Input()
+    set lockFields(val: boolean) {        
+        this.isLocked = val;
+    }
     @Input() isActive = false;
     @Input() layoutType: PepLayoutType = 'card';
     // @Input() listType = '';
