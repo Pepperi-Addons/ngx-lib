@@ -66,7 +66,7 @@
         "ERROR_INVALID_FIELDS": "Veuillez valider les champs suivants :",
         "ERROR_INVENTORY_LIMIT": "Quantité max.",
         "ERROR_IS_NOT_VALID": "{{field}} n’est pas valide",
-        "ERROR_IS_REQUIRED": "{{field}} n’est pas requis",
+        "ERROR_IS_REQUIRED": "{{field}} requise",
         "ERROR_MANDATORY_FIELDS": "Champ requis :",
         "ERROR_MAX_QUANTITY_LIMIT": "Quantité max.",
         "ERROR_MIN_QUANTITY_LIMIT": "Quantité min.",
@@ -74,6 +74,6 @@
         "INFO_LOADING_FILE": "Chargement en cours",
         "INFO_MISSING_FILE": "Fichier manquant",
         "INFO_MISSING_IMAGE": "Image manquante",
-        "INFO_MISSING_SIGNATURE": "Signature manquante"
+        "INFO_MISSING_SIGNATURE": "Signature requise"
     }
 }

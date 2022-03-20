@@ -26,6 +26,13 @@
     "INTERNAL_PAGE": {
         "CLICK_TO_ORDER": "Click to order"
     },
+    "PROFILE_DATA_VIEWS_LIST": {
+        "ADD_PROFILE": "Add profile",
+        "SELECT_PROFILE_DIALOG_TITLE": "Select profile",
+        "SELECT_PROFILE": "Select a profile",
+        "DEFAULT_PROFILE": "(Default profile)",
+        "NO_FIELDS_ASSIGNED": "No fields were assigned"
+    },
     "RICH_TEXTAREA": {
         "HINT": "Enter Text"
     },
@@ -75,7 +82,8 @@
             "GREATER_THEN": "Greater than",
             "GREATER_THEN_OR_EQUAL": "Greater than or equal to",
             "NUMBER_RANGE": "Between",
-            "In": "In"
+            "CONTAINS": "Contains",
+            "IN": "In"
         },
         "OPERATOR_UNITS": {
             "DAYS": "Days",
@@ -95,6 +103,7 @@
         "DELETE": "Delete",
         "DONE": "Done",
         "OK": "Ok",
+        "REMOVE": "Remove",
         "SAVE": "Save"
     },
     "LIST": {
