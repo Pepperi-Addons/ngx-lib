@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { PepSessionService } from './session.service';
 import { PepFileService } from './file.service';
 import { PepHttpService } from '../../http/services/http.service';
@@ -21,17 +22,22 @@ export class PepAddonService {
     private readonly ADDON_API_RELATIVE_PATH = '/addons/api';
     private readonly ADDON_API_ASYNC_RELATIVE_PATH = `${this.ADDON_API_RELATIVE_PATH}/async`;
 
+    private get devServer() {
+        return this.route.snapshot.queryParamMap.get('devServer') === 'true';
+    }
+
     constructor(
         private sessionService: PepSessionService,
         private httpService: PepHttpService,
         private loaderService: PepLoaderService,
         public translateService: PepTranslateService,
         public fileService: PepFileService,
+        private route: ActivatedRoute,
     ) {
         //
     }
 
-    private getAddonBaseRelativePath(isAsync: boolean): string {
+    private getAddonBaseRelativePath(isAsync: boolean = false): string {
         return isAsync
             ? this.ADDON_API_ASYNC_RELATIVE_PATH
             : this.ADDON_API_RELATIVE_PATH;
@@ -56,6 +62,18 @@ export class PepAddonService {
         }
     }
 
+    getServerBaseUrl(addonUUID: string, fileName: string = '', isAsync = false, localhostPort = 4500): string {
+        const fileToAdd = fileName.length > 0 ? `/${fileName}` : '';
+        
+        // For devServer run server on localhost.
+        if(this.devServer) {
+            return `http://localhost:${localhostPort}${fileToAdd}`;
+        } else {
+            const baseUrl = this.sessionService.getPapiBaseUrl();
+            return `${baseUrl}${this.getAddonBaseRelativePath(isAsync)}/${addonUUID}${fileToAdd}`;
+        }
+    }
+
     getAddonApiCall(
         addonUUID: string,
         fileName: string,
@@ -63,12 +81,15 @@ export class PepAddonService {
         httpOptions = {},
         isAsync = false
     ): Observable<any> {
-        return this.httpService.getPapiApiCall(
-            `${this.getAddonBaseRelativePath(
-                isAsync
-            )}/${addonUUID}/${fileName}/${functionName}`,
-            httpOptions
-        );
+        // return this.httpService.getPapiApiCall(
+        //     `${this.getAddonBaseRelativePath(
+        //         isAsync
+        //     )}/${addonUUID}/${fileName}/${functionName}`,
+        //     httpOptions
+        // );
+
+        const papiBaseUrl = this.getServerBaseUrl(addonUUID, fileName, isAsync);
+        return this.httpService.getHttpCall(`${papiBaseUrl}/${functionName}`, httpOptions);
     }
 
     postAddonApiCall(
@@ -79,13 +100,16 @@ export class PepAddonService {
         httpOptions = {},
         isAsync = false
     ): Observable<any> {
-        return this.httpService.postPapiApiCall(
-            `${this.getAddonBaseRelativePath(
-                isAsync
-            )}/${addonUUID}/${fileName}/${functionName}`,
-            body,
-            httpOptions
-        );
+        // return this.httpService.postPapiApiCall(
+        //     `${this.getAddonBaseRelativePath(
+        //         isAsync
+        //     )}/${addonUUID}/${fileName}/${functionName}`,
+        //     body,
+        //     httpOptions
+        // );
+
+        const papiBaseUrl = this.getServerBaseUrl(addonUUID, fileName, isAsync);
+        return this.httpService.postHttpCall(`${papiBaseUrl}/${functionName}`, body, httpOptions);
     }
 
     // TODO: need to chek this if the loader is working.
