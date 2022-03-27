@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'pep-snack-bar',
@@ -6,8 +7,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     templateUrl: './snack-bar.component.html',
 })
 export class PepSnackBarComponent {
+    @Input() snackBarRef: MatSnackBarRef<any>;
     @Input() title: string;
-    @Input() message: string;
 
     @Output()
     closeClick: EventEmitter<void> = new EventEmitter<void>();
@@ -17,6 +18,7 @@ export class PepSnackBarComponent {
     }
 
     onCloseClicked(event: any): void {
+        this.snackBarRef?.dismiss();
         this.closeClick.emit();
     }
 }
