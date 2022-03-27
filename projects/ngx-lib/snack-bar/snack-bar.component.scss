@@ -1,0 +1,25 @@
+@use '../src/core/style/abstracts/variables';
+
+.snack-bar-container {
+    width: 22rem;
+    padding: variables.$content-padding;
+    
+    .snack-bar-header-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: variables.$snack-bar-header-height;
+        margin-bottom: variables.$spacing-sm;
+
+        ::ng-deep {
+            .round-corners {
+                border-radius: 1.5rem;
+            }
+        }
+    }
+
+    .snack-bar-content {
+        max-height: 50vh;
+        overflow: auto;
+    }
+}

@@ -15,6 +15,8 @@ import { PepCarouselModule } from '@pepperi-addons/ngx-lib/carousel';
 import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { PepColorModule } from '@pepperi-addons/ngx-lib/color';
 import { PepDateModule } from '@pepperi-addons/ngx-lib/date';
+import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
+import { PepSnackBarModule } from '@pepperi-addons/ngx-lib/snack-bar';
 import { PepGroupButtonsModule } from '@pepperi-addons/ngx-lib/group-buttons';
 import { PepImageModule } from '@pepperi-addons/ngx-lib/image';
 import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
@@ -124,6 +126,8 @@ const pepperiComponentsModules = [
     PepCheckboxModule,
     PepColorModule,
     PepDateModule,
+    PepDialogModule,
+    PepSnackBarModule,
     PepGroupButtonsModule,
     PepImageModule,
     PepImagesFilmstripModule,
