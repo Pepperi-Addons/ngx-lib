@@ -49,7 +49,11 @@ export class PepDialogService {
         dialogConfig.autoFocus = false;
         dialogConfig.direction = this.layoutService.isRtl() ? 'rtl' : 'ltr';
         dialogConfig.disableClose = options.disableClose ?? true;
-        dialogConfig.panelClass = ['pep-dialog', options.panelClass || ''];
+        
+        dialogConfig.panelClass = ['pep-dialog'];
+        if (options.panelClass) {
+            dialogConfig.panelClass.push(options.panelClass);
+        }
 
         if (size === 'inline') {
             dialogConfig.height = options.height || 'auto';
