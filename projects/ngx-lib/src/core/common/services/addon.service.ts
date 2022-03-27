@@ -37,7 +37,7 @@ export class PepAddonService {
         //
     }
 
-    private getAddonBaseRelativePath(isAsync: boolean = false): string {
+    private getAddonBaseRelativePath(isAsync = false): string {
         return isAsync
             ? this.ADDON_API_ASYNC_RELATIVE_PATH
             : this.ADDON_API_RELATIVE_PATH;
@@ -62,7 +62,7 @@ export class PepAddonService {
         }
     }
 
-    getServerBaseUrl(addonUUID: string, fileName: string = '', isAsync = false, localhostPort = 4500): string {
+    getServerBaseUrl(addonUUID: string, fileName = '', isAsync = false, localhostPort = 4500): string {
         const fileToAdd = fileName.length > 0 ? `/${fileName}` : '';
         
         // For devServer run server on localhost.
