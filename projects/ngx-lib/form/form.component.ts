@@ -92,14 +92,15 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             this.updateForm();
         }
     }
-
     get data(): ObjectsDataRow {
         return this._data;
     }
+
     @Input()
-    set lockFields(val: boolean) {        
-        this.isLocked = val;
+    set lockFields(value: boolean) {
+        this.isLocked = value;
     }
+
     @Input() isActive = false;
     @Input() layoutType: PepLayoutType = 'card';
     // @Input() listType = '';
@@ -1164,7 +1165,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         // Set it to false to enable all fields.
         if (this.isInternal && this.isLocked) {
-            this.isLocked = false;
+            this.isLocked = false; 
         }
     }
 

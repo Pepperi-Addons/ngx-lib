@@ -541,6 +541,12 @@
     }
 }
 
+//  Snack bar
+// -------------------------------------------------
+.pepperi-snack-bar, .pep-snack-bar {
+    min-width: 20rem;
+}
+
 // -----------------------------------------------------
 // Override bootstrap css.
 // -----------------------------------------------------
@@ -811,6 +817,19 @@
         .dialog-header-container {
             @include mixins.pep-border(border-bottom);
         }
+    }
+
+    //  SnackBar
+    // -------------------------------------------------
+    .mat-snack-bar-container {
+        // box-shadow: unset;
+        // background: unset;
+        // border: 1px solid functions.get-pep-color(color-system-primary, color-base);
+        padding: unset;
+        color: functions.get-pep-color(color-text, color-main) !important;
+        background: functions.get-pep-color(color-system-primary-invert, color-base) !important;
+        box-shadow: functions.get-pep-shadow(shadow-sm, hard) !important;
+        border: 1px solid functions.get-pep-color(color-system-primary, color-base) !important;
     }
 
     /*----------------- ngx Overrides ---------------------*/

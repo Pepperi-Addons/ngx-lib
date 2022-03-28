@@ -1,0 +1,9 @@
+<div class="snack-bar-container">
+    <div mat-snack-bar-title class="snack-bar-header-container pep-border-bottom">
+        <label class="body-md ellipsis">{{title}}</label>
+        <pep-button sizeType="xs" classNames="round-corners" iconName="system_close" iconPosition="end" (buttonClick)="onCloseClicked($event)"></pep-button>
+    </div>
+    <div mat-snack-bar-content>
+        <ng-content select="[pep-snack-bar-content]"></ng-content>
+    </div>
+</div>

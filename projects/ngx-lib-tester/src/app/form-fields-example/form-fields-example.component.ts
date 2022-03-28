@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
+import { PepSnackBarService } from '@pepperi-addons/ngx-lib/snack-bar';
 import {
     PepLayoutService,
     IPepFieldClickEvent,
@@ -9,6 +11,7 @@ import {
     PepMenuItem,
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
+import { PepSnackBarData } from 'projects/ngx-lib/snack-bar';
 
 @Component({
     templateUrl: './form-fields-example.component.html',
@@ -30,7 +33,12 @@ export class FormFieldsExampleComponent implements OnInit {
     searchAutoCompleteValues = [];
 
     dateString;
-    constructor(public layoutService: PepLayoutService) {
+    constructor(
+        private snackBarService: PepSnackBarService,
+        public layoutService: PepLayoutService,
+        
+    ) {
+
         this.minDateValue = new Date('1-1-2019').getTime();
         this.maxDateValue = new Date('1-1-2021').getTime();
 
@@ -67,5 +75,15 @@ export class FormFieldsExampleComponent implements OnInit {
 
     elementClicked(event: IPepFieldClickEvent) {
         alert(`${event.key}: was clicked`);
+    }
+
+    raiseSnackBar(event) {
+        debugger;
+        const data: PepSnackBarData = {
+            title: 'test',
+            content: 'content bla bla'
+        }
+
+        this.snackBarService.openDefaultSnackBar(data);
     }
 }

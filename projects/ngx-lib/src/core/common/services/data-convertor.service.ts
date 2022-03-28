@@ -52,6 +52,8 @@ export class PepFieldData {
 }
 export class PepRowData {
     UUID?: string;
+    IsEditable?: boolean;
+    IsSelectableForActions?: boolean;
     Fields: PepFieldData[];
 }
 
@@ -99,8 +101,14 @@ export class PepDataConvertorService {
                 rowData.UID = rowUUID
                     ? rowUUID
                     : row.UUID
-                    ? row.UUID
-                    : PepGuid.newGuid();
+                        ? row.UUID
+                        : PepGuid.newGuid();
+                if (row.IsEditable === false) {
+                    rowData.IsEditable = false;
+                }
+                if (row.IsSelectableForActions === false) {
+                    rowData.IsSelectableForActions = false;
+                }
                 row.Fields.forEach((field) =>
                     rowData.Fields.push(this.setDataField(field))
                 );

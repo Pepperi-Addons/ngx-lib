@@ -214,7 +214,7 @@ export class ListExampleComponent implements OnInit, AfterViewInit {
 
             const uiControl = this.dataConvertorService.getUiControl(
                 tableData[0]
-            );
+            );            
             const rows = this.dataConvertorService.convertListData(tableData);
             this.customList.initListData(
                 uiControl,

@@ -6,7 +6,7 @@
             </div>
             <div header-end-content>
                 <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'"
-                    [classNames]="'pep-spacing-element '">
+                    [classNames]="'pep-spacing-element '" (click)="raiseSnackBar($event)">
                 </pep-button>
             </div>
         </pep-top-bar>
