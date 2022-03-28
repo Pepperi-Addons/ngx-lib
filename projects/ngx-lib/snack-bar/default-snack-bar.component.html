@@ -1,3 +1,3 @@
-<pep-snack-bar [title]="data?.title" (closeClick)="onCloseClicked($event)">
+<pep-snack-bar [snackBarRef]="snackBarRef" [title]="data?.title" (closeClick)="onCloseClicked($event)">
     <div pep-snack-bar-content [innerHtml]="data?.content | pepSafeHtml"></div>
 </pep-snack-bar>

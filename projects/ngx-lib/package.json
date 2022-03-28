@@ -1,10 +1,6 @@
 {
     "name": "@pepperi-addons/ngx-lib",
-<<<<<<< HEAD
-    "version": "0.3.11-beta.10",
-=======
-    "version": "0.3.11-beta.12",
->>>>>>> master
+    "version": "0.3.12-beta.2",
     "peerDependencies": {
         "@angular/animations": ">= 12.0.0",
         "@angular/cdk": ">= 12.0.0",

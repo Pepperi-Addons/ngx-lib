@@ -17,7 +17,7 @@ export class PepDefaultSnackBarComponent {
     ) {}
 
     onCloseClicked(event): void {
-        this.snackBarRef.dismiss();
+        this.closeClick.emit();
     }
 
 }
