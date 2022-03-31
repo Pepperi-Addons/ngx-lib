@@ -455,6 +455,20 @@ $sorting-width: 1rem;
                 // }
             }
         }
+        
+
+        &.no-spacing {
+            padding: 0;
+            height: variables.$table-field-height;
+
+            .row-selection {
+                height: variables.$table-field-height;
+            }
+
+            fieldset {
+                height: variables.$table-field-height;
+            }
+        }
 
         &:hover,
         &.highlighted,
@@ -911,6 +925,12 @@ $sorting-width: 1rem;
         .table-row {
             .table-row-fieldset {
                 @include mixins.state-table-row-default();
+            }
+
+            &.even {
+                .table-row-fieldset {
+                    @include mixins.state-table-row-even();
+                }
             }
 
             &:hover,

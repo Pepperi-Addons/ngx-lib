@@ -121,6 +121,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() lockItemInnerEvents = false;
     @Input() printMode = false;
     @Input() isReport = false;
+    @Input() noRowsSpacing = true;
+    @Input() zebraLineColor = true;
     @Input() totalsRow = [];
     @Input() pagerType: PepListPagerType = 'scroll';
     @Input() pageSize: number = DEFAULT_PAGE_SIZE;

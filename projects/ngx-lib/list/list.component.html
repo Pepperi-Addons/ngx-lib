@@ -29,8 +29,8 @@
         [bufferAmount]="printMode ? totalRows : -1" [parentScroll]="parentScroll" [disable]="loadingItemsFromApi"
         class="virtual-scroller" [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }"
         (vsChange)="onVirtualScrollerChange($event)" (vsChildRectChange)="onChildRectChange($event)">
-        <ng-container *ngFor="let item of scroller.viewPortItems; let index; let isFirst = first;">
-            <ng-container *ngTemplateOutlet="listData; context: {item: item}"></ng-container>
+        <ng-container *ngFor="let item of scroller.viewPortItems; let index = index; let isFirst = first;">
+            <ng-container *ngTemplateOutlet="listData; context: {item: item, index:index}"></ng-container>
         </ng-container>
     </virtual-scroller>
 
@@ -41,17 +41,18 @@
     <ng-container *ngTemplateOutlet="tableTotal"></ng-container>
 </ng-container>
 
-<ng-template #listData let-item="item">
+<ng-template #listData let-item="item" let-index="index">
     <ng-container *ngIf="isTable">
         <!-- getIsItemSelected(item) -> item | isItemSelected: selectionTypeForActions : selectedItemId : isAllSelected : selectedItems : unSelectedItems -->
-        <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)"
+        <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)" 
             (mouseleave)="onTableRowMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
-                    selected: getIsItemSelected(item),
-                    highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId
-                }" [ngStyle]="{ visibility: !loadingItemsFromApi || item ? 'visible' : 'hidden' }">
+                'no-spacing': noRowsSpacing,
+                even: zebraLineColor && index % 2 !== 0,
+                selected: getIsItemSelected(item),
+                highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId}" [ngStyle]="{ visibility: !loadingItemsFromApi || item ? 'visible' : 'hidden' }">
             <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
                 <mat-checkbox *ngIf="selectionTypeForActions == 'multi'" type="checkbox"
-                    class="pull-left flip row-selection"
+                    class="pull-left flip row-selection" [ngClass]="{ 'md': noRowsSpacing }"
                     [disabled]="item | isItemDisabled: lockItemInnerEvents : printMode" [ngStyle]="{
                             visibility: !deviceHasMouse ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
@@ -59,7 +60,7 @@
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                 </mat-checkbox>
                 <mat-radio-button *ngIf="selectionTypeForActions == 'single'" name="selection"
-                    class="pull-left flip row-selection pep-radio-button"
+                    class="pull-left flip row-selection pep-radio-button" [ngClass]="{ 'md': noRowsSpacing }"
                     [disabled]="item | isItemDisabled: lockItemInnerEvents : printMode"
                     [checked]="getIsItemSelected(item)"
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
@@ -109,7 +110,7 @@
 
         <div class="table-header-padding-top"></div>
         <fieldset class="table-header-fieldset">
-            <mat-checkbox *ngIf="selectionTypeForActions !== 'none'" #selectAllCB class="pull-left flip row-selection"
+            <mat-checkbox *ngIf="selectionTypeForActions !== 'none'" #selectAllCB class="pull-left flip row-selection" [ngClass]="{ 'md': noRowsSpacing }"
                 type="checkbox" [ngStyle]="{
                         visibility:
                             selectionTypeForActions == 'single' || 
