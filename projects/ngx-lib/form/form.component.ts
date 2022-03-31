@@ -76,7 +76,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() isInternal = true;
     @Input() isReport = false;
     @Input() layout: UIControl;
-    @Input() lockEvents = false;
+    @Input() lockEvents = false;   
     @Input() canEditObject = true;
 
     private _data: ObjectsDataRow = null;
