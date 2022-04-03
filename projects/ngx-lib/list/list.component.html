@@ -46,13 +46,13 @@
         <!-- getIsItemSelected(item) -> item | isItemSelected: selectionTypeForActions : selectedItemId : isAllSelected : selectedItems : unSelectedItems -->
         <div class="table-row" (mouseenter)="onTableRowMouseEnter($event, item?.UID, item?.Type)" 
             (mouseleave)="onTableRowMouseLeave($event, item?.UID, item?.Type)" [ngClass]="{
-                'no-spacing': noRowsSpacing,
-                even: zebraLineColor && index % 2 !== 0,
+                'compact-view': tableViewType === 'compact',
+                even: zebraStripes && index % 2 !== 0,
                 selected: getIsItemSelected(item),
                 highlighted: item?.UID + SEPARATOR + item?.Type === selectedItemId}" [ngStyle]="{ visibility: !loadingItemsFromApi || item ? 'visible' : 'hidden' }">
             <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
                 <mat-checkbox *ngIf="selectionTypeForActions == 'multi'" type="checkbox"
-                    class="pull-left flip row-selection" [ngClass]="{ 'md': noRowsSpacing }"
+                    class="pull-left flip row-selection" [ngClass]="{ 'md': tableViewType === 'compact' }"
                     [disabled]="item | isItemDisabled: lockItemInnerEvents : printMode" [ngStyle]="{
                             visibility: !deviceHasMouse ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
@@ -60,7 +60,7 @@
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                 </mat-checkbox>
                 <mat-radio-button *ngIf="selectionTypeForActions == 'single'" name="selection"
-                    class="pull-left flip row-selection pep-radio-button" [ngClass]="{ 'md': noRowsSpacing }"
+                    class="pull-left flip row-selection pep-radio-button" [ngClass]="{ 'md': tableViewType === 'compact' }"
                     [disabled]="item | isItemDisabled: lockItemInnerEvents : printMode"
                     [checked]="getIsItemSelected(item)"
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
@@ -110,7 +110,7 @@
 
         <div class="table-header-padding-top"></div>
         <fieldset class="table-header-fieldset">
-            <mat-checkbox *ngIf="selectionTypeForActions !== 'none'" #selectAllCB class="pull-left flip row-selection" [ngClass]="{ 'md': noRowsSpacing }"
+            <mat-checkbox *ngIf="selectionTypeForActions !== 'none'" #selectAllCB class="pull-left flip row-selection" [ngClass]="{ 'md': tableViewType === 'compact' }"
                 type="checkbox" [ngStyle]="{
                         visibility:
                             selectionTypeForActions == 'single' || 
@@ -122,6 +122,7 @@
             <fieldset>
                 <div *ngFor="let field of layout?.ControlFields; let j = index" class="header-column pull-left flip"
                     [ngStyle]="{ width: field.calcTitleColumnWidthString }" [ngClass]="{
+                            'compact-view': tableViewType === 'compact',
                             'support-sorting': supportSorting,
                             'has-sorting': field.ApiName === sortBy,
                             'is-resizing': field.ApiName === pressedColumn,

@@ -4,6 +4,8 @@
 
 .pepperi-report-fields, .pep-report-fields {
     height: inherit;
+    display: flex;
+    align-items: center;
 
     span {
         display: block;
@@ -224,6 +226,7 @@
 //  Table view
 // ------------------------
 $sorting-width: 1rem;
+$zoom-compact-view: 85%;
 
 .table-header {
     position: sticky;
@@ -289,6 +292,32 @@ $sorting-width: 1rem;
                 display: block;
             }
 
+            .resize-box {
+                display: none;
+                cursor: w-resize;
+                margin-inline-end: calc((#{variables.$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
+                height: variables.$table-field-height; // 2rem;
+                align-items: center;
+
+                // .mat-icon,
+                .splitter {
+                    width: 0.125rem;
+                    height: 1rem;
+                    line-height: variables.$table-field-height; // 2rem;
+                    
+                    padding-inline-end: 0.425rem;
+                    border:none;
+                    border-inline-end-width: 1px;
+                    border-inline-end-style: dashed;
+                }
+            }
+
+            &.compact-view {
+                .header-label {
+                    zoom: $zoom-compact-view;
+                }
+            }
+
             &.support-sorting {
                 .sorting-box {
                     display: none;
@@ -314,26 +343,6 @@ $sorting-width: 1rem;
                     &.has-sorting {
                         display: block;
                     }
-                }
-            }
-
-            .resize-box {
-                display: none;
-                cursor: w-resize;
-                margin-inline-end: calc((#{variables.$spacing-sm} + #{$sorting-width}) * -1); // header column padding + sorting width.
-                height: variables.$table-field-height; // 2rem;
-                align-items: center;
-
-                // .mat-icon,
-                .splitter {
-                    width: 0.125rem;
-                    height: 1rem;
-                    line-height: variables.$table-field-height; // 2rem;
-                    
-                    padding-inline-end: 0.425rem;
-                    border:none;
-                    border-inline-end-width: 1px;
-                    border-inline-end-style: dashed;
                 }
             }
 
@@ -456,8 +465,7 @@ $sorting-width: 1rem;
             }
         }
         
-
-        &.no-spacing {
+        &.compact-view {
             padding: 0;
             height: variables.$table-field-height;
 
@@ -467,6 +475,14 @@ $sorting-width: 1rem;
 
             fieldset {
                 height: variables.$table-field-height;
+
+                .table-cell > * {
+                    zoom: $zoom-compact-view;
+                }
+    
+                .pep-report-fields > * {
+                    zoom: $zoom-compact-view;
+                }
             }
         }
 

@@ -11,6 +11,8 @@ export type PepListViewType = '' | 'cards' | 'lines' | 'table'; // | 'map';
 
 export type PepListCardSizeType = 'sm' | 'md';
 
+export type PepListTableViewType = 'compact' | 'regular';
+
 export interface IPepListItemClickEvent {
     source: ObjectsDataRow;
     viewType: PepListViewType;
