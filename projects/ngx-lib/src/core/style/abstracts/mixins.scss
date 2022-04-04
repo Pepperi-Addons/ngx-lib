@@ -747,6 +747,9 @@
 @mixin state-table-row-default() {
 
 }
+@mixin state-table-row-even() {
+    background: functions.get-pep-color(color-weak, color-tran-10);
+}
 @mixin state-table-row-hover() {
     background: functions.get-pep-color(color-weak, color-tran-30);
 }
@@ -756,7 +759,6 @@
 @mixin state-table-row-selected() {
     background: functions.get-pep-color(color-system-success, color-tran-20);
 }
-
 // ******************************************************************************
 //                       Card states declerations
 // ******************************************************************************

@@ -41,6 +41,7 @@ import {
     DEFAULT_PAGE_SIZE,
     IPepListStartIndexChangeEvent,
     PepListCardSizeType,
+    PepListTableViewType,
 } from './list.model';
 import {
     IPepListPagerChangeEvent,
@@ -78,6 +79,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() hideAllSelectionInMulti = false;
 
     @Input() cardSize: PepListCardSizeType = 'md';
+    @Input() tableViewType: PepListTableViewType = 'regular';
+    
     private _viewType: PepListViewType = '';
     @Input()
     set viewType(value: PepListViewType) {
@@ -121,6 +124,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() lockItemInnerEvents = false;
     @Input() printMode = false;
     @Input() isReport = false;
+    @Input() zebraStripes = false;
     @Input() totalsRow = [];
     @Input() pagerType: PepListPagerType = 'scroll';
     @Input() pageSize: number = DEFAULT_PAGE_SIZE;

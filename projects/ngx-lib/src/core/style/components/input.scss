@@ -39,8 +39,8 @@
 
 .pepperi-report-input, .pep-report-input {
     padding: 0 0.25rem;
-    height: variables.$table-row-fieldset-height; // 2.5rem;
-    line-height: variables.$table-row-fieldset-height !important; // 2.5rem !important;
+    // height: variables.$table-row-fieldset-height; // 2.5rem;
+    // line-height: variables.$table-row-fieldset-height !important; // 2.5rem !important;
     vertical-align: middle;
     display: block;
     @include mixins.ellipsis();
