@@ -10,7 +10,7 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { PepQueryBuilderSectionComponent } from './query-builder-section/query-builder-section.component';
 import { IPepQueryBuilderField, IPepQuerySection, IPepQueryItem } from './common/model/legacy';
-import { PepQueryBuilderService } from './query-builder.service';
+import { PepQueryStructureService } from './common/services/query-structure.service';
 import { PepTypeConvertorService } from './common/services/type-convertor.service';
 import { PepOutputQueryService } from './common/services/output-query.service';
 import { IPepQueryDepth } from './common/model/structure';
@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
     selector: 'pep-query-builder',
     templateUrl: './query-builder.component.html',
     styleUrls: ['./query-builder.component.scss'],
-    providers: [PepQueryBuilderService, PepTypeConvertorService, PepOutputQueryService]
+    providers: [ PepQueryStructureService, PepTypeConvertorService, PepOutputQueryService]
 })
 export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     _query: IPepQuerySection | IPepQueryItem = null;
@@ -32,13 +32,13 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     }
     @Input()
     set fields(list: Array<IPepQueryBuilderField>) {
-        this.queryBuilderService.fields = list;
-        this.hasFields = this.queryBuilderService.hasFields;
+        this.queryStructureService.fields = list;
+        this.hasFields = this.queryStructureService.hasFields;
         this.loadQuery();
     }
     @Input()
     set maxDepth(value: number) {
-        this.queryBuilderService.maxDepth = value;
+        this.queryStructureService.maxDepth = value;
     }
 
     @Output()
@@ -56,17 +56,17 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
 
     constructor(
         private _fb: FormBuilder,
-        public queryBuilderService: PepQueryBuilderService
+        public queryStructureService: PepQueryStructureService
     ) {
         this.setupForm();
         this.initDepth();
-        this._formSubscription$ = this.queryBuilderService.form.valueChanges.subscribe((val) => {
-            if (this.queryBuilderService.form.valid !== this._lastFormValidStatus) {
-                this._lastFormValidStatus = this.queryBuilderService.form.valid;
+        this._formSubscription$ = this.queryStructureService.form.valueChanges.subscribe((val) => {
+            if (this.queryStructureService.form.valid !== this._lastFormValidStatus) {
+                this._lastFormValidStatus = this.queryStructureService.form.valid;
                 this.formValidationChange.emit(this._lastFormValidStatus);
             }
         });
-        this._outputQuerySubscription$ = this.queryBuilderService.outputQuery$.subscribe((outputQuery) => {
+        this._outputQuerySubscription$ = this.queryStructureService.outputQuery$.subscribe((outputQuery) => {
             this.queryChange.emit(outputQuery);
         });
     }
@@ -76,7 +76,7 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     }
 
     setupForm() {
-        this.queryBuilderService.form = this._fb.group({
+        this.queryStructureService.form = this._fb.group({
             operator: this._fb.control(PepOperatorTypes.And)
         });
     }
@@ -84,7 +84,7 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     initDepth() {
         this.depth = {
             current: 0,
-            max: this.queryBuilderService.maxDepth
+            max: this.queryStructureService.maxDepth
         }
     }
 
@@ -94,24 +94,24 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
     loadQuery() {
         if (
             this._query &&
-            this.queryBuilderService.hasFields &&
+            this.queryStructureService.hasFields &&
             this.root?.sectionContainer
         ) {
-            this.queryBuilderService.buildQueryStructure(this._query, this.root.sectionContainer);
+            this.queryStructureService.buildQueryStructure(this._query, this.root.sectionContainer);
         }
     }
 
     onCreateSection() {
-        const section = this.queryBuilderService.createSection(PepOperatorTypes.And, this.root.sectionContainer, this.queryBuilderService.form, 1);
-        this.queryBuilderService.createItem(null, section.containerRef, section.parentForm);
+        const section = this.queryStructureService.createSection(PepOperatorTypes.And, this.root.sectionContainer, this.queryStructureService.form, 1);
+        this.queryStructureService.createItem(null, section.containerRef, section.parentForm);
     }
 
     onCreateItem() {
-        this.queryBuilderService.createItem(null, this.root.sectionContainer, this.queryBuilderService.form);
+        this.queryStructureService.createItem(null, this.root.sectionContainer, this.queryStructureService.form);
     }
 
     onOperatorChange() {
-        this.queryBuilderService.createOutputQuery();
+        this.queryStructureService.createOutputQuery();
     }
 
     ngOnDestroy() {

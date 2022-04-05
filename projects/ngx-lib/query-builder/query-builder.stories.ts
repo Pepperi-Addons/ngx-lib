@@ -2,7 +2,7 @@ import { Meta, Story, moduleMetadata } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 import { action } from '@storybook/addon-actions';
 import { PepQueryBuilderModule } from './query-builder.module';
-import { PepQueryBuilderService } from './query-builder.service';
+//import { PepQueryBuilderService } from './query-builder.service';
 import { PepQueryBuilderComponent } from './query-builder.component';
 
 

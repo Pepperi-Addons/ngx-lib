@@ -218,7 +218,7 @@ const PepQueryBuilderOperators = [
  * @param type smart filter's type
  * @returns smart filter operator item
  */
-export function getSmartBuilderOperator(operator: string, type: PepSmartFilterType): IPepSmartFilterOperator | null {
+export function getSmartFilterOperator(operator: string, type: PepSmartFilterType): IPepSmartFilterOperator | null {
     const smartFilterOperator = PepQueryBuilderOperators.find(item =>
         item.legacy === operator &&
         (item.type === null || item.type.includes(type))
