@@ -52,9 +52,8 @@ export class PepRemoteLoaderService {
     }
 
     async getBlockRemoteLoaderOptions(name: string): Promise<PepRemoteLoaderOptions> {
-        const baseUrl = this.sessionService.getPapiBaseUrl();
         const pagesAddonUuid = this.addonService.getPagesAddonUUID();
-        const url = `${baseUrl}/addons/api/${pagesAddonUuid}/addon_blocks/get_addon_block_loader_data?name=${name}`;
+        const url = `/addons/api/${pagesAddonUuid}/addon_blocks/get_addon_block_loader_data?name=${name}`;
 
         const blockLoaderData: IBlockLoaderData = await this.httpService.getPapiApiCall(url).toPromise(); 
 
