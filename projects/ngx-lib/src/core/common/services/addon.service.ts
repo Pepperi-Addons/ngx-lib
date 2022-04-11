@@ -17,6 +17,7 @@ import { PepTranslateService } from './translate.service';
     providedIn: 'root',
 })
 export class PepAddonService {
+    private readonly PAGES_ADDON_UUID = '50062e0c-9967-4ed4-9102-f2bc50602d41';
     private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
     private readonly ADDONS_DICTIONARY_ASSETS_PATH_KEY = 'AddonsDictionaryAssetsPath';
     private readonly ADDON_API_RELATIVE_PATH = '/addons/api';
@@ -144,6 +145,10 @@ export class PepAddonService {
 
     setDefaultTranslateLang(translate: TranslateService, urlLangParam = 'userLang') {
         this.translateService.setDefaultTranslateLang(translate, urlLangParam);
+    }
+
+    getPagesAddonUUID() {
+        return this.PAGES_ADDON_UUID;
     }
 
     // Deprecated need to delete in next major.
