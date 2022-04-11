@@ -26,7 +26,7 @@ export class PepRemoteLoaderService {
             const componentRef = options.container.createComponent(factory);
             const addonBlockInstance = componentRef.instance;
 
-            addonBlockInstance.name = options.blockRelationName;
+            addonBlockInstance.name = options.name;
             addonBlockInstance.hostObject = options.hostObject;
 
             addonBlockInstance.hostEvents.subscribe((event) => {

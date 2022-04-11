@@ -28,7 +28,7 @@ export interface IBlockLoaderData {
 
 export interface IAddonBlockLoaderOptions {
     container: ViewContainerRef;
-    blockRelationName: string;
+    name: string;
     hostObject?: any;
     hostEventsCallback?: (event: any) => void;
 }
