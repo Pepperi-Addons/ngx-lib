@@ -5,6 +5,7 @@ import { IAddonBlockLoaderDialogOptions, IAddonBlockLoaderOptions, IBlockLoaderD
 import { PepAddonBlockLoaderComponent } from './addon-block-loader.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class PepRemoteLoaderService {
@@ -16,6 +17,7 @@ export class PepRemoteLoaderService {
         private httpService: PepHttpService,
         private sessionService: PepSessionService,
         private addonService: PepAddonService,
+        private route: ActivatedRoute,
     ) {
         //
     }
@@ -51,11 +53,23 @@ export class PepRemoteLoaderService {
         }
     }
 
+    private getAddonBaseUrl(addonUUID: string, fileName: string = 'api'): string {
+        // For devServer run server on localhost.
+        const devServer = this.route.snapshot.queryParamMap.get('devServer') === 'true';
+        if(devServer) {
+            return `http://localhost:4500/${fileName}`;
+        } else {
+            const baseUrl = this.sessionService.getPapiBaseUrl();
+            return `${baseUrl}/addons/api/${addonUUID}/${fileName}`;
+        }
+    }
+    
     async getBlockRemoteLoaderOptions(name: string): Promise<PepRemoteLoaderOptions> {
         const pagesAddonUuid = this.addonService.getPagesAddonUUID();
-        const url = `/addons/api/${pagesAddonUuid}/addon_blocks/get_addon_block_loader_data?name=${name}`;
+        const pagesBaseUrl = this.getAddonBaseUrl(pagesAddonUuid, 'addon_blocks');
+        const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}`;
 
-        const blockLoaderData: IBlockLoaderData = await this.httpService.getPapiApiCall(url).toPromise(); 
+        const blockLoaderData: IBlockLoaderData = await this.httpService.getHttpCall(url).toPromise(); 
 
         if (blockLoaderData) {
             return this.getRemoteLoaderOptions(blockLoaderData);
