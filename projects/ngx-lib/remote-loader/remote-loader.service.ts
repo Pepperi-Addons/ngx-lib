@@ -65,18 +65,18 @@ export class PepRemoteLoaderService {
     }
     
     async getBlockRemoteLoaderOptions(name: string): Promise<PepRemoteLoaderOptions> {
-        const pagesAddonUuid = this.addonService.getPagesAddonUUID();
-        const pagesBaseUrl = this.getAddonBaseUrl(pagesAddonUuid, 'addon_blocks');
-        const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}`;
-
-        const blockLoaderData: IBlockLoaderData = await this.httpService.getHttpCall(url).toPromise(); 
-
-        if (blockLoaderData) {
-            return this.getRemoteLoaderOptions(blockLoaderData);
-            
-        } else {
-            return Promise.reject(`Addon block with name - ${name} is not found`);
-        }
+        return new Promise((resolve, reject) => {
+            const pagesAddonUuid = this.addonService.getPagesAddonUUID();
+            const pagesBaseUrl = this.getAddonBaseUrl(pagesAddonUuid, 'addon_blocks');
+            const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}`;
+            this.httpService.getHttpCall(url).toPromise().then((data: IBlockLoaderData) => {
+                if (data) {
+                    resolve(this.getRemoteLoaderOptions(data));
+                } else {
+                    reject(`Addon block with name - ${name} is not found`);
+                }
+            }); 
+        });
     }
 
     loadAddonBlockInContainer(options: IAddonBlockLoaderOptions) {
