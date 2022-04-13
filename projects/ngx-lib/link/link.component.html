@@ -48,21 +48,6 @@
     <ng-container *ngIf="layoutType === 'form'">
         <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: true, hasParent: false }">
         </ng-container>
-        <ng-container *ngIf="parentFieldKey; then groupedBlock; else regularBlock"></ng-container>
-        <ng-template #regularBlock>
-            <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: true, hasParent: false }">
-            </ng-container>
-        </ng-template>
-        <ng-template #groupedBlock>
-            <ng-container [formGroupName]="parentFieldKey">
-                <mat-form-field appearance="outline">
-                    <input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
-                        [placeholder]="!disabled ? placeholder : ''" title="{{ formattedValue }}"
-                        [formControlName]="key" [value]="value" (blur)="onBlur($event)" (change)="onChange($event)"
-                        (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" />
-                </mat-form-field>
-            </ng-container>
-        </ng-template>
     </ng-container>
 
     <ng-container *ngIf="layoutType === 'card'">
