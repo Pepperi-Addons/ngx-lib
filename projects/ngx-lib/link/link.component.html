@@ -27,12 +27,13 @@
                     </span>
                 </ng-template>
                 <ng-template #otherError>
-                    <span class="body-xs" [title]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
+                    <!-- TODO: Show error if it's not a valid link -->
+                    <!-- <span class="body-xs" [title]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
                             ('MESSAGES.ERROR_RANGE_IS_NOT_VALID' | translate: { min: minValue, max: maxValue }) :
                             ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })" [innerText]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
                             ('MESSAGES.ERROR_RANGE_IS_NOT_VALID' | translate: { min: minValue, max: maxValue }) :
                             ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })">
-                    </span>
+                    </span> -->
                 </ng-template>
             </mat-error>
 
@@ -89,24 +90,16 @@
         <ng-template #notSelectedBlock>
             <ng-container *ngIf="formattedValue?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
             <ng-template #notEmptyBlock>
-                <ng-container [ngSwitch]="type">
-                    <ng-container *ngSwitchCase="'link'">
-                        <a *ngIf="formattedValue != null && (value ? value : formattedValue) | isUrl" [id]="key"
-                            class="color-link body-sm pep-report-input"
-                            [ngClass]="{'disable': (disabled && value === '')}" title="{{ formattedValue }}"
-                            target="_blank" href="{{ value ? value : formattedValue }}" (click)="onClick()">{{
-                            formattedValue }}</a>
-                        <a *ngIf="formattedValue != null && !((value ? value : formattedValue) | isUrl)" [id]="key"
-                            class="color-link body-sm pep-report-input"
-                            [ngClass]="{'disable': (disabled && value === '')}" title="{{ formattedValue }}"
-                            href="javascript:void(0)" (click)="onClick()">{{
-                            formattedValue }}</a>
-                    </ng-container>
-                    <ng-container *ngSwitchDefault>
-                        <span [id]="key" class="body-sm pep-report-input" [ngClass]="{'readonly': disabled}"
-                            title="{{ formattedValue }}" [ngStyle]="{ color: textColor }">{{ formattedValue }}</span>
-                    </ng-container>
-                </ng-container>
+                <a *ngIf="formattedValue != null && (value ? value : formattedValue) | isUrl" [id]="key"
+                    class="color-link body-sm pep-report-input"
+                    [ngClass]="{'disable': (disabled && value === '')}" title="{{ formattedValue }}"
+                    target="_blank" href="{{ value ? value : formattedValue }}" (click)="onClick()">{{
+                    formattedValue }}</a>
+                <a *ngIf="formattedValue != null && !((value ? value : formattedValue) | isUrl)" [id]="key"
+                    class="color-link body-sm pep-report-input"
+                    [ngClass]="{'disable': (disabled && value === '')}" title="{{ formattedValue }}"
+                    href="javascript:void(0)" (click)="onClick()">{{
+                    formattedValue }}</a>
             </ng-template>
             <ng-template #emptyBlock>
                 <span [id]="key">&nbsp;</span>

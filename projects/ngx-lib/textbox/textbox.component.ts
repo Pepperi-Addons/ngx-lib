@@ -82,7 +82,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._value;
     }
 
-    private _formattedValue = null;
+    private _formattedValue = '';
     /**
      * The formatted value.
      *
@@ -90,15 +90,16 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
      */
     @Input()
     set formattedValue(value: string) {
-        if (!value) {
-            value = '';
-        }
+        // Do nothing.
+        // if (!value) {
+        //     value = '';
+        // }
 
-        if (this._calculateFormattedValue) {
-            this._calculateFormattedValue = false;
-        }
+        // if (this._calculateFormattedValue) {
+        //     this._calculateFormattedValue = false;
+        // }
 
-        this.setFormattedValue(value);
+        // this.setFormattedValue(value);
     }
     get formattedValue(): string {
         return this._formattedValue;

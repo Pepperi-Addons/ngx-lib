@@ -92,15 +92,16 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
      */
     @Input()
     set formattedValue(value: string) {
-        if (!value) {
-            value = '';
-        }
+        // Do nothing.
+        // if (!value) {
+        //     value = '';
+        // }
 
-        if (this._calculateFormattedValue) {
-            this._calculateFormattedValue = false;
-        }
+        // if (this._calculateFormattedValue) {
+        //     this._calculateFormattedValue = false;
+        // }
 
-        this.setFormattedValue(value);
+        // this.setFormattedValue(value);
     }
     get formattedValue(): string {
         return this._formattedValue;
@@ -126,7 +127,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
      * @type {PepTextboxFieldType}
      * @memberof PepTextboxComponent
      */
-    @Input() type: PepTextboxFieldType = 'text';
+    type: PepTextboxFieldType = 'link';
 
     /**
      * If the textbox is mandatory
@@ -154,9 +155,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     // @Input() lastFocusField: any;
-    @Input() minValue = NaN;
-    @Input() maxValue = NaN;
-
+    
     private _visible = true;
     @Input()
     set visible(visible: boolean) {
@@ -184,8 +183,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     @Input() renderError = true;
     @Input() renderSymbol = true;
     @Input() layoutType: PepLayoutType = 'form';
-    @Input() parentFieldKey: string = null;
-
+    
     /**
      * The value change event.
      *
@@ -229,9 +227,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
 
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
-            this._formattedValue = this.isNumberType()
-                ? this.utilitiesService.formatNumber(value)
-                : value;
+            this._formattedValue = value;
         } else {
             this._formattedValue = value;
         }
@@ -243,19 +239,12 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            this.formattedValue,
-            this.parentFieldKey
+            this.formattedValue
         );
     }
 
     get displayValue(): string {
-        let res = '';
-
-        if (this.type == 'link') {
-            res = this.formattedValue;
-        } else {
-            res = this.isInFocus ? this.value : this.formattedValue;
-        }
+        let res = this.formattedValue;
 
         return res;
     }
@@ -269,8 +258,6 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
             disabled: this.disabled,
             maxFieldCharacters: this.maxFieldCharacters,
             type: this.type,
-            minValue: this.minValue,
-            maxValue: this.maxValue,
         });
         this.form = this.customizationService.getDefaultFromGroup(
             pepField,
@@ -281,15 +268,6 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.form === null) {
             this.standAlone = true;
-
-            this.minValue =
-                isNaN(this.minValue) && !isNaN(this.maxValue)
-                    ? 0
-                    : this.minValue;
-            this.maxValue =
-                isNaN(this.maxValue) && !isNaN(this.minValue)
-                    ? 99999
-                    : this.maxValue;
 
             this.setDefaultForm();
 
@@ -306,8 +284,6 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
             }
         }
 
-        this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
-
         this.updateFormFieldValue();
     }
 
@@ -315,8 +291,6 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         if (this.standAlone) {
             this.setDefaultForm();
         }
-
-        this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
     }
 
     ngOnDestroy(): void {
@@ -335,56 +309,9 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         }, 0);
     }
 
-    isNumberType(): boolean {
-        return (
-            this.type === 'percentage' ||
-            this.type === 'currency' ||
-            this.type === 'int' ||
-            this.type === 'real'
-        );
-    }
-
     isValueValid(value: string): boolean {
-        let res = false;
-
-        if (this.isNumberType()) {
-            if (value === '') {
-                res = this.mandatory ? false : true;
-            } else {
-                const numberValue = this.utilitiesService.coerceNumberProperty(
-                    value
-                );
-                res =
-                    numberValue >= this.minValue &&
-                    numberValue <= this.maxValue;
-            }
-        } else {
-            // TODO: Maybe need to check other types.
-            res = true;
-        }
-
-        return res;
-    }
-
-    isDifferentValue(value: string): boolean {
-        let res = false;
-
-        if (this.isNumberType()) {
-            if (this.value === '' || value === '') {
-                res = true;
-            } else {
-                const currentValue = this.utilitiesService.coerceNumberProperty(
-                    this.value
-                );
-                const newValue = this.utilitiesService.coerceNumberProperty(
-                    value
-                );
-
-                res = currentValue !== newValue;
-            }
-        } else {
-            res = true;
-        }
+        // TODO: Maybe need to check other types.
+        let res = true;
 
         return res;
     }
@@ -398,7 +325,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     onBlur(e: any): void {
         this.isInFocus = false;
         const value = e.target ? e.target.value : e;
-        if (value !== this.value && this.isDifferentValue(value)) {
+        if (value !== this.value) {
             // If renderError is false and the new value is not valid.
             if (!this.renderError && !this.isValueValid(value)) {
                 this.renderer.setProperty(
@@ -435,26 +362,14 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     anchorClicked(): void {
         const currentValue = this.value;
         if (currentValue.trim().length > 0) {
-            switch (this.type) {
-                case 'email':
-                    window.open('mailto:' + currentValue, 'email');
-                    break;
-                case 'phone':
-                    window.open('tel:' + currentValue, 'tel');
-                    break;
-                case 'link':
-                    const output: IPepFieldClickEvent = {
-                        key: this.key,
-                        value: this.value,
-                        controlType: this.controlType
-                    }
-                    this.elementClick.emit(output);
-                    if (this.isUrlPipe.transform(currentValue)) {
-                        window.open(currentValue);
-                    }
-                    break;
-                default:
-                    break;
+            const output: IPepFieldClickEvent = {
+                key: this.key,
+                value: this.value,
+                controlType: this.controlType
+            }
+            this.elementClick.emit(output);
+            if (this.isUrlPipe.transform(currentValue)) {
+                window.open(currentValue);
             }
         }
     }

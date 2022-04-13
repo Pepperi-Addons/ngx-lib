@@ -5,6 +5,8 @@ import {
     PepLayoutService,
     IPepFieldClickEvent,
     PepScreenSizeType,
+    PepTextboxField,
+    PepCustomizationService
 } from '@pepperi-addons/ngx-lib';
 import { pepIconSystemBin } from '@pepperi-addons/ngx-lib/icon';
 import {
@@ -33,10 +35,14 @@ export class FormFieldsExampleComponent implements OnInit {
     searchAutoCompleteValues = [];
 
     dateString;
+
+    textboxFormGroup;
+    formattedValue = null;
+
     constructor(
         private snackBarService: PepSnackBarService,
         public layoutService: PepLayoutService,
-        
+        private customizationService: PepCustomizationService
     ) {
 
         this.minDateValue = new Date('1-1-2019').getTime();
@@ -50,7 +56,30 @@ export class FormFieldsExampleComponent implements OnInit {
             "<h1><u>Rich Text Value Example</u></h1><h2><em style=' color: rgb(147, 200, 14);'>Pepperi Rich Text Value </em><u style='color: rgb(0, 102, 204);'>Example</u></h2><ol><li><strong><u>Pepperi Rich Text Value Example</u></strong></li><li>Pepperi Rich text [value] example</li></ol>";
     }
 
+    private setTextboxFormGroup() {
+        // [key]="'Texbox'" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
+        //                 [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
+        //                 [value]="e'Peppri Textbox'"
+        const pepField = new PepTextboxField({
+            key: 'Texbox',
+            value: 'Peppri Textbox',
+            mandatory: true,
+            readonly: false,
+            disabled: false,
+            maxFieldCharacters: 15,
+            type: 'text',
+            minValue: NaN,
+            maxValue: NaN,
+        });
+        this.textboxFormGroup = this.customizationService.getDefaultFromGroup(
+            pepField,
+            true
+        );
+    }
+
     ngOnInit(): void {
+        this.setTextboxFormGroup();
+
         this.menuItems = [
             { key: 'test1', text: 'test 1' },
             { key: 'test2', text: 'test 2', disabled: true },
