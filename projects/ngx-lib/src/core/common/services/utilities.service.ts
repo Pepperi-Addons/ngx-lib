@@ -12,6 +12,7 @@ export class PepUtilitiesService {
     constructor(@Optional() private translate: TranslateService = null) {
         this.culture = this.translate?.getBrowserCultureLang() || 'en-US';
         this.numberFormatter = new Intl.NumberFormat(this.culture, {
+            minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         });
     }
