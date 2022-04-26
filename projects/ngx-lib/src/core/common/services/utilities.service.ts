@@ -6,15 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
     providedIn: 'root',
 })
 export class PepUtilitiesService {
-    private numberFormatter: Intl.NumberFormat;
     private culture = 'en-US';
 
     constructor(@Optional() private translate: TranslateService = null) {
         this.culture = this.translate?.getBrowserCultureLang() || 'en-US';
-        this.numberFormatter = new Intl.NumberFormat(this.culture, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
     }
 
     private changeDecimalSeperator(value: string, reverse = false): string {
@@ -115,9 +110,16 @@ export class PepUtilitiesService {
         );
     }
 
-    formatNumber(value: any): string {
+    formatNumber(value: any, toDecimal: boolean): string {
         const number = this.coerceNumberProperty(value);
-        return this.numberFormatter.format(number);
+        const fractionDigits = toDecimal ? 2 : 0;
+
+        const numberFormatter = new Intl.NumberFormat(this.culture, {
+            minimumFractionDigits: fractionDigits,
+            maximumFractionDigits: fractionDigits,
+        });
+
+        return numberFormatter.format(number);
     }
 
     incrementNumber(value: any): string {

@@ -73,10 +73,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this._value = value;
-
-        if (this._calculateFormattedValue) {
-            this.setFormattedValue(value);
-        }
+        this.setFormattedValue(value);
     }
     get value(): string {
         return this._value;
@@ -125,7 +122,18 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
      * @type {PepTextboxFieldType}
      * @memberof PepTextboxComponent
      */
-    @Input() type: PepTextboxFieldType = 'text';
+    private _type: PepTextboxFieldType = 'text';
+    @Input() 
+    set type(value: PepTextboxFieldType) {
+        this._type = value;
+
+        if (this.value) {
+            this.setFormattedValue(this.value);
+        }
+    }
+    get type(): PepTextboxFieldType {
+        return this._type;
+    }
 
     /**
      * If the textbox is mandatory
@@ -223,9 +231,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
-            this._formattedValue = this.isNumberType()
-                ? this.utilitiesService.formatNumber(value)
-                : value;
+            if (this.isNumberType()) {
+                this._formattedValue = this.utilitiesService.formatNumber(value, this.isDecimal());
+            } else {
+                this._formattedValue = value;
+            }
         } else {
             this._formattedValue = value;
         }
@@ -329,11 +339,23 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         }, 0);
     }
 
+    isDecimal(): boolean {
+        let res = false;
+
+        if (this.isNumberType()) {
+            if (this.type === 'currency' || this.type === 'real') {
+                res = true;
+            }
+        }
+
+        return res;
+    }
+
     isNumberType(): boolean {
         return (
             this.type === 'percentage' ||
-            this.type === 'currency' ||
             this.type === 'int' ||
+            this.type === 'currency' ||
             this.type === 'real'
         );
     }
@@ -403,10 +425,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             } else {
                 this.value = value;
 
-                // If the user is setting the formatted value then set the value till the user format it and return it back.
-                if (!this._calculateFormattedValue) {
-                    this._formattedValue = value;
-                }
+                // // If the user is setting the formatted value then set the value till the user format it and return it back.
+                // if (!this._calculateFormattedValue) {
+                //     this._formattedValue = value;
+                // }
 
                 this.valueChange.emit(value);
             }

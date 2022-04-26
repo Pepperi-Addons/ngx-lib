@@ -79,10 +79,7 @@ export class PepQuantitySelectorComponent
         }
 
         this._value = value;
-
-        if (this._calculateFormattedValue) {
-            this.setFormattedValue(value);
-        }
+        this.setFormattedValue(value);
     }
     get value(): string {
         return this._value;
@@ -91,15 +88,15 @@ export class PepQuantitySelectorComponent
     private _formattedValue = null;
     @Input()
     set formattedValue(value: string) {
-        if (!value) {
-            value = '';
-        }
+        // if (!value) {
+        //     value = '';
+        // }
 
-        if (this._calculateFormattedValue) {
-            this._calculateFormattedValue = false;
-        }
+        // if (this._calculateFormattedValue) {
+        //     this._calculateFormattedValue = false;
+        // }
 
-        this.setFormattedValue(value);
+        // this.setFormattedValue(value);
     }
     get formattedValue(): string {
         return this._formattedValue;
@@ -123,7 +120,20 @@ export class PepQuantitySelectorComponent
 
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() allowDecimal = false;
+    
+    private _allowDecimal = false;
+    @Input() 
+    set allowDecimal(value: boolean) {
+        this._allowDecimal = value;
+
+        if (this.value) {
+            this.setFormattedValue(this.value);
+        }
+    }
+    get allowDecimal(): boolean {
+        return this._allowDecimal;
+    }
+
     @Input() additionalValue = '';
 
     private _notificationInfo: any;
@@ -254,7 +264,7 @@ export class PepQuantitySelectorComponent
 
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
-            this._formattedValue = this.utilitiesService.formatNumber(value);
+            this._formattedValue = this.utilitiesService.formatNumber(value, this.allowDecimal);
         } else {
             this._formattedValue = value;
         }
@@ -271,9 +281,7 @@ export class PepQuantitySelectorComponent
     }
 
     get displayValue(): string {
-        const res = this.isInFocus
-            ? parseFloat(this.value).toString()
-            : this.formattedValue;
+        const res = this.isInFocus ? this.value : this.formattedValue;
         return res;
     }
 
@@ -502,10 +510,10 @@ export class PepQuantitySelectorComponent
         if (value !== this.value && this.isDifferentValue(value)) {
             this.value = value;
 
-            // If the user is setting the formatted value then set the value till the user format it and return it back.
-            if (!this._calculateFormattedValue) {
-                this._formattedValue = value;
-            }
+            // // If the user is setting the formatted value then set the value till the user format it and return it back.
+            // if (!this._calculateFormattedValue) {
+            //     this._formattedValue = value;
+            // }
 
             this.valueChange.emit(this.value);
         } else {

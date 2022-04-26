@@ -132,6 +132,8 @@ export class PepFilesUploaderComponent implements OnInit {
                 }
             };
             reader.readAsDataURL(item._file);
+
+            
         };
     }
 
