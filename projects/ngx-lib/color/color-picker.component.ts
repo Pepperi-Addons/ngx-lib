@@ -267,4 +267,8 @@ export class PepColorPickerComponent implements OnInit {
         // this.notify.emit({ key: this.key, value: color });
         this.dialogRef.close(color);
     }
+
+    closeDialog(event) {
+        this.dialogRef.close(event);
+    }
 }

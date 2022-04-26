@@ -11,7 +11,7 @@
 </div>
 
 <ng-template #selectProfileTemplate let-data>
-    <pep-dialog [title]="'PROFILE_DATA_VIEWS_LIST.SELECT_PROFILE_DIALOG_TITLE' | translate">
+    <pep-dialog [title]="'PROFILE_DATA_VIEWS_LIST.SELECT_PROFILE_DIALOG_TITLE' | translate" (close)="closeDialog()">
         <ng-container pep-dialog-content>
             <pep-select [label]="'PROFILE_DATA_VIEWS_LIST.SELECT_PROFILE' | translate" [options]="data.options"
                 [emptyOption]="false" (valueChange)="setSelectedNewProfileId($event)">

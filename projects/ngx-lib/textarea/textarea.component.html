@@ -93,7 +93,7 @@
 </ng-container>
 
 <ng-template #textAreaDialogTemplate>
-    <pep-dialog class="dialog-textarea-container" [title]="label">
+    <pep-dialog class="dialog-textarea-container" [title]="label" (close)="closeDialog($event)">
         <ng-container pep-dialog-content>
             <textarea #dialogTextarea [readonly]="disabled || readonly">{{ value }}</textarea>
         </ng-container>

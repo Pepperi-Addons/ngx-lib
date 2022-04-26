@@ -258,6 +258,10 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
 
         this.dialogRef.close(this.signatureURL);
     }
+    
+    closeDialog(event) {
+        this.dialogRef.close(event);
+    }
 
     errorHandler(event: any): void {
         this.signatureURL = this.src = ''; // this.blankImage;

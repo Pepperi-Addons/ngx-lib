@@ -21,4 +21,8 @@ export class PepDefaultDialogComponent {
             }
         });
     }
+
+    closeDialog(res) {
+        this.dialogRef.close(res);
+    }
 }

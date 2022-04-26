@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'pep-dialog',
@@ -10,4 +11,18 @@ export class PepDialogComponent {
     @Input() showClose = true;
     @Input() showHeader = true;
     @Input() showFooter = true;
+
+    // @Input() dialogRef: MatDialogRef<any>;
+
+    @Output() close: EventEmitter<any> = new EventEmitter<any>();
+
+    constructor() {}
+    
+    closeDialog() {
+        // if (this.dialogRef) {
+        //     this.dialogRef.close(null);
+        // }
+
+        this.close.emit(null);
+    }
 }

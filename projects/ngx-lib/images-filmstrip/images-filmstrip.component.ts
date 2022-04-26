@@ -210,6 +210,8 @@ export class PepImagesFilmstripComponent
     dialogGalleryRef: GalleryRef;
     guid: string;
 
+    private enlargeImageDialogRef: MatDialogRef<any>;
+
     constructor(
         private customizationService: PepCustomizationService,
         private dialogService: PepDialogService,
@@ -413,7 +415,7 @@ export class PepImagesFilmstripComponent
         config.maxWidth = '75vw';
         config.height = '95vh';
 
-        const dialogRef = this.dialogService.openDialog(
+        this.enlargeImageDialogRef = this.dialogService.openDialog(
             this.galleryDialogTemplate,
             {
                 currIndex: this.currIndex,
@@ -421,7 +423,7 @@ export class PepImagesFilmstripComponent
             config
         );
 
-        dialogRef.afterOpened().subscribe(() => {
+        this.enlargeImageDialogRef.afterOpened().subscribe(() => {
             this.afterDialogOpened();
         });
 
@@ -436,6 +438,14 @@ export class PepImagesFilmstripComponent
             `${this.guid}-dlgGallery`
         );
         this.initGalleryStyle(this.galleryDialogCont, this.dialogGalleryRef);
+    }
+
+    closeDialog(event) {
+        if (this.inDialog) {
+            this.dialogRef?.close(event);
+        } else {
+            this.enlargeImageDialogRef?.close(event);
+        }
     }
 
     setThumbnailDimension(galleryContainer): void {
@@ -489,6 +499,7 @@ export class PepImagesFilmstripComponent
         //     this.updateStyle();
         // }
     }
+
 
     // scrollFunction(e: any): boolean {
     //     e.deltaY > 0 ? this.zoomOut() : this.zoomIn();

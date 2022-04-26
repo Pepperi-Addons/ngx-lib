@@ -1,5 +1,5 @@
 <div class="pep-color-picker-container">
-    <pep-dialog [title]="'COLOR.DIALOG_TITLE' | translate">
+    <pep-dialog [title]="'COLOR.DIALOG_TITLE' | translate" (close)="closeDialog($event)">
         <ng-container pep-dialog-content>
             <div class="color-chooser-content">
                 <div class="current-color" [ngStyle]="{ 'background': data?.value ? data.value : 'transparent' }"></div>

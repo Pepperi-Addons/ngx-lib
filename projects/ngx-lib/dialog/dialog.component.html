@@ -2,7 +2,7 @@
     <span class="dialog-title" *ngIf="title?.length">
         {{ title }}
     </span>
-    <button mat-button *ngIf="showClose" [mat-dialog-close]="null" class="pep-button icon-button md weak dialog-close">
+    <button mat-button *ngIf="showClose" (click)="closeDialog()" class="pep-button icon-button md weak dialog-close">
         <mat-icon>
             <pep-icon name="system_close">
             </pep-icon>

@@ -84,17 +84,16 @@ export class PepRemoteLoaderService {
     }
 
     loadAddonBlockInDialog(options: IAddonBlockLoaderDialogOptions): MatDialogRef<PepAddonBlockLoaderComponent> | null {
-        let dialogRef: MatDialogRef<PepAddonBlockLoaderComponent> | null = null;
         const addonBlockInstance = this.loadAddonBlockInternal(options);
 
         if (addonBlockInstance) {
-            addonBlockInstance.inDialog = true;
             const pepConfig = this.dialogService.getDialogConfig({ disableClose: false }, options.size || 'full-screen');
             const mergeConfig = {...options.config, ...pepConfig}; 
             const data = options.data || null;
-            dialogRef = this.dialogService.openDialog(addonBlockInstance.dialogTemplate, data, mergeConfig);
+            addonBlockInstance.dialogRef = this.dialogService.openDialog(addonBlockInstance.dialogTemplate, data, mergeConfig);
+            return addonBlockInstance.dialogRef;
+        } else {
+            return null;
         }
-
-        return dialogRef;
     }
 }
