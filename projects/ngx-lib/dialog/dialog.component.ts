@@ -8,21 +8,15 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class PepDialogComponent {
     @Input() title: string;
-    @Input() showClose = true;
+    @Input() showClose = false;
     @Input() showHeader = true;
     @Input() showFooter = true;
-
-    // @Input() dialogRef: MatDialogRef<any>;
 
     @Output() close: EventEmitter<any> = new EventEmitter<any>();
 
     constructor() {}
     
     closeDialog() {
-        // if (this.dialogRef) {
-        //     this.dialogRef.close(null);
-        // }
-
         this.close.emit(null);
     }
 }

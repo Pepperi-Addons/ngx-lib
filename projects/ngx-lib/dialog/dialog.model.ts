@@ -46,7 +46,7 @@ export class PepDialogData {
         this.title = options.title || '';
         this.actionsType = options.actionsType || 'close';
         this.content = options.content || '';
-        this.showClose = options.showClose ?? true;
+        this.showClose = options.showClose ?? false;
         this.showHeader = options.showHeader ?? true;
         this.showFooter = options.showFooter ?? true;
         this.actionButtons = options.actionButtons ?? null;

@@ -86,7 +86,7 @@
                     'card-view': viewType === 'cards',
                     'small-card': cardSize === 'sm'
                 }" class="pull-left flip"
-            [ngStyle]="{ height: calculatedObjectHeight, visibility: !loadingItemsFromApi || item ? 'visible' : 'hidden' }">
+            [ngStyle]="{ height: 'initial', visibility: !loadingItemsFromApi || item ? 'visible' : 'hidden' }">
             <mat-checkbox *ngIf="showCardSelection" class="pull-left flip card-selection"
                 [disabled]="item | isItemDisabled: lockItemInnerEvents : printMode" [checked]="getIsItemSelected(item)"
                 (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
