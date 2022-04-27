@@ -79,6 +79,8 @@ export class PepCustomizationService {
         PepCustomizationService.BORDER_RADIUS_KEY + '-md';
     static BORDER_RADIUS_LG_KEY =
         PepCustomizationService.BORDER_RADIUS_KEY + '-lg';
+    static BORDER_RADIUS_XL_KEY =
+        PepCustomizationService.BORDER_RADIUS_KEY + '-xl';
 
     // Fonts variables keys
     static FONT_SIZE_2XS_KEY = '--pep-font-size-2xs';
@@ -360,6 +362,8 @@ export class PepCustomizationService {
             '0.25' + PepCustomizationService.REM_STRING;
         themeVars[PepCustomizationService.BORDER_RADIUS_LG_KEY] =
             '0.5' + PepCustomizationService.REM_STRING;
+        themeVars[PepCustomizationService.BORDER_RADIUS_XL_KEY] =
+            '1' + PepCustomizationService.REM_STRING;
     }
 
     getDefaultThemeSpacingVariables(themeVars: any): void {
