@@ -218,6 +218,7 @@
 //  Form view
 // ------------------------
 .form-view {
+    padding: variables.$content-margin variables.$spacing-xs;
     margin-top: variables.$content-margin;
     margin-bottom: variables.$content-margin;
     margin-inline: 0.25rem;

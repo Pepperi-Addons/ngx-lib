@@ -59,7 +59,6 @@ $font-weight-normal: var(--pep-font-weight-normal, 400);
 $font-weight-bold: var(--pep-font-weight-bold, 600);
 $font-weight-bolder: var(--pep-font-weight-bolder, 800);
 
-
 // Round corners
 // -----------------------------------------------------------------------------
 $border-radius-sm: var(--pep-border-radius-sm, 0.125rem);
@@ -83,6 +82,10 @@ $spacing-6xl: var(--pep-spacing-6xl, 5rem);     // 80px
 $spacing-7xl: var(--pep-spacing-7xl, 6rem);     // 96px
 $spacing-8xl: var(--pep-spacing-8xl, 8rem);     // 128px
 $spacing-9xl: var(--pep-spacing-9xl, 16rem);    // 256px
+
+// Focus size
+// -----------------------------------------------------------------------------
+$focus-size: $spacing-xs;
 
 // *****************************************************************************************
 //                        Layout - General

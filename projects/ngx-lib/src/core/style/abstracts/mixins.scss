@@ -306,7 +306,7 @@
 // ******************************************************************************
 //                        General state declerations
 // ******************************************************************************
-@mixin focus($add-important: false, $focus-color: null, $focus-size: variables.$spacing-xs) {
+@mixin focus($add-important: false, $focus-color: null, $focus-size: variables.$focus-size) {
     @if ($focus-color == null) {
         $focus-color: functions.get-pep-color(color-text, color-link-focus);
     }
