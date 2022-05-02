@@ -540,6 +540,24 @@
             }
         }
     }
+
+    &.remote-loader-dialog {
+        .mat-dialog-content {
+            max-height: unset !important;
+            height: 100% !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            
+            .pep-top-bar-container {
+                height: variables.$dialog-header-height;
+                
+                .header-content {
+                    margin-top: 0 !important;
+                }
+            }
+        }
+    }
+
 }
 
 //  Snack bar

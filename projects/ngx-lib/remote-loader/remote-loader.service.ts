@@ -87,7 +87,7 @@ export class PepRemoteLoaderService {
         const addonBlockInstance = this.loadAddonBlockInternal(options);
 
         if (addonBlockInstance) {
-            const pepConfig = this.dialogService.getDialogConfig({ disableClose: false }, options.size || 'full-screen');
+            const pepConfig = this.dialogService.getDialogConfig({ disableClose: false, panelClass: 'remote-loader-dialog' }, options.size || 'full-screen');
             const mergeConfig = {...options.config, ...pepConfig}; 
             const data = options.data || null;
             addonBlockInstance.dialogRef = this.dialogService.openDialog(addonBlockInstance.dialogTemplate, data, mergeConfig);
