@@ -7,7 +7,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { ActivatedRoute } from '@angular/router';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ 
+    providedIn: 'root' 
+})
 export class PepRemoteLoaderService {
     
     constructor(
@@ -83,7 +85,7 @@ export class PepRemoteLoaderService {
         return this.loadAddonBlockInternal(options);
     }
 
-    loadAddonBlockInDialog(options: IAddonBlockLoaderDialogOptions): MatDialogRef<PepAddonBlockLoaderComponent> | null {
+    loadAddonBlockInDialog(options: IAddonBlockLoaderDialogOptions): MatDialogRef<any> | null {
         const addonBlockInstance = this.loadAddonBlockInternal(options);
 
         if (addonBlockInstance) {
@@ -91,7 +93,11 @@ export class PepRemoteLoaderService {
             const mergeConfig = {...options.config, ...pepConfig}; 
             const data = options.data || null;
             addonBlockInstance.dialogRef = this.dialogService.openDialog(addonBlockInstance.dialogTemplate, data, mergeConfig);
+            addonBlockInstance.dialogRef.afterClosed().subscribe(() => {
+                addonBlockInstance.dialogRef = null;
+            });
             return addonBlockInstance.dialogRef;
+
         } else {
             return null;
         }
