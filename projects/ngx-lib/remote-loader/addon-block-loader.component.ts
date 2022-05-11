@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PepRemoteLoaderOptions } from './remote-loader.model';
 import { PepRemoteLoaderService } from './remote-loader.service';
@@ -8,7 +8,7 @@ import { PepRemoteLoaderService } from './remote-loader.service';
     templateUrl: './addon-block-loader.component.html',
     styleUrls: ['./addon-block-loader.component.scss']
 })
-export class PepAddonBlockLoaderComponent implements OnInit {
+export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @ViewChild('dialogTemplate', { static: true, read: TemplateRef }) dialogTemplate!: TemplateRef<any>;
     
     private _name: string = '';
@@ -39,7 +39,7 @@ export class PepAddonBlockLoaderComponent implements OnInit {
     @Output() blockLoad: EventEmitter<void> = new EventEmitter<void>();
     
     inDialog: boolean = false;
-    remotePathOptions!: PepRemoteLoaderOptions;
+    remotePathOptions: PepRemoteLoaderOptions = null;
     
     constructor(private remoteLoaderService: PepRemoteLoaderService) {
         //
@@ -47,6 +47,14 @@ export class PepAddonBlockLoaderComponent implements OnInit {
     
     ngOnInit() {
         //
+    }
+
+    ngOnDestroy(): void {
+        if (this.dialogRef) {
+            this.dialogRef = null;
+        }
+
+        this.remotePathOptions = null;
     }
 
     onBlockLoad() {

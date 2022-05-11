@@ -112,8 +112,6 @@ export class PepRemoteLoaderComponent implements OnChanges {
                 // }
                 this.hostEvents.emit(e)
             });
-            // this.viewContainer.element.nativeElement.addEventListener('customEvent', () => {
-            //   setTimeout(() => {});});
         }
     }
 
