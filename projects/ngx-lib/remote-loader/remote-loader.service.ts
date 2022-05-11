@@ -55,7 +55,7 @@ export class PepRemoteLoaderService {
         }
     }
 
-    private getAddonBaseUrl(addonUUID: string, fileName: string = 'api'): string {
+    private getAddonBaseUrl(addonUUID: string, fileName = 'api'): string {
         // For devServer run server on localhost.
         const devServer = this.route.snapshot.queryParamMap.get('devServer') === 'true';
         if(devServer) {

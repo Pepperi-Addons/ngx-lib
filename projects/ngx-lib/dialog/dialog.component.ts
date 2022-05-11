@@ -14,7 +14,9 @@ export class PepDialogComponent {
 
     @Output() close: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor() {}
+    constructor() {
+        //
+    }
     
     closeDialog() {
         this.close.emit(null);

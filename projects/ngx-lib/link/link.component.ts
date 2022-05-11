@@ -244,7 +244,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     get displayValue(): string {
-        let res = this.formattedValue;
+        const res = this.formattedValue;
 
         return res;
     }
@@ -311,7 +311,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
 
     isValueValid(value: string): boolean {
         // TODO: Maybe need to check other types.
-        let res = true;
+        const res = true;
 
         return res;
     }

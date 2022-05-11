@@ -11,7 +11,7 @@ import { PepRemoteLoaderService } from './remote-loader.service';
 export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @ViewChild('dialogTemplate', { static: true, read: TemplateRef }) dialogTemplate!: TemplateRef<any>;
     
-    private _name: string = '';
+    private _name = '';
     @Input() 
     set name(value: string) {
         this._name = value;
@@ -38,7 +38,7 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     @Output() blockLoad: EventEmitter<void> = new EventEmitter<void>();
     
-    inDialog: boolean = false;
+    inDialog = false;
     remotePathOptions: PepRemoteLoaderOptions = null;
     
     constructor(private remoteLoaderService: PepRemoteLoaderService) {

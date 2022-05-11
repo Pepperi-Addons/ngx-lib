@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, ViewChild, ViewContainerRef, ComponentFact
   Injector, NgModuleFactory, Compiler, EventEmitter, Output, ComponentRef, SimpleChanges, NgZone } from '@angular/core';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 import { PepRemoteLoaderOptions } from './remote-loader.model';
-declare var __webpack_public_path__;
+declare let __webpack_public_path__;
 
 @Component({
     selector: 'pep-remote-loader',
@@ -89,8 +89,7 @@ export class PepRemoteLoaderComponent implements OnChanges {
                 this.pepAddonService.setAddonStaticFolder(publicPath, this.options.addonId);
 
                 const module =  await loadRemoteModule(this.options).then(m => m);
-                let moduleFactory: NgModuleFactory<any>;
-                moduleFactory = this.compiler.compileModuleSync(module[this.options.exposedModule.replace('./','')]);
+                const moduleFactory: NgModuleFactory<any> = this.compiler.compileModuleSync(module[this.options.exposedModule.replace('./','')]);
                 const moduleRef = moduleFactory.create(this.injector);
                 const componentFactory = moduleRef?.componentFactoryResolver?.resolveComponentFactory(module[this.options.componentName]);
                 this.compRef = this.viewContainer.createComponent(componentFactory, null, this.injector, null, moduleRef);
