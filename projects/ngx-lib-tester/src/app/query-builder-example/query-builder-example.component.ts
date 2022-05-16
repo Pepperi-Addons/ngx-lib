@@ -8,6 +8,8 @@ import { IPepQueryBuilderField } from '@pepperi-addons/ngx-lib/query-builder/com
 })
 export class QueryBuilderExampleComponent implements OnInit {
     fields: Array<IPepQueryBuilderField>;
+    variableFields: Array<IPepQueryBuilderField>;
+    
     json: any;
 
     isformValid = true;
@@ -19,6 +21,7 @@ export class QueryBuilderExampleComponent implements OnInit {
     ngOnInit(): void {
         this.loadQuery();
         this.loadFilterFields();
+        this.loadVariableFields();
 
 
         /*
@@ -61,7 +64,7 @@ export class QueryBuilderExampleComponent implements OnInit {
 
     }
     loadQuery() {
-        /*this.json = {
+        this.json = {
             "ComplexId": "5",
             "Operation": "AND",
             "LeftNode": {
@@ -71,40 +74,40 @@ export class QueryBuilderExampleComponent implements OnInit {
                     "LeftNode":
                     {
                         "ComplexId": "1",
-                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAboolll', "Operation": 'IsEqual', "Values": ["True"] },
+                        "LeftNode": { "ExpressionId": '1', "ApiName": 'AllowDecimal', "Operation": 'IsEqualVariable', "Values": ["AllowDecimal"] },
                         "Operation": "OR",
                         "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'value4', 'value8'] }
                     },
                     "Operation": "OR",
                     "RightNode": {
                         "ComplexId": "2",
-                        "LeftNode": { "ExpressionId": '3', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ["abc"] },
+                        "LeftNode": { "ExpressionId": '3', "ApiName": "CampaignName", "Operation": 'IsEqualVariable', "Values": ["abc"] },
                         "Operation": "AND",
-                        "RightNode": { "ExpressionId": '4', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ['sss'] }
+                        "RightNode": { "ExpressionId": '4', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ['ssd'] }
                     }
                 },
                 "Operation": "OR",
-                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "InTheLast", "Values": ["9", "Months"] },
+                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "NotInTheLastCalendar", "Values": ["3", "Months"] },
             },
             "RightNode": { "ExpressionId": '6', "ApiName": "CaseQuantity", "Operation": "IsEqual", "Values": ["2"] },
-        } */
-        this.json = {
+        } 
+        /*this.json = {
             "ComplexId": "1",
-            "Operation": "AND",
+            "Operation": "OR",
             "LeftNode": {
-                "Values": ["123"],
-                "Operation": "Contains",
-                "ApiName": "Account.ExternalID",
+                "Values": ['2', 'Days'],
+                "Operation": "NotInTheLastCalendar",
+                "ApiName": "ActionDateTime",
                 "ExpressionId": "1"
             }
             , "RightNode":
             {
                 "Values": ["5132"],
                 "Operation": "Contains",
-                "ApiName": "Account.ExternalID",
+                "ApiName": "CampaignName",
                 "ExpressionId": "2"
             } 
-        }
+        } */
     }
 
     loadFilterFields() {
@@ -135,6 +138,14 @@ export class QueryBuilderExampleComponent implements OnInit {
             }
         ];
 
+    }
+
+    loadVariableFields() {
+        this.variableFields = [
+            { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String', OptionalValues: [] },
+            { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer', OptionalValues: [] },
+            { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool', OptionalValues: [] }
+        ]
     }
 
     getFilters(json: any) {

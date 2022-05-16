@@ -3,7 +3,10 @@ import { IPepQuerySection, IPepQueryItem } from '../model/legacy';
 import { getLegacyOperator } from '../model/operator';
 import { PepOperatorTypes } from '../model/type';
 import { getLegacyOperationUnit } from '../model/operator-unit';
-import { PepSmartFilterOperators } from '@pepperi-addons/ngx-lib/smart-filters';
+import { 
+    PepSmartFilterOperators,
+    PepSmartFilterAdditionalOperators
+} from '@pepperi-addons/ngx-lib/smart-filters';
 
 
 @Injectable()
@@ -102,7 +105,9 @@ export class PepOutputQueryService {
                 values = current.values.first;
             } else if (
                 current.operator === PepSmartFilterOperators.InTheLast ||
+                current.operator === PepSmartFilterAdditionalOperators.InTheLastCalendar ||
                 current.operator === PepSmartFilterOperators.NotInTheLast ||
+                current.operator === PepSmartFilterAdditionalOperators.NotInTheLastCalendar ||
                 current.operator === PepSmartFilterOperators.DueIn ||
                 current.operator === PepSmartFilterOperators.NotDueIn
             ) { //operation unit            

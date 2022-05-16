@@ -30,11 +30,16 @@ import {
     Validators,
 } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { PepValidatorService } from '@pepperi-addons/ngx-lib';
+import {
+    PepValidatorService,
+    IPepOption
+} from '@pepperi-addons/ngx-lib';
 import {
     IPepSmartFilterOperator,
     IPepSmartFilterOperatorUnit,
     PepSmartFilterOperators,
+    PepSmartFilterAdditionalOperators,
+    PepSmartFilterVariableOperators,
     PepSmartFilterOperatorUnits,
 } from './operator';
 import { forwardRef } from '@angular/core';
@@ -63,6 +68,19 @@ export abstract class BaseFilterComponent
         return this._field;
     }
 
+    variableFieldOptions: Array<IPepOption> = [];
+    @Input()
+    set variableField(list: any[]) {
+        if (list?.length) {
+            this.variableFieldOptions = list.map(item => {
+                return {
+                    key: item,
+                    value: item
+                }
+            });
+        }
+    };
+
     private _filter: IPepSmartFilterData;
     @Input()
     set filter(value: IPepSmartFilterData) {
@@ -82,6 +100,7 @@ export abstract class BaseFilterComponent
     @Input() inline = false;
     @Input() showActionButtons = true;
     @Input() renderTitle = true;
+    @Input() showAdditionalOperators = false;
 
     @Output() filterClear: EventEmitter<void> = new EventEmitter<void>();
     @Output()
@@ -203,12 +222,40 @@ export abstract class BaseFilterComponent
             })
             .map((key) => PepSmartFilterOperators[key]);
 
+        // Add additional operators
+        if (this.showAdditionalOperators) {
+            let additional: IPepSmartFilterOperator[] = Object.keys(PepSmartFilterAdditionalOperators)
+                .filter((key) => {
+                    return PepSmartFilterAdditionalOperators[key].componentType.includes(
+                        this.field.componentType
+                    );
+                })
+                .map((key) => PepSmartFilterAdditionalOperators[key]);
+
+            this.operators = [...this.operators, ...additional];
+        }
+
+        //add variable operators
+        if (this.variableFieldOptions?.length) {
+            let variables: IPepSmartFilterOperator[] = Object.keys(PepSmartFilterVariableOperators)
+                .filter((key) => {
+                    return PepSmartFilterVariableOperators[key].componentType.includes(
+                        this.field.componentType
+                    );
+                })
+                .map((key) => PepSmartFilterVariableOperators[key]);
+
+            this.operators = [...this.operators, ...variables];
+        }
+
         // Filter by from field.operators input if exist.
         if (this.field.operators?.length > 0) {
             this.operators = this.operators.filter((o1) =>
                 this.field.operators.some((o2) => o1.id === o2)
             );
         }
+
+
 
         // Get the operator units by componentType.
         this.operatorUnits = Object.keys(PepSmartFilterOperatorUnits)

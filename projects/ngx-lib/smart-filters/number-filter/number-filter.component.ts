@@ -3,6 +3,7 @@ import { BaseFilterComponent } from '../common/model/base-filter-component';
 import {
     IPepSmartFilterOperator,
     PepSmartFilterOperators,
+    PepSmartFilterVariableOperators
 } from '../common/model/operator';
 import { IPepSmartFilterDataValue } from '../common/model/filter';
 import { Validators } from '@angular/forms';
@@ -16,6 +17,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class PepNumberFilterComponent extends BaseFilterComponent implements OnInit {
     PepSmartFilterOperators = PepSmartFilterOperators;
+    PepSmartFilterVariableOperators = PepSmartFilterVariableOperators;
     chooseTypeOptions: Array<IPepOption> = [];
     operatorWidth = '38%';
     fieldsWidth = '70%';
@@ -97,7 +99,7 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
     }
 
     onOperatorChanged(value: string) {
-        const operator = Object.values(PepSmartFilterOperators).find(
+        const operator = Object.values(this.operators).find(
             (operator) => operator.id === value
         );
         this.operator = operator;
@@ -108,6 +110,13 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
             this.applyFilter();
         }
         this.setControlsWidth();
+    }
+
+    onVariableChanged(value: any) {
+        this.firstControl.setValue(value);
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
     }
 
     onValueChanged() {

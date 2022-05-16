@@ -1,6 +1,6 @@
 <div class="example-form-container">
     <div style="font-weight: bold; text-decoration: underline; margin-top: 20px;">Parent Form Container</div>
-    <pep-query-builder [query]="json" [fields]="fields" (queryChange)="getFilters($event)"
+    <pep-query-builder [query]="json" [fields]="fields" [variableFields]="variableFields" (queryChange)="getFilters($event)"
         (formValidationChange)="onFormValidationChanged($event)">
     </pep-query-builder>
 

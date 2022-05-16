@@ -6,6 +6,7 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { PepTypeConvertorService } from '../common/services/type-convertor.service';
 import { IPepQueryBuilderFieldContainer } from '../common/model/field';
 
+
 @Component({
     selector: 'pep-query-builder-item',
     templateUrl: './query-builder-item.component.html',
@@ -50,6 +51,14 @@ export class PepQueryBuilderItemComponent {
             this.addToParentForm();
         }
     }
+    /*
+    @Input() 
+    set variableFields(val: any) {
+        console.log('variableFields 2', val);
+    } */
+    
+    @Input() 
+    variableFields: any = {};
 
     @Output()
     filterChange = new EventEmitter();

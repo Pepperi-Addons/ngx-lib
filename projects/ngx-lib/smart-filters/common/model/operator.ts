@@ -220,6 +220,80 @@ export const PepSmartFilterOperators = {
     In: In,
 };
 
+const InTheLastCalendar: IPepSmartFilterOperator = {
+    id: 'inTheLastCalendar',
+    name: 'IN_THE_LAST_CALENDAR',
+    short: 'In the last (calendar)',
+    componentType: ['date'],
+}
+
+const NotInTheLastCalendar: IPepSmartFilterOperator = {
+    id: 'notInTheLastCalendar',
+    name: 'NOT_IN_THE_LAST_CALENDAR',
+    short: 'Not in the last (calendar)',
+    componentType: ['date'],
+}
+
+export const PepSmartFilterAdditionalOperators = {
+    InTheLastCalendar: InTheLastCalendar,
+    NotInTheLastCalendar: NotInTheLastCalendar
+}
+
+const EqualsToVariable: IPepSmartFilterOperator = {
+    id: 'eqv',
+    name: 'EQUAL_TO_VARIABLE',
+    short: '=',
+    componentType: [
+        'text',
+        'number',
+        'boolean'
+    ]
+}
+
+const NotEqualsToVariable: IPepSmartFilterOperator = {
+    id: 'neqv',
+    name: 'NOT_EQUAL_TO_VARIABLE',
+    short: '<>',
+    componentType: ['boolean']
+}
+
+const LessThanVariable: IPepSmartFilterOperator = {
+    id: 'ltv',
+    name: 'LESS_THAN_VARIABLE',
+    short: '<',
+    componentType: ['number'],
+};
+
+const GreaterThanVariable: IPepSmartFilterOperator = {
+    id: 'gtv',
+    name: 'GREATER_THAN_VARIABLE',
+    short: '>',
+    componentType: ['number'],
+};
+
+const InTheLastVariable: IPepSmartFilterOperator = {
+    id: 'inTheLastVariable',
+    name: 'IN_THE_LAST_VARIABLE',
+    short: 'In the last Variable',
+    componentType: ['date'],
+};
+
+const DateRangeVariable: IPepSmartFilterOperator = {
+    id: 'dateRangeVariable',
+    name: 'DATE_RANGE_VARIABLE',
+    short: 'Range Variable',
+    componentType: ['date'],
+};
+
+export const PepSmartFilterVariableOperators = {
+    EqualsToVariable: EqualsToVariable,
+    NotEqualsToVariable: NotEqualsToVariable,
+    LessThanVariable: LessThanVariable,
+    GreaterThanVariable: GreaterThanVariable,
+    DateRangeVariable: DateRangeVariable,
+    InTheLastVariable: InTheLastVariable
+}
+
 export class IPepSmartFilterOperatorUnit {
     id: PepSmartFilterOperatorUnitType;
     name: string;

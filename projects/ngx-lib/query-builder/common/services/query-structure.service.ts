@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { } from 'lodash';
 import { IPepQueryBuilderField, IPepQuerySection, IPepQueryItem } from '../../common/model/legacy';
-import {   
+import {
     IPepSmartFilterData,
     PepSmartFilterOperators,
     IPepSmartFilterOperator,
@@ -19,7 +19,7 @@ import { PepQueryBuilderSectionComponent } from '../../query-builder-section/que
 import { PepQueryBuilderItemComponent } from '../../query-builder-item/query-builder-item.component';
 import { IPepQueryBuilderFieldContainer } from '../../common/model/field';
 import { PepQueryBuilderTypeMap } from '../../common/model/type-map';
-import { getSmartBuilderOperationUnit } from '../../common/model/operator-unit';
+import { getSmartFilterOperationUnit } from '../../common/model/operator-unit';
 import { IPepQueryBuilderValues } from '../../common/model/filter';
 import { PepOperatorTypes } from '../../common/model/type';
 
@@ -30,14 +30,15 @@ export class PepQueryStructureService {
     private _outputQuery$ = new BehaviorSubject<IPepQuerySection | IPepQueryItem>(null);
 
     private _smartFilterFields: Array<IPepQueryBuilderFieldContainer>;
+    private _variableFields: any = {};
     private _form: FormGroup;
     private _maxStructureDepth = MAX_STRUCTURE_DEPTH;
 
     public outputQuery$ = this._outputQuery$.asObservable();
 
     constructor(
-        private _fb: FormBuilder, 
-        private _resolver: ComponentFactoryResolver, 
+        private _fb: FormBuilder,
+        private _resolver: ComponentFactoryResolver,
         private _outputQueryService: PepOutputQueryService,
         private _queryBuilderService: PepQueryBuilderService) {
 
@@ -57,6 +58,18 @@ export class PepQueryStructureService {
 
     get hasFields(): boolean {
         return this._smartFilterFields?.length > 0;
+    }
+
+    set variableFields(list: Array<IPepQueryBuilderField>) {
+        const typeMapper = new PepQueryBuilderTypeMap();
+        list.forEach(field => {
+            const fieldType = this.convertSmartFilterComponentType(typeMapper.getSmartFilterType(field.FieldType));
+            if (this.hasProperty(this._variableFields, fieldType)) {
+                this._variableFields[fieldType].push(field.FieldID);
+            } else {
+                this._variableFields[fieldType] = [field.FieldID];
+            }
+        });
     }
 
     set form(value: FormGroup) {
@@ -182,6 +195,7 @@ export class PepQueryStructureService {
 
         componentRef.instance.formKey = formKey;
         componentRef.instance.fields = this._smartFilterFields;
+        componentRef.instance.variableFields = this._variableFields;
         const selectedField = this.getSelectedField(current);
         if (selectedField) {
             componentRef.instance.selected = selectedField;
@@ -199,7 +213,7 @@ export class PepQueryStructureService {
             this.createOutputQuery();
         });
     }
-    
+
     /**
      * get smart filter field
      * @param current filter legacy element
@@ -212,7 +226,21 @@ export class PepQueryStructureService {
         } else {
             return this._smartFilterFields?.length > 0 ? this._smartFilterFields[0] : null;
         }
-    }    
+    }
+
+    private convertSmartFilterComponentType(type: string) {
+        switch (type) {
+            case 'int':
+            case 'currency':
+            case 'real':
+            case 'percentage':
+                return 'number';
+            case 'dete-time':
+                return 'date';
+            default:
+                return type;
+        }
+    }
 
     /**
      * creates a legacy output query 

@@ -1,17 +1,38 @@
 <ng-container *ngIf="inline">
-    <pep-select [value]="firstControl?.value || ''" xAlignment="left" [options]="options" [renderTitle]="renderTitle"
-        [emptyOption]="true" (valueChange)="onValueChanged($event)">
-    </pep-select>
-
-</ng-container>
-
-<div *ngIf="!inline" [formGroup]="form">
-    <mat-radio-group class="radio-group" [formControlName]="firstControlKey">
-        <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="true">
-            {{ 'CHECKBOX.TRUE' | translate }}
-        </mat-radio-button>
-        <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="false">
-            {{ 'CHECKBOX.FALSE' | translate }}
-        </mat-radio-button>
-    </mat-radio-group>
-</div>
+    <ng-container *ngIf="variableFieldOptions?.length">
+        <div fxLayout="row" fxLayoutGap=".5rem">
+            <pep-select [fxFlex]="operatorWidth" [key]="'typeOperator'" [value]="operator.id"
+                [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
+                [options]="chooseTypeOptions" (valueChange)="onOperatorChanged($event)">
+            </pep-select>
+            <ng-container *ngIf="operator === PepSmartFilterVariableOperators.EqualsToVariable || 
+                operator === PepSmartFilterVariableOperators.NotEqualsToVariable">
+                <pep-select [fxFlex]="valueWidth" [key]="firstControlKey" [value]="firstControl?.value || ''"
+                    [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
+                    [options]="variableFieldOptions" (valueChange)="onValueChanged($event)">
+                </pep-select>
+            </ng-container>
+            <ng-container *ngIf="operator !== PepSmartFilterVariableOperators.EqualsToVariable && 
+                operator !== PepSmartFilterVariableOperators.NotEqualsToVariable">
+                <pep-select [fxFlex]="valueWidth" [value]="firstControl?.value || ''" xAlignment="left"
+                    [options]="options" [renderTitle]="renderTitle" [emptyOption]="false"
+                    (valueChange)="onValueChanged($event)">
+                </pep-select>
+            </ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!variableFieldOptions || !variableFieldOptions.length">
+        <pep-select [fxFlex]="valueWidth" [value]="firstControl?.value || ''" xAlignment="left" [options]="options"
+            [renderTitle]="renderTitle" [emptyOption]="false" (valueChange)="onValueChanged($event)">
+        </pep-select>
+    </ng-container>
+    <div *ngIf="!inline" [formGroup]="form">
+        <mat-radio-group class="radio-group" [formControlName]="firstControlKey">
+            <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="true">
+                {{ 'CHECKBOX.TRUE' | translate }}
+            </mat-radio-button>
+            <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="false">
+                {{ 'CHECKBOX.FALSE' | translate }}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>

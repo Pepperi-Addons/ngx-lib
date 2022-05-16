@@ -6,6 +6,7 @@ import {
 import {    
     IPepSmartFilterData,
     PepSmartFilterOperators,
+    PepSmartFilterAdditionalOperators,
     IPepSmartFilterOperator,
     PepSmartFilterType,
     createSmartFilter,
@@ -15,7 +16,7 @@ import {
 import { getSmartFilterOperator } from './common/model/operator';
 import { IPepQueryBuilderFieldContainer } from './common/model/field';
 import { PepQueryBuilderTypeMap } from './common/model/type-map';
-import { getSmartBuilderOperationUnit } from './common/model/operator-unit';
+import { getSmartFilterOperationUnit } from './common/model/operator-unit';
 import { IPepQueryBuilderValues } from './common/model/filter';
 
 
@@ -71,7 +72,7 @@ export class PepQueryBuilderService {
                                     value: option.Value
                                 }
                             })
-                        }, typeMapper.getSmartBuilderType(field.FieldType) as PepSmartFilterType),
+                        }, typeMapper.getSmartFilterType(field.FieldType) as PepSmartFilterType),
                     query: {
                         fieldType: field.FieldType
                     }
@@ -103,13 +104,15 @@ export class PepQueryBuilderService {
             }) : null;
         } else if (
             operator === PepSmartFilterOperators.InTheLast ||
+            operator === PepSmartFilterAdditionalOperators.InTheLastCalendar ||
             operator === PepSmartFilterOperators.NotInTheLast ||
+            operator === PepSmartFilterAdditionalOperators.NotInTheLastCalendar ||
             operator === PepSmartFilterOperators.DueIn ||
             operator === PepSmartFilterOperators.NotDueIn
         ) { //operation unit
             data.first = current?.Values?.length > 0 ? current.Values[0] : null;
             if (current?.Values?.length === 2) {
-                data.operationUnit = getSmartBuilderOperationUnit(current.Values[1]);
+                data.operationUnit = getSmartFilterOperationUnit(current.Values[1]);
             }
         } else {
             data.first = current?.Values?.length > 0 ? current.Values[0] : null;

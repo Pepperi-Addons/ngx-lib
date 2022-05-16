@@ -1,4 +1,9 @@
-import { PepSmartFilterOperators, IPepSmartFilterOperator } from '@pepperi-addons/ngx-lib/smart-filters';
+import { 
+    PepSmartFilterOperators, 
+    PepSmartFilterAdditionalOperators,
+    PepSmartFilterVariableOperators,
+    IPepSmartFilterOperator 
+} from '@pepperi-addons/ngx-lib/smart-filters';
 import { PepSmartFilterType } from '@pepperi-addons/ngx-lib/smart-filters';
 
 export interface IPepQueryBuilderOperator {
@@ -13,10 +18,22 @@ const Equals: IPepQueryBuilderOperator = {
     type: ['boolean', 'int', 'text']
 };
 
+const EqualsVariable: IPepQueryBuilderOperator = {
+    legacy: 'IsEqualVariable',
+    smartFilter: PepSmartFilterVariableOperators.EqualsToVariable,
+    type: ['boolean', 'int', 'text']
+};
+
 const NotEqual: IPepQueryBuilderOperator = {
     legacy: 'IsNotEqual',
     smartFilter: PepSmartFilterOperators.NotEqual,
     type: null
+};
+
+const NotEqualsVariable: IPepQueryBuilderOperator = {
+    legacy: 'IsNotEqualVariable',
+    smartFilter: PepSmartFilterVariableOperators.NotEqualsToVariable,
+    type: ['boolean', 'int', 'text']
 };
 
 const LessThan: IPepQueryBuilderOperator = {
@@ -25,9 +42,21 @@ const LessThan: IPepQueryBuilderOperator = {
     type: null
 };
 
+const LessThanVarible: IPepQueryBuilderOperator = {
+    legacy: 'LessThanVarible',
+    smartFilter: PepSmartFilterVariableOperators.LessThanVariable,
+    type: null
+};
+
 const GreaterThan: IPepQueryBuilderOperator = {
     legacy: '>',
     smartFilter: PepSmartFilterOperators.GreaterThan,
+    type: null
+};
+
+const GreaterThanVarible: IPepQueryBuilderOperator = {
+    legacy: 'GreaterThanVarible',
+    smartFilter: PepSmartFilterVariableOperators.GreaterThanVariable,
     type: null
 };
 
@@ -118,11 +147,29 @@ const InTheLast: IPepQueryBuilderOperator = {
     type: null
 };
 
+const InTheLastCalendar: IPepQueryBuilderOperator = {
+    legacy: 'InTheLastCalendar',
+    smartFilter: PepSmartFilterAdditionalOperators.InTheLastCalendar,
+    type: null
+}
+
+const InTheLastVariable: IPepQueryBuilderOperator = {
+    legacy: 'InTheLastVariable',
+    smartFilter: PepSmartFilterVariableOperators.InTheLastVariable,
+    type: null
+}
+
 const NotInTheLast: IPepQueryBuilderOperator = {
     legacy: 'NotInTheLast',
     smartFilter: PepSmartFilterOperators.NotInTheLast,
     type: null
 };
+
+const NotInTheLastCalendar: IPepQueryBuilderOperator = {
+    legacy: 'NotInTheLastCalendar',
+    smartFilter: PepSmartFilterAdditionalOperators.NotInTheLastCalendar,
+    type: null
+}
 
 const Today: IPepQueryBuilderOperator = {
     legacy: 'Today',
@@ -145,6 +192,12 @@ const ThisMonth: IPepQueryBuilderOperator = {
 const DateRange: IPepQueryBuilderOperator = {
     legacy: 'Between',
     smartFilter: PepSmartFilterOperators.DateRange,
+    type: ['date-time']
+};
+
+const dateRangeVariable: IPepQueryBuilderOperator = {
+    legacy: 'BetweenVariable',
+    smartFilter: PepSmartFilterVariableOperators.DateRangeVariable,
     type: ['date-time']
 };
 
@@ -187,10 +240,14 @@ const In: IPepQueryBuilderOperator = {
 
 const PepQueryBuilderOperators = [
     Equals,
+    EqualsVariable, 
     NotEqual,
+    NotEqualsVariable,
     LessThan,
+    LessThanVarible,
     //   LessThanOrEquals,
     GreaterThan,
+    GreaterThanVarible,
     //   GreaterThanOrEquals,
     NumberRange,
     Contains,
@@ -199,11 +256,15 @@ const PepQueryBuilderOperators = [
     //   After,
     //   Before,
     InTheLast,
+    InTheLastVariable,
+    InTheLastCalendar,
     NotInTheLast,
+    NotInTheLastCalendar,
     Today,
     ThisWeek,
     ThisMonth,
     DateRange,
+    dateRangeVariable,
     DueIn,
     NotDueIn,
     On,

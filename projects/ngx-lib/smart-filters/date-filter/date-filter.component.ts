@@ -4,6 +4,8 @@ import {
     IPepSmartFilterOperator,
     IPepSmartFilterOperatorUnit,
     PepSmartFilterOperators,
+    PepSmartFilterAdditionalOperators,
+    PepSmartFilterVariableOperators,
     PepSmartFilterOperatorUnits,
 } from '../common/model/operator';
 import { IPepSmartFilterDataValue } from '../common/model/filter';
@@ -17,6 +19,8 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
 })
 export class PepDateFilterComponent extends BaseFilterComponent implements OnInit {
     PepSmartFilterOperators = PepSmartFilterOperators;
+    PepSmartFilterAdditionalOperators = PepSmartFilterAdditionalOperators;
+    PepSmartFilterVariableOperators = PepSmartFilterVariableOperators;
     chooseTimeOptions: Array<IPepOption> = [];
     chooseTimeUnitOptions: Array<IPepOption> = [];
     operatorWidth: string;
@@ -36,7 +40,9 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
     // Override
     getDefaultOperatorUnit(): IPepSmartFilterOperatorUnit {
         if (this.operator === PepSmartFilterOperators.InTheLast ||
+            this.operator === PepSmartFilterAdditionalOperators.InTheLastCalendar ||
             this.operator === PepSmartFilterOperators.NotInTheLast ||
+            this.operator === PepSmartFilterAdditionalOperators.NotInTheLastCalendar ||
             this.operator === PepSmartFilterOperators.DueIn ||
             this.operator === PepSmartFilterOperators.NotDueIn) {
             return PepSmartFilterOperatorUnits.Months;
@@ -89,7 +95,9 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
             this.secondControl.setValidators(Validators.required);
         } else if (
             this.operator === PepSmartFilterOperators.InTheLast ||
+            this.operator === PepSmartFilterAdditionalOperators.InTheLastCalendar || 
             this.operator === PepSmartFilterOperators.NotInTheLast ||
+            this.operator === PepSmartFilterAdditionalOperators.NotInTheLastCalendar ||
             this.operator === PepSmartFilterOperators.DueIn ||
             this.operator === PepSmartFilterOperators.NotDueIn
         ) {
@@ -135,7 +143,7 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
     }
 
     onOperatorChanged(value: string) {
-        const operator = Object.values(PepSmartFilterOperators).find(
+        const operator = Object.values(this.operators).find(
             (operator) => operator.id === value
         );
 
@@ -160,6 +168,13 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
         if (this._parentForm) {
             this.updateParentForm();
         }
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
+    onVariableChanged(value: any) {
+        this.firstControl.setValue(value);
         if (this.emitOnChange) {
             this.applyFilter();
         }

@@ -38,7 +38,7 @@ const PepQueryBuilderOperationUnit = [
  * @param operationUnit legacy operation unit
  * @returns smart filter operation unit item
  */
-export function getSmartBuilderOperationUnit(operationUnit: string): IPepSmartFilterOperatorUnit | null {
+export function getSmartFilterOperationUnit(operationUnit: string): IPepSmartFilterOperatorUnit | null {
     const smartFilterOperationUnit: IPepQueryBuilderOperationUnit = PepQueryBuilderOperationUnit.find(unit => unit.legacy === operationUnit);
     return smartFilterOperationUnit ? smartFilterOperationUnit.smartFilter : null;
 }

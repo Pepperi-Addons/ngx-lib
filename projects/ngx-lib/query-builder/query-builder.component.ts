@@ -36,6 +36,10 @@ export class PepQueryBuilderComponent implements OnInit, OnDestroy {
         this.hasFields = this.queryStructureService.hasFields;
         this.loadQuery();
     }
+    @Input() 
+    set variableFields(list : Array<IPepQueryBuilderField>) {
+        this.queryStructureService.variableFields = list;
+    };
     @Input()
     set maxDepth(value: number) {
         this.queryStructureService.maxDepth = value;
