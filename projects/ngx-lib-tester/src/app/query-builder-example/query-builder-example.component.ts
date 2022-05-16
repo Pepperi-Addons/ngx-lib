@@ -74,20 +74,20 @@ export class QueryBuilderExampleComponent implements OnInit {
                     "LeftNode":
                     {
                         "ComplexId": "1",
-                        "LeftNode": { "ExpressionId": '1', "ApiName": 'AllowDecimal', "Operation": 'IsEqualVariable', "Values": ["AllowDecimal"] },
+                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAAttachmentTest1', "Operation": 'IsEqualVariable', "Values": ["TSAAttachmentTest1"] },
                         "Operation": "OR",
                         "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'value4', 'value8'] }
                     },
                     "Operation": "OR",
                     "RightNode": {
                         "ComplexId": "2",
-                        "LeftNode": { "ExpressionId": '3', "ApiName": "CampaignName", "Operation": 'IsEqualVariable', "Values": ["abc"] },
+                        "LeftNode": { "ExpressionId": '3', "ApiName": "CampaignName", "Operation": 'Contains', "Values": ["abc"] },
                         "Operation": "AND",
-                        "RightNode": { "ExpressionId": '4', "ApiName": "TSAAttachmentTest1", "Operation": 'Contains', "Values": ['ssd'] }
+                        "RightNode": { "ExpressionId": '4', "ApiName": "CostPrice", "Operation": 'LessThanVarible', "Values": ['CostPrice'] }
                     }
                 },
                 "Operation": "OR",
-                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "NotInTheLastCalendar", "Values": ["3", "Months"] },
+                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "InTheLastVariable", "Values": ["ActionDateTime2"] },
             },
             "RightNode": { "ExpressionId": '6', "ApiName": "CaseQuantity", "Operation": "IsEqual", "Values": ["2"] },
         } 
@@ -144,7 +144,8 @@ export class QueryBuilderExampleComponent implements OnInit {
         this.variableFields = [
             { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String', OptionalValues: [] },
             { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer', OptionalValues: [] },
-            { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool', OptionalValues: [] }
+            { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime', OptionalValues: [] },
+            { FieldID: 'ActionDateTime2', Title: 'Action Date Time 2', FieldType: 'DateTime', OptionalValues: [] }
         ]
     }
 

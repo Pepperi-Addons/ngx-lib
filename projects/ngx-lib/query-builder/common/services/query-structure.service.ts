@@ -235,7 +235,7 @@ export class PepQueryStructureService {
             case 'real':
             case 'percentage':
                 return 'number';
-            case 'dete-time':
+            case 'date-time':
                 return 'date';
             default:
                 return type;

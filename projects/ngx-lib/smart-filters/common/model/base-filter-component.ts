@@ -80,6 +80,7 @@ export abstract class BaseFilterComponent
             });
         }
     };
+    
 
     private _filter: IPepSmartFilterData;
     @Input()

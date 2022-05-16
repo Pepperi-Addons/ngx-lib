@@ -220,6 +220,7 @@ export const PepSmartFilterOperators = {
     In: In,
 };
 
+//additional operators to be added upon input flag
 const InTheLastCalendar: IPepSmartFilterOperator = {
     id: 'inTheLastCalendar',
     name: 'IN_THE_LAST_CALENDAR',
@@ -239,6 +240,7 @@ export const PepSmartFilterAdditionalOperators = {
     NotInTheLastCalendar: NotInTheLastCalendar
 }
 
+//additional variable operators to be added upon input variable fields
 const EqualsToVariable: IPepSmartFilterOperator = {
     id: 'eqv',
     name: 'EQUAL_TO_VARIABLE',

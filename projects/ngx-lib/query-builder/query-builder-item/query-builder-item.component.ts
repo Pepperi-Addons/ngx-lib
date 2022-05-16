@@ -51,11 +51,6 @@ export class PepQueryBuilderItemComponent {
             this.addToParentForm();
         }
     }
-    /*
-    @Input() 
-    set variableFields(val: any) {
-        console.log('variableFields 2', val);
-    } */
     
     @Input() 
     variableFields: any = {};
