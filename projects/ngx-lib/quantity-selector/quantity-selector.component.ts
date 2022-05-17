@@ -281,7 +281,9 @@ export class PepQuantitySelectorComponent
     }
 
     get displayValue(): string {
-        const res = this.isInFocus ? this.value : this.formattedValue;
+        const res = this.isInFocus
+            ? parseFloat(this.value).toString()
+            : this.formattedValue;
         return res;
     }
 
