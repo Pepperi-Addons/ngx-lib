@@ -79,7 +79,7 @@ export abstract class BaseFilterComponent
                 }
             });
         }
-    };
+    }
     
 
     private _filter: IPepSmartFilterData;
@@ -225,7 +225,7 @@ export abstract class BaseFilterComponent
 
         // Add additional operators
         if (this.showAdditionalOperators) {
-            let additional: IPepSmartFilterOperator[] = Object.keys(PepSmartFilterAdditionalOperators)
+            const additional: IPepSmartFilterOperator[] = Object.keys(PepSmartFilterAdditionalOperators)
                 .filter((key) => {
                     return PepSmartFilterAdditionalOperators[key].componentType.includes(
                         this.field.componentType
@@ -238,7 +238,7 @@ export abstract class BaseFilterComponent
 
         //add variable operators
         if (this.variableFieldOptions?.length) {
-            let variables: IPepSmartFilterOperator[] = Object.keys(PepSmartFilterVariableOperators)
+            const variables: IPepSmartFilterOperator[] = Object.keys(PepSmartFilterVariableOperators)
                 .filter((key) => {
                     return PepSmartFilterVariableOperators[key].componentType.includes(
                         this.field.componentType
