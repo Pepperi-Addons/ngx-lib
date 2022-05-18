@@ -61,15 +61,17 @@ export class PepQueryStructureService {
     }
 
     set variableFields(list: Array<IPepQueryBuilderField>) {
-        const typeMapper = new PepQueryBuilderTypeMap();
-        list.forEach(field => {
-            const fieldType = this.convertSmartFilterComponentType(typeMapper.getSmartFilterType(field.FieldType));
-            if (this.hasProperty(this._variableFields, fieldType)) {
-                this._variableFields[fieldType].push(field.FieldID);
-            } else {
-                this._variableFields[fieldType] = [field.FieldID];
-            }
-        });
+        if (list?.length) {
+            const typeMapper = new PepQueryBuilderTypeMap();
+            list.forEach(field => {
+                const fieldType = this.convertSmartFilterComponentType(typeMapper.getSmartFilterType(field.FieldType));
+                if (this.hasProperty(this._variableFields, fieldType)) {
+                    this._variableFields[fieldType].push(field.FieldID);
+                } else {
+                    this._variableFields[fieldType] = [field.FieldID];
+                }
+            });
+        }
     }
 
     set form(value: FormGroup) {
