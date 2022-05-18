@@ -257,6 +257,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.type == 'link') {
             res = this.formattedValue;
+        } else if (this.isNumberType()) {
+            res = this.isInFocus ? (this.value.length > 0 ? parseFloat(this.value).toString() : '') : this.formattedValue;
         } else {
             res = this.isInFocus ? this.value : this.formattedValue;
         }
