@@ -1,5 +1,5 @@
 <div class="smart-filters-container" dir="{{ layoutService.isRtl() ? 'rtl' : 'ltr' }}">
-    <div class="title">
+    <div *ngIf="fields?.length > 0" class="title">
         <span class="body-md bold">{{ title?.length > 0 ? title : ("SMART_FILTERS.TITLE" | translate)}}</span>
         <mat-chip *ngIf="filtersDataMap.size > 0" [selectable]="false" [removable]="true" (click)="onFiltersClear()"
             class="clear-filter pep-button chip xs weak">
