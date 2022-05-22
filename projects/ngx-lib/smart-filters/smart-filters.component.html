@@ -58,6 +58,11 @@
                             (filterChange)="onFilterChange(field, $event)" (filterClear)="onFilterClear(field)">
                         </pep-number-filter>
                     </ng-container>
+                    <ng-container *ngSwitchCase="'text'">
+                        <pep-text-filter [field]="field" [filter]="filtersDataMap.get(field.id)"
+                            (filterChange)="onFilterChange(field, $event)" (filterClear)="onFilterClear(field)">
+                        </pep-text-filter>
+                    </ng-container>
                     <!-- <div *ngSwitchDefault>
                     </div> -->
                 </ng-container>

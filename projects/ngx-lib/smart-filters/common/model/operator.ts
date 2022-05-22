@@ -16,10 +16,10 @@ const Equals: IPepSmartFilterOperator = {
     short: '=',
     componentType: [
         'number',
-        'boolean'
+        'boolean',
         // 'multi-select',
         // 'date',
-        // 'text',
+        'text',
         // 'auto-complete',
         // 'select',
     ],
@@ -33,7 +33,7 @@ const NotEqual: IPepSmartFilterOperator = {
         'number',
         // 'multi-select',
         // 'date',
-        // 'text',
+        'text',
         // 'auto-complete',
         // 'select',
     ],
@@ -81,19 +81,19 @@ const Contains: IPepSmartFilterOperator = {
     componentType: ['text'],
 };
 
-// const BeginsWith: Operator = {
-//     id: 'beginsWith',
-//     name: 'Begins With',
-//     short: 'Begins With',
-//     type: ['text'],
-// };
+const BeginsWith: IPepSmartFilterOperator = {
+    id: 'beginsWith',
+    name: 'BEGINS_WITH',
+    short: 'Begins With',
+    componentType: ['text'],
+};
 
-// const EndsWith: Operator = {
-//     id: 'endsWith',
-//     name: 'Ends With',
-//     short: 'End With',
-//     type: ['text'],
-// };
+const EndsWith: IPepSmartFilterOperator = {
+    id: 'endsWith',
+    name: 'ENDS_WITH',
+    short: 'End With',
+    componentType: ['text'],
+};
 
 // const After: Operator = {
 //     id: 'after',
@@ -202,8 +202,8 @@ export const PepSmartFilterOperators = {
     // GreaterThanOrEquals: GreaterThanOrEquals,
     NumberRange: NumberRange,
     Contains: Contains,
-    // BeginsWith: BeginsWith,
-    // EndsWith: EndsWith,
+    BeginsWith: BeginsWith,
+    EndsWith: EndsWith,
     // After: After,
     // Before: Before,
     InTheLast: InTheLast,

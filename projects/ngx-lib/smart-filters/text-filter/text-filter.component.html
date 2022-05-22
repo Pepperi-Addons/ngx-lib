@@ -5,7 +5,7 @@
     </pep-select>
     <ng-container *ngIf="operator !== PepSmartFilterVariableOperators.EqualsToVariable">
         <pep-textbox [fxFlex]="inline ? firstControlWidth : null" [form]="form" [key]="firstControlKey"
-            [label]="'SMART_FILTERS.AMOUNT' | translate" [renderError]="false" [renderTitle]="renderTitle"
+            [label]="'SMART_FILTERS.VALUE' | translate" [renderError]="false" [renderTitle]="renderTitle"
             [type]="field.type" [formattedValue]="firstControl?.value || ''" [value]="firstControl?.value || ''"
             (valueChange)="onValueChanged()">
         </pep-textbox>

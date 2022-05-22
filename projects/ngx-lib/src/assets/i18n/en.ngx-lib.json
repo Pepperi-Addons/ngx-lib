@@ -53,6 +53,7 @@
         "IS_ON": "Is on",
         "CHOOSE_TIME": "Choose time",
         "AMOUNT": "Amount",
+        "VALUE": "Value",
         "TIME_UNIT": "Time unit",
         "START_DATE": "Start date",
         "END_DATE": "End date",
@@ -91,7 +92,9 @@
             "GREATER_THAN_VARIABLE": "Greater than (variable)",
             "NUMBER_RANGE": "Between",
             "CONTAINS": "Contains",
-            "IN": "In"
+            "IN": "In",
+            "BEGINS_WITH": "Begins with",
+            "ENDS_WITH": "Ends with"
         },
         "OPERATOR_UNITS": {
             "DAYS": "Days",
