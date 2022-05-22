@@ -27,6 +27,9 @@ import {
     PepSplitUppercasePipe,
     PepToNumberPipe,
 } from './core/common/pipes/common-pipes';
+
+import { DateAgoPipe } from './core/common/pipes/date-ago.pipe';
+
 const pipeList = [
     PepCapitalizePipe,
     PepEncodePipe,
@@ -38,6 +41,7 @@ const pipeList = [
     PepSafePipe,
     PepSplitUppercasePipe,
     PepToNumberPipe,
+    DateAgoPipe
 ];
 
 import { PepInputAutoWidthDirective } from './core/common/directives/auto-width.directive';

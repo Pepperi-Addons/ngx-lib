@@ -155,5 +155,17 @@
         "INFO_MISSING_FILE": "Missing file",
         "INFO_MISSING_IMAGE": "Missing image",
         "INFO_MISSING_SIGNATURE": "Signature missing"
+    },
+    "DATE_AGO": {
+        "JUST_NOW": "Just now",
+        "SECOND": "second",
+        "MINUTE": "minute",
+        "HOUR": "hour",
+        "DAY": "day",
+        "WEEK": "week",
+        "MONTH": "month",
+        "YEAR": "year",
+        "SINGULAR": " ago",
+        "PLURAL": "'s ago"
     }
 }

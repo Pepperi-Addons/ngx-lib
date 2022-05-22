@@ -180,21 +180,11 @@ import {
 export class PepUIModule {
     constructor(
         translate: TranslateService,
-        private pepperiIconRegistry: PepIconRegistry
+        private pepIconRegistry: PepIconRegistry,
+        private pepAddonService: PepAddonService
+
     ) {
-        this.pepperiIconRegistry.registerIcons(pepIcons);
-
-        let userLang = 'en';
-        translate.setDefaultLang(userLang);
-        userLang = translate.getBrowserLang().split('-')[0]; // use navigator lang if available
-
-        if (location.href.indexOf('userLang=en') > -1) {
-            userLang = 'en';
-        }
-
-        // the lang to use, if the lang isn't available, it will use the current loader to get them
-        translate.use(userLang).subscribe((res: any) => {
-            // In here you can put the code you want. At this point the lang will be loaded
-        });
+        this.pepIconRegistry.registerIcons(pepIcons);
+        this.pepAddonService.setDefaultTranslateLang(translate);
     }
 }
