@@ -13,6 +13,7 @@ import { FormFieldsExampleComponent } from './form-fields-example/form-fields-ex
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
+import { KofExampleComponent } from './kof-example/kof-example.component';
 import { PepUIModule } from './modules/pepperi.module';
 import { MaterialModule } from './modules/material.module';
 
@@ -25,7 +26,8 @@ import { MaterialModule } from './modules/material.module';
         FormFieldsExampleComponent,
         InlineListExampleComponent,
         ListExampleComponent,
-        TopBarExampleComponent
+        TopBarExampleComponent,
+        KofExampleComponent
     ],
     imports: [
         CommonModule,
