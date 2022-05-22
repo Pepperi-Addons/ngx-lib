@@ -1,8 +1,21 @@
-@use "../../../../ngx-lib/src/core/style/abstracts/functions.scss";
-.that-grid {
+@use "../../../../ngx-lib/src/core/style/abstracts/functions";
+@use "../../../../ngx-lib/src/core/style/abstracts/variables";
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    padding: 0;
+}
+.color-set-grid {
     display: grid;
     grid-row: auto;
-    gap: 1rem;
+    gap: 0.5rem;
+    background-color: rgb(240, 227, 233);
+    padding: 1rem;
 }
 .this-grid {
     display: grid;
@@ -10,11 +23,15 @@
     gap: 1rem;
     div {
         height: 3rem;
+        border-radius: variables.$border-radius-sm;
     }
     @for $i from 0 through 9 {
         $tran: 0 + $i;
         .t#{$i}0 {
-            background: functions.get-pep-color(color-weak, color-tran- + $tran + 0);
+            background: functions.get-pep-color(
+                color-weak,
+                color-tran- + $tran + 0
+            );
             &:before {
                 content: "tran-#{$tran}0";
                 font-size: 0.4em;
@@ -23,30 +40,58 @@
             }
         }
     }
-    .flat-l-20{
+    .flat-l-20 {
         background: functions.get-pep-color(color-weak, color-flat-l-20);
-    }
-    .flat-l-10{
-        background: functions.get-pep-color(color-weak, color-flat-l-10);
-    }
-    .base{
-        background: functions.get-pep-color(color-weak, color-flat-l-10);
-    }
-    @for $i from 1 through 4 {
-        $flat: 1 + $i;
-        .flat-r-#{$i}0 {
-            background: functions.get-pep-color(color-weak, color-tran- + $flat + 0);
+        &:before {
+            content: "flat-l-20";
+            font-size: 0.4em;
+            padding-inline-start: 1em;
+            display: block;
+            color: yellow;
         }
     }
-    
-// color-flat-r-10
-// color-flat-r-20
-// color-flat-r-30
-// color-flat-r-40
+    .flat-l-10 {
+        background: functions.get-pep-color(color-weak, color-flat-l-10);
+        &:before {
+            content: "flat-l-10";
+            font-size: 0.4em;
+            padding-inline-start: 1em;
+            display: block;
+            color: yellow;
+        }
+    }
+    .base {
+        background: functions.get-pep-color(color-weak, color-base);
+        &:before {
+            content: "base";
+            font-size: 0.4em;
+            padding-inline-start: 1em;
+            display: block;
+            color: yellow;
+        }
+    }
+    @for $i from 1 through 4 {
+        $flat: 0 + $i;
+        .flat-r-#{$i}0 {
+            background: functions.get-pep-color(
+                color-weak,
+                color-flat-r- + $flat + 0
+            );
+            &:before {
+                content: "flat-r-#{$flat}0";
+                font-size: 0.4em;
+                padding-inline-start: 1em;
+                display: block;
+            }
+        }
+    }
 
+    // color-flat-r-10
+    // color-flat-r-20
+    // color-flat-r-30
+    // color-flat-r-40
 }
 
 // .text-color {
 //     color: functions.get-pep-color(color-text, color-dimmed);
 // }
-
