@@ -10,78 +10,80 @@ p {
     margin: 0;
     padding: 0;
 }
+.this-layout {
+    height: calc(100% - 2rem);
+    overflow: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: variables.$border-radius-md;
+    margin-block: 1rem;
+}
 .color-set-grid {
     display: grid;
     grid-row: auto;
     gap: 0.5rem;
-    background-color: rgb(240, 227, 233);
+    background-color: rgb(240, 227, 240);
+    border-radius: variables.$border-radius-md;
     padding: 1rem;
 }
-.this-grid {
+@mixin this-grid() {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
     gap: 1rem;
+}
+@mixin before-text() {
+    font-size: 0.6em;
+    padding-inline-start: 1em;
+    display: block;
+    padding: 0.4em 0.8em;
+    background-color: functions.get-pep-color(color-system-primary-invert, color-tran-80);
+}
+@mixin color-single($color-name, $color-value) {
+    background: functions.get-pep-color($color-name, $color-value);
+    &:before {
+        content: "#{$color-value}";
+        @include before-text();
+    }
+}
+@mixin color-grid($color-name) {
+    @include this-grid();
     div {
-        height: 3rem;
+        height: 4rem;
         border-radius: variables.$border-radius-sm;
     }
     @for $i from 0 through 9 {
         $tran: 0 + $i;
         .t#{$i}0 {
             background: functions.get-pep-color(
-                color-weak,
+                $color-name,
                 color-tran- + $tran + 0
             );
             &:before {
                 content: "tran-#{$tran}0";
-                font-size: 0.4em;
-                padding-inline-start: 1em;
-                display: block;
+                @include before-text();
             }
         }
     }
     .flat-l-20 {
-        background: functions.get-pep-color(color-weak, color-flat-l-20);
-        &:before {
-            content: "flat-l-20";
-            font-size: 0.4em;
-            padding-inline-start: 1em;
-            display: block;
-            color: yellow;
-        }
+        @include color-single($color-name, color-flat-l-20);
     }
     .flat-l-10 {
-        background: functions.get-pep-color(color-weak, color-flat-l-10);
-        &:before {
-            content: "flat-l-10";
-            font-size: 0.4em;
-            padding-inline-start: 1em;
-            display: block;
-            color: yellow;
-        }
+        @include color-single($color-name, color-flat-l-10);
     }
     .base {
-        background: functions.get-pep-color(color-weak, color-base);
-        &:before {
-            content: "base";
-            font-size: 0.4em;
-            padding-inline-start: 1em;
-            display: block;
-            color: yellow;
-        }
+        @include color-single($color-name, color-base);
     }
     @for $i from 1 through 4 {
         $flat: 0 + $i;
         .flat-r-#{$i}0 {
             background: functions.get-pep-color(
-                color-weak,
+                $color-name,
                 color-flat-r- + $flat + 0
             );
             &:before {
                 content: "flat-r-#{$flat}0";
-                font-size: 0.4em;
-                padding-inline-start: 1em;
-                display: block;
+                @include before-text();
             }
         }
     }
@@ -90,6 +92,72 @@ p {
     // color-flat-r-20
     // color-flat-r-30
     // color-flat-r-40
+}
+.color-user-primary-grid {
+    @include color-grid(color-user-primary);
+}
+.color-system-primary-invert-grid {
+    @include color-grid(color-system-primary-invert);
+}
+.color-system-primary-grid {
+    @include color-grid(color-system-primary);
+}
+.color-system-success-grid {
+    @include color-grid(color-system-success);
+}
+.color-system-caution-grid {
+    @include color-grid(color-system-caution);
+}
+.color-user-secondary-grid {
+    @include color-grid(color-user-secondary);
+}
+.color-weak-grid {
+    @include color-grid(color-weak);
+}
+.color-regular-grid {
+    @include color-grid(color-regular);
+}
+.color-strong-grid {
+    @include color-grid(color-strong);
+}
+.color-top-header-grid {
+    @include color-grid(color-top-header);
+}
+.color-qs-grid {
+    @include color-grid(color-qs);
+}
+
+//* Text Colors
+
+.color-text-grid {
+    @include color-grid(color-text);
+}
+.color-text-color-main {
+    @include color-single(color-text, color-main);
+}
+.color-text-color-dimmed {
+    @include color-single(color-text, color-dimmed);
+}
+.color-text-color-disabled {
+    @include color-single(color-text, color-disabled);
+}
+.color-text-color-invert {
+    @include color-single(color-text, color-invert);
+}
+.color-text-color-link {
+    @include color-single(color-text, color-link);
+}
+.color-text-color-link-highlight {
+    @include color-single(color-text, color-link-highlight);
+}
+.color-text-color-link-focus {
+    @include color-single(color-text, color-link-focus);
+}
+.color-text-color-success {
+    @include color-single(color-text, color-success);
+}
+.color-text-color-caution {
+    @include color-single(color-text, color-caution);
 }
 
 // .text-color {
