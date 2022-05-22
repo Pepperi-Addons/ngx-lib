@@ -1,0 +1,52 @@
+@use "../../../../ngx-lib/src/core/style/abstracts/functions.scss";
+.that-grid {
+    display: grid;
+    grid-row: auto;
+    gap: 1rem;
+}
+.this-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+    gap: 1rem;
+    div {
+        height: 3rem;
+    }
+    @for $i from 0 through 9 {
+        $tran: 0 + $i;
+        .t#{$i}0 {
+            background: functions.get-pep-color(color-weak, color-tran- + $tran + 0);
+            &:before {
+                content: "tran-#{$tran}0";
+                font-size: 0.4em;
+                padding-inline-start: 1em;
+                display: block;
+            }
+        }
+    }
+    .flat-l-20{
+        background: functions.get-pep-color(color-weak, color-flat-l-20);
+    }
+    .flat-l-10{
+        background: functions.get-pep-color(color-weak, color-flat-l-10);
+    }
+    .base{
+        background: functions.get-pep-color(color-weak, color-flat-l-10);
+    }
+    @for $i from 1 through 4 {
+        $flat: 1 + $i;
+        .flat-r-#{$i}0 {
+            background: functions.get-pep-color(color-weak, color-tran- + $flat + 0);
+        }
+    }
+    
+// color-flat-r-10
+// color-flat-r-20
+// color-flat-r-30
+// color-flat-r-40
+
+}
+
+// .text-color {
+//     color: functions.get-pep-color(color-text, color-dimmed);
+// }
+
