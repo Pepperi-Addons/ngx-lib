@@ -125,7 +125,7 @@ export class PepQueryStructureService {
                 this.flatten(current.Operation, section.LeftNode, containerRef, parentForm, depth);
                 this.flatten(current.Operation, section.RightNode, containerRef, parentForm, depth);
             } else {
-                const result = this.createSection(section.Operation, containerRef, parentForm, depth);
+                const result = this.createSection(section.Operation, containerRef, parentForm, depth + 1);
                 this.flatten(section.Operation, section.LeftNode, result.containerRef, result.parentForm, depth + 1);
                 this.flatten(section.Operation, section.RightNode, result.containerRef, result.parentForm, depth + 1);
             }
