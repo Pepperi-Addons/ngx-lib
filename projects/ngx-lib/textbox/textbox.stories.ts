@@ -90,12 +90,12 @@ export default {
 // This creates a Story for the component
 const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
     props: args,
-    template: `
-        <pep-textbox [label]="label" [value]="value" [type]="type" [mandatory]="mandatory" [textColor]="textColor"
-        [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [minValue]="minValue" [maxValue]="maxValue"
-        [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
-        [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-textbox>
-    `,
+    // template: `
+    //     <pep-textbox [label]="label" [value]="value" [type]="type" [mandatory]="mandatory" [textColor]="textColor"
+    //     [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [minValue]="minValue" [maxValue]="maxValue"
+    //     [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
+    //     [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-textbox>
+    // `,
 });
 
 export const Base = Template.bind({});

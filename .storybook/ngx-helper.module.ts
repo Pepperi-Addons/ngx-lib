@@ -1,10 +1,11 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient } from '@angular/common/http';
 
 import { PepAddonService, PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-// import { PepSizeDetectorModule } from '@pepperi-addons/ngx-lib/size-detector';
+import { PepSizeDetectorModule } from '@pepperi-addons/ngx-lib/size-detector';
 
 import { allIcons } from '@pepperi-addons/ngx-lib/icon';
 import {
@@ -14,7 +15,7 @@ import {
 } from '@pepperi-addons/ngx-lib/icon';
 
 const pepperiComponentsModules = [
-    // PepSizeDetectorModule,
+    PepSizeDetectorModule,
     // PepIconModule,
 ];
 
@@ -44,6 +45,7 @@ export function registerAllIcons(pepperiIconRegistry: PepIconRegistry): any {
     declarations: [],
     imports: [
         CommonModule,
+        RouterTestingModule,
         BrowserAnimationsModule,
         PepNgxLibModule,
         pepperiComponentsModules,
@@ -62,7 +64,7 @@ export function registerAllIcons(pepperiIconRegistry: PepIconRegistry): any {
             multi: true,
             deps: [PepIconRegistry]
         },
-        // TranslateService
+        TranslateService
     ],
 })
 export class SBNgxHelperModule {

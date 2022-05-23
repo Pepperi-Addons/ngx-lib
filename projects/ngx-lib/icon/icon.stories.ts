@@ -92,9 +92,17 @@ const Template: Story<PepIconComponent> = (args: PepIconComponent) => ({
     props: {
         ...args,
     },
-    template: `
-        <pep-icon style="width:50px; height:50px; " [name]="name" [spin]="spin" [fill]="fill"></pep-icon>
-    `,
+    styles: [
+        `
+            pep-icon {
+                width:50px;
+                height:50px;
+            }
+        `,
+    ],
+    // template: `
+    //     <pep-icon style="width:50px; height:50px; " [name]="name" [spin]="spin" [fill]="fill"></pep-icon>
+    // `,
 });
 
 export const Base = Template.bind({});
@@ -103,7 +111,6 @@ Base.args = {
     name: pepIconSystemSettings.name,
     // spin: false,
 };
-// Base.parameters = { controls: { include: ['fill'] } };
 
 // This creates a Story for the component
 const AllIconsTemplate: Story<PepIconComponent> = (args: PepIconComponent) => ({
@@ -121,5 +128,5 @@ const AllIconsTemplate: Story<PepIconComponent> = (args: PepIconComponent) => ({
     `,
 });
 
-export const AllIcons = AllIconsTemplate.bind({});
-AllIcons.storyName = 'All icons';
+export const BaseAllIcons = AllIconsTemplate.bind({});
+BaseAllIcons.storyName = 'All icons';

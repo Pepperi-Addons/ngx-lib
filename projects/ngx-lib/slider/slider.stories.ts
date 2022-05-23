@@ -5,6 +5,8 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 import { PepSliderComponent } from './slider.component';
 import { PepSliderModule } from './slider.module';
 
+import { action } from '@storybook/addon-actions';
+
 // This exports the Stories group for this component
 export default {
     // The title defines the name and where in the structure of
@@ -20,10 +22,26 @@ export default {
             },
         },
         value: commonArgTypes.value,
+        label: commonArgTypes.label,
+        disabled: commonArgTypes.disabled,
+        hint: commonArgTypes.hint,
+        minValue: {
+            description: 'This is min value of the component',
+        },
+        maxValue: {
+            description: 'This is the max value of the component',
+        },
     },
     parameters: {
         controls: {
-            include: ['value'],
+            include: [
+                'value',
+                'label',
+                'disabled',
+                'hint',
+                'minValue',
+                'maxValue',
+            ],
         },
     },
     decorators: [
@@ -36,13 +54,20 @@ export default {
 
 // This creates a Story for the component
 const Template: Story<PepSliderComponent> = (args: PepSliderComponent) => ({
-    props: args,
-    template: `
-        <pep-slider [value]="value"></pep-slider>
-    `,
+    props: {
+        ...args,
+        valueChange: action('valueChange'),
+        inputChange: action('inputChange'),
+    },
+    // template: `
+    //     <pep-slider [value]="value"></pep-slider>
+    // `,
 });
 
 export const Base = Template.bind({});
 Base.args = {
-    value: '',
+    value: 50,
+    hint: 'percentage',
+    minValue: 0,
+    maxValue: 100,
 };

@@ -8,6 +8,8 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 import { PepSelectComponent } from './select.component';
 import { PepSelectModule } from './select.module';
 
+import { action } from '@storybook/addon-actions';
+
 // This exports the Stories group for this component
 export default {
     title: 'Components/select',
@@ -53,12 +55,15 @@ export default {
 
 const Template: Story<PepSelectComponent> = (args: PepSelectComponent) => ({
     // component: PepSelectComponent,
-    props: args,
-    template: `
-        <pep-select [value]="value" [label]="label" [type]="type" [mandatory]="mandatory" [disabled]="disabled"
-        [xAlignment]="xAlignment" [options]="options" [showTitle]="showTitle"
-        (valueChange)="valueChange($event)"></pep-select>
-    `,
+    props: {
+        ...args,
+        valueChange: action('valueChange'),
+    },
+    // template: `
+    //     <pep-select [value]="value" [label]="label" [type]="type" [mandatory]="mandatory" [disabled]="disabled"
+    //     [xAlignment]="xAlignment" [options]="options" [showTitle]="showTitle"
+    //     (valueChange)="valueChange($event)"></pep-select>
+    // `,
 });
 
 // Basic story

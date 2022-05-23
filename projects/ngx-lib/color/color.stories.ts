@@ -7,6 +7,8 @@ import { PepColorModule } from './color.module';
 
 import { PepColorPickerComponent } from './color-picker.component';
 
+import { action } from '@storybook/addon-actions';
+
 // This exports the Stories group for this component
 export default {
     title: 'Components/color',
@@ -72,12 +74,12 @@ export default {
 const Template: Story<PepColorComponent> = (args: PepColorComponent) => ({
     props: {
         ...args,
-        // valueChange: action('valueChange'),
+        valueChange: action('valueChange'),
     },
-    template: `
-        <pep-color [label]="label" [value]="value" [type]="type" [disabled]="disabled" [xAlignment]="xAlignment" 
-        [showTitle]="showTitle" [showAAComplient]="showAAComplient" (valueChange)="valueChange($event)"></pep-color>
-    `,
+    // template: `
+    //     <pep-color [label]="label" [value]="value" [type]="type" [disabled]="disabled" [xAlignment]="xAlignment" 
+    //     [showTitle]="showTitle" [showAAComplient]="showAAComplient" (valueChange)="valueChange($event)"></pep-color>
+    // `,
 });
 
 export const Base = Template.bind({});

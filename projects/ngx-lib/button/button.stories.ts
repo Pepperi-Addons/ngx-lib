@@ -61,12 +61,12 @@ export default {
 const Template: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
     props: {
         ...args,
-        // buttonClick: action('buttonClick'),
+        buttonClick: action('buttonClick'),
     },
-    template: `
-        <pep-button [value]="value" [disabled]="disabled" [styleType]="styleType" [styleStateType]="styleStateType" [sizeType]="sizeType" [iconName]="iconName"
-        [iconPosition]="iconPosition" [visible]="visible" (buttonClick)="buttonClick($event)"></pep-button>
-    `,
+    // template: `
+    //     <pep-button [value]="value" [disabled]="disabled" [styleType]="styleType" [styleStateType]="styleStateType" [sizeType]="sizeType" [iconName]="iconName"
+    //     [iconPosition]="iconPosition" [visible]="visible" (buttonClick)="buttonClick($event)"></pep-button>
+    // `,
 });
 
 export const Base = Template.bind({});
@@ -82,46 +82,44 @@ Disabled.args = {
 };
 
 // This creates a Story for the component
-const StyleTypeTemplate: Story<PepButtonComponent> = (
-    args: PepButtonComponent
-) => ({
+const StyleTypeTemplate: Story<PepButtonComponent> = (args: PepButtonComponent) => ({
     props: args,
     template: `
     <div style="display: flex; flex-direction: column;">
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">XL</h3>
+        <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">XL</h3>
+        <div class="flex pep-spacing-element-negative">
             <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="xl"></pep-button>
             <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="xl">
             </pep-button>
             <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="xl">
             </pep-button>
         </div>
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">LG</h3>
+        <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">LG</h3>
+        <div class="flex pep-spacing-element-negative">
             <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="lg"></pep-button>
             <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="lg">
             </pep-button>
             <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="lg">
             </pep-button>
         </div>
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">MD</h3>
+        <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">MD</h3>
+        <div class="flex pep-spacing-element-negative">
             <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="md"></pep-button>
             <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="md">
             </pep-button>
             <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="md">
             </pep-button>
         </div>
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">SM</h3>
+        <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">SM</h3>
+        <div class="flex pep-spacing-element-negative">
             <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="sm"></pep-button>
             <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="sm">
             </pep-button>
             <pep-button class="pep-spacing-element" value="Strong" styleType="strong" sizeType="sm">
             </pep-button>
         </div>
-        <div class="pep-spacing-element-negative">
-            <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">XS</h3>
+        <h3 class="pep-spacing-element" style="margin-bottom:0.5rem;">XS</h3>
+        <div class="flex pep-spacing-element-negative">
             <pep-button class="pep-spacing-element" value="Weak" styleType="weak" sizeType="xs"></pep-button>
             <pep-button class="pep-spacing-element" value="Regular" styleType="regular" sizeType="xs">
             </pep-button>

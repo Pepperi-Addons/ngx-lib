@@ -45,10 +45,10 @@ const Template: Story<PepImagesFilmstripComponent> = (
     props: {
         ...args,
     },
-    template: `
-        <pep-images-filmstrip [label]="label" [value]="value" [xAlignment]="xAlignment" [rowSpan]="rowSpan" [showThumbnails]="showThumbnails"
-        [showTitle]="showTitle"></pep-images-filmstrip>
-    `,
+    // template: `
+    //     <pep-images-filmstrip [label]="label" [value]="value" [xAlignment]="xAlignment" [rowSpan]="rowSpan" [showThumbnails]="showThumbnails"
+    //     [showTitle]="showTitle"></pep-images-filmstrip>
+    // `,
 });
 
 export const Base = Template.bind({});

@@ -5,6 +5,8 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 import { PepQuantitySelectorComponent } from './quantity-selector.component';
 import { PepQuantitySelectorModule } from './quantity-selector.module';
 
+import { action } from '@storybook/addon-actions';
+
 // This exports the Stories group for this component
 export default {
     // The title defines the name and where in the structure of
@@ -78,12 +80,16 @@ export default {
 const Template: Story<PepQuantitySelectorComponent> = (
     args: PepQuantitySelectorComponent
 ) => ({
-    props: args,
-    template: `
-        <pep-quantity-selector [label]="label" [value]="value" [disabled]="disabled" [readonly]="readonly" [mandatory]="mandatory" [textColor]="textColor"
-        [xAlignment]="xAlignment" [allowDecimal]="allowDecimal" [styleType]="styleType" [visible]="visible" [showTitle]="showTitle" [rowSpan]="rowSpan"
-        (valueChange)="valueChange($event)" (elementClick)="elementClick($event)"></pep-quantity-selector>
-    `,
+    props: {
+        ...args,
+        valueChange: action('valueChange'),
+        elementClick: action('elementClick'),
+    },
+    // template: `
+    //     <pep-quantity-selector [label]="label" [value]="value" [disabled]="disabled" [readonly]="readonly" [mandatory]="mandatory" [textColor]="textColor"
+    //     [xAlignment]="xAlignment" [allowDecimal]="allowDecimal" [styleType]="styleType" [visible]="visible" [showTitle]="showTitle" [rowSpan]="rowSpan"
+    //     (valueChange)="valueChange($event)" (elementClick)="elementClick($event)"></pep-quantity-selector>
+    // `,
 });
 
 export const Base = Template.bind({});

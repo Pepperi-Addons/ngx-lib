@@ -83,11 +83,11 @@ const Template: Story<PepCheckboxComponent> = (args: PepCheckboxComponent) => ({
         ...args,
         valueChange: action('valueChange'),
     },
-    template: `
-        <pep-checkbox [label]="label" [value]="value" [type]="type" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" 
-        [additionalValue]="additionalValue" [showTitle]="showTitle" [renderTitle]="renderTitle" [visible]="visible"
-        (valueChange)="valueChange($event)"></pep-checkbox>
-    `,
+    // template: `
+    //     <pep-checkbox [label]="label" [value]="value" [type]="type" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" 
+    //     [additionalValue]="additionalValue" [showTitle]="showTitle" [renderTitle]="renderTitle" [visible]="visible"
+    //     (valueChange)="valueChange($event)"></pep-checkbox>
+    // `,
 });
 
 export const Base = Template.bind({});
