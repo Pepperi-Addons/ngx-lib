@@ -47,10 +47,13 @@
             (valueChange)="onDateValueChanged()">
         </pep-date>
     </ng-container>
-    <ng-container *ngIf="operator === PepSmartFilterVariableOperators.DateRangeVariable ||
-        operator === PepSmartFilterVariableOperators.InTheLastVariable">
-        <pep-select [fxFlex]="inline ? fieldsWidth : null" [key]="firstControlKey" [value]="firstControl?.value || ''"
+    <div pepRtlDirection *ngIf="operator === PepSmartFilterVariableOperators.DateRangeVariable" fxLayout="row"
+        fxLayout.xs="column" fxLayoutGap=".5rem" fxFlex="fieldsWidth">
+        <pep-select fxFlex="50%" [key]="firstControlKey" [value]="firstControl?.value || ''"
             [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
             [options]="variableFieldOptions" (valueChange)="onVariableChanged($event)"></pep-select>
-    </ng-container>
+        <pep-select fxFlex="50%" [key]="secondControlKey" [value]="secondControl?.value || ''"
+            [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
+            [options]="variableFieldOptions" (valueChange)="onSecondVariableChanged($event)"></pep-select>
+    </div>
 </div>

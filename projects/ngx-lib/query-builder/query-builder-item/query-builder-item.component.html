@@ -26,9 +26,10 @@
                     </pep-date-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'multi-select'">
-                    <pep-multi-select-filter fxFlex="auto" [showActionButtons]="false" [field]="_selectedField"
-                        [filter]="_filter" [parentForm]="f.smart" [emitOnChange]="true" [inline]="true"
-                        [renderTitle]="false" (filterChange)="onFilterChanged()">
+                    <pep-multi-select-filter fxFlex="auto" [showActionButtons]="false"
+                        [variableField]="variableFields?.['multi-select']" [field]="_selectedField" [filter]="_filter"
+                        [parentForm]="f.smart" [emitOnChange]="true" [inline]="true" [renderTitle]="false"
+                        (filterChange)="onFilterChanged()">
                     </pep-multi-select-filter>
                 </ng-container>
                 <ng-container *ngSwitchCase="'number'">

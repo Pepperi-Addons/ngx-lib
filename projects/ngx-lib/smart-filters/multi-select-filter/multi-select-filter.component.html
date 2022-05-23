@@ -1,8 +1,32 @@
 <ng-container *ngIf="inline">
-    <pep-select [key]="'multi1'" [label]="'Pepperi Multi Select'" [type]="'multi'" [value]="selected"
-        [xAlignment]="'left'" [renderTitle]="renderTitle" [options]='inlineOptions'
-        (valueChange)="onMultiSelectChanged($event)">
-    </pep-select>
+    <ng-container *ngIf="variableFieldOptions?.length">
+        <div fxLayout="row" fxLayoutGap=".5rem">
+            <pep-select [fxFlex]="operatorWidth" [key]="'typeOperator'" [value]="operator.id"
+                [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
+                [options]="chooseTypeOptions" (valueChange)="onOperatorChanged($event)">
+            </pep-select>
+            <ng-container *ngIf="operator === PepSmartFilterVariableOperators.EqualsToVariable || 
+                operator === PepSmartFilterVariableOperators.NotEqualsToVariable">
+                <pep-select [fxFlex]="valueWidth" [key]="firstControlKey" [value]="firstControl?.value || ''"
+                    [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
+                    [options]="variableFieldOptions" (valueChange)="onValueChanged($event)">
+                </pep-select>
+            </ng-container>
+            <ng-container *ngIf="operator !== PepSmartFilterVariableOperators.EqualsToVariable && 
+                operator !== PepSmartFilterVariableOperators.NotEqualsToVariable">
+                <pep-select [fxFlex]="valueWidth" [label]="'Pepperi Multi Select'" [type]="'multi'"
+                    [value]="selected" [xAlignment]="'left'" [renderTitle]="renderTitle" [options]='inlineOptions'
+                    (valueChange)="onMultiSelectChanged($event)">
+                </pep-select>
+            </ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!variableFieldOptions || !variableFieldOptions.length">
+        <pep-select [label]="'Pepperi Multi Select'" [type]="'multi'" [value]="selected"
+            [xAlignment]="'left'" [renderTitle]="renderTitle" [options]='inlineOptions'
+            (valueChange)="onMultiSelectChanged($event)">
+        </pep-select>
+    </ng-container>
 </ng-container>
 <div *ngIf="!inline" [formGroup]="form">
     <pep-search *ngIf="options?.length > numberOptionsToShowSearch" [searchControl]="searchControl"

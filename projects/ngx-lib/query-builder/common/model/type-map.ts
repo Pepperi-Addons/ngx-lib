@@ -22,9 +22,9 @@ export class PepQueryBuilderTypeMap {
     }
 
     /**
-     * Converts legacy field type to smart builder type
+     * Converts legacy field type to smart filter type
      * @param type legacy type
-     * @returns smart builder field type
+     * @returns smart filter field type
      */
     getSmartFilterType(key: string): PepSmartFilterType | null {
         const item = this.map.get(key);

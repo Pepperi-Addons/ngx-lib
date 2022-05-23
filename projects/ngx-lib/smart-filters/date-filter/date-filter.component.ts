@@ -57,7 +57,8 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
             first: this.firstControl.value,
         };
 
-        if (this.operator === PepSmartFilterOperators.DateRange) {
+        if (this.operator === PepSmartFilterOperators.DateRange ||
+            PepSmartFilterVariableOperators.DateRangeVariable) {
             filterValue['second'] = this.secondControl.value;
         }
 
@@ -89,13 +90,16 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
     setFieldsStateAndValidators(): void {
         this.firstControl.enable();
 
-        if (this.operator === PepSmartFilterOperators.DateRange) {
+        if (
+            this.operator === PepSmartFilterOperators.DateRange ||
+            PepSmartFilterVariableOperators.DateRangeVariable
+        ) {
             this.firstControl.setValidators(Validators.required);
             this.secondControl.enable();
             this.secondControl.setValidators(Validators.required);
         } else if (
             this.operator === PepSmartFilterOperators.InTheLast ||
-            this.operator === PepSmartFilterAdditionalOperators.InTheLastCalendar || 
+            this.operator === PepSmartFilterAdditionalOperators.InTheLastCalendar ||
             this.operator === PepSmartFilterOperators.NotInTheLast ||
             this.operator === PepSmartFilterAdditionalOperators.NotInTheLastCalendar ||
             this.operator === PepSmartFilterOperators.DueIn ||
@@ -175,6 +179,13 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
 
     onVariableChanged(value: any) {
         this.firstControl.setValue(value);
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
+    onSecondVariableChanged(value: any) {
+        this.secondControl.setValue(value);
         if (this.emitOnChange) {
             this.applyFilter();
         }

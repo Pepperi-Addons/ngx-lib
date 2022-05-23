@@ -1,8 +1,8 @@
-import { 
-    PepSmartFilterOperators, 
+import {
+    PepSmartFilterOperators,
     PepSmartFilterAdditionalOperators,
     PepSmartFilterVariableOperators,
-    IPepSmartFilterOperator 
+    IPepSmartFilterOperator
 } from '@pepperi-addons/ngx-lib/smart-filters';
 import { PepSmartFilterType } from '@pepperi-addons/ngx-lib/smart-filters';
 
@@ -21,7 +21,7 @@ const Equals: IPepQueryBuilderOperator = {
 const EqualsVariable: IPepQueryBuilderOperator = {
     legacy: 'IsEqualVariable',
     smartFilter: PepSmartFilterVariableOperators.EqualsToVariable,
-    type: ['boolean', 'int', 'text']
+    type: ['boolean', 'int', 'text', 'multi-select']
 };
 
 const NotEqual: IPepQueryBuilderOperator = {
@@ -33,7 +33,7 @@ const NotEqual: IPepQueryBuilderOperator = {
 const NotEqualsVariable: IPepQueryBuilderOperator = {
     legacy: 'IsNotEqualVariable',
     smartFilter: PepSmartFilterVariableOperators.NotEqualsToVariable,
-    type: ['boolean', 'int', 'text']
+    type: ['boolean', 'multi-select']
 };
 
 const LessThan: IPepQueryBuilderOperator = {
@@ -96,6 +96,18 @@ const Contains: IPepQueryBuilderOperator = {
     type: null
 };
 
+const BeginsWith: IPepQueryBuilderOperator = {
+    legacy: 'BeginsWith',
+    smartFilter: PepSmartFilterOperators.BeginsWith,
+    type: null
+};
+
+const EndsWith: IPepQueryBuilderOperator = {
+    legacy: 'EndsWith',
+    smartFilter: PepSmartFilterOperators.EndsWith,
+    type: null
+};
+
 /*
 const BeginsWith: IPepQueryBuilderOperator = {
     legacy: {
@@ -153,11 +165,12 @@ const InTheLastCalendar: IPepQueryBuilderOperator = {
     type: null
 }
 
+/*
 const InTheLastVariable: IPepQueryBuilderOperator = {
     legacy: 'InTheLastVariable',
     smartFilter: PepSmartFilterVariableOperators.InTheLastVariable,
     type: null
-}
+} */
 
 const NotInTheLast: IPepQueryBuilderOperator = {
     legacy: 'NotInTheLast',
@@ -240,7 +253,7 @@ const In: IPepQueryBuilderOperator = {
 
 const PepQueryBuilderOperators = [
     Equals,
-    EqualsVariable, 
+    EqualsVariable,
     NotEqual,
     NotEqualsVariable,
     LessThan,
@@ -251,12 +264,12 @@ const PepQueryBuilderOperators = [
     //   GreaterThanOrEquals,
     NumberRange,
     Contains,
-    //   BeginsWith,
-    //   EndsWith,
+    BeginsWith,
+    EndsWith,
     //   After,
     //   Before,
     InTheLast,
-    InTheLastVariable,
+    // InTheLastVariable,
     InTheLastCalendar,
     NotInTheLast,
     NotInTheLastCalendar,

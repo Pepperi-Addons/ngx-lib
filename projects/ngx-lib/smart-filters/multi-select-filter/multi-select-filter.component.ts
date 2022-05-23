@@ -11,6 +11,7 @@ import { BaseFilterComponent } from '../common/model/base-filter-component';
 import {
     IPepSmartFilterOperator,
     PepSmartFilterOperators,
+    PepSmartFilterVariableOperators
 } from '../common/model/operator';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { IPepSmartFilterDataValue } from '../common/model/filter';
@@ -35,12 +36,17 @@ class PepMultiSelectFilterOption implements IPepSmartFilterFieldOption {
 export class PepMultiSelectFilterComponent
     extends BaseFilterComponent
     implements OnInit, AfterViewInit {
+    PepSmartFilterVariableOperators = PepSmartFilterVariableOperators;
+
     options: PepMultiSelectFilterOption[] = [];
     filteredOptions$: Observable<any>;
+    chooseTypeOptions: Array<IPepOption> = [];
     searchControl = new FormControl();
     //inline props
     selected = '';
     inlineOptions: IPepOption[] = [];
+    operatorWidth: string;
+    valueWidth: string;
 
     @ViewChild('optionsContainer')
     optionsContainer: ElementRef;
@@ -56,6 +62,7 @@ export class PepMultiSelectFilterComponent
 
         if (this.inline) {
             this.inlineControlInit();
+            this.setControlsWidth();
         } else {
             this.noneInlineControlInit();
         }
@@ -71,8 +78,8 @@ export class PepMultiSelectFilterComponent
         //load options from field        
         this.inlineOptions = this.field?.options?.length > 0 ? this.field.options as IPepOption[] : [];
 
-        // Init the selected values from first value.        
-        if (this.firstControl?.value?.length > 0) {
+        // init the selected values from first value.  
+        if (this.firstControl?.value && Array.isArray(this.firstControl.value)) {
             this.selected = this.firstControl.value.join(';');
         }
     }
@@ -181,6 +188,42 @@ export class PepMultiSelectFilterComponent
     }
 
     // Override
+    loadOperatorsOptions() {
+        this.chooseTypeOptions = this.operators.map((operator) => {
+            return {
+                key: operator.id,
+                value: this.translate.instant(
+                    `${this.OPERATORS_TRANSLATION_PREFIX}.${operator.name}`
+                ),
+            };
+        });
+    }
+
+    setControlsWidth() {
+        if (this.variableFieldOptions?.length) {
+            this.operatorWidth = '38%';
+            this.valueWidth = '62%';
+
+        } else {
+            this.valueWidth = '100%';
+        }
+    }
+
+    onOperatorChanged(value: string) {
+        const operator = Object.values(this.operators).find(
+            (operator) => operator.id === value
+        );
+        this.operator = operator;
+        if (this._parentForm) {
+            this.updateParentForm();
+        }
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
+
+    // Override
     initFilter() {
         this.options.forEach((opt) => (opt.selected = false));
         this.searchControl.setValue('');
@@ -204,6 +247,14 @@ export class PepMultiSelectFilterComponent
         } else {
             this.firstControl.setValue(null);
         }
+
+        if (this.emitOnChange) {
+            this.applyFilter();
+        }
+    }
+
+    onValueChanged(value) {
+        this.firstControl.setValue(value);
 
         if (this.emitOnChange) {
             this.applyFilter();

@@ -35,7 +35,6 @@ export type PepSmartFilterOperatorType =
     | 'before'
     | 'inTheLast'
     | 'inTheLastCalendar'
-    | 'inTheLastVariable'
     | 'today'
     | 'thisWeek'
     | 'thisMonth'

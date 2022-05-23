@@ -15,7 +15,7 @@ export interface IPepQueryBuilderField {
     FieldID: string;
     FieldType: string;
     Title: string;
-    OptionalValues: Array<KeyValuePair<string>>;
+    OptionalValues?: Array<KeyValuePair<string>>;
 }
 
 export interface IPepQuerySection {

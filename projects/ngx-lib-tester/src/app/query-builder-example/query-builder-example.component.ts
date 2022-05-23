@@ -74,9 +74,9 @@ export class QueryBuilderExampleComponent implements OnInit {
                     "LeftNode":
                     {
                         "ComplexId": "1",
-                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAAttachmentTest1', "Operation": 'IsEqualVariable', "Values": ["TSAAttachmentTest1"] },
+                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAAttachmentTest1', "Operation": 'IsEqual', "Values": ["TSAAttachmentTest1"] },
                         "Operation": "OR",
-                        "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'value4', 'value8'] }
+                        "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'BillToState', 'BillToState'] }
                     },
                     "Operation": "OR",
                     "RightNode": {
@@ -87,9 +87,9 @@ export class QueryBuilderExampleComponent implements OnInit {
                     }
                 },
                 "Operation": "OR",
-                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "InTheLastVariable", "Values": ["ActionDateTime2"] },
+                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "BetweenVariable", "Values": ["ActionDateTime2", "ActionDateTime"] },
             },
-            "RightNode": { "ExpressionId": '6', "ApiName": "CaseQuantity", "Operation": "IsEqual", "Values": ["2"] },
+            "RightNode": { "ExpressionId": '6', "ApiName": "TSAboolll", "Operation": "IsEqual", "Values": ["TSAboolll2"] },
         } 
         /*this.json = {
             "ComplexId": "1",
@@ -113,14 +113,14 @@ export class QueryBuilderExampleComponent implements OnInit {
     loadFilterFields() {
 
         this.fields = [
-            { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String', OptionalValues: [] },
-            { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool', OptionalValues: [] },
-            { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer', OptionalValues: [] },
-            { FieldID: 'CaseQuantity', Title: 'Case Quantity', FieldType: 'Integer', OptionalValues: [] },
-            { FieldID: 'CampaignName', Title: 'Campaign Name', FieldType: 'String', OptionalValues: [] },
-            { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime', OptionalValues: [] },
-            { FieldID: 'Type', Title: 'Type', FieldType: 'String', OptionalValues: [] },
-            { FieldID: 'TSAboolll', Title: 'TSA boolll', FieldType: 'Bool', OptionalValues: [] },
+            { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
+            { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool' },
+            { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
+            { FieldID: 'CaseQuantity', Title: 'Case Quantity', FieldType: 'Integer' },
+            { FieldID: 'CampaignName', Title: 'Campaign Name', FieldType: 'String' },
+            { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime' },
+            { FieldID: 'Type', Title: 'Type', FieldType: 'String' },
+            { FieldID: 'TSAboolll', Title: 'TSA boolll', FieldType: 'Bool' },
 
             {
                 FieldID: 'BillToState', Title: 'Bill To State', FieldType: 'MultipleStringValues', OptionalValues: [
@@ -142,10 +142,15 @@ export class QueryBuilderExampleComponent implements OnInit {
 
     loadVariableFields() {
         this.variableFields = [
-            { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String', OptionalValues: [] },
-            { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer', OptionalValues: [] },
-            { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime', OptionalValues: [] },
-            { FieldID: 'ActionDateTime2', Title: 'Action Date Time 2', FieldType: 'DateTime', OptionalValues: [] }
+            { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
+            { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
+            { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime' },
+            { FieldID: 'ActionDateTime2', Title: 'Action Date Time 2', FieldType: 'DateTime' },
+            { FieldID: 'TSAboolll', Title: 'ATSA boolll', FieldType: 'Bool' },
+            { FieldID: 'TSAboolll2', Title: 'TSA boolll 2', FieldType: 'Bool' },
+            { FieldID: 'BillToState', Title: 'Bill To State', FieldType: 'MultipleStringValues' },
+            { FieldID: 'TSAAttachmentTest2', Title: 'TSA Attachment Test 2', FieldType: 'String' },
+            
         ]
     }
 
