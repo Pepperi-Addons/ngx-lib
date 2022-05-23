@@ -64,10 +64,10 @@ const Template: Story<PepImageComponent> = (args: PepImageComponent) => ({
         ...args,
     },
     // [srcLarge]="srcLarge"
-    template: `
-        <pep-image [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
-        [showTitle]="showTitle" (elementClick)="elementClick($event)" (fileChange)="fileChange($event)"></pep-image>
-    `,
+    // template: `
+    //     <pep-image [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
+    //     [showTitle]="showTitle" (elementClick)="elementClick($event)" (fileChange)="fileChange($event)"></pep-image>
+    // `,
 });
 
 export const Base = Template.bind({});

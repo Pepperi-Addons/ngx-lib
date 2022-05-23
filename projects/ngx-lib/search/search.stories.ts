@@ -5,6 +5,8 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 import { PepSearchComponent } from './search.component';
 import { PepSearchModule } from './search.module';
 
+import { action } from '@storybook/addon-actions';
+
 // This exports the Stories group for this component
 export default {
     // The title defines the name and where in the structure of
@@ -41,10 +43,13 @@ export default {
 
 // This creates a Story for the component
 const Template: Story<PepSearchComponent> = (args: PepSearchComponent) => ({
-    props: args,
-    template: `
-        <pep-search [triggerOn]="triggerOn" [value]="value" [sizeType]="sizeType" (search)="search($event)"></pep-search>
-    `,
+    props: {
+        ...args,
+        search: action('search'),
+    },
+    // template: `
+    //     <pep-search [triggerOn]="triggerOn" [value]="value" [sizeType]="sizeType" (search)="search($event)"></pep-search>
+    // `,
 });
 
 export const Base = Template.bind({});

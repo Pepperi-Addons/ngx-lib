@@ -5,6 +5,8 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 import { PepDateComponent } from './date.component';
 import { PepDateModule } from './date.module';
 
+import { action } from '@storybook/addon-actions';
+
 // This exports the Stories group for this component
 export default {
     // The title defines the name and where in the structure of
@@ -72,13 +74,16 @@ export default {
 
 // This creates a Story for the component
 const Template: Story<PepDateComponent> = (args: PepDateComponent) => ({
-    props: args,
-    template: `
-        <pep-date [label]="label" [value]="value" [type]="type" [mandatory]="mandatory" [textColor]="textColor"
-        [disabled]="disabled" [minDateValue]="minDateValue" [maxDateValue]="maxDateValue" [minValue]="minValue" [maxValue]="maxValue"
-        [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
-        [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-date>
-    `,
+    props: {
+        ...args,
+        valueChange: action('valueChange'),
+    },
+    // template: `
+    //     <pep-date [label]="label" [value]="value" [type]="type" [mandatory]="mandatory" [textColor]="textColor"
+    //     [disabled]="disabled" [minDateValue]="minDateValue" [maxDateValue]="maxDateValue" [minValue]="minValue" [maxValue]="maxValue"
+    //     [showTitle]="showTitle" [renderTitle]="renderTitle" [renderError]="renderError" [renderSymbol]="renderSymbol"
+    //     [xAlignment]="xAlignment" (valueChange)="valueChange($event)"></pep-date>
+    // `,
 });
 
 export const Base = Template.bind({});

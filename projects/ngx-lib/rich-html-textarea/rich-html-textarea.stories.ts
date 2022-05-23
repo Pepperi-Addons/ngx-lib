@@ -70,10 +70,10 @@ const Template: Story<PepRichHtmlTextareaComponent> = (
     args: PepRichHtmlTextareaComponent
 ) => ({
     props: args,
-    template: `
-        <pep-rich-html-textarea [label]="label" [value]="value" [mandatory]="mandatory" [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [inlineMode]="inlineMode"
-        [xAlignment]="xAlignment"  [rowSpan]="rowSpan" [visible]="visible" [showTitle]="showTitle" (valueChange)="valueChange($event)"></pep-rich-html-textarea>
-    `,
+    // template: `
+    //     <pep-rich-html-textarea [label]="label" [value]="value" [mandatory]="mandatory" [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [inlineMode]="inlineMode"
+    //     [xAlignment]="xAlignment"  [rowSpan]="rowSpan" [visible]="visible" [showTitle]="showTitle" (valueChange)="valueChange($event)"></pep-rich-html-textarea>
+    // `,
 });
 
 export const Base = Template.bind({});

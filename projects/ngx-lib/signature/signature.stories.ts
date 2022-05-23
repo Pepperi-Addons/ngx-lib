@@ -5,6 +5,8 @@ import { commonArgTypes } from '@storybook-settings/common-args.model';
 import { PepSignatureComponent } from '../signature/signature.component';
 import { PepSignatureModule } from '../signature/signature.module';
 
+import { action } from '@storybook/addon-actions';
+
 // This exports the Stories group for this component
 export default {
     title: 'Components/signature',
@@ -55,12 +57,13 @@ export default {
 const Template: Story<PepSignatureComponent> = (args: PepSignatureComponent) => ({
     props: {
         ...args,
+        fileChange: action('fileChange'),
     },
     // [srcLarge]="srcLarge"
-    template: `
-        <pep-signature [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
-        [showTitle]="showTitle" (fileChange)="fileChange($event)"></pep-signature>
-    `,
+    // template: `
+    //     <pep-signature [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
+    //     [showTitle]="showTitle" (fileChange)="fileChange($event)"></pep-signature>
+    // `,
 });
 
 export const Base = Template.bind({});

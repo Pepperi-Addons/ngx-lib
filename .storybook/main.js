@@ -20,5 +20,8 @@ module.exports = {
         //     // }
         // },
         // '@storybook/addon-storysource',
-    ]
+    ],
+    angularOptions: {
+        enableIvy: false,
+    },
 }

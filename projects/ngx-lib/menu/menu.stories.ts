@@ -7,6 +7,8 @@ import { pepIconSystemMenu } from '@pepperi-addons/ngx-lib/icon';
 import { PepMenuComponent } from './menu.component';
 import { PepMenuModule } from './menu.module';
 
+import { action } from '@storybook/addon-actions';
+
 // This exports the Stories group for this component
 export default {
     title: 'Components/menu',
@@ -26,7 +28,7 @@ export default {
             description: 'This is the text of the component',
             control: 'text',
             table: {
-                defaultValue: { summary: null },
+                defaultValue: { summary: '' },
             },
         },
         type: {
@@ -108,11 +110,13 @@ export default {
 const Template: Story<PepMenuComponent> = (args: PepMenuComponent) => ({
     props: {
         ...args,
+        menuClick: action('menuClick'),
+        menuItemClick: action('menuItemClick'),
     },
-    template: `
-        <pep-menu [text]="text" [iconName]="iconName" [type]="type" [styleType]="styleType" [sizeType]="sizeType" [classNames]="classNames" 
-        [disabled]="disabled" [items]="items" [selectedItem]="selectedItem" (menuClick)="menuClick($event)" (menuItemClick)="menuItemClick($event)"></pep-menu>
-    `,
+    // template: `
+    //     <pep-menu [text]="text" [iconName]="iconName" [type]="type" [styleType]="styleType" [sizeType]="sizeType" [classNames]="classNames" 
+    //     [disabled]="disabled" [items]="items" [selectedItem]="selectedItem" (menuClick)="menuClick($event)" (menuItemClick)="menuItemClick($event)"></pep-menu>
+    // `,
 });
 
 export const Base = Template.bind({});

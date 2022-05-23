@@ -59,11 +59,13 @@ const Template: Story<PepAttachmentComponent> = (
 ) => ({
     props: {
         ...args,
+        elementClick: action('elementClick'),
+        fileChange: action('fileChange'),
     },
-    template: `
-        <pep-attachment [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
-        [showTitle]="showTitle" (elementClick)="elementClick($event)" (fileChange)="fileChange($event)"></pep-attachment>
-    `,
+    // template: `
+    //     <pep-attachment [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
+    //     [showTitle]="showTitle" (elementClick)="elementClick($event)" (fileChange)="fileChange($event)"></pep-attachment>
+    // `,
 });
 
 export const Base = Template.bind({});

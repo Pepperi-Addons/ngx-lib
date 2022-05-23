@@ -15,6 +15,13 @@ export const commonArgTypes = {
             defaultValue: { summary: null },
         }
     },
+    hint: {
+        description: 'This is the hint',
+        control: 'text',
+        table: {
+            defaultValue: { summary: '' },
+        }
+    },
     // layoutType: {
     //     // name: 'layoutType',
     //     defaultValue: 'form',

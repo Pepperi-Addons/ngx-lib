@@ -76,10 +76,10 @@ const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponen
         queryChange: action('queryChange'),
         formValidationChange: action('formValidationChange'),
     },
-    template: `
-    <pep-query-builder [query]="query" [fields]="fields" [maxDepth]="maxDepth" (queryChange)="queryChange($event)"
-    (formValidationChange)="formValidationChange($event)"></pep-query-builder>
-    `,
+    // template: `
+    // <pep-query-builder [query]="query" [fields]="fields" [maxDepth]="maxDepth" (queryChange)="queryChange($event)"
+    // (formValidationChange)="formValidationChange($event)"></pep-query-builder>
+    // `,
 });
 
 export const Base = Template.bind({});

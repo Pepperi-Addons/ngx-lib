@@ -22,6 +22,9 @@
             "main": "projects/ngx-lib-tester/src/main.ts",
             "polyfills": "projects/ngx-lib-tester/src/polyfills.ts",
             "tsConfig": "projects/ngx-lib-tester/tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "ngx-signaturepad"
+            ],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "dist",

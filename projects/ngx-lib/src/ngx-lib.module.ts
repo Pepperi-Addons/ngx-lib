@@ -80,7 +80,11 @@ import { PepHttpService, PepAddonService, PepFileService, PepCustomizationServic
         layoutList,
         portalList,
     ],
-    imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+    ],
     exports: [
         pipeList,
         utilitiesList,
