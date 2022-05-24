@@ -52,3 +52,19 @@ export class PepDialogData {
         this.actionButtons = options.actionButtons ?? null;
     }
 }
+
+export class PepDialogCustomizeData extends PepDialogData {
+    [key: string]: any;
+
+    constructor(options: any) {
+        super(options);
+
+        // Foreach rest properties save the rest[property] in this[property].
+        const { title, actionsType, content, contentDisabled, showClose, showHeader, showFooter, actionButtons, ...rest } = options;
+        Object.keys(rest).forEach((key) => {
+            if (key in this) {
+                this[key] = rest[key];
+            }
+        });
+    }
+}

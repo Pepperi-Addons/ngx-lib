@@ -7,7 +7,7 @@ import {
 import { PepLayoutService } from '@pepperi-addons/ngx-lib';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentType } from '@angular/cdk/portal';
-import { PepDialogSizeType, PepDialogData } from './dialog.model';
+import { PepDialogSizeType, PepDialogData, PepDialogCustomizeData } from './dialog.model';
 import { PepDefaultDialogComponent } from './default-dialog.component';
 
 @Injectable({
@@ -22,11 +22,21 @@ export class PepDialogService {
 
     private fixConfigIfNeeded(data: PepDialogData, config: MatDialogConfig) {
         if (config.disableClose) {
-            if (
-                (((data.showClose !== undefined && !data.showClose) || (data.showHeader !== undefined && !data.showHeader)) && (data.showFooter !== undefined && !data.showFooter)) ||
-                (data.actionsType === 'custom' &&
-                    (data.actionButtons === null ||
-                        data.actionButtons.length === 0))
+            // Create tmp object for comparing against the defaults.
+            const tmp = new PepDialogData({
+                showClose: data.showClose,
+                showHeader: data.showHeader,
+                showFooter: data.showFooter,
+                actionButtons: data.actionButtons,
+            });
+
+            const showCloseIsFalse = tmp.showClose === false;
+            const showHeaderIsFalse = tmp.showHeader === false;
+            const showFooterIsFalse = tmp.showFooter === false;
+            const noActions = tmp.actionButtons === null || tmp.actionButtons.length === 0;
+
+            if ((showFooterIsFalse && (showCloseIsFalse || showHeaderIsFalse)) || 
+                (data.actionsType === 'custom' && noActions)
             ) {
                 config.disableClose = false;
             }
@@ -92,7 +102,9 @@ export class PepDialogService {
         if (!config) {
             config = this.getDialogConfig();
         }
-        this.fixConfigIfNeeded(data, config);
+
+        const tmpConfig = new PepDialogCustomizeData(data);
+        this.fixConfigIfNeeded(tmpConfig, config);
 
         config.data = data;
         const dialogRef = this.dialog.open(componentOrTemplateRef, config);

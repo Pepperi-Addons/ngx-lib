@@ -55,6 +55,7 @@ interface IPepImagesFilmstripDialogData {
     key: string;
     value: string;
     label: string;
+    showFooter: boolean;
     uid: string;
     showThumbnails: boolean;
 }
@@ -196,7 +197,9 @@ export class PepImagesFilmstripComponent
     config: GalleryConfig;
     items: GalleryItem[] = null;
     inDialog = false;
-
+    showFooter = false;
+    showClose = true;
+    
     mandatory = false;
     readonly = false;
     disabled = false;

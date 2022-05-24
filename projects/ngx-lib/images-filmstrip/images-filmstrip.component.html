@@ -22,7 +22,7 @@
 
 <ng-template #galleryDialogTemplate>
     <div class="gallery-dialog">
-        <pep-dialog [title]="label" [showFooter]="false" (close)="closeDialog($event)">
+        <pep-dialog [title]="label" [showFooter]="showFooter" [showClose]="showClose"  (close)="closeDialog($event)">
             <div pep-dialog-content #galleryDialogCont class="gallery-dialog-content"
                 [ngClass]="isVertical ? 'vertical-gallery' : 'horizontal-gallery'">
                 <pep-button *ngIf="items?.length > 1" iconName="arrow_left_alt" styleType="weak-invert"

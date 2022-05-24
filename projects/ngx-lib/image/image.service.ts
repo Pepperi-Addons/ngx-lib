@@ -36,6 +36,8 @@ export class PepImageService {
                 key: new Date().getDate(),
                 value: imagesValue,
                 label: title,
+                showFooter: false,
+                showClose: true,
                 uid: '',
                 showThumbnails: arr.length > 1,
             },
