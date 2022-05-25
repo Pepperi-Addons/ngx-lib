@@ -13,9 +13,9 @@ import { ActivatedRoute } from '@angular/router';
 export class PepRemoteLoaderService {
     
     constructor(
-        private resolver: ComponentFactoryResolver,
+        // private resolver: ComponentFactoryResolver,
         // private injector: Injector,
-        private dialogService: PepDialogService,
+        // private dialogService: PepDialogService,
         private httpService: PepHttpService,
         private sessionService: PepSessionService,
         private addonService: PepAddonService,
@@ -24,26 +24,26 @@ export class PepRemoteLoaderService {
         //
     }
 
-    private loadAddonBlockInternal(options: IAddonBlockLoaderDialogOptions): PepAddonBlockLoaderComponent | null {
-        if (options.container !== null) {
-            const factory = this.resolver.resolveComponentFactory(PepAddonBlockLoaderComponent);
-            const componentRef = options.container.createComponent(factory);
-            const addonBlockInstance = componentRef.instance;
+    // private loadAddonBlockInternal(options: IAddonBlockLoaderDialogOptions): PepAddonBlockLoaderComponent | null {
+    //     if (options.container !== null) {
+    //         const factory = this.resolver.resolveComponentFactory(PepAddonBlockLoaderComponent);
+    //         const componentRef = options.container.createComponent(factory);
+    //         const addonBlockInstance = componentRef.instance;
 
-            addonBlockInstance.name = options.name;
-            addonBlockInstance.hostObject = options.hostObject;
+    //         addonBlockInstance.name = options.name;
+    //         addonBlockInstance.hostObject = options.hostObject;
 
-            addonBlockInstance.hostEvents.subscribe((event) => {
-                if (options.hostEventsCallback) {
-                    options.hostEventsCallback(event);
-                }
-            });
+    //         addonBlockInstance.hostEvents.subscribe((event) => {
+    //             if (options.hostEventsCallback) {
+    //                 options.hostEventsCallback(event);
+    //             }
+    //         });
 
-            return addonBlockInstance;
-        } else {
-            return null;
-        }
-    }
+    //         return addonBlockInstance;
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
     getRemoteLoaderOptions(blockLoaderData: IBlockLoaderData, remoteEntry = ''): PepRemoteLoaderOptions {
         return {
@@ -81,25 +81,25 @@ export class PepRemoteLoaderService {
         });
     }
 
-    loadAddonBlockInContainer(options: IAddonBlockLoaderOptions) {
-        return this.loadAddonBlockInternal(options);
-    }
+    // loadAddonBlockInContainer(options: IAddonBlockLoaderOptions) {
+    //     return this.loadAddonBlockInternal(options);
+    // }
 
-    loadAddonBlockInDialog(options: IAddonBlockLoaderDialogOptions): MatDialogRef<any> | null {
-        const addonBlockInstance = this.loadAddonBlockInternal(options);
+    // loadAddonBlockInDialog(options: IAddonBlockLoaderDialogOptions): MatDialogRef<any> | null {
+    //     const addonBlockInstance = this.loadAddonBlockInternal(options);
 
-        if (addonBlockInstance) {
-            const pepConfig = this.dialogService.getDialogConfig({ disableClose: false, panelClass: 'remote-loader-dialog' }, options.size || 'full-screen');
-            const mergeConfig = {...options.config, ...pepConfig}; 
-            const data = options.data || null;
-            addonBlockInstance.dialogRef = this.dialogService.openDialog(addonBlockInstance.dialogTemplate, data, mergeConfig);
-            addonBlockInstance.dialogRef.afterClosed().subscribe(() => {
-                addonBlockInstance.dialogRef = null;
-            });
-            return addonBlockInstance.dialogRef;
+    //     if (addonBlockInstance) {
+    //         const pepConfig = this.dialogService.getDialogConfig({ disableClose: false, panelClass: 'remote-loader-dialog' }, options.size || 'full-screen');
+    //         const mergeConfig = {...options.config, ...pepConfig}; 
+    //         const data = options.data || null;
+    //         addonBlockInstance.dialogRef = this.dialogService.openDialog(addonBlockInstance.dialogTemplate, data, mergeConfig);
+    //         addonBlockInstance.dialogRef.afterClosed().subscribe(() => {
+    //             addonBlockInstance.dialogRef = null;
+    //         });
+    //         return addonBlockInstance.dialogRef;
 
-        } else {
-            return null;
-        }
-    }
+    //     } else {
+    //         return null;
+    //     }
+    // }
 }

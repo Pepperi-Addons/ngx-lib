@@ -103,6 +103,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     /**
+     * The accessory sign.
+     *
+     * @memberof PepTextboxComponent
+     */
+    @Input() accessory = '';
+
+    /**
      * The title of the textbox.
      *
      * @memberof PepTextboxComponent
@@ -231,8 +238,16 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
-            if (this.isNumberType()) {
-                this._formattedValue = this.utilitiesService.formatNumber(value, this.isDecimal());
+            if (this.type === 'currency') {
+                this._formattedValue = this.utilitiesService.formatCurrency(value, this.accessory);
+            } else if (this.type === 'percentage') {
+                this._formattedValue = this.utilitiesService.formatPercent(value);
+            } else if (this.type === 'real') {
+                this._formattedValue = this.utilitiesService.formatDecimal(value);
+            } else if (this.type === 'int') {
+                this._formattedValue = this.utilitiesService.formatNumber(value);
+            } else if (this.type === 'duration') {
+                this._formattedValue = this.utilitiesService.formatDuration(value, { duration: 'seconds' });
             } else {
                 this._formattedValue = value;
             }

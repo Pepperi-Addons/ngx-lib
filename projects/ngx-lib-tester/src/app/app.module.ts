@@ -191,7 +191,7 @@ const pepperiComponentsModules = [
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
-                useFactory: PepAddonService.createDefaultMultiTranslateLoader,
+                useFactory: PepAddonService.createMultiTranslateLoader,
                 deps: [PepAddonService]
             },
         }),

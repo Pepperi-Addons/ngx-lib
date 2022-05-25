@@ -264,11 +264,15 @@ export class PepQuantitySelectorComponent
 
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
-            this._formattedValue = this.utilitiesService.formatNumber(value, this.allowDecimal);
+            if (this.allowDecimal) {
+                this._formattedValue = this.utilitiesService.formatDecimal(value);
+            } else {
+                this._formattedValue = this.utilitiesService.formatNumber(value);
+            }
         } else {
             this._formattedValue = value;
         }
-
+        
         this.updateFormFieldValue();
     }
 

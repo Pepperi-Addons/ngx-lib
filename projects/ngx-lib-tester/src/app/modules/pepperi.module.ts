@@ -170,8 +170,8 @@ import {
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
-                useFactory: PepAddonService.createDefaultMultiTranslateLoader,
-                deps: [HttpClient, PepFileService, PepAddonService],
+                useFactory: PepAddonService.createMultiTranslateLoader,
+                deps: [PepAddonService],
             },
         }),
     ],

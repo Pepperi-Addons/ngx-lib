@@ -7,14 +7,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
-import { PepRemoteLoaderComponent } from './remote-loader.component';
 import { PepAddonBlockLoaderComponent } from './addon-block-loader.component';
+import { PepAddonBlockLoaderService } from './addon-block-loader.service';
+
+import { PepRemoteLoaderComponent } from './remote-loader.component';
 import { PepRemoteLoaderService } from './remote-loader.service';
 
 @NgModule({
     declarations: [
+        PepAddonBlockLoaderComponent,
         PepRemoteLoaderComponent,
-        PepAddonBlockLoaderComponent
     ],
     imports: [
         CommonModule,
@@ -26,10 +28,11 @@ import { PepRemoteLoaderService } from './remote-loader.service';
         PepDialogModule,
     ],
     exports: [
+        PepAddonBlockLoaderComponent,
         PepRemoteLoaderComponent,
-        PepAddonBlockLoaderComponent
     ],
     providers: [
+        PepAddonBlockLoaderService,
         PepRemoteLoaderService
     ]
 })
