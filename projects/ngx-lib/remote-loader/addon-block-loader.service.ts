@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, Injectable, Injector } from '@angular/core';
 import { IAddonBlockLoaderDialogOptions, IAddonBlockLoaderOptions, IBlockLoaderData } from './remote-loader.model';
 import { PepAddonBlockLoaderComponent } from './addon-block-loader.component';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -16,7 +16,7 @@ export class PepAddonBlockLoaderService {
         //
     }
 
-    private loadAddonBlockInternal(options: IAddonBlockLoaderDialogOptions): PepAddonBlockLoaderComponent | null {
+    private loadAddonBlockInternal(options: IAddonBlockLoaderDialogOptions): ComponentRef<PepAddonBlockLoaderComponent> | null {
         if (options.container !== null) {
             const factory = this.resolver.resolveComponentFactory(PepAddonBlockLoaderComponent);
             const componentRef = options.container.createComponent(factory);
@@ -31,26 +31,27 @@ export class PepAddonBlockLoaderService {
                 }
             });
 
-            return addonBlockInstance;
+            return componentRef;
         } else {
             return null;
         }
     }
 
-    loadAddonBlockInContainer(options: IAddonBlockLoaderOptions) {
+    loadAddonBlockInContainer(options: IAddonBlockLoaderOptions): ComponentRef<PepAddonBlockLoaderComponent> | null  {
         return this.loadAddonBlockInternal(options);
     }
 
     loadAddonBlockInDialog(options: IAddonBlockLoaderDialogOptions): MatDialogRef<any> | null {
-        const addonBlockInstance = this.loadAddonBlockInternal(options);
-
-        if (addonBlockInstance) {
+        const componentRef = this.loadAddonBlockInternal(options);
+        
+        if (componentRef) {
+            const addonBlockInstance = componentRef.instance;
             const pepConfig = this.dialogService.getDialogConfig({ disableClose: false, panelClass: 'remote-loader-dialog' }, options.size || 'full-screen');
             const mergeConfig = {...options.config, ...pepConfig}; 
             const data = options.data || null;
             addonBlockInstance.dialogRef = this.dialogService.openDialog(addonBlockInstance.dialogTemplate, data, mergeConfig);
             addonBlockInstance.dialogRef.afterClosed().subscribe(() => {
-                addonBlockInstance.dialogRef = null;
+                componentRef.destroy();
             });
             return addonBlockInstance.dialogRef;
 
