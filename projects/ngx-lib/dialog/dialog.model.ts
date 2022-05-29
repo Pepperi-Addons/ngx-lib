@@ -43,13 +43,13 @@ export class PepDialogData {
         showFooter?: boolean;
         actionButtons?: Array<PepDialogActionButton>;
     }) {
-        this.title = options.title || '';
-        this.actionsType = options.actionsType || 'close';
-        this.content = options.content || '';
-        this.showClose = options.showClose ?? false;
-        this.showHeader = options.showHeader ?? true;
-        this.showFooter = options.showFooter ?? true;
-        this.actionButtons = options.actionButtons ?? null;
+        this.title = options?.title || '';
+        this.actionsType = options?.actionsType || 'close';
+        this.content = options?.content || '';
+        this.showClose = options?.showClose ?? false;
+        this.showHeader = options?.showHeader ?? true;
+        this.showFooter = options?.showFooter ?? true;
+        this.actionButtons = options?.actionButtons ?? null;
     }
 }
 
@@ -60,7 +60,7 @@ export class PepDialogCustomizeData extends PepDialogData {
         super(options);
 
         // Foreach rest properties save the rest[property] in this[property].
-        const { title, actionsType, content, contentDisabled, showClose, showHeader, showFooter, actionButtons, ...rest } = options;
+        const { title, actionsType, content, contentDisabled, showClose, showHeader, showFooter, actionButtons, ...rest } = options || {};
         Object.keys(rest).forEach((key) => {
             if (key in this) {
                 this[key] = rest[key];
