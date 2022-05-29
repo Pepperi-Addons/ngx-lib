@@ -24,7 +24,7 @@ export default {
         xAlignment: commonArgTypes.xAlignment,
         showTitle: commonArgTypes.showTitle,
         value: {
-            description: 'This is the value of all images with ";" seperator',
+            description: 'This is the value of all images with ";" separator',
             table: {
                 defaultValue: { summary: null },
             },

@@ -24,7 +24,7 @@ export class PepValidatorService {
     constructor(@Optional() private translate: TranslateService = null) {
         const currentLang = this.translate?.currentLang || navigator.language;
 
-        // Check for number with thousands seperator and if === ',' then the decimal seperator is '.' else ','
+        // Check for number with thousands separator and if === ',' then the decimal separator is '.' else ','
         const tmp = new Intl.NumberFormat(currentLang, {
             maximumSignificantDigits: 2,
         }).format(1000);

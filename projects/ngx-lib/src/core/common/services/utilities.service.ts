@@ -180,32 +180,6 @@ export class PepUtilitiesService {
         } else {
             return formatNumber(value, this.culture, digitsInfo);
         }
-
-
-        //formatCurrency()
-        // const number = this.coerceNumberProperty(value);
-        // const fractionDigits = (type != 'integer' && number !== 0) ? 2 : 0;
-
-        // const options: Intl.NumberFormatOptions = {
-        //     minimumFractionDigits: fractionDigits,
-        //     maximumFractionDigits: fractionDigits,
-        // };
-
-        // if (type === 'percent') {
-        //     options['style'] = 'percent';
-        // } else if (type === 'currency') {
-        //     options['style'] = 'currency';
-
-        //     if (currencySign.length > 0) {
-        //         options['currencySign'] = currencySign;
-        //     } else {
-        //         options['currency'] = this.culture;
-        //     }
-        // }
-
-        // const numberFormatter = new Intl.NumberFormat(this.culture, options);
-
-        // return numberFormatter.format(number);
     }
     
     /**
