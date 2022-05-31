@@ -4,18 +4,20 @@
     <div *ngIf="titleType !== 'none'" class="title-container"
         [ngClass]="{ 'pep-border-bottom': titleType === 'with-bottom-border'}">
         <label class="title body-{{ titleSizeType }} bold ellipsis " >{{title}}</label>
-        <pep-search *ngIf="showSearch && items?.length > numberItemsToShowSearch" sizeType="sm" shrink="always"
+        <pep-search *ngIf="showSearch && items?.length > numberItemsToShowSearch" class="search-button" sizeType="sm" shrink="always"
             [searchControl]="searchControl" triggerOn="keydown"></pep-search>
     </div>
 
-    <div class="dragable-items-container">
-        <pep-draggable-item *ngFor="let item of filteredItems$ | async; let i=index;" class="draggble-item"
-            [title]="item.title" [data]="item.data" [disabled]="item.disabled" cdkDrag [cdkDragData]="item.data"
-            [cdkDragDisabled]="item.disabled" (cdkDragStarted)="onDragStart($event)" (cdkDragEnded)="onDragEnd($event)">
-    
-            <ng-container *ngIf="itemPlaceholderType !== 'regular'">
-                <div class="placeholder-item {{itemPlaceholderType}}" *cdkDragPlaceholder></div>
-            </ng-container>
-        </pep-draggable-item>
+    <div class="draggable-items-overflow">
+        <div class="draggable-items-wrapper">
+            <pep-draggable-item *ngFor="let item of filteredItems$ | async; let i=index;" class="draggble-item"
+                [title]="item.title" [data]="item.data" [disabled]="item.disabled" cdkDrag [cdkDragData]="item.data"
+                [cdkDragDisabled]="item.disabled" (cdkDragStarted)="onDragStart($event)" (cdkDragEnded)="onDragEnd($event)">
+        
+                <ng-container *ngIf="itemPlaceholderType !== 'regular'">
+                    <div class="placeholder-item {{itemPlaceholderType}}" *cdkDragPlaceholder></div>
+                </ng-container>
+            </pep-draggable-item>
+        </div>
     </div>
 </div>

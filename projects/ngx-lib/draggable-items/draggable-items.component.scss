@@ -2,12 +2,24 @@
 @use '../src/core/style/abstracts/functions';
 @use '../src/core/style/abstracts/mixins';
 
-$spacing-bottom: variables.$spacing-sm;
+.pep-draggable-items-container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    overflow: hidden;
+    padding-inline-end: variables.$spacing-xs;
+}
 
-.dragable-items-container {
+.draggable-items-overflow {
+    overflow: auto;
+    padding: variables.$content-padding 0;
+}
+
+.draggable-items-wrapper {
     display: flex;
     flex-direction: column;
-    gap: $spacing-bottom;
+    gap: variables.$spacing-sm;
+    // overflow: auto;
 
     .draggble-item {
         cursor: grab; 
@@ -21,6 +33,7 @@ $spacing-bottom: variables.$spacing-sm;
 .title-container {
     height: variables.$top-bar-field-height;
     display: flex;
+    gap: variables.$spacing-sm;
     flex-flow: row;
     justify-content: space-between;
 
@@ -28,9 +41,14 @@ $spacing-bottom: variables.$spacing-sm;
         align-self:center;
     }
 
-    &.pep-border-bottom {
-        margin-bottom: variables.$content-margin;
+    .search-button {
+        display: flex;
+        align-self: center;
     }
+
+    // &.pep-border-bottom {
+    //     margin-bottom: variables.$content-margin;
+    // }
 }
 
 .placeholder-item {
