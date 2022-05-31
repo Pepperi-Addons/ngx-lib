@@ -11,7 +11,6 @@ import { PepSizeType } from '@pepperi-addons/ngx-lib';
     styleUrls: ['./draggable-items.component.scss', './draggable-items.component.theme.scss']
 })
 export class DraggableItemsComponent implements OnInit, OnDestroy {
-
     @Input() containerId = 'draggable-container';
     @Input() showSearch = false;
     @Input() title = '';
