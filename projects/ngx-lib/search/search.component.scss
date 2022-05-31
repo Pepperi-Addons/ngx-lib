@@ -22,8 +22,7 @@
     }
 
     &.pep-floating-search {
-        display: inline-flex; // flex;
-        // justify-content: flex-start;
+        display: inline-block; // inline-flex;
 
         &.pep-is-action-button-visable {
             width: calc(100% - (#{variables.$spacing-sm} * 2 + #{variables.$spacing-xl})); // content spacing in both sides + 1.5 rem is the action-button width.
