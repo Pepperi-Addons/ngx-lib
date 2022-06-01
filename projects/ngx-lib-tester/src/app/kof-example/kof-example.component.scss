@@ -1,5 +1,8 @@
 @use "../../../../ngx-lib/src/core/style/abstracts/functions";
 @use "../../../../ngx-lib/src/core/style/abstracts/variables";
+
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
 h1,
 h2,
 h3,
@@ -10,22 +13,39 @@ p {
     margin: 0;
     padding: 0;
 }
+code {
+    letter-spacing: -0.0125em;
+    font-size: 95%;
+    padding: 0.3em 0.5em;
+    background: functions.get-pep-color(color-user-primary, color-tran-20);
+    border-radius: variables.$border-radius-sm;
+}
+em {
+    font-style: normal;
+    font-family: "Permanent Marker", cursive;
+}
 .this-layout {
-    height: calc(100% - 2rem);
+    height: 100%;
     overflow: auto !important;
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        border-radius: variables.$border-radius-md;
+        margin-block: 1rem;
+    }
+}
+.set-grid {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    border-radius: variables.$border-radius-md;
-    margin-block: 1rem;
-}
-.color-set-grid {
-    display: grid;
-    grid-row: auto;
-    gap: 0.5rem;
     background-color: rgb(240, 227, 240);
     border-radius: variables.$border-radius-md;
     padding: 1rem;
+}
+.side-by-side {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+    gap: 1rem;
 }
 @mixin this-grid() {
     display: grid;
@@ -37,7 +57,10 @@ p {
     padding-inline-start: 1em;
     display: block;
     padding: 0.4em 0.8em;
-    background-color: functions.get-pep-color(color-system-primary-invert, color-tran-80);
+    background-color: functions.get-pep-color(
+        color-system-primary-invert,
+        color-tran-80
+    );
 }
 @mixin color-single($color-name, $color-value) {
     background: functions.get-pep-color($color-name, $color-value);
@@ -60,7 +83,7 @@ p {
                 color-tran- + $tran + 0
             );
             &:before {
-                content: "tran-#{$tran}0";
+                content: "color-tran-#{$tran}0";
                 @include before-text();
             }
         }
@@ -82,17 +105,13 @@ p {
                 color-flat-r- + $flat + 0
             );
             &:before {
-                content: "flat-r-#{$flat}0";
+                content: "color-flat-r-#{$flat}0";
                 @include before-text();
             }
         }
     }
-
-    // color-flat-r-10
-    // color-flat-r-20
-    // color-flat-r-30
-    // color-flat-r-40
 }
+
 .color-user-primary-grid {
     @include color-grid(color-user-primary);
 }
@@ -163,3 +182,32 @@ p {
 // .text-color {
 //     color: functions.get-pep-color(color-text, color-dimmed);
 // }
+hr {
+    width: 100%;
+    border-color: functions.get-pep-color(color-text, color-dimmed);
+    margin-block: 1rem;
+}
+
+.shadow-grid {
+    @include this-grid();
+    div {
+        height: 6rem;
+        border-radius: variables.$border-radius-md;
+        background-color: functions.get-pep-color(
+            color-system-primary,
+            color-flat-r-40
+        );
+        p {
+            padding: 0.5rem;
+        }
+    }
+}
+#shadows{
+    h2{
+        margin-block: 0.5rem;
+        &:first-child {
+            margin-block-start: 0;
+        }
+    }
+
+}
