@@ -146,7 +146,7 @@ export class PepUtilitiesService {
         let number = this.coerceNumberProperty(value);
 
         if (number === 0) {
-            return '0';
+            return '0%';
         } else {
             return formatPercent(number / 100, this.culture, digitsInfo);
         }
@@ -156,7 +156,7 @@ export class PepUtilitiesService {
         let number = this.coerceNumberProperty(value);
 
         if (number === 0) {
-            return '0';
+            return formatCurrency(0, this.culture, currencySign, undefined, digitsInfo);
         } else {
             return formatCurrency(value, this.culture, currencySign, undefined, digitsInfo);
         }
