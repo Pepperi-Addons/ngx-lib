@@ -58,7 +58,7 @@ import {
     ],
 })
 export class PepMenuComponent implements OnChanges, OnDestroy {
-    @Input() text: string = '';
+    @Input() text = '';
     /**
      * The icon name to show on the menu. look in (@link icon -> All icons)
      *

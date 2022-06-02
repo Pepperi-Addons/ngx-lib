@@ -92,7 +92,7 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
 
         if (
             this.operator === PepSmartFilterOperators.DateRange ||
-            PepSmartFilterVariableOperators.DateRangeVariable
+            this.operator === PepSmartFilterVariableOperators.DateRangeVariable
         ) {
             this.firstControl.setValidators(Validators.required);
             this.secondControl.enable();
