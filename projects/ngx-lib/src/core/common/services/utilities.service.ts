@@ -143,7 +143,7 @@ export class PepUtilitiesService {
     }
 
     formatPercent(value: any, digitsInfo = '1.0-2') {
-        let number = this.coerceNumberProperty(value);
+        const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
             return '0';
@@ -152,8 +152,8 @@ export class PepUtilitiesService {
         }
     }
 
-    formatCurrency(value: any, currencySign: string = '', digitsInfo = '1.2-2') {
-        let number = this.coerceNumberProperty(value);
+    formatCurrency(value: any, currencySign = '', digitsInfo = '1.2-2') {
+        const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
             return '0';
@@ -163,7 +163,7 @@ export class PepUtilitiesService {
     }
     
     formatDecimal(value: any, digitsInfo = '1.2-2') {
-        let number = this.coerceNumberProperty(value);
+        const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
             return '0';
@@ -173,7 +173,7 @@ export class PepUtilitiesService {
     }
     
     formatNumber(value: any, digitsInfo = '1.0-0'): string {
-        let number = this.coerceNumberProperty(value);
+        const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
             return '0';
