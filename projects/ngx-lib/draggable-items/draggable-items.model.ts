@@ -4,6 +4,11 @@ export type PepDraggableItemPlaceholderType = 'none' | 'regular' | 'weak';
 
 export interface IPepDraggableItem {
     title: string;
-    data: any
+    data: IPepDraggableItemData
     disabled?: boolean;
+}
+
+export interface IPepDraggableItemData {
+    key: string;
+    [key: string]: any;
 }
