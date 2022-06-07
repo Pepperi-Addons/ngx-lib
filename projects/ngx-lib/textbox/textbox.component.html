@@ -1,7 +1,7 @@
 <ng-container [formGroup]="form">
     <ng-template #pepTemplate let-isFormView="isFormView" let-hasParent="hasParent">
         <pep-field-title *ngIf="renderTitle && isFormView && !hasParent" [label]="label" [mandatory]="mandatory"
-            [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [xAlignment]="xAlignment"
+            [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [hint]="hint" [xAlignment]="xAlignment"
             [showTitle]="showTitle" [inputLength]="input.value?.length">
         </pep-field-title>
         <mat-form-field appearance="outline">

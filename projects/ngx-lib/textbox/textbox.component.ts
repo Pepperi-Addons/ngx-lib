@@ -164,6 +164,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
      */
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
+    @Input() hint: string;
     @Input() textColor = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
