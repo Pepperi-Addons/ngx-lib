@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
 
 import { httpInterceptorProviders } from './core/http/interceptors/index';
 
@@ -70,7 +69,25 @@ import { PepTargetDirective } from './core/portal/target.directive';
 const portalList = [PepAttachDirective, PepTargetDirective];
 
 import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
-import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepLayoutService, PepTranslateService } from './core/index';
+import { 
+    PepAddonService,
+    PepColorService,
+    PepCookieService,
+    PepDataConvertorService,
+    PepFileService,
+    PepJwtHelperService,
+    PepSessionService,
+    PepTranslateService,
+    PepUtilitiesService,
+    PepValidatorService,
+    PepWindowScrollingService,
+    PepCustomizationService,
+    PepHttpService,
+    PepLoaderService,
+    PepLayoutService,
+    PepPortalService,
+    PepScrollToService,
+} from './core/index';
 
 @NgModule({
     declarations: [
@@ -95,12 +112,23 @@ import { PepHttpService, PepAddonService, PepFileService, PepCustomizationServic
     ],
     providers: [
         httpInterceptorProviders,
-        PepHttpService,
         PepAddonService,
+        PepColorService,
+        PepCookieService,
+        PepDataConvertorService,
         PepFileService,
+        PepJwtHelperService,
+        PepSessionService,
+        PepTranslateService,
+        PepUtilitiesService,
+        PepValidatorService,
+        PepWindowScrollingService,
         PepCustomizationService,
+        PepHttpService,
+        PepLoaderService,
         PepLayoutService,
-        PepTranslateService
+        PepPortalService,
+        PepScrollToService,
     ]
 })
 export class PepNgxLibModule {
