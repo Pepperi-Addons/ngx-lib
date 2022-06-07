@@ -1,10 +1,10 @@
-@use '../src/core/style/abstracts/functions';
+// @use '../src/core/style/abstracts/functions';
 
-.total-items {
-    color: functions.get-pep-color(color-text, color-dimmed);
+// .total-items {
+//     color: functions.get-pep-color(color-text, color-dimmed);
 
-    .number {
-        color: functions.get-pep-color(color-text, color-main);
-    }
+//     .number {
+//         color: functions.get-pep-color(color-text, color-main);
+//     }
 
-}
+// }

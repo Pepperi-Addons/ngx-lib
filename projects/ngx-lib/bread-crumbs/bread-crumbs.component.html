@@ -1,7 +1,7 @@
 <ng-container *ngIf="displayType === 'label'; then labelTemplate; else itemsTemplate">
 </ng-container>
 <ng-template #labelTemplate>
-    <div *ngIf="items?.length > 0" class="bread-crumbs-label ellipsis" [ngClass]="{ 'pep-spacing-element': addSpacing }"
+    <div *ngIf="items?.length > 0" class="bread-crumbs-label color-dimmed ellipsis" [ngClass]="{ 'pep-spacing-element': addSpacing }"
         [title]="getLabelTitle()">
         <div class="body-xs ellipsis">
             <ng-container *ngFor="let item of items; let isFirst = first; let isLast = last">
@@ -9,7 +9,7 @@
                 <span *ngIf="!isLast">{{ item.text }}</span>
             </ng-container>
         </div>
-        <div class=" title-md ellipsis current" title="{{ items[items.length - 1]?.text }}">
+        <div class=" title-md ellipsis current color-main" title="{{ items[items.length - 1]?.text }}">
             <span>{{ items[items.length - 1]?.text }}</span>
         </div>
     </div>

@@ -27,19 +27,16 @@
         <span *ngIf="!showTitle"></span>
     </ng-template>
     <ng-template #hintTemplate>
-        <ng-container *ngIf="hint?.length > 0 then hintTextTemplate else maxCharactersTemplate">
-        </ng-container>
-        <ng-template #hintTextTemplate>
-            <span class="body-xs">
+        <span class="body-xs color-dimmed">
+            <ng-container *ngIf="hint?.length > 0 then hintTextTemplate else maxCharactersTemplate"></ng-container>
+            <ng-template #hintTextTemplate>
                 &nbsp;{{ hint }}
-            </span>
-        </ng-template>
-        <ng-template #maxCharactersTemplate>
-            <span *ngIf="maxFieldCharacters > 0" class="body-xs">
-                &nbsp;{{ inputLength || 0 }}/{{ maxFieldCharacters }}
-            </span>
-            <!-- For the grid template () -->
-            <span *ngIf="maxFieldCharacters === 0"></span>
-        </ng-template>
+            </ng-template>
+            <ng-template #maxCharactersTemplate>
+                <ng-container *ngIf="maxFieldCharacters > 0">
+                    &nbsp;{{ inputLength || 0 }}/{{ maxFieldCharacters }}
+                </ng-container>
+            </ng-template>
+        </span>
     </ng-template>
 </div>
