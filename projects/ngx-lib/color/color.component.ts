@@ -37,6 +37,7 @@ export class PepColorComponent implements OnInit, OnDestroy {
     @Input() renderTitle = true;
 
     @Input() showAAComplient = true;
+    @Input() checkAAComplient = true;
     @Input() layoutType: PepLayoutType = 'form';
 
     @Output()
@@ -78,6 +79,7 @@ export class PepColorComponent implements OnInit, OnDestroy {
                 value: this.value,
                 type: this.type,
                 showAAComplient: this.showAAComplient,
+                checkAAComplient: this.checkAAComplient
             }
         );
 
