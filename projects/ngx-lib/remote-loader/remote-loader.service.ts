@@ -39,14 +39,14 @@ export class PepRemoteLoaderService {
         }
     }
     
-    async getBlockRemoteLoaderOptions(name: string, blockType: PepBlockDataType = 'AddonBlock'): Promise<PepRemoteLoaderOptions> {
+    async getBlockRemoteLoaderOptions(name: string, blockType: PepBlockDataType = 'AddonBlock', remoteEntry = ''): Promise<PepRemoteLoaderOptions> {
         return new Promise((resolve, reject) => {
             const pagesAddonUuid = this.addonService.getPagesAddonUUID();
             const pagesBaseUrl = this.getAddonBaseUrl(pagesAddonUuid, 'addon_blocks');
             const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}&blockType=${blockType}`;
             this.httpService.getHttpCall(url).toPromise().then((data: IBlockLoaderData) => {
                 if (data) {
-                    resolve(this.getRemoteLoaderOptions(data));
+                    resolve(this.getRemoteLoaderOptions(data, remoteEntry));
                 } else {
                     reject(`Addon block with name - ${name} is not found for type - ${blockType}`);
                 }
