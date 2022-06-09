@@ -21,6 +21,8 @@ type PepRemoteLoaderData = {
 
 export type PepRemoteLoaderOptions = LoadRemoteModuleOptions & PepRemoteLoaderData;
 
+export type PepBlockDataType = 'SettingsBlock' | 'AddonBlock' | 'PageBlock';
+
 export interface IBlockLoaderData {
     relation: NgComponentRelation, 
     addonPublicBaseURL: string
