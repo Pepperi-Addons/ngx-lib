@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { PepRemoteLoaderOptions } from './remote-loader.model';
+import { PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
 import { PepRemoteLoaderService } from './remote-loader.service';
 
 @Component({
@@ -11,13 +11,19 @@ import { PepRemoteLoaderService } from './remote-loader.service';
 export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @ViewChild('dialogTemplate', { static: true, read: TemplateRef }) dialogTemplate!: TemplateRef<any>;
     
+    private _blockType: PepBlockDataType = 'AddonBlock';
+    @Input() 
+    set blockType(value: PepBlockDataType) {
+        this._blockType = value;
+    }
+    get blockType(): PepBlockDataType {
+        return this._blockType;
+    }
+
     private _name = '';
     @Input() 
     set name(value: string) {
         this._name = value;
-        this.remoteLoaderService.getBlockRemoteLoaderOptions(value).then(options => {
-            this.remotePathOptions = options;
-        });
     }
     get name(): string {
         return this._name;
@@ -46,7 +52,9 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit() {
-        //
+        this.remoteLoaderService.getBlockRemoteLoaderOptions(this._name, this._blockType).then(options => {
+            this.remotePathOptions = options;
+        });
     }
 
     ngOnDestroy(): void {

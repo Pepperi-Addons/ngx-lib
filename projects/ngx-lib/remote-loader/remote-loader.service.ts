@@ -1,10 +1,7 @@
-import { ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
-import {PepAddonService, PepHttpService, PepSessionService} from '@pepperi-addons/ngx-lib';
+import { Injectable } from '@angular/core';
+import { PepAddonService, PepHttpService, PepSessionService} from '@pepperi-addons/ngx-lib';
 import { PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
-import { IAddonBlockLoaderDialogOptions, IAddonBlockLoaderOptions, IBlockLoaderData } from './remote-loader.model';
-import { PepAddonBlockLoaderComponent } from './addon-block-loader.component';
-import { MatDialogRef } from '@angular/material/dialog';
-import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { IBlockLoaderData } from './remote-loader.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({ 
@@ -42,16 +39,16 @@ export class PepRemoteLoaderService {
         }
     }
     
-    async getBlockRemoteLoaderOptions(name: string, relationName: PepBlockDataType = 'AddonBlock'): Promise<PepRemoteLoaderOptions> {
+    async getBlockRemoteLoaderOptions(name: string, blockType: PepBlockDataType = 'AddonBlock'): Promise<PepRemoteLoaderOptions> {
         return new Promise((resolve, reject) => {
             const pagesAddonUuid = this.addonService.getPagesAddonUUID();
             const pagesBaseUrl = this.getAddonBaseUrl(pagesAddonUuid, 'addon_blocks');
-            const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}relationName=${relationName}`;
+            const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}&blockType=${blockType}`;
             this.httpService.getHttpCall(url).toPromise().then((data: IBlockLoaderData) => {
                 if (data) {
                     resolve(this.getRemoteLoaderOptions(data));
                 } else {
-                    reject(`Addon block with name - ${name} is not found for type - ${relationName}`);
+                    reject(`Addon block with name - ${name} is not found for type - ${blockType}`);
                 }
             }); 
         });

@@ -22,6 +22,7 @@ export class PepAddonBlockLoaderService {
             const componentRef = options.container.createComponent(factory);
             const addonBlockInstance = componentRef.instance;
 
+            addonBlockInstance.blockType = options.blockType || 'AddonBlock';
             addonBlockInstance.name = options.name;
             addonBlockInstance.hostObject = options.hostObject;
 

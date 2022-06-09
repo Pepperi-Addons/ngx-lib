@@ -30,6 +30,7 @@ export interface IBlockLoaderData {
 
 export interface IAddonBlockLoaderOptions {
     container: ViewContainerRef;
+    blockType?: PepBlockDataType;
     name: string;
     hostObject?: any;
     hostEventsCallback?: (event: any) => void;
