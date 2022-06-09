@@ -22,6 +22,7 @@ interface IPepColorPickerDialogData {
     value: string;
     type: PepColorType;
     showAAComplient: boolean;
+    checkAAComplient: boolean;
     textColor: string;
     contrastRatio: PepContrastRatioType;
 }
@@ -90,7 +91,7 @@ export class PepColorPickerComponent implements OnInit {
 
     ngOnInit(): void {
         this.initVars();
-        this.checkAAComplient = this.data.showAAComplient;
+        this.checkAAComplient = this.data.checkAAComplient;
         this.convertValueStringToColor(this.data.value);
     }
 
