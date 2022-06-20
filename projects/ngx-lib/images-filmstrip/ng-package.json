@@ -1,0 +1,11 @@
+{
+    "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+    "lib": {
+        "entryFile": "public-api.ts"
+    },
+    "allowedNonPeerDependencies": [
+        "@ngx-translate/core",
+        "ng-gallery",
+        "hammerjs"
+    ]
+}

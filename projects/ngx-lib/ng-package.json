@@ -1,7 +1,6 @@
 {
     "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
     "dest": "../../dist/ngx-lib",
-    "allowedNonPeerDependencies": [],
     "assets": [
         "**/*.theme.scss",
         "./theming.scss",
@@ -10,10 +9,6 @@
     ],
     "lib": {
         "entryFile": "src/public-api.ts",
-        "umdModuleIds": {
-            "@ngx-translate/core": "translate",
-            "ngx-translate-multi-http-loader": "ngx-translate-multi-http-loader"
-        },
         "styleIncludePaths": [
             "../shared"
         ]

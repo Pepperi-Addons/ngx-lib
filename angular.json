@@ -135,7 +135,6 @@
       }
     }
   },
-  "defaultProject": "ngx-lib-tester",
   "cli": {
     "analytics": "24759c03-7ae3-43c1-b439-27b39a1d252a"
   }

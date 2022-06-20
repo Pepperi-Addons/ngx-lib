@@ -1,0 +1,13 @@
+{
+    "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+    "lib": {
+        "entryFile": "public-api.ts"
+    },
+    "allowedNonPeerDependencies": [
+        "@ngx-translate/core",
+        "@angular/material-moment-adapter",
+        "@mat-datetimepicker/core",
+        "@mat-datetimepicker/moment",
+        "moment"
+    ]
+}

@@ -64,7 +64,9 @@ const pepComponentsModules = [
 ];
 
 import { PepFormComponent } from './form.component';
+import { PepInternalFormComponent } from './internal-form.component';
 import { PepFieldGeneratorComponent } from './field-generator.component';
+import { PepInternalFieldGeneratorComponent } from './internal-field-generator.component';
 import { PepIndicatorsComponent } from './indicators.component';
 import { PepInternalButtonComponent } from './internal-button.component';
 import { PepInternalListComponent } from './internal-list.component';
@@ -97,7 +99,9 @@ import { PepInternalCaruselComponent } from './internal-carusel.component';
     exports: [PepFormComponent],
     declarations: [
         PepFormComponent,
+        PepInternalFormComponent,
         PepFieldGeneratorComponent,
+        PepInternalFieldGeneratorComponent,
         PepIndicatorsComponent,
         PepInternalButtonComponent,
         PepInternalListComponent,

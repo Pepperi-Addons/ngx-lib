@@ -636,7 +636,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		this.resetWrapGroupDimensions();
 	}
 
-	protected getElementSize(element: HTMLElement): ClientRect {
+	protected getElementSize(element: HTMLElement): any {
 		const result = element.getBoundingClientRect();
 		const styles = getComputedStyle(element);
 		const marginTop = parseInt(styles['margin-top'], 10) || 0;

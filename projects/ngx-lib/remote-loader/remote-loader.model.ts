@@ -1,4 +1,4 @@
-import { LoadRemoteModuleOptions } from "@angular-architects/module-federation"
+import { LoadRemoteModuleScriptOptions } from "@angular-architects/module-federation"
 import { ViewContainerRef } from "@angular/core";
 import { MatDialogConfig } from "@angular/material/dialog";
 import { PepDialogSizeType } from "@pepperi-addons/ngx-lib/dialog";
@@ -19,7 +19,7 @@ type PepRemoteLoaderData = {
     // [key:string]: any; // If anyone will need it then add it!!!
 }
 
-export type PepRemoteLoaderOptions = LoadRemoteModuleOptions & PepRemoteLoaderData;
+export type PepRemoteLoaderOptions = LoadRemoteModuleScriptOptions & PepRemoteLoaderData;
 
 export type PepBlockDataType = 'SettingsBlock' | 'AddonBlock' | 'PageBlock';
 

@@ -1,21 +1,14 @@
 {
     "ngPackage": {
         "lib": {
-            "entryFile": "public-api.ts",
-            "umdModuleIds": {
-                "@mat-datetimepicker/core": "datetimepicker-core",
-                "@mat-datetimepicker/moment": "datetimepicker-moment",
-                "@ngx-translate/core": "translate",
-                "moment/moment": "moment/moment",
-                "moment": "moment"
-            }
+            "entryFile": "public-api.ts"
         }
     },
     "peerDependencies": {
-        "@angular/material-moment-adapter": ">= 12.0.0",
-        "@mat-datetimepicker/core": ">= 6.0.0",
-        "@mat-datetimepicker/moment": ">= 6.0.0",
-        "@ngx-translate/core": "^13.0.0",
+        "@angular/material-moment-adapter": ">= 14.0.2",
+        "@mat-datetimepicker/core": ">= 9.0.68",
+        "@mat-datetimepicker/moment": ">= 9.0.68",
+        "@ngx-translate/core": "^14.0.0",
         "moment": ">= 2.26.0"
     }
 }

@@ -1,6 +1,6 @@
 import { PepAddonService } from '@pepperi-addons/ngx-lib';
 import { Component, Input, OnChanges, ViewChild, ViewContainerRef, ComponentFactoryResolver,
-  Injector, NgModuleFactory, Compiler, EventEmitter, Output, ComponentRef, SimpleChanges, NgZone } from '@angular/core';
+  Injector, NgModuleFactory, Compiler, EventEmitter, Output, ComponentRef, SimpleChanges, NgZone, createNgModuleRef } from '@angular/core';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 import { PepRemoteLoaderOptions } from './remote-loader.model';
 declare let __webpack_public_path__;
@@ -78,8 +78,13 @@ export class PepRemoteLoaderComponent implements OnChanges {
             // Load Component
             if (this.options?.noModule) {
                 const component = await loadRemoteModule(this.options).then(m => m[this.options.componentName]);
-                const componentFactory = this.cfr.resolveComponentFactory(component);
-                this.compRef = this.viewContainer.createComponent(componentFactory, null, this.injector);
+                
+                // New code
+                this.compRef = this.viewContainer.createComponent(component, { injector: this.injector });
+
+                // Old code
+                // const componentFactory = this.cfr.resolveComponentFactory(component);
+                // this.compRef = this.viewContainer.createComponent(componentFactory, null, this.injector);
             }
             // Load Module
             else {
@@ -89,10 +94,18 @@ export class PepRemoteLoaderComponent implements OnChanges {
                 this.pepAddonService.setAddonStaticFolder(publicPath, this.options.addonId);
 
                 const module =  await loadRemoteModule(this.options).then(m => m);
-                const moduleFactory: NgModuleFactory<any> = this.compiler.compileModuleSync(module[this.options.exposedModule.replace('./','')]);
-                const moduleRef = moduleFactory.create(this.injector);
-                const componentFactory = moduleRef?.componentFactoryResolver?.resolveComponentFactory(module[this.options.componentName]);
-                this.compRef = this.viewContainer.createComponent(componentFactory, null, this.injector, null, moduleRef);
+                
+                // New code
+                const moduleRef = createNgModuleRef(module, this.injector);
+                const component = module[this.options.componentName];
+                this.compRef = this.viewContainer.createComponent(component, { injector: this.injector, ngModuleRef: moduleRef });
+                
+                // Old code
+                // const moduleFactory: NgModuleFactory<any> = this.compiler.compileModuleSync(module[this.options.exposedModule.replace('./','')]);
+                // const moduleRef = moduleFactory.create(this.injector);
+                
+                // const componentFactory = moduleRef?.componentFactoryResolver?.resolveComponentFactory(module[this.options.componentName]);
+                // this.compRef = this.viewContainer.createComponent(componentFactory, null, this.injector, null, moduleRef);
 
                 const t1 = performance.now();
                 console.log('remote module load performance: ' + (t1-t0)/1000);
@@ -115,6 +128,7 @@ export class PepRemoteLoaderComponent implements OnChanges {
     }
 
     ngOnDestroy(): void {
+        this.compRef?.destroy();
         this.viewContainer?.clear();
     }
 }
