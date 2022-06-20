@@ -71,71 +71,71 @@ interface IPepImagesFilmstripDialogData {
 //     ])
 // ]);
 
-import {
-    IMAGEVIEWER_CONFIG,
-    ImageViewerConfig,
-    createButtonConfig,
-} from '@hallysonh/ngx-imageviewer';
+// import {
+//     IMAGEVIEWER_CONFIG,
+//     ImageViewerConfig,
+//     createButtonConfig,
+// } from '@hallysonh/ngx-imageviewer';
 import { DOCUMENT } from '@angular/common';
 
-export function createViewerConfig(
-    translate: TranslateService
-): ImageViewerConfig {
-    return {
-        // width: 850,
-        // height: 150,
-        bgStyle: '#FFF', // component background style
-        // scaleStep: 0.1, // zoom scale step (using the zoom in/out buttons)
-        // rotateStepper: false, // touch rotate should rotate only 90 to 90 degrees
-        loadingMessage: translate.instant('MESSAGES.INFO_LOADING_FILE'), // 'Loading...',
-        // buttonStyle: {
-        //     iconFontFamily: 'Material Icons', // font used to render the button icons
-        //     alpha: 0.5, // buttons' transparence value
-        //     hoverAlpha: 0.7, // buttons' transparence value when mouse is over
-        //     bgStyle: '#000000', //  buttons' background style
-        //     iconStyle: '#ffffff', // buttons' icon colors
-        //     borderStyle: '#000000', // buttons' border style
-        //     borderWidth: 0, // buttons' border width (0 == disabled)
-        // },
-        // tooltips: {
-        //     enabled: true, // enable or disable tooltips for buttons
-        //     bgStyle: '#000000', // tooltip background style
-        //     bgAlpha: 0.5, // tooltip background transparence
-        //     textStyle: '#ffffff', // tooltip's text style
-        //     textAlpha: 0.9, // tooltip's text transparence
-        //     padding: 15, // tooltip padding
-        //     radius: 20, // tooltip border radius
-        // },
-        // shorter button configuration style
-        nextPageButton: createButtonConfig(
-            'navigate_next',
-            'Next page',
-            0,
-            false
-        ),
-        beforePageButton: createButtonConfig(
-            'navigate_before',
-            'Previous page',
-            1,
-            false
-        ),
-        zoomOutButton: createButtonConfig('zoom_out', 'Zoom out', 0, false),
-        zoomInButton: createButtonConfig('zoom_in', 'Zoom in', 1, false),
-        rotateLeftButton: createButtonConfig(
-            'rotate_left',
-            'Rotate left',
-            2,
-            false
-        ),
-        rotateRightButton: createButtonConfig(
-            'rotate_right',
-            'Rotate right',
-            3,
-            false
-        ),
-        resetButton: createButtonConfig('autorenew', 'Reset', 4, false),
-    };
-}
+// export function createViewerConfig(
+//     translate: TranslateService
+// ): ImageViewerConfig {
+//     return {
+//         // width: 850,
+//         // height: 150,
+//         bgStyle: '#FFF', // component background style
+//         // scaleStep: 0.1, // zoom scale step (using the zoom in/out buttons)
+//         // rotateStepper: false, // touch rotate should rotate only 90 to 90 degrees
+//         loadingMessage: translate.instant('MESSAGES.INFO_LOADING_FILE'), // 'Loading...',
+//         // buttonStyle: {
+//         //     iconFontFamily: 'Material Icons', // font used to render the button icons
+//         //     alpha: 0.5, // buttons' transparence value
+//         //     hoverAlpha: 0.7, // buttons' transparence value when mouse is over
+//         //     bgStyle: '#000000', //  buttons' background style
+//         //     iconStyle: '#ffffff', // buttons' icon colors
+//         //     borderStyle: '#000000', // buttons' border style
+//         //     borderWidth: 0, // buttons' border width (0 == disabled)
+//         // },
+//         // tooltips: {
+//         //     enabled: true, // enable or disable tooltips for buttons
+//         //     bgStyle: '#000000', // tooltip background style
+//         //     bgAlpha: 0.5, // tooltip background transparence
+//         //     textStyle: '#ffffff', // tooltip's text style
+//         //     textAlpha: 0.9, // tooltip's text transparence
+//         //     padding: 15, // tooltip padding
+//         //     radius: 20, // tooltip border radius
+//         // },
+//         // shorter button configuration style
+//         nextPageButton: createButtonConfig(
+//             'navigate_next',
+//             'Next page',
+//             0,
+//             false
+//         ),
+//         beforePageButton: createButtonConfig(
+//             'navigate_before',
+//             'Previous page',
+//             1,
+//             false
+//         ),
+//         zoomOutButton: createButtonConfig('zoom_out', 'Zoom out', 0, false),
+//         zoomInButton: createButtonConfig('zoom_in', 'Zoom in', 1, false),
+//         rotateLeftButton: createButtonConfig(
+//             'rotate_left',
+//             'Rotate left',
+//             2,
+//             false
+//         ),
+//         rotateRightButton: createButtonConfig(
+//             'rotate_right',
+//             'Rotate right',
+//             3,
+//             false
+//         ),
+//         resetButton: createButtonConfig('autorenew', 'Reset', 4, false),
+//     };
+// }
 
 @Component({
     selector: 'pep-images-filmstrip',
@@ -143,12 +143,12 @@ export function createViewerConfig(
     styleUrls: ['./images-filmstrip.component.scss', './images-filmstrip.component.theme.scss'],
     // animations: [slideInAnimation],
     providers: [
-        {
-            provide: IMAGEVIEWER_CONFIG,
-            // useValue: IMAGEVIEWER_CONFIG_DEFAULT,
-            useFactory: createViewerConfig,
-            deps: [TranslateService],
-        },
+        // {
+        //     provide: IMAGEVIEWER_CONFIG,
+        //     // useValue: IMAGEVIEWER_CONFIG_DEFAULT,
+        //     useFactory: createViewerConfig,
+        //     deps: [TranslateService],
+        // },
     ],
 })
 export class PepImagesFilmstripComponent

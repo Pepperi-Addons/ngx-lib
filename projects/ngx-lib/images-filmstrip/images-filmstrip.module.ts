@@ -21,7 +21,7 @@ import {
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
 import { GalleryModule } from 'ng-gallery';
-import { ImageViewerModule } from '@hallysonh/ngx-imageviewer';
+// import { ImageViewerModule } from '@hallysonh/ngx-imageviewer';
 
 import { PepImagesFilmstripComponent } from './images-filmstrip.component';
 
@@ -36,7 +36,7 @@ import { PepImagesFilmstripComponent } from './images-filmstrip.component';
         MatIconModule,
         // External modules
         GalleryModule,
-        ImageViewerModule,
+        // ImageViewerModule,
         // ImageViewerModule.forRoot({
         //     btnClass: 'default', // The CSS class(es) that will apply to the buttons
         //     zoomFactor: 0.1, // The amount that the scale will be increased by
