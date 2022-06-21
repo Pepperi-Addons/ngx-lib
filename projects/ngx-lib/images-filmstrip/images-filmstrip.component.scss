@@ -70,16 +70,6 @@ gallery {
                 // background-image: unset !important;
             }
         }
-
-        .g-item-template {
-            ngx-imageviewer {
-                canvas{
-                    max-width: 100% !important;
-                    max-height: 100% !important;
-                }
-            }
-
-        }
     }
 }
 
