@@ -14,16 +14,8 @@ import {
     ViewContainerRef,
     OnChanges,
 } from '@angular/core';
-import {
-    trigger,
-    state,
-    style,
-    transition,
-    animate,
-} from '@angular/animations';
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
 import {
     Gallery,
     GalleryConfig,
@@ -46,7 +38,7 @@ import {
     PepGuid
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
-import { pepIconArrowRightAlt, pepIconArrowLeftAlt, PepIconRegistry, pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
+import { PepIconRegistry, pepIconNoImage2 } from '@pepperi-addons/ngx-lib/icon';
 
 import 'hammerjs';
 
@@ -60,100 +52,15 @@ interface IPepImagesFilmstripDialogData {
     showThumbnails: boolean;
 }
 
-// export const slideInAnimation = trigger('slideAnimation', [
-//     state('in', style({ transform: 'translateY(0)', opacity: 1 })),
-//     transition(':enter', [
-//         style({ transform: 'translateY(-100%)', opacity: 0 }),
-//         animate(400)
-//     ]),
-//     transition(':leave', [
-//         animate(400, style({ transform: 'translateY(-100%)', opacity: 0 }))
-//     ])
-// ]);
-
-// import {
-//     IMAGEVIEWER_CONFIG,
-//     ImageViewerConfig,
-//     createButtonConfig,
-// } from '@hallysonh/ngx-imageviewer';
 import { DOCUMENT } from '@angular/common';
-
-// export function createViewerConfig(
-//     translate: TranslateService
-// ): ImageViewerConfig {
-//     return {
-//         // width: 850,
-//         // height: 150,
-//         bgStyle: '#FFF', // component background style
-//         // scaleStep: 0.1, // zoom scale step (using the zoom in/out buttons)
-//         // rotateStepper: false, // touch rotate should rotate only 90 to 90 degrees
-//         loadingMessage: translate.instant('MESSAGES.INFO_LOADING_FILE'), // 'Loading...',
-//         // buttonStyle: {
-//         //     iconFontFamily: 'Material Icons', // font used to render the button icons
-//         //     alpha: 0.5, // buttons' transparence value
-//         //     hoverAlpha: 0.7, // buttons' transparence value when mouse is over
-//         //     bgStyle: '#000000', //  buttons' background style
-//         //     iconStyle: '#ffffff', // buttons' icon colors
-//         //     borderStyle: '#000000', // buttons' border style
-//         //     borderWidth: 0, // buttons' border width (0 == disabled)
-//         // },
-//         // tooltips: {
-//         //     enabled: true, // enable or disable tooltips for buttons
-//         //     bgStyle: '#000000', // tooltip background style
-//         //     bgAlpha: 0.5, // tooltip background transparence
-//         //     textStyle: '#ffffff', // tooltip's text style
-//         //     textAlpha: 0.9, // tooltip's text transparence
-//         //     padding: 15, // tooltip padding
-//         //     radius: 20, // tooltip border radius
-//         // },
-//         // shorter button configuration style
-//         nextPageButton: createButtonConfig(
-//             'navigate_next',
-//             'Next page',
-//             0,
-//             false
-//         ),
-//         beforePageButton: createButtonConfig(
-//             'navigate_before',
-//             'Previous page',
-//             1,
-//             false
-//         ),
-//         zoomOutButton: createButtonConfig('zoom_out', 'Zoom out', 0, false),
-//         zoomInButton: createButtonConfig('zoom_in', 'Zoom in', 1, false),
-//         rotateLeftButton: createButtonConfig(
-//             'rotate_left',
-//             'Rotate left',
-//             2,
-//             false
-//         ),
-//         rotateRightButton: createButtonConfig(
-//             'rotate_right',
-//             'Rotate right',
-//             3,
-//             false
-//         ),
-//         resetButton: createButtonConfig('autorenew', 'Reset', 4, false),
-//     };
-// }
 
 @Component({
     selector: 'pep-images-filmstrip',
     templateUrl: './images-filmstrip.component.html',
     styleUrls: ['./images-filmstrip.component.scss', './images-filmstrip.component.theme.scss'],
-    // animations: [slideInAnimation],
-    providers: [
-        // {
-        //     provide: IMAGEVIEWER_CONFIG,
-        //     // useValue: IMAGEVIEWER_CONFIG_DEFAULT,
-        //     useFactory: createViewerConfig,
-        //     deps: [TranslateService],
-        // },
-    ],
 })
 export class PepImagesFilmstripComponent
     implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-    // @ViewChild('ngxViewerImage') ngxViewerImage: any; // TODO: Check if we need to use this??
     @Input() key = '';
     @Input() value = '';
     @Input() label = '';

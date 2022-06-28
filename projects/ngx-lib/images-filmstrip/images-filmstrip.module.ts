@@ -21,7 +21,6 @@ import {
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
 import { GalleryModule } from 'ng-gallery';
-// import { ImageViewerModule } from '@hallysonh/ngx-imageviewer';
 
 import { PepImagesFilmstripComponent } from './images-filmstrip.component';
 
@@ -36,24 +35,6 @@ import { PepImagesFilmstripComponent } from './images-filmstrip.component';
         MatIconModule,
         // External modules
         GalleryModule,
-        // ImageViewerModule,
-        // ImageViewerModule.forRoot({
-        //     btnClass: 'default', // The CSS class(es) that will apply to the buttons
-        //     zoomFactor: 0.1, // The amount that the scale will be increased by
-        //     containerBackgroundColor: 'transparent', // The color to use for the background. This can provided in hex, or rgb(a).
-        //     wheelZoom: true, // If true, the mouse wheel can be used to zoom in
-        //     allowFullscreen: false, // If true, the fullscreen button will be shown, allowing the user to entr fullscreen mode
-        //     btnIcons: {
-        //         // The icon classes that will apply to the buttons. By default, font-awesome is used.
-        //         zoomIn: 'fa fa-plus',
-        //         zoomOut: 'fa fa-minus',
-        //         rotateClockwise: 'fa fa-repeat',
-        //         rotateCounterClockwise: 'fa fa-undo',
-        //         next: 'fa fa-arrow-right',
-        //         prev: 'fa fa-arrow-left',
-        //         fullscreen: 'fa fa-arrows-alt'
-        //     }
-        // }),
         // ngx-lib modules
         PepNgxLibModule,
         PepButtonModule,
