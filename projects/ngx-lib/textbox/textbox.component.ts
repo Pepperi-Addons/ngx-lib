@@ -13,7 +13,7 @@ import {
     ChangeDetectorRef,
     HostBinding,
 } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import {
     PepLayoutType,
@@ -227,7 +227,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     isInFocus: boolean;
 
     constructor(
-        public fb: FormBuilder,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef,

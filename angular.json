@@ -1,141 +1,141 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "ngx-lib-tester": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "projects/ngx-lib-tester",
-      "sourceRoot": "projects/ngx-lib-tester/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/ngx-lib-tester",
-            "index": "projects/ngx-lib-tester/src/index.html",
-            "main": "projects/ngx-lib-tester/src/main.ts",
-            "polyfills": "projects/ngx-lib-tester/src/polyfills.ts",
-            "tsConfig": "projects/ngx-lib-tester/tsconfig.app.json",
-            "allowedCommonJsDependencies": [
-              "ngx-signaturepad"
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "dist",
-                "node_modules",
-                "node_modules/@pepperi-addons"
-              ]
-            },
-            "assets": [
-              "projects/ngx-lib-tester/src/favicon.ico",
-              "projects/ngx-lib-tester/src/assets",
-              {
-                "glob": "**/*",
-                "input": "./dist/ngx-lib/src/assets",
-                "output": "./assets/ngx-lib"
-              }
-            ],
-            "styles": [
-              "node_modules/quill/dist/quill.core.css",
-              "node_modules/quill/dist/quill.bubble.css",
-              "node_modules/quill/dist/quill.snow.css",
-              "projects/ngx-lib-tester/src/theme.scss",
-              "projects/ngx-lib-tester/src/styles.scss"
-            ],
-            "scripts": [
-              "node_modules/quill/dist/quill.core.js"
-            ],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/ngx-lib-tester/src/environments/environment.ts",
-                  "with": "projects/ngx-lib-tester/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "ngx-lib-tester:build",
-            "port": 2626
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ngx-lib-tester:build:production"
-            }
-          }
-        },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {}
-        }
-      }
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "cli": {
+        "analytics": "24759c03-7ae3-43c1-b439-27b39a1d252a"
     },
-    "ngx-lib": {
-      "projectType": "library",
-      "root": "projects/ngx-lib",
-      "sourceRoot": "projects/ngx-lib/src",
-      "prefix": "pep",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/ngx-lib/tsconfig.lib.json",
-            "project": "projects/ngx-lib/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/ngx-lib/tsconfig.lib.prod.json"
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "ngx-lib-tester": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "projects/ngx-lib-tester",
+            "sourceRoot": "projects/ngx-lib-tester/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/ngx-lib-tester",
+                        "index": "projects/ngx-lib-tester/src/index.html",
+                        "main": "projects/ngx-lib-tester/src/main.ts",
+                        "polyfills": "projects/ngx-lib-tester/src/polyfills.ts",
+                        "tsConfig": "projects/ngx-lib-tester/tsconfig.app.json",
+                        "allowedCommonJsDependencies": [
+                            "ngx-signaturepad"
+                        ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "dist",
+                                "node_modules",
+                                "node_modules/@pepperi-addons"
+                            ]
+                        },
+                        "assets": [
+                            "projects/ngx-lib-tester/src/favicon.ico",
+                            "projects/ngx-lib-tester/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "./dist/ngx-lib/src/assets",
+                                "output": "./assets/ngx-lib"
+                            }
+                        ],
+                        "styles": [
+                            "node_modules/quill/dist/quill.core.css",
+                            "node_modules/quill/dist/quill.bubble.css",
+                            "node_modules/quill/dist/quill.snow.css",
+                            "projects/ngx-lib-tester/src/theme.scss",
+                            "projects/ngx-lib-tester/src/styles.scss"
+                        ],
+                        "scripts": [
+                            "node_modules/quill/dist/quill.core.js"
+                        ],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/ngx-lib-tester/src/environments/environment.ts",
+                                    "with": "projects/ngx-lib-tester/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "ngx-lib-tester:build",
+                        "port": 2626
+                    },
+                    "configurations": {
+                        "production": {
+                          "browserTarget": "ngx-lib-tester:build:production"
+                        }
+                    }
+                },
+                "deploy": {
+                    "builder": "angular-cli-ghpages:deploy",
+                    "options": {}
+                }
             }
-          }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ngx-lib/src/test.ts",
-            "tsConfig": "projects/ngx-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-lib/karma.conf.js"
-          }
+        "ngx-lib": {
+            "projectType": "library",
+            "root": "projects/ngx-lib",
+            "sourceRoot": "projects/ngx-lib/src",
+            "prefix": "pep",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "options": {
+                        "tsConfig": "projects/ngx-lib/tsconfig.lib.json",
+                        "project": "projects/ngx-lib/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/ngx-lib/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/ngx-lib/src/test.ts",
+                        "tsConfig": "projects/ngx-lib/tsconfig.spec.json",
+                        "karmaConfig": "projects/ngx-lib/karma.conf.js"
+                    }
+                }
+            }
         }
-      }
     }
-  },
-  "cli": {
-    "analytics": "24759c03-7ae3-43c1-b439-27b39a1d252a"
-  }
 }

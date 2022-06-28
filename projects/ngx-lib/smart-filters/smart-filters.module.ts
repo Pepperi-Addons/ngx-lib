@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatCommonModule } from '@angular/material/core';
@@ -84,6 +84,9 @@ import { PepNumberFilterComponent } from './number-filter/number-filter.componen
         PepMultiSelectFilterComponent,
         PepNumberFilterComponent
     ],
+    providers: [
+        FormBuilder
+    ]
 })
 export class PepSmartFiltersModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

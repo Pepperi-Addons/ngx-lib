@@ -23,10 +23,6 @@ import {
     AbstractControl,
     FormBuilder,
     FormGroup,
-    NG_VALIDATORS,
-    NG_VALUE_ACCESSOR,
-    ValidationErrors,
-    ValidatorFn,
     Validators,
 } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';

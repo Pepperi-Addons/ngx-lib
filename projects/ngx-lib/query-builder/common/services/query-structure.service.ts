@@ -1,5 +1,5 @@
 import { Injectable, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { } from 'lodash';
 import { IPepQueryBuilderField, IPepQuerySection, IPepQueryItem } from '../../common/model/legacy';
@@ -37,7 +37,6 @@ export class PepQueryStructureService {
     public outputQuery$ = this._outputQuery$.asObservable();
 
     constructor(
-        private _fb: FormBuilder,
         private _resolver: ComponentFactoryResolver,
         private _outputQueryService: PepOutputQueryService,
         private _queryBuilderService: PepQueryBuilderService) {
@@ -146,8 +145,11 @@ export class PepQueryStructureService {
         const factory = this._resolver.resolveComponentFactory(PepQueryBuilderSectionComponent);
         const componentRef = containerRef.createComponent(factory);
 
-        const sectionGroup = this._fb.group({
-            operator: this._fb.control(operator)
+        // const sectionGroup = this._fb.group({
+        //     operator: this._fb.control(operator)
+        // });
+        const sectionGroup = new FormGroup({
+            operator: new FormControl(operator)
         });
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('section')) { counter++; } });
