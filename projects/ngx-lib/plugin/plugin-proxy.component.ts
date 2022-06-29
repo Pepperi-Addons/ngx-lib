@@ -3,7 +3,7 @@ import { loadRemoteModule } from '@angular-architects/module-federation';
 import { PepAddonService } from '@pepperi-addons/ngx-lib';
 import { PepPluginOptions } from './plugin.model';
 import { Subscription } from 'rxjs';
-declare let __webpack_public_path__;
+// declare let __webpack_public_path__;
 
 @Component({
     standalone: true,

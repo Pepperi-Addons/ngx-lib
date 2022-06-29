@@ -18,13 +18,14 @@ export class PepRemoteLoaderService {
         //
     }
 
-    getRemoteLoaderOptions(blockLoaderData: IBlockLoaderData, remoteEntry = ''): PepRemoteLoaderOptions {
+    getRemoteLoaderOptions(blockLoaderData: IBlockLoaderData, remoteEntry = '', type: 'script' | 'module' | 'manifest' = 'module'): PepRemoteLoaderOptions {
         return {
-            addonId: blockLoaderData.relation.AddonUUID,
+            type: type,
             remoteEntry: remoteEntry.length > 0 ? remoteEntry : `${blockLoaderData.addonPublicBaseURL}${blockLoaderData.relation.AddonRelativeURL}.js`,
-            remoteName: blockLoaderData.relation.AddonRelativeURL,
             exposedModule: `./${blockLoaderData.relation.ModuleName}`,
-            componentName: blockLoaderData.relation.ComponentName, 
+            componentName: blockLoaderData.relation.ComponentName, // For load the component from the module.
+            remoteName: blockLoaderData.relation.AddonRelativeURL, // For script type, this is the name of the script.
+            addonId: blockLoaderData.relation.AddonUUID, // For local use (adding the relative path to the assets).
         }
     }
 

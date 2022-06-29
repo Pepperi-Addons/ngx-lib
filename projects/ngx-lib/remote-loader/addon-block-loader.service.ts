@@ -10,7 +10,6 @@ import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 export class PepAddonBlockLoaderService {
     
     constructor(
-        private resolver: ComponentFactoryResolver,
         private dialogService: PepDialogService,
     ) {
         //
@@ -18,8 +17,8 @@ export class PepAddonBlockLoaderService {
 
     private loadAddonBlockInternal(options: IAddonBlockLoaderDialogOptions): ComponentRef<PepAddonBlockLoaderComponent> | null {
         if (options.container !== null) {
-            const factory = this.resolver.resolveComponentFactory(PepAddonBlockLoaderComponent);
-            const componentRef = options.container.createComponent(factory);
+            // const factory = this.resolver.resolveComponentFactory(PepAddonBlockLoaderComponent);
+            const componentRef = options.container.createComponent(PepAddonBlockLoaderComponent);
             const addonBlockInstance = componentRef.instance;
 
             addonBlockInstance.blockType = options.blockType || 'AddonBlock';

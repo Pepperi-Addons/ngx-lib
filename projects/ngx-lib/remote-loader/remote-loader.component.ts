@@ -1,9 +1,7 @@
 import { PepAddonService } from '@pepperi-addons/ngx-lib';
-import { Component, Input, OnChanges, ViewChild, ViewContainerRef, ComponentFactoryResolver,
-  Injector, NgModuleFactory, Compiler, EventEmitter, Output, ComponentRef, SimpleChanges, NgZone, createNgModuleRef } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild, ViewContainerRef, Injector, EventEmitter, Output, ComponentRef, SimpleChanges, createNgModuleRef } from '@angular/core';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 import { PepRemoteLoaderOptions } from './remote-loader.model';
-declare let __webpack_public_path__;
 
 @Component({
     selector: 'pep-remote-loader',
@@ -46,10 +44,7 @@ export class PepRemoteLoaderComponent implements OnChanges {
 
     constructor(
         private injector: Injector,
-        private cfr: ComponentFactoryResolver,
-        private compiler: Compiler,
-        private pepAddonService: PepAddonService,
-        // private zone: NgZone,
+        private pepAddonService: PepAddonService
     ) { }
 
     private setHostComponentIntoComponentRef() {
@@ -76,60 +71,27 @@ export class PepRemoteLoaderComponent implements OnChanges {
         if (!this.options?.update) {
             this.viewContainer?.clear();
             
-            // try {
-                // if (this.options.addonId) {
-                //     const publicPathArr = this.options.remoteEntry.split('/');
-                //     const publicPath = publicPathArr.slice(0, publicPathArr.length - 1).join('/')+'/';
-                //     __webpack_public_path__ = publicPath;
-                //     this.pepAddonService.setAddonStaticFolder(publicPath, this.options.addonId);
-                // }
-                
-                // const module =  await loadRemoteModule(this.options).then(m => m);
-                // const component = module[this.options.componentName];
-                // this.compRef = this.viewContainer.createComponent(component);
-
-            // } catch (e) {
-                
-                this.viewContainer?.clear();
-                // Load Component
-                if (this.options?.noModule) {
-                    const component = await loadRemoteModule(this.options).then(m => m[this.options.componentName]);
+            if (this.options?.noModule) { // Load Component
+                const componentType = await loadRemoteModule(this.options).then(m => m[this.options.componentName]);
+                this.compRef = this.viewContainer.createComponent(componentType, { injector: this.injector });
+            } else { // Load Module
+                if (this.options?.addonId && (this.options.type === 'module' || this.options.type === 'script')) {
+                    const lastSlashIndex = this.options.remoteEntry?.lastIndexOf('/') || -1;
                     
-                    // New code
-                    // this.compRef = this.viewContainer.createComponent(component, { injector: this.injector });
-    
-                    // Old code
-                    const componentFactory = this.cfr.resolveComponentFactory(component);
-                    this.compRef = this.viewContainer.createComponent(componentFactory, null, this.injector);
-                }
-                // Load Module
-                else {
-                    // const publicPathArr = this.options.remoteEntry.split('/');
-                    // const publicPath = publicPathArr.slice(0, publicPathArr.length - 1).join('/')+'/';
-                    // __webpack_public_path__ = publicPath;
-                    // this.pepAddonService.setAddonStaticFolder(publicPath, this.options.addonId);
-    
-                    const module =  await loadRemoteModule(this.options).then(m => m);
-                    
-                    // New code
-                    const moduleRef = createNgModuleRef(module, this.injector);
-                    const component = module[this.options.componentName];
-                    this.compRef = this.viewContainer.createComponent(component, { injector: this.injector, ngModuleRef: moduleRef });
-                    
-                    // Old code
-                    // const moduleFactory: NgModuleFactory<any> = this.compiler.compileModuleSync(module[this.options.exposedModule.replace('./','')]);
-                    // const moduleRef = moduleFactory.create(this.injector);
-                    
-                    // const componentFactory = moduleRef?.componentFactoryResolver?.resolveComponentFactory(module[this.options.componentName]);
-                    // this.compRef = this.viewContainer.createComponent(componentFactory, null, this.injector, null, moduleRef);
-    
-                    const t1 = performance.now();
-                    console.log('remote module load performance: ' + (t1-t0)/1000);
+                    if (lastSlashIndex > 0) {
+                        const publicPath = this.options.remoteEntry.substring(0, lastSlashIndex + 1);
+                        this.pepAddonService.setAddonStaticFolder(publicPath, this.options.addonId);
+                    }
                 }
 
-            // }
+                const module =  await loadRemoteModule(this.options).then(m => m);
+                const moduleRef = createNgModuleRef(module[this.options.exposedModule.replace('./','')], this.injector);
+                this.compRef = this.viewContainer.createComponent(module[this.options.componentName], { injector: this.injector, ngModuleRef: moduleRef });
 
-            
+                const t1 = performance.now();
+                console.log('remote module load performance: ' + (t1-t0)/1000);
+            }
+
             this.load.emit();
         }
 
