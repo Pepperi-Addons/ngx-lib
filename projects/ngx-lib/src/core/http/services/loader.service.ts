@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { filter, distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PepLoaderService {
     counter = 0;
-    private showLoaderSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-        false
-    );
+    private showLoaderSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(undefined);
 
     get onChanged$(): Observable<boolean> {
         return this.showLoaderSubject
             .asObservable()
-            .pipe(distinctUntilChanged());
+            .pipe(
+                filter(v => v !== undefined),
+                distinctUntilChanged());
     }
 
     constructor() {

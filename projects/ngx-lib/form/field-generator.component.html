@@ -83,7 +83,7 @@
         (valueChange)="onValueChanged($event, field)" [isActive]="isActive">
     </pep-textarea>
 
-    <pep-textbox *ngSwitchCase="'textbox'" [form]="form" [key]="field.key" [value]="field.value"
+    <pep-textbox *ngSwitchCase="'textbox'" #control [form]="form" [key]="field.key" [value]="field.value"
         [formattedValue]="field.formattedValue" [accessory]="field.accessory" [label]="field.label" [placeholder]="field.placeholder"
         [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
@@ -127,3 +127,4 @@
     <ng-container *ngSwitchCase="'placeholder'">
     </ng-container>
 </ng-container>
+
