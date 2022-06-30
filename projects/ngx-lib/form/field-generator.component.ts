@@ -31,9 +31,7 @@ import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.m
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepFieldGeneratorComponent implements AfterViewInit, OnChanges, OnDestroy {   
-    @ViewChild('control') control: any;
-
+export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {      
     private _field: any;
     @Input()
     set field(value: any) {
@@ -87,12 +85,6 @@ export class PepFieldGeneratorComponent implements AfterViewInit, OnChanges, OnD
     get isDirty(): boolean {
         const formControl = this.form && this.form.get(this.field.key);
         return formControl ? formControl.dirty : false;
-    }
-
-    ngAfterViewInit() {
-        if (this.control) {
-            console.log('this.control', this.control);
-        }
     }
 
     onFileChanged(fileData: any, field: PepFieldBase) {
