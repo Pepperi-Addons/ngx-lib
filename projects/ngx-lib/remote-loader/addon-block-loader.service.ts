@@ -52,6 +52,8 @@ export class PepAddonBlockLoaderService {
             const data = options.data || null;
             addonBlockInstance.dialogRef = this.dialogService.openDialog(addonBlockInstance.dialogTemplate, data, mergeConfig);
             addonBlockInstance.dialogRef.afterClosed().subscribe(() => {
+                componentRef.hostView.detach();
+                componentRef.hostView.destroy();
                 componentRef.destroy();
             });
             return addonBlockInstance.dialogRef;

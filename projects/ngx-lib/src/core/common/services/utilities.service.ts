@@ -11,6 +11,10 @@ export class PepUtilitiesService {
 
     constructor(@Optional() private translate: TranslateService = null) {
         this.culture = this.translate?.getBrowserCultureLang() || 'en-US';
+
+        // try {
+        //     import(`@angular/common/locales/global/${this.culture}`);
+        // } catch {}
     }
 
     private changeDecimalSeperator(value: string, reverse = false): string {
@@ -62,6 +66,23 @@ export class PepUtilitiesService {
         return str
     }
     
+    private isCurrencyShouldBeOnRight(currencySymbol: string) {
+        let res = false;
+
+        if (currencySymbol == "€" ||
+            currencySymbol == "₪" ||
+            currencySymbol == "Ft" ||
+            currencySymbol == "Kč" ||
+            currencySymbol == "руб" ||
+            currencySymbol == "zł" ||
+            currencySymbol == "kr.")
+        {
+            res = true;
+        }
+
+        return res;
+    }
+
     parseDate(dateStr: string, showTime = false): Date {
         let retVal: Date = null;
         if (dateStr !== '') {
@@ -142,43 +163,73 @@ export class PepUtilitiesService {
         );
     }
 
-    formatPercent(value: any, digitsInfo = '1.0-2') {
+    // formatPercent(value: any, digitsInfo = '1.0-2') {
+    formatPercent(value: any) {
         const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
             return '0%';
         } else {
-            return formatPercent(number / 100, this.culture, digitsInfo);
+            // return formatPercent(number / 100, this.culture, digitsInfo);
+            return new Intl.NumberFormat(this.culture, { 
+                style: 'percent',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            }).format(number / 100);
         }
     }
 
-    formatCurrency(value: any, currencySign = '', digitsInfo = '1.2-2') {
+    // formatCurrency(value: any, currencySign = '', digitsInfo = '1.2-2') {
+    formatCurrency(value: any, currencySign = '') {
+        let res = '';
         const number = this.coerceNumberProperty(value);
+        const styleOptions = { 
+            // style: 'currency',
+            // currencySign: currencySign,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
+        };
 
         if (number === 0) {
-            return formatCurrency(0, this.culture, currencySign, undefined, digitsInfo);
+            // return formatCurrency(0, this.culture, currencySign, undefined, digitsInfo);
+            res = new Intl.NumberFormat(this.culture, styleOptions).format(0);
         } else {
-            return formatCurrency(value, this.culture, currencySign, undefined, digitsInfo);
+            // return formatCurrency(value, this.culture, currencySign, undefined, digitsInfo);
+            res = new Intl.NumberFormat(this.culture, styleOptions).format(number);
         }
+
+        res = this.isCurrencyShouldBeOnRight(currencySign) ? `${res} ${currencySign}` : `${currencySign} ${res}`
+        
+        return res;
     }
     
-    formatDecimal(value: any, digitsInfo = '1.2-2') {
+    // formatDecimal(value: any, digitsInfo = '1.2-2') {
+    formatDecimal(value: any) {
         const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
             return '0';
         } else {
-            return formatNumber(value, this.culture, digitsInfo);
+            // return formatNumber(value, this.culture, digitsInfo);
+            return new Intl.NumberFormat(this.culture, { 
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }).format(number)
         }
     }
     
-    formatNumber(value: any, digitsInfo = '1.0-0'): string {
+    // formatNumber(value: any, digitsInfo = '1.0-0'): string {
+    formatNumber(value: any): string {
         const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
             return '0';
         } else {
-            return formatNumber(value, this.culture, digitsInfo);
+            // return formatNumber(value, this.culture, digitsInfo);
+            return new Intl.NumberFormat(this.culture, { 
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+            }).format(number)
         }
     }
     

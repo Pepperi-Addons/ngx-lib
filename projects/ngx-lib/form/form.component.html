@@ -1,6 +1,5 @@
 <fieldset *ngIf="form" [formGroup]="form" [disabled]="isLocked" class="pep-form"
     [ngStyle]="{ 'background-color': layoutType == 'card' && data?.BackgroundColor }">
-   
     <!-- New Form -->
     <mat-grid-list *ngIf="layoutType == 'form'" [cols]="columns" [rowHeight]="rowHeight + 'rem'"
         [gutterSize]="formGutterSize">

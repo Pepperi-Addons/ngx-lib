@@ -1,18 +1,12 @@
 import {
-    Component,
-    AfterViewInit,
+    Component,    
     OnChanges,
     Input,
     Output,
-    EventEmitter,
-    ViewChild,
+    EventEmitter,    
     ViewEncapsulation,
-    ChangeDetectionStrategy,
-    ViewContainerRef,
-    ComponentFactoryResolver,
-    OnDestroy,
-    ComponentRef,
-    ComponentFactory,
+    ChangeDetectionStrategy,    
+    OnDestroy    
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
