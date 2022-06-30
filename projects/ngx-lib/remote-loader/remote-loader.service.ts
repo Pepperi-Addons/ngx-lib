@@ -46,11 +46,9 @@ export class PepRemoteLoaderService {
             const pagesBaseUrl = this.getAddonBaseUrl(pagesAddonUuid, 'addon_blocks');
             const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}&blockType=${blockType}`;
             this.httpService.getHttpCall(url).toPromise().then((data: IBlockLoaderData) => {
-                if (data) {
-                    resolve(this.getRemoteLoaderOptions(data, remoteEntry));
-                } else {
-                    reject(`Addon block with name - ${name} is not found for type - ${blockType}`);
-                }
+                resolve(this.getRemoteLoaderOptions(data, remoteEntry));
+            }).catch(err => {
+                reject(`Addon block with name - ${name} is not found for type - ${blockType}`);
             }); 
         });
     }
