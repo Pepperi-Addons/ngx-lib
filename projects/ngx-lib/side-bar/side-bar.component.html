@@ -2,7 +2,7 @@
     <ng-container *ngIf="isLargeScreen || ignoreResize; then largeScreensBlock; else notLargeScreensBlock">
     </ng-container>
     <ng-template #largeScreensBlock>
-        <div class="toggle-side-bar-container" [ngClass]="{ 'is-open-state': showToggle && state === 'open'}">
+        <div class="toggle-side-bar-container" [ngClass]="{ 'is-open-state': !showToggle || state === 'open'}">
             <ng-container *ngTemplateOutlet="sideLayoutTemplate"></ng-container>
             <div class="toggle-button-border"></div>
             <button mat-button *ngIf="showToggle" class="toggle-button pep-button xs regular icon-button " (click)="toggleSideWrapper()">
