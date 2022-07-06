@@ -37,6 +37,7 @@ export class PepSideBarComponent implements OnInit {
     @Input() ignoreResize = false;
     @Input() showHeader = true;
     @Input() showFooter = false;
+    @Input() showToggle = true;
 
     private _useAsWebComponent = false;
     private readonly _animationTime = 350; // milliseconds.

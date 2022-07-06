@@ -53,7 +53,8 @@ interface IPepFieldBaseOptions {
     minValue?: number;
     maxValue?: number;
     textColor?: string;
-    visible?: boolean;
+    visible?: boolean;    
+    emptyOption?: boolean;
     // lastFocusField?: any;
 }
 export class PepFieldBase {
@@ -82,7 +83,7 @@ export class PepFieldBase {
     minValue: number;
     maxValue: number;
     textColor: string;
-    visible: boolean;
+    visible: boolean;    
     // lastFocusField: any;
 
     constructor(options: IPepFieldBaseOptions = {}) {
@@ -414,12 +415,14 @@ interface IPepSelectFieldOptions extends IPepFieldBaseOptions {
 }
 export class PepSelectField extends PepFieldBase {
     controlType = 'select';
-    options: IPepOption[] = [];
-    type: PepSelectFieldType;
+    options: IPepOption[] = [];    
+    type: PepSelectFieldType;    
+    emptyOption: boolean;
 
     constructor(options: IPepSelectFieldOptions = {}) {
         super(options);
         this.type = options.type || 'select';
+        this.emptyOption = options.emptyOption;
 
         this.update(options);
     }

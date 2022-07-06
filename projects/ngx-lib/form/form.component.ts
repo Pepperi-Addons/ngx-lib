@@ -8,8 +8,7 @@ import {
     Output,
     EventEmitter,
     OnChanges,
-    DoCheck,
-    Optional,
+    DoCheck,    
 } from '@angular/core';
 import {
     FormGroup,
@@ -76,7 +75,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     @Input() isInternal = true;
     @Input() isReport = false;
     @Input() layout: UIControl;
-    @Input() lockEvents = false;   
+    @Input() lockEvents = false;
     @Input() canEditObject = true;
 
     private _data: ObjectsDataRow = null;
@@ -101,7 +100,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         this.isLocked = value;
     }
 
-    @Input() isActive = false;
+    @Input() isActive = false;    
     @Input() layoutType: PepLayoutType = 'card';
     // @Input() listType = '';
     @Input() objectId = '0';
@@ -396,7 +395,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         const placeholder =
             controlField.ReadOnly || !canEditObject ? '' : controlField.Title;
 
-        return {
+        let fieldProperties = {
             key: controlField.ApiName,
             label: controlField.Title,
             accessory: dataField.Accessory,
@@ -429,6 +428,14 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             textColor: dataField.TextColor,
             visible: dataField.Visible,
         };
+
+        if (dataField.AdditionalProps) {
+            fieldProperties = {
+                ...fieldProperties,
+                ...dataField.AdditionalProps
+            }
+        }
+        return fieldProperties;
     }
 
     convertToCustomField(
@@ -1165,7 +1172,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         // Set it to false to enable all fields.
         if (this.isInternal && this.isLocked) {
-            this.isLocked = false; 
+            this.isLocked = false;
         }
     }
 
@@ -1217,8 +1224,8 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 updatedField.FieldType === FIELD_TYPE.NumberRealForMatrix
             ) {
                 allowDecimal = true;
-            } 
-            
+            }
+
             options.allowDecimal = allowDecimal;
 
         } else if (customField instanceof PepSelectField) {

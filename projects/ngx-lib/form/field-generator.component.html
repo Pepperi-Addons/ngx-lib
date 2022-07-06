@@ -62,8 +62,9 @@
     <pep-select *ngSwitchCase="'select'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
         [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [options]="field.options" [showTitle]="showTitle"
-        [layoutType]="layoutType" [visible]="field.visible" (valueChange)="onValueChanged($event, field)"
-        (formValidationChange)="onFormValidationChanged($event)" [isActive]="isActive">
+        [layoutType]="layoutType" [visible]="field.visible" [emptyOption]="field.emptyOption"
+        (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
+        [isActive]="isActive">
     </pep-select>
 
     <pep-separator *ngSwitchCase="'separator'" [form]="form" [key]="field.key" [label]="field.label"
@@ -84,10 +85,10 @@
     </pep-textarea>
 
     <pep-textbox *ngSwitchCase="'textbox'" [form]="form" [key]="field.key" [value]="field.value"
-        [formattedValue]="field.formattedValue" [accessory]="field.accessory" [label]="field.label" [placeholder]="field.placeholder"
-        [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
-        [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
-        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
+        [formattedValue]="field.formattedValue" [accessory]="field.accessory" [label]="field.label"
+        [placeholder]="field.placeholder" [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled"
+        [readonly]="field.readonly" [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
         (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
         [isActive]="isActive" [visible]="field.visible">
     </pep-textbox>

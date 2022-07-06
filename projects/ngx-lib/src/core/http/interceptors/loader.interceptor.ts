@@ -12,24 +12,29 @@ import { PepLoaderService } from '../services/loader.service';
 
 @Injectable()
 export class PepLoaderInterceptor implements HttpInterceptor {
-    constructor(private injector: Injector) {}
+    constructor(private injector: Injector) { }
 
     intercept(
         req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         // console.warn('LoaderInterceptor');
-
+        let newVer = 2;
         const loaderService = this.injector.get(PepLoaderService);
+      //  console.log('show', req.url);       
         loaderService.show();
 
         return next.handle(req).pipe(
             // delay(3000),
-            catchError((err) => {
-                loaderService.hide();
-                return throwError(err);
-            }),
-            finalize(() => loaderService.hide())
+            catchError((err) => 
+            {
+                console.log('intercept catchError', err);
+                return throwError(err)}),
+            finalize(() => {
+                console.log('hide', req.url);
+                return loaderService.hide()
+            }
+            )
         );
 
         // return next.handle(req).pipe(map(event => {

@@ -61,6 +61,17 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
         return this._visible;
     }
 
+    private _emptyOption = true;
+    @Input() 
+    set emptyOption(val: boolean) {
+        if (val !== undefined) {
+            this._emptyOption = val;
+        }        
+    } 
+    get emptyOption() {
+        return this._emptyOption;
+    }
+
     controlType = 'select';
 
     // @Input() field: PepFieldBase;
@@ -68,8 +79,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
     @Input() isActive = false;
-    @Input() showTitle = true;
-    @Input() emptyOption = true;
+    @Input() showTitle = true;  
+
     @Input() renderTitle = true;
 
     @Output()

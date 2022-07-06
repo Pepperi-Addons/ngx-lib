@@ -1,12 +1,12 @@
 import {
-    Component,
+    Component,    
     OnChanges,
     Input,
     Output,
-    EventEmitter,
+    EventEmitter,    
     ViewEncapsulation,
-    ChangeDetectionStrategy,
-    OnDestroy,
+    ChangeDetectionStrategy,    
+    OnDestroy    
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -17,6 +17,7 @@ import {
 } from '@pepperi-addons/ngx-lib';
 import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.model';
 
+
 @Component({
     selector: 'pep-field-generator',
     templateUrl: './field-generator.component.html',
@@ -24,11 +25,11 @@ import { IPepFormFieldClickEvent, IPepFormFieldValueChangeEvent } from './form.m
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
+export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {      
     private _field: any;
     @Input()
     set field(value: any) {
-        this._field = value;
+        this._field = value;       
     }
     get field(): any {
         return this._field;
@@ -78,10 +79,6 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     get isDirty(): boolean {
         const formControl = this.form && this.form.get(this.field.key);
         return formControl ? formControl.dirty : false;
-    }
-
-    ngOnDestroy(): void {
-        //
     }
 
     onFileChanged(fileData: any, field: PepFieldBase) {
@@ -143,5 +140,9 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         // debugger;
         // For testing.
         // this.field.disabled = this.field.readonly = false;
+    }
+
+    ngOnDestroy(): void {
+        //
     }
 }
