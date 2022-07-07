@@ -26,15 +26,8 @@ export class PepLoaderInterceptor implements HttpInterceptor {
 
         return next.handle(req).pipe(
             // delay(3000),
-            catchError((err) => 
-            {
-                console.log('intercept catchError', err);
-                return throwError(err)}),
-            finalize(() => {
-                console.log('hide', req.url);
-                return loaderService.hide()
-            }
-            )
+            catchError((err) => throwError(err)),
+            finalize(() =>  loaderService.hide())
         );
 
         // return next.handle(req).pipe(map(event => {

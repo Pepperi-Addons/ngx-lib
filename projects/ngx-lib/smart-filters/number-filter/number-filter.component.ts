@@ -102,7 +102,7 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
         const operator = Object.values(this.operators).find(
             (operator) => operator.id === value
         );
-        this.operator = operator;
+        this.operator = operator;        
         if (this._parentForm) {
             this.updateParentForm();
         }
