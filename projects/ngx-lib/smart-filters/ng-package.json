@@ -10,6 +10,6 @@
         "@mat-datetimepicker/core",
         "@mat-datetimepicker/moment",
         "ngx-virtual-scroller",
-        "moment",
+        "moment"
     ]
 }
