@@ -237,7 +237,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
 
     private setDateModel(): void {
         if (
-            this.value === null ||
+            !this.value ||
             this.value === '' ||
             this.value.indexOf('1900-1-1') >= 0 ||
             this.value.indexOf('1900-01-01') >= 0 ||

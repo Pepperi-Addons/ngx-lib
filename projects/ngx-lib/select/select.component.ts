@@ -31,7 +31,20 @@ import {
 })
 export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() key = '';
-    @Input() value = '';
+    
+    private _value = '';
+    @Input()
+    set value(value: string) {
+        if (!value) {
+            value = '';
+        }
+
+        this._value = value;
+    }
+    get value(): string {
+        return this._value;
+    }
+
     @Input() label = '';
     @Input() type: PepSelectFieldType = 'select';
     @Input() mandatory = false;
@@ -39,7 +52,19 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
-    @Input() options: Array<IPepOption> = [];
+
+    private _options: Array<IPepOption> = [];
+    @Input() 
+    set options(value: Array<IPepOption>) {
+        if (!value) {
+            value = [];
+        }
+        
+        this._options = value;
+    }
+    get options(): Array<IPepOption> {
+        return this._options;
+    }
 
     private _visible = true;
     @Input()
