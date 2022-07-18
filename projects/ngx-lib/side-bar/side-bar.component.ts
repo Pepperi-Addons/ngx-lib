@@ -11,13 +11,6 @@ import {
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import {
-    trigger,
-    state,
-    style,
-    transition,
-    animate,
-} from '@angular/animations';
-import {
     PepCustomizationService,
     PepLayoutService,
     PepScreenSizeType,
@@ -34,6 +27,7 @@ import { pepIconArrowLeft, pepIconArrowRight } from '@pepperi-addons/ngx-lib/ico
 export class PepSideBarComponent implements OnInit {
     static ONE_MULTI_BY_DIR_KEY = '--pep-one-multi-by-dir';
 
+    @Input() position: 'start' | 'end' = 'start';
     @Input() ignoreResize = false;
     @Input() showHeader = true;
     @Input() showFooter = false;
@@ -89,7 +83,7 @@ export class PepSideBarComponent implements OnInit {
         this.toggleButtonArrowName =
             // state === 'open' ?
             // (this.layoutService.isRtl() ? pepIconArrowRight.name : pepIconArrowLeft.name) :
-            (this.layoutService.isRtl() ? pepIconArrowLeft.name : pepIconArrowRight.name);
+            (this.layoutService.isRtl() || this.position === 'end' ? pepIconArrowLeft.name : pepIconArrowRight.name);
     }
 
     private toggleState() {
@@ -99,33 +93,6 @@ export class PepSideBarComponent implements OnInit {
     ngOnInit() {
         document.documentElement.style.setProperty(PepSideBarComponent.ONE_MULTI_BY_DIR_KEY, this.layoutService.isRtl() ? '1' : '-1');
         this.setState(this.isLargeScreen ? 'open' : 'close');
-    }
-
-    setSideBarHeight(event) {
-        // const from = event.relatedTarget
-        //     ? event.relatedTarget
-        //     : event.fromElement;
-        // const to = event.target ? event.target : event.toElement;
-
-        // if (typeof from === 'undefined' || typeof to === 'undefined') {
-        //     return;
-        // }
-        // this.isMouseIn = true;
-
-        // this.sideBarHeight = window.innerHeight - to.offsetTop + 'px';
-    }
-
-    mouseLeaveSideBar(event) {
-        // const from = event.relatedTarget
-        //     ? event.relatedTarget
-        //     : event.fromElement;
-        // const to = event.target ? event.target : event.toElement;
-
-        // if (typeof from === 'undefined' || typeof to === 'undefined') {
-        //     return;
-        // }
-        // this.sideBarHeight = '100%';
-        // this.isMouseIn = false;
     }
 
     open() {

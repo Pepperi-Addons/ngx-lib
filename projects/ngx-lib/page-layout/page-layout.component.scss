@@ -3,11 +3,11 @@
 :host {
     &.pep-page-layout {
         display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: auto 1fr auto;
         grid-template-areas: 
-            "header-layout  header-layout"
-            "side-layout    main-layout";
+            "header-layout  header-layout   header-layout"
+            "side-layout    main-layout     side-layout-end";
 
         height: 100%;
         width: 100%;
@@ -26,6 +26,20 @@
 
             &.show-shadow {
                 padding-inline-end: variables.$content-padding;
+            }
+
+            &.side-layout-end {
+                grid-area: side-layout-end;
+                
+                &.show-shadow {
+                    padding-inline-start: variables.$content-padding;
+                    padding-inline-end: unset;
+                }
+            }
+
+            ::ng-deep div[pep-side-area],
+            ::ng-deep div[pep-side-area-end] {
+                height: inherit;
             }
         }
 

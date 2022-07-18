@@ -18,7 +18,7 @@ import { PepTranslateService } from './translate.service';
 })
 export class PepAddonService {
     private readonly PAGES_ADDON_UUID = '50062e0c-9967-4ed4-9102-f2bc50602d41';
-    private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
+    // private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
     private readonly ADDONS_DICTIONARY_ASSETS_PATH_KEY = 'AddonsDictionaryAssetsPath';
     private readonly ADDON_API_RELATIVE_PATH = '/addons/api';
     private readonly ADDON_API_ASYNC_RELATIVE_PATH = `${this.ADDON_API_RELATIVE_PATH}/async`;
