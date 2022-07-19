@@ -183,7 +183,6 @@ export class PepUIModule {
         translate: TranslateService,
         private pepIconRegistry: PepIconRegistry,
         private pepAddonService: PepAddonService
-
     ) {
         this.pepIconRegistry.registerIcons(pepIcons);
         this.pepAddonService.setDefaultTranslateLang(translate);
