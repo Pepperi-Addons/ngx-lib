@@ -49,10 +49,12 @@ export class PepGroupButtonsComponent implements OnDestroy {
     }
 
     onButtonClicked(event: Event, button: PepButton): void {       
-        this.selectedButtonKey = this.supportUnselect && this.selectedButtonKey === button?.key ? '' : button?.key;
+        const unselect: boolean = this.supportUnselect && this.selectedButtonKey === button?.key;
 
+        this.selectedButtonKey = unselect ? '' : button?.key;
+        
         const buttonClick = {
-            source: button,
+            source: unselect ? {key: 'none'} : button, 
             event,
         };
 
