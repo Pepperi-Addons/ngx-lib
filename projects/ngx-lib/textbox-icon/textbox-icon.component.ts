@@ -16,7 +16,7 @@ export class PepTextboxIconComponent {
 
     iconButtonClicked(): void {
         const currentValue = this.value;
-        if (currentValue.toString().trim().length > 0) {
+        if (currentValue && currentValue.toString().trim().length > 0) {
             switch (this.type) {
                 case 'email':
                     window.open('mailto:' + currentValue, 'email');

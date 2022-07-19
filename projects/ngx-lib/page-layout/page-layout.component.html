@@ -5,6 +5,10 @@
     <ng-content select="pep-side-bar"></ng-content>
     <ng-content select="[pep-side-area]"></ng-content>
 </div>
+<div class="pep-page-side-layout side-layout-end" [ngClass]="{ 'show-shadow': showShadow }">
+    <ng-content select="pep-side-bar[position='end']"></ng-content>
+    <ng-content select="[pep-side-area-end]"></ng-content>
+</div>
 <div class="pep-page-main-layout" [ngClass]="{ 'add-padding': addPadding }">
     <div class="pep-top-area">
         <ng-content select="[pep-top-area]"></ng-content>

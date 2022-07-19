@@ -10,6 +10,8 @@ import {
     PepIconModule,
     PepIconRegistry,
     pepIconSystemClose,
+    pepIconArrowLeft,
+    pepIconArrowRight,
 } from '@pepperi-addons/ngx-lib/icon';
 
 import { PepSideBarComponent } from './side-bar.component';
@@ -30,6 +32,9 @@ import { PepSideBarComponent } from './side-bar.component';
 })
 export class PepSideBarModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
-        this.pepIconRegistry.registerIcons([pepIconSystemClose]);
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemClose,
+            pepIconArrowLeft,
+            pepIconArrowRight,]);
     }
 }
