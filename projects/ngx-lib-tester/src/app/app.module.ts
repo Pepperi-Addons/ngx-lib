@@ -190,11 +190,12 @@ const pepperiComponentsModules = [
         pepperiComponentsModules,
         TranslateModule.forRoot({
             loader: {
-                provide: TranslateLoader,
-                useFactory: PepAddonService.createMultiTranslateLoader,
+                provide: TranslateLoader,                
+                useFactory: (addonService: PepAddonService) => 
+                PepAddonService.createMultiTranslateLoader('', addonService, ['ngx-lib']),
                 deps: [PepAddonService]
             },
-        }),
+        }), 
     ],
     providers: [],
     bootstrap: [AppComponent],
