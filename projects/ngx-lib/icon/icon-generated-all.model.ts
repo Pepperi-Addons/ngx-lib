@@ -80,6 +80,8 @@ export const allIcons = {
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M9 7V6a1 1 0 011-1h4a1 1 0 011 1v.999l.913.001H17a1 1 0 010 2h-.167l-.757 9.083a1 1 0 01-.996.917H8.92a1 1 0 01-.996-.917L7.166 9H7a1 1 0 110-2h2zm5.76 2l-5.525.005L9.79 17h4.42l.55-8z"/></svg>',
   system_bolt:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M10.612 19.84a.33.33 0 01-.279.16.332.332 0 01-.128-.026.362.362 0 01-.199-.402l1.25-6.568H7.333c-.103 0-.2-.05-.263-.137a.374.374 0 01-.06-.305l2-8.293A.336.336 0 019.333 4h6c.122 0 .235.07.294.185a.377.377 0 01-.012.362L12.943 9h3.723c.122 0 .235.064.294.18a.387.387 0 01-.015.37l-6.333 10.29z"/></svg>',
+  system_boolean:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 17A5 5 0 016 7h12a5 5 0 01.217 9.995L18 17H6zm8.007-8H6a3 3 0 00-.176 5.995L6 15h8.007a4.968 4.968 0 010-6z"/></svg>',
   system_chat:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M11.5 4a7.5 7.5 0 016.755 10.764L20 20l-5.236-1.745A7.5 7.5 0 1111.5 4zm0 2a5.5 5.5 0 102.392 10.454l.732-.354 2.214.738-.738-2.214.354-.732A5.5 5.5 0 0011.5 6zm-2 4a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm4 0a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/></svg>',
   system_circle:
@@ -148,6 +150,8 @@ export const allIcons = {
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 12a1 1 0 012 0 8 8 0 01-11.955 6.955l-1.338 1.338A1 1 0 015 19.586V16a1 1 0 011-1h3.586a1 1 0 01.707 1.707l-.763.763A6 6 0 0018 12zM4 12a8 8 0 0111.955-6.955l1.338-1.338A1 1 0 0119 4.414V8a1 1 0 01-1 1h-3.586a1 1 0 01-.707-1.707l.763-.763A6 6 0 006 12a1 1 0 01-2 0z" fill-rule="evenodd"/></svg>',
   system_question:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 110 18 9 9 0 010-18zm0 2a7 7 0 100 14 7 7 0 000-14zm-.004 9a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm-.087-7c2.565 0 3.814 1.075 3.814 2.575 0 .93-.665 1.713-1.25 2.022-.774.409-1.213.678-1.268 1.27l-.006.133h-2.703c0-1.421.199-1.866 1.118-2.285.782-.358 1.38-.656 1.38-1.14 0-.432-.493-.726-1.11-.726-.62 0-1.156.305-1.225.75l-.007.097H8.21C8.235 7.795 9.511 7 11.91 7z" fill-rule="evenodd"/></svg>',
+  system_radio_btn:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 3a9 9 0 110 18 9 9 0 010-18zm0 2a7 7 0 100 14 7 7 0 000-14zm0 3a4 4 0 110 8 4 4 0 010-8z"/></svg>',
   system_rotate_device:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M18.707 4.293A1 1 0 0119 5v3.586a1 1 0 01-1 1h-3.586a1 1 0 01-.707-1.707l.763-.763A6 6 0 006 12.561V16.5A1.5 1.5 0 007.5 18h9a1.5 1.5 0 001.5-1.5V13a1 1 0 012 0v4a3 3 0 01-3 3H7a3 3 0 01-3-3v-5h.021a8 8 0 0111.934-6.37l1.338-1.337a1 1 0 011.414 0zM12 11a2 2 0 011.001 3.732L13 16a1 1 0 01-2 0v-1.268A2 2 0 0112 11z"/></svg>',
   system_search:
@@ -174,6 +178,10 @@ export const allIcons = {
     '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 17a1 1 0 010 2h-6a1 1 0 010-2zm0-4a1 1 0 010 2H4a1 1 0 010-2zm0-4a1 1 0 010 2H8a1 1 0 010-2zm0-4a1 1 0 010 2H2a1 1 0 110-2z" fill-rule="evenodd"/></svg>',
   text_align_right:
     '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 17a1 1 0 010 2H2a1 1 0 010-2zm12-4a1 1 0 010 2H2a1 1 0 010-2zm-4-4a1 1 0 010 2H2a1 1 0 010-2zm6-4a1 1 0 010 2H2a1 1 0 110-2z" fill-rule="evenodd"/></svg>',
+  text_long_text:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14 17H2a1 1 0 000 2h12a1 1 0 000-2zm7-4h-6a1 1 0 000 2h6a1 1 0 000-2zm-10 0H2a1 1 0 000 2h9a1 1 0 000-2zM5 9H2a1 1 0 100 2h3a1 1 0 000-2zm13 0H9a1 1 0 100 2h9a1 1 0 000-2zm-8-4H2a1 1 0 100 2h8a1 1 0 000-2zm12 0h-8a1 1 0 000 2h8a1 1 0 000-2z"/></svg>',
+  text_short_text:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4.5 13h-2a1.5 1.5 0 000 3h2a1.5 1.5 0 000-3zm13 0h-8a1.5 1.5 0 000 3h8a1.5 1.5 0 000-3zm-8-5h-7a1.5 1.5 0 000 3h7a1.5 1.5 0 000-3zm12 0h-7a1.5 1.5 0 000 3h7a1.5 1.5 0 000-3z"/></svg>',
   time_cal:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M16 3a1 1 0 011 1v1h1a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h1V4a1 1 0 01.883-.993L8 3a1 1 0 011 1v1h2V4a1 1 0 01.883-.993L12 3a1 1 0 011 1v1h2V4a1 1 0 01.883-.993zm2 8H6v6a1 1 0 001 1h10a1 1 0 001-1v-6zM7.983 7H7a1 1 0 00-1 1v1h12V8a1 1 0 00-1-1l-.983-.001L16 7h-.017l-3.966-.001L12 7h-.017l-3.966-.001L8 7h-.017z"/></svg>',
   time_datetime:

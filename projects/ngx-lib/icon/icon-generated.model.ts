@@ -279,6 +279,13 @@ export const pepIconSystemBolt: {
   name: 'system_bolt',
   data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M10.612 19.84a.33.33 0 01-.279.16.332.332 0 01-.128-.026.362.362 0 01-.199-.402l1.25-6.568H7.333c-.103 0-.2-.05-.263-.137a.374.374 0 01-.06-.305l2-8.293A.336.336 0 019.333 4h6c.122 0 .235.07.294.185a.377.377 0 01-.012.362L12.943 9h3.723c.122 0 .235.064.294.18a.387.387 0 01-.015.37l-6.333 10.29z"/></svg>`
 };
+export const pepIconSystemBoolean: {
+  name: 'system_boolean';
+  data: string;
+} = {
+  name: 'system_boolean',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 17A5 5 0 016 7h12a5 5 0 01.217 9.995L18 17H6zm8.007-8H6a3 3 0 00-.176 5.995L6 15h8.007a4.968 4.968 0 010-6z"/></svg>`
+};
 export const pepIconSystemChat: {
   name: 'system_chat';
   data: string;
@@ -517,6 +524,13 @@ export const pepIconSystemQuestion: {
   name: 'system_question',
   data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3a9 9 0 110 18 9 9 0 010-18zm0 2a7 7 0 100 14 7 7 0 000-14zm-.004 9a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm-.087-7c2.565 0 3.814 1.075 3.814 2.575 0 .93-.665 1.713-1.25 2.022-.774.409-1.213.678-1.268 1.27l-.006.133h-2.703c0-1.421.199-1.866 1.118-2.285.782-.358 1.38-.656 1.38-1.14 0-.432-.493-.726-1.11-.726-.62 0-1.156.305-1.225.75l-.007.097H8.21C8.235 7.795 9.511 7 11.91 7z" fill-rule="evenodd"/></svg>`
 };
+export const pepIconSystemRadioBtn: {
+  name: 'system_radio_btn';
+  data: string;
+} = {
+  name: 'system_radio_btn',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 3a9 9 0 110 18 9 9 0 010-18zm0 2a7 7 0 100 14 7 7 0 000-14zm0 3a4 4 0 110 8 4 4 0 010-8z"/></svg>`
+};
 export const pepIconSystemRotateDevice: {
   name: 'system_rotate_device';
   data: string;
@@ -607,6 +621,20 @@ export const pepIconTextAlignRight: {
 } = {
   name: 'text_align_right',
   data: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 17a1 1 0 010 2H2a1 1 0 010-2zm12-4a1 1 0 010 2H2a1 1 0 010-2zm-4-4a1 1 0 010 2H2a1 1 0 010-2zm6-4a1 1 0 010 2H2a1 1 0 110-2z" fill-rule="evenodd"/></svg>`
+};
+export const pepIconTextLongText: {
+  name: 'text_long_text';
+  data: string;
+} = {
+  name: 'text_long_text',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M14 17H2a1 1 0 000 2h12a1 1 0 000-2zm7-4h-6a1 1 0 000 2h6a1 1 0 000-2zm-10 0H2a1 1 0 000 2h9a1 1 0 000-2zM5 9H2a1 1 0 100 2h3a1 1 0 000-2zm13 0H9a1 1 0 100 2h9a1 1 0 000-2zm-8-4H2a1 1 0 100 2h8a1 1 0 000-2zm12 0h-8a1 1 0 000 2h8a1 1 0 000-2z"/></svg>`
+};
+export const pepIconTextShortText: {
+  name: 'text_short_text';
+  data: string;
+} = {
+  name: 'text_short_text',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4.5 13h-2a1.5 1.5 0 000 3h2a1.5 1.5 0 000-3zm13 0h-8a1.5 1.5 0 000 3h8a1.5 1.5 0 000-3zm-8-5h-7a1.5 1.5 0 000 3h7a1.5 1.5 0 000-3zm12 0h-7a1.5 1.5 0 000 3h7a1.5 1.5 0 000-3z"/></svg>`
 };
 export const pepIconTimeCal: {
   name: 'time_cal';
@@ -719,6 +747,7 @@ export type PepIconType =
   | 'system_avatar'
   | 'system_bin'
   | 'system_bolt'
+  | 'system_boolean'
   | 'system_chat'
   | 'system_circle'
   | 'system_close'
@@ -753,6 +782,7 @@ export type PepIconType =
   | 'system_print'
   | 'system_processing'
   | 'system_question'
+  | 'system_radio_btn'
   | 'system_rotate_device'
   | 'system_search'
   | 'system_select'
@@ -766,6 +796,8 @@ export type PepIconType =
   | 'text_align_center'
   | 'text_align_left'
   | 'text_align_right'
+  | 'text_long_text'
+  | 'text_short_text'
   | 'time_cal'
   | 'time_datetime'
   | 'time_duration'
