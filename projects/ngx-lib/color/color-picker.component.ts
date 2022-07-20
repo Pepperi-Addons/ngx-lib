@@ -256,8 +256,8 @@ export class PepColorPickerComponent implements OnInit {
         });
     }
 
-    onColorValueChange(event): void {
-        this.convertValueStringToColor(event.value);
+    onColorValueChange(color): void {
+        this.convertValueStringToColor(color);
     }
 
     onSave(event): void {
