@@ -102,6 +102,9 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._formattedValue;
     }
 
+    @Input() minFractionDigits: number = NaN;
+    @Input() maxFractionDigits: number = NaN;
+
     /**
      * The accessory sign.
      *
@@ -239,11 +242,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
             if (this.type === 'currency') {
-                this._formattedValue = this.utilitiesService.formatCurrency(value, this.accessory);
+                this._formattedValue = this.utilitiesService.formatCurrency(value, this.accessory, this.minFractionDigits, this.maxFractionDigits);
             } else if (this.type === 'percentage') {
-                this._formattedValue = this.utilitiesService.formatPercent(value);
+                this._formattedValue = this.utilitiesService.formatPercent(value, this.minFractionDigits, this.maxFractionDigits);
             } else if (this.type === 'real') {
-                this._formattedValue = this.utilitiesService.formatDecimal(value);
+                this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
             } else if (this.type === 'int') {
                 this._formattedValue = this.utilitiesService.formatNumber(value);
             } else if (this.type === 'duration') {

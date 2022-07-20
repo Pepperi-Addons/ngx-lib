@@ -164,7 +164,7 @@ export class PepUtilitiesService {
     }
 
     // formatPercent(value: any, digitsInfo = '1.0-2') {
-    formatPercent(value: any) {
+    formatPercent(value: any, minFractionDigits = 0, maxFractionDigits = 2) {
         const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
@@ -173,21 +173,21 @@ export class PepUtilitiesService {
             // return formatPercent(number / 100, this.culture, digitsInfo);
             return new Intl.NumberFormat(this.culture, { 
                 style: 'percent',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
+                minimumFractionDigits: minFractionDigits || 0,
+                maximumFractionDigits: maxFractionDigits || 2,
             }).format(number / 100);
         }
     }
 
     // formatCurrency(value: any, currencySign = '', digitsInfo = '1.2-2') {
-    formatCurrency(value: any, currencySign = '') {
+    formatCurrency(value: any, currencySign = '', minFractionDigits = 0, maxFractionDigits = 2) {
         let res = '';
         const number = this.coerceNumberProperty(value);
         const styleOptions = { 
             // style: 'currency',
             // currencySign: currencySign,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2,
+            minimumFractionDigits: minFractionDigits || 0,
+            maximumFractionDigits: maxFractionDigits || 2,
         };
 
         if (number === 0) {
@@ -204,7 +204,7 @@ export class PepUtilitiesService {
     }
     
     // formatDecimal(value: any, digitsInfo = '1.2-2') {
-    formatDecimal(value: any) {
+    formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2) {
         const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
@@ -212,8 +212,8 @@ export class PepUtilitiesService {
         } else {
             // return formatNumber(value, this.culture, digitsInfo);
             return new Intl.NumberFormat(this.culture, { 
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
+                minimumFractionDigits: minFractionDigits || 2,
+                maximumFractionDigits: maxFractionDigits || 2,
             }).format(number)
         }
     }
