@@ -265,6 +265,20 @@ export const pepIconSystemAvatar: {
   name: 'system_avatar',
   data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M5.873 20C5.317 18.835 5 17.562 5 16.333c0-2.407 1.215-4.078 3.066-4.997C7.706 10.393 7.5 9.37 7.5 8.4 7.5 5.362 9.515 4 12 4s4.5 1.362 4.5 4.4c0 .97-.205 1.993-.566 2.936 1.85.919 3.066 2.59 3.066 4.997 0 1.23-.317 2.502-.873 3.667h-1.244c-1.16 0-1.16-.629-.999-.966.392-.816.616-1.705.616-2.534 0-1.482-.716-2.44-1.821-2.974C13.93 14.42 13.004 15 12 15c-1.004 0-1.93-.58-2.679-1.474C8.216 14.06 7.5 15.018 7.5 16.5c0 .827.223 1.712.612 2.525.163.34.163.975-.966.975H5.873zM12 12.5c1.105 0 2-2.2 2-3.857S13.105 6.5 12 6.5s-2 .486-2 2.143c0 1.657.895 3.857 2 3.857z"/></svg>`
 };
+export const pepIconSystemBellOn: {
+  name: 'system_bell_on';
+  data: string;
+} = {
+  name: 'system_bell_on',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path fill="#000" fill-rule="nonzero" d="M12 2a6.004 6.004 0 015.982 5.538l.013.224L18 8v3.667l2.8 3.733a1 1 0 01.167.346l.025.126L21 16l-.001 2a1 1 0 01-.884.992L20 19H15a3 3 0 01-5.995.176L9 19H4a1 1 0 01-.993-.883L3 18v-2a1 1 0 01.13-.492l.07-.108L6 11.667V7.979l.006-.239A6 6 0 0112 2zm0 2C9.856 4 8.095 5.691 8.004 7.804L8 8v4a1 1 0 01-.2.6L5 16.333V17h13.999l.001-.667-2.8-3.733a1 1 0 01-.192-.471L16 12V8.021l-.004-.195A4 4 0 0012 4z"/><circle cx="19" cy="5" r="5" fill="#E62600"/></g></svg>`
+};
+export const pepIconSystemBell: {
+  name: 'system_bell';
+  data: string;
+} = {
+  name: 'system_bell',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4 19a1 1 0 01-1-1v-2a1 1 0 01.2-.6L6 11.667V7.979l.006-.239a6 6 0 0111.99.022L18 8v3.667l2.8 3.733a1 1 0 01.192.472L21 16l-.001 2a1 1 0 01-1 .999H15a3 3 0 01-6 0zm8-15a4 4 0 013.996 3.826L16 8.02V12l.008.129a1 1 0 00.192.471l2.8 3.733-.001.667H5v-.667L7.8 12.6A1 1 0 008 12V8l.004-.196C8.094 5.691 9.856 4 12 4z"/></svg>`
+};
 export const pepIconSystemBin: {
   name: 'system_bin';
   data: string;
@@ -745,6 +759,8 @@ export type PepIconType =
   | 'shopping_paper'
   | 'system_attach'
   | 'system_avatar'
+  | 'system_bell_on'
+  | 'system_bell'
   | 'system_bin'
   | 'system_bolt'
   | 'system_boolean'

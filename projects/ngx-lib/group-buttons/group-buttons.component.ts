@@ -54,7 +54,7 @@ export class PepGroupButtonsComponent implements OnDestroy {
         this.selectedButtonKey = unselect ? '' : button?.key;
         
         const buttonClick = {
-            source: unselect ? {key: 'none'} : button, 
+            source: unselect ? null : button, 
             event,
         };
 
