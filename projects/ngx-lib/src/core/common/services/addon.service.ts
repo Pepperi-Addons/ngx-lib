@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PepSessionService } from './session.service';
 import { PepFileService } from './file.service';
@@ -24,7 +24,7 @@ export class PepAddonService {
     private readonly ADDON_API_ASYNC_RELATIVE_PATH = `${this.ADDON_API_RELATIVE_PATH}/async`;
 
     private get devServer() {
-        return this.route.snapshot.queryParamMap.get('devServer') === 'true';
+        return this.route ? this.route.snapshot.queryParamMap.get('devServer') === 'true' : false;
     }
 
     constructor(
@@ -33,7 +33,7 @@ export class PepAddonService {
         private loaderService: PepLoaderService,
         public translateService: PepTranslateService,
         public fileService: PepFileService,
-        private route: ActivatedRoute,
+        @Optional() private route: ActivatedRoute,
     ) {
         //
     }
