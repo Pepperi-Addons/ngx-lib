@@ -18,9 +18,9 @@
 // -----------------------------------------------------
 .mat-form-title {
     margin: 0;
-    padding: variables.$spacing-2xs 0;
+    // padding: variables.$spacing-2xs 0;
     height: variables.$form-field-title-height;
-    line-height: 1rem;
+    // line-height: 1rem;
     // display: block;
     display: grid;
     grid-template-columns: auto 1fr auto;
