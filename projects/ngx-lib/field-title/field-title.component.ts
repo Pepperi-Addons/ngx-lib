@@ -19,4 +19,6 @@ export class PepFieldTitleComponent {
 
     @Input() showTitle = true;
     @Input() inputLength = 0;
+    @Input() fontBodyType: '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' = 'xs';
+
 }
