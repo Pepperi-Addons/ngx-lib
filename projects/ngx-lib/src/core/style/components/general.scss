@@ -18,12 +18,13 @@
 // -----------------------------------------------------
 .mat-form-title {
     margin: 0;
-    // padding: variables.$spacing-2xs 0;
-    height: variables.$form-field-title-height;
-    // line-height: 1rem;
-    // display: block;
     display: grid;
     grid-template-columns: auto 1fr auto;
+    height: variables.$form-field-title-height;
+    align-content: center;
+    // padding: variables.$spacing-2xs 0;
+    // line-height: 1rem;
+    // display: block;
 
     .mat-icon {
         // line-height: 0.875rem;
