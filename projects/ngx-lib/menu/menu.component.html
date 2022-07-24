@@ -20,13 +20,13 @@
         <ng-template #menuTemplate>
             <button mat-button class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
                 [ngClass]="{ 'icon-button': !displayText || screenSize > PepScreenSizeType.SM, 'pep-button-limited-width': screenSize < PepScreenSizeType.XS, disabled: disabled }"
-                pepRtlDirection pepMenuBlur (menuClick)="onMenuClicked($event)" [disabled]="disabled"
-                [matMenuTriggerFor]="menu.childMenu">
+                pepRtlDirection pepMenuBlur [matMenuTriggerFor]="menu.childMenu" [disabled]="disabled"
+                (menuClick)="onMenuClicked($event)" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()">
                 <ng-container *ngTemplateOutlet="triggerTemplate">
                 </ng-container>
             </button>
             <pep-menu-item #menu [type]="type" [items]="items" [selectedItem]="selectedItem" [xPosition]="xPosition"
-                (menuItemClick)="onMenuItemClicked($event)"></pep-menu-item>
+                (menuItemClick)="onMenuItemClicked($event)" ></pep-menu-item>
         </ng-template>
         <ng-template #buttonTemplate>
             <button mat-button class="pep-button {{ sizeType }} {{ styleType }} {{ classNames }}"
