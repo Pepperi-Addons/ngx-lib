@@ -46,13 +46,12 @@ import { PepListModule } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
 import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
-
 import { PepFormModule } from '@pepperi-addons/ngx-lib/form';
-
 import { PepSmartFiltersModule } from '@pepperi-addons/ngx-lib/smart-filters';
 import { PepQueryBuilderModule } from '@pepperi-addons/ngx-lib/query-builder';
 import { PepDraggableItemsModule } from '@pepperi-addons/ngx-lib/draggable-items';
 import { PepProfileDataViewsListModule } from '@pepperi-addons/ngx-lib/profile-data-views-list';
+import { PepChipsModule } from '@pepperi-addons/ngx-lib/chips';
 
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -165,6 +164,7 @@ const pepperiComponentsModules = [
     PepQueryBuilderModule,
     PepDraggableItemsModule,
     PepProfileDataViewsListModule,
+    PepChipsModule,
     PepFormModule
 ];
 

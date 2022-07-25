@@ -1,0 +1,39 @@
+<mat-form-field class="pep-chips-container" appearance="outline">
+  
+  <mat-chip-list #chipList aria-label="Fruit selection"
+    [ngClass]="{'mat-chip-list-stacked': orientation === 'vertical'}">
+    <mat-chip *ngFor="let chip of chips" class="pep-chips regular" [disabled]="chip.disabled" [selected]="chip.selected"
+      [removable]="chip.removable" [selectable]="chip.selectable" (removed)="removeChip(chip)"
+      (selectionChange)="onSelectionChanged($event.selected, chip)">
+     
+      <span class="body-xs ellipsis pull-left flip" title="{{chip.value}}">{{chip.value}}</span>      
+      
+      <mat-icon matChipRemove>
+        <pep-icon name="system_close"></pep-icon>
+      </mat-icon>
+    </mat-chip>
+
+    <!-- <mat-chip *ngFor="let chip of chips" class="pep-button regular"
+      [disabled]="chip.disabled" [selected]="chip.selected" [removable]="chip.removable" [selectable]="chip.selectable"
+      (removed)="removeChip(chip)" (selectionChange)="onSelectionChanged($event.selected, chip)">
+
+      <span class="body-xs ellipsis pull-left flip" title="{{chip.value}}">{{chip.value}}</span>      
+
+      <pep-button matChipRemove styleType="weak" styleStateType="system" sizeType="xs" 
+         iconName="system_close" iconPosition="end" [visible]="true"
+        ></pep-button>  
+
+    </mat-chip> -->
+
+
+
+    <input *ngIf="type === 'input'" matInput [placeholder]="placeholder" [matChipInputFor]="chipList"
+      [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addChip($event)">
+    <!-- <pep-select [options]="selectList" [emptyOption]="false" [renderTitle]="false" (valueChanged)="onChipSelected($event)"></pep-select> -->
+
+    <pep-menu *ngIf="type === 'select'" [items]="selectList" [sizeType]="'xs'" [text]="placeholder"
+      [iconName]="'arrow_down'" (menuItemClick)="onChipSelected($event.source)">
+    </pep-menu>
+
+  </mat-chip-list>
+</mat-form-field>

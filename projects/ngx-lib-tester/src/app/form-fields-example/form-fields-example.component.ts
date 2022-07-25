@@ -14,6 +14,7 @@ import {
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
 import { PepSnackBarData } from 'projects/ngx-lib/snack-bar';
+//import { } from '@pepperi-addons/ngx-lib/chips';
 
 @Component({
     templateUrl: './form-fields-example.component.html',
@@ -38,6 +39,20 @@ export class FormFieldsExampleComponent implements OnInit {
 
     textboxFormGroup;
     formattedValue = null;
+    chips = [
+        {
+            value: 'Chair',
+            disabled: true
+        },
+        {
+            value: 'Table',
+            selectable: false
+        },
+        {
+            value: 'Bench',
+            selected: true
+        }
+    ]
 
     constructor(
         private snackBarService: PepSnackBarService,

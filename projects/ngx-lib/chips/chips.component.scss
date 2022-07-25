@@ -1,0 +1,92 @@
+@use '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/mixins';
+
+.pep-chips-container {
+    
+}
+
+
+::ng-deep.mat-form-field {
+    .mat-form-field-flex {
+        padding: 0 !important;
+    }
+}
+
+::ng-deep.mat-chip-list {
+    .mat-chip-list-wrapper {
+        gap: variables.$spacing-sm;
+        margin: variables.$spacing-sm;
+       
+        .mat-chip {    
+            @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);        
+            margin: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            height: variables.$lh-md;
+            min-height: unset;
+            z-index: variables.$z-index-lowest;
+
+            .mat-icon {
+                height: variables.$fs-md;
+                width: variables.$fs-md;
+                font-size: variables.$fs-md;
+            }
+        }
+
+        .mat-chip-input {
+            @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
+            margin: 0;
+        }
+    }
+
+    &.mat-chip-list-stacked {
+        .mat-chip {
+            justify-content: space-between;
+        }
+    }
+   
+    
+} 
+
+/*
+.close-button {
+    border-radius: 50%;
+} 
+
+
+
+.pep-chip {
+    z-index: variables.$z-index-lowest;
+    background: rgb(255, 255, 255);
+    border-radius: 12px;
+    border: 1px solid rgb(153, 153, 153);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.04),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+    height: 24px;   
+    line-height: 16px;
+
+    color: rgb(26, 26, 26);
+font-family: Inter-Regular;
+font-size: 12px;
+font-weight: normal;
+height: 16px;
+letter-spacing: 0.11px;
+line-height: 16px;
+} */
+
+/*
+::ng-deep.mat-chip-list {
+    display: block;
+
+    .mat-chip-list-wrapper {
+        margin: 0.25rem 0;
+        height: 100%;
+
+        .mat-chip {
+            max-width: 125px;
+            display: flex;
+            margin-inline-end: 0.25rem;
+        }
+    }
+} */

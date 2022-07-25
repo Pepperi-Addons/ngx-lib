@@ -4,21 +4,31 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatChipsModule, MAT_CHIPS_DEFAULT_OPTIONS } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { COMMA, ENTER, TAB, SEMICOLON } from '@angular/cdk/keycodes';
 
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-import {
+import { 
     PepIconModule,
     PepIconRegistry,
     pepIconSystemBolt,
+    pepIconSystemClose
 } from '@pepperi-addons/ngx-lib/icon';
-import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 
-import { PepChipComponent } from './chip.component';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu'; 
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { PepChipsComponent } from './chips.component';
+
+const pepIcons = [
+    pepIconSystemBolt,
+    pepIconSystemClose
+];
+
 
 @NgModule({
-    declarations: [PepChipComponent],
+    declarations: [PepChipsComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -27,15 +37,24 @@ import { PepChipComponent } from './chip.component';
         MatFormFieldModule,
         MatChipsModule,
         MatIconModule,
-
         PepNgxLibModule,
         PepIconModule,
         PepFieldTitleModule,
+        PepMenuModule,
+        PepButtonModule
     ],
-    exports: [PepChipComponent]    
+    exports: [PepChipsComponent],
+    providers: [
+        {
+          provide: MAT_CHIPS_DEFAULT_OPTIONS,
+          useValue: {
+            separatorKeyCodes: [ENTER, COMMA]
+          }
+        }
+      ]    
 })
-export class PepChipModule {
+export class PepChipsModule {
     constructor(private pepIconRegistry: PepIconRegistry) {
-        this.pepIconRegistry.registerIcons([pepIconSystemBolt]);
+        this.pepIconRegistry.registerIcons(pepIcons);
     }
 }

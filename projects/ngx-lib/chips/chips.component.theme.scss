@@ -1,0 +1,23 @@
+@use '../src/core/style/abstracts/mixins';
+
+
+::ng-deep.mat-chip-list {
+    .mat-chip-list-wrapper {
+        .mat-chip {
+           @include mixins.state-regular-default(true);            
+        
+            &.mat-chip-selected {
+                color: unset !important;
+                background-color: unset !important;
+                @include mixins.state-regular-active(true);
+            }
+            &:focus {
+                /*@include mixins.state-regular-focus(true);*/
+                @include mixins.focus(true);
+            }
+            &:hover {
+                @include mixins.state-regular-hover(true);
+            } 
+        }
+    }
+}
