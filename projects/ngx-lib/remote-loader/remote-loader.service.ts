@@ -30,7 +30,7 @@ export class PepRemoteLoaderService {
         }
     }
 
-    private getBlockLoaderDataUrl(name: string, blockType: PepBlockDataType = 'AddonBlock', pagesDevServer = ''): string {
+    private getBlockLoaderDataUrl(name: string, blockType: PepBlockDataType = 'AddonBlock', addonUUID = '', pagesDevServer = ''): string {
         const fileName = 'addon_blocks';
         const pagesAddonUuid = this.addonService.getPagesAddonUUID();
         let pagesBaseUrl;
@@ -43,14 +43,13 @@ export class PepRemoteLoaderService {
             pagesBaseUrl = `${baseUrl}/addons/api/${pagesAddonUuid}/${fileName}`;
         }
 
-        const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}&blockType=${blockType}`;
+        const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}&blockType=${blockType}&addonUUID=${addonUUID}`;
         return url;
     }
 
-    
-    async getBlockRemoteLoaderOptions(name: string, blockType: PepBlockDataType = 'AddonBlock', blockRemoteEntry = '', pagesDevServer = ''): Promise<PepRemoteLoaderOptions> {
+    async getBlockRemoteLoaderOptions(name: string, blockType: PepBlockDataType = 'AddonBlock', addonUUID = '', blockRemoteEntry = '', pagesDevServer = ''): Promise<PepRemoteLoaderOptions> {
         return new Promise((resolve, reject) => {
-            const blockLoaderDataUrl = this.getBlockLoaderDataUrl(name, blockType, pagesDevServer);
+            const blockLoaderDataUrl = this.getBlockLoaderDataUrl(name, blockType, addonUUID, pagesDevServer);
             firstValueFrom(this.httpService.getHttpCall(blockLoaderDataUrl)).then((data: IBlockLoaderData) => {
                 resolve(this.getRemoteLoaderOptions(data, blockRemoteEntry));
             }).catch(err => {
