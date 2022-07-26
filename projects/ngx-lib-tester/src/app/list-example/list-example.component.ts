@@ -48,7 +48,7 @@ import {
 } from '@pepperi-addons/ngx-lib/smart-filters';
 import { FakeData } from './fake-data';
 import { PepSideBarComponent } from '@pepperi-addons/ngx-lib/side-bar';
-import { createSmartFilter, createSmartFilterField } from 'projects/ngx-lib/smart-filters/common/model/creator';
+import { createSmartFilter, createSmartFilterField } from '@pepperi-addons/ngx-lib/smart-filters';
 
 
 @Component({

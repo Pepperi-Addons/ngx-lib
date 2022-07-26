@@ -13,13 +13,15 @@ import {
 } from '@angular/core';
 import { COMMA, ENTER, TAB, SEMICOLON } from '@angular/cdk/keycodes';
 import { MatChipInputEvent, MatChipSelectionChange } from '@angular/material/chips';
-import { IPepChip, PepChipsOrientation, PepChipsInputType } from './chips.model';
+import { TranslateService } from '@ngx-translate/core';
+import { IPepChip, PepChipsOrientationType, PepChipsInputType } from './chips.model';
 import { RouteConfigLoadStart } from '@angular/router';
 import {
     PepStyleType,
     PepStyleStateType,
     PepSizeType,
 } from '@pepperi-addons/ngx-lib';
+import { PepChipsService } from './chips.service';
 
 export interface Fruit {
     name: string;
@@ -29,79 +31,60 @@ export interface Fruit {
     selector: 'pep-chips',
     templateUrl: './chips.component.html',
     styleUrls: ['./chips.component.scss', './chips.component.theme.scss'],
-
+    providers: [PepChipsService]
 })
 export class PepChipsComponent implements OnInit, OnDestroy {
-    _chips: IPepChip[] = [];
     @Input()
-    set chips(list: IPepChip[]) {
-        this.setChips(list);
+    set chips(chips: IPepChip[]) {
+        this.chipsService.initData(chips);
     }
     get chips() {
-        return this._chips;
+        return this.chipsService.chips;
     }
 
     @Input() type: PepChipsInputType = 'input';
-    @Input() orientation: PepChipsOrientation = 'horizontal';
+    @Input() orientation: PepChipsOrientationType = 'horizontal'; 
+    @Input() multiSelect = false;
+    @Input() placeholder = '';
 
-    /**
-    * The style of the button.
-    *
-    * @type {PepStyleType}
-    * @memberof PepButtonComponent
-    */
-    @Input() styleType: PepStyleType = 'regular';
+    @Output() fieldClick = new EventEmitter<void>();
 
-    /**
-     * The size of the button.
-     *
-     * @type {PepSizeType}
-     * @memberof PepButtonComponent
-     */
-    @Input() sizeType: PepSizeType = 'xs';
-    @Input() placeholder = 'New chip';
-   
-    constructor() {
-
-    }
-
-    selectList: any[] = [{key: 'sofa', text: 'Sofa'}, {key: 'chair', text: 'Chair'}, {key: 'table', text: 'Table'}]
-    ngOnInit(): void {
+    constructor(public chipsService: PepChipsService, private _translate: TranslateService) {
         //
     }
 
-    setChips(list: IPepChip[]) {
-        list.forEach(chip => {
-            this._chips.push({
-                value: chip.value,
-                disabled: chip.disabled !== undefined ? chip.disabled : false,
-                selected: chip.selected !== undefined ? chip.selected : false,
-                removable: chip.removable !== undefined ? chip.removable : true,
-                selectable: chip.selectable !== undefined ? chip.selectable : true
-            })
-        });
-    } 
+    //selectList: any[] = [{ key: 'sofa', text: 'Sofa' }, { key: 'chair', text: 'Chair' }, { key: 'table', text: 'Table' }]
 
-    addChip(event: MatChipInputEvent): void {
+    ngOnInit(): void {        
+        this._translate.get("CHIPS.ADD_CHIP").pipe(this.chipsService.destroyer).subscribe((text: string) => this.placeholder = text);
+    }  
+
+    addChipsToList(chips: IPepChip[]) {
+        chips.forEach(chip => this.chipsService.addChip(chip));
+    }   
+
+    onChipAdded(event: MatChipInputEvent): void {
         console.log('add', event);
         const value = (event.value || '').trim();
 
-        // Add our fruit
         if (value) {
-            this.chips.push({
+            this.chipsService.addChip({
+                value: value
+            });
+            /*this.chipsService.chips = [{
                 value: value,
                 disabled: false,
                 selected: false,
                 removable: true,
                 selectable: true
-            });
-        }
+            }];*/
 
-        // Clear the input value
-        event.chipInput!.clear();
+            // clear the input value
+            event.chipInput!.clear();
+        }
     }
 
-    removeChip(chip: IPepChip): void {
+    onChipRemoved(chip: IPepChip): void {
         console.log('remove', chip);
         const index = this.chips.indexOf(chip);
 
@@ -116,6 +99,11 @@ export class PepChipsComponent implements OnInit, OnDestroy {
         chip.selected = isSelected;
     }
 
+    onChipsSelectClicked() {        
+        this.fieldClick.emit();
+    }
+
+    /*
     onChipSelected(newChip) {
         console.log('onChipSelected', newChip);
         const index = this._chips.findIndex(chip => chip.value === newChip.text);
@@ -129,9 +117,9 @@ export class PepChipsComponent implements OnInit, OnDestroy {
             })
         }
         
-    }
+    } */
 
     ngOnDestroy(): void {
-
+        this.chipsService.destroy();
     }
 }

@@ -109,7 +109,10 @@
                         (elementClicked)="elementClicked($event)">
                     </pep-images-filmstrip>
 
-                    <pep-chips [chips]="chips" ></pep-chips>
+                    <pep-chips #chipsComp [chips]="chips" (itemClick)="onChipSelectClicked()"></pep-chips>
+                    <pep-button [value]="'add chips'" [sizeType]="'sm'" [styleType]="'regular'"
+                    (click)="addChips()">
+                </pep-button>
                     
                 </div>
 

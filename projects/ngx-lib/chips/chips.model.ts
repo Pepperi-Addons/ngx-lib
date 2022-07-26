@@ -1,4 +1,4 @@
-export type PepChipsOrientation = 'vertical'
+export type PepChipsOrientationType = 'vertical'
 | 'horizontal';
 
 export interface IPepChip {

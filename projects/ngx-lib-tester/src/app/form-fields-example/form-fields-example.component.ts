@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { PepSnackBarService } from '@pepperi-addons/ngx-lib/snack-bar';
 import {
@@ -13,7 +13,8 @@ import {
     PepMenuItem,
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
-import { PepSnackBarData } from 'projects/ngx-lib/snack-bar';
+import { PepSnackBarData } from '@pepperi-addons/ngx-lib/snack-bar';
+import { PepChipsComponent } from '@pepperi-addons/ngx-lib/chips';
 //import { } from '@pepperi-addons/ngx-lib/chips';
 
 @Component({
@@ -21,6 +22,8 @@ import { PepSnackBarData } from 'projects/ngx-lib/snack-bar';
     styleUrls: ['./form-fields-example.component.scss'],
 })
 export class FormFieldsExampleComponent implements OnInit {
+    @ViewChild('chipsComp') chipsComp: PepChipsComponent;
+
     title = 'client-side';
     minDateValue: number;
     maxDateValue: number;
@@ -39,10 +42,10 @@ export class FormFieldsExampleComponent implements OnInit {
 
     textboxFormGroup;
     formattedValue = null;
-    chips = [
+    chips: any[] = [
         {
             value: 'Chair',
-            disabled: true
+            removable: false
         },
         {
             value: 'Table',
@@ -129,5 +132,20 @@ export class FormFieldsExampleComponent implements OnInit {
         }
 
         this.snackBarService.openDefaultSnackBar(data);
+    }
+
+    onChipSelectClicked() {
+        console.log('onChipSelectClicked');
+        //open any select component
+    }
+
+    addChips() {
+        this.chipsComp.addChipsToList([{
+            value: 'monkey'
+        },
+        {
+            value: 'donkey'
+        }])
+        
     }
 }

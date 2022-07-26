@@ -11,6 +11,9 @@
         "TRUE": "True",
         "FALSE": "False"
     },
+    "CHIPS": {
+        "ADD_CHIP": "Add Chip"
+    },
     "IMAGE": {
         "NO_IMAGE": "No image",
         "CLICK_TO_ENLARGE": "Click to enlarge"

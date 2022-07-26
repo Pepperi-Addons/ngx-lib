@@ -17,7 +17,6 @@ import {
 } from '@pepperi-addons/ngx-lib/icon';
 
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
-import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu'; 
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { PepChipsComponent } from './chips.component';
 
@@ -39,8 +38,7 @@ const pepIcons = [
         MatIconModule,
         PepNgxLibModule,
         PepIconModule,
-        PepFieldTitleModule,
-        PepMenuModule,
+        PepFieldTitleModule,        
         PepButtonModule
     ],
     exports: [PepChipsComponent],
