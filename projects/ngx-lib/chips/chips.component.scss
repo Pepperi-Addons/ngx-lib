@@ -1,67 +1,72 @@
 @use '../src/core/style/abstracts/variables';
 @use '../src/core/style/abstracts/mixins';
 
-.pep-chips-container {
-    
-}
+.pep-chips-container {   
+    ::ng-deep.mat-chip-list {
+        width: 100%;
 
+        .mat-chip-list-wrapper {
+            gap: variables.$spacing-sm;
+            margin: variables.$spacing-sm;       
+        
+            .pep-chips {    
+                @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-xs);        
+                margin: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                height: variables.$lh-md;
+                min-height: unset;
+                z-index: variables.$z-index-lowest;
+                gap: variables.$spacing-xs;
+                max-width: 100%;
 
-::ng-deep.mat-form-field {
-    .mat-form-field-flex {
-        padding: 0 !important;
-    }
-}
+                .mat-chip-remove {
+                    height: unset;
+                    width: unset;
+                    margin: 0;     
 
-::ng-deep.mat-chip-list {
-    width: 100%;
+                    .pep-button {
+                        flex-shrink: 0;
+                        border-radius: 50%;
+                        min-width: unset;
+                        height: variables.$spacing-lg;    
+                        width: variables.$spacing-lg;    
 
-    .mat-chip-list-wrapper {
-        gap: variables.$spacing-sm;
-        margin: variables.$spacing-sm;       
-       
-        .mat-chip {    
-            @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-xs);        
-            margin: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-            height: variables.$lh-md;
-            min-height: unset;
-            z-index: variables.$z-index-lowest;
-            gap: variables.$spacing-xs;
-            max-width: 100%;
+                        .mat-icon {
+                            height: variables.$spacing-md;  
+                            width: variables.$spacing-md;                                      
+                            font-size: variables.$fs-md;
+                            margin: unset;                            
+                        }
+                    }            
+                }
+            
+            }
 
-            .mat-icon {
-                height: variables.$fs-md;
-                width: variables.$fs-md;
-                font-size: variables.$fs-md;
-                margin: unset;
-                flex-shrink: 0;
+            .mat-chip-input {
+                @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
+                margin: 0;
+            }
+
+            .chips-select {
+                @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
+                z-index: variables.$z-index-lowest;
             }
         }
 
-        .mat-chip-input {
-            @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
-            margin: 0;
-        }
+        &.mat-chip-list-stacked {       
 
-        .chips-select {
-            @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
-            z-index: variables.$z-index-lowest;
-        }
-    }
+            .pep-chips {
+                justify-content: space-between;
+                width: fit-content !important;           
+            }
 
-    &.mat-chip-list-stacked {       
-
-        .mat-chip {
-            justify-content: space-between;
-            width: fit-content !important;           
+            .mat-chip-input {
+                flex: unset;
+                width: 100%;
+            }
         }
-
-        .mat-chip-input {
-            flex: unset;
-            width: 100%;
-        }
-    }
-   
     
-} 
+        
+    } 
+}

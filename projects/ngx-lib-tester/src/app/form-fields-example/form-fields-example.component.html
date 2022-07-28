@@ -21,7 +21,7 @@
                         [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
                          [formattedValue]="formattedValue" [value]="'Pepperi Textbox'"(valueChange)="onValueChanged($event)">
                     </pep-textbox>
-                    <pep-textbox [key]="'float'" [label]="'Pepperi float'" [type]="'real'" [xAlignment]="'left'"
+                    <pep-textbox [key]="'float'" [label]="'Pepperi float'" styleType="regular" [type]="'real'" [xAlignment]="'left'"
                         [value]="'9399371'" [mandatory]="true" [disabled]="false">
                     </pep-textbox>
                     <pep-textbox [key]="'currency'" [label]="'Pepperi currency'" [type]="'currency'"
@@ -115,7 +115,7 @@
 
                 <div class="child4 child-container">
                     <!-- Quantity Selector -->
-                    <pep-quantity-selector [key]="'qs'" [label]="'Pepperi Quantity Selector 1'" [value]="'500.50'"
+                    <pep-quantity-selector [key]="'qs'" [label]="'Pepperi Quantity Selector 1'" styleType="strong" [value]="'500.50'"
                         [allowDecimal]="true" [xAlignment]="'right'" (elementClicked)="elementClicked($event)">
                     </pep-quantity-selector>
 

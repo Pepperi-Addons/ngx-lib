@@ -55,7 +55,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
     * @type {PepStyleType}
     * @memberof PepButtonComponent
     */
-    @Input() styleType: PepStyleType = 'strong';
+    @Input() styleType: PepStyleType = 'regular';
 
     /**
     * Whether chip multi select allowed.
@@ -77,7 +77,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
      * @type {EventEmitter<void>}
      * @memberof PepButtonComponent
      */
-    @Output() fieldClick = new EventEmitter<void>();
+    @Output() fieldClick: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(public chipsService: PepChipsService, private _translate: TranslateService) {
         //

@@ -1,71 +1,57 @@
 @use '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/functions';
 
+@mixin pep-chips-states ($style: regular){       
+    @include mixins.pep-state-default($style, null, true);
+    
+    &:hover {
+        @include mixins.pep-state-hover($style, null, true);
+    }     
+    &.mat-chip-selected {                   
+        @include mixins.pep-state-active($style, null, true);
+        @if $style != strong {
+            color:functions.get-pep-color(color-text, color-main) !important;   
+        } 
+    }
+    &:focus {                
+        @include mixins.pep-state-focus($style, null, true);
+       
+    }
+    
+    @if $style == strong {
+        .pep-button {
+            @include mixins.pep-button-states(strong);
+        }
+    }
+                    
+}
 
-::ng-deep.mat-chip-list {
-    .mat-chip-list-wrapper {
-        .mat-chip {
-            &.mat-chip-selected {
-                color: unset !important;
-                background-color: unset !important;
+.pep-chips-container {
+    ::ng-deep.mat-chip-list {
+        /* override material props*/
+        .mat-chip.mat-standard-chip {
+            &::after {
+                background: unset;
             }
-
-            &.regular {
-                @include mixins.state-regular-default(true);   
-                                 
-                &:hover {
-                    @include mixins.state-regular-hover(true);
-                } 
-                &.mat-chip-selected {                   
-                    @include mixins.state-regular-active(true);
-                }
-                &:focus {                
-                    @include mixins.state-regular-focus(true);
-                } 
+            &:focus::after {
+                opacity: unset;
             }
+        }
 
-            &.weak {
-                @include mixins.state-weak-default();            
-        
-                &:hover {
-                    @include mixins.state-weak-hover();
-                } 
-                &.mat-chip-selected {                   
-                    @include mixins.state-weak-active();
+        .mat-chip-list-wrapper {
+            .pep-chips {               
+                &.regular {
+                    @include pep-chips-states(regular);                   
                 }
-                &:focus {                
-                    @include mixins.state-weak-focus();
+                &.weak {
+                    @include pep-chips-states(weak);
                 }
-                
-            }
-
-            &.weak-invert {
-                @include mixins.state-weak-invert-default();            
-        
-                &:hover {
-                    @include mixins.state-weak-invert-hover();
-                } 
-                &.mat-chip-selected {                   
-                    @include mixins.state-weak-invert-active();
+                &.weak-invert {
+                    @include pep-chips-states(weak-invert);
                 }
-                &:focus {                
-                    @include mixins.state-weak-invert-focus();
+                &.strong {
+                    @include pep-chips-states(strong);               
                 }
-                
-            }
-
-            &.strong {
-                @include mixins.state-strong-default();            
-        
-                &:hover {
-                    @include mixins.state-strong-hover();
-                } 
-                &.mat-chip-selected {                            
-                    @include mixins.state-strong-active();
-                }
-                &:focus {                
-                    @include mixins.state-strong-focus();
-                }
-               
             }
         }
     }
