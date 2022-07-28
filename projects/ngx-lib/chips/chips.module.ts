@@ -30,8 +30,7 @@ const pepIcons = [
     declarations: [PepChipsComponent],
     imports: [
         CommonModule,
-        ReactiveFormsModule,
-        // Material modules
+        ReactiveFormsModule,        
         MatCommonModule,
         MatFormFieldModule,
         MatChipsModule,

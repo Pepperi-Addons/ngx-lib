@@ -19,7 +19,7 @@ export default {
     ],
     argTypes: {        
         type: {
-            description: 'Data input selection type',
+            description: 'Data \'Add new chip\' selection type. When \'select\' is choosen, the new data will be sent from external component',
             options: [
                 'input', 
                 'select'
@@ -33,7 +33,7 @@ export default {
             },
         },
         orientation: {
-            description: 'Chips orientation type',
+            description: 'Chips layout orientation type',
             options: [
                 'horizontal', 
                 'vertical'
@@ -45,6 +45,22 @@ export default {
                 },
                 defaultValue: { summary: 'horizontal' },
             },
+        },
+        styleType: {
+            description: 'Style type',
+            options: [
+                'weak', 
+                'weak-invert',
+                'regular',
+                'strong'
+            ],        
+            control: { type: 'radio' },    
+            table: {
+                type: {
+                    summary: 'weak | weak-invert | regular | strong',                    
+                },
+                defaultValue: { summary: 'regular' },
+            }
         },
         multiSelect: {
             description: 'Whether chips multi select allowed'
@@ -59,7 +75,7 @@ export default {
         },
         fieldClick: {
             action: 'fieldClick',
-            description: 'Emits a click event whenever Add new chip is clicked',
+            description: 'Emits a click event whenever \'Add new chip\' is clicked',
             control: false,
             table: {
                 type: {

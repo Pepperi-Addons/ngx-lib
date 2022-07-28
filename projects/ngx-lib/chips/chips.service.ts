@@ -1,5 +1,5 @@
-import { Injectable, TemplateRef } from '@angular/core';
-import { MonoTypeOperatorFunction, Subject, takeUntil } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { IPepChip } from './chips.model';
 
 @Injectable()
@@ -10,12 +10,6 @@ export class PepChipsService {
     constructor() {
         this._destroyer = new Subject();
     }
-
-    /*
-    set chips(list: IPepChip[]) {
-        this._chips = [];
-        this.addToList(list);
-    } */
 
     get chips() {
         return this._chips;
@@ -46,19 +40,5 @@ export class PepChipsService {
     get destroyer() {
         return takeUntil(this._destroyer);
     } 
-
-    /*
-    private addToList(list: IPepChip[]) {
-        list.forEach(chip => {
-            this._chips.push({
-                value: chip.value,
-                disabled: chip.disabled !== undefined ? chip.disabled : false,
-                selected: chip.selected !== undefined ? chip.selected : false,
-                removable: chip.removable !== undefined ? chip.removable : true,
-                selectable: chip.selectable !== undefined ? chip.selectable : true
-            })
-        });
-    }*/
-
 
 }

@@ -13,7 +13,7 @@
 }
 
 ::ng-deep.mat-chip-list {
-    max-width: 100%;
+    width: 100%;
 
     .mat-chip-list-wrapper {
         gap: variables.$spacing-sm;
@@ -59,7 +59,7 @@
 
         .mat-chip-input {
             flex: unset;
-            width: unset;
+            width: 100%;
         }
     }
    

@@ -22,8 +22,7 @@ import { PepChipsComponent } from '@pepperi-addons/ngx-lib/chips';
     styleUrls: ['./form-fields-example.component.scss'],
 })
 export class FormFieldsExampleComponent implements OnInit {
-    @ViewChild('chipsComp') chipsComp: PepChipsComponent;
-
+  
     title = 'client-side';
     minDateValue: number;
     maxDateValue: number;
@@ -134,18 +133,6 @@ export class FormFieldsExampleComponent implements OnInit {
         this.snackBarService.openDefaultSnackBar(data);
     }
 
-    onChipSelectClicked() {
-        console.log('onChipSelectClicked');
-        //open any select component
-    }
-
-    addChips() {
-        this.chipsComp.addChipsToList([{
-            value: 'monkey'
-        },
-        {
-            value: 'donkey'
-        }])
-        
-    }
+    
+   
 }

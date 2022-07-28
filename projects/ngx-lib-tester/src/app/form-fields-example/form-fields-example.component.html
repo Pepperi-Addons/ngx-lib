@@ -47,7 +47,7 @@
                     <pep-separator [key]="'sep1'" [label]="'separator'"></pep-separator>
 
                     <!-- Checkbox Exmaples -->
-                    <pep-checkbox key="cb1" label="Pepperi Checkbox" value="true" xAlignment="left"
+                    <pep-checkbox [type]="'booleanText'" key="cb1" label="Pepperi Checkbox" value="true" xAlignment="left"
                         (valueChange)="onValueChanged($event)">
                     </pep-checkbox>
                     <pep-checkbox key="bt1" label="Pepperi Emoji Checkbox" type="booleanText" value="true"
@@ -109,10 +109,7 @@
                         (elementClicked)="elementClicked($event)">
                     </pep-images-filmstrip>
 
-                    <pep-chips #chipsComp [chips]="chips" (itemClick)="onChipSelectClicked()"></pep-chips>
-                    <pep-button [value]="'add chips'" [sizeType]="'sm'" [styleType]="'regular'"
-                    (click)="addChips()">
-                </pep-button>
+                    <pep-chips [chips]="chips"></pep-chips>
                     
                 </div>
 

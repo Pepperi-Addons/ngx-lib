@@ -4,28 +4,14 @@ import {
     Input,
     Output,
     EventEmitter,
-    ChangeDetectionStrategy,
-    OnDestroy,
-    Renderer2,
-    ElementRef,
-    Optional,
-    OnChanges,
+    OnDestroy
 } from '@angular/core';
-import { COMMA, ENTER, TAB, SEMICOLON } from '@angular/cdk/keycodes';
-import { MatChipInputEvent, MatChipSelectionChange } from '@angular/material/chips';
+import { MatChipInputEvent, } from '@angular/material/chips';
 import { TranslateService } from '@ngx-translate/core';
+import { PepStyleType } from '@pepperi-addons/ngx-lib';
 import { IPepChip, PepChipsOrientationType, PepChipsInputType } from './chips.model';
-import { RouteConfigLoadStart } from '@angular/router';
-import {
-    PepStyleType,
-    PepStyleStateType,
-    PepSizeType,
-} from '@pepperi-addons/ngx-lib';
 import { PepChipsService } from './chips.service';
 
-export interface Fruit {
-    name: string;
-}
 
 @Component({
     selector: 'pep-chips',
@@ -34,6 +20,11 @@ export interface Fruit {
     providers: [PepChipsService]
 })
 export class PepChipsComponent implements OnInit, OnDestroy {
+    /**
+    * Initial chip list.
+    *    
+    * @memberof PepChipsComponent
+    */
     @Input()
     set chips(chips: IPepChip[]) {
         this.chipsService.initData(chips);
@@ -42,50 +33,89 @@ export class PepChipsComponent implements OnInit, OnDestroy {
         return this.chipsService.chips;
     }
 
+    /**
+    * The add chip emitter type.
+    *
+    * @type {PepChipsInputType}
+    * @memberof PepChipsComponent
+    */
     @Input() type: PepChipsInputType = 'input';
-    @Input() orientation: PepChipsOrientationType = 'horizontal'; 
+
+    /**
+    * The chip layput direction type.
+    *
+    * @type {PepChipsOrientationType}
+    * @memberof PepChipsComponent
+    */
+    @Input() orientation: PepChipsOrientationType = 'horizontal';
+
+    /**
+    * The style of the button.
+    *
+    * @type {PepStyleType}
+    * @memberof PepButtonComponent
+    */
+    @Input() styleType: PepStyleType = 'strong';
+
+    /**
+    * Whether chip multi select allowed.
+    *    
+    * @memberof PepChipsComponent
+    */
     @Input() multiSelect = false;
+
+    /**
+    * Add new chip placeholder.
+    *    
+    * @memberof PepChipsComponent
+    */
     @Input() placeholder = '';
 
+    /**
+     * Add new chip(s) event.
+     *
+     * @type {EventEmitter<void>}
+     * @memberof PepButtonComponent
+     */
     @Output() fieldClick = new EventEmitter<void>();
 
     constructor(public chipsService: PepChipsService, private _translate: TranslateService) {
         //
     }
 
-    //selectList: any[] = [{ key: 'sofa', text: 'Sofa' }, { key: 'chair', text: 'Chair' }, { key: 'table', text: 'Table' }]
-
-    ngOnInit(): void {        
+    ngOnInit(): void {
         this._translate.get("CHIPS.ADD_CHIP").pipe(this.chipsService.destroyer).subscribe((text: string) => this.placeholder = text);
-    }  
+    }
 
+    /**
+     * Adding chip(s) to current chips list
+     * @param chips Chip(s) to add
+     */
     addChipsToList(chips: IPepChip[]) {
         chips.forEach(chip => this.chipsService.addChip(chip));
-    }   
+    }
 
+    /**
+     * On new chip added
+     * @param event Chip addition event
+     */
     onChipAdded(event: MatChipInputEvent): void {
-        console.log('add', event);
         const value = (event.value || '').trim();
 
         if (value) {
             this.chipsService.addChip({
                 value: value
             });
-            /*this.chipsService.chips = [{
-                value: value,
-                disabled: false,
-                selected: false,
-                removable: true,
-                selectable: true
-            }];*/
-
             // clear the input value
             event.chipInput!.clear();
         }
     }
 
+    /**
+     * On chip removed
+     * @param chip Removed chip item
+     */
     onChipRemoved(chip: IPepChip): void {
-        console.log('remove', chip);
         const index = this.chips.indexOf(chip);
 
         if (index >= 0) {
@@ -93,31 +123,21 @@ export class PepChipsComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     * On chip selection status changed
+     * @param isSelected Whether the chip is selected
+     * @param chip Selected chip item
+     */
     onSelectionChanged(isSelected: boolean, chip: IPepChip) {
-        console.log('onSelectionChanged isSelected', isSelected);
-        console.log('onSelectionChanged chip', chip);
         chip.selected = isSelected;
     }
 
-    onChipsSelectClicked() {        
+    /**
+     * On Add new chip(s) clicked
+     */
+    onChipsSelectClicked() {
         this.fieldClick.emit();
     }
-
-    /*
-    onChipSelected(newChip) {
-        console.log('onChipSelected', newChip);
-        const index = this._chips.findIndex(chip => chip.value === newChip.text);
-        if (index === -1) {
-            this._chips.push({
-                value: newChip.text,
-                disabled: newChip.disabled !== undefined ? newChip.disabled : false,
-                selected: newChip.selected !== undefined ? newChip.selected : false,
-                removable: newChip.removable !== undefined ? newChip.removable : true,
-                selectable: newChip.selectable !== undefined ? newChip.selectable : true
-            })
-        }
-        
-    } */
 
     ngOnDestroy(): void {
         this.chipsService.destroy();
