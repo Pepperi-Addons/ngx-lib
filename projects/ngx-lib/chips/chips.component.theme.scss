@@ -1,0 +1,58 @@
+@use '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/functions';
+
+@mixin pep-chips-states ($style: regular){       
+    @include mixins.pep-state-default($style, null, true);
+    
+    &:hover {
+        @include mixins.pep-state-hover($style, null, true);
+    }     
+    &.mat-chip-selected {                   
+        @include mixins.pep-state-active($style, null, true);
+        @if $style != strong {
+            color:functions.get-pep-color(color-text, color-main) !important;   
+        } 
+    }
+    &:focus {                
+        @include mixins.pep-state-focus($style, null, true);
+       
+    }
+    
+    @if $style == strong {
+        .pep-button {
+            @include mixins.pep-button-states(strong);
+        }
+    }
+                    
+}
+
+.pep-chips-container {
+    ::ng-deep.mat-chip-list {
+        /* override material props*/
+        .mat-chip.mat-standard-chip {
+            &::after {
+                background: unset;
+            }
+            &:focus::after {
+                opacity: unset;
+            }
+        }
+
+        .mat-chip-list-wrapper {
+            .pep-chips {               
+                &.regular {
+                    @include pep-chips-states(regular);                   
+                }
+                &.weak {
+                    @include pep-chips-states(weak);
+                }
+                &.weak-invert {
+                    @include pep-chips-states(weak-invert);
+                }
+                &.strong {
+                    @include pep-chips-states(strong);               
+                }
+            }
+        }
+    }
+}
