@@ -38,12 +38,13 @@ export class FormFieldsExampleComponent implements OnInit {
 
     textboxFormGroup;
     formattedValue = null;
-    chips: [{
+    chips: any[] =  [{
         value: 'Chair'
     },
     {
         value: 'Table'
     }]
+    
 
     constructor(
         private snackBarService: PepSnackBarService,
