@@ -45,7 +45,7 @@
         }
 
         .mat-checkbox-layout {
-            @include mixins.font-body(variables.$fs-xl, variables.$lh-xl);
+            @include mixins.font-body(variables.$fs-lg, variables.$lh-lg);
             font-weight: variables.$font-weight-bold !important;
 
             .mat-checkbox-label span {
