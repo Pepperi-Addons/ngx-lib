@@ -101,6 +101,9 @@ export class PepQuantitySelectorComponent
     get formattedValue(): string {
         return this._formattedValue;
     }
+    
+    @Input() minFractionDigits: number = NaN;
+    @Input() maxFractionDigits: number = NaN;
 
     @Input() label = '';
     @Input() type: PepQuantitySelectorFieldType = 'qs';
@@ -265,7 +268,7 @@ export class PepQuantitySelectorComponent
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
             if (this.allowDecimal) {
-                this._formattedValue = this.utilitiesService.formatDecimal(value);
+                this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
             } else {
                 this._formattedValue = this.utilitiesService.formatNumber(value);
             }

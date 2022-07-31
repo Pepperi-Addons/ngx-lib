@@ -427,6 +427,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             // hasIndicators: hasIndicators,
             textColor: dataField.TextColor,
             visible: dataField.Visible,
+            digitsNumberAfterDecimalPoint: dataField.DigitsNumberAfterDecimalPoint,
         };
 
         if (dataField.AdditionalProps) {
