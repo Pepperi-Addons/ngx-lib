@@ -102,8 +102,25 @@ export class PepQuantitySelectorComponent
         return this._formattedValue;
     }
     
-    @Input() minFractionDigits: number = NaN;
-    @Input() maxFractionDigits: number = NaN;
+    private _minFractionDigits: number = NaN;
+    @Input()
+    set minFractionDigits(value: number) {
+        this._minFractionDigits = value;
+        this.setFormattedValue(this.value);
+    }
+    get minFractionDigits(): number {
+        return this._minFractionDigits;
+    }
+
+    private _maxFractionDigits: number = NaN;
+    @Input()
+    set maxFractionDigits(value: number) {
+        this._maxFractionDigits = value;
+        this.setFormattedValue(this.value);
+    }
+    get maxFractionDigits(): number {
+        return this._maxFractionDigits;
+    }
 
     @Input() label = '';
     @Input() type: PepQuantitySelectorFieldType = 'qs';
@@ -289,7 +306,7 @@ export class PepQuantitySelectorComponent
 
     get displayValue(): string {
         const res = this.isInFocus
-            ? parseFloat(this.value).toString()
+            ? this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits)
             : this.formattedValue;
         return res;
     }

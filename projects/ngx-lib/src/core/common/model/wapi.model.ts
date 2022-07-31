@@ -177,7 +177,8 @@ export class ObjectsDataRowCell {
     UIPageInfo?: any;
     // Type?: string; // This is in the object??
     Value: any;
-    Visible?: boolean;
+    Visible?: boolean; 
+    DigitsNumberAfterDecimalPoint?: number;
 }
 
 export class ObjectsDataRow {

@@ -48,7 +48,7 @@
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [allowDecimal]="field.allowDecimal"
         [additionalValue]="field.additionalValue" [notificationInfo]="field.notificationInfo" [isActive]="isActive"
         [layoutType]="layoutType" [showTitle]="showTitle" [visible]="field.visible" 
-        [minFractionDigits]="field.digitsNumberAfterDecimalPoint" [maxFractionDigits]="field.digitsNumberAfterDecimalPoint"
+        [minFractionDigits]="field.digitsNumberAfterDecimalPoint"
         (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
         (elementClick)="onClick($event)">
     </pep-quantity-selector>
@@ -90,7 +90,7 @@
         [placeholder]="field.placeholder" [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled"
         [readonly]="field.readonly" [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
-        [minFractionDigits]="field.digitsNumberAfterDecimalPoint" [maxFractionDigits]="field.digitsNumberAfterDecimalPoint"
+        [minFractionDigits]="field.digitsNumberAfterDecimalPoint"
         (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
         [isActive]="isActive" [visible]="field.visible">
     </pep-textbox>
