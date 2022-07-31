@@ -428,6 +428,7 @@ export class PepInternalFormComponent implements OnInit, DoCheck, OnChanges, OnD
             // hasIndicators: hasIndicators,
             textColor: dataField.TextColor,
             visible: dataField.Visible,
+            digitsNumberAfterDecimalPoint: dataField.DigitsNumberAfterDecimalPoint,
         };
     }
 
@@ -1204,6 +1205,7 @@ export class PepInternalFormComponent implements OnInit, DoCheck, OnChanges, OnD
             additionalValue: updatedField.AdditionalValue,
             formattedValue: updatedField.FormattedValue,
             textColor: updatedField.TextColor,
+            digitsNumberAfterDecimalPoint: updatedField.DigitsNumberAfterDecimalPoint,
         };
 
         if (customField instanceof PepQuantitySelectorField) {

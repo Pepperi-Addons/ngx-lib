@@ -102,8 +102,25 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._formattedValue;
     }
 
-    @Input() minFractionDigits: number = NaN;
-    @Input() maxFractionDigits: number = NaN;
+    private _minFractionDigits: number = NaN;
+    @Input()
+    set minFractionDigits(value: number) {
+        this._minFractionDigits = value;
+        this.setFormattedValue(this.value);
+    }
+    get minFractionDigits(): number {
+        return this._minFractionDigits;
+    }
+
+    private _maxFractionDigits: number = NaN;
+    @Input()
+    set maxFractionDigits(value: number) {
+        this._maxFractionDigits = value;
+        this.setFormattedValue(this.value);
+    }
+    get maxFractionDigits(): number {
+        return this._maxFractionDigits;
+    }
 
     /**
      * The accessory sign.
@@ -276,7 +293,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         if (this.type == 'link') {
             res = this.formattedValue;
         } else if (this.isNumberType()) {
-            res = this.isInFocus ? (this.value.length > 0 ? parseFloat(this.value).toString() : '') : this.formattedValue;
+            res = this.isInFocus ? (this.value.length > 0 ? this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits) : '') : this.formattedValue;
         } else {
             res = this.isInFocus ? this.value : this.formattedValue;
         }
