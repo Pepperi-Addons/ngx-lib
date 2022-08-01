@@ -20,14 +20,23 @@ export class PepRemoteLoaderService {
     }
 
     getRemoteLoaderOptions(blockLoaderData: IBlockLoaderData, blockRemoteEntry = '', type: 'script' | 'module' | 'manifest' = 'module'): PepRemoteLoaderOptions {
-        return {
+        const exposedModule = blockLoaderData.relation.ElementsModule?.length > 0 ? blockLoaderData.relation.ElementsModule : blockLoaderData.relation.ModuleName;
+        const res = {
             type: type,
             remoteEntry: blockRemoteEntry.length > 0 ? blockRemoteEntry : `${blockLoaderData.addonPublicBaseURL}${blockLoaderData.relation.AddonRelativeURL}.js`,
-            exposedModule: `./${blockLoaderData.relation.ModuleName}`,
-            componentName: blockLoaderData.relation.ComponentName, // For load the component from the module.
             remoteName: blockLoaderData.relation.AddonRelativeURL, // For script type, this is the name of the script.
+            exposedModule: `./${exposedModule}`,
             addonId: blockLoaderData.relation.AddonUUID, // For local use (adding the relative path to the assets).
         }
+        
+        // If it's web components
+        if (blockLoaderData.relation.ElementsModule?.length > 0) {
+            res['elementName'] = blockLoaderData.relation.ElementName
+        } else { // For load the component from the module.
+            res['componentName'] = blockLoaderData.relation.ComponentName; 
+        }
+
+        return res;
     }
 
     private getBlockLoaderDataUrl(name: string, blockType: PepBlockDataType = 'AddonBlock', addonUUID = '', pagesDevServer = ''): string {

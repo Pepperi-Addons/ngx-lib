@@ -17,4 +17,7 @@
         (hostEvents)="onHostEvents($event);"
         (load)="onBlockLoad()">
     </pep-remote-loader>
+
+    <mft-wc-wrapper *ngIf="webComponentWrapperOptions" [options]="webComponentWrapperOptions" [props]="{ hostObject: hostObject }" [events]="{ hostEvents: onHostEventsCallback }"></mft-wc-wrapper>
+
 </ng-template>

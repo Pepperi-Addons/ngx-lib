@@ -1,3 +1,4 @@
+import { WebComponentWrapperOptions } from '@angular-architects/module-federation-tools';
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
@@ -46,16 +47,25 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     @Output() blockLoad: EventEmitter<void> = new EventEmitter<void>();
     
-    inDialog = false;
-    remotePathOptions: PepRemoteLoaderOptions = null;
+    protected inDialog = false;
+    protected remotePathOptions: PepRemoteLoaderOptions = null;
+    protected webComponentWrapperOptions: WebComponentWrapperOptions = null;
     
+    protected onHostEventsCallback: (event: CustomEvent) => void;
+
     constructor(private remoteLoaderService: PepRemoteLoaderService) {
-        //
+        this.onHostEventsCallback = (event: CustomEvent) => {
+            this.onHostEvents(event.detail);
+        }
     }
     
     ngOnInit() {
-        this.remoteLoaderService.getBlockRemoteLoaderOptions(this.name, this.blockType, this.remoteEntry).then(options => {
-            this.remotePathOptions = options;
+        this.remoteLoaderService.getBlockRemoteLoaderOptions(this.name, this.blockType, this.remoteEntry).then((options: PepRemoteLoaderOptions) => {
+            if (options.elementName?.length > 0) {
+                this.webComponentWrapperOptions = options as WebComponentWrapperOptions;
+            } else {
+                this.remotePathOptions = options;
+            }
         });
     }
 
@@ -65,6 +75,7 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
         }
 
         this.remotePathOptions = null;
+        this.webComponentWrapperOptions = null;
     }
 
     onBlockLoad() {
