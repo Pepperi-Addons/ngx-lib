@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { PepAddonService, PepHttpService, PepSessionService} from '@pepperi-addons/ngx-lib';
 import { PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
 import { IBlockLoaderData } from './remote-loader.model';
-import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({ 
@@ -13,8 +12,7 @@ export class PepRemoteLoaderService {
     constructor(
         private httpService: PepHttpService,
         private sessionService: PepSessionService,
-        private addonService: PepAddonService,
-        private route: ActivatedRoute,
+        private addonService: PepAddonService
     ) {
         //
     }
