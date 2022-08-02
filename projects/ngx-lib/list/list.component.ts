@@ -364,11 +364,15 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private setContainerWidth(): void {
+        if (!this.hostElement.nativeElement.parentElement) {
+            return;
+        }
+
         const selectionCheckBoxWidth =
             this.selectionTypeForActions === 'multi' ? 44 : 0;
 
         const rowHeight = 40; // the table row height (2.5rem * 16font-size).
-        const style = window.getComputedStyle(
+        const style = getComputedStyle(
             this.hostElement.nativeElement.parentElement
         );
         // The container-fluid class padding left + right + border
