@@ -11,13 +11,18 @@
 </ng-template>
 
 <ng-template #remoteLoaderTemplate>
-    <pep-remote-loader *ngIf="remotePathOptions"
+    <pep-remote-loader *ngIf="remotePathOptions && !loadElement"
         [options]="remotePathOptions"
         [hostObject]="hostObject"
         (hostEvents)="onHostEvents($event);"
         (load)="onBlockLoad()">
     </pep-remote-loader>
 
-    <mft-wc-wrapper *ngIf="webComponentWrapperOptions" [options]="webComponentWrapperOptions" [props]="{ hostObject: hostObject }" [events]="{ hostEvents: onHostEventsCallback }"></mft-wc-wrapper>
+    <pep-remote-loader-element *ngIf="remotePathOptions && loadElement" 
+        [options]="remotePathOptions"
+        [props]="{ hostObject: hostObject }"
+        [events]="{ hostEvents: onHostEventsCallback }"
+        (load)="onBlockLoad()">
+    </pep-remote-loader-element>
 
 </ng-template>

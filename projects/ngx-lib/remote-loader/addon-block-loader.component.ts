@@ -49,8 +49,8 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     
     protected inDialog = false;
     protected remotePathOptions: PepRemoteLoaderOptions = null;
-    protected webComponentWrapperOptions: WebComponentWrapperOptions = null;
-    
+    protected loadElement: boolean = false;
+
     protected onHostEventsCallback: (event: CustomEvent) => void;
 
     constructor(private remoteLoaderService: PepRemoteLoaderService) {
@@ -61,11 +61,8 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     
     ngOnInit() {
         this.remoteLoaderService.getBlockRemoteLoaderOptions(this.name, this.blockType, this.remoteEntry).then((options: PepRemoteLoaderOptions) => {
-            if (options.elementName?.length > 0) {
-                this.webComponentWrapperOptions = options as WebComponentWrapperOptions;
-            } else {
-                this.remotePathOptions = options;
-            }
+            this.loadElement = options.elementName?.length > 0;
+            this.remotePathOptions = options;
         });
     }
 
@@ -75,7 +72,6 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
         }
 
         this.remotePathOptions = null;
-        this.webComponentWrapperOptions = null;
     }
 
     onBlockLoad() {

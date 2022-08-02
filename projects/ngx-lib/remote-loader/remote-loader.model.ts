@@ -6,13 +6,14 @@ import { NgComponentRelation } from "@pepperi-addons/papi-sdk";
 
 type PepRemoteLoaderData = {
     addonId?: string;
-    displayName?: string;
     componentName?: string;
-    // Maybe those properties are not in use so we need to remove them.
-    update?: boolean;
-    noModule?: boolean;
     // For web components
     elementName?: string;
+    
+    // displayName?: string;
+    // Maybe those properties are not in use so we need to remove them.
+    // update?: boolean;
+    // noModule?: boolean;
 }
 
 export type PepRemoteLoaderOptions = PepRemoteLoaderData & LoadRemoteModuleOptions;

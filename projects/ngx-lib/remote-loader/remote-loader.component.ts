@@ -1,6 +1,6 @@
-import { PepAddonService } from '@pepperi-addons/ngx-lib';
 import { Component, Input, OnChanges, ViewChild, ViewContainerRef, Injector, EventEmitter, Output, ComponentRef, SimpleChanges, createNgModuleRef } from '@angular/core';
 import { loadRemoteModule } from '@angular-architects/module-federation';
+import { PepAddonService } from '@pepperi-addons/ngx-lib';
 import { PepRemoteLoaderOptions } from './remote-loader.model';
 
 @Component({
@@ -52,29 +52,25 @@ export class PepRemoteLoaderComponent implements OnChanges {
             this.compRef.instance.hostObject = this.hostObject;
 
             // TODO: Check if this is needed?? if not remove this.
-            if (this.compRef?.instance?.ngOnChanges) {
-                this.compRef.instance.ngOnChanges(this.hostObject);
-            }
+            // if (this.compRef?.instance?.ngOnChanges) {
+            //     this.compRef.instance.ngOnChanges(this.hostObject);
+            // }
         }
     }
 
-    async ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges) {
         // if (changes?.options?.currentValue) {
         //     this.loadModule(changes?.options?.currentValue);
         // }
     }
 
     private async loadModule() {
-        const t0 = performance.now();
+        try {
+            const t0 = performance.now();
         
-        // Check if only need update
-        if (!this.options?.update) {
             this.viewContainer?.clear();
             
-            if (this.options?.noModule) { // Load Component
-                const componentType = await loadRemoteModule(this.options).then(m => m[this.options.componentName]);
-                this.compRef = this.viewContainer.createComponent(componentType, { injector: this.injector });
-            } else { // Load Module
+            if (this.options.exposedModule?.length > 0) { // Load module
                 if (this.options?.addonId && (this.options.type === 'module' || this.options.type === 'script')) {
                     const lastSlashIndex = this.options.remoteEntry?.lastIndexOf('/') || -1;
                     
@@ -90,21 +86,28 @@ export class PepRemoteLoaderComponent implements OnChanges {
 
                 const t1 = performance.now();
                 console.log('remote module load performance: ' + (t1-t0)/1000);
-            }
+            } 
+            // Check if this is in use??? (comment out in Angular 14 version)
+            // else { // Load Component
+            //     const componentType = await loadRemoteModule(this.options).then(m => m[this.options.componentName]);
+            //     this.compRef = this.viewContainer.createComponent(componentType, { injector: this.injector });
+            // }
 
             this.load.emit();
-        }
 
-        if (this.compRef) {
-            this.setHostComponentIntoComponentRef();
-            
-            this.compRef?.instance['hostEvents']?.subscribe(e => {
-                // switch(e.action){
-                //     case 'addon-loaded':
-                //         this.showSpinner = false;
-                // }
-                this.hostEvents.emit(e)
-            });
+            if (this.compRef) {
+                this.setHostComponentIntoComponentRef();
+                
+                this.compRef?.instance['hostEvents']?.subscribe(e => {
+                    // switch(e.action){
+                    //     case 'addon-loaded':
+                    //         this.showSpinner = false;
+                    // }
+                    this.hostEvents.emit(e)
+                });
+            }
+        } catch(error) {
+            console.error(error);
         }
     }
 

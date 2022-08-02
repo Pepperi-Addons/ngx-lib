@@ -13,11 +13,13 @@ import { PepAddonBlockLoaderService } from './addon-block-loader.service';
 
 import { PepRemoteLoaderComponent } from './remote-loader.component';
 import { PepRemoteLoaderService } from './remote-loader.service';
+import { PepRemoteLoaderElementComponent } from './remote-loader-element.component';
 
 @NgModule({
     declarations: [
         PepAddonBlockLoaderComponent,
         PepRemoteLoaderComponent,
+        PepRemoteLoaderElementComponent,
     ],
     imports: [
         CommonModule,
@@ -32,6 +34,7 @@ import { PepRemoteLoaderService } from './remote-loader.service';
     exports: [
         PepAddonBlockLoaderComponent,
         PepRemoteLoaderComponent,
+        PepRemoteLoaderElementComponent
     ],
     providers: [
         PepAddonBlockLoaderService,

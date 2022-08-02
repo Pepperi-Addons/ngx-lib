@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { PepAddonService, PepHttpService, PepSessionService} from '@pepperi-addons/ngx-lib';
 import { PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
 import { IBlockLoaderData } from './remote-loader.model';
-import { firstValueFrom } from 'rxjs';
 
 @Injectable({ 
     providedIn: 'root' 
@@ -57,7 +56,7 @@ export class PepRemoteLoaderService {
     async getBlockRemoteLoaderOptions(name: string, blockType: PepBlockDataType = 'AddonBlock', addonUUID = '', blockRemoteEntry = '', pagesDevServer = ''): Promise<PepRemoteLoaderOptions> {
         return new Promise((resolve, reject) => {
             const blockLoaderDataUrl = this.getBlockLoaderDataUrl(name, blockType, addonUUID, pagesDevServer);
-            firstValueFrom(this.httpService.getHttpCall(blockLoaderDataUrl)).then((data: IBlockLoaderData) => {
+            this.httpService.getHttpCall(blockLoaderDataUrl).toPromise().then((data: IBlockLoaderData) => {
                 resolve(this.getRemoteLoaderOptions(data, blockRemoteEntry));
             }).catch(err => {
                 reject(`Addon block with name - ${name} is not found for type - ${blockType}`);
