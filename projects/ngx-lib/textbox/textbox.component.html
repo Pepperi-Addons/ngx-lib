@@ -5,11 +5,12 @@
             [showTitle]="showTitle" [inputLength]="input.value?.length">
         </pep-field-title>
         <mat-form-field appearance="outline">
-            <input #input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
+            <input #input matInput pepTextboxValidation [formControlName]="key" [errorStateMatcher]="matcher" [id]="key"
+                [name]="key" class=" body-sm " autocomplete="off"
                 maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
                 [placeholder]="hasParent && !disabled ? placeholder : ''"
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
-                title="{{ formattedValue }}" [formControlName]="key" [type]="type" [value]="displayValue"
+                title="{{ formattedValue }}" [type]="type" [value]="displayValue"
                 (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" (blur)="onBlur($event)"
                 (change)="onChange($event)"
                 [ngClass]="{'disable-hidden': disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')}" />
@@ -20,24 +21,31 @@
                 <a href="javascript:void(0)" (click)="anchorClicked()" [id]="key" [name]="key"
                     class="color-link body-sm "> {{formattedValue}}</a>
             </span>
-            <mat-error *ngIf="renderError">
-                <ng-container *ngIf="mandatory && input.value.length == 0 then requiredError else otherError">
+            <mat-error *ngIf="renderError">               
+                <ng-container *ngIf="mandatory && input.value.length == 0 then requiredError else otherErrorContainer">
                 </ng-container>
                 <ng-template #requiredError>
                     <span class="body-xs" [title]="('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label })"
                         [innerText]="('MESSAGES.ERROR_IS_REQUIRED' | translate: { field: label })">
                     </span>
                 </ng-template>
-                <ng-template #otherError>
-                    <span class="body-xs" [title]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
+                <ng-template #otherErrorContainer>
+                    <ng-template *ngIf="form.get(key).errors?.pattern then patternError else otherError"></ng-template>
+                    <ng-template #patternError>
+                        <span class="body-xs">
+                            {{ regexError }}
+                        </span>
+                    </ng-template>
+                    <ng-template #otherError>
+                        <span class="body-xs" [title]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
                             ('MESSAGES.ERROR_RANGE_IS_NOT_VALID' | translate: { min: minValue, max: maxValue }) :
                             ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })" [innerText]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
                             ('MESSAGES.ERROR_RANGE_IS_NOT_VALID' | translate: { min: minValue, max: maxValue }) :
                             ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })">
-                    </span>
+                        </span>
+                    </ng-template>
                 </ng-template>
-            </mat-error>
-
+            </mat-error>          
             <pep-textbox-icon *ngIf="renderSymbol && isFormView && xAlignment == 'right'" matPrefix [value]="value"
                 [label]="label" [type]="type" [disabled]="disabled">
             </pep-textbox-icon>
@@ -45,8 +53,7 @@
                 [label]="label" [type]="type" [disabled]="disabled">
             </pep-textbox-icon>
         </mat-form-field>
-    </ng-template>
-
+    </ng-template>     
     <ng-container *ngIf="layoutType === 'form'">
         <ng-container *ngIf="parentFieldKey; then groupedBlock; else regularBlock"></ng-container>
         <ng-template #regularBlock>

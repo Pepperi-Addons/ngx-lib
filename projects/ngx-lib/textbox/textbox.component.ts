@@ -25,6 +25,16 @@ import {
     PepFieldBase,
     PepUtilitiesService,
 } from '@pepperi-addons/ngx-lib';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+/** error when invalid control is dirty or touched */
+export class TextErrorStateMatcher implements ErrorStateMatcher {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+        const validateOnDirty = form?.form?.controls?.['validateOnDirty']?.value;
+        return !!(validateOnDirty && control && control.invalid && (control.dirty || control.touched));
+    }
+}
 
 /**
  * This is a text box input component that can be use to
@@ -133,7 +143,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
      * @memberof PepTextboxComponent
      */
     private _type: PepTextboxFieldType = 'text';
-    @Input() 
+    @Input()
     set type(value: PepTextboxFieldType) {
         this._type = value;
 
@@ -203,6 +213,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() renderSymbol = true;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
+    @Input() regex: string | RegExp;
+    @Input() regexError = '';
 
     /**
      * The value change event.
@@ -228,6 +240,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     standAlone = false;
     isInEditMode = false;
     isInFocus: boolean;
+
+    matcher = new TextErrorStateMatcher();
 
     constructor(
         public fb: FormBuilder,
@@ -296,11 +310,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             type: this.type,
             minValue: this.minValue,
             maxValue: this.maxValue,
+            regex: this.regex
         });
         this.form = this.customizationService.getDefaultFromGroup(
             pepField,
             this.renderError
-        );
+        );        
     }
 
     ngOnInit(): void {
@@ -330,8 +345,15 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 );
             }
         }
+        //flag to indicate whether validation on dirty is required        
+        this.form.addControl('validateOnDirty', new FormControl(this.type === 'text'));
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
+
+        //load default error text
+        if (this.type === 'text' && this.regex && !this.regexError) {
+            this.translate.get('MESSAGES.ERROR_INVALID_PATTERN').subscribe(text => this.regexError = text);
+        }
 
         this.updateFormFieldValue();
     }
