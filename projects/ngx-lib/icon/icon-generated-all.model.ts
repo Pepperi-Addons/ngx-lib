@@ -92,6 +92,8 @@ export const allIcons = {
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill-rule="evenodd"/></svg>',
   system_close:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M18.39 5.61a2.085 2.085 0 010 2.95L14.948 12l3.44 3.44c.774.774.813 2.004.116 2.823l-.116.126a2.085 2.085 0 01-2.949 0L12 14.95l-3.44 3.44a2.085 2.085 0 11-2.95-2.949L9.052 12l-3.44-3.44a2.085 2.085 0 01-.116-2.823l.116-.126a2.085 2.085 0 012.949 0L12 9.05l3.44-3.44a2.085 2.085 0 012.95 0z"/></svg>',
+  system_copy:
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M21 2a1 1 0 011 1v14a1 1 0 01-1 1h-3v3a1 1 0 01-1 1H3a1 1 0 01-1-1V7a1 1 0 011-1l3-.001V3a1 1 0 011-1h14zm-5.5 6h-11a.5.5 0 00-.5.5v11a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-11a.5.5 0 00-.5-.5zM10 10a1 1 0 011 1v1.999L13 13a1 1 0 010 2l-2-.001V17a1 1 0 01-2 0v-2.001L7 15a1 1 0 010-2l2-.001V11a1 1 0 011-1zm9.5-6h-11a.5.5 0 00-.5.5v1.499L17 6a1 1 0 011 1v9h1.5a.5.5 0 00.5-.5v-11a.5.5 0 00-.5-.5z"/></svg>',
   system_doc:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M13.172 4a1 1 0 01.707.293l3.828 3.828a1 1 0 01.293.707V19a1 1 0 01-1 1H7a1 1 0 01-1-1V5a1 1 0 011-1h6.172zM11 6H9a1 1 0 00-1 1v10a1 1 0 001 1h6a1 1 0 001-1v-6a1 1 0 00-1-1h-2a1 1 0 01-1-1V7a1 1 0 00-1-1z"/></svg>',
   system_door:
