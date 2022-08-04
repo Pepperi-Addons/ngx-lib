@@ -59,10 +59,10 @@ export default {
             // },
         },
         regex: {
-            description: 'Regex validation pattern. supports field type \'text\' only.',
+            description: 'Regex validation pattern. supports field type \'text\' only.',           
             table: {
                 type: {
-                    summary: `'string' | 'RegExp'`
+                    summary: `string | RegExp`
                 },
                 defaultValue: {
                     summary: null
@@ -70,10 +70,10 @@ export default {
             }            
         },
         regexError: {
-            description: 'Regex invalid character error message. if not provided, a default error message will be displayed.',
+            description: 'Regex invalid character error message. if not provided, a default error message will be displayed.',           
             table: {
                 defaultValue: {
-                    summary: 'Invalid Character'
+                    summary: '\"Invalid Character\"'
                 }
             }
         },
@@ -94,6 +94,8 @@ export default {
                 'renderError',
                 'renderSymbol',
                 'xAlignment',
+                "regex",
+                "regexError",
                 'valueChange',
             ],
         },

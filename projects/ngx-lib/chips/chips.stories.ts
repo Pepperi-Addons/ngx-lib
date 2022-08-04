@@ -89,6 +89,7 @@ export default {
         controls: {
             include: [
                 'type',
+                "styleType",
                 'orientation',
                 'multiSelect',
                 'placeholder',
