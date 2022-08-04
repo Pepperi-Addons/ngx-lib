@@ -16,6 +16,10 @@ export class PepChipsService {
         return this._chips;
     }
 
+    get selected() {
+        return this._chips.filter(chip => chip.selected).map(chip => chip.value);
+    }
+
     initData(chips: IPepChip[]) {
         this._chips = [];      
         if (chips?.length) {

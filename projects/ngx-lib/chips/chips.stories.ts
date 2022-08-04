@@ -17,7 +17,20 @@ export default {
             ]
         })
     ],
-    argTypes: {        
+    argTypes: {   
+        chips: {
+            description: 'The chips within the chip list',            
+            defaultValue: [],
+            control: 'array',
+            table: {
+                type: {
+                    summary: 'IPepChip[]'
+                },
+                defaultValue: {
+                    summary: null
+                }
+            }
+        },
         type: {
             description: 'Data \'Add new chip\' selection type. When \'select\' is choosen, the new data will be sent from external component',
             options: [
@@ -73,6 +86,18 @@ export default {
                 }
             }
         },
+        selected: {
+            description: 'The selected chip(s)',
+            control: false,
+            table: {
+                type: {
+                    summary: 'IPepChip | IPepChip[]',                    
+                },
+                defaultValue: {
+                    summary: null
+                }           
+            }
+        },        
         fieldClick: {
             action: 'fieldClick',
             description: 'Emits a click event whenever \'Add new chip\' is clicked',
@@ -82,19 +107,34 @@ export default {
                     summary: 'EventEmitter<void>'
                 }
             }
-
+        },
+        selectionChange: {
+            action: 'selectionChange',
+            description: 'Emits when the chip is selected or deselected',
+            control: false,
+            table: {
+                type: {
+                    summary: 'EventEmitter<IPepChipSelection>'
+                }
+            }
+        },
+        addChipsToList: {
+            description: 'Adding chip(s) to current chip list'
         }
     },
     parameters: {
         controls: {
             include: [
+                'chips',
                 'type',
                 "styleType",
                 'orientation',
                 'multiSelect',
                 'placeholder',
-                'fieldClick'
-                
+                "selected",                
+                'fieldClick',
+                "selectionChange",
+                'addChipsToList'                
             ],
         }
     }
@@ -105,7 +145,8 @@ export default {
 const Template: Story<PepChipsComponent> = (args: PepChipsComponent) => ({
     props: {
         ...args,
-        fieldClick: action('fieldClick')       
+        fieldClick: action('fieldClick'),
+        selectionChange: action('selectionChange')
     }
 });
 
