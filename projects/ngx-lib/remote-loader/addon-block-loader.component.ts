@@ -12,6 +12,7 @@ import { PepRemoteLoaderService } from './remote-loader.service';
 export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @ViewChild('dialogTemplate', { static: true, read: TemplateRef }) dialogTemplate!: TemplateRef<any>;
     
+    @Input() addonId: string = '';
     @Input() remoteEntry: string = '';
 
     private _blockType: PepBlockDataType = 'AddonBlock';
@@ -60,7 +61,7 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit() {
-        this.remoteLoaderService.getBlockRemoteLoaderOptions(this.name, this.blockType, this.remoteEntry).then((options: PepRemoteLoaderOptions) => {
+        this.remoteLoaderService.getBlockRemoteLoaderOptions(this.name, this.blockType, this.addonId, this.remoteEntry).then((options: PepRemoteLoaderOptions) => {
             this.loadElement = options.elementName?.length > 0;
             this.remotePathOptions = options;
         });

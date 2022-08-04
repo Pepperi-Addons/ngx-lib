@@ -25,15 +25,21 @@
             z-index: variables.$z-index-lowest + 4;
 
             &.show-shadow {
-                padding-inline-end: variables.$content-padding;
+                [pep-side-area],
+                pep-side-bar {
+                    padding-inline-end: variables.$content-padding;
+                }
             }
 
             &.side-layout-end {
                 grid-area: side-layout-end;
                 
                 &.show-shadow {
-                    padding-inline-start: variables.$content-padding;
-                    padding-inline-end: unset;
+                    [pep-side-area-end],
+                    pep-side-bar[position='end'] {
+                        padding-inline-start: variables.$content-padding;
+                        padding-inline-end: unset;
+                    }
                 }
             }
 

@@ -151,6 +151,15 @@ export class PepAddonService {
         return this.PAGES_ADDON_UUID;
     }
 
+    setShellRouterData(data: { addPadding?: boolean, showSidebar?: boolean, showHeader?: boolean }) {
+        const eventData = {
+            detail: data,
+        };
+
+        const customEvent = new CustomEvent('set-router-data', eventData);
+        window.dispatchEvent(customEvent);
+    }
+
     // // Deprecated need to delete in next major.
     // public static createDefaultMultiTranslateLoader(
     //     http: HttpClient,
