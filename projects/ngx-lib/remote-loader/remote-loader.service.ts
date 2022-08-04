@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PepAddonService, PepHttpService, PepSessionService} from '@pepperi-addons/ngx-lib';
-import { PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
+import { IPepRemoteLoaderParamsOptions, PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
 import { IBlockLoaderData } from './remote-loader.model';
 
 @Injectable({ 
@@ -36,31 +36,46 @@ export class PepRemoteLoaderService {
         return res;
     }
 
-    private getBlockLoaderDataUrl(name: string, blockType: PepBlockDataType = 'AddonBlock', addonUUID = '', pagesDevServer = ''): string {
+    private getBlockLoaderDataUrl(options: IPepRemoteLoaderParamsOptions): string {
         const fileName = 'addon_blocks';
         const pagesAddonUuid = this.addonService.getPagesAddonUUID();
         let pagesBaseUrl;
 
         // For devServer run server on localhost.
-        if(pagesDevServer.length > 0) {
-            pagesBaseUrl = `${pagesDevServer}/${fileName}`;
+        if(options.pagesDevServer?.length > 0) {
+            pagesBaseUrl = `${options.pagesDevServer}/${fileName}`;
         } else {
             const baseUrl = this.sessionService.getPapiBaseUrl();
             pagesBaseUrl = `${baseUrl}/addons/api/${pagesAddonUuid}/${fileName}`;
         }
 
-        const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${name}&blockType=${blockType}&addonUUID=${addonUUID}`;
+        const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${options.name}&slugName=${options.slugName}&blockType=${options.blockType}&addonUUID=${options.addonUUID}`;
         return url;
     }
 
-    async getBlockRemoteLoaderOptions(name: string, blockType: PepBlockDataType = 'AddonBlock', addonUUID = '', blockRemoteEntry = '', pagesDevServer = ''): Promise<PepRemoteLoaderOptions> {
+    async getBlockRemoteLoaderOptions(options: IPepRemoteLoaderParamsOptions): Promise<PepRemoteLoaderOptions> {
+        // name: string, blockType: PepBlockDataType = 'AddonBlock', addonUUID = '', blockRemoteEntry = '', pagesDevServer = ''
+        options.blockType = options.blockType ?? 'AddonBlock';
+        options.name = options.name ?? '';
+        options.slugName = options.slugName ?? '';
+        options.addonUUID = options.addonUUID ?? '';
+
         return new Promise((resolve, reject) => {
-            const blockLoaderDataUrl = this.getBlockLoaderDataUrl(name, blockType, addonUUID, pagesDevServer);
-            this.httpService.getHttpCall(blockLoaderDataUrl).toPromise().then((data: IBlockLoaderData) => {
-                resolve(this.getRemoteLoaderOptions(data, blockRemoteEntry));
-            }).catch(err => {
-                reject(`Addon block with name - ${name} is not found for type - ${blockType}`);
-            }); 
+            if (options.name?.length > 0 || (options.slugName?.length > 0 && options.blockType === 'SettingsBlock')) {
+                const blockLoaderDataUrl = this.getBlockLoaderDataUrl(options);
+                this.httpService.getHttpCall(blockLoaderDataUrl).toPromise().then((data: IBlockLoaderData) => {
+                    resolve(this.getRemoteLoaderOptions(data, options.blockRemoteEntry));
+                }).catch(err => {
+                    reject(`Addon block with name - ${options.name} is not found for type - ${options.blockType}`);
+                }); 
+            } else {
+                if (options.blockType === 'SettingsBlock') {
+                    reject(`name is not supplied`);
+                }
+                else {
+                    reject(`slugName is not supplied`);
+                }
+            }
         });
     }
 }

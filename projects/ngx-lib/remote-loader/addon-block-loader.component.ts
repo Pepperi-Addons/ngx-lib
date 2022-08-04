@@ -1,7 +1,7 @@
 import { WebComponentWrapperOptions } from '@angular-architects/module-federation-tools';
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
+import { IPepRemoteLoaderParamsOptions, PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
 import { PepRemoteLoaderService } from './remote-loader.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     
     @Input() addonId: string = '';
     @Input() remoteEntry: string = '';
+    @Input() slugName: string = '';
 
     private _blockType: PepBlockDataType = 'AddonBlock';
     @Input() 
@@ -61,7 +62,15 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit() {
-        this.remoteLoaderService.getBlockRemoteLoaderOptions(this.name, this.blockType, this.addonId, this.remoteEntry).then((options: PepRemoteLoaderOptions) => {
+        const options: IPepRemoteLoaderParamsOptions = {
+            name: this.name,
+            slugName: this.slugName,
+            blockType: this.blockType,
+            addonUUID: this.addonId,
+            blockRemoteEntry: this.remoteEntry
+        };
+
+        this.remoteLoaderService.getBlockRemoteLoaderOptions(options).then((options: PepRemoteLoaderOptions) => {
             this.loadElement = options.elementName?.length > 0;
             this.remotePathOptions = options;
         });

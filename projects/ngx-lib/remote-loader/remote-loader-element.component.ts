@@ -57,14 +57,22 @@ export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChan
     private async loadOptionsFromRoute() {
         const params = this.route?.snapshot.params;
         const data = this.route?.snapshot.data;
+        const blockType = data?.blockType || 'SettingsBlock';
+
+        const slugName = params?.slugName || data?.slugName;
         const blockName = params?.blockName || data?.blockName;
         
-        if (blockName?.length > 0) {
+        if (blockName?.length > 0 || (slugName?.length > 0 && blockType === 'SettingsBlock')) {
             const addonUUID = params?.addonUUID || data?.addonUUID || '';
-            const blockType = data?.blockType || 'SettingsBlock';
             const blockRemoteEntry = data?.blockRemoteEntry || '';
 
-            this.options = await this.remoteLoaderService.getBlockRemoteLoaderOptions(blockName, blockType, addonUUID, blockRemoteEntry);
+            this.options = await this.remoteLoaderService.getBlockRemoteLoaderOptions({
+                name: blockName,
+                slugName,
+                blockType,
+                addonUUID,
+                blockRemoteEntry
+            });
 
             const fileName = `${this.options['remoteName']}.js`;
 
