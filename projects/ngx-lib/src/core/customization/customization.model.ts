@@ -56,6 +56,7 @@ interface IPepFieldBaseOptions {
     visible?: boolean;    
     emptyOption?: boolean;    
     // lastFocusField?: any;
+    digitsNumberAfterDecimalPoint?: number;
 }
 export class PepFieldBase {
     value: any;
@@ -201,6 +202,7 @@ export class PepTextboxField extends PepFieldBase {
     controlType = 'textbox';
     type: PepTextboxFieldType = 'text';
     regex: string| RegExp;
+    digitsNumberAfterDecimalPoint: number = NaN;
 
     constructor(options: IPepTextboxFieldOptions = {}) {
         super(options);
@@ -214,6 +216,8 @@ export class PepTextboxField extends PepFieldBase {
 
     public update(options: IPepTextboxFieldOptions): void {
         super.update(options);
+
+        this.digitsNumberAfterDecimalPoint = options.digitsNumberAfterDecimalPoint ?? NaN;
 
         if (this.type === 'link') {
             // DI-11292 - add changes for link field for the "Read Only display value" prop
@@ -362,6 +366,7 @@ export class PepQuantitySelectorField extends PepFieldBase {
     notificationInfo: any = {};
     updatedDataCount: number;
     type: PepQuantitySelectorFieldType;
+    digitsNumberAfterDecimalPoint: number = NaN;
 
     constructor(options: IPepQuantitySelectorFieldOptions = {}) {
         super(options);
@@ -375,6 +380,8 @@ export class PepQuantitySelectorField extends PepFieldBase {
     public update(options: IPepQuantitySelectorFieldOptions): void {
         super.update(options);
         
+        this.digitsNumberAfterDecimalPoint = options.digitsNumberAfterDecimalPoint ?? NaN;
+
         this.allowDecimal = options.allowDecimal || false;
         this.notificationInfo = options.notificationInfo;
         this.updatedDataCount += 1;

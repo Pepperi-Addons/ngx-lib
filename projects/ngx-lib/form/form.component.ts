@@ -427,6 +427,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             // hasIndicators: hasIndicators,
             textColor: dataField.TextColor,
             visible: dataField.Visible,
+            digitsNumberAfterDecimalPoint: dataField.DigitsNumberAfterDecimalPoint,
         };
 
         if (dataField.AdditionalProps) {
@@ -1211,6 +1212,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
             additionalValue: updatedField.AdditionalValue,
             formattedValue: updatedField.FormattedValue,
             textColor: updatedField.TextColor,
+            digitsNumberAfterDecimalPoint: updatedField.DigitsNumberAfterDecimalPoint
         };
 
         if (customField instanceof PepQuantitySelectorField) {

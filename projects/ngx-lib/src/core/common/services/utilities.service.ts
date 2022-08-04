@@ -165,6 +165,9 @@ export class PepUtilitiesService {
 
     // formatPercent(value: any, digitsInfo = '1.0-2') {
     formatPercent(value: any, minFractionDigits = 0, maxFractionDigits = 2) {
+        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
+        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
+
         const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
@@ -174,20 +177,23 @@ export class PepUtilitiesService {
             return new Intl.NumberFormat(this.culture, { 
                 style: 'percent',
                 minimumFractionDigits: minFractionDigits || 0,
-                maximumFractionDigits: maxFractionDigits || 2,
+                maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
             }).format(number / 100);
         }
     }
 
     // formatCurrency(value: any, currencySign = '', digitsInfo = '1.2-2') {
     formatCurrency(value: any, currencySign = '', minFractionDigits = 0, maxFractionDigits = 2) {
+        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
+        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
+
         let res = '';
         const number = this.coerceNumberProperty(value);
         const styleOptions = { 
             // style: 'currency',
             // currencySign: currencySign,
             minimumFractionDigits: minFractionDigits || 0,
-            maximumFractionDigits: maxFractionDigits || 2,
+            maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
         };
 
         if (number === 0) {
@@ -205,6 +211,8 @@ export class PepUtilitiesService {
     
     // formatDecimal(value: any, digitsInfo = '1.2-2') {
     formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2) {
+        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
+        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
         const number = this.coerceNumberProperty(value);
 
         if (number === 0) {
@@ -212,8 +220,8 @@ export class PepUtilitiesService {
         } else {
             // return formatNumber(value, this.culture, digitsInfo);
             return new Intl.NumberFormat(this.culture, { 
-                minimumFractionDigits: minFractionDigits || 2,
-                maximumFractionDigits: maxFractionDigits || 2,
+                minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits),
+                maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
             }).format(number)
         }
     }
@@ -293,7 +301,9 @@ export class PepUtilitiesService {
 
     coerceNumberProperty(value: any, fallbackValue = 0): number {
         // If the decimal separator is ',' change it to '.'
-        value = this.changeDecimalSeperator(value);
+        if (value?.length > 0) {
+            value = this.changeDecimalSeperator(value);
+        }
 
         return coerceNumberProperty(value, fallbackValue);
     }
