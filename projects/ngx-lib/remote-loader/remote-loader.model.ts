@@ -21,13 +21,11 @@ export type PepRemoteLoaderOptions = PepRemoteLoaderData & LoadRemoteModuleOptio
 export interface IPepRemoteLoaderParamsOptions {
     name?: string, 
     slugName?: string, 
-    blockType?: PepBlockDataType,
+    blockType?: string,
     addonUUID?: string,
     blockRemoteEntry?: string,
     pagesDevServer?: string
 }
-
-export type PepBlockDataType = 'SettingsBlock' | 'AddonBlock' | 'PageBlock';
 
 export interface IBlockLoaderData {
     relation: NgComponentRelation, 
@@ -37,7 +35,7 @@ export interface IBlockLoaderData {
 
 export interface IAddonBlockLoaderOptions {
     container: ViewContainerRef;
-    blockType?: PepBlockDataType;
+    blockType?: string;
     name: string;
     hostObject?: any;
     hostEventsCallback?: (event: any) => void;

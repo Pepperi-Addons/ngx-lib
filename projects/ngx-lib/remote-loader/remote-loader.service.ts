@@ -1,6 +1,7 @@
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { Injectable } from '@angular/core';
 import { PepAddonService, PepHttpService, PepSessionService} from '@pepperi-addons/ngx-lib';
-import { IPepRemoteLoaderParamsOptions, PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
+import { IPepRemoteLoaderParamsOptions, PepRemoteLoaderOptions } from './remote-loader.model';
 import { IBlockLoaderData } from './remote-loader.model';
 
 @Injectable({ 
@@ -54,7 +55,6 @@ export class PepRemoteLoaderService {
     }
 
     async getBlockRemoteLoaderOptions(options: IPepRemoteLoaderParamsOptions): Promise<PepRemoteLoaderOptions> {
-        // name: string, blockType: PepBlockDataType = 'AddonBlock', addonUUID = '', blockRemoteEntry = '', pagesDevServer = ''
         options.blockType = options.blockType ?? 'AddonBlock';
         options.name = options.name ?? '';
         options.slugName = options.slugName ?? '';
@@ -64,10 +64,13 @@ export class PepRemoteLoaderService {
             if (options.name?.length > 0 || (options.slugName?.length > 0 && options.blockType === 'SettingsBlock')) {
                 const blockLoaderDataUrl = this.getBlockLoaderDataUrl(options);
                 this.httpService.getHttpCall(blockLoaderDataUrl).toPromise().then((data: IBlockLoaderData) => {
-                    resolve(this.getRemoteLoaderOptions(data, options.blockRemoteEntry));
+                    const ngVersionNumber = coerceNumberProperty(data.relation?.SubType?.toLocaleLowerCase().replace('ng', ''), 14);
+                    const type = ngVersionNumber >= 14 ? 'module' : 'script';
+
+                    resolve(this.getRemoteLoaderOptions(data, options.blockRemoteEntry, type));
                 }).catch(err => {
                     reject(`Addon block with name - ${options.name} is not found for type - ${options.blockType}`);
-                }); 
+                });
             } else {
                 if (options.blockType === 'SettingsBlock') {
                     reject(`name is not supplied`);

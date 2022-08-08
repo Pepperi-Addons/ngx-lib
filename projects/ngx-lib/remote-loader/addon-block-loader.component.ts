@@ -1,7 +1,7 @@
 import { WebComponentWrapperOptions } from '@angular-architects/module-federation-tools';
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { IPepRemoteLoaderParamsOptions, PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
+import { IPepRemoteLoaderParamsOptions, PepRemoteLoaderOptions } from './remote-loader.model';
 import { PepRemoteLoaderService } from './remote-loader.service';
 
 @Component({
@@ -16,12 +16,12 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @Input() remoteEntry: string = '';
     @Input() slugName: string = '';
 
-    private _blockType: PepBlockDataType = 'AddonBlock';
+    private _blockType: string = 'AddonBlock';
     @Input() 
-    set blockType(value: PepBlockDataType) {
+    set blockType(value: string) {
         this._blockType = value;
     }
-    get blockType(): PepBlockDataType {
+    get blockType(): string {
         return this._blockType;
     }
 
