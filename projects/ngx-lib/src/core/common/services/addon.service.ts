@@ -1,4 +1,5 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, Injector, Optional, Type } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 import { ActivatedRoute } from '@angular/router';
 import { PepSessionService } from './session.service';
 import { PepFileService } from './file.service';
@@ -160,21 +161,11 @@ export class PepAddonService {
         window.dispatchEvent(customEvent);
     }
 
-    // // Deprecated need to delete in next major.
-    // public static createDefaultMultiTranslateLoader(
-    //     http: HttpClient,
-    //     fileService: PepFileService,
-    //     addonService: PepAddonService,
-    //     addonUUID = ''
-    // ) {
-    //     const ngxLibTranslationResource = addonService.getNgxLibTranslationResource(addonUUID);
-    //     const addonTranslationResource = addonService.getAddonTranslationResource(addonUUID);
-
-    //     return addonService.translateService.createMultiTranslateLoader([
-    //         ngxLibTranslationResource,
-    //         addonTranslationResource
-    //     ]);
-    // }
+    defineCustomElement(elementName: string, component: Type<any>, injector: Injector) {
+        if (!customElements.get(elementName)) {  
+            customElements.define(elementName, createCustomElement(component, {injector: injector}));
+        }
+    }
 
     public static createMultiTranslateLoader(
         addonUUID: string,
