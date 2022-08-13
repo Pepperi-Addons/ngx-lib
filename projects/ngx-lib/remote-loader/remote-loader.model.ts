@@ -33,10 +33,8 @@ export interface IBlockLoaderData {
     addonPublicBaseURL: string
 }
 
-export interface IAddonBlockLoaderOptions {
+export interface IAddonBlockLoaderOptions extends IPepRemoteLoaderParamsOptions {
     container: ViewContainerRef;
-    blockType?: string;
-    name: string;
     hostObject?: any;
     hostEventsCallback?: (event: any) => void;
 }

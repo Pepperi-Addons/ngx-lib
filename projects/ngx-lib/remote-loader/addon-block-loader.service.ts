@@ -17,12 +17,14 @@ export class PepAddonBlockLoaderService {
 
     private loadAddonBlockInternal(options: IAddonBlockLoaderDialogOptions): ComponentRef<PepAddonBlockLoaderComponent> | null {
         if (options.container !== null) {
-            // const factory = this.resolver.resolveComponentFactory(PepAddonBlockLoaderComponent);
             const componentRef = options.container.createComponent(PepAddonBlockLoaderComponent);
             const addonBlockInstance = componentRef.instance;
 
-            addonBlockInstance.blockType = options.blockType || 'AddonBlock';
             addonBlockInstance.name = options.name;
+            addonBlockInstance.slugName = options.slugName;
+            addonBlockInstance.blockType = options.blockType || 'AddonBlock';
+            addonBlockInstance.addonId = options.addonUUID;
+            addonBlockInstance.remoteEntry = options.blockRemoteEntry;
             addonBlockInstance.hostObject = options.hostObject;
 
             addonBlockInstance.hostEvents.subscribe((event) => {

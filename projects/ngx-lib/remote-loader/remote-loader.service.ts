@@ -73,10 +73,10 @@ export class PepRemoteLoaderService {
                 });
             } else {
                 if (options.blockType === 'SettingsBlock') {
-                    reject(`name is not supplied`);
+                    reject(`slugName is not supplied`);
                 }
                 else {
-                    reject(`slugName is not supplied`);
+                    reject(`name is not supplied`);
                 }
             }
         });
