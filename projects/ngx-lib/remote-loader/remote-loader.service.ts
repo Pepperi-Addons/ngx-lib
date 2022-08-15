@@ -69,7 +69,8 @@ export class PepRemoteLoaderService {
 
                     resolve(this.getRemoteLoaderOptions(data, options.blockRemoteEntry, type));
                 }).catch(err => {
-                    reject(`Addon block with name - ${options.name} is not found for type - ${options.blockType}`);
+                    const nameMsg = options.blockType === 'SettingsBlock' ? `slugName - ${options.slugName}` : `name - ${options.name}`
+                    reject(`Block with ${nameMsg} is not found for type - ${options.blockType}`);
                 });
             } else {
                 if (options.blockType === 'SettingsBlock') {
