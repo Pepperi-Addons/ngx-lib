@@ -9,7 +9,7 @@ import {
 import { MatChipInputEvent, } from '@angular/material/chips';
 import { TranslateService } from '@ngx-translate/core';
 import { PepStyleType } from '@pepperi-addons/ngx-lib';
-import { IPepChip, PepChipsOrientationType, PepChipsInputType } from './chips.model';
+import { IPepChip, PepChipsOrientationType, PepChipsInputType, IPepChipSelection } from './chips.model';
 import { PepChipsService } from './chips.service';
 
 
@@ -21,7 +21,7 @@ import { PepChipsService } from './chips.service';
 })
 export class PepChipsComponent implements OnInit, OnDestroy {
     /**
-    * Initial chip list.
+    * The chips within the chip list.
     *    
     * @memberof PepChipsComponent
     */
@@ -78,6 +78,19 @@ export class PepChipsComponent implements OnInit, OnDestroy {
      * @memberof PepButtonComponent
      */
     @Output() fieldClick: EventEmitter<void> = new EventEmitter<void>();
+    @Output() selectionChange: EventEmitter<IPepChipSelection> = new EventEmitter<IPepChipSelection>();
+
+    /**
+     * Selected chip(s)
+     */
+    get selected() {
+        const selected = this.chipsService.selected;        
+        if (this.multiSelect) {
+            return selected.length ? selected : [];
+        } else {
+            return selected.length ? selected[0] : null;
+        }        
+    }
 
     constructor(public chipsService: PepChipsService, private _translate: TranslateService) {
         //
@@ -93,7 +106,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
      */
     addChipsToList(chips: IPepChip[]) {
         chips.forEach(chip => this.chipsService.addChip(chip));
-    }
+    }    
 
     /**
      * On new chip added
@@ -130,6 +143,11 @@ export class PepChipsComponent implements OnInit, OnDestroy {
      */
     onSelectionChanged(isSelected: boolean, chip: IPepChip) {
         chip.selected = isSelected;
+
+        this.selectionChange.emit({
+            value: chip.value,
+            isSelected: isSelected
+        })
     }
 
     /**

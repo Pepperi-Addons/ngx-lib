@@ -58,6 +58,25 @@ export default {
             //     },
             // },
         },
+        regex: {
+            description: 'Regex validation pattern. supports field type \'text\' only.',           
+            table: {
+                type: {
+                    summary: `string | RegExp`
+                },
+                defaultValue: {
+                    summary: null
+                }
+            }            
+        },
+        regexError: {
+            description: 'Regex invalid character error message. if not provided, a default error message will be displayed.',           
+            table: {
+                defaultValue: {
+                    summary: '\"Invalid Character\"'
+                }
+            }
+        },
         valueChange: commonArgTypes.valueChange,
     },
     parameters: {
@@ -75,6 +94,8 @@ export default {
                 'renderError',
                 'renderSymbol',
                 'xAlignment',
+                "regex",
+                "regexError",
                 'valueChange',
             ],
         },

@@ -1,5 +1,8 @@
 export type PepChipsOrientationType = 'horizontal'
 | 'vertical'
+    
+export type PepChipsInputType = 'input'
+| 'select'
 
 export interface IPepChip {
     value: string;
@@ -8,7 +11,7 @@ export interface IPepChip {
     removable?: boolean;
     selectable?: boolean;
 }
-    
-export type PepChipsInputType = 'input'
-| 'select'
-    
+export interface IPepChipSelection {
+    value: string;
+    isSelected: boolean;
+}

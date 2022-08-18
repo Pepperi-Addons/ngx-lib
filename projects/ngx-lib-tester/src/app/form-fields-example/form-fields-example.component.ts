@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { PepSnackBarService } from '@pepperi-addons/ngx-lib/snack-bar';
 import {
@@ -13,16 +13,17 @@ import {
     PepMenuItem,
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
-import { PepSnackBarData } from '@pepperi-addons/ngx-lib/snack-bar';
-import { PepChipsComponent } from '@pepperi-addons/ngx-lib/chips';
-//import { } from '@pepperi-addons/ngx-lib/chips';
+
+import { PepSnackBarData } from 'projects/ngx-lib/snack-bar';
+import { PepChipsComponent } from 'projects/ngx-lib/chips';
 
 @Component({
     templateUrl: './form-fields-example.component.html',
     styleUrls: ['./form-fields-example.component.scss'],
 })
 export class FormFieldsExampleComponent implements OnInit {
-  
+    @ViewChild('chipsComp') chipsComp: PepChipsComponent;
+
     title = 'client-side';
     minDateValue: number;
     maxDateValue: number;
@@ -41,6 +42,7 @@ export class FormFieldsExampleComponent implements OnInit {
 
     textboxFormGroup;
     formattedValue = null;
+
     chips: any[] = [
         {
             value: 'Chair',
@@ -55,6 +57,14 @@ export class FormFieldsExampleComponent implements OnInit {
             selected: true
         }
     ]
+
+    selectedChips(){
+        console.log('selectedChips', this.chipsComp.chips);
+    }
+
+    onSelectionChange(value) {
+        console.log('onSelectionChange', value);
+    }
 
     constructor(
         private snackBarService: PepSnackBarService,
@@ -105,6 +115,8 @@ export class FormFieldsExampleComponent implements OnInit {
         ];
 
         this.dateString = new Date().toUTCString();
+        
+        
     }
 
     menuClicked(event): void {

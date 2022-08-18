@@ -54,7 +54,7 @@ interface IPepFieldBaseOptions {
     maxValue?: number;
     textColor?: string;
     visible?: boolean;    
-    emptyOption?: boolean;
+    emptyOption?: boolean;    
     // lastFocusField?: any;
     digitsNumberAfterDecimalPoint?: number;
 }
@@ -84,7 +84,7 @@ export class PepFieldBase {
     minValue: number;
     maxValue: number;
     textColor: string;
-    visible: boolean;    
+    visible: boolean;        
     // lastFocusField: any;
 
     constructor(options: IPepFieldBaseOptions = {}) {
@@ -129,7 +129,7 @@ export class PepFieldBase {
 
         if (this.maxFieldCharacters > 0) {
             validators.push(Validators.maxLength(this.maxFieldCharacters));
-        }
+        }        
 
         return validators;
     }
@@ -196,17 +196,21 @@ export type PepTextboxFieldType =
     | 'real';
 interface IPepTextboxFieldOptions extends IPepFieldBaseOptions {
     type?: PepTextboxFieldType;
+    regex?: string | RegExp;
 }
 export class PepTextboxField extends PepFieldBase {
     controlType = 'textbox';
     type: PepTextboxFieldType = 'text';
+    regex: string| RegExp;
     digitsNumberAfterDecimalPoint: number = NaN;
 
     constructor(options: IPepTextboxFieldOptions = {}) {
         super(options);
 
         this.type = options.type || 'text';
-        
+        this.regex = options.regex;
+
+
         this.update(options);
     }
 
@@ -245,6 +249,10 @@ export class PepTextboxField extends PepFieldBase {
             if (!isNaN(this.maxValue)) {
                 validators.push(Validators.max(this.maxValue));
             }
+        }
+
+        if (this.type === 'text' && this.regex) {
+            validators.push(Validators.pattern(this.regex));
         }
 
         return validators;

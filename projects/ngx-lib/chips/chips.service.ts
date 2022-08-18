@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { IPepChip } from './chips.model';
 
 @Injectable()
@@ -13,6 +14,10 @@ export class PepChipsService {
 
     get chips() {
         return this._chips;
+    }
+
+    get selected() {
+        return this._chips.filter(chip => chip.selected).map(chip => chip.value);
     }
 
     initData(chips: IPepChip[]) {
