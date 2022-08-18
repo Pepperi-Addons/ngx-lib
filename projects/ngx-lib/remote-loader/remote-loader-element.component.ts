@@ -79,6 +79,9 @@ export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChan
             if (window.location.search.indexOf('dev=true') > 0) {
                 this.options['remoteEntry'] = `http://localhost:4400/${fileName}`;
             }
+
+            // Set the data into the props cause this component is loading from the route.
+            this.props = data;
         }
     }
 
