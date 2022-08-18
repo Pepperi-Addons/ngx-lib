@@ -47,6 +47,7 @@ export class FormFieldsExampleComponent implements OnInit {
     {
         value: 'Table'
     }]
+    regex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;        
     
 
     selectedChips(){
@@ -134,5 +135,13 @@ export class FormFieldsExampleComponent implements OnInit {
         }
 
         this.snackBarService.openDefaultSnackBar(data);
+    }
+
+    durationValidtion(event) {
+        console.log('durationValidtion', event);
+    }
+
+    durationChange(event) {
+        console.log('durationChange', event);
     }
 }

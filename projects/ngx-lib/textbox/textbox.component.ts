@@ -328,11 +328,12 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             minValue: this.minValue,
             maxValue: this.maxValue,
             regex: this.regex
-        });
+        });        
         this.form = this.customizationService.getDefaultFromGroup(
             pepField,
             this.renderError
-        );        
+        );      
+        console.log('this.form', this.form);
     }
 
     ngOnInit(): void {
@@ -363,19 +364,19 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             }
         }
         //flag to indicate whether validation on dirty is required        
-        this.form.addControl('validateOnDirty', new FormControl(this.type === 'text'));
+        this.form.addControl('validateOnDirty', new FormControl(this.type === 'text' || this.type === 'duration'));
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
 
         //load default error text
-        if (this.type === 'text' && this.regex && !this.regexError) {
+        if ((this.type === 'text' || this.type === 'duration') && this.regex && !this.regexError) {
             this.translate.get('MESSAGES.ERROR_INVALID_PATTERN').subscribe(text => this.regexError = text);
         }
 
         this.updateFormFieldValue();
     }
 
-    ngOnChanges(changes: any): void {
+    ngOnChanges(changes: any): void {        
         if (this.standAlone) {
             this.setDefaultForm();
         }

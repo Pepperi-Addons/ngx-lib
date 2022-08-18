@@ -30,7 +30,7 @@
                     <pep-textbox [key]="'percentage'" [label]="'Pepperi percentage'" [type]="'percentage'"
                         [xAlignment]="'left'" [value]="'10'" [mandatory]="true" [disabled]="true">
                     </pep-textbox>
-                    <pep-textbox [key]="'int'" [label]="'Pepperi int'" [type]="'int'" [xAlignment]="'left'"
+                    <pep-textbox [key]="'int'" [label]="'Pepperi int'" [type]="'int'" [xAlignment]="'left'" 
                         [value]="'20302'" [mandatory]="true">
                     </pep-textbox>
                     <pep-textbox [key]="'Email'" [label]="'Pepperi Email'" [type]="'email'" [xAlignment]="'left'"
@@ -39,8 +39,8 @@
                     <pep-textbox [key]="'phone'" [label]="'Pepperi phone'" [type]="'phone'" [xAlignment]="'left'"
                         [value]="'+972-54-3653-445'">
                     </pep-textbox>
-                    <pep-textbox [key]="'duration'" [label]="'Pepperi duration'" [type]="'duration'"
-                        [xAlignment]="'left'" [value]="'6:00:53'">
+                    <pep-textbox [key]="'duration'" [label]="'Pepperi duration'" [type]="'duration'" [regex]="regex" [regexError]="'some errror2'"
+                        [xAlignment]="'left'" [value]="'6:03'" (valueChange)="durationChange($event)">
                     </pep-textbox>
 
                     <!-- Separator Example -->
@@ -62,6 +62,7 @@
                     <pep-date [key]="'dateTime1'" [label]="'Pepperi Date Time'" [type]="'datetime'" [value]="dateString"
                         [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
                     </pep-date>
+                  
                 </div>
 
                 <div class="child2 child-container">
@@ -110,7 +111,7 @@
                     </pep-images-filmstrip>
                     
                     <pep-chips #chipsComp [chips]="chips"  (selectionChange)="onSelectionChange($event)"></pep-chips>
-                    <pep-button (click)="selectedChips()">Selected</pep-button>
+                    <!-- <pep-button (click)="selectedChips()">Selected</pep-button> -->
                 </div>
 
                 <div class="child4 child-container">

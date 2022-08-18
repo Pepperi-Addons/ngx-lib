@@ -251,7 +251,7 @@ export class PepTextboxField extends PepFieldBase {
             }
         }
 
-        if (this.type === 'text' && this.regex) {
+        if ((this.type === 'text' || this.type === 'duration') && this.regex) {            
             validators.push(Validators.pattern(this.regex));
         }
 
