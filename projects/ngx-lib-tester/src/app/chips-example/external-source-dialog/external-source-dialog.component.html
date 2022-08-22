@@ -1,0 +1,15 @@
+<div id="select-dialog" class="dialog">
+    <pep-dialog [title]="'Select Recipients'" [showClose]="true" (close)="onDialogClose()">
+         <ng-container pep-dialog-content>            
+             <pep-select [key]="'multi1'" [type]="'multi'"
+             [xAlignment]="'left'"
+             [options]='[{ "key": "recipient5@gmail.com", "value": "recipient5@gmail.com" }, 
+                { "key": "recipient6@hotmail.com", "value": "recipient6@hotmail.com" }, 
+                { "key": "recipient7@gmail.com", "value": "recipient7@gmail.com" }, 
+                { "key": "recipient8@hotmail.com", "value": "recipient8@hotmail.com" }]'
+             (valueChange)="onValueChanged($event)">
+         </pep-select>
+        </ng-container>       
+     </pep-dialog> 
+ </div>
+ 

@@ -7,7 +7,7 @@
 
         .mat-chip-list-wrapper {
             gap: variables.$spacing-sm;
-            margin: variables.$spacing-sm;       
+            margin: variables.$spacing-sm;               
         
             .pep-chips {    
                 @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-xs);        
@@ -65,8 +65,16 @@
                 flex: unset;
                 width: 100%;
             }
-        }
-    
-        
+        }       
     } 
+
+    ::ng-deep.mat-form-field-flex {
+        padding: 0;
+    }   
+    
+    &.pep-list-static {
+        ::ng-deep.mat-chip-list-wrapper {
+            margin: 0;
+        }   
+    }
 }

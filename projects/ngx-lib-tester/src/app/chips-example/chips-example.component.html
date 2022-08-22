@@ -1,0 +1,17 @@
+<div class="chips-container">    
+    <div>
+        <div class="chips-title">Regular Chips (styleType=regular, multiSelect=true)</div>
+        <pep-chips [chips]="chips" [placeholder]="'Add Recipient'" [multiSelect]="true"
+            (selectionChange)="onSelectionChange($event)"></pep-chips>
+    </div>
+    <div>
+        <div class="chips-title">External Chips (styleType=weak, orientation=vertical)</div>
+        <pep-chips #chipsComp [type]="'select'" [chips]="chips2" [styleType]="'weak'" [orientation] ="'vertical'" [placeholder]="'Add Recipient'" (fieldClick)="externalSourceClicked()"
+            (selectionChange)="onSelectionChange($event)"></pep-chips>
+    </div>
+    <div>
+        <div class="chips-title">Static Chips (styleType=strong)</div>
+        <pep-chips [type]="'none'" [chips]="chips3" [placeholder]="'Add Recipient'" [styleType]="'strong'"
+            (selectionChange)="onSelectionChange($event)"></pep-chips>
+    </div>
+</div>

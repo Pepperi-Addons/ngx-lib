@@ -35,12 +35,13 @@ export default {
             description: 'Data \'Add new chip\' selection type. When \'select\' is choosen, the new data will be sent from external component',
             options: [
                 'input', 
-                'select'
+                'select',
+                'none'
             ],        
             control: { type: 'radio' },    
             table: {
                 type: {
-                    summary: 'input | select',                    
+                    summary: 'input | select | none',                    
                 },
                 defaultValue: { summary: 'input' },
             },
@@ -82,7 +83,7 @@ export default {
             description: 'Add new chip placeholder',
             table: {
                 defaultValue: {
-                    summary: null
+                    summary: '\'Add Chip\''
                 }
             }
         },

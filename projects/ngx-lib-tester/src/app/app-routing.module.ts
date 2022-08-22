@@ -7,6 +7,7 @@ import { QueryBuilderExampleComponent } from './query-builder-example/query-buil
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
 import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
+import { ChipsExampleComponent } from './chips-example/chips-example.component';
 // import * as config from '../../../addon.config.json';
 
 const routes: Routes = [
@@ -33,9 +34,14 @@ const routes: Routes = [
     {
         path: `inline-list-example`,
         component: InlineListExampleComponent
-    }, {
+    }, 
+    {
         path: `top-bar-example`,
         component: TopBarExampleComponent,
+    }, 
+    {
+        path: `chips-example`,
+        component: ChipsExampleComponent,
     },
     {
         path: '**',

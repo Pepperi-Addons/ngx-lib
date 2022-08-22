@@ -3,6 +3,7 @@ export type PepChipsOrientationType = 'horizontal'
     
 export type PepChipsInputType = 'input'
 | 'select'
+| 'none'
 
 export interface IPepChip {
     value: string;

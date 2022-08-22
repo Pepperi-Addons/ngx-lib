@@ -332,8 +332,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         this.form = this.customizationService.getDefaultFromGroup(
             pepField,
             this.renderError
-        );      
-        console.log('this.form', this.form);
+        );              
     }
 
     ngOnInit(): void {

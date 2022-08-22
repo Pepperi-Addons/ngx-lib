@@ -13,6 +13,9 @@ import { FormFieldsExampleComponent } from './form-fields-example/form-fields-ex
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
+import { ChipsExampleComponent } from './chips-example/chips-example.component';
+import { ExternalSourceDialogComponent } from './chips-example/external-source-dialog/external-source-dialog.component';
+
 import { MaterialModule } from './modules/material.module';
 import {
     PepAddonService,
@@ -180,7 +183,9 @@ const pepperiComponentsModules = [
         FormFieldsExampleComponent,
         InlineListExampleComponent,
         ListExampleComponent,
-        TopBarExampleComponent
+        TopBarExampleComponent,
+        ChipsExampleComponent,
+        ExternalSourceDialogComponent
     ],
     imports: [
         CommonModule,
