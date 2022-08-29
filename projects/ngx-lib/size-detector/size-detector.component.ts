@@ -92,7 +92,7 @@ export class PepSizeDetectorComponent implements AfterViewInit {
             const el = this.hostElement.nativeElement.querySelector(
                 `.${this.prefix}${x.id}`
             );
-            const isVisible = window.getComputedStyle(el).display !== 'none';
+            const isVisible = getComputedStyle(el).display !== 'none';
 
             return isVisible;
         });

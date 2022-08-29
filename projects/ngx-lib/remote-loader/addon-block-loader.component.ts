@@ -1,6 +1,7 @@
+import { WebComponentWrapperOptions } from '@angular-architects/module-federation-tools';
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { PepBlockDataType, PepRemoteLoaderOptions } from './remote-loader.model';
+import { IPepRemoteLoaderParamsOptions, PepRemoteLoaderOptions } from './remote-loader.model';
 import { PepRemoteLoaderService } from './remote-loader.service';
 
 @Component({
@@ -11,14 +12,16 @@ import { PepRemoteLoaderService } from './remote-loader.service';
 export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @ViewChild('dialogTemplate', { static: true, read: TemplateRef }) dialogTemplate!: TemplateRef<any>;
     
+    @Input() addonId: string = '';
     @Input() remoteEntry: string = '';
+    @Input() slugName: string = '';
 
-    private _blockType: PepBlockDataType = 'AddonBlock';
+    private _blockType: string = 'AddonBlock';
     @Input() 
-    set blockType(value: PepBlockDataType) {
+    set blockType(value: string) {
         this._blockType = value;
     }
-    get blockType(): PepBlockDataType {
+    get blockType(): string {
         return this._blockType;
     }
 
@@ -48,13 +51,27 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     
     inDialog = false;
     remotePathOptions: PepRemoteLoaderOptions = null;
-    
+    loadElement: boolean = false;
+
+    onHostEventsCallback: (event: CustomEvent) => void;
+
     constructor(private remoteLoaderService: PepRemoteLoaderService) {
-        //
+        this.onHostEventsCallback = (event: CustomEvent) => {
+            this.onHostEvents(event.detail);
+        }
     }
     
     ngOnInit() {
-        this.remoteLoaderService.getBlockRemoteLoaderOptions(this.name, this.blockType, this.remoteEntry).then(options => {
+        const options: IPepRemoteLoaderParamsOptions = {
+            name: this.name,
+            slugName: this.slugName,
+            blockType: this.blockType,
+            addonUUID: this.addonId,
+            blockRemoteEntry: this.remoteEntry
+        };
+
+        this.remoteLoaderService.getBlockRemoteLoaderOptions(options).then((options: PepRemoteLoaderOptions) => {
+            this.loadElement = options.elementName?.length > 0;
             this.remotePathOptions = options;
         });
     }

@@ -156,7 +156,9 @@ export class PepUtilitiesService {
         const div = document.createElement('DIV');
         // div.className = 'svg-icon';
         // Add class svg-icon
-        div.innerHTML = svgContent.replace('<svg ', '<svg class="svg-icon" ');
+        if (svgContent?.length > 0) {
+            div.innerHTML = svgContent.replace('<svg ', '<svg class="svg-icon" ');
+        }
         return (
             div.querySelector('svg') ||
             document.createElementNS('http://www.w3.org/2000/svg', 'path')

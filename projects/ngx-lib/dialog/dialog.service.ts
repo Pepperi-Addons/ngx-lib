@@ -94,11 +94,11 @@ export class PepDialogService {
         return dialogRef;
     }
 
-    openDialog<T>(
+    openDialog<T, D = any, R = any>(
         componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
         data: any = {},
-        config: MatDialogConfig = null
-    ): MatDialogRef<T> {
+        config: MatDialogConfig<D> = null
+    ): MatDialogRef<T, R> {
         if (!config) {
             config = this.getDialogConfig();
         }

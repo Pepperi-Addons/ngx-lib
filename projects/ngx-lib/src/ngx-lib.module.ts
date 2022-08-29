@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { httpInterceptorProviders } from './core/http/interceptors/index';
 
@@ -129,6 +129,7 @@ import {
         PepLayoutService,
         PepPortalService,
         PepScrollToService,
+        FormBuilder
     ]
 })
 export class PepNgxLibModule {

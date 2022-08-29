@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -64,7 +64,9 @@ const pepComponentsModules = [
 ];
 
 import { PepFormComponent } from './form.component';
+import { PepInternalFormComponent } from './internal-form.component';
 import { PepFieldGeneratorComponent } from './field-generator.component';
+import { PepInternalFieldGeneratorComponent } from './internal-field-generator.component';
 import { PepIndicatorsComponent } from './indicators.component';
 import { PepInternalButtonComponent } from './internal-button.component';
 import { PepInternalListComponent } from './internal-list.component';
@@ -97,7 +99,9 @@ import { PepInternalCaruselComponent } from './internal-carusel.component';
     exports: [PepFormComponent],
     declarations: [
         PepFormComponent,
-        PepFieldGeneratorComponent,        
+        PepInternalFormComponent,
+        PepFieldGeneratorComponent,
+        PepInternalFieldGeneratorComponent,
         PepIndicatorsComponent,
         PepInternalButtonComponent,
         PepInternalListComponent,
@@ -105,6 +109,9 @@ import { PepInternalCaruselComponent } from './internal-carusel.component';
         PepInternalPageComponent,
         PepInternalCaruselComponent
     ],
+    providers: [
+        FormBuilder
+    ]
 })
 export class PepFormModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

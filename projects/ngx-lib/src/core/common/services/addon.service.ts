@@ -1,4 +1,5 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, Injector, Optional, Type } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 import { ActivatedRoute } from '@angular/router';
 import { PepSessionService } from './session.service';
 import { PepFileService } from './file.service';
@@ -18,7 +19,7 @@ import { PepTranslateService } from './translate.service';
 })
 export class PepAddonService {
     private readonly PAGES_ADDON_UUID = '50062e0c-9967-4ed4-9102-f2bc50602d41';
-    private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
+    // private readonly ADDON_ASSETS_PATH_KEY = 'AddonAssetsPath';
     private readonly ADDONS_DICTIONARY_ASSETS_PATH_KEY = 'AddonsDictionaryAssetsPath';
     private readonly ADDON_API_RELATIVE_PATH = '/addons/api';
     private readonly ADDON_API_ASYNC_RELATIVE_PATH = `${this.ADDON_API_RELATIVE_PATH}/async`;
@@ -44,23 +45,23 @@ export class PepAddonService {
             : this.ADDON_API_RELATIVE_PATH;
     }
 
-    getAddonStaticFolder(subAddonUUID = ''): string {
-        if (subAddonUUID.length > 0) {
+    getAddonStaticFolder(addonUUID: string): string {
+        // if (addonUUID.length > 0) {
             const addonsDictionary = this.sessionService.getObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY);
-            return addonsDictionary && addonsDictionary[subAddonUUID] ? addonsDictionary[subAddonUUID] : '';
-        } else {
-            return this.sessionService.getObject(this.ADDON_ASSETS_PATH_KEY) || '';
-        }
+            return addonsDictionary && addonsDictionary[addonUUID] ? addonsDictionary[addonUUID] : '';
+        // } else {
+            // return this.sessionService.getObject(this.ADDON_ASSETS_PATH_KEY) || '';
+        // }
     }
 
-    setAddonStaticFolder(path: string, subAddonUUID = ''): void {
-        if (subAddonUUID.length > 0) {
+    setAddonStaticFolder(path: string, addonUUID: string): void {
+        // if (addonUUID.length > 0) {
             const addonsDictionary = this.sessionService.getObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY) ?? {};
-            addonsDictionary[subAddonUUID] = path;
+            addonsDictionary[addonUUID] = path;
             this.sessionService.setObject(this.ADDONS_DICTIONARY_ASSETS_PATH_KEY, addonsDictionary);
-        } else {
-            return this.sessionService.setObject(this.ADDON_ASSETS_PATH_KEY, path);
-        }
+        // } else {
+        //     return this.sessionService.setObject(this.ADDON_ASSETS_PATH_KEY, path);
+        // }
     }
 
     getServerBaseUrl(addonUUID: string, fileName = '', isAsync = false, localhostPort = 4500): string {
@@ -122,8 +123,8 @@ export class PepAddonService {
         });
     }
 
-    getNgxLibTranslationResource(subAddonUUID = '', libName = 'ngx-lib'): ITranslationResource {
-        const addonStaticFolder = this.getAddonStaticFolder(subAddonUUID);
+    getNgxLibTranslationResource(addonUUID: string, libName = 'ngx-lib'): ITranslationResource {
+        const addonStaticFolder = this.getAddonStaticFolder(addonUUID);
         const translationsPath: string = this.fileService.getAssetsTranslationsPath(addonStaticFolder, libName);
         const translationsSuffix: string = this.fileService.getAssetsTranslationsSuffix(libName);
 
@@ -133,8 +134,8 @@ export class PepAddonService {
         };
     }
 
-    getAddonTranslationResource(subAddonUUID = ''): ITranslationResource {
-        const addonStaticFolder = this.getAddonStaticFolder(subAddonUUID);
+    getAddonTranslationResource(addonUUID: string): ITranslationResource {
+        const addonStaticFolder = this.getAddonStaticFolder(addonUUID);
         const defaultSubFolder = 'assets/i18n/';
 
         return {
@@ -151,37 +152,36 @@ export class PepAddonService {
         return this.PAGES_ADDON_UUID;
     }
 
-    // Deprecated need to delete in next major.
-    public static createDefaultMultiTranslateLoader(
-        http: HttpClient,
-        fileService: PepFileService,
-        addonService: PepAddonService,
-        subAddonUUID = ''
-    ) {
-        const ngxLibTranslationResource = addonService.getNgxLibTranslationResource(subAddonUUID);
-        const addonTranslationResource = addonService.getAddonTranslationResource(subAddonUUID);
+    setShellRouterData(data: { addPadding?: boolean, showSidebar?: boolean, showHeader?: boolean }) {
+        const eventData = {
+            detail: data,
+        };
 
-        return addonService.translateService.createMultiTranslateLoader([
-            ngxLibTranslationResource,
-            addonTranslationResource
-        ]);
+        const customEvent = new CustomEvent('set-router-data', eventData);
+        window.dispatchEvent(customEvent);
+    }
+
+    defineCustomElement(elementName: string, component: Type<any>, injector: Injector) {
+        if (!customElements.get(elementName)) {  
+            customElements.define(elementName, createCustomElement(component, {injector: injector}));
+        }
     }
 
     public static createMultiTranslateLoader(
+        addonUUID: string,
         addonService: PepAddonService,
         libsName = ['ngx-lib'],
-        subAddonUUID = ''
     ) {
         const ngxLibTranslationResources = [];
 
         if (libsName?.length > 0) {
             for (let index = 0; index < libsName.length; index++) {
                 const libName = libsName[index];
-                ngxLibTranslationResources.push(addonService.getNgxLibTranslationResource(subAddonUUID, libName));
+                ngxLibTranslationResources.push(addonService.getNgxLibTranslationResource(addonUUID, libName));
             }
         }
 
-        const addonTranslationResource = addonService.getAddonTranslationResource(subAddonUUID);
+        const addonTranslationResource = addonService.getAddonTranslationResource(addonUUID);
 
         return addonService.translateService.createMultiTranslateLoader([
             ...ngxLibTranslationResources,

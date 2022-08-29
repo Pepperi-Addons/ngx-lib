@@ -11,7 +11,6 @@ import {
     ViewChild,
     AfterViewInit,
 } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { PepInternalCaruselService } from './internal-carusel.service';
 
 import {
@@ -83,7 +82,6 @@ export class PepInternalCaruselComponent implements OnInit, AfterViewInit {
     PepScreenSizeType = PepScreenSizeType;
 
     constructor(
-        protected fb: FormBuilder,
         private layoutService: PepLayoutService,
         private internalCaruselService: PepInternalCaruselService
     ) { }

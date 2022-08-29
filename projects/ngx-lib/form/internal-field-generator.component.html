@@ -1,0 +1,134 @@
+<ng-container [ngSwitch]="field.controlType" [formGroup]="form">
+
+    <pep-address *ngSwitchCase="'address'" [form]="form" [key]="field.key" [formattedValue]="field.formattedValue"
+        [label]="field.label" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [groupFields]="field.groupFields"
+        [layoutType]="layoutType" [visible]="field.visible" (addressValueChange)="onAddressValueChanged($event, field)">
+    </pep-address>
+
+    <pep-attachment *ngSwitchCase="'attachment'" [form]="form" [key]="field.key" [src]="field.value"
+        [label]="field.label" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [isActive]="isActive" [showTitle]="showTitle"
+        [layoutType]="layoutType" [visible]="field.visible" (elementClick)="onClick($event)"
+        (fileChange)="onFileChanged($event, field)">
+    </pep-attachment>
+
+    <pep-checkbox *ngSwitchCase="'checkbox'" [form]="form" [key]="field.key"
+        [value]="(field.value | lowercase) == 'true' || field.value == '1' ? true : false" [label]="field.label"
+        [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [additionalValue]="field.additionalValue"
+        [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
+        (valueChange)="onValueChanged($event, field)" [isActive]="isActive">
+    </pep-checkbox>
+
+    <pep-date *ngSwitchCase="'date'" [form]="form" [key]="field.key" [value]="field.value"
+        [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type" [mandatory]="field.mandatory"
+        [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [minValue]="field.minValue"
+        [maxValue]="field.maxValue" [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
+        (valueChange)="onValueChanged($event, field)" [isActive]="isActive">
+    </pep-date>
+
+    <pep-images-filmstrip *ngSwitchCase="'images'" [uid]="uid" [form]="form" [key]="field.key" [label]="field.label"
+        [showTitle]="showTitle" [rowSpan]="field.rowSpan" [value]="field.value" [layoutType]="layoutType">
+    </pep-images-filmstrip>
+
+    <pep-image *ngSwitchCase="'image'" [uid]="uid" [form]="form" [key]="field.key" [src]="field.formattedValue"
+        [srcLarge]="field.value" [options]="field.options" [label]="field.label" [mandatory]="field.mandatory"
+        [disabled]="field.disabled" [readonly]="field.readonly" [xAlignment]="field.xAlignment"
+        [rowSpan]="field.rowSpan" [indicatorsField]="field.indicatorsField" [menuField]="field.menuField"
+        [hasCampaignField]="field.hasCampaignField" [sizeLimitMB]="field.sizeLimitMB" [isActive]="isActive"
+        [layoutType]="layoutType" [visible]="field.visible" (elementClick)="onClick($event)"
+        (fileChange)="onFileChanged($event, field)">
+    </pep-image>
+
+    <pep-quantity-selector *ngSwitchCase="'qs'" [form]="form" [key]="field.key" [value]="field.value"
+        [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type" [mandatory]="field.mandatory"
+        [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [allowDecimal]="field.allowDecimal"
+        [additionalValue]="field.additionalValue" [notificationInfo]="field.notificationInfo" [isActive]="isActive"
+        [layoutType]="layoutType" [showTitle]="showTitle" [visible]="field.visible"
+        [minFractionDigits]="field.digitsNumberAfterDecimalPoint"
+        (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
+        (elementClick)="onClick($event)">
+    </pep-quantity-selector>
+
+    <pep-rich-html-textarea *ngSwitchCase="'richhtmltextarea'" [form]="form" [key]="field.key" [value]="field.value"
+        [label]="field.label" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [maxFieldCharacters]="field.maxFieldCharacters" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
+        [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
+        (valueChange)="onValueChanged($event, field)" [isActive]="isActive">
+    </pep-rich-html-textarea>
+
+    <pep-select *ngSwitchCase="'select'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
+        [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [options]="field.options" [showTitle]="showTitle"
+        [layoutType]="layoutType" [visible]="field.visible" (valueChange)="onValueChanged($event, field)"
+        (formValidationChange)="onFormValidationChanged($event)" [isActive]="isActive">
+    </pep-select>
+
+    <pep-separator *ngSwitchCase="'separator'" [form]="form" [key]="field.key" [label]="field.label"
+        [xAlignment]="field.xAlignment" [layoutType]="layoutType" [visible]="field.visible">
+    </pep-separator>
+
+    <pep-signature *ngSwitchCase="'signature'" [form]="form" [key]="field.key" [src]="field.value" [label]="field.label"
+        [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [isActive]="isActive" [layoutType]="layoutType"
+        [visible]="field.visible" (fileChange)="onFileChanged($event, field)">
+    </pep-signature>
+
+    <pep-textarea *ngSwitchCase="'textarea'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
+        [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
+        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
+        (valueChange)="onValueChanged($event, field)" [isActive]="isActive">
+    </pep-textarea>
+
+    <pep-textbox *ngSwitchCase="'textbox'" [form]="form" [key]="field.key" [value]="field.value"
+        [formattedValue]="field.formattedValue" [accessory]="field.accessory" [label]="field.label" [placeholder]="field.placeholder"
+        [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
+        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
+        [minFractionDigits]="field.digitsNumberAfterDecimalPoint"
+        (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
+        [isActive]="isActive" [visible]="field.visible">
+    </pep-textbox>
+
+    <pep-link *ngSwitchCase="'link'" [form]="form" [key]="field.key" [value]="field.value"
+        [formattedValue]="field.formattedValue" [label]="field.label" [placeholder]="field.placeholder"
+        [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
+        [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
+        [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
+        (valueChange)="onValueChanged($event, field)" [isActive]="isActive" [visible]="field.visible"
+        (formValidationChange)="onFormValidationChanged($event)" (elementClick)="onClick($event)">
+    </pep-link>
+
+    <pep-indicators *ngSwitchCase="'indicators'" [key]="field.key" [value]="field.value" [layoutType]="layoutType">
+    </pep-indicators>
+    <pep-internal-button *ngSwitchCase="'button'" [form]="form" [key]="field.key" [value]="field.value"
+        [formattedValue]="field.formattedValue" [label]="field.label"
+        [referenceObjectInternalType]="field.referenceObjectInternalType" [type]="field.type"
+        [disabled]="field.disabled" [readonly]="field.readonly" [xAlignment]="field.xAlignment"
+        [layoutType]="layoutType" [visible]="field.visible" (elementClick)="onClick($event)"
+        (valueChange)="onValueChanged($event, field)">
+    </pep-internal-button>
+    <pep-internal-menu *ngSwitchCase="'menu'" [key]="field.key" [label]="field.label" [disabled]="field.disabled"
+        [xAlignment]="field.xAlignment" [options]="field.options" [layoutType]="layoutType"
+        (elementClick)="onClick($event)">
+    </pep-internal-menu>
+    <!-- 
+        comment for not cause a circular reference.
+        <pep-internal-page *ngSwitchCase="'internalPage'" [field]="field" [layoutType]="layoutType"
+            (internalFormFieldClick)="onInternalFormFieldClick($event)"
+            (internalFormFieldChange)="onInternalFormFieldChanged($event)">
+        </pep-internal-page>
+
+        <pep-internal-carusel *ngSwitchCase="'internalCarusel'" [field]="field"
+            (internalFormFieldClick)="onInternalFormFieldClick($event)"
+            (internalFormFieldChange)="onInternalFormFieldChanged($event)">
+        </pep-internal-carusel> 
+    -->
+
+    <ng-container *ngSwitchCase="'placeholder'">
+    </ng-container>
+</ng-container>

@@ -103,7 +103,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Adding chip(s) to current chip list
+     * Adding chip(s) to current chips list
      * @param chips Chip(s) to add
      */
     addChipsToList(chips: IPepChip[]) {
@@ -145,6 +145,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
      */
     onSelectionChanged(isSelected: boolean, chip: IPepChip) {
         chip.selected = isSelected;
+
         this.selectionChange.emit({
             value: chip.value,
             isSelected: isSelected

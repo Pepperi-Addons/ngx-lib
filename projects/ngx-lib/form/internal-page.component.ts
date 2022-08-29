@@ -12,7 +12,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
 } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { PepInternalPageService } from './internal-page.service';
 
 import {
@@ -100,11 +100,9 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
     defaultRowSpan = -1;
 
     constructor(
-        protected fb: FormBuilder,
         private dialogService: PepDialogService,
         private internalPageService: PepInternalPageService,
         public customizationService: PepCustomizationService,
-        private elementRef: ElementRef,
         private changeDetectorRef: ChangeDetectorRef
     ) { }
 

@@ -12,7 +12,6 @@ export interface IPepChip {
     removable?: boolean;
     selectable?: boolean;
 }
-   
 export interface IPepChipSelection {
     value: string;
     isSelected: boolean;

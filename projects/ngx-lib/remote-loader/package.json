@@ -3,11 +3,13 @@
       "lib": {
           "entryFile": "public-api.ts",
           "umdModuleIds": {
-              "@angular-architects/module-federation": "module-federation"
+              "@angular-architects/module-federation": "module-federation",
+              "@angular-architects/module-federation-tools": "module-federation-tools"
           }
       }
   },
   "peerDependencies": {
-      "@angular-architects/module-federation": ">= ^12.5.3"
-  }
+      "@angular-architects/module-federation": ">= 14.3.0",
+      "@angular-architects/module-federation-tools": ">= 14.3.10"
+    }
 }

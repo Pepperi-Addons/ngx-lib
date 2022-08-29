@@ -169,8 +169,9 @@ import {
         pepperiComponentsModules,
         TranslateModule.forRoot({
             loader: {
-                provide: TranslateLoader,
-                useFactory: PepAddonService.createMultiTranslateLoader,
+                provide: TranslateLoader,              
+                useFactory: (addonService: PepAddonService) => 
+                    PepAddonService.createMultiTranslateLoader('', addonService, ['ngx-lib']),
                 deps: [PepAddonService],
             },
         }),
@@ -182,7 +183,6 @@ export class PepUIModule {
         translate: TranslateService,
         private pepIconRegistry: PepIconRegistry,
         private pepAddonService: PepAddonService
-
     ) {
         this.pepIconRegistry.registerIcons(pepIcons);
         this.pepAddonService.setDefaultTranslateLang(translate);

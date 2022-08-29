@@ -28,6 +28,7 @@ export class PepGroupButtonsComponent implements OnDestroy {
     @Input() sizeType: PepSizeType = 'md';
     @Input() buttons: Array<PepButton> = [];
     @Input() buttonsDisabled = false;
+    @Input() supportUnselect = false;
     @Input() selectedButtonKey = '';
     @Input() stretch = false;
 
@@ -47,11 +48,13 @@ export class PepGroupButtonsComponent implements OnDestroy {
         // }
     }
 
-    onButtonClicked(event: Event, button: PepButton): void {
-        this.selectedButtonKey = button?.key;
+    onButtonClicked(event: Event, button: PepButton): void {       
+        const unselect: boolean = this.supportUnselect && this.selectedButtonKey === button?.key;
 
+        this.selectedButtonKey = unselect ? '' : button?.key;
+        
         const buttonClick = {
-            source: button,
+            source: unselect ? null : button, 
             event,
         };
 

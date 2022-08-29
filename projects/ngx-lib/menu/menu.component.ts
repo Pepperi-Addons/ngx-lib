@@ -214,4 +214,14 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
             this.stateChange.emit({ state: this.state });
         }
     }
+
+    onMenuOpened() {
+        this.state = 'visible';
+        this.stateChange.emit({ state: this.state });
+    }
+
+    onMenuClosed() {
+        this.state = 'hidden';
+        this.stateChange.emit({ state: this.state });
+    }
 }

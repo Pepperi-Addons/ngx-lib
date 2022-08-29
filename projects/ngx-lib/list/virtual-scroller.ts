@@ -622,21 +622,23 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 
 		this.isAngularUniversalSSR = isPlatformServer(platformId);
 
-		this.checkResizeInterval = options.checkResizeInterval;
-		this.modifyOverflowStyleOfParentScroll = options.modifyOverflowStyleOfParentScroll;
-		this.resizeBypassRefreshThreshold = options.resizeBypassRefreshThreshold;
-		this.scrollAnimationTime = options.scrollAnimationTime;
-		this.scrollDebounceTime = options.scrollDebounceTime;
-		this.scrollThrottlingTime = options.scrollThrottlingTime;
-		this.scrollbarHeight = options.scrollbarHeight;
-		this.scrollbarWidth = options.scrollbarWidth;
-		this.stripedTable = options.stripedTable;
+		const defaultOptions = VIRTUAL_SCROLLER_DEFAULT_OPTIONS_FACTORY();
+
+		this.checkResizeInterval = options?.checkResizeInterval || defaultOptions.checkResizeInterval;
+		this.modifyOverflowStyleOfParentScroll = options?.modifyOverflowStyleOfParentScroll || defaultOptions.modifyOverflowStyleOfParentScroll;
+		this.resizeBypassRefreshThreshold = options?.resizeBypassRefreshThreshold || defaultOptions.resizeBypassRefreshThreshold;
+		this.scrollAnimationTime = options?.scrollAnimationTime || defaultOptions.scrollAnimationTime;
+		this.scrollDebounceTime = options?.scrollDebounceTime || defaultOptions.scrollDebounceTime;
+		this.scrollThrottlingTime = options?.scrollThrottlingTime || defaultOptions.scrollThrottlingTime;
+		this.scrollbarHeight = options?.scrollbarHeight || defaultOptions.scrollbarHeight;
+		this.scrollbarWidth = options?.scrollbarWidth || defaultOptions.scrollbarWidth;
+		this.stripedTable = options?.stripedTable || defaultOptions.stripedTable;
 
 		this.horizontal = false;
 		this.resetWrapGroupDimensions();
 	}
 
-	protected getElementSize(element: HTMLElement): ClientRect {
+	protected getElementSize(element: HTMLElement): any {
 		const result = element.getBoundingClientRect();
 		const styles = getComputedStyle(element);
 		const marginTop = parseInt(styles['margin-top'], 10) || 0;

@@ -20,14 +20,14 @@
         <span *ngIf="!mandatory"></span>
     </ng-template>
     <ng-template #titleTemplate>
-        <mat-label *ngIf="showTitle" [title]="label" class="body-xs">
+        <mat-label *ngIf="showTitle" [title]="label" class="body-{{fontBodyType}}">
             {{ label }}
         </mat-label>
         <!-- For the grid template () -->
         <span *ngIf="!showTitle"></span>
     </ng-template>
     <ng-template #hintTemplate>
-        <span class="body-xs color-dimmed">
+        <span class="body-{{fontBodyType}} color-dimmed">
             <ng-container *ngIf="hint?.length > 0 then hintTextTemplate else maxCharactersTemplate"></ng-container>
             <ng-template #hintTextTemplate>
                 &nbsp;{{ hint }}

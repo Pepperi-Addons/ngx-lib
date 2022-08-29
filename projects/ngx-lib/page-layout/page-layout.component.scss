@@ -3,11 +3,11 @@
 :host {
     &.pep-page-layout {
         display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: auto 1fr auto;
         grid-template-areas: 
-            "header-layout  header-layout"
-            "side-layout    main-layout";
+            "header-layout  header-layout   header-layout"
+            "side-layout    main-layout     side-layout-end";
 
         height: 100%;
         width: 100%;
@@ -15,17 +15,37 @@
 
         .pep-page-header-layout {
             grid-area: header-layout;
-            z-index: 10;
+            z-index: variables.$z-index-lowest + 9;
         }
 
         .pep-page-side-layout {
             grid-area: side-layout;
             overflow: hidden;
             height: 100%;
-            z-index: 5;
+            z-index: variables.$z-index-lowest + 4;
 
             &.show-shadow {
-                padding-inline-end: variables.$content-padding;
+                [pep-side-area],
+                pep-side-bar {
+                    padding-inline-end: variables.$content-padding;
+                }
+            }
+
+            &.side-layout-end {
+                grid-area: side-layout-end;
+                
+                &.show-shadow {
+                    [pep-side-area-end],
+                    pep-side-bar[position='end'] {
+                        padding-inline-start: variables.$content-padding;
+                        padding-inline-end: unset;
+                    }
+                }
+            }
+
+            ::ng-deep div[pep-side-area],
+            ::ng-deep div[pep-side-area-end] {
+                height: inherit;
             }
         }
 
@@ -33,7 +53,7 @@
             grid-area: main-layout;
             overflow: hidden;
             height: 100%;
-            z-index: 1;
+            z-index: variables.$z-index-lowest;
             
             padding-bottom: variables.$footer-bar-height; // In case that the fixed footer is shown (the footer is in the top bar component).
             

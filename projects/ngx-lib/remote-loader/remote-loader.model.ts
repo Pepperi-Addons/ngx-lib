@@ -1,37 +1,40 @@
-import { LoadRemoteModuleOptions } from "@angular-architects/module-federation"
+import { LoadRemoteModuleOptions } from "@angular-architects/module-federation";
 import { ViewContainerRef } from "@angular/core";
 import { MatDialogConfig } from "@angular/material/dialog";
 import { PepDialogSizeType } from "@pepperi-addons/ngx-lib/dialog";
-import { NgComponentRelation } from "@pepperi-addons/papi-sdk";
+import { InstalledAddon, NgComponentRelation } from "@pepperi-addons/papi-sdk";
 
 type PepRemoteLoaderData = {
-    componentName: string;
-    addonId: string;
-    update?: boolean;
-    noModule?: boolean;
-    // title: string;
-    // moduleData?: object;
-    // visibleEndpoint?: string;
-    // multiSelection?: boolean | string ;
-    // confirmation?: boolean;
-    // type: string | string[];
-    // subType: string | string[];
-    // [key:string]: any; // If anyone will need it then add it!!!
+    addonId?: string;
+    componentName?: string;
+    // For web components
+    elementName?: string;
+    
+    // displayName?: string;
+    // Maybe those properties are not in use so we need to remove them.
+    // update?: boolean;
+    // noModule?: boolean;
 }
 
-export type PepRemoteLoaderOptions = LoadRemoteModuleOptions & PepRemoteLoaderData;
+export type PepRemoteLoaderOptions = PepRemoteLoaderData & LoadRemoteModuleOptions;
 
-export type PepBlockDataType = 'SettingsBlock' | 'AddonBlock' | 'PageBlock';
+export interface IPepRemoteLoaderParamsOptions {
+    name?: string, 
+    slugName?: string, 
+    blockType?: string,
+    addonUUID?: string,
+    blockRemoteEntry?: string,
+    pagesDevServer?: string
+}
 
 export interface IBlockLoaderData {
     relation: NgComponentRelation, 
+    addon: InstalledAddon,
     addonPublicBaseURL: string
 }
 
-export interface IAddonBlockLoaderOptions {
+export interface IAddonBlockLoaderOptions extends IPepRemoteLoaderParamsOptions {
     container: ViewContainerRef;
-    blockType?: PepBlockDataType;
-    name: string;
     hostObject?: any;
     hostEventsCallback?: (event: any) => void;
 }

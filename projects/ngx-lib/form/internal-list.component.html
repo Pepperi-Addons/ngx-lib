@@ -59,7 +59,7 @@
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
                 <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
                     <!-- [canEditObject]="!disabled && item?.IsEditable" -->
-                    <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item"
+                    <pep-internal-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item"
                         [canEditObject]="!disabled" [objectId]="objectId" [parentId]="parentId"
                         [searchCode]="searchCode" [lockEvents]="disableSelectionItems" [layoutType]="'table'"
                         [isActive]="
@@ -67,7 +67,7 @@
                                 item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                             " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
                         (click)="itemClicked($event, item)">
-                    </pep-form>
+                    </pep-internal-form>
                 </fieldset>
             </div>
         </ng-container>
@@ -82,14 +82,14 @@
                     }" class="pull-left flip"
                 [ngStyle]="{ height: calculatedObjectHeight, visibility: showItems || item ? 'visible' : 'hidden' }">
                 <!-- [canEditObject]="!disabled && item?.IsEditable" -->
-                <pep-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item"
+                <pep-internal-form [checkForChanges]="checkForChanges" [layout]="uiControl" [data]="item"
                     [canEditObject]="!disabled" [objectId]=" objectId" [parentId]="parentId" [searchCode]="searchCode"
                     [lockEvents]="disableSelectionItems" [layoutType]="'card'" [isActive]="
                             (item?.UID + SEPARATOR + item?.Type === selectedItemId ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId) && deviceHasMouse
                         " (valueChange)="onValueChanged($event)" (fieldClick)="onCustomizeFieldClick($event)"
                     (click)="itemClicked($event, item)">
-                </pep-form>
+                </pep-internal-form>
             </div>
         </ng-container>
     </ng-container>

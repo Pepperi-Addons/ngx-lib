@@ -4,24 +4,28 @@
     <ng-template #largeScreensBlock>
         <div class="toggle-side-bar-container" [ngClass]="{ 'is-open-state': !showToggle || state === 'open'}">
             <ng-container *ngTemplateOutlet="sideLayoutTemplate"></ng-container>
-            <div class="toggle-button-border"></div>
-            <button mat-button *ngIf="showToggle" class="toggle-button pep-button xs regular icon-button " (click)="toggleSideWrapper()">
-                <mat-icon>
-                    <pep-icon [name]="toggleButtonArrowName">
-                    </pep-icon>
-                </mat-icon>
-            </button>
+            <ng-container *ngTemplateOutlet="toggleButtonTemplate"></ng-container>
         </div>
     </ng-template>
     <ng-template #notLargeScreensBlock>
         <mat-sidenav-container [hasBackdrop]="true">
-            <mat-sidenav #sidenav mode="over" autoFocus="false" fixedInViewport="false"
+            <mat-sidenav #sidenav [position]="position" mode="over" autoFocus="false" fixedInViewport="false"
                 (openedChange)="toggleSidenav($event)">
                 <ng-container *ngTemplateOutlet="sideLayoutTemplate"></ng-container>
             </mat-sidenav>
         </mat-sidenav-container>
     </ng-template>
 </div>
+
+<ng-template #toggleButtonTemplate>
+    <div class="toggle-button-border"></div>
+    <button mat-button *ngIf="showToggle" class="toggle-button pep-button xs regular icon-button " (click)="toggleSideWrapper()">
+        <mat-icon>
+            <pep-icon [name]="toggleButtonArrowName">
+            </pep-icon>
+        </mat-icon>
+    </button>
+</ng-template>
 
 <ng-template #sideLayoutTemplate>
     <div class="side-layout">
