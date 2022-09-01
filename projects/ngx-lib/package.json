@@ -12,6 +12,8 @@
         "@angular/material": ">= 14.0.2",
         "@angular/platform-browser": ">= 14.0.2",
         "@angular/platform-browser-dynamic": ">= 14.0.2",
+        "@angular-architects/module-federation": ">= ^14.3.8",
+        "@angular-architects/module-federation-tools": ">= ^14.3.10",
         "@ngx-translate/core": ">= 14.0.0",
         "@ngx-translate/http-loader": ">= 7.0.0",
         "ngx-translate-multi-http-loader": ">= 3.0.0",
