@@ -567,14 +567,14 @@
 }
 
 // -----------------------------------------------------
-// Override bootstrap css.
+// Override bootstrap css. !!!!remove this!!!!
 // -----------------------------------------------------
-.modal {
-    z-index: variables.$z-index-high;
-}
-.modal-backdrop {
-    z-index: variables.$z-index-high - 2;
-}
+// .modal {
+//     z-index: variables.$z-index-high;
+// }
+// .modal-backdrop {
+//     z-index: variables.$z-index-high - 2;
+// }
 
 @mixin declare-system-base-theme() {
     .header-content {
