@@ -85,12 +85,14 @@
 
     &.inline {
         position: inherit;
-        height: calc(#{variables.$top-bar-spacing-bottom} + #{variables.$top-bar-field-height});
+        // height: calc(#{variables.$top-bar-spacing-bottom} + #{variables.$top-bar-field-height});
+        height: variables.$top-bar-field-height;
         width: 100%;
         
         .header-content {
             margin-top: 0;
-            height: variables.$top-bar-field-height;
+            // height: variables.$top-bar-field-height;
+            height: inherit;
             padding: 0;
             position: inherit;
             width: inherit;
