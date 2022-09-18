@@ -461,6 +461,13 @@ export const pepIconSystemMap: {
   name: 'system_map',
   data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M8.958 20l-.073-.006a.985.985 0 01-.14-.027l-.03-.008a.855.855 0 01-.08-.027l-.006-.004-5-2A1 1 0 013 17V5a1 1 0 011.371-.928l4.66 1.863 5.653-1.884.01-.003a.997.997 0 01.086-.024l-.096.027a1.024 1.024 0 01.206-.046l.03-.002a.85.85 0 01.086-.004H15.042a.984.984 0 01.213.034l.03.008a.855.855 0 01.08.027l.006.004 5 2A1 1 0 0121 7v12a1 1 0 01-1.371.928l-4.661-1.864-5.652 1.885-.01.003a.997.997 0 01-.086.024l.096-.027a1.024 1.024 0 01-.206.046l-.03.002a.85.85 0 01-.086.004H8.958zM14 6.387l-4 1.334v9.892l4-1.334V6.387zm-9 .09v9.846l3 1.2V7.677l-3-1.2zm11 0v9.846l3 1.2V7.677l-3-1.2z"/></svg>`
 };
+export const pepIconSystemMegaphone: {
+  name: 'system_megaphone';
+  data: string;
+} = {
+  name: 'system_megaphone',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 3.603a3 3 0 013 3v8.794a3 3 0 01-3.773 2.898l-2.764-.737-1.587 2.803a1 1 0 01-1.128.474l-6.01-1.603a1 1 0 01-.716-.739L5.206 15H4.5A2.5 2.5 0 012 12.5v-3A2.5 2.5 0 014.5 7h1.238a1 1 0 00.258-.034l12.231-3.261A3 3 0 0119 3.603zM7.352 15.395l.481 2.059 4.684 1.249.949-1.678-6.114-1.63zM19 5.603a1 1 0 00-.258.034L6.511 8.899A3 3 0 015.738 9H4.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h1.238l.167.004a.994.994 0 01.445.059c.054.011.107.024.16.038l12.232 3.262A1 1 0 0020 15.397V6.603a1 1 0 00-1-1z"/></svg>`
+};
 export const pepIconSystemMenuDots: {
   name: 'system_menu_dots';
   data: string;
@@ -794,6 +801,7 @@ export type PepIconType =
   | 'system_inventory'
   | 'system_link'
   | 'system_map'
+  | 'system_megaphone'
   | 'system_menu_dots'
   | 'system_menu'
   | 'system_move'
