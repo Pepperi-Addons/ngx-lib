@@ -6,8 +6,8 @@
     },
     "peerDependencies": {
         "@angular/material-moment-adapter": ">= 14.0.2",
-        "@mat-datetimepicker/core": ">= 9.0.68",
-        "@mat-datetimepicker/moment": ">= 9.0.68",
+        "@mat-datetimepicker/core": ">= 10.0.2",
+        "@mat-datetimepicker/moment": ">= 10.0.2",
         "@ngx-translate/core": "^14.0.0",
         "moment": ">= 2.26.0"
     }
