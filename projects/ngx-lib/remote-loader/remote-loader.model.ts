@@ -27,9 +27,10 @@ export interface IPepRemoteLoaderParamsOptions {
     pagesDevServer?: string
 }
 
+// This is copy of Pages interface.
 export interface IBlockLoaderData {
     relation: NgComponentRelation, 
-    addon: InstalledAddon,
+    addon?: InstalledAddon,
     addonPublicBaseURL: string
 }
 
