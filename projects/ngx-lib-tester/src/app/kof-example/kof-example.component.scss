@@ -239,3 +239,16 @@ hr {
 .rotate3d {
     transform: rotate3d(50, 50, 50, 15deg);
 }
+.size-it {
+    height: 4rem;
+    width: 100%;
+}
+.state-is-weak {
+    @include mixins.pep-button-states;
+}
+.state-is-regular {
+    @include mixins.pep-button-states(regular);
+}
+.state-is-strong {
+    @include mixins.pep-button-states(strong);
+}
