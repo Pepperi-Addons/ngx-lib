@@ -1,5 +1,6 @@
 @use "../../../../ngx-lib/src/core/style/abstracts/functions";
 @use "../../../../ngx-lib/src/core/style/abstracts/variables";
+@use "../../../../ngx-lib/src/core/style/abstracts/mixins";
 
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 
@@ -38,12 +39,19 @@ em {
 .set-grid {
     display: flex;
     flex-direction: column;
-    --set-grid-bg: rgb(240, 227, 240);
+    --set-grid-bg: rgb(230, 230, 230);
     --set-grid-lines: rgb(240, 197, 209);
     background-color: var(--set-grid-bg);
     opacity: 0.8;
-    background-image: linear-gradient(var(--set-grid-lines) 1px, transparent 1px),
-        linear-gradient(to right, var(--set-grid-lines) 1px, var(--set-grid-bg) 1px);
+    background-image: linear-gradient(
+            var(--set-grid-lines) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to right,
+            var(--set-grid-lines) 1px,
+            var(--set-grid-bg) 1px
+        );
     background-size: 1rem 1rem;
     border-radius: variables.$border-radius-md;
     padding: 1rem;
@@ -56,6 +64,11 @@ em {
 .side-grid {
     display: flex;
     flex-direction: row;
+    gap: 0.5rem;
+}
+.side-grid-col {
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
 }
 @mixin this-grid() {
@@ -195,7 +208,9 @@ em {
 // }
 hr {
     width: 100%;
-    border-color: functions.get-pep-color(color-text, color-dimmed);
+    height: 1px;
+    border: none;
+    background-color: functions.get-pep-color(color-system-primary, color-tran-70);
     margin-block: 1rem;
 }
 
