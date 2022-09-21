@@ -16,10 +16,11 @@ p {
 }
 code {
     letter-spacing: -0.0125em;
-    font-size: 95%;
-    padding: 0.3em 0.5em;
-    background: functions.get-pep-color(color-user-primary, color-tran-20);
-    border-radius: variables.$border-radius-sm;
+    font-size: 90%;
+    padding: 0.25em 0.4em;
+    background: functions.get-pep-color(color-user-primary, color-tran-50);
+    border-radius: variables.$border-radius-md;
+    width: fit-content;
 }
 em {
     font-style: normal;
