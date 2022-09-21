@@ -23,6 +23,7 @@ import {
 export class PepSeparatorComponent implements OnInit {
     @Input() key = '';
     @Input() label = '';
+    @Input() description = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
 
     controlType = 'separator';

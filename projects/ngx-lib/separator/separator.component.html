@@ -2,6 +2,9 @@
     <div class="pep-separator-field wrap pep-border-bottom align-{{ xAlignment }}" title="{{ label }}">
         <span class="block-with-text body-md">{{ label }}</span>
     </div>
+    <div *ngIf="description" class="pep-separator-description">
+        {{description}}
+    </div>
 </ng-container>
 
 <ng-container *ngIf="layoutType === 'card'">
