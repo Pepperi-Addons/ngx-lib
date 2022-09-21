@@ -553,11 +553,11 @@ export class PepCustomizationService {
 
     getUserSecondaryColorsVariables(themeVars: any): void {
         themeVars[PepCustomizationService.COLOR_USER_SECONDARY_KEY + '-h'] =
-            '77';
+            '36';
         themeVars[PepCustomizationService.COLOR_USER_SECONDARY_KEY + '-s'] =
-            '87%';
+            '100%';
         themeVars[PepCustomizationService.COLOR_USER_SECONDARY_KEY + '-l'] =
-            '42%';
+            '50%';
     }
 
     getWeakColorsVariables(themeVars: any): void {
