@@ -1,4 +1,310 @@
 <div class="this-layout">
+    <section id="buttons">
+        <h1 class="color-dimmed">Buttons</h1>
+        <div class="set-grid" style="gap: 0.5rem">
+            <h2 class="body-lg color-dimmed">Strong</h2>
+            <div class="side-grid" id="strong-button-set">
+                <pep-button
+                    value="Disabled"
+                    styleType="strong"
+                    sizeType="xs"
+                    [disabled]="true"
+                ></pep-button>
+                <pep-button
+                    value="XS"
+                    styleType="strong"
+                    sizeType="xs"
+                ></pep-button>
+                <pep-button
+                    value="SM"
+                    styleType="strong"
+                    sizeType="sm"
+                ></pep-button>
+                <pep-button
+                    value="MD"
+                    styleType="strong"
+                    sizeType="md"
+                ></pep-button>
+                <pep-button
+                    value="LG"
+                    styleType="strong"
+                    sizeType="lg"
+                ></pep-button>
+                <pep-button
+                    value="XL"
+                    styleType="strong"
+                    sizeType="xl"
+                ></pep-button>
+                <pep-button
+                    value="Success"
+                    styleType="strong"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    iconPosition="start"
+                    styleStateType="success"
+                ></pep-button>
+                <pep-button
+                    value="Caution"
+                    styleType="strong"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    iconPosition="end"
+                    styleStateType="caution"
+                ></pep-button>
+                <pep-button
+                    styleType="strong"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                ></pep-button>
+                <pep-button
+                    styleType="strong"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    [disabled]="true"
+                ></pep-button>
+                <pep-button
+                    class="rotate3d"
+                    value="W/ class"
+                    styleType="strong"
+                    sizeType="xl"
+                    classNames="body-2xs"
+                ></pep-button>
+            </div>
+            <h2 class="body-lg color-dimmed">Regular</h2>
+            <div class="side-grid" id="regular-button-set">
+                <pep-button
+                    value="Disabled"
+                    styleType="regular"
+                    sizeType="xs"
+                    [disabled]="true"
+                ></pep-button>
+                <pep-button
+                    value="XS"
+                    styleType="regular"
+                    sizeType="xs"
+                ></pep-button>
+                <pep-button
+                    value="SM"
+                    styleType="regular"
+                    sizeType="sm"
+                ></pep-button>
+                <pep-button
+                    value="MD"
+                    styleType="regular"
+                    sizeType="md"
+                ></pep-button>
+                <pep-button
+                    value="LG"
+                    styleType="regular"
+                    sizeType="lg"
+                ></pep-button>
+                <pep-button
+                    value="XL"
+                    styleType="regular"
+                    sizeType="xl"
+                ></pep-button>
+                <pep-button
+                    value="Success"
+                    styleType="regular"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    iconPosition="start"
+                    styleStateType="success"
+                ></pep-button>
+                <pep-button
+                    value="Caution"
+                    styleType="regular"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    iconPosition="end"
+                    styleStateType="caution"
+                ></pep-button>
+                <pep-button
+                    styleType="regular"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                ></pep-button>
+                <pep-button
+                    styleType="regular"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    [disabled]="true"
+                ></pep-button>
+                <pep-button
+                    class="rotate3d"
+                    value="W/ class"
+                    styleType="regular"
+                    sizeType="xl"
+                    classNames="body-2xs"
+                ></pep-button>
+            </div>
+            <h2 class="body-lg color-dimmed">Weak</h2>
+            <div class="side-grid" id="weak-button-set">
+                <pep-button
+                    value="Disabled"
+                    styleType="weak"
+                    sizeType="xs"
+                    [disabled]="true"
+                ></pep-button>
+                <pep-button
+                    value="XS"
+                    styleType="weak"
+                    sizeType="xs"
+                ></pep-button>
+                <pep-button
+                    value="SM"
+                    styleType="weak"
+                    sizeType="sm"
+                ></pep-button>
+                <pep-button
+                    value="MD"
+                    styleType="weak"
+                    sizeType="md"
+                ></pep-button>
+                <pep-button
+                    value="LG"
+                    styleType="weak"
+                    sizeType="lg"
+                ></pep-button>
+                <pep-button
+                    value="XL"
+                    styleType="weak"
+                    sizeType="xl"
+                ></pep-button>
+                <pep-button
+                    value="Success"
+                    styleType="weak"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    iconPosition="start"
+                    styleStateType="success"
+                ></pep-button>
+                <pep-button
+                    value="Caution"
+                    styleType="weak"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    iconPosition="end"
+                    styleStateType="caution"
+                ></pep-button>
+                <pep-button
+                    styleType="weak"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                ></pep-button>
+                <pep-button
+                    styleType="weak"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    [disabled]="true"
+                ></pep-button>
+                <pep-button
+                    class="rotate3d"
+                    value="W/ class"
+                    styleType="weak"
+                    sizeType="xl"
+                    classNames="body-2xs"
+                ></pep-button>
+            </div>
+            <h2 class="body-lg color-dimmed">Weak Invert</h2>
+            <div class="side-grid" id="weak-invert-button-set">
+                <pep-button
+                    value="Disabled"
+                    styleType="weak-invert"
+                    sizeType="xs"
+                    [disabled]="true"
+                ></pep-button>
+                <pep-button
+                    value="XS"
+                    styleType="weak-invert"
+                    sizeType="xs"
+                ></pep-button>
+                <pep-button
+                    value="SM"
+                    styleType="weak-invert"
+                    sizeType="sm"
+                ></pep-button>
+                <pep-button
+                    value="MD"
+                    styleType="weak-invert"
+                    sizeType="md"
+                ></pep-button>
+                <pep-button
+                    value="LG"
+                    styleType="weak-invert"
+                    sizeType="lg"
+                ></pep-button>
+                <pep-button
+                    value="XL"
+                    styleType="weak-invert"
+                    sizeType="xl"
+                ></pep-button>
+                <pep-button
+                    styleType="weak-invert"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                ></pep-button>
+                <pep-button
+                    styleType="weak-invert"
+                    sizeType="xl"
+                    iconName="system_bolt"
+                    [disabled]="true"
+                ></pep-button>
+                <pep-button
+                    class="rotate3d"
+                    value="W/ class"
+                    styleType="weak-invert"
+                    sizeType="xl"
+                    classNames="body-2xs"
+                ></pep-button>
+            </div>
+            <!-- TODO -->
+            <span style="display: none">
+                <pep-button
+                    [value]="'toggle menu'"
+                    [classNames]="'pep-spacing-element'"
+                    (click)="toggleMenu()"
+                >
+                </pep-button>
+                <pep-button
+                    [value]="'test 1'"
+                    [sizeType]="'sm'"
+                    [styleType]="'regular'"
+                    [classNames]="'pep-spacing-element '"
+                >
+                </pep-button>
+                <pep-button
+                    [sizeType]="'sm'"
+                    [classNames]="'pep-spacing-element '"
+                    [value]="'Tomer test'"
+                    [iconName]="'system_bolt'"
+                >
+                </pep-button>
+                <pep-button
+                    [value]="'toggle menu'"
+                    [classNames]="'pep-spacing-element'"
+                    (click)="toggleMenu()"
+                >
+                </pep-button>
+                <button
+                    class="pep-spacing-element pep-button sm pull-right flip"
+                    mat-button
+                >
+                    Kof Examples
+                </button>
+                <button class="pep-button sm pep-spacing-element">
+                    button
+                </button>
+                <pep-button
+                    [value]="'test 2'"
+                    [sizeType]="'sm'"
+                    [classNames]="'pep-spacing-element '"
+                    [iconName]="'system_settings'"
+                >
+                </pep-button
+            ></span>
+        </div>
+    </section>
     <section id="typography">
         <h1 class="color-dimmed">Typography</h1>
         <!-- prettier-ignore -->
@@ -438,7 +744,9 @@
             <h2 class="body-lg color-dimmed">LG Shadows</h2>
             <div class="shadow-grid">
                 <div class="shadow-lg-xsoft">
-                    <p class="body-sm"><code>.shadow-lg-xsoft</code></p>
+                    <p class="body-sm text-align-center">
+                        <code>.shadow-lg-xsoft</code>
+                    </p>
                 </div>
                 <div class="shadow-lg-soft">
                     <p class="body-sm"><code>.shadow-lg-soft</code></p>
@@ -465,6 +773,11 @@
                     <p class="body-sm"><code>.shadow-xl-hard</code></p>
                 </div>
             </div>
+        </div>
+    </section>
+    <section>
+        <div class="set-grid">
+            <div class="zxzxc">yo</div>
         </div>
     </section>
 </div>
