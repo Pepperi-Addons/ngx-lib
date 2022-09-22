@@ -97,6 +97,7 @@ export class PepRichHtmlTextareaComponent
     @Input() isActive = false;
     @Input() showTitle = true;
     @Input() renderTitle = true;
+    @Input() renderEnlargeButton = true;
 
     private _layoutType: PepLayoutType = 'form';
     @Input()

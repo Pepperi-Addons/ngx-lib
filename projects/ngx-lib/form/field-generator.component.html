@@ -55,8 +55,9 @@
     <pep-rich-html-textarea *ngSwitchCase="'richhtmltextarea'" [form]="form" [key]="field.key" [value]="field.value"
         [label]="field.label" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
-        [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
-        (valueChange)="onValueChanged($event, field)" [isActive]="isActive">
+        [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible" [renderTitle]="field.renderTitle"
+        [renderEnlargeButton]="field.renderEnlargeButton" (valueChange)="onValueChanged($event, field)"
+        [isActive]="isActive">
     </pep-rich-html-textarea>
 
     <pep-select *ngSwitchCase="'select'" [form]="form" [key]="field.key" [value]="field.value" [label]="field.label"
@@ -68,8 +69,7 @@
     </pep-select>
 
     <pep-separator *ngSwitchCase="'separator'" [form]="form" [key]="field.key" [label]="field.label"
-        [description]="field.description" [xAlignment]="field.xAlignment" [layoutType]="layoutType"
-        [visible]="field.visible">
+        [xAlignment]="field.xAlignment" [layoutType]="layoutType" [visible]="field.visible">
     </pep-separator>
 
     <pep-signature *ngSwitchCase="'signature'" [form]="form" [key]="field.key" [src]="field.value" [label]="field.label"

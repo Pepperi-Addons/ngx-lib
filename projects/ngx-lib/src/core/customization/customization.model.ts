@@ -162,9 +162,9 @@ export class PepPlaceholderField extends PepFieldBase {
 
 export class PepSeparatorField extends PepFieldBase {
     controlType = 'separator';
-
+    
     constructor(options: IPepFieldBaseOptions = {}) {
-        super(options);
+        super(options);        
     }
 }
 
@@ -201,7 +201,7 @@ interface IPepTextboxFieldOptions extends IPepFieldBaseOptions {
 export class PepTextboxField extends PepFieldBase {
     controlType = 'textbox';
     type: PepTextboxFieldType = 'text';
-    regex: string| RegExp;
+    regex: string | RegExp;
     digitsNumberAfterDecimalPoint: number = NaN;
 
     constructor(options: IPepTextboxFieldOptions = {}) {
@@ -290,12 +290,20 @@ export class PepTextareaField extends PepFieldBase {
     }
 }
 
+interface IPepSignatureFieldOptions extends IPepFieldBaseOptions {
+    renderTitle?: boolean;
+    renderEnlargeButton?: boolean;
+}
 export class PepRichHtmlTextareaField extends PepFieldBase {
-    controlType = 'richhtmltextarea';
+    controlType = 'richhtmltextarea';    
+    renderTitle: boolean;
+    renderEnlargeButton: boolean;
 
-    constructor(options: IPepFieldBaseOptions = {}) {
+    constructor(options: IPepSignatureFieldOptions = {}) {
         super(options);
-        // this.type = 'richhtmltextarea';
+
+        this.renderTitle = options.renderTitle !== undefined ? options.renderTitle : true;
+        this.renderEnlargeButton = options.renderEnlargeButton !== undefined ? options.renderEnlargeButton : true;
     }
 }
 

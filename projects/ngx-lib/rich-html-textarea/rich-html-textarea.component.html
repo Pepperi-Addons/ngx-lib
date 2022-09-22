@@ -30,7 +30,7 @@
                         [innerHtml]="value | pepSafeHtml" [style.height]="fieldHeight">
                     </div>
                 </ng-template>
-                <pep-textbox-icon matSuffix [value]="value" [label]="label" [type]="controlType"
+                <pep-textbox-icon *ngIf="renderEnlargeButton" matSuffix [value]="value" [label]="label" [type]="controlType"
                     [disabled]="disabled || readonly"
                     [ngClass]="{ 'card-one-row-icon': layoutType === 'card' && rowSpan === 1 }"
                     (iconClick)="openDialog()">

@@ -44,7 +44,7 @@
                     </pep-textbox>
 
                     <!-- Separator Example -->
-                    <pep-separator [key]="'sep1'" [label]="'separator'" [description]="'some desc'"></pep-separator>
+                    <pep-separator [key]="'sep1'" [label]="'separator'"></pep-separator>
 
                     <!-- Checkbox Exmaples -->
                     <pep-checkbox [type]="'booleanText'" key="cb1" label="Pepperi Checkbox" value="true" xAlignment="left"
@@ -141,14 +141,14 @@
                     </pep-select>
 
                     <!-- Textarea Example -->
-                    <pep-textarea [key]="'textarea1'" [label]="'Pepperi Text Area'" [value]="'Pepperi Textarea Example'"
+                    <pep-textarea [key]="'textarea1'" [label]="'Pepperi Text Area'"  [value]="'Pepperi Textarea Example'"
                         [rowSpan]="2" [maxFieldCharacters]="300" [xAlignment]="'right'">
                     </pep-textarea>
 
                     <!-- Rich Html Textarea Example -->
-                    <pep-rich-html-textarea [key]="'richText1'" [label]="'Pepperi Rich Html Textarea'"
+                    <pep-rich-html-textarea [key]="'richText1'" [renderTitle]="false" [label]="'Pepperi Rich Html Textarea'" [renderEnlargeButton]="false"
                         [value]="richHtml" [rowSpan]="3" [maxFieldCharacters]="300" [xAlignment]="'left'"
-                        [disabled]="false">
+                        >
                     </pep-rich-html-textarea>
 
                     <!-- <pep-rich-html-textarea [key]="'richText2'" [label]="'richText2'" [value]="richTextValue" [rowSpan]="3"
