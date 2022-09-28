@@ -22,9 +22,12 @@ code {
     border-radius: variables.$border-radius-md;
     width: fit-content;
 }
+@mixin scribble-font {
+    font-family: "Permanent Marker", cursive;
+}
 em {
     font-style: normal;
-    font-family: "Permanent Marker", cursive;
+    @include scribble-font();
 }
 @mixin center-center {
     display: flex;
@@ -64,7 +67,6 @@ em {
     padding: 1rem;
     @media (max-width: variables.$screen-max-size-xs) {
         border-radius: unset;
-        
     }
 }
 .side-by-side {
@@ -93,7 +95,7 @@ em {
     grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
     gap: 1rem;
 }
-.that-grid{
+.that-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: 1rem;
@@ -118,8 +120,9 @@ em {
 @mixin color-grid($color-name) {
     @include this-grid();
     div {
+        overflow: hidden;
         height: 4rem;
-        border-radius: variables.$border-radius-sm;
+        border-radius: variables.$border-radius-md;
     }
     @for $i from 0 through 9 {
         $tran: 0 + $i;
@@ -283,6 +286,7 @@ hr {
     height: $size-of-box;
     width: $size-of-box;
     min-width: $size-of-box;
+    border-radius: variables.$border-radius-sm;
     background-color: functions.get-pep-color(color-system-primary, color-base);
 }
 
@@ -328,8 +332,42 @@ hr {
 .size-of-box-xl9 {
     @include size-box(variables.$spacing-9xl);
 }
-#spacing{
+#spacing {
     p + div {
         margin-top: variables.$spacing-xs;
     }
+}
+
+$breakpointsss: (
+    2xs: variables.$screen-max-size-2xs,
+    xs: variables.$screen-max-size-xs,
+    sm: variables.$screen-max-size-sm,
+    md: variables.$screen-max-size-md,
+    lg: variables.$screen-max-size-lg,
+    xl: variables.$screen-max-size-xl,
+);
+
+@mixin this-screen-size($size, $color) {
+    @media (max-width: map-get($breakpointsss, $size)) {
+        background-color: $color;
+        &:before {
+            @include scribble-font();
+            content: "$screen-max-size-#{$size}";
+        }
+    }
+}
+.this-is-screen-size {
+    overflow: hidden;
+    border-radius: variables.$border-radius-md;
+    background-color: lightgreen;
+    @include center-center();
+    &:before {
+        @include scribble-font();
+        content: "Bigger then $screen-max-size-xl (5000px)";
+    }
+    @include this-screen-size(lg, plum);
+    @include this-screen-size(md, burlywood);
+    @include this-screen-size(sm, royalblue);
+    @include this-screen-size(xs, rosybrown);
+    @include this-screen-size(2xs, salmon);
 }
