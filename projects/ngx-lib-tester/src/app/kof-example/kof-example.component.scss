@@ -26,6 +26,12 @@ em {
     font-style: normal;
     font-family: "Permanent Marker", cursive;
 }
+@mixin center-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .this-layout {
     height: 100%;
     overflow: auto !important;
@@ -56,6 +62,10 @@ em {
     background-size: 1rem 1rem;
     border-radius: variables.$border-radius-md;
     padding: 1rem;
+    @media (max-width: variables.$screen-max-size-xs) {
+        border-radius: unset;
+        
+    }
 }
 .side-by-side {
     display: grid;
@@ -67,7 +77,10 @@ em {
     flex-direction: row;
     gap: var(--pep-spacing-sm);
 }
-.big-gap{
+.flex-wrap {
+    flex-wrap: wrap;
+}
+.big-gap {
     gap: var(--pep-spacing-lg);
 }
 .side-grid-col {
@@ -78,6 +91,11 @@ em {
 @mixin this-grid() {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    gap: 1rem;
+}
+.that-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: 1rem;
 }
 @mixin before-text() {
@@ -139,7 +157,6 @@ em {
         }
     }
 }
-
 .color-user-primary-grid {
     @include color-grid(color-user-primary);
 }
@@ -207,9 +224,6 @@ em {
     @include color-single(color-text, color-caution);
 }
 
-// .text-color {
-//     color: functions.get-pep-color(color-text, color-dimmed);
-// }
 hr {
     width: 100%;
     height: 1px;
@@ -261,7 +275,61 @@ hr {
 }
 .round-it {
     background-color: functions.get-pep-color(color-system-primary, color-base);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include center-center;
+}
+
+@mixin size-box($size-of-box) {
+    @include center-center;
+    height: $size-of-box;
+    width: $size-of-box;
+    min-width: $size-of-box;
+    background-color: functions.get-pep-color(color-system-primary, color-base);
+}
+
+.size-of-box-2xs {
+    @include size-box(variables.$spacing-2xs);
+}
+.size-of-box-xs {
+    @include size-box(variables.$spacing-xs);
+}
+.size-of-box-sm {
+    @include size-box(variables.$spacing-sm);
+}
+.size-of-box-md {
+    @include size-box(variables.$spacing-md);
+}
+.size-of-box-lg {
+    @include size-box(variables.$spacing-lg);
+}
+.size-of-box-xl {
+    @include size-box(variables.$spacing-xl);
+}
+.size-of-box-xl2 {
+    @include size-box(variables.$spacing-2xl);
+}
+.size-of-box-xl3 {
+    @include size-box(variables.$spacing-3xl);
+}
+.size-of-box-xl4 {
+    @include size-box(variables.$spacing-4xl);
+}
+.size-of-box-xl5 {
+    @include size-box(variables.$spacing-5xl);
+}
+.size-of-box-xl6 {
+    @include size-box(variables.$spacing-6xl);
+}
+.size-of-box-xl7 {
+    @include size-box(variables.$spacing-7xl);
+}
+.size-of-box-xl8 {
+    @include size-box(variables.$spacing-8xl);
+}
+.size-of-box-xl9 {
+    @include size-box(variables.$spacing-9xl);
+}
+#spacing{
+    p + div {
+        margin-top: variables.$spacing-xs;
+    }
 }
