@@ -277,12 +277,12 @@ export abstract class BaseFilterComponent
     }
 
     private setupFilter() {
-        if (this.filter) {
-            this.operator = this.filter.operator;
-            this.operatorUnit = this.filter.operatorUnit;
+        if (this._filter) {
+            this.operator = this._filter.operator;
+            this.operatorUnit = this._filter.operatorUnit;
             const formValue = {};
-            formValue[this.firstControlKey] = this.filter.value.first;
-            formValue[this.secondControlKey] = this.filter.value.second;
+            formValue[this.firstControlKey] = this._filter.value.first;
+            formValue[this.secondControlKey] = this._filter.value.second;
             this.form.patchValue(formValue);
         } else {
             this.operator = this.getDefaultOperator();

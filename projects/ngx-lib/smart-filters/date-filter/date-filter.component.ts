@@ -49,7 +49,7 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
         } else {
             return undefined;
         }
-    }    
+    }
 
     // Override
     getFilterValue(): IPepSmartFilterDataValue {
@@ -63,6 +63,15 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
         }
 
         return filterValue;
+    }
+
+    // Override
+    initFilter() {
+        setTimeout(() => {            
+            if (this.emitOnChange) {
+                this.applyFilter();
+            }
+        }, 0);
     }
 
     // Override
@@ -159,9 +168,12 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
         if (this._parentForm) {
             this.updateParentForm();
         }
-        if (this.emitOnChange) {
-            this.applyFilter();
-        }
+        setTimeout(() => {
+            if (this.emitOnChange) {
+                this.applyFilter();
+            }    
+        }, 0)
+        
     }
 
     onTimeUnitChanged(value: string) {

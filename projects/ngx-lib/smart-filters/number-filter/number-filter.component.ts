@@ -56,6 +56,15 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
     }
 
     // Override
+    initFilter() {
+        setTimeout(() => {
+            if (this.emitOnChange) {
+                this.applyFilter();
+            }
+        }, 0);
+    }
+
+    // Override
     loadOperatorsOptions() {
         this.chooseTypeOptions = this.operators.map((operator) => {
             return {
@@ -102,14 +111,16 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
         const operator = Object.values(this.operators).find(
             (operator) => operator.id === value
         );
-        this.operator = operator;        
+        this.operator = operator;
         if (this._parentForm) {
             this.updateParentForm();
         }
-        if (this.emitOnChange) {
-            this.applyFilter();
-        }
         this.setControlsWidth();
+        setTimeout(() => {
+            if (this.emitOnChange) {
+                this.applyFilter();
+            }
+        }, 0);
     }
 
     onVariableChanged(value: any) {
