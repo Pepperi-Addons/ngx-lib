@@ -5,14 +5,29 @@
             <div class="size-it this-is-screen-size"></div>
         </div>
     </section>
+    <section id="z-index">
+        <h1 class="color-dimmed">Z Index</h1>
+        <div class="set-grid">
+            <div class="z-grid">
+                <div class="z-grid__1">
+                    <code>variables.$z-index-high</code>
+                </div>
+                <div class="z-grid__2">
+                    <code>variables.$z-index-medium</code>
+                </div>
+                <div class="z-grid__3"><code>variables.$z-index-low</code></div>
+                <div class="z-grid__4">
+                    <code>variables.$z-index-lowest</code>
+                </div>
+            </div>
+        </div>
+    </section>
     <section id="spacing">
         <h1 class="color-dimmed">Spacing</h1>
         <div class="set-grid">
-            <p class="body-sm">
+            <p class="body-md">
                 <em>Code Example: </em>
-                <code
-                    >height: variables.$spacing-2xs;</code
-                >
+                <code>height: variables.$spacing-2xs;</code>
             </p>
             <div class="side-grid flex-wrap">
                 <div>
@@ -552,11 +567,11 @@
         <h1 class="color-dimmed">Colors</h1>
         <p class="body-sm"></p>
         <div class="set-grid" id="color-text">
-            <h1 class="body-lg">color-text</h1>
-            <p class="body-sm">
+            <h1 class="body-xl"><code>color-text</code></h1>
+            <p class="body-md">
                 <em>Code Example: </em>
                 <code
-                    >color: functions.get-pep-color(color-text,
+                    >color: functions.get-pep-color(<strong>color-text</strong>,
                     color-main);</code
                 >
             </p>
@@ -573,11 +588,12 @@
             </div>
         </div>
         <div class="set-grid" id="color-system-primary-invert">
-            <h1 class="body-lg">color-system-primary-invert</h1>
-            <p class="body-sm">
+            <h1 class="body-xl"><code>color-system-primary-invert</code></h1>
+            <p class="body-md">
                 <em>Code Example: </em>
                 <code
-                    >color: functions.get-pep-color(color-system-primary-invert,
+                    >color:
+                    functions.get-pep-color(<strong>color-system-primary-invert</strong>,
                     color-base);</code
                 >
             </p>
@@ -606,11 +622,12 @@
             </div>
         </div>
         <div class="set-grid" id="color-system-primary">
-            <h1 class="body-lg">color-system-primary</h1>
-            <p class="body-sm">
+            <h1 class="body-xl"><code>color-system-primary</code></h1>
+            <p class="body-md">
                 <em>Code Example: </em>
                 <code
-                    >color: functions.get-pep-color(color-system-primary,
+                    >color:
+                    functions.get-pep-color(<strong>color-system-primary</strong>,
                     color-tran-20);</code
                 >
             </p>
@@ -639,11 +656,12 @@
             </div>
         </div>
         <div class="set-grid" id="color-system-success">
-            <h1 class="body-lg">color-system-success</h1>
-            <p class="body-sm">
+            <h1 class="body-xl"><code>color-system-success</code></h1>
+            <p class="body-md">
                 <em>Code Example: </em>
                 <code
-                    >color: functions.get-pep-color(color-system-success,
+                    >color:
+                    functions.get-pep-color(<strong>color-system-success</strong>,
                     color-base);</code
                 >
             </p>
@@ -672,12 +690,12 @@
             </div>
         </div>
         <div class="set-grid" id="color-system-caution">
-            <h1 class="body-lg">color-system-caution</h1>
-            <p class="body-sm">
+            <h1 class="body-xl"><code>color-system-caution</code></h1>
+            <p class="body-md">
                 <em>Code Example: </em>
                 <code
                     >background-color:
-                    functions.get-pep-color(color-system-caution,
+                    functions.get-pep-color(<strong>color-system-caution</strong>,
                     color-base);</code
                 >
             </p>
@@ -706,11 +724,12 @@
             </div>
         </div>
         <div class="set-grid" id="color-user-primary">
-            <h1 class="body-lg">color-user-primary</h1>
-            <p class="body-sm">
+            <h1 class="body-xl"><code>color-user-primary</code></h1>
+            <p class="body-md">
                 <em>Code Example: </em>
                 <code
-                    >color: functions.get-pep-color(color-user-primary,
+                    >color:
+                    functions.get-pep-color(<strong>color-user-primary</strong>,
                     color-tran-50);</code
                 >
             </p>
@@ -739,11 +758,12 @@
             </div>
         </div>
         <div class="set-grid" id="color-user-secondary">
-            <h1 class="body-lg">color-user-secondary</h1>
-            <p class="body-sm">
+            <h1 class="body-xl"><code>color-user-secondary</code></h1>
+            <p class="body-md">
                 <em>Code Example: </em>
                 <code
-                    >color: functions.get-pep-color(color-user-secondary,
+                    >color:
+                    functions.get-pep-color(<strong>color-user-secondary</strong>,
                     color-flat-r-30);</code
                 >
             </p>
@@ -775,6 +795,12 @@
     <section id="shadows">
         <h1 class="color-dimmed">Shadows</h1>
         <div class="set-grid" id="heading">
+            <p class="body-md">
+                <em>Code Example: </em>
+                <code>&lt;div class="shadow-lg-hard"&gt;...&lt;/div&gt;</code>
+                <br />
+                <em>Or in the CSS:</em> <code>box-shadow: variables.$shadow-lg-hard;</code>
+            </p>
             <h2 class="body-lg color-dimmed">XS Shadows</h2>
             <div class="shadow-grid">
                 <div class="shadow-xs-xsoft">

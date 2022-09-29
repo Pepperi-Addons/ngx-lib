@@ -3,6 +3,7 @@
 @use "../../../../ngx-lib/src/core/style/abstracts/mixins";
 
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code&display=swap");
 
 h1,
 h2,
@@ -14,13 +15,18 @@ p {
     margin: 0;
     padding: 0;
 }
-code {
+@mixin code-font {
+    font-family: "Fira Code", monospace;
     letter-spacing: -0.0125em;
     font-size: 90%;
     padding: 0.25em 0.4em;
     background: functions.get-pep-color(color-user-primary, color-tran-50);
     border-radius: variables.$border-radius-md;
     width: fit-content;
+}
+code {
+    @include code-font();
+    margin-bottom: 1rem;
 }
 @mixin scribble-font {
     font-family: "Permanent Marker", cursive;
@@ -67,6 +73,11 @@ em {
     padding: 1rem;
     @media (max-width: variables.$screen-max-size-xs) {
         border-radius: unset;
+    }
+    h1,
+    h2,
+    p {
+        margin-bottom: 0.25rem;
     }
 }
 .side-by-side {
@@ -370,4 +381,41 @@ $breakpointsss: (
     @include this-screen-size(sm, royalblue);
     @include this-screen-size(xs, rosybrown);
     @include this-screen-size(2xs, salmon);
+}
+
+.z-grid {
+    div {
+        width: 100%;
+        height: 100%;
+        background-color: cornsilk;
+        border-radius: variables.$border-radius-lg;
+        @include center-center();
+        font-size: variables.$fs-xl;
+        code {
+            margin-bottom: unset;
+        }
+    }
+    display: grid;
+    grid-template-columns: repeat(6, minmax(2rem, 1fr));
+    grid-template-rows: repeat(9, 2rem);
+    &__1 {
+        z-index: variables.$z-index-high;
+        grid-area: 1/1/4/4;
+        box-shadow: variables.$shadow-lg-hard;
+    }
+    &__2 {
+        z-index: variables.$z-index-medium;
+        grid-area: 3/2/6/5;
+        box-shadow: variables.$shadow-md-hard;
+    }
+    &__3 {
+        z-index: variables.$z-index-low;
+        grid-area: 5 / 3 / 8 / 6;
+        box-shadow: variables.$shadow-sm-hard;
+    }
+    &__4 {
+        z-index: variables.$z-index-lowest;
+        grid-area: 7 / 4 / 10 / 7;
+        box-shadow: variables.$shadow-xs-hard;
+    }
 }
