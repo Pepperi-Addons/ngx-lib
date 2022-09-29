@@ -49,7 +49,7 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
         } else {
             return undefined;
         }
-    }
+    }    
 
     // Override
     getFilterValue(): IPepSmartFilterDataValue {
@@ -58,7 +58,7 @@ export class PepDateFilterComponent extends BaseFilterComponent implements OnIni
         };
 
         if (this.operator === PepSmartFilterOperators.DateRange ||
-            PepSmartFilterVariableOperators.DateRangeVariable) {
+            this.operator === PepSmartFilterVariableOperators.DateRangeVariable) {
             filterValue['second'] = this.secondControl.value;
         }
 
