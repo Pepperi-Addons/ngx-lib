@@ -43,6 +43,8 @@ export class FormFieldsExampleComponent implements OnInit {
     textboxFormGroup;
     formattedValue = null;
 
+    regex = /^[0-9]*$/;
+
     chips: any[] = [
         {
             value: 'Chair',
@@ -124,7 +126,7 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     onValueChanged(key: any) {
-        alert(`${key}: value was changed`);
+        //alert(`${key}: value was changed`);
     }
 
     imageChange(event: any) {
