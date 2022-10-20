@@ -53,6 +53,7 @@ export class PepFieldData {
 export class PepRowData {
     UUID?: string;
     IsEditable?: boolean;
+    IsSelected?: boolean;
     IsSelectableForActions?: boolean;
     Fields: PepFieldData[];
 }
@@ -108,6 +109,9 @@ export class PepDataConvertorService {
                 }
                 if (row.IsSelectableForActions === false) {
                     rowData.IsSelectableForActions = false;
+                }
+                if (row.IsSelected) {
+                    rowData.IsSelected = true;
                 }
                 row.Fields.forEach((field) =>
                     rowData.Fields.push(this.setDataField(field))

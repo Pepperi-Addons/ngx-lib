@@ -187,6 +187,7 @@ export class ObjectsDataRow {
     ExtraInfo?: Array<{ Key: string; Value: string }>;
     Fields: Array<ObjectsDataRowCell>;
     IsEditable = true;
+    IsSelected = false;
     IsSelectableForActions = true;
     MainAction?: string;
     Profile?: any;
