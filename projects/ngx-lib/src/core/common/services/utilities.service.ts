@@ -41,7 +41,7 @@ export class PepUtilitiesService {
         if (typeof milliseconds !== 'number') {
             throw new TypeError('Expected a number')
         }
-    
+
         return {
             days: Math.trunc(milliseconds / 86400000),
             hours: Math.trunc(milliseconds / 3600000) % 24,
@@ -50,22 +50,22 @@ export class PepUtilitiesService {
             milliseconds: Math.trunc(milliseconds) % 1000
         }
     }
-    
+
     // adapted from https://github.com/rafaelrinaldi/add-zero.
     // moved to internal function b/c addZero is unmaintained (7+ years).
     // stripped out negative sign logic since we're already doing it elsewhere.
     private addZero(value: number, digits = 2) {
         digits = digits || 2
-    
+
         let str = value.toString()
         let size = 0
-    
+
         size = digits - str.length + 1
         str = new Array(size).join('0').concat(str)
-    
+
         return str
     }
-    
+
     private isCurrencyShouldBeOnRight(currencySymbol: string) {
         let res = false;
 
@@ -75,8 +75,7 @@ export class PepUtilitiesService {
             currencySymbol == "Kč" ||
             currencySymbol == "руб" ||
             currencySymbol == "zł" ||
-            currencySymbol == "kr.")
-        {
+            currencySymbol == "kr.") {
             res = true;
         }
 
@@ -176,7 +175,7 @@ export class PepUtilitiesService {
             return '0%';
         } else {
             // return formatPercent(number / 100, this.culture, digitsInfo);
-            return new Intl.NumberFormat(this.culture, { 
+            return new Intl.NumberFormat(this.culture, {
                 style: 'percent',
                 minimumFractionDigits: minFractionDigits || 0,
                 maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
@@ -191,7 +190,7 @@ export class PepUtilitiesService {
 
         let res = '';
         const number = this.coerceNumberProperty(value);
-        const styleOptions = { 
+        const styleOptions = {
             // style: 'currency',
             // currencySign: currencySign,
             minimumFractionDigits: minFractionDigits || 0,
@@ -207,10 +206,10 @@ export class PepUtilitiesService {
         }
 
         res = this.isCurrencyShouldBeOnRight(currencySign) ? `${res} ${currencySign}` : `${currencySign} ${res}`
-        
+
         return res;
     }
-    
+
     // formatDecimal(value: any, digitsInfo = '1.2-2') {
     formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2) {
         minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
@@ -221,13 +220,13 @@ export class PepUtilitiesService {
             return '0';
         } else {
             // return formatNumber(value, this.culture, digitsInfo);
-            return new Intl.NumberFormat(this.culture, { 
+            return new Intl.NumberFormat(this.culture, {
                 minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits),
                 maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
             }).format(number)
         }
     }
-    
+
     // formatNumber(value: any, digitsInfo = '1.0-0'): string {
     formatNumber(value: any): string {
         const number = this.coerceNumberProperty(value);
@@ -236,13 +235,13 @@ export class PepUtilitiesService {
             return '0';
         } else {
             // return formatNumber(value, this.culture, digitsInfo);
-            return new Intl.NumberFormat(this.culture, { 
+            return new Intl.NumberFormat(this.culture, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
             }).format(number)
         }
     }
-    
+
     /**
      * Convert a number in milliseconds to a standard duration string.
      * @param {number} value - duration in milliseconds
@@ -257,7 +256,7 @@ export class PepUtilitiesService {
             return value;
         } else {
             let number = this.coerceNumberProperty(value);
-    
+
             const leading = options?.leading || true;
             const duration = options?.duration || 'milliseconds';
             if (duration === 'seconds') {
@@ -268,14 +267,14 @@ export class PepUtilitiesService {
             const sign = number <= -1000 ? '-' : '';
             const t = this.parseMs(unsignedMs);
             const seconds = this.addZero(t.seconds);
-            
+
             if (t.days) {
                 return sign + t.days + ':' + this.addZero(t.hours) + ':' + this.addZero(t.minutes) + ':' + seconds
             }
 
             if (t.hours) {
                 return sign + (leading ? this.addZero(t.hours) : t.hours) + ':' + this.addZero(t.minutes) + ':' + seconds
-            } 
+            }
 
             return sign + (leading ? this.addZero(t.minutes) : t.minutes) + ':' + seconds
         }
@@ -305,12 +304,12 @@ export class PepUtilitiesService {
         // If the decimal separator is ',' change it to '.'
         if (value?.length > 0) {
             value = this.changeDecimalSeperator(value);
-        }
-        //if the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
-        if (this.getDecimalSeparator() === '.')  {
-            value = value.replace(',', '');
-        } else {
-            value = value.replace('.', '');
+            //if the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
+            if (this.getDecimalSeparator() === '.') {
+                value = value.replace(',', '');
+            } else {
+                value = value.replace('.', '');
+            }
         }
 
         return coerceNumberProperty(value, fallbackValue);
