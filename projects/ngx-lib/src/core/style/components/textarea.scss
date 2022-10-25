@@ -94,6 +94,10 @@
         overflow-y: scroll;
         // @include mixins.box-sizing(border-box);
         box-sizing: border-box;
+
+        &.hide-enlarge-button {
+            padding-inline-end: 3rem;
+        }
     }
 
     &.right-alignment {

@@ -82,7 +82,7 @@ export class FormFieldsExampleComponent implements OnInit {
         });
 
         this.richHtml =
-            "<h1><u>Rich Text Value Example</u></h1><h2><em style=' color: rgb(147, 200, 14);'>Pepperi Rich Text Value </em><u style='color: rgb(0, 102, 204);'>Example</u></h2><ol><li><strong><u>Pepperi Rich Text Value Example</u></strong></li><li>Pepperi Rich text [value] example</li></ol>";
+            "<h1><u>Rich Text Value Example</u></h1><h2><em style=' color: rgb(147, 200, 14);'>Pepperi Rich Text Value </em><u style='color: rgb(0, 102, 204);'>Example</u></h2><ol><li><strong><u>Pepperi Rich Text Value Example</u></strong></li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li></ol>";
     }
 
     private setTextboxFormGroup() {

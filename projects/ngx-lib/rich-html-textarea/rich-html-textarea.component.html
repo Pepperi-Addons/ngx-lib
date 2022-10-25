@@ -25,13 +25,13 @@
                     theme="snow" [style.height]="fieldHeight"></quill-view-html> 
                 -->
 
-                    <div class="body-sm rich-text-cont "
+                    <div class="body-sm rich-text-cont " [ngClass]="{'hide-enlarge-button': !renderEnlargeButton}"
                         [ngStyle]="{ 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
                         [innerHtml]="value | pepSafeHtml" [style.height]="fieldHeight">
                     </div>
                 </ng-template>
-                <pep-textbox-icon *ngIf="renderEnlargeButton" matSuffix [value]="value" [label]="label" [type]="controlType"
-                    [disabled]="disabled || readonly"
+                <pep-textbox-icon *ngIf="renderEnlargeButton" matSuffix [value]="value" [label]="label"
+                    [type]="controlType" [disabled]="disabled || readonly"
                     [ngClass]="{ 'card-one-row-icon': layoutType === 'card' && rowSpan === 1 }"
                     (iconClick)="openDialog()">
                 </pep-textbox-icon>
@@ -111,7 +111,8 @@
 
 <ng-template #quilTemplate let-inDialog="inDialog">
     <quill-editor id="{{inDialog ? 'quill-editor-dialog' : 'quill-editor-inline'}}"
-        [class]="inDialog ? 'dialog-quill' : 'inline-quill'" [ngClass]="{ 'rich-text-cont': !inDialog }"
+        [class]="inDialog ? 'dialog-quill' : 'inline-quill'"
+        [ngClass]="{ 'rich-text-cont': !inDialog, 'hide-enlarge-button': !renderEnlargeButton }"
         placeholder="{{'RICH_TEXTAREA.HINT' | translate}}" [ngModel]="inDialog ? quillContentDialog : quillContent"
         [sanitize]="true" [readOnly]="disabled" [maxLength]="maxFieldCharacters" [required]="mandatory"
         (onEditorCreated)="onEditorCreated($event, inDialog)" (onContentChanged)="onContentChanged($event, inDialog)"

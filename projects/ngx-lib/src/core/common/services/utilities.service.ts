@@ -306,6 +306,12 @@ export class PepUtilitiesService {
         if (value?.length > 0) {
             value = this.changeDecimalSeperator(value);
         }
+        //if the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
+        if (this.getDecimalSeparator() === '.')  {
+            value = value.replace(',', '');
+        } else {
+            value = value.replace('.', '');
+        }
 
         return coerceNumberProperty(value, fallbackValue);
     }
