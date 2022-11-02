@@ -1,0 +1,42 @@
+<!-- <button mat-button [pepDataQa]="key ? key : value"
+    class="pep-button {{ sizeType }} {{ styleType }} {{ styleStateType }} {{ classNames }}"
+    [ngClass]="{ 'icon-button': iconName && !value }" [disabled]="disabled" (click)="onButtonClicked($event)">
+    <ng-container *ngTemplateOutlet="contentTemplate">
+    </ng-container>
+</button>
+
+<ng-template #contentTemplate>
+    <mat-icon *ngIf="iconName && iconPosition === 'start'" [ngClass]="{ 'pull-left flip': value }">
+        <pep-icon name="{{iconName}}"></pep-icon>
+    </mat-icon>
+    <span *ngIf="value" class="ellipsis pull-left flip"
+        [ngClass]="{ 'button-title-with-icon': iconName, 'icon-before': iconPosition === 'start' }" [title]="value">
+        {{value}}
+    </span>
+    <mat-icon *ngIf="iconName && iconPosition === 'end'" [ngClass]="{ 'pull-left flip': value }">
+        <pep-icon name="{{iconName}}"></pep-icon>
+    </mat-icon>
+</ng-template> -->
+
+
+    <pep-field-title *ngIf="label !== ''" [label]="label" [mandatory]="mandatory"
+        [disabled]="disabled" [showTitle]="label !== ''">
+    </pep-field-title>
+   
+        <div class="select-panel">
+            <div class="ellipsis pull-left flip" [title]="option.value" [style.width]="optColumnWidth+'%'"  *ngFor="let option of options">
+                <ng-container *ngTemplateOutlet="isMultiSelect == true ? multiBlock : singleBlock; context: { option }"></ng-container>
+            </div>
+        </div>
+    
+    <ng-template #singleBlock let-option="option">
+        <input type="radio" name="avner"  value="option.key" (onchange)="selectionChange($event)">
+        <label>{{option.value}}</label>
+    </ng-template>
+
+    <ng-template #multiBlock let-option="option">
+        <input type="checkbox" name="vehicle1" value="option.key">
+        <label>{{option.value}}</label>   
+    </ng-template>
+
+

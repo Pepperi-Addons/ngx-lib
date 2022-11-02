@@ -1,0 +1,13 @@
+
+@use '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/mixins';
+
+:host {
+    display: grid;
+}
+
+.select-panel{
+    padding: variables.$spacing-md;
+    font-size: variables.$fs-sm;
+    line-height: variables.$lh-md;
+}
