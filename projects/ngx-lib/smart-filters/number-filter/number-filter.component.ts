@@ -84,7 +84,7 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
                 firstValidators.push(this.validator.isLessThan(this.secondControl));
             }
             this.firstControl.setValidators(firstValidators);
-
+            this.firstControl.updateValueAndValidity();
 
             this.secondControl.enable();
             const secondValidators = [Validators.required];
@@ -92,6 +92,7 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
                 secondValidators.push(this.validator.isGreaterThan(this.firstControl));
             }
             this.secondControl.setValidators(secondValidators);
+            this.secondControl.updateValueAndValidity();
         } else {
             super.setFieldsStateAndValidators();
         }

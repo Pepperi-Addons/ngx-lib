@@ -22,7 +22,7 @@
     </pep-checkbox>
 
     <pep-date *ngSwitchCase="'date'" [form]="form" [key]="field.key" [value]="field.value"
-        [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type" [mandatory]="field.mandatory"
+        [label]="field.label" [type]="field.type" [mandatory]="field.mandatory"
         [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [minValue]="field.minValue"
         [maxValue]="field.maxValue" [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
@@ -43,7 +43,7 @@
     </pep-image>
 
     <pep-quantity-selector *ngSwitchCase="'qs'" [form]="form" [key]="field.key" [value]="field.value"
-        [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type" [mandatory]="field.mandatory"
+        [label]="field.label" [type]="field.type" [mandatory]="field.mandatory"
         [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [allowDecimal]="field.allowDecimal"
         [additionalValue]="field.additionalValue" [notificationInfo]="field.notificationInfo" [isActive]="isActive"
@@ -85,7 +85,7 @@
     </pep-textarea>
 
     <pep-textbox *ngSwitchCase="'textbox'" [form]="form" [key]="field.key" [value]="field.value"
-        [formattedValue]="field.formattedValue" [accessory]="field.accessory" [label]="field.label" [placeholder]="field.placeholder"
+        [accessory]="field.accessory" [label]="field.label" [placeholder]="field.placeholder"
         [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
         [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
@@ -95,7 +95,7 @@
     </pep-textbox>
 
     <pep-link *ngSwitchCase="'link'" [form]="form" [key]="field.key" [value]="field.value"
-        [formattedValue]="field.formattedValue" [label]="field.label" [placeholder]="field.placeholder"
+        [label]="field.label" [placeholder]="field.placeholder"
         [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
         [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"

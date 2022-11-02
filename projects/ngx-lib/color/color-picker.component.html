@@ -21,7 +21,7 @@
             <div class="color-value-content">
                 <div class="color-value" [ngClass]="{ 'with-complient': checkAAComplient }">
                     <pep-textbox [key]="'colorValue'" [label]="'COLOR.ADD_VALUE_HERE' | translate "
-                        [formattedValue]="data?.value" [value]="data?.value" (valueChange)="onColorValueChange($event)">
+                        [value]="data?.value" (valueChange)="onColorValueChange($event)">
                     </pep-textbox>
                 </div>
                 <div *ngIf="checkAAComplient" class="color-complient-container">

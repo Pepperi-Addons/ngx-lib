@@ -7,8 +7,7 @@
             <div [ngSwitch]="groupField.controlType" *ngFor="let groupField of groupFields; let i = index"
                 class="pep-address-field columns-{{ groupField.colSpan }}">
                 <pep-textbox *ngSwitchCase="'textbox'" [layoutType]="layoutType" title="{{ groupField.formattedValue }}"
-                    [form]="form" [key]="groupField.key" [value]="groupField.value"
-                    [formattedValue]="groupField.formattedValue" [label]="groupField.label"
+                    [form]="form" [key]="groupField.key" [value]="groupField.value" [label]="groupField.label"
                     [placeholder]="groupField.placeholder" [type]="groupField.type" [mandatory]="groupField.mandatory"
                     [disabled]="groupField.disabled" [readonly]="groupField.readonly"
                     [xAlignment]="groupField.xAlignment" [rowSpan]="groupField.rowSpan" [parentFieldKey]="key"
