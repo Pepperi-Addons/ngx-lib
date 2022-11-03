@@ -8,11 +8,13 @@ import { PepIconModule } from '@pepperi-addons/ngx-lib/icon';
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepSelectPanelComponent } from './select-panel.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
     imports: [
         CommonModule,
         // Material modules
+        MatFormFieldModule,
         MatCommonModule,
         MatButtonModule,
         MatIconModule,

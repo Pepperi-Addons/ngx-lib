@@ -1,7 +1,6 @@
-import { Component,OnDestroy,Input,Output,EventEmitter,Renderer2,ElementRef } from '@angular/core';
+import { Component,OnDestroy,Input,Output,EventEmitter,Renderer2,ElementRef, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IPepOption, PepCustomizationService, PepLayoutType, PepSelectField } from '@pepperi-addons/ngx-lib'; 
-
 
 /**
  * This is a button component that support pepperi theme
@@ -34,7 +33,7 @@ export class PepSelectPanelComponent implements OnDestroy {
         if (!value) {
             value = [];
         }
-        
+
         this._options = value;
     }
     get options(): Array<IPepOption> {
@@ -44,15 +43,19 @@ export class PepSelectPanelComponent implements OnDestroy {
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-    public optColumnWidth = 100;
-
+    @ViewChild('selectPanel', { static: true }) selectPanel: ElementRef;
+    
     constructor(private renderer: Renderer2, private customizationService: PepCustomizationService, private element: ElementRef) { }
 
   
 
     ngOnInit(): void {
-        this.optColumnWidth = 100 / this.numOfCol;
+         
     }
+
+    ngAfterViewInit() {
+        this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', ('auto '+this.numOfCol.toString()));
+      }
 
     ngOnDestroy(): void {
         // if (this.buttonClick) {
@@ -61,6 +64,7 @@ export class PepSelectPanelComponent implements OnDestroy {
     }
 
     selectionChange(event: any): void {
+        debugger;
         this.valueChange.emit(event);
         // if (!this.isMulti) {
         //     this.changeValue(this.selectedValueModel);

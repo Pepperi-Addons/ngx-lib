@@ -1,9 +1,6 @@
 @use '../src/core/style/abstracts/mixins';
 @use '../src/core/style/abstracts/functions';
 
-.select-panel{
-    background: functions.get-pep-color(color-weak, color-tran-30);
-
-    input[type="radio"],
-    input[type="checkbox"]{ height: 1.25rem; width: 1.25rem;}
-}
+// .select-panel{
+//     background: functions.get-pep-color(color-weak, color-tran-30);
+// }

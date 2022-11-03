@@ -17,16 +17,27 @@
             <div class="content spacing-top">
                 <div class="child1 child-container">
                     <pep-select-panel 
+                    [label]="'Multi select'" 
+                    [isMultiSelect]="true"
+                    [disabled]="false"
+                    [numOfCol]="1"
+                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2222222222" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
+                    (valueChange)="onValueChanged($event)">
+                </pep-select-panel>
+                    <pep-select-panel 
                     [label]="'Single select'" 
                     [isMultiSelect]="false"
-                    [numOfCol]="1"
-                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2222222222" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'>
+                    [numOfCol]="3"
+                    [options]='[{   "key": "val0", "value": "1" },{   "key": "val1", "value": "2" }, { "key": "val2", "value": "3" }, { "key": "val3", "value": "4" }, { "key": "val4", "value": "5" }]'
+                    (valueChange)="onValueChanged($event)">
                 </pep-select-panel>
                 <pep-select-panel 
                     [label]="'Multi select'" 
                     [isMultiSelect]="true"
+                    [disabled]="false"
                     [numOfCol]="3"
-                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2222222222" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'>
+                    [options]='[{ "key": "key0", "value": "Option 0" }, { "key": "key1", "value": "Option 1" }, { "key": "key2", "value": "Option 2" }, { "key": "key3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
+                    (valueChange)="onValueChanged($event)">
                 </pep-select-panel>
                     <!-- Textbox Examples -->
                     <pep-textbox [key]="'Texbox'" [form]="textboxFormGroup" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"

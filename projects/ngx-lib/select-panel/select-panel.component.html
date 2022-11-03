@@ -19,24 +19,27 @@
 </ng-template> -->
 
 
+
     <pep-field-title *ngIf="label !== ''" [label]="label" [mandatory]="mandatory"
         [disabled]="disabled" [showTitle]="label !== ''">
     </pep-field-title>
-   
-        <div class="select-panel">
-            <div class="ellipsis pull-left flip" [title]="option.value" [style.width]="optColumnWidth+'%'"  *ngFor="let option of options">
+    <!-- <mat-form-field appearance="outline"> -->
+        <div #selectPanel class="select-panel">
+            <div class="optCont" [title]="option.value"  *ngFor="let option of options">
                 <ng-container *ngTemplateOutlet="isMultiSelect == true ? multiBlock : singleBlock; context: { option }"></ng-container>
             </div>
         </div>
-    
+<!-- </mat-form-field> -->
+
     <ng-template #singleBlock let-option="option">
-        <input type="radio" name="avner"  value="option.key" (onchange)="selectionChange($event)">
-        <label>{{option.value}}</label>
+        <input type="radio" [disabled]="disabled" name="avner"  value="option.key" (change)="selectionChange($event)">
+        <label class="ellipsis">{{option.value}}</label>
     </ng-template>
 
     <ng-template #multiBlock let-option="option">
-        <input type="checkbox" name="vehicle1" value="option.key">
-        <label>{{option.value}}</label>   
+        <input type="checkbox" [disabled]="disabled" name="vehicle1" value="{{option.key}}" (change)="selectionChange($event)">
+        <label class="ellipsis">{{option.value}}</label>   
     </ng-template>
+
 
 

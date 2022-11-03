@@ -126,6 +126,7 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     onValueChanged(key: any) {
+        debugger;
         //alert(`${key}: value was changed`);
     }
 
