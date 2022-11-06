@@ -9,13 +9,21 @@ import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepSelectPanelComponent } from './select-panel.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
+        ReactiveFormsModule,
         // Material modules
-        MatFormFieldModule,
         MatCommonModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatInputModule,
+        MatFormFieldModule,
         MatButtonModule,
         MatIconModule,
         // ngx-lib modules

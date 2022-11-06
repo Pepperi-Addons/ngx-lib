@@ -21,7 +21,7 @@
                     [isMultiSelect]="true"
                     [disabled]="false"
                     [numOfCol]="1"
-                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2222222222" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
+                    [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2222222222", "checked": true }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
                     (valueChange)="onValueChanged($event)">
                 </pep-select-panel>
                     <pep-select-panel 
@@ -36,7 +36,7 @@
                     [isMultiSelect]="true"
                     [disabled]="false"
                     [numOfCol]="3"
-                    [options]='[{ "key": "key0", "value": "Option 0" }, { "key": "key1", "value": "Option 1" }, { "key": "key2", "value": "Option 2" }, { "key": "key3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
+                    [options]='[{ "key": "key0", "value": "Option 0" }, { "key": "key1", "value": "Option 1",  "checked": true }, { "key": "key2", "value": "Option 2" }, { "key": "key3", "value": "Option 3",  "checked": true }, { "key": "val4", "value": "Option 4",  "checked": true }]'
                     (valueChange)="onValueChanged($event)">
                 </pep-select-panel>
                     <!-- Textbox Examples -->

@@ -126,8 +126,7 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     onValueChanged(key: any) {
-        debugger;
-        //alert(`${key}: value was changed`);
+        alert(`${key}: value was changed`);
     }
 
     imageChange(event: any) {

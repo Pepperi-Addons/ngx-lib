@@ -1,6 +1,6 @@
 import { Component,OnDestroy,Input,Output,EventEmitter,Renderer2,ElementRef, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IPepOption, PepCustomizationService, PepLayoutType, PepSelectField } from '@pepperi-addons/ngx-lib'; 
+import { DEFAULT_HORIZONTAL_ALIGNMENT, IPepOption, PepCustomizationService, PepHorizontalAlignment, PepLayoutType, PepSelectField } from '@pepperi-addons/ngx-lib'; 
 
 /**
  * This is a button component that support pepperi theme
@@ -17,8 +17,14 @@ import { IPepOption, PepCustomizationService, PepLayoutType, PepSelectField } fr
 })
 export class PepSelectPanelComponent implements OnDestroy {
     
-    @Input() label = '';
+    @Input() form: FormGroup = null;
+    @Input() layoutType: PepLayoutType = 'form';
+
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() renderTitle = true;
+    @Input() showTitle = true; 
+    @Input() label = '';
+
     @Input() mandatory = false;
     @Input() disabled = false;
     @Input() classNames = '';
@@ -41,20 +47,36 @@ export class PepSelectPanelComponent implements OnDestroy {
     }
 
     @Output()
-    valueChange: EventEmitter<string> = new EventEmitter<string>();
+    valueChange: EventEmitter<object> = new EventEmitter<object>();
 
     @ViewChild('selectPanel', { static: true }) selectPanel: ElementRef;
     
+    private optionsMap = {}; //new Array< {key: string, value: boolean}>;
+
     constructor(private renderer: Renderer2, private customizationService: PepCustomizationService, private element: ElementRef) { }
 
-  
+    private setDefaultForm(): void {
+        const pepField = new PepSelectField({
+            //key: this.key,
+            value: this.options,
+            mandatory: this.mandatory,
+            readonly: false,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
 
     ngOnInit(): void {
-         
+        if (this.form === null) {
+            this.setDefaultForm();
+        }
     }
 
     ngAfterViewInit() {
         this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', ('auto '+this.numOfCol.toString()));
+        if(this.isMultiSelect){
+            this.initOptionsMap();
+        }
       }
 
     ngOnDestroy(): void {
@@ -63,9 +85,21 @@ export class PepSelectPanelComponent implements OnDestroy {
         // }
     }
 
-    selectionChange(event: any): void {
-        debugger;
-        this.valueChange.emit(event);
+    initOptionsMap(): void {
+        for (var x = 0; x<this.options.length; x++) {
+            this.optionsMap[this.options[x].key] =  false;
+        }
+    }
+
+    selectionChange(option, event: any): void {
+       if(this.isMultiSelect){
+            this.optionsMap[option.key] = event.checked;
+       }
+       else{
+            this.optionsMap = new Object();
+            this.optionsMap[option.key] = event.source.checked;
+       }
+       this.valueChange.emit(this.optionsMap);
         // if (!this.isMulti) {
         //     this.changeValue(this.selectedValueModel);
         // }

@@ -36,6 +36,7 @@ import { PepQuantitySelectorModule } from '@pepperi-addons/ngx-lib/quantity-sele
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
+
 import { PepSliderModule } from '@pepperi-addons/ngx-lib/slider';
 import { PepSeparatorModule } from '@pepperi-addons/ngx-lib/separator';
 import { PepSideBarModule } from '@pepperi-addons/ngx-lib/side-bar';

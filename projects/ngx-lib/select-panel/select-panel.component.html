@@ -1,45 +1,39 @@
-<!-- <button mat-button [pepDataQa]="key ? key : value"
-    class="pep-button {{ sizeType }} {{ styleType }} {{ styleStateType }} {{ classNames }}"
-    [ngClass]="{ 'icon-button': iconName && !value }" [disabled]="disabled" (click)="onButtonClicked($event)">
-    <ng-container *ngTemplateOutlet="contentTemplate">
-    </ng-container>
-</button>
-
-<ng-template #contentTemplate>
-    <mat-icon *ngIf="iconName && iconPosition === 'start'" [ngClass]="{ 'pull-left flip': value }">
-        <pep-icon name="{{iconName}}"></pep-icon>
-    </mat-icon>
-    <span *ngIf="value" class="ellipsis pull-left flip"
-        [ngClass]="{ 'button-title-with-icon': iconName, 'icon-before': iconPosition === 'start' }" [title]="value">
-        {{value}}
-    </span>
-    <mat-icon *ngIf="iconName && iconPosition === 'end'" [ngClass]="{ 'pull-left flip': value }">
-        <pep-icon name="{{iconName}}"></pep-icon>
-    </mat-icon>
-</ng-template> -->
-
-
-
-    <pep-field-title *ngIf="label !== ''" [label]="label" [mandatory]="mandatory"
-        [disabled]="disabled" [showTitle]="label !== ''">
-    </pep-field-title>
-    <!-- <mat-form-field appearance="outline"> -->
-        <div #selectPanel class="select-panel">
+<ng-container [formGroup]="form">
+    <pep-field-title *ngIf="renderTitle" 
+                     [label]="label" 
+                     [mandatory]="mandatory"
+                     [disabled]="disabled" 
+                     [xAlignment]="xAlignment" 
+                     [showTitle]="showTitle">
+        </pep-field-title>
+    <div #selectPanel class="select-panel">
             <div class="optCont" [title]="option.value"  *ngFor="let option of options">
                 <ng-container *ngTemplateOutlet="isMultiSelect == true ? multiBlock : singleBlock; context: { option }"></ng-container>
             </div>
-        </div>
-<!-- </mat-form-field> -->
+    </div>
+</ng-container>
 
     <ng-template #singleBlock let-option="option">
-        <input type="radio" [disabled]="disabled" name="avner"  value="option.key" (change)="selectionChange($event)">
-        <label class="ellipsis">{{option.value}}</label>
+            <mat-radio-button 
+                [name]="'sel'"
+                class="pep-radio-button" 
+                [disabled]="disabled"
+                [checked]="option.checked"
+                (change)="selectionChange(option, $event)">
+                {{option.value}}
+            </mat-radio-button>
     </ng-template>
 
     <ng-template #multiBlock let-option="option">
-        <input type="checkbox" [disabled]="disabled" name="vehicle1" value="{{option.key}}" (change)="selectionChange($event)">
-        <label class="ellipsis">{{option.value}}</label>   
+        <mat-checkbox
+            [name]="'key'"
+            [disabled]="disabled" 
+            [checked]="option.checked"
+            (change)="selectionChange(option, $event)">
+            {{option.value}}
+        </mat-checkbox>
     </ng-template>
+
 
 
 

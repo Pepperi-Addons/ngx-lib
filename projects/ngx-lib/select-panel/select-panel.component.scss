@@ -13,6 +13,23 @@
     padding: variables.$spacing-md;
     font-size: variables.$fs-sm;
     line-height: variables.$lh-md;
+    border-radius: variables.$border-radius-md;
+    
+    @include mixins.pep-state-default();
+
+    &:hover {
+         @include mixins.pep-state-hover();
+     }
+ 
+ 
+ 
+    // &:active {
+    //      @include mixins.pep-state-active();
+    //  }
+     
+     &.mat-focused {
+         
+     }
 
     .optCont{
         display: flex;
@@ -43,5 +60,9 @@
 
     .optCont:last-child{
         margin-bottom: 0;
+    }
+
+    .fieldset {
+       
     }
 }
