@@ -77,7 +77,24 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         return this._value;
     }
 
-    @Input() formattedValue = '';
+    // @Input() formattedValue = '';
+    private _formattedValue = null;
+    @Input()
+    set formattedValue(value: string) {
+        // if (!value) {
+        //     value = '';
+        // }
+
+        // if (this._calculateFormattedValue) {
+        //     this._calculateFormattedValue = false;
+        // }
+
+        // this.setFormattedValue(value);
+    }
+    get formattedValue(): string {
+        return this._formattedValue;
+    }
+
     @Input() label = '';
 
     private _type: PepDateFieldType = 'date';

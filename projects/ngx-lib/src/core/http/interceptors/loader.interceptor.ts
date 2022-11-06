@@ -19,7 +19,7 @@ export class PepLoaderInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         // console.warn('LoaderInterceptor');
-        let newVer = 2;
+        const newVer = 2;
         const loaderService = this.injector.get(PepLoaderService);
       //  console.log('show', req.url);       
         loaderService.show();

@@ -27,14 +27,6 @@ export class PepUtilitiesService {
         return value;
     }
 
-    private getDecimalSeparator() {
-        const numberWithDecimalSeparator = 1.1;
-
-        return numberWithDecimalSeparator
-            .toLocaleString(this.culture)
-            .substring(1, 2);
-    }
-
     // adapted from https://github.com/sindresorhus/parse-ms.
     // moved to internal function because parse-ms is now pure ESM.
     private parseMs(milliseconds: number) {
@@ -189,23 +181,31 @@ export class PepUtilitiesService {
         maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
 
         let res = '';
-        const number = this.coerceNumberProperty(value);
-        const styleOptions = {
-            // style: 'currency',
-            // currencySign: currencySign,
-            minimumFractionDigits: minFractionDigits || 0,
-            maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
-        };
 
-        if (number === 0) {
-            // return formatCurrency(0, this.culture, currencySign, undefined, digitsInfo);
-            res = new Intl.NumberFormat(this.culture, styleOptions).format(0);
-        } else {
-            // return formatCurrency(value, this.culture, currencySign, undefined, digitsInfo);
-            res = new Intl.NumberFormat(this.culture, styleOptions).format(number);
-        }
-
-        res = this.isCurrencyShouldBeOnRight(currencySign) ? `${res} ${currencySign}` : `${currencySign} ${res}`
+        // If the decimal seperator is the last digit
+        // if (value.length > 0 && value.indexOf(this.getDecimalSeparator()) === value.length -1) {
+        //     res = value;
+        // } else {
+            const number = this.coerceNumberProperty(value);
+            const styleOptions = {
+                // style: 'currency',
+                // currencySign: currencySign,
+                minimumFractionDigits: minFractionDigits || 0,
+                maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
+            };
+    
+            if (number === 0) {
+                // return formatCurrency(0, this.culture, currencySign, undefined, digitsInfo);
+                res = new Intl.NumberFormat(this.culture, styleOptions).format(0);
+            } else {
+                // return formatCurrency(value, this.culture, currencySign, undefined, digitsInfo);
+                res = new Intl.NumberFormat(this.culture, styleOptions).format(number);
+            }
+    
+            if (currencySign.length > 0) {
+                res = this.isCurrencyShouldBeOnRight(currencySign) ? `${res} ${currencySign}` : `${currencySign} ${res}`
+            }
+        // }
 
         return res;
     }
@@ -313,5 +313,13 @@ export class PepUtilitiesService {
         }
 
         return coerceNumberProperty(value, fallbackValue);
+    }
+
+    getDecimalSeparator() {
+        const numberWithDecimalSeparator = 1.1;
+
+        return numberWithDecimalSeparator
+            .toLocaleString(this.culture)
+            .substring(1, 2);
     }
 }

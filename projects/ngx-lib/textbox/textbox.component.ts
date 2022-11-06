@@ -112,7 +112,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._formattedValue;
     }
 
-    private _minFractionDigits: number = NaN;
+    private _minFractionDigits = NaN;
     @Input()
     set minFractionDigits(value: number) {
         this._minFractionDigits = value;
@@ -122,7 +122,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         return this._minFractionDigits;
     }
 
-    private _maxFractionDigits: number = NaN;
+    private _maxFractionDigits = NaN;
     @Input()
     set maxFractionDigits(value: number) {
         this._maxFractionDigits = value;
@@ -272,19 +272,24 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
-            if (this.type === 'currency') {
-                this._formattedValue = this.utilitiesService.formatCurrency(value, this.accessory, this.minFractionDigits, this.maxFractionDigits);
-            } else if (this.type === 'percentage') {
-                this._formattedValue = this.utilitiesService.formatPercent(value, this.minFractionDigits, this.maxFractionDigits);
-            } else if (this.type === 'real') {
-                this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
-            } else if (this.type === 'int') {
-                this._formattedValue = this.utilitiesService.formatNumber(value);
-            } else if (this.type === 'duration') {
-                this._formattedValue = this.utilitiesService.formatDuration(value, { duration: 'seconds' });
-            } else {
+            if (value.length > 0 && value.indexOf(this.utilitiesService.getDecimalSeparator()) === value.length -1) {
                 this._formattedValue = value;
+            } else {
+                if (this.type === 'currency') {
+                    this._formattedValue = this.utilitiesService.formatCurrency(value, this.accessory, this.minFractionDigits, this.maxFractionDigits);
+                } else if (this.type === 'percentage') {
+                    this._formattedValue = this.utilitiesService.formatPercent(value, this.minFractionDigits, this.maxFractionDigits);
+                } else if (this.type === 'real') {
+                    this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
+                } else if (this.type === 'int') {
+                    this._formattedValue = this.utilitiesService.formatNumber(value);
+                } else if (this.type === 'duration') {
+                    this._formattedValue = this.utilitiesService.formatDuration(value, { duration: 'seconds' });
+                } else {
+                    this._formattedValue = value;
+                }
             }
+
         } else {
             this._formattedValue = value;
         }
@@ -429,9 +434,16 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 const numberValue = this.utilitiesService.coerceNumberProperty(
                     value
                 );
-                res =
-                    numberValue >= this.minValue &&
-                    numberValue <= this.maxValue;
+                    
+                if (!isNaN(this.minValue) && !isNaN(this.maxValue)) {
+                    res = numberValue >= this.minValue && numberValue <= this.maxValue;
+                } else if (!isNaN(this.minValue)) {
+                    res = numberValue >= this.minValue;
+                } else if (!isNaN(this.maxValue)) {
+                    res = numberValue <= this.maxValue;
+                } else {
+                    res = true;
+                }
             }
         } else {
             // TODO: Maybe need to check other types.
@@ -473,21 +485,22 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     onBlur(e: any): void {
         this.isInFocus = false;
         const value = e.target ? e.target.value : e;
-        if (value !== this.value && this.isDifferentValue(value)) {
-            // If renderError is false and the new value is not valid.
-            if (!this.renderError && !this.isValueValid(value)) {
-                this.renderer.setProperty(
-                    this.input.nativeElement,
-                    'value',
-                    this.value
-                );
-            } else {
-                this.value = value;
 
-                // // If the user is setting the formatted value then set the value till the user format it and return it back.
-                // if (!this._calculateFormattedValue) {
-                //     this._formattedValue = value;
-                // }
+        // If renderError is false and the new value is not valid.
+        if (!this.renderError && !this.isValueValid(value)) {
+            this.renderer.setProperty(
+                this.input.nativeElement,
+                'value',
+                this.value
+            );
+        } else {
+            this.value = value;
+
+            if (value !== this.value && this.isDifferentValue(value)) {
+            // // If the user is setting the formatted value then set the value till the user format it and return it back.
+            // if (!this._calculateFormattedValue) {
+            //     this._formattedValue = value;
+            // }
 
                 this.valueChange.emit(value);
             }

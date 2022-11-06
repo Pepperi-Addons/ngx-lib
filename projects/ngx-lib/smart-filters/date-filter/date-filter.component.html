@@ -15,7 +15,7 @@
         <!-- Amount -->
         <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
             [renderError]="false" [renderTitle]="renderTitle" fxFlex="50%" [type]="'int'"
-            [formattedValue]="firstControl?.value || ''" [value]="firstControl?.value || ''"
+            [value]="firstControl?.value || ''"
             (valueChange)="onDateValueChanged()">
         </pep-textbox>
         <!-- Time unit -->

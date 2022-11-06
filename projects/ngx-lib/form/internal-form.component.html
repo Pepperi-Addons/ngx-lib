@@ -77,7 +77,7 @@
             </pep-checkbox>
 
             <pep-date *ngSwitchCase="'date'" [form]="form" [key]="field.key" [value]="field.value"
-                [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type"
+                [label]="field.label" [type]="field.type"
                 [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
                 [textColor]="field.textColor" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
                 [minValue]="field.minValue" [maxValue]="field.maxValue" [layoutType]="layoutType">
@@ -97,7 +97,7 @@
             </pep-textarea>
 
             <pep-quantity-selector *ngSwitchCase="'qs'" [id]="field.key" [form]="form" [key]="field.key"
-                [value]="field.value" [formattedValue]="field.formattedValue" [label]="field.label" [type]="field.type"
+                [value]="field.value" [label]="field.label" [type]="field.type"
                 [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
                 [textColor]="field.textColor" [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
                 [layoutType]="layoutType" (valueChange)="onValueChanged($event)" (elementClick)="onClick($event)">

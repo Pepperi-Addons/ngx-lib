@@ -11,13 +11,13 @@
             <!-- Min number -->
             <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.MIN' | translate"
                 [renderError]="false" [renderTitle]="renderTitle" [type]="field.type" fxFlex="50%"
-                [formattedValue]="firstControl?.value || ''" [value]="firstControl?.value || ''"
+                [value]="firstControl?.value || ''"
                 [maxValue]="secondControl?.value || ''" (valueChange)="onValueChanged()">
             </pep-textbox>
             <!-- Max number -->
             <pep-textbox [form]="form" [key]="secondControlKey" [label]="'SMART_FILTERS.MAX' | translate"
                 [renderError]="false" [renderTitle]="renderTitle" [type]="field.type" fxFlex="50%"
-                [formattedValue]="secondControl?.value || ''" [value]="secondControl?.value || ''"
+                [value]="secondControl?.value || ''"
                 [minValue]="firstControl?.value || ''" (valueChange)="onValueChanged()">
             </pep-textbox>
         </div>
@@ -37,7 +37,7 @@
             <!-- Amount -->
             <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
                 [renderError]="false" [renderTitle]="renderTitle" [type]="field.type"
-                [formattedValue]="firstControl?.value || ''" [value]="firstControl?.value || ''"
+                [value]="firstControl?.value || ''"
                 (valueChange)="onValueChanged()">
             </pep-textbox>
         </div>

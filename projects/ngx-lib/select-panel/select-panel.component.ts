@@ -47,11 +47,11 @@ export class PepSelectPanelComponent implements OnDestroy {
     }
 
     @Output()
-    valueChange: EventEmitter<object> = new EventEmitter<object>();
+    valueChange: EventEmitter<Map<string,boolean>> = new EventEmitter<Map<string,boolean>>();
 
     @ViewChild('selectPanel', { static: true }) selectPanel: ElementRef;
     
-    private optionsMap = {}; //new Array< {key: string, value: boolean}>;
+    private optionsMap = new Map<string,boolean>();
 
     constructor(private renderer: Renderer2, private customizationService: PepCustomizationService, private element: ElementRef) { }
 
@@ -86,23 +86,21 @@ export class PepSelectPanelComponent implements OnDestroy {
     }
 
     initOptionsMap(): void {
-        for (var x = 0; x<this.options.length; x++) {
-            this.optionsMap[this.options[x].key] =  false;
+        for (let x = 0; x<this.options.length; x++) {
+            //this.optionsMap.set(this.options[x].key,this.options[x].)
+            this.optionsMap.set(this.options[x].key, false);
         }
     }
 
     selectionChange(option, event: any): void {
        if(this.isMultiSelect){
-            this.optionsMap[option.key] = event.checked;
+            this.optionsMap.set(option.key, event.checked);
        }
        else{
-            this.optionsMap = new Object();
-            this.optionsMap[option.key] = event.source.checked;
+            this.optionsMap.clear();
+            this.optionsMap.set(option.key, event.source.checked) ;
        }
        this.valueChange.emit(this.optionsMap);
-        // if (!this.isMulti) {
-        //     this.changeValue(this.selectedValueModel);
-        // }
     }
 
 }
