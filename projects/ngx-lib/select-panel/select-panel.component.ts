@@ -40,7 +40,7 @@ export class PepSelectPanelComponent implements OnDestroy {
             value = 1;
         }
 
-        this._numOfCol = value;
+        this._numOfCol = value; 
         this.setNumOfColumns();
     }
     
