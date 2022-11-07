@@ -17,9 +17,9 @@
     
     @include mixins.pep-state-default();
 
-    &:hover {
-         @include mixins.pep-state-hover();
-     }
+    // &:hover {
+    //      @include mixins.pep-state-hover();
+    //  }
  
  
  
@@ -32,28 +32,9 @@
     //  }
 
     .optCont{
-        display: flex;
+        display: grid;
         height: 2rem;
         align-items: center;
-
-        // input[type="radio"],
-        // input[type="checkbox"]{ 
-        //     height: variables.$lh-sm;
-        //     width: variables.$lh-sm;
-        //     border: 1px solid rgb(153, 153, 153);
-        //     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04),
-        //                 0px 2px 4px 0px rgba(0, 0, 0, 0.04),
-        //                 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
-        // }
-
-        // input[type="radio"]{
-        //     margin-inline-start: 0;
-        // }
-
-        // input[type="checkbox"]{ 
-        //     margin: 0rem .35rem 0 1px;
-        //     border-radius: 4px;
-        // }
         
         label{ height: variables.$lh-md;}
     }

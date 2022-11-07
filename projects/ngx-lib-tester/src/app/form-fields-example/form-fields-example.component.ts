@@ -16,6 +16,8 @@ import {
 
 import { PepSnackBarData } from 'projects/ngx-lib/snack-bar';
 import { PepChipsComponent } from 'projects/ngx-lib/chips';
+import { IPepSelectionOption } from 'ngx-lib/select-panel/select-panel.model';
+import { PepButton } from 'ngx-lib/button';
 
 @Component({
     templateUrl: './form-fields-example.component.html',
@@ -45,6 +47,8 @@ export class FormFieldsExampleComponent implements OnInit {
 
     regex = /^[0-9]*$/;
 
+    multiSelectArr = new Array();
+    numOfSelectionColumn = 1;
     chips: any[] = [
         {
             value: 'Chair',
@@ -59,6 +63,11 @@ export class FormFieldsExampleComponent implements OnInit {
             selected: true
         }
     ]
+    public numOfColumn : Array<PepButton> = [
+            { key: '1', value: '1', callback: (event: any) => this.onColNumChanged(event.source.key)},
+            { key: '2', value: '2', callback: (event: any) => this.onColNumChanged(event.source.key)},
+            { key: '3', value: '3', callback: (event: any) => this.onColNumChanged(event.source.key)}
+    ] 
 
     selectedChips(){
         console.log('selectedChips', this.chipsComp.chips);
@@ -116,6 +125,12 @@ export class FormFieldsExampleComponent implements OnInit {
             { key: 'test3', text: 'test 3' },
         ];
 
+        for(var i=0; i<5;i++){
+            let opt: IPepSelectionOption = { "key": "val"+i.toString(), "value": "Opt"+i.toString(), isChecked: i%2 == 0};
+            this.multiSelectArr.push(opt);
+
+        }
+
         this.dateString = new Date().toUTCString();
         
         
@@ -138,13 +153,16 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     raiseSnackBar(event) {
-        debugger;
         const data: PepSnackBarData = {
             title: 'test',
             content: 'content bla bla'
         }
 
         this.snackBarService.openDefaultSnackBar(data);
+    }
+
+    onColNumChanged(event){
+        this.numOfSelectionColumn = event;
     }
 
     

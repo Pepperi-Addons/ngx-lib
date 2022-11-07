@@ -1,6 +1,7 @@
 import { Component,OnDestroy,Input,Output,EventEmitter,Renderer2,ElementRef, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DEFAULT_HORIZONTAL_ALIGNMENT, IPepOption, PepCustomizationService, PepHorizontalAlignment, PepLayoutType, PepSelectField } from '@pepperi-addons/ngx-lib'; 
+import { IPepSelectionOption } from './select-panel.model';
 
 /**
  * This is a button component that support pepperi theme
@@ -30,28 +31,39 @@ export class PepSelectPanelComponent implements OnDestroy {
     @Input() classNames = '';
 
     @Input() isMultiSelect = false;
-    @Input() numOfCol = 1;
+
+    private _numOfCol: number;
+
+    @Input() 
+    set numOfCol(value: number){
+        if (!value) {
+            value = 1;
+        }
+
+        this._numOfCol = value;
+        this.setNumOfColumns();
+    }
     
-    private _options: Array<IPepOption> = [];
+    private _options: Array<IPepSelectionOption> = [];
     
     @Input() 
-    set options(value: Array<IPepOption>) {
+    set options(value: Array<IPepSelectionOption>) {
         if (!value) {
             value = [];
         }
 
         this._options = value;
     }
-    get options(): Array<IPepOption> {
+    get options(): Array<IPepSelectionOption> {
         return this._options;
     }
 
     @Output()
-    valueChange: EventEmitter<Map<string,boolean>> = new EventEmitter<Map<string,boolean>>();
+    valueChange: EventEmitter<string[]> = new EventEmitter<string[]>();
 
     @ViewChild('selectPanel', { static: true }) selectPanel: ElementRef;
     
-    private optionsMap = new Map<string,boolean>();
+    private optionsMap = new Array<string>();
 
     constructor(private renderer: Renderer2, private customizationService: PepCustomizationService, private element: ElementRef) { }
 
@@ -73,7 +85,7 @@ export class PepSelectPanelComponent implements OnDestroy {
     }
 
     ngAfterViewInit() {
-        this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', ('auto '+this.numOfCol.toString()));
+        this.setNumOfColumns();
         if(this.isMultiSelect){
             this.initOptionsMap();
         }
@@ -85,20 +97,31 @@ export class PepSelectPanelComponent implements OnDestroy {
         // }
     }
 
+    setNumOfColumns(){
+        this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', ('auto '+this._numOfCol.toString()));
+    }
     initOptionsMap(): void {
         for (let x = 0; x<this.options.length; x++) {
-            //this.optionsMap.set(this.options[x].key,this.options[x].)
-            this.optionsMap.set(this.options[x].key, false);
+            //push checked option to the returned array;
+            if(this.options[x].isChecked){
+                this.optionsMap.push(this.options[x].key);
+            }
         }
     }
 
     selectionChange(option, event: any): void {
        if(this.isMultiSelect){
-            this.optionsMap.set(option.key, event.checked);
+        const optIndex = this.optionsMap.indexOf(option.key);
+        if ( optIndex == -1){
+            this.optionsMap.push(option.key);
+        }
+        else{
+            //remove the option from the returned array;
+            this.optionsMap.splice(optIndex,1);
+        }
        }
        else{
-            this.optionsMap.clear();
-            this.optionsMap.set(option.key, event.source.checked) ;
+            this.optionsMap[0] = (option.key);
        }
        this.valueChange.emit(this.optionsMap);
     }
