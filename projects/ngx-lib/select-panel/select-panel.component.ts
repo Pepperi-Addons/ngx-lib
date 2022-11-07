@@ -31,7 +31,18 @@ export class PepSelectPanelComponent implements OnDestroy {
     @Input() classNames = '';
 
     @Input() isMultiSelect = false;
-    @Input() numOfCol = 1;
+
+    private _numOfCol: number;
+
+    @Input() 
+    set numOfCol(value: number){
+        if (!value) {
+            value = 1;
+        }
+
+        this._numOfCol = value;
+        this.setNumOfColumns();
+    }
     
     private _options: Array<IPepSelectionOption> = [];
     
@@ -74,7 +85,7 @@ export class PepSelectPanelComponent implements OnDestroy {
     }
 
     ngAfterViewInit() {
-        this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', ('auto '+this.numOfCol.toString()));
+        this.setNumOfColumns();
         if(this.isMultiSelect){
             this.initOptionsMap();
         }
@@ -86,6 +97,9 @@ export class PepSelectPanelComponent implements OnDestroy {
         // }
     }
 
+    setNumOfColumns(){
+        this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', ('auto '+this._numOfCol.toString()));
+    }
     initOptionsMap(): void {
         for (let x = 0; x<this.options.length; x++) {
             //push checked option to the returned array;

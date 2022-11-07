@@ -20,18 +20,19 @@
                     [label]="'Multi select'" 
                     [isMultiSelect]="true"
                     [disabled]="false"
-                    [numOfCol]="1"
+                    [numOfCol]="numOfSelectionColumn"
                     [options]="multiSelectArr"
                     (valueChange)="onValueChanged($event)">
             </pep-select-panel>
-                    <pep-select-panel 
-                        [label]="'Multi select'" 
-                        [isMultiSelect]="true"
-                        [disabled]="false"
-                        [numOfCol]="3"
-                        [options]="multiSelectArr2"
-                        (valueChange)="onValueChanged($event)">
-                </pep-select-panel>
+            <pep-group-buttons [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">
+            </pep-group-buttons>
+
+            <!-- <pep-group-buttons-settings 
+                [subHeader]="'Num of Columns'"
+                [btnKey]="numOfSelectionColumn" 
+                [groupType]="'custom'" [btnsArray]="numOfColumn"
+                (btnkeyChange)="onColNumChanged($event)">
+        </pep-group-buttons-settings> -->
                     <!-- Textbox Examples -->
                     <pep-textbox [key]="'Texbox'" [form]="textboxFormGroup" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
                         [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
