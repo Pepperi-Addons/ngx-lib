@@ -3,3 +3,4 @@
  */
 export * from './select-panel.module';
 export * from './select-panel.component';
+export * from './select-panel.model';
