@@ -11,6 +11,9 @@
         "TRUE": "True",
         "FALSE": "False"
     },
+    "CHIPS": {
+        "ADD_CHIP": "Add Chip"
+    },
     "IMAGE": {
         "NO_IMAGE": "No image",
         "CLICK_TO_ENLARGE": "Click to enlarge"
@@ -151,6 +154,7 @@
         "ERROR_MAX_QUANTITY_LIMIT": "Max quantity",
         "ERROR_MIN_QUANTITY_LIMIT": "Min quantity",
         "ERROR_RANGE_IS_NOT_VALID": "Value should be between {{min}} and {{max}}",
+        "ERROR_INVALID_PATTERN": "Invalid Character",
         "INFO_LOADING_FILE": "Loading",
         "INFO_MISSING_FILE": "Missing file",
         "INFO_MISSING_IMAGE": "Missing image",
