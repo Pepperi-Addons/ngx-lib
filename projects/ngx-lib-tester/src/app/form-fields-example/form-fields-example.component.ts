@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { PepSnackBarService } from '@pepperi-addons/ngx-lib/snack-bar';
+import { PepSnackBarService, PepSnackBarData } from '@pepperi-addons/ngx-lib/snack-bar';
 import {
     PepLayoutService,
     IPepFieldClickEvent,
@@ -14,9 +14,9 @@ import {
     IPepMenuItemClickEvent,
 } from '@pepperi-addons/ngx-lib/menu';
 
-import { PepSnackBarData } from 'projects/ngx-lib/snack-bar';
-import { PepChipsComponent } from 'projects/ngx-lib/chips';
-import { IPepSelectionOption } from 'ngx-lib/select-panel/select-panel.model';
+
+import { PepChipsComponent } from '@pepperi-addons/ngx-lib/chips';
+import { IPepSelectionOption } from '@pepperi-addons/ngx-lib/select-panel';
 import { PepButton } from 'ngx-lib/button';
 
 @Component({
@@ -47,7 +47,7 @@ export class FormFieldsExampleComponent implements OnInit {
 
     regex = /^[0-9]*$/;
 
-    multiSelectArr = new Array();
+    multiSelectArr = [];
     numOfSelectionColumn = 1;
     chips: any[] = [
         {
@@ -125,15 +125,17 @@ export class FormFieldsExampleComponent implements OnInit {
             { key: 'test3', text: 'test 3' },
         ];
 
-        for(var i=0; i<5;i++){
-            let opt: IPepSelectionOption = { "key": "val"+i.toString(), "value": "Opt"+i.toString(), isChecked: i%2 == 0};
-            this.multiSelectArr.push(opt);
+        for(let i = 0; i < 5; i++){
+            const opt: IPepSelectionOption = { 
+                'key': 'val' + i.toString(), 
+                'value': 'Opt' + i.toString(),
+                isChecked: i % 2 == 0
+            };
 
+            this.multiSelectArr.push(opt);
         }
 
         this.dateString = new Date().toUTCString();
-        
-        
     }
 
     menuClicked(event): void {
