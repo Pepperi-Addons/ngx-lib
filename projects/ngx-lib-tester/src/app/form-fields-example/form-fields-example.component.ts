@@ -16,6 +16,7 @@ import {
 
 import { PepSnackBarData } from 'projects/ngx-lib/snack-bar';
 import { PepChipsComponent } from 'projects/ngx-lib/chips';
+import { IPepSelectionOption } from 'ngx-lib/select-panel/select-panel.model';
 
 @Component({
     templateUrl: './form-fields-example.component.html',
@@ -44,7 +45,8 @@ export class FormFieldsExampleComponent implements OnInit {
     formattedValue = null;
 
     regex = /^[0-9]*$/;
-
+    multiSelectArr = new Array();
+    multiSelectArr2 = new Array();
     chips: any[] = [
         {
             value: 'Chair',
@@ -115,6 +117,15 @@ export class FormFieldsExampleComponent implements OnInit {
             { key: 'sep', type: 'splitter' },
             { key: 'test3', text: 'test 3' },
         ];
+
+        for(var i=0; i<15;i++){
+            let opt: IPepSelectionOption = { "key": "val"+i.toString(), "value": "Opt"+i.toString(), isChecked: i%2 == 0};
+            this.multiSelectArr.push(opt);
+           
+            if(i<5){
+                this.multiSelectArr2.push({ "key": +i.toString(), "value": i.toString()});
+            }
+        }
 
         this.dateString = new Date().toUTCString();
         

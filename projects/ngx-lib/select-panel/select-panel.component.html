@@ -18,7 +18,7 @@
                 [name]="'sel'"
                 class="pep-radio-button" 
                 [disabled]="disabled"
-                [checked]="option.checked"
+                [checked]="option.isChecked"
                 (change)="selectionChange(option, $event)">
                 {{option.value}}
             </mat-radio-button>
@@ -28,7 +28,7 @@
         <mat-checkbox
             [name]="'key'"
             [disabled]="disabled" 
-            [checked]="option.checked"
+            [checked]="option.isChecked"
             (change)="selectionChange(option, $event)">
             {{option.value}}
         </mat-checkbox>
