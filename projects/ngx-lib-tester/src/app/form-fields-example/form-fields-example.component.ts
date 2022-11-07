@@ -47,7 +47,7 @@ export class FormFieldsExampleComponent implements OnInit {
 
     regex = /^[0-9]*$/;
 
-    multiSelectArr: Array<any> = [];
+    multiSelectArr = [];
     numOfSelectionColumn = 1;
     chips: any[] = [
         {
@@ -126,14 +126,16 @@ export class FormFieldsExampleComponent implements OnInit {
         ];
 
         for(let i = 0; i < 5; i++){
-            const opt: IPepSelectionOption = { "key": "val"+i.toString(), "value": "Opt"+i.toString(), isChecked: i%2 == 0};
-            this.multiSelectArr.push(opt);
+            const opt: IPepSelectionOption = { 
+                'key': 'val' + i.toString(), 
+                'value': 'Opt' + i.toString(),
+                isChecked: i % 2 == 0
+            };
 
+            this.multiSelectArr.push(opt);
         }
 
         this.dateString = new Date().toUTCString();
-        
-        
     }
 
     menuClicked(event): void {
