@@ -15,27 +15,16 @@
     <ng-container pep-main-area>
         <div class="main-content ">
             <div class="content spacing-top">
-                <div class="child01 child-container">
+                <div class="child1 child-container">
                     <pep-select-panel 
-                        [label]="'Multi select'" 
-                        [isMultiSelect]="true"
-                        [disabled]="false"
-                        [numOfCol]="1"
-                        [options]="multiSelectArr"
-                        (valueChange)="onValueChanged($event)">
-                </pep-select-panel>
-                </div>
-                <div class="child01 child-container">
+                    [label]="'Multi select'" 
+                    [isMultiSelect]="true"
+                    [disabled]="false"
+                    [numOfCol]="1"
+                    [options]="multiSelectArr"
+                    (valueChange)="onValueChanged($event)">
+            </pep-select-panel>
                     <pep-select-panel 
-                        [label]="'Single select'" 
-                        [isMultiSelect]="false"
-                        [numOfCol]="5"
-                        [options]="multiSelectArr"
-                        (valueChange)="onValueChanged($event)">
-                </pep-select-panel>
-                </div>
-                <div class="child01 child-container">
-                <pep-select-panel 
                         [label]="'Multi select'" 
                         [isMultiSelect]="true"
                         [disabled]="false"
@@ -43,8 +32,6 @@
                         [options]="multiSelectArr2"
                         (valueChange)="onValueChanged($event)">
                 </pep-select-panel>
-                </div>
-                <div class="child1 child-container"  style="display:none;">
                     <!-- Textbox Examples -->
                     <pep-textbox [key]="'Texbox'" [form]="textboxFormGroup" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
                         [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
@@ -93,7 +80,7 @@
                     </pep-date>
                 </div>
                 
-                <div class="child2 child-container" style="display:none;">
+                <div class="child2 child-container">
                     <!-- Signature Example -->
                     <pep-signature [key]="'sig1'"
                         [src]="'https://i.ibb.co/VMHwLkm/58957776-8700-4c6a-b9bc-a171b84d8080.png'"
@@ -114,7 +101,7 @@
                     -->
                 </div>
 
-                <div class="child3 child-container" style="display:none;">
+                <div class="child3 child-container">
                     <!-- Images Examples Events [elementClicked, valueChanged]-->
                     <!-- <pep-image [key]="'No Image'" [src]="" [label]="'image'" [xAlignment]="'center'"
                         [rowSpan]="6">
@@ -143,7 +130,7 @@
 
                 </div>
 
-                <div class="child4 child-container" style="display:none;">
+                <div class="child4 child-container">
                     <!-- Quantity Selector -->
                     <pep-quantity-selector [key]="'qs'" [label]="'Pepperi Quantity Selector 1'" styleType="strong" [value]="'500.50'"
                         [allowDecimal]="true" [xAlignment]="'right'" (elementClicked)="elementClicked($event)">
