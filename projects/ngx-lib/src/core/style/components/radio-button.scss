@@ -55,6 +55,7 @@
         .mat-radio-label {
             @include mixins.fix-inline-z-index();
             margin: 0;
+            font-weight: variables.$font-weight-normal;
         }
 
         &.mat-radio-checked {
