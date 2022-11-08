@@ -16,7 +16,7 @@
     <ng-template #singleBlock let-option="option">
             <mat-radio-button 
                 [name]="'sel'"
-                class="pep-radio-button" 
+                [class]="'pep-radio-button md'" 
                 [disabled]="disabled"
                 [checked]="option.isChecked"
                 (change)="selectionChange(option, $event)">
@@ -27,6 +27,7 @@
     <ng-template #multiBlock let-option="option">
         <mat-checkbox
             [name]="'key'"
+            [class]="'md'"
             [disabled]="disabled" 
             [checked]="option.isChecked"
             (change)="selectionChange(option, $event)">

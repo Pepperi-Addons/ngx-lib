@@ -37,6 +37,10 @@
         align-items: center;
         
         label{ height: variables.$lh-md;}
+
+        ::ng-deep.mat-checkbox-layout{
+            display: flex !important;
+        }
     }
 
     .optCont:last-child{
