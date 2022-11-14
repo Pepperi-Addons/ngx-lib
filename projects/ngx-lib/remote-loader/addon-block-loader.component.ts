@@ -12,11 +12,11 @@ import { PepRemoteLoaderService } from './remote-loader.service';
 export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     @ViewChild('dialogTemplate', { static: true, read: TemplateRef }) dialogTemplate!: TemplateRef<any>;
     
-    @Input() addonId: string = '';
-    @Input() remoteEntry: string = '';
-    @Input() slugName: string = '';
+    @Input() addonId = '';
+    @Input() remoteEntry = '';
+    @Input() slugName = '';
 
-    private _blockType: string = 'AddonBlock';
+    private _blockType = 'AddonBlock';
     @Input() 
     set blockType(value: string) {
         this._blockType = value;
@@ -51,7 +51,7 @@ export class PepAddonBlockLoaderComponent implements OnInit, OnDestroy {
     
     protected inDialog = false;
     protected remotePathOptions: PepRemoteLoaderOptions = null;
-    protected loadElement: boolean = false;
+    protected loadElement = false;
 
     protected onHostEventsCallback: (event: CustomEvent) => void;
 

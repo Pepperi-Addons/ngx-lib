@@ -1,0 +1,40 @@
+<ng-container [formGroup]="form">
+    <pep-field-title *ngIf="renderTitle" 
+                     [label]="label" 
+                     [mandatory]="mandatory"
+                     [disabled]="disabled" 
+                     [xAlignment]="xAlignment" 
+                     [showTitle]="showTitle">
+        </pep-field-title>
+    <div #selectPanel class="select-panel">
+            <div class="optCont" [title]="option.value"  *ngFor="let option of options">
+                <ng-container *ngTemplateOutlet="isMultiSelect == true ? multiBlock : singleBlock; context: { option }"></ng-container>
+            </div>
+    </div>
+</ng-container>
+
+    <ng-template #singleBlock let-option="option">
+            <mat-radio-button 
+                [name]="'sel'"
+                [class]="'pep-radio-button md'" 
+                [disabled]="disabled"
+                [checked]="option.isChecked"
+                (change)="selectionChange(option, $event)">
+                {{option.value}}
+            </mat-radio-button>
+    </ng-template>
+
+    <ng-template #multiBlock let-option="option">
+        <mat-checkbox
+            [name]="'key'"
+            [class]="'md'"
+            [disabled]="disabled" 
+            [checked]="option.isChecked"
+            (change)="selectionChange(option, $event)">
+            {{option.value}}
+        </mat-checkbox>
+    </ng-template>
+
+
+
+

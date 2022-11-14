@@ -120,7 +120,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
                 value: value
             });
             // clear the input value
-            event.chipInput!.clear();
+            event.chipInput?.clear();
         }
     }
 

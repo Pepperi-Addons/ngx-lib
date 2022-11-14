@@ -67,6 +67,7 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
                 firstValidators.push(this.validator.isLessThan(this.secondControl));
             }
             this.firstControl.setValidators(firstValidators);
+            this.firstControl.updateValueAndValidity();
         } else {
             super.setFieldsStateAndValidators();
         }

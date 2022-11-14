@@ -1,0 +1,50 @@
+
+@use '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/mixins';
+
+
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-panel{
+    width: inherit;
+    padding: variables.$spacing-md;
+    font-size: variables.$fs-sm;
+    line-height: variables.$lh-md;
+    border-radius: variables.$border-radius-md;
+    
+    @include mixins.pep-state-default();
+
+    // &:hover {
+    //      @include mixins.pep-state-hover();
+    //  }
+ 
+ 
+ 
+    // &:active {
+    //      @include mixins.pep-state-active();
+    //  }
+     
+    //  &.mat-focused {
+         
+    //  }
+
+    .optCont{
+        display: grid;
+        height: 2rem;
+        align-items: center;
+        
+        label{ height: variables.$lh-md;}
+
+        ::ng-deep.mat-checkbox-layout{
+            display: flex !important;
+        }
+    }
+
+    .optCont:last-child{
+        margin-bottom: 0;
+    }
+
+}

@@ -204,7 +204,7 @@ export class PepTextboxField extends PepFieldBase {
     type: PepTextboxFieldType = 'text';
     regex: string | RegExp;
     regexError: string;
-    digitsNumberAfterDecimalPoint: number = NaN;
+    digitsNumberAfterDecimalPoint = NaN;
 
     constructor(options: IPepTextboxFieldOptions = {}) {
         super(options);
@@ -377,7 +377,7 @@ export class PepQuantitySelectorField extends PepFieldBase {
     notificationInfo: any = {};
     updatedDataCount: number;
     type: PepQuantitySelectorFieldType;
-    digitsNumberAfterDecimalPoint: number = NaN;
+    digitsNumberAfterDecimalPoint = NaN;
 
     constructor(options: IPepQuantitySelectorFieldOptions = {}) {
         super(options);

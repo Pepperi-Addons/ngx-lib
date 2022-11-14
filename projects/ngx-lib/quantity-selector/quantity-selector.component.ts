@@ -102,7 +102,7 @@ export class PepQuantitySelectorComponent
         return this._formattedValue;
     }
     
-    private _minFractionDigits: number = NaN;
+    private _minFractionDigits = NaN;
     @Input()
     set minFractionDigits(value: number) {
         this._minFractionDigits = value;
@@ -112,7 +112,7 @@ export class PepQuantitySelectorComponent
         return this._minFractionDigits;
     }
 
-    private _maxFractionDigits: number = NaN;
+    private _maxFractionDigits = NaN;
     @Input()
     set maxFractionDigits(value: number) {
         this._maxFractionDigits = value;

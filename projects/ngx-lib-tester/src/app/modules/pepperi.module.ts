@@ -11,6 +11,7 @@ import {
 import { PepAttachmentModule } from '@pepperi-addons/ngx-lib/attachment';
 import { PepBreadCrumbsModule } from '@pepperi-addons/ngx-lib/bread-crumbs';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { PepSelectPanelModule } from '@pepperi-addons/ngx-lib/select-panel';
 import { PepCarouselModule } from '@pepperi-addons/ngx-lib/carousel';
 import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { PepColorModule } from '@pepperi-addons/ngx-lib/color';
@@ -123,6 +124,7 @@ const pepperiComponentsModules = [
     PepCarouselModule,
     PepBreadCrumbsModule,
     PepButtonModule,
+    PepSelectPanelModule,
     PepCheckboxModule,
     PepColorModule,
     PepDateModule,

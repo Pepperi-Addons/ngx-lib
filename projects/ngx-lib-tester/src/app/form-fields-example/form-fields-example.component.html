@@ -16,10 +16,27 @@
         <div class="main-content ">
             <div class="content spacing-top">
                 <div class="child1 child-container">
+                    <pep-select-panel 
+                    [label]="'Multi select'" 
+                    [isMultiSelect]="true"
+                    [disabled]="false"
+                    [numOfCol]="numOfSelectionColumn"
+                    [options]="multiSelectArr"
+                    (valueChange)="onValueChanged($event)">
+            </pep-select-panel>
+            <pep-group-buttons [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">
+            </pep-group-buttons>
+
+            <!-- <pep-group-buttons-settings 
+                [subHeader]="'Num of Columns'"
+                [btnKey]="numOfSelectionColumn" 
+                [groupType]="'custom'" [btnsArray]="numOfColumn"
+                (btnkeyChange)="onColNumChanged($event)">
+        </pep-group-buttons-settings> -->
                     <!-- Textbox Examples -->
                     <pep-textbox [key]="'Texbox'" [form]="textboxFormGroup" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
                         [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
-                         [formattedValue]="formattedValue" [value]="'Pepperi Textbox'"(valueChange)="onValueChanged($event)">
+                        [value]="'Pepperi Textbox'"(valueChange)="onValueChanged($event)">
                     </pep-textbox>
                     <pep-textbox [key]="'float'" [label]="'Pepperi float'" styleType="regular" [type]="'real'" [xAlignment]="'left'"
                         [value]="'9399371'" [mandatory]="true" [disabled]="false">
@@ -63,7 +80,7 @@
                         [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
                     </pep-date>
                 </div>
-
+                
                 <div class="child2 child-container">
                     <!-- Signature Example -->
                     <pep-signature [key]="'sig1'"

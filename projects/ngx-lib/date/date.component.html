@@ -8,8 +8,8 @@
                 (dateChange)="onDateChange($event)" (click)="openDatetimePicker(datetimePicker)"
                 (blur)="onBlur($event)" />
             <mat-error *ngIf="renderError"><span class="body-xs"
-                    [title]="mandatory && formattedValue.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"
-                    [innerText]="mandatory && formattedValue.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"></span>
+                    [title]="mandatory && formattedValue?.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"
+                    [innerText]="mandatory && formattedValue?.length == 0 ? ('MESSAGES.ERROR_IS_REQUIRED' | translate: {field: label}) : ('MESSAGES.ERROR_IS_NOT_VALID' | translate: {field: label})"></span>
             </mat-error>
             <pep-textbox-icon *ngIf="renderSymbol && showIcon && xAlignment == 'right'" matPrefix [value]="value"
                 [label]="label" [type]="type" [disabled]="disabled" (iconClick)="openDatetimePicker(datetimePicker)">

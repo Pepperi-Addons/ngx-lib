@@ -35,12 +35,12 @@ import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstr
 import { PepQuantitySelectorModule } from '@pepperi-addons/ngx-lib/quantity-selector';
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
+import { PepSelectPanelModule } from '@pepperi-addons/ngx-lib/select-panel';
 import { PepSeparatorModule } from '@pepperi-addons/ngx-lib/separator';
 import { PepSignatureModule } from '@pepperi-addons/ngx-lib/signature';
 import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { PepLinkModule } from '@pepperi-addons/ngx-lib/link';
-
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepGroupButtonsModule } from '@pepperi-addons/ngx-lib/group-buttons';
 
@@ -56,6 +56,7 @@ const pepComponentsModules = [
     PepQuantitySelectorModule,
     PepRichHtmlTextareaModule,
     PepSelectModule,
+    PepSelectPanelModule,
     PepSeparatorModule,
     PepSignatureModule,
     PepTextareaModule,
