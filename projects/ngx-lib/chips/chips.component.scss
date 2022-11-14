@@ -45,12 +45,13 @@
 
             .mat-chip-input {
                 @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
-                margin: 0;
+                margin: 0;                
             }
 
             .chips-select {
                 @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
                 z-index: variables.$z-index-lowest;
+                opacity: 0.4;
             }
         }
 
