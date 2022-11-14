@@ -9,7 +9,7 @@
     <input *ngIf="type === 'input'" matInput autocomplete="off"
       [placeholder]="placeholder || 'CHIPS.ADD_CHIP' | translate" [matChipInputFor]="chipList"
       [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="onChipAdded($event)">
-    <div *ngIf="type === 'select'" class="chips-select" (click)="onChipsSelectClicked()">{{ placeholder ||
+    <div *ngIf="type === 'select'" class="chips-select color-dimmed" (click)="onChipsSelectClicked()">{{ placeholder ||
       'CHIPS.ADD_CHIP' | translate
       }}</div>
   </mat-chip-list>
