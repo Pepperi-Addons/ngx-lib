@@ -126,8 +126,8 @@
                         (elementClicked)="elementClicked($event)">
                     </pep-images-filmstrip>
                     
-                    <pep-chips #chipsComp [chips]="chips"  (selectionChange)="onSelectionChange($event)"></pep-chips>
-                    <pep-button (click)="selectedChips()">Selected</pep-button>
+                    <pep-chips #chipsComp [chips]="chips" (selectionChange)="onSelectionChange($event)"></pep-chips>
+                    <!-- <pep-button (click)="selectedChips()">Selected</pep-button> -->
 
                 </div>
 
@@ -146,7 +146,7 @@
                     </pep-quantity-selector>
 
                     <!-- Select Example -->
-                    <pep-select [key]="'select1'" [label]="'Pepperi Select'" [value]="'val2'" [xAlignment]="'right'"
+                    <pep-select [key]="'select1'" [label]="'Pepperi Select'"  [xAlignment]="'right'"
                         [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }]'
                         (valueChange)="onValueChanged($event)">
                     </pep-select>
@@ -163,7 +163,7 @@
                     </pep-textarea>
 
                     <!-- Rich Html Textarea Example -->
-                    <pep-rich-html-textarea [key]="'richText1'" [renderTitle]="false" [label]="'Pepperi Rich Html Textarea'" [renderEnlargeButton]="false"
+                    <pep-rich-html-textarea [key]="'richText1'" [renderTitle]="false" [label]="'Pepperi Rich Html Textarea'" [renderEnlargeButton]="true"
                         [value]="richHtml" [rowSpan]="3" [maxFieldCharacters]="300" [xAlignment]="'left'" [inlineMode]="false"
                         >
                     </pep-rich-html-textarea>

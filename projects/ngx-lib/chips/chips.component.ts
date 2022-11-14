@@ -97,7 +97,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this._translate.get("CHIPS.ADD_CHIP").pipe(this.chipsService.destroyer).subscribe((text: string) => this.placeholder = text);
+      
     }
 
     /**
