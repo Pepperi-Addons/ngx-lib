@@ -26,8 +26,13 @@
                     
 }
 
-.pep-chips-container {
+.pep-chips-container {   
     ::ng-deep.mat-chip-list {
+
+        &:focus-visible {
+            outline: none;
+        }
+        
         /* override material props*/
         .mat-chip.mat-standard-chip {
             &::after {

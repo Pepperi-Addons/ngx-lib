@@ -29,7 +29,9 @@
                         "polyfills": "projects/ngx-lib-tester/src/polyfills.ts",
                         "tsConfig": "projects/ngx-lib-tester/tsconfig.app.json",
                         "allowedCommonJsDependencies": [
-                            "ngx-signaturepad"
+                            "ngx-signaturepad",
+                            "core-js",
+                            "lodash"                            
                         ],
                         "stylePreprocessorOptions": {
                             "includePaths": [
@@ -38,12 +40,15 @@
                                 "node_modules/@pepperi-addons"
                             ]
                         },
-                        "assets": [
-                            "projects/ngx-lib-tester/src/favicon.ico",
-                            "projects/ngx-lib-tester/src/assets",
+                        "assets": [                               
+                            {
+                                "glob": "**/favicon.ico",
+                                "input": "projects/ngx-lib/src",
+                                "output": ""
+                            },
                             {
                                 "glob": "**/*",
-                                "input": "./dist/ngx-lib/src/assets",
+                                "input": "projects/ngx-lib/src/assets",
                                 "output": "./assets/ngx-lib"
                             }
                         ],
@@ -102,7 +107,7 @@
                     },
                     "configurations": {
                         "production": {
-                          "browserTarget": "ngx-lib-tester:build:production"
+                            "browserTarget": "ngx-lib-tester:build:production"
                         }
                     }
                 },
@@ -122,7 +127,7 @@
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
                         "tsConfig": "projects/ngx-lib/tsconfig.lib.json",
-                        "project": "projects/ngx-lib/ng-package.json"
+                        "project": "projects/ngx-lib/ng-package.json"                        
                     },
                     "configurations": {
                         "production": {
@@ -137,7 +142,7 @@
                         "tsConfig": "projects/ngx-lib/tsconfig.spec.json",
                         "karmaConfig": "projects/ngx-lib/karma.conf.js"
                     }
-                }
+                }              
             }
         }
     }
