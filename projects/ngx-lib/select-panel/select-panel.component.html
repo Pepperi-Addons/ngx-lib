@@ -7,7 +7,7 @@
                      [showTitle]="showTitle">
         </pep-field-title>
     <div #selectPanel class="select-panel">
-            <div class="optCont" [title]="option.value"  *ngFor="let option of options">
+            <div class="optCont" [title]="option.value"  *ngFor="let option of optionsMap">
                 <ng-container *ngTemplateOutlet="isMultiSelect == true ? multiBlock : singleBlock; context: { option }"></ng-container>
             </div>
     </div>
@@ -18,7 +18,7 @@
                 [name]="'sel'"
                 [class]="'pep-radio-button md'" 
                 [disabled]="disabled"
-                [checked]="option.isChecked"
+                [checked]="option?.isChecked"
                 (change)="selectionChange(option, $event)">
                 {{option.value}}
             </mat-radio-button>

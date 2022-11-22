@@ -44,26 +44,37 @@ export class PepSelectPanelComponent implements OnDestroy {
         this.setNumOfColumns();
     }
     
-    private _options: Array<IPepSelectionOption> = [];
-    
+    private _value = '';
+    @Input()
+    set value(value: string) {
+        if (!value) {
+            value = '';
+        }
+
+        this._value = value;
+    }
+    get value(): string {
+        return this._value;
+    }
+
+    private _options: Array<IPepOption> = [];
     @Input() 
-    set options(value: Array<IPepSelectionOption>) {
+    set options(value: Array<IPepOption>) {
         if (!value) {
             value = [];
         }
-
+        
         this._options = value;
     }
-    get options(): Array<IPepSelectionOption> {
+    get options(): Array<IPepOption> {
         return this._options;
     }
 
     @Output()
-    valueChange: EventEmitter<string[]> = new EventEmitter<string[]>();
-
+    valueChange: EventEmitter<string> = new EventEmitter<string>();
     @ViewChild('selectPanel', { static: true }) selectPanel: ElementRef;
     
-    private optionsMap = new Array<string>();
+    public optionsMap: Array<IPepSelectionOption> = [];
 
     constructor(private renderer: Renderer2, private customizationService: PepCustomizationService, private element: ElementRef) { }
 
@@ -86,9 +97,7 @@ export class PepSelectPanelComponent implements OnDestroy {
 
     ngAfterViewInit() {
         this.setNumOfColumns();
-        if(this.isMultiSelect){
-            this.initOptionsMap();
-        }
+        this.initOptionsMap();
       }
 
     ngOnDestroy(): void {
@@ -100,30 +109,37 @@ export class PepSelectPanelComponent implements OnDestroy {
     setNumOfColumns(){
         this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', ('auto '+this._numOfCol.toString()));
     }
+
     initOptionsMap(): void {
-        for (let x = 0; x<this.options.length; x++) {
-            //push checked option to the returned array;
-            if(this.options[x].isChecked){
-                this.optionsMap.push(this.options[x].key);
-            }
-        }
+        this.optionsMap = [];
+        //push checked option to the returned array;
+        this.options.forEach(opt => {
+            this.optionsMap.push({'key': opt.key, 'value': opt.value, 'isChecked': this.isChecked(opt)});
+        });
     }
 
     selectionChange(option, event: any): void {
        if(this.isMultiSelect){
-        const optIndex = this.optionsMap.indexOf(option.key);
-        if ( optIndex == -1){
-            this.optionsMap.push(option.key);
-        }
-        else{
-            //remove the option from the returned array;
-            this.optionsMap.splice(optIndex,1);
-        }
+        let tmpArr = this.value.split(';') || [];
+        if (!tmpArr.includes(option.key)){
+                tmpArr.push(option.key);
+            }
+            else{
+                //remove the option from the returned array;
+                tmpArr = tmpArr.filter((key) => { return  key !== option.key});
+            }
+            
+            this.value = tmpArr.join(';');
        }
        else{
-            this.optionsMap[0] = (option.key);
+            this.value = option.key;
        }
-       this.valueChange.emit(this.optionsMap);
+       this.valueChange.emit(this.value);
+       this.initOptionsMap();
+    }
+
+    isChecked(option: any){
+        return this.value.indexOf(option.key) > -1 ;
     }
 
 }
