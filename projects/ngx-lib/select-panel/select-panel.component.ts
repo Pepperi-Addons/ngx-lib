@@ -128,7 +128,6 @@ export class PepSelectPanelComponent implements OnDestroy {
                 //remove the option from the returned array;
                 tmpArr = tmpArr.filter((key) => { return  key !== option.key});
             }
-            debugger;
             this.value = tmpArr.length ? tmpArr.join(';') : '';
            
        }
