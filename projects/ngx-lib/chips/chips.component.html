@@ -1,15 +1,16 @@
 <mat-form-field class="pep-chips-container" appearance="outline">
-  <mat-chip-list #chipList
-    [ngClass]="{'mat-chip-list-stacked': orientation === 'vertical'}" [multiple]="multiSelect">
+  <mat-chip-list #chipList [ngClass]="{'mat-chip-list-stacked': orientation === 'vertical'}" [multiple]="multiSelect">
     <mat-chip *ngFor="let chip of chips" class="pep-chips {{ styleType }}" [disabled]="chip.disabled"
       [selected]="chip.selected" [removable]="chip.removable" [selectable]="chip.selectable"
       (removed)="onChipRemoved(chip)" (selectionChange)="onSelectionChanged($event.selected, chip)">
-      <span class="ellipsis pull-left flip" title="{{chip.value}}">{{chip.value}}</span>     
+      <span class="ellipsis pull-left flip" title="{{chip.value}}">{{chip.value}}</span>
       <pep-button *ngIf="chip.removable" matChipRemove sizeType="xs" iconName="system_close"></pep-button>
     </mat-chip>
-    <input *ngIf="type === 'input'" matInput [placeholder]="placeholder || 'CHIPS.ADD_CHIP' | translate" [matChipInputFor]="chipList"
+    <input *ngIf="type === 'input'" matInput autocomplete="off"
+      [placeholder]="placeholder || 'CHIPS.ADD_CHIP' | translate" [matChipInputFor]="chipList"
       [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="onChipAdded($event)">
-    <div *ngIf="type === 'select'" class="chips-select" (click)="onChipsSelectClicked()">{{ placeholder || 'CHIPS.ADD_CHIP' | translate
+    <div *ngIf="type === 'select'" class="chips-select color-dimmed" (click)="onChipsSelectClicked()">{{ placeholder ||
+      'CHIPS.ADD_CHIP' | translate
       }}</div>
   </mat-chip-list>
 </mat-form-field>

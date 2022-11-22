@@ -1,5 +1,6 @@
 @use '../src/core/style/abstracts/variables';
 @use '../src/core/style/abstracts/mixins';
+@use '../src/core/style/abstracts/functions';
 
 .pep-chips-container {   
     ::ng-deep.mat-chip-list {
@@ -48,10 +49,14 @@
                 margin: 0;                
             }
 
+            .mat-chip-input::placeholder {                
+                color: functions.get-pep-color(color-text, color-dimmed);
+            }
+
             .chips-select {
                 @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
-                z-index: variables.$z-index-lowest;
-                opacity: 0.4;
+                z-index: variables.$z-index-lowest;    
+                cursor: pointer;      
             }
         }
 

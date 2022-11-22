@@ -32,7 +32,7 @@ export class PepSelectPanelComponent implements OnDestroy {
 
     @Input() isMultiSelect = false;
 
-    private _numOfCol: number;
+    private _numOfCol = 1;
 
     @Input() 
     set numOfCol(value: number){

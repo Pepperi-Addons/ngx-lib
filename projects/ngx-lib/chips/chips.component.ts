@@ -97,7 +97,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-      
+      //
     }
 
     /**
