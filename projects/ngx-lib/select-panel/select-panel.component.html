@@ -6,7 +6,7 @@
                      [xAlignment]="xAlignment" 
                      [showTitle]="showTitle">
         </pep-field-title>
-    <div #selectPanel class="select-panel">
+    <div #selectPanel class="select-panel" [ngClass]="{'disable': disabled }">
             <div class="optCont" [title]="option.value"  *ngFor="let option of options">
                 <ng-container *ngTemplateOutlet="isMultiSelect == true ? multiBlock : singleBlock; context: { option }"></ng-container>
             </div>
