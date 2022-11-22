@@ -1,0 +1,25 @@
+@use '../src/core/style/abstracts/mixins';
+
+.select-panel {
+    @include mixins.pep-state-default();
+
+    // &:hover {
+    //      @include mixins.pep-state-hover();
+    //  }
+ 
+ 
+ 
+    // &:active {
+    //      @include mixins.pep-state-active();
+    //  }
+     
+    //  &.mat-focused {
+         
+    //  }
+    &.disable,
+    &:disabled {
+        &:not(.ignore-disabled) {
+            @include mixins.pep-state-disable();
+        }
+    }
+}
