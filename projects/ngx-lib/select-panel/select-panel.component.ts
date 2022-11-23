@@ -120,7 +120,7 @@ export class PepSelectPanelComponent implements OnDestroy {
 
     selectionChange(option, event: any): void {
        if(this.isMultiSelect){
-        let tmpArr = this.value.split(';') || [];
+        let tmpArr = this.value?.length ? this.value.split(';') : [];
         if (!tmpArr.includes(option.key)){
                 tmpArr.push(option.key);
             }
@@ -128,8 +128,8 @@ export class PepSelectPanelComponent implements OnDestroy {
                 //remove the option from the returned array;
                 tmpArr = tmpArr.filter((key) => { return  key !== option.key});
             }
-            
-            this.value = tmpArr.join(';');
+            this.value = tmpArr.length ? tmpArr.join(';') : '';
+           
        }
        else{
             this.value = option.key;
