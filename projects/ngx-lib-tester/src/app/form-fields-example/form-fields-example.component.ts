@@ -60,7 +60,8 @@ export class FormFieldsExampleComponent implements OnInit {
         },
         {
             value: 'Bench',
-            selected: true
+            selected: true,
+            key: 'aaa'
         }
     ]
     public numOfColumn : Array<PepButton> = [
@@ -74,7 +75,11 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     onSelectionChange(value) {
-        console.log('onSelectionChange', value);
+        console.log('onSelectionChange', value);        
+    }
+
+    onChipClick(value) {
+        console.log('onChipClick', value);
     }
 
     constructor(

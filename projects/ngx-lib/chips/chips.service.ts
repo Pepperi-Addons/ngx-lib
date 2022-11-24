@@ -27,8 +27,9 @@ export class PepChipsService {
         }        
     }
 
-    addChip(chip: IPepChip) {
+    addChip(chip: IPepChip) {        
         this._chips.push({
+            key: chip.key,
             value: chip.value,
             disabled: chip.disabled !== undefined ? chip.disabled : false,
             selected: chip.selected !== undefined ? chip.selected : false,
