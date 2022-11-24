@@ -2,3 +2,9 @@
     display: grid;
     width: inherit;
 }
+
+.mat-form-title {
+    ::ng-deep .mat-icon {
+        height: 100% !important;
+    }
+}

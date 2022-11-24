@@ -130,15 +130,15 @@ export class FormFieldsExampleComponent implements OnInit {
             { key: 'test3', text: 'test 3' },
         ];
 
-        for(let i = 0; i < 5; i++){
-            const opt: IPepSelectionOption = { 
-                'key': 'val' + i.toString(), 
-                'value': 'Opt' + i.toString(),
-                isChecked: i % 2 == 0
-            };
+        // for(let i = 0; i < 5; i++){
+        //     const opt: IPepSelectionOption = { 
+        //         'key': 'val' + i.toString(), 
+        //         'value': 'Opt' + i.toString(),
+        //         isChecked: i % 2 == 0
+        //     };
 
-            this.multiSelectArr.push(opt);
-        }
+        //     this.multiSelectArr.push(opt);
+        // }
 
         this.dateString = new Date().toUTCString();
     }

@@ -21,7 +21,8 @@
                     [isMultiSelect]="true"
                     [disabled]="false"
                     [numOfCol]="numOfSelectionColumn"
-                    [options]="multiSelectArr"
+                    [value]="'val1;val2'"
+                    [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
                     (valueChange)="onValueChanged($event)">
             </pep-select-panel>
             <pep-group-buttons [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">

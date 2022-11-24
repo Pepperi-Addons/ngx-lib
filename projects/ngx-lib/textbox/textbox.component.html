@@ -30,7 +30,7 @@
                     </span>
                 </ng-template>
                 <ng-template #otherErrorContainer>
-                    <ng-template *ngIf="form.get(key).errors?.pattern then patternError else otherError"></ng-template>
+                    <ng-template *ngIf="form?.get(key)?.errors?.pattern then patternError else otherError"></ng-template>
                     <ng-template #patternError>
                         <span class="body-xs">
                             {{ regexError }}
