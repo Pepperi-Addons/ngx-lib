@@ -303,14 +303,13 @@ export class PepUtilitiesService {
     coerceNumberProperty(value: any, fallbackValue = 0): number {
         // If the decimal separator is ',' change it to '.'
         if (value?.length > 0) {
+            value = this.changeDecimalSeperator(value);
             //if the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
             if (this.getDecimalSeparator() === '.') {
                 value = value.replace(/,/g, ''); // .replace(',', '');
             } else {
                 value = value.replace(/./g, ''); // .replace('.', '');
             }
-
-            value = this.changeDecimalSeperator(value);
         }
 
         return coerceNumberProperty(value, fallbackValue);
