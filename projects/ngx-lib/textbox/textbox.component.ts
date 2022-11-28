@@ -27,6 +27,7 @@ import {
 } from '@pepperi-addons/ngx-lib';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 
 /** error when invalid control is dirty or touched */
 export class TextErrorStateMatcher implements ErrorStateMatcher {
@@ -84,6 +85,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         this._value = value;
         this.setFormattedValue(value);
+        this.changeDisplayValue();
     }
     get value(): string {
         return this._value;
@@ -256,9 +258,25 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     standAlone = false;
     isInEditMode = false;
-    isInFocus: boolean;
+    
+    private _isInFocus = false;
+    @Input()
+    set isInFocus(isInFocus: boolean) {
+        this._isInFocus = isInFocus;
+        this.changeDisplayValue();
+    }
+    get isInFocus(): boolean {
+        return this._isInFocus;
+    }
+
 
     matcher = new TextErrorStateMatcher();
+
+    // protected displayValue$: 
+    private _displayValueSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    get displayValue$(): Observable<string> {
+        return this._displayValueSubject.asObservable().pipe(distinctUntilChanged());
+    }
 
     constructor(
         private customizationService: PepCustomizationService,
@@ -268,6 +286,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         private utilitiesService: PepUtilitiesService
     ) {
         this.isInFocus = false;
+    }
+
+    private notifyDisplayValueChange(value: string) {
+        this._displayValueSubject.next(value);
     }
 
     private setFormattedValue(value: string) {
@@ -306,18 +328,19 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         );
     }
 
-    get displayValue(): string {
+    private changeDisplayValue(): void {
         let res = '';
 
         if (this.type == 'link') {
             res = this.formattedValue;
         } else if (this.isNumberType()) {
-            res = this.isInFocus ? (this.value.length > 0 ? this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits) : '') : this.formattedValue;
+            res = this.isInFocus ? this.value : this.formattedValue;
+            // res = this.isInFocus ? (this.value.length > 0 ? this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits) : '') : this.formattedValue;
         } else {
             res = this.isInFocus ? this.value : this.formattedValue;
         }
 
-        return res;
+        this.notifyDisplayValueChange(res);
     }
 
     private setDefaultForm(): void {
@@ -460,14 +483,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             if (this.value === '' || value === '') {
                 res = true;
             } else {
-                const currentValue = this.utilitiesService.coerceNumberProperty(
-                    this.value
-                );
-                const newValue = this.utilitiesService.coerceNumberProperty(
-                    value
-                );
-
-                res = currentValue !== newValue;
+                res = this.utilitiesService.isEqualNumber(this.value, value) === false;
             }
         } else {
             res = true;
