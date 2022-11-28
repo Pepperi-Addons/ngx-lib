@@ -81,7 +81,7 @@ export class PepSelectPanelComponent implements OnDestroy {
     private setDefaultForm(): void {
         const pepField = new PepSelectField({
             //key: this.key,
-            value: this.options,
+            value: this.value,
             mandatory: this.mandatory,
             readonly: false,
             disabled: this.disabled,

@@ -306,9 +306,9 @@ export class PepUtilitiesService {
             value = this.changeDecimalSeperator(value);
             //if the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
             if (this.getDecimalSeparator() === '.') {
-                value = value.replace(',', '');
+                value = value.replace(/,/g, ''); // .replace(',', '');
             } else {
-                value = value.replace('.', '');
+                value = value.replace(/./g, ''); // .replace('.', '');
             }
         }
 
