@@ -234,17 +234,12 @@ export class PepUtilitiesService {
     // formatDecimal(value: any, digitsInfo = '1.2-2') {
     formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2) {
         minFractionDigits = coerceNumberProperty(minFractionDigits, null);
-        console.log('formatDecimal minFractionDigits value is', minFractionDigits);
-
         maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
-        console.log('formatDecimal minFractionDigits value is', maxFractionDigits);
-
+        
         value = this.cutValueByFractionDigits(value, maxFractionDigits);
 
         const number = this.coerceNumberProperty(value);
         
-        console.log('number value is', number);
-
         if (number === 0) {
             return '0';
         } else {
@@ -253,9 +248,7 @@ export class PepUtilitiesService {
                 minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits || 2),
                 maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
             }).format(number);
-            
-            console.log('Intl.NumberFormat value is', res);
-
+        
             return res;
         }
     }
@@ -337,20 +330,12 @@ export class PepUtilitiesService {
         // If the decimal separator is ',' change it to '.'
         if (value?.length > 0) {
 
-            console.log('coerceNumberProperty value is', value);
-
-            //if the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
+            // If the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
             if (this.getDecimalSeparator() === '.') {
                 value = value.replace(/,/g, ''); // .replace(',', '');
             } else {
                 value = value.replace(/./g, ''); // .replace('.', '');
             }
-
-            console.log('coerceNumberProperty after remove the thousend seperator value is', value);
-
-            // value = this.changeDecimalSeperator(value);
-            
-            // console.log('coerceNumberProperty after change decimal seperator value is', value);
         }
 
         return coerceNumberProperty(value, fallbackValue);
