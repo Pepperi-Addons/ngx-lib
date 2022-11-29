@@ -65,6 +65,7 @@ export class PepSelectPanelComponent implements OnDestroy {
         }
         
         this._options = value;
+        this.initOptionsMap();
     }
     get options(): Array<IPepOption> {
         return this._options;
