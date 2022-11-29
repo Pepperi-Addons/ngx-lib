@@ -119,6 +119,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     set minFractionDigits(value: number) {
         this._minFractionDigits = value;
         this.setFormattedValue(this.value);
+        this.changeDisplayValue();
     }
     get minFractionDigits(): number {
         return this._minFractionDigits;
@@ -129,6 +130,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     set maxFractionDigits(value: number) {
         this._maxFractionDigits = value;
         this.setFormattedValue(this.value);
+        this.changeDisplayValue();
     }
     get maxFractionDigits(): number {
         return this._maxFractionDigits;
@@ -168,6 +170,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.value) {
             this.setFormattedValue(this.value);
+            this.changeDisplayValue();
         }
     }
     get type(): PepTextboxFieldType {
