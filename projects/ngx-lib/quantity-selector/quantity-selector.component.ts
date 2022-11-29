@@ -516,15 +516,7 @@ export class PepQuantitySelectorComponent
     }
 
     isDifferentValue(value: string): boolean {
-        let res = false;
-
-        const currentValue = this.utilitiesService.coerceNumberProperty(
-            this.value
-        );
-        const newValue = this.utilitiesService.coerceNumberProperty(value);
-
-        res = currentValue !== newValue;
-
+        const res = this.utilitiesService.isEqualNumber(this.value, value) === false;
         return res;
     }
 

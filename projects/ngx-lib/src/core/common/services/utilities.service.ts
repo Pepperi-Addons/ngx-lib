@@ -18,10 +18,10 @@ export class PepUtilitiesService {
     }
 
     private changeDecimalSeperator(value: string, reverse = false): string {
-        // If the decimal separator is ','
-        if (this.getDecimalSeparator() === ',') {
-            // If reverse change the number from '.' to ',' else do the opposite.
-            value = reverse ? value.replace('.', ',') : value.replace(',', '.');
+        // If the decimal separator is '.'
+        if (this.getDecimalSeparator() === '.') {
+            // If NOT reverse change the number from '.' to ',' else do the opposite.
+            value = !reverse ? value.replace('.', ',') : value.replace(',', '.');
         }
 
         return value;
@@ -69,6 +69,24 @@ export class PepUtilitiesService {
             currencySymbol == "zł" ||
             currencySymbol == "kr.") {
             res = true;
+        }
+
+        return res;
+    }
+
+    private cutValueByFractionDigits(value: string, maxFractionDigits: number): string {
+        let res = value;
+        maxFractionDigits = maxFractionDigits || 2;
+        const decimalSeperator = this.getDecimalSeparator();
+
+        if (value.includes(decimalSeperator)) {
+            const valueArr = value.split(decimalSeperator);
+
+            // if (valueArr[1].length < maxFractionDigits) {
+            valueArr[1] = valueArr[1].padEnd(maxFractionDigits, '0');
+            // }
+
+            res = `${valueArr[0]}${decimalSeperator}${valueArr[1].slice(0, maxFractionDigits)}`;
         }
 
         return res;
@@ -158,8 +176,10 @@ export class PepUtilitiesService {
 
     // formatPercent(value: any, digitsInfo = '1.0-2') {
     formatPercent(value: any, minFractionDigits = 0, maxFractionDigits = 2) {
-        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
-        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
+        minFractionDigits = coerceNumberProperty(minFractionDigits, null);
+        maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
+
+        value = this.cutValueByFractionDigits(value, maxFractionDigits);
 
         const number = this.coerceNumberProperty(value);
 
@@ -176,9 +196,9 @@ export class PepUtilitiesService {
     }
 
     // formatCurrency(value: any, currencySign = '', digitsInfo = '1.2-2') {
-    formatCurrency(value: any, currencySign = '', minFractionDigits = 0, maxFractionDigits = 2) {
-        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
-        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
+    formatCurrency(value: any, currencySign = '', minFractionDigits = 2, maxFractionDigits = 2) {
+        minFractionDigits = coerceNumberProperty(minFractionDigits, null);
+        maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
 
         let res = '';
 
@@ -186,11 +206,12 @@ export class PepUtilitiesService {
         // if (value.length > 0 && value.indexOf(this.getDecimalSeparator()) === value.length -1) {
         //     res = value;
         // } else {
+            value = this.cutValueByFractionDigits(value, maxFractionDigits);
             const number = this.coerceNumberProperty(value);
             const styleOptions = {
                 // style: 'currency',
                 // currencySign: currencySign,
-                minimumFractionDigits: minFractionDigits || 0,
+                minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits || 2),
                 maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
             };
     
@@ -212,18 +233,30 @@ export class PepUtilitiesService {
 
     // formatDecimal(value: any, digitsInfo = '1.2-2') {
     formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2) {
-        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
-        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
+        minFractionDigits = coerceNumberProperty(minFractionDigits, null);
+        console.log('formatDecimal minFractionDigits value is', minFractionDigits);
+
+        maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
+        console.log('formatDecimal minFractionDigits value is', maxFractionDigits);
+
+        value = this.cutValueByFractionDigits(value, maxFractionDigits);
+
         const number = this.coerceNumberProperty(value);
+        
+        console.log('number value is', number);
 
         if (number === 0) {
             return '0';
         } else {
             // return formatNumber(value, this.culture, digitsInfo);
-            return new Intl.NumberFormat(this.culture, {
-                minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits),
+            const res = new Intl.NumberFormat(this.culture, {
+                minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits || 2),
                 maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
-            }).format(number)
+            }).format(number);
+            
+            console.log('Intl.NumberFormat value is', res);
+
+            return res;
         }
     }
 
@@ -281,21 +314,21 @@ export class PepUtilitiesService {
     }
 
     incrementNumber(value: any): string {
-        let numberValue = this.coerceNumberProperty(value);
-        const newNumber = this.changeDecimalSeperator(
-            (++numberValue).toString(),
-            true
-        );
+        // Change value to be with dot ('.') decimal seperator.
+        let valueWithDotDecimalSeperator = this.changeDecimalSeperator(value);
+        let numberValue = this.coerceNumberProperty(valueWithDotDecimalSeperator);
+        // Change value back to Culture decimal seperator.
+        const newNumber = this.changeDecimalSeperator((++numberValue).toString(), true);
 
         return newNumber;
     }
 
     decrementNumber(value: any): string {
-        let numberValue = this.coerceNumberProperty(value);
-        const newNumber = this.changeDecimalSeperator(
-            (--numberValue).toString(),
-            true
-        );
+        // Change value to be with dot ('.') decimal seperator.
+        let valueWithDotDecimalSeperator = this.changeDecimalSeperator(value);
+        let numberValue = this.coerceNumberProperty(valueWithDotDecimalSeperator);
+        // Change value back to Culture decimal seperator.
+        const newNumber = this.changeDecimalSeperator((--numberValue).toString(), true);
 
         return newNumber;
     }
@@ -303,23 +336,38 @@ export class PepUtilitiesService {
     coerceNumberProperty(value: any, fallbackValue = 0): number {
         // If the decimal separator is ',' change it to '.'
         if (value?.length > 0) {
-            value = this.changeDecimalSeperator(value);
+
+            console.log('coerceNumberProperty value is', value);
+
             //if the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
             if (this.getDecimalSeparator() === '.') {
-                value = value.replace(',', '');
+                value = value.replace(/,/g, ''); // .replace(',', '');
             } else {
-                value = value.replace('.', '');
+                value = value.replace(/./g, ''); // .replace('.', '');
             }
+
+            console.log('coerceNumberProperty after remove the thousend seperator value is', value);
+
+            // value = this.changeDecimalSeperator(value);
+            
+            // console.log('coerceNumberProperty after change decimal seperator value is', value);
         }
 
         return coerceNumberProperty(value, fallbackValue);
     }
 
-    getDecimalSeparator() {
+    getDecimalSeparator(): string {
         const numberWithDecimalSeparator = 1.1;
 
         return numberWithDecimalSeparator
             .toLocaleString(this.culture)
             .substring(1, 2);
+    }
+
+    isEqualNumber(numberAsString: string, numberAsString2: string): boolean {
+        const number = this.coerceNumberProperty(numberAsString);
+        const number2 = this.coerceNumberProperty(numberAsString);
+
+        return number === number2;
     }
 }
