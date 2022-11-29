@@ -36,8 +36,8 @@
         </pep-group-buttons-settings> -->
                     <!-- Textbox Examples -->
                     <pep-textbox [key]="'Texbox'" [form]="textboxFormGroup" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
-                        [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
-                        [value]="'Pepperi Textbox'"(valueChange)="onValueChanged($event)">
+                        [maxFieldCharacters]="15"  [xAlignment]="'left'" [rowSpan]="2" [regex]="'/^[0-9]*$/'" [regexError]="'invalid regex'"
+                        [value]="'Pepperi Textbox new'"(valueChange)="onValueChanged($event)">
                     </pep-textbox>
                     <pep-textbox [key]="'float'" [label]="'Pepperi float'" styleType="regular" [type]="'real'" [xAlignment]="'left'"
                         [value]="'9399371'" [mandatory]="true" [disabled]="false">
