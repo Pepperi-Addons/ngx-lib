@@ -28,6 +28,7 @@ import {
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 /** error when invalid control is dirty or touched */
 export class TextErrorStateMatcher implements ErrorStateMatcher {
@@ -457,9 +458,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             if (value === '') {
                 res = this.mandatory ? false : true;
             } else {
-                const numberValue = this.utilitiesService.coerceNumberProperty(
-                    value
-                );
+                value = this.utilitiesService.changeDecimalSeperatorWhenItsComma(value);
+                const numberValue = coerceNumberProperty(value);
                     
                 if (!isNaN(this.minValue) && !isNaN(this.maxValue)) {
                     res = numberValue >= this.minValue && numberValue <= this.maxValue;

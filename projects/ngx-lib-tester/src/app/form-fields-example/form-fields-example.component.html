@@ -16,24 +16,25 @@
         <div class="main-content ">
             <div class="content spacing-top">
                 <div class="child1 child-container">
-                    <pep-select-panel 
-                    [label]="'Multi select'" 
-                    [isMultiSelect]="true"
-                    [disabled]="false"
-                    [numOfCol]="numOfSelectionColumn"
-                    [value]="'val1;val2'"
-                    [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
-                    (valueChange)="onValueChanged($event)">
-            </pep-select-panel>
-            <pep-group-buttons [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">
-            </pep-group-buttons>
+                    <!-- <pep-select-panel 
+                        [label]="'Multi select'" 
+                        [isMultiSelect]="true"
+                        [disabled]="false"
+                        [numOfCol]="numOfSelectionColumn"
+                        [value]="'val1;val2'"
+                        [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
+                        (valueChange)="onValueChanged($event)">
+                    </pep-select-panel>
+                    <pep-group-buttons [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">
+                    </pep-group-buttons> -->
 
-            <!-- <pep-group-buttons-settings 
-                [subHeader]="'Num of Columns'"
-                [btnKey]="numOfSelectionColumn" 
-                [groupType]="'custom'" [btnsArray]="numOfColumn"
-                (btnkeyChange)="onColNumChanged($event)">
-        </pep-group-buttons-settings> -->
+                    <!-- <pep-group-buttons-settings 
+                        [subHeader]="'Num of Columns'"
+                        [btnKey]="numOfSelectionColumn" 
+                        [groupType]="'custom'" [btnsArray]="numOfColumn"
+                        (btnkeyChange)="onColNumChanged($event)">
+                    </pep-group-buttons-settings> -->
+
                     <!-- Textbox Examples -->
                     <pep-textbox [key]="'Texbox'" [form]="textboxFormGroup" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
                         [maxFieldCharacters]="15"  [xAlignment]="'left'" [rowSpan]="2" [regex]="'/^[0-9]*$/'" [regexError]="'invalid regex'"
@@ -43,7 +44,7 @@
                         [value]="'9399371'" [mandatory]="true" [disabled]="false">
                     </pep-textbox>
                     <pep-textbox [key]="'currency'" [label]="'Pepperi currency'" [type]="'currency'"
-                        [xAlignment]="'left'" [value]="'1092.50'" [mandatory]="true">
+                        [xAlignment]="'left'" [value]="'1092'" [mandatory]="true">
                     </pep-textbox>
                     <pep-textbox [key]="'percentage'" [label]="'Pepperi percentage'" [type]="'percentage'"
                         [xAlignment]="'left'" [value]="'10'" [mandatory]="true" [disabled]="true">

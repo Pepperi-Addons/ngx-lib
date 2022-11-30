@@ -17,14 +17,37 @@ export class PepUtilitiesService {
         // } catch {}
     }
 
-    private changeDecimalSeperator(value: string, reverse = false): string {
-        // If the decimal separator is '.'
-        if (this.getDecimalSeparator() === '.') {
-            // If NOT reverse change the number from '.' to ',' else do the opposite.
-            value = !reverse ? value.replace('.', ',') : value.replace(',', '.');
+    changeDecimalSeperatorWhenItsComma(value: string, reverse = false): string {
+        // If the decimal separator is ','
+        if (this.getDecimalSeparator() === ',') {
+            // If reverse change the number from '.' to ',' else do the opposite.
+            value = reverse ? value.replace('.', ',') : value.replace(',', '.');
         }
 
         return value;
+    }
+
+    private changeToNumberBeforeFormat(value: string, fallbackValue = 0): number {
+        // If the decimal separator is ',' change it to '.'
+        if (value?.length > 0) {
+
+            console.log('coerceNumberProperty value is', value);
+
+            // Remove the thousand separator - If the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
+            const thousandSeparator = this.getDecimalSeparator() === '.' ? ',' : '.';
+            if (value.includes(thousandSeparator)) {
+                const regex = new RegExp(thousandSeparator, 'g')
+                value = value.replace(regex, ''); // .replace(',', '');
+                console.log('coerceNumberProperty after remove the thousend seperator value is', value);
+            }
+
+            // If the decimal separator is ',' change it to '.' for let the formatting works.
+            value = this.changeDecimalSeperatorWhenItsComma(value);
+            
+            console.log('coerceNumberProperty after change decimal seperator value is', value);
+        }
+
+        return coerceNumberProperty(value, fallbackValue);
     }
 
     // adapted from https://github.com/sindresorhus/parse-ms.
@@ -181,7 +204,7 @@ export class PepUtilitiesService {
 
         value = this.cutValueByFractionDigits(value, maxFractionDigits);
 
-        const number = this.coerceNumberProperty(value);
+        const number = this.changeToNumberBeforeFormat(value);
 
         if (number === 0) {
             return '0%';
@@ -207,7 +230,7 @@ export class PepUtilitiesService {
         //     res = value;
         // } else {
             value = this.cutValueByFractionDigits(value, maxFractionDigits);
-            const number = this.coerceNumberProperty(value);
+            const number = this.changeToNumberBeforeFormat(value);
             const styleOptions = {
                 // style: 'currency',
                 // currencySign: currencySign,
@@ -234,12 +257,17 @@ export class PepUtilitiesService {
     // formatDecimal(value: any, digitsInfo = '1.2-2') {
     formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2) {
         minFractionDigits = coerceNumberProperty(minFractionDigits, null);
+        console.log('formatDecimal minFractionDigits value is', minFractionDigits);
+
         maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
-        
+        console.log('formatDecimal minFractionDigits value is', maxFractionDigits);
+
         value = this.cutValueByFractionDigits(value, maxFractionDigits);
 
-        const number = this.coerceNumberProperty(value);
+        const number = this.changeToNumberBeforeFormat(value);
         
+        console.log('number value is', number);
+
         if (number === 0) {
             return '0';
         } else {
@@ -248,14 +276,16 @@ export class PepUtilitiesService {
                 minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits || 2),
                 maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
             }).format(number);
-        
+            
+            console.log('Intl.NumberFormat value is', res);
+
             return res;
         }
     }
 
     // formatNumber(value: any, digitsInfo = '1.0-0'): string {
     formatNumber(value: any): string {
-        const number = this.coerceNumberProperty(value);
+        const number = this.changeToNumberBeforeFormat(value);
 
         if (number === 0) {
             return '0';
@@ -281,7 +311,7 @@ export class PepUtilitiesService {
         if (!isNumber) {
             return value;
         } else {
-            let number = this.coerceNumberProperty(value);
+            let number = this.changeToNumberBeforeFormat(value);
 
             const leading = options?.leading || true;
             const duration = options?.duration || 'milliseconds';
@@ -308,37 +338,24 @@ export class PepUtilitiesService {
 
     incrementNumber(value: any): string {
         // Change value to be with dot ('.') decimal seperator.
-        let valueWithDotDecimalSeperator = this.changeDecimalSeperator(value);
-        let numberValue = this.coerceNumberProperty(valueWithDotDecimalSeperator);
+        let valueWithDotDecimalSeperator = this.changeDecimalSeperatorWhenItsComma(value);
+        // let numberValue = this.changeToNumberWithDefaultSettings(valueWithDotDecimalSeperator);
+        let numberValue = coerceNumberProperty(valueWithDotDecimalSeperator, 0);
         // Change value back to Culture decimal seperator.
-        const newNumber = this.changeDecimalSeperator((++numberValue).toString(), true);
+        const newNumber = this.changeDecimalSeperatorWhenItsComma((++numberValue).toString(), true);
 
         return newNumber;
     }
 
     decrementNumber(value: any): string {
         // Change value to be with dot ('.') decimal seperator.
-        let valueWithDotDecimalSeperator = this.changeDecimalSeperator(value);
-        let numberValue = this.coerceNumberProperty(valueWithDotDecimalSeperator);
+        let valueWithDotDecimalSeperator = this.changeDecimalSeperatorWhenItsComma(value);
+        // let numberValue = this.changeToNumberWithDefaultSettings(valueWithDotDecimalSeperator);
+        let numberValue = coerceNumberProperty(valueWithDotDecimalSeperator, 0);
         // Change value back to Culture decimal seperator.
-        const newNumber = this.changeDecimalSeperator((--numberValue).toString(), true);
+        const newNumber = this.changeDecimalSeperatorWhenItsComma((--numberValue).toString(), true);
 
         return newNumber;
-    }
-
-    coerceNumberProperty(value: any, fallbackValue = 0): number {
-        // If the decimal separator is ',' change it to '.'
-        if (value?.length > 0) {
-
-            // If the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
-            if (this.getDecimalSeparator() === '.') {
-                value = value.replace(/,/g, ''); // .replace(',', '');
-            } else {
-                value = value.replace(/./g, ''); // .replace('.', '');
-            }
-        }
-
-        return coerceNumberProperty(value, fallbackValue);
     }
 
     getDecimalSeparator(): string {
@@ -350,8 +367,8 @@ export class PepUtilitiesService {
     }
 
     isEqualNumber(numberAsString: string, numberAsString2: string): boolean {
-        const number = this.coerceNumberProperty(numberAsString);
-        const number2 = this.coerceNumberProperty(numberAsString);
+        const number = this.changeToNumberBeforeFormat(numberAsString);
+        const number2 = this.changeToNumberBeforeFormat(numberAsString2);
 
         return number === number2;
     }
