@@ -84,12 +84,27 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             value = '';
         }
 
-        this._value = value;
-        this.setFormattedValue(value);
+        if (this.isDifferentValue(value)) {
+            // console.log(`set value, value is - ${value}`)
+            this._value = value;
+        }
+
+        this.setFormattedValue(this.value);
         this.changeDisplayValue();
     }
     get value(): string {
         return this._value;
+    }
+
+    get valueAsCurrentCulture(): string {
+        return this.utilitiesService.changeDecimalSeparatorWhenItsComma(this.value, true);
+        // let res = this.value;
+
+        // if (this.isDecimal()) {
+        //     res = this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits, false);
+        // }
+        
+        // return res;
     }
 
     private _formattedValue = '';
@@ -267,6 +282,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     set isInFocus(isInFocus: boolean) {
         this._isInFocus = isInFocus;
+        this.setFormattedValue(this.value);
         this.changeDisplayValue();
     }
     get isInFocus(): boolean {
@@ -297,37 +313,41 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private setFormattedValue(value: string) {
-        if (this._calculateFormattedValue) {
-            if (value.length > 0 && value.indexOf(this.utilitiesService.getDecimalSeparator()) === value.length -1) {
-                this._formattedValue = value;
-            } else {
-                if (this.type === 'currency') {
-                    this._formattedValue = this.utilitiesService.formatCurrency(value, this.accessory, this.minFractionDigits, this.maxFractionDigits);
-                } else if (this.type === 'percentage') {
-                    this._formattedValue = this.utilitiesService.formatPercent(value, this.minFractionDigits, this.maxFractionDigits);
-                } else if (this.type === 'real') {
-                    this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
-                } else if (this.type === 'int') {
-                    this._formattedValue = this.utilitiesService.formatNumber(value);
-                } else if (this.type === 'duration') {
-                    this._formattedValue = this.utilitiesService.formatDuration(value, { duration: 'seconds' });
-                } else {
-                    this._formattedValue = value;
-                }
-            }
+        if (this.isInFocus) {
+            return;
+        }
 
+        if (this._calculateFormattedValue) {
+            // console.log(`setFormattedValue before - value is ${value}`);
+            if (this.type === 'currency') {
+                this._formattedValue = this.utilitiesService.formatCurrency(value, this.accessory, this.minFractionDigits, this.maxFractionDigits);
+            } else if (this.type === 'percentage') {
+                this._formattedValue = this.utilitiesService.formatPercent(value, this.minFractionDigits, this.maxFractionDigits);
+            } else if (this.type === 'real') {
+                this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
+            } else if (this.type === 'int') {
+                this._formattedValue = this.utilitiesService.formatNumber(value);
+            } else if (this.type === 'duration') {
+                this._formattedValue = this.utilitiesService.formatDuration(value, { duration: 'seconds' });
+            } else {
+                this._formattedValue = value;
+            }
         } else {
             this._formattedValue = value;
         }
 
+        // console.log(`setFormattedValue after - value is ${this._formattedValue}`);
+
         this.updateFormFieldValue();
     }
 
-    private updateFormFieldValue() {
+    private updateFormFieldValue(firstLoad = false) {
+        // Set the formatted value only for the first load cause it's not formatted if we set the value (I don't know why)
+        // Else we set the value - this is important to set the value only cause setting the formatted value will cause bug when the number is with thousand separator
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            this.formattedValue,
+            firstLoad ? this.formattedValue : this.value,
             this.parentFieldKey
         );
     }
@@ -337,20 +357,22 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         if (this.type == 'link') {
             res = this.formattedValue;
+        } else if (this.isDecimal()) {
+            res = this.isInFocus ? this.valueAsCurrentCulture : this.formattedValue;
         } else if (this.isNumberType()) {
             res = this.isInFocus ? this.value : this.formattedValue;
-            // res = this.isInFocus ? (this.value.length > 0 ? this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits) : '') : this.formattedValue;
         } else {
             res = this.isInFocus ? this.value : this.formattedValue;
         }
 
         this.notifyDisplayValueChange(res);
+        // console.log('changeDisplayValue ' + res);
     }
 
     private setDefaultForm(): void {
         const pepField = new PepTextboxField({
             key: this.key,
-            value: this.value,
+            value: this.valueAsCurrentCulture,
             mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
@@ -403,7 +425,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             this.translate.get('MESSAGES.ERROR_INVALID_PATTERN').subscribe(text => this.regexError = text);
         }
 
-        this.updateFormFieldValue();
+        this.updateFormFieldValue(true);
     }
 
     ngOnChanges(changes: any): void {
@@ -421,13 +443,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     onFocus(event: any): void {
         this.isInFocus = true;
 
-        // select the value in focus (DI-18246 improvement)
-        setTimeout(() => {
-            const eventTarget = event.target || event.srcElement;
-            if (eventTarget) {
-                eventTarget.select();
-            }
-        }, 0);
+        // // select the value in focus (DI-18246 improvement)
+        // setTimeout(() => {
+        //     const eventTarget = event.target || event.srcElement;
+        //     if (eventTarget) {
+        //         eventTarget.select();
+        //     }
+        // }, 125);
     }
 
     isDecimal(): boolean {
@@ -458,7 +480,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             if (value === '') {
                 res = this.mandatory ? false : true;
             } else {
-                value = this.utilitiesService.changeDecimalSeperatorWhenItsComma(value);
+                value = this.utilitiesService.changeDecimalSeparatorWhenItsComma(value);
                 const numberValue = coerceNumberProperty(value);
                     
                 if (!isNaN(this.minValue) && !isNaN(this.maxValue)) {
@@ -483,10 +505,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         let res = false;
 
         if (this.isNumberType()) {
-            if (this.value === '' || value === '') {
+            if ((this.value === '' || value === '')) {
                 res = true;
             } else {
-                res = this.utilitiesService.isEqualNumber(this.value, value) === false;
+                res = this.utilitiesService.isEqualNumber(this.valueAsCurrentCulture, value) === false;
             }
         } else {
             res = true;
@@ -497,12 +519,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
     onChange(e: any): void {
         const value = e.target ? e.target.value : e;
-
+        // console.log(`onChange value is ${value}`);
         this.valueChange.emit(value);
     }
 
     onBlur(e: any): void {
-        this.isInFocus = false;
         const value = e.target ? e.target.value : e;
 
         // If renderError is false and the new value is not valid.
@@ -510,17 +531,17 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             this.renderer.setProperty(
                 this.input.nativeElement,
                 'value',
-                this.value
+                this.valueAsCurrentCulture 
             );
         } else {
-            this.value = value;
+            // For decimal we need to replace the decimal separator back if it's comma (',').
+            if (this.isDecimal()) {
+                this.value = this.utilitiesService.changeDecimalSeparatorWhenItsComma(value);
+            } else {
+                this.value = value;
+            }
 
-            if (value !== this.value && this.isDifferentValue(value)) {
-            // // If the user is setting the formatted value then set the value till the user format it and return it back.
-            // if (!this._calculateFormattedValue) {
-            //     this._formattedValue = value;
-            // }
-
+            if (value !== this.valueAsCurrentCulture && this.isDifferentValue(value)) {
                 this.valueChange.emit(value);
             }
         }
@@ -528,6 +549,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         if (this.isInEditMode) {
             this.isInEditMode = false;
         }
+        
+        this.isInFocus = false;
     }
 
     anchorClicked(): void {

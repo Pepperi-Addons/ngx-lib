@@ -11,6 +11,7 @@
                 [placeholder]="hasParent && !disabled ? placeholder : ''"
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
                 title="{{ formattedValue }}" [type]="type" [value]="displayValue$ | async"
+                (click)="$event.target.setSelectionRange(0, 999)"
                 (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event);" (blur)="onBlur($event)"
                 (change)="onChange($event)"
                 [ngClass]="{'disable-hidden': disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')}" />
@@ -66,7 +67,8 @@
                     <!-- (keyup)="onKeyUp($event)"  -->
                     <input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
                         [placeholder]="!disabled ? placeholder : ''" title="{{ formattedValue }}"
-                        [formControlName]="key" [value]="value" (blur)="onBlur($event)" (change)="onChange($event)"
+                        [formControlName]="key" [value]="value" 
+                        (click)="$event.target.setSelectionRange(0, 999)" (blur)="onBlur($event)" (change)="onChange($event)"
                         (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" />
                 </mat-form-field>
                 <!-- <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: true, hasParent: true }"></ng-container> -->

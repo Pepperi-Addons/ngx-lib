@@ -8,7 +8,7 @@ import {
 import { IPepSmartFilterDataValue } from '../common/model/filter';
 import { Validators } from '@angular/forms';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     selector: 'pep-number-filter',
@@ -24,13 +24,19 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
 
     ngOnInit() {
         this.firstControl.valueChanges
+            // .pipe(debounceTime(3000), this.getDestroyer(), distinctUntilChanged())
+            // .pipe(this.getDestroyer(), distinctUntilChanged((pre: any, curr: any) => 
+            //     this.utilitiesService.isEqualNumber(pre, curr)
+            // ))
             .pipe(this.getDestroyer(), distinctUntilChanged())
             .subscribe(() => {
+                console.log(`firstControl.valueChanges - ${this.firstControl.value}`)
                 this.setFieldsStateAndValidators();
             });
 
         this.secondControl.valueChanges
             .pipe(this.getDestroyer(), distinctUntilChanged())
+            // .pipe(debounceTime(3000), this.getDestroyer(), distinctUntilChanged())
             .subscribe(() => {
                 this.setFieldsStateAndValidators();
             });
@@ -132,6 +138,8 @@ export class PepNumberFilterComponent extends BaseFilterComponent implements OnI
     }
 
     onValueChanged() {
+        // this.firstControl.setValue(value);
+        console.log(`onValueChanged ${this.firstControl.value}`);
         if (this.emitOnChange) {
             this.applyFilter();
         }
