@@ -563,6 +563,15 @@ export class PepQuantitySelectorComponent
 
     onFocus(event: any): void {
         this.isInFocus = true;
+
+        // setTimeout(() => {
+        //     if (this.isInFocus) {
+        //         const eventTarget = event.target || event.srcElement;
+        //         if (eventTarget) {
+        //             eventTarget.select();
+        //         }
+        //     }
+        // }, 0);
     }
 
     isDifferentValue(value: string): boolean {

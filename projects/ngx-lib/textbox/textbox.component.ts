@@ -445,11 +445,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         // // select the value in focus (DI-18246 improvement)
         // setTimeout(() => {
-        //     const eventTarget = event.target || event.srcElement;
-        //     if (eventTarget) {
-        //         eventTarget.select();
+        //     if (this.isInFocus) {
+        //         const eventTarget = event.target || event.srcElement;
+        //         if (eventTarget) {
+        //             eventTarget.select();
+        //         }
         //     }
-        // }, 125);
+        // }, 0);
     }
 
     isDecimal(): boolean {
