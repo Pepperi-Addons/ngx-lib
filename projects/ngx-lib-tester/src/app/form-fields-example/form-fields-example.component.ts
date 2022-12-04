@@ -48,6 +48,8 @@ export class FormFieldsExampleComponent implements OnInit {
     regex = /^[0-9]*$/;
 
     multiSelectArr = [];
+    selectOptions = [];
+
     numOfSelectionColumn = 1;
     chips: any[] = [
         {
@@ -64,6 +66,7 @@ export class FormFieldsExampleComponent implements OnInit {
             key: 'aaa'
         }
     ]
+
     public numOfColumn : Array<PepButton> = [
             { key: '1', value: '1', callback: (event: any) => this.onColNumChanged(event.source.key)},
             { key: '2', value: '2', callback: (event: any) => this.onColNumChanged(event.source.key)},
@@ -94,7 +97,14 @@ export class FormFieldsExampleComponent implements OnInit {
         this.layoutService.onResize$.pipe().subscribe((size) => {
             this.screenSize = size;
         });
-
+        
+        for (let index = 0; index < 100; index++) {
+            this.selectOptions.push({ 
+                "key": `val${index+1}`,
+                "value": `${index+1} Option ${index+1}`
+            });
+        }
+        
         this.richHtml =
             "<h1><u>Rich Text Value Example</u></h1><h2><em style=' color: rgb(147, 200, 14);'>Pepperi Rich Text Value </em><u style='color: rgb(0, 102, 204);'>Example</u></h2><ol><li><strong><u>Pepperi Rich Text Value Example</u></strong></li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li></ol>";
     }

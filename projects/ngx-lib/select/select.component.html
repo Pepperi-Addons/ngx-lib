@@ -4,7 +4,7 @@
         <ng-template #regularSelectBlock>
             <mat-form-field appearance="outline" dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
                 <mat-select #select [required]="mandatory ? mandatory : undefined" matInput disableOptionCentering
-                    class="body-sm text-align-{{ xAlignment }}" [id]="key"
+                    class="body-sm text-align-{{ xAlignment }}" [id]="key" [typeaheadDebounceInterval]="typeaheadDebounceInterval"
                     [ngClass]="{'right-alignment': xAlignment === 'right'}"
                     [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
                     [(ngModel)]="selectedValueModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
@@ -24,7 +24,7 @@
         <ng-template #multiSelectBlock>
             <mat-form-field appearance="outline" dir="{{ xAlignment === 'right' ? 'rtl' : 'ltr' }}">
                 <mat-select #select multiple [required]="mandatory ? mandatory : undefined" matInput
-                    disableOptionCentering class="body-sm text-align-{{ xAlignment }}" [id]="key"
+                    disableOptionCentering class="body-sm text-align-{{ xAlignment }}" [id]="key" [typeaheadDebounceInterval]="typeaheadDebounceInterval"
                     [ngClass]="{'right-alignment': xAlignment === 'right'}"
                     [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
                     [(ngModel)]="selectedValuesModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
