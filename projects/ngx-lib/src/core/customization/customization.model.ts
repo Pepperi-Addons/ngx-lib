@@ -202,8 +202,8 @@ interface IPepTextboxFieldOptions extends IPepFieldBaseOptions {
 export class PepTextboxField extends PepFieldBase {
     controlType = 'textbox';
     type: PepTextboxFieldType = 'text';
-    regex: string | RegExp;
-    regexError: string;
+    regex?: string | RegExp;
+    regexError?: string;
     digitsNumberAfterDecimalPoint = NaN;
 
     constructor(options: IPepTextboxFieldOptions = {}) {
@@ -211,8 +211,7 @@ export class PepTextboxField extends PepFieldBase {
 
         this.type = options.type || 'text';
         this.regex = options.regex ?? null;
-        this.regexError = options.regexError;
-
+        this.regexError = options.regexError ?? null;
 
         this.update(options);
     }

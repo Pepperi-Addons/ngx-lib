@@ -251,7 +251,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Input() renderSymbol = true;
     @Input() layoutType: PepLayoutType = 'form';
     @Input() parentFieldKey: string = null;
-    @Input() regex: string | RegExp;
+    @Input() regex: string | RegExp = null;
     @Input() regexError = '';
 
     /**
@@ -420,7 +420,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
 
-        //load default error text
+        // load default error text
         if (this.type === 'text' && this.regex && !this.regexError) {
             this.translate.get('MESSAGES.ERROR_INVALID_PATTERN').subscribe(text => this.regexError = text);
         }
@@ -537,14 +537,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
             );
         } else {
             // For decimal we need to replace the decimal separator back if it's comma (',').
-            if (this.isDecimal()) {
-                this.value = this.utilitiesService.changeDecimalSeparatorWhenItsComma(value);
-            } else {
-                this.value = value;
-            }
-
-            if (value !== this.valueAsCurrentCulture && this.isDifferentValue(value)) {
-                this.valueChange.emit(value);
+            const correctValue = this.isDecimal() ? this.utilitiesService.changeDecimalSeparatorWhenItsComma(value) : value;
+        
+            if (correctValue !== this.valueAsCurrentCulture && this.isDifferentValue(value)) {
+                this.value = correctValue;
+                this.valueChange.emit(this.value);
             }
         }
 
