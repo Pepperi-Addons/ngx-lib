@@ -169,8 +169,7 @@ export class PepValidatorService {
     }
 
     validatePhone(value: string): boolean {
-        // test phone with regular expression, when
-        // phone is invalid, replace it with the previousValue
+        // test phone with regular expression
         const valid: boolean = new RegExp(this.phone).test(value);
         return valid;
     }
