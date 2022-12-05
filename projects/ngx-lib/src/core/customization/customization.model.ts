@@ -235,11 +235,12 @@ export class PepTextboxField extends PepFieldBase {
         const validators = super.getBaseValidators();
 
         if (this.type === 'email') {
-            validators.push(
-                Validators.pattern(
-                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                )
-            );
+            // validators.push(
+            //     Validators.pattern(
+            //         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            //     )
+            // );
+            validators.push(Validators.email);
         } else if (this.type === 'phone') {
             validators.push(Validators.pattern(/^[\d\.\-\+\(\)\*\#]+$/));
         } else if (this.type === 'int' || this.type === 'real') {
