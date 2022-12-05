@@ -100,22 +100,23 @@ export class PepQuantitySelectorComponent
         // return res;
     }
 
-    private _formattedValue = null;
-    @Input()
-    set formattedValue(value: string) {
-        // if (!value) {
-        //     value = '';
-        // }
+    protected formattedValue = '';
+    // private _formattedValue = '';
+    // @Input()
+    // set formattedValue(value: string) {
+    //     // if (!value) {
+    //     //     value = '';
+    //     // }
 
-        // if (this._calculateFormattedValue) {
-        //     this._calculateFormattedValue = false;
-        // }
+    //     // if (this._calculateFormattedValue) {
+    //     //     this._calculateFormattedValue = false;
+    //     // }
 
-        // this.setFormattedValue(value);
-    }
-    get formattedValue(): string {
-        return this._formattedValue;
-    }
+    //     // this.setFormattedValue(value);
+    // }
+    // get formattedValue(): string {
+    //     return this._formattedValue;
+    // }
     
     private _minFractionDigits = NaN;
     @Input()
@@ -316,12 +317,12 @@ export class PepQuantitySelectorComponent
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
             if (this.allowDecimal) {
-                this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
+                this.formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
             } else {
-                this._formattedValue = this.utilitiesService.formatNumber(value);
+                this.formattedValue = this.utilitiesService.formatNumber(value);
             }
         } else {
-            this._formattedValue = value;
+            this.formattedValue = value;
         }
         
         this.updateFormFieldValue();

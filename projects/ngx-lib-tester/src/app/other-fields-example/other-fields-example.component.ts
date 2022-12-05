@@ -20,10 +20,10 @@ import { IPepSelectionOption } from '@pepperi-addons/ngx-lib/select-panel';
 import { PepButton } from 'ngx-lib/button';
 
 @Component({
-    templateUrl: './form-fields-example.component.html',
-    styleUrls: ['./form-fields-example.component.scss'],
+    templateUrl: './other-fields-example.component.html',
+    styleUrls: ['./other-fields-example.component.scss'],
 })
-export class FormFieldsExampleComponent implements OnInit {
+export class OtherFieldsExampleComponent implements OnInit {
     @ViewChild('chipsComp') chipsComp: PepChipsComponent;
 
     title = 'client-side';
@@ -110,6 +110,7 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
         this.menuItems = [
             { key: 'test1', text: 'test 1' },
             { key: 'test2', text: 'test 2', disabled: true },
@@ -131,11 +132,11 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     menuClicked(event): void {
-        console.log('menu clicked');
+        alert('menu clicked');
     }
 
     onValueChanged(key: any) {
-        console.log(`${key}: value was changed`);
+        alert(`${key}: value was changed`);
     }
 
     imageChange(event: any) {
@@ -143,7 +144,7 @@ export class FormFieldsExampleComponent implements OnInit {
     }
 
     elementClicked(event: IPepFieldClickEvent) {
-        console.log(`${event.key}: was clicked`);
+        alert(`${event.key}: was clicked`);
     }
 
     raiseSnackBar(event) {

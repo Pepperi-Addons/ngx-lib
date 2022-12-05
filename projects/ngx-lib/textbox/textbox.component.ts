@@ -30,13 +30,14 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
-/** error when invalid control is dirty or touched */
-export class TextErrorStateMatcher implements ErrorStateMatcher {
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        const validateOnDirty = form?.form?.controls?.['validateOnDirty']?.value;
-        return !!(validateOnDirty && control && control.invalid && (control.dirty || control.touched));
-    }
-}
+// Not in use - I don't know why we need this???
+// /** error when invalid control is dirty or touched */
+// export class TextErrorStateMatcher implements ErrorStateMatcher {
+//     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+//         const validateOnDirty = form?.form?.controls?.['validateOnDirty']?.value;
+//         return !!(validateOnDirty && control && control.invalid && (control.dirty || control.touched));
+//     }
+// }
 
 /**
  * This is a text box input component that can be use to
@@ -107,28 +108,29 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         // return res;
     }
 
-    private _formattedValue = '';
-    /**
-     * The formatted value.
-     *
-     * @memberof PepTextboxComponent
-     */
-    @Input()
-    set formattedValue(value: string) {
-        // Do nothing.
-        // if (!value) {
-        //     value = '';
-        // }
+    protected formattedValue = '';
+    // private _formattedValue = '';
+    // /**
+    //  * The formatted value.
+    //  *
+    //  * @memberof PepTextboxComponent
+    //  */
+    // @Input()
+    // set formattedValue(value: string) {
+    //     // Do nothing.
+    //     // if (!value) {
+    //     //     value = '';
+    //     // }
 
-        // if (this._calculateFormattedValue) {
-        //     this._calculateFormattedValue = false;
-        // }
+    //     // if (this._calculateFormattedValue) {
+    //     //     this._calculateFormattedValue = false;
+    //     // }
 
-        // this.setFormattedValue(value);
-    }
-    get formattedValue(): string {
-        return this._formattedValue;
-    }
+    //     // this.setFormattedValue(value);
+    // }
+    // get formattedValue(): string {
+    //     return this._formattedValue;
+    // }
 
     private _minFractionDigits = NaN;
     @Input()
@@ -198,7 +200,14 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
      *
      * @memberof PepTextboxComponent
      */
-    @Input() mandatory = false;
+    private _mandatory: boolean = false;
+    @Input()
+    set mandatory(value: boolean) {
+        this._mandatory = value;
+    }
+    get mandatory(): boolean {
+        return this._mandatory;
+    }
 
     // TODO: Check if should remove disabled and keep only readonly.
     /**
@@ -290,7 +299,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     }
 
 
-    matcher = new TextErrorStateMatcher();
+    // matcher = new TextErrorStateMatcher();
 
     // protected displayValue$: 
     private _displayValueSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -320,23 +329,23 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         if (this._calculateFormattedValue) {
             // console.log(`setFormattedValue before - value is ${value}`);
             if (this.type === 'currency') {
-                this._formattedValue = this.utilitiesService.formatCurrency(value, this.accessory, this.minFractionDigits, this.maxFractionDigits);
+                this.formattedValue = this.utilitiesService.formatCurrency(value, this.accessory, this.minFractionDigits, this.maxFractionDigits);
             } else if (this.type === 'percentage') {
-                this._formattedValue = this.utilitiesService.formatPercent(value, this.minFractionDigits, this.maxFractionDigits);
+                this.formattedValue = this.utilitiesService.formatPercent(value, this.minFractionDigits, this.maxFractionDigits);
             } else if (this.type === 'real') {
-                this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
+                this.formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
             } else if (this.type === 'int') {
-                this._formattedValue = this.utilitiesService.formatNumber(value);
+                this.formattedValue = this.utilitiesService.formatNumber(value);
             } else if (this.type === 'duration') {
-                this._formattedValue = this.utilitiesService.formatDuration(value, { duration: 'seconds' });
+                this.formattedValue = this.utilitiesService.formatDuration(value, { duration: 'seconds' });
             } else {
-                this._formattedValue = value;
+                this.formattedValue = value;
             }
         } else {
-            this._formattedValue = value;
+            this.formattedValue = value;
         }
 
-        // console.log(`setFormattedValue after - value is ${this._formattedValue}`);
+        // console.log(`setFormattedValue after - value is ${this.formattedValue}`);
 
         this.updateFormFieldValue();
     }
@@ -415,13 +424,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
                 );
             }
         }
-        //flag to indicate whether validation on dirty is required        
-        this.form.addControl('validateOnDirty', new FormControl(this.type === 'text'));
+        // flag to indicate whether validation on dirty is required        
+        // this.form.addControl('validateOnDirty', new FormControl(this.type === 'text'));
 
         this.readonly = this.type === 'duration' ? true : this.readonly; // Hack until we develop Timer UI for editing Duration field
 
         // load default error text
-        if (this.type === 'text' && this.regex && !this.regexError) {
+        if (this.type === 'text' && this.regex && (!this.regexError || this.regexError.length === 0)) {
             this.translate.get('MESSAGES.ERROR_INVALID_PATTERN').subscribe(text => this.regexError = text);
         }
 
@@ -443,15 +452,15 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     onFocus(event: any): void {
         this.isInFocus = true;
 
-        // // select the value in focus (DI-18246 improvement)
-        // setTimeout(() => {
-        //     if (this.isInFocus) {
-        //         const eventTarget = event.target || event.srcElement;
-        //         if (eventTarget) {
-        //             eventTarget.select();
-        //         }
-        //     }
-        // }, 0);
+        // select the value in focus (DI-18246 improvement)
+        setTimeout(() => {
+            if (this.isInFocus) {
+                const eventTarget = event.target || event.srcElement;
+                if (eventTarget) {
+                    eventTarget.select();
+                }
+            }
+        }, 0);
     }
 
     isDecimal(): boolean {

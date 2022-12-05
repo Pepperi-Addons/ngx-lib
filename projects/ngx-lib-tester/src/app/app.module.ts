@@ -10,6 +10,7 @@ import { CarouselExampleComponent } from './carousel-example/carousel-example.co
 import { DraggableExampleComponent } from './draggable-example/draggable-example.component';
 import { QueryBuilderExampleComponent } from './query-builder-example/query-builder-example.component';
 import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component';
+import { OtherFieldsExampleComponent } from './other-fields-example/other-fields-example.component';
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
@@ -178,6 +179,7 @@ const pepperiComponentsModules = [
         DraggableExampleComponent,
         QueryBuilderExampleComponent,
         FormFieldsExampleComponent,
+        OtherFieldsExampleComponent,
         InlineListExampleComponent,
         ListExampleComponent,
         TopBarExampleComponent
