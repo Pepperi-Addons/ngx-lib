@@ -210,7 +210,7 @@ export class PepTextboxField extends PepFieldBase {
         super(options);
 
         this.type = options.type || 'text';
-        this.regex = options.regex;
+        this.regex = options.regex ?? null;
         this.regexError = options.regexError;
 
 
