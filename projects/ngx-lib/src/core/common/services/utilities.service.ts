@@ -233,7 +233,7 @@ export class PepUtilitiesService {
     }
 
     // formatDecimal(value: any, digitsInfo = '1.2-2') {
-    formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2, useGrouping: boolean = true) {
+    formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2, useGrouping = true) {
         minFractionDigits = coerceNumberProperty(minFractionDigits, null);
         // console.log('formatDecimal minFractionDigits value is', minFractionDigits);
         maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
