@@ -2,7 +2,7 @@ import { Component,OnDestroy,Input,Output,EventEmitter,Renderer2,ElementRef, Vie
 import { FormGroup } from '@angular/forms';
 import { DEFAULT_HORIZONTAL_ALIGNMENT, IPepOption, PepCustomizationService, PepHorizontalAlignment, PepLayoutType, PepSelectField } from '@pepperi-addons/ngx-lib'; 
 import { IPepSelectionOption } from './select-panel.model';
-import { v4 as uuidv4 } from 'uuid';
+import { PepGuid } from '../src/core/common/model/utilities.model';
 
 /**
  * This is a button component that support pepperi theme
