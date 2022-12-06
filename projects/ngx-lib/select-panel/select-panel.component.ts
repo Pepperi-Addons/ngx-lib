@@ -1,6 +1,6 @@
 import { Component,OnDestroy,Input,Output,EventEmitter,Renderer2,ElementRef, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DEFAULT_HORIZONTAL_ALIGNMENT, IPepOption, PepCustomizationService, PepHorizontalAlignment, PepLayoutType, PepSelectField } from '@pepperi-addons/ngx-lib'; 
+import { DEFAULT_HORIZONTAL_ALIGNMENT, IPepOption, PepCustomizationService, PepHorizontalAlignment, PepLayoutType, PepSelectField, PepGuid } from '@pepperi-addons/ngx-lib'; 
 import { IPepSelectionOption } from './select-panel.model';
 
 /**
@@ -31,9 +31,8 @@ export class PepSelectPanelComponent implements OnDestroy {
     @Input() classNames = '';
 
     @Input() isMultiSelect = false;
-
+    
     private _numOfCol = 1;
-
     @Input() 
     set numOfCol(value: number){
         if (!value) {
@@ -70,6 +69,8 @@ export class PepSelectPanelComponent implements OnDestroy {
     get options(): Array<IPepOption> {
         return this._options;
     }
+
+    public groupName = PepGuid.newGuid();
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();

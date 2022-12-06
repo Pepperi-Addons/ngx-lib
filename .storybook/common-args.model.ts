@@ -77,7 +77,7 @@ export const commonArgTypes = {
     },
     classNames: {
         description:
-            'Class names that should be on the menu element tag like classNames="class1 class2"',
+            'Class names that should be on the component element tag like classNames="class1 class2"',
     },
     iconName: {
         table: {
