@@ -265,6 +265,27 @@ export const pepIconShoppingPaper: {
   name: 'shopping_paper',
   data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2a5 5 0 015 5v1h2a2 2 0 012 2v8a4 4 0 01-4 4H7a4 4 0 01-4-4v-8a2 2 0 012-2h2V7a5 5 0 015-5zm6 8H6a1 1 0 00-1 1v7a2 2 0 002 2h10a2 2 0 002-2v-7a1 1 0 00-1-1zm-6-6a3 3 0 00-3 3v1h6V7a3 3 0 00-3-3z"/></svg>`
 };
+export const pepIconSystemAlert: {
+  name: 'system_alert';
+  data: string;
+} = {
+  name: 'system_alert',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 3a1.71 1.71 0 011.49.872l7.99 14.203a2 2 0 01.045 1.875L21.5 20c-.306.613-.933 1-1.618 1H4.118A1.809 1.809 0 012.5 20l-.025-.05a2 2 0 01.046-1.875L10.51 3.872A1.71 1.71 0 0112 3zm-.49 3.47a1 1 0 00-.382.381L5.132 17.51A1 1 0 006.004 19h11.991a1 1 0 00.872-1.49L12.872 6.85a1 1 0 00-1.362-.38zM12 16a1 1 0 110 2 1 1 0 010-2zm0-6a1 1 0 011 1v3.5a1 1 0 01-2 0V11a1 1 0 011-1z"/></svg>`
+};
+export const pepIconSystemFlag: {
+  name: 'system_flag';
+  data: string;
+} = {
+  name: 'system_flag',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M3.752 5.002c2.372-.68 3.727-.82 5.936-.746l.425.016c2.271.097 3.44 0 5.725-.655a1 1 0 011.237.686l2.205 7.69a1 1 0 01-.686 1.237c-2.372.68-3.727.82-5.936.747l-.425-.017c-1.87-.08-2.992-.028-4.607.358l-.152.037 1.925 6.713a1 1 0 01-.576 1.199l-.11.038a1 1 0 01-1.237-.685L3.066 6.24a1 1 0 01.686-1.238zm1.517 1.663l1.653 5.767.274-.067c1.671-.398 2.903-.479 4.697-.419l.425.016c1.87.08 2.993.029 4.607-.358l.152-.037-1.654-5.768-.273.069c-1.671.397-2.902.478-4.697.418l-.425-.016c-1.87-.08-2.993-.028-4.607.358l-.152.037z"/></svg>`
+};
+export const pepIconSystemLock: {
+  name: 'system_lock';
+  data: string;
+} = {
+  name: 'system_lock',
+  data: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 3a5 5 0 015 5v1.819l1.164.195a1 1 0 01.829.865L19 11v8a1 1 0 01-.836.986l-6 1a1 1 0 01-.328 0l-6-1A1 1 0 015 19v-8a1 1 0 01.836-.986L7 9.819V8a5 5 0 015-5zm-.001 8.013L7 11.847v6.305l4.999.834L17 18.152v-6.305l-5.001-.834zM12 5a3 3 0 00-3 3v1.486l2.836-.472a1 1 0 01.054-.008l.055-.004h.11l.11.012L15 9.486V8a3 3 0 00-3-3z"/></svg>`
+};
 export const pepIconSystemAttach: {
   name: 'system_attach';
   data: string;
@@ -787,6 +808,10 @@ export type PepIconType =
   | 'ripples_transparent'
   | 'shopping_cart'
   | 'shopping_paper'
+  | 'system_alert'
+  | 'system_edit'
+  | 'system_flag'
+  | 'system_lock'  
   | 'system_attach'
   | 'system_avatar'
   | 'system_bell_on'
@@ -800,8 +825,7 @@ export type PepIconType =
   | 'system_copy'
   | 'system_doc'
   | 'system_door'
-  | 'system_dot_ellipsis'
-  | 'system_edit'
+  | 'system_dot_ellipsis'  
   | 'system_education'
   | 'system_email'
   | 'system_file_download'

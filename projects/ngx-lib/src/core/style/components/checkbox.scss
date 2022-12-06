@@ -74,6 +74,10 @@
         padding-left: unset !important;
         padding-right: unset !important;
 
+        &.disable {
+            background: unset !important;
+        }
+
         .mat-checkbox-inner-container {
             margin-left: 0 !important;
             margin-right: 0 !important;

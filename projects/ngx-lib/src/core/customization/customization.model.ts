@@ -197,22 +197,21 @@ export type PepTextboxFieldType =
 interface IPepTextboxFieldOptions extends IPepFieldBaseOptions {
     type?: PepTextboxFieldType;
     regex?: string | RegExp;
-    regexError?: string;
+    // regexError?: string;
 }
 export class PepTextboxField extends PepFieldBase {
     controlType = 'textbox';
     type: PepTextboxFieldType = 'text';
-    regex: string | RegExp;
-    regexError: string;
+    regex?: string | RegExp;
+    // regexError?: string;
     digitsNumberAfterDecimalPoint = NaN;
 
     constructor(options: IPepTextboxFieldOptions = {}) {
         super(options);
 
         this.type = options.type || 'text';
-        this.regex = options.regex;
-        this.regexError = options.regexError;
-
+        this.regex = options.regex ?? null;
+        // this.regexError = options.regexError ?? null;
 
         this.update(options);
     }
@@ -240,6 +239,7 @@ export class PepTextboxField extends PepFieldBase {
                     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 )
             );
+            // validators.push(Validators.email);
         } else if (this.type === 'phone') {
             validators.push(Validators.pattern(/^[\d\.\-\+\(\)\*\#]+$/));
         } else if (this.type === 'int' || this.type === 'real') {

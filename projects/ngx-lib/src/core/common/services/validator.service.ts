@@ -162,14 +162,14 @@ export class PepValidatorService {
 
         // test number with regular expression, when
         // number is invalid, replace it with a zero
+        console.log(`regex is ${regex} and value is ${value}`);
         const valid: boolean = new RegExp(regex).test(value);
 
         return valid ? value : null;
     }
 
     validatePhone(value: string): boolean {
-        // test phone with regular expression, when
-        // phone is invalid, replace it with the previousValue
+        // test phone with regular expression
         const valid: boolean = new RegExp(this.phone).test(value);
         return valid;
     }

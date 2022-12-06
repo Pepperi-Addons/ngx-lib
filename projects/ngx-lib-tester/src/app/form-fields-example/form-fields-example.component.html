@@ -16,28 +16,10 @@
         <div class="main-content ">
             <div class="content spacing-top">
                 <div class="child1 child-container">
-                    <pep-select-panel 
-                    [label]="'Multi select'" 
-                    [isMultiSelect]="true"
-                    [disabled]="false"
-                    [numOfCol]="numOfSelectionColumn"
-                    [value]="'val1;val2'"
-                    [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
-                    (valueChange)="onValueChanged($event)">
-            </pep-select-panel>
-            <pep-group-buttons [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">
-            </pep-group-buttons>
-
-            <!-- <pep-group-buttons-settings 
-                [subHeader]="'Num of Columns'"
-                [btnKey]="numOfSelectionColumn" 
-                [groupType]="'custom'" [btnsArray]="numOfColumn"
-                (btnkeyChange)="onColNumChanged($event)">
-        </pep-group-buttons-settings> -->
                     <!-- Textbox Examples -->
-                    <pep-textbox [key]="'Texbox'" [form]="textboxFormGroup" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
-                        [maxFieldCharacters]="15" [mandatory]="true" [xAlignment]="'left'" [rowSpan]="2"
-                        [value]="'Pepperi Textbox'"(valueChange)="onValueChanged($event)">
+                    <pep-textbox [key]="'Texbox'" [label]="'Pepperi Texbox'" [placeholder]="'place holder'"
+                        [maxFieldCharacters]="15"  [xAlignment]="'left'" [rowSpan]="2" regex="^[a-zA-Z]+$" regexError="invalid regex"
+                        [value]="'Pepperi Textbox new'"(valueChange)="onValueChanged($event)">
                     </pep-textbox>
                     <pep-textbox [key]="'float'" [label]="'Pepperi float'" styleType="regular" [type]="'real'" [xAlignment]="'left'"
                         [value]="'9399371'" [mandatory]="true" [disabled]="false">
@@ -52,7 +34,7 @@
                         [value]="'20302'" [mandatory]="true">
                     </pep-textbox>
                     <pep-textbox [key]="'Email'" [label]="'Pepperi Email'" [type]="'email'" [xAlignment]="'left'"
-                        [value]="'email@pepperi.com'" [disabled]="true">
+                        [value]="'email@pepperi.com'">
                     </pep-textbox>
                     <pep-textbox [key]="'phone'" [label]="'Pepperi phone'" [type]="'phone'" [xAlignment]="'left'"
                         [value]="'+972-54-3653-445'">
@@ -73,7 +55,7 @@
                     </pep-checkbox>
 
                     <!-- Date Examples -->
-                    <pep-date [key]="'date1'" [mandatory]="true" [label]="'Pepperi Date'" value="2018-06-18"
+                    <pep-date [key]="'date1'" [mandatory]="true" [label]="'Pepperi Date'" value="2018-06-18" layoutType="table"
                         [minValue]="minDateValue" [maxValue]="maxDateValue" [xAlignment]="'left'"
                         (valueChange)="onValueChanged($event)">
                     </pep-date>
@@ -94,47 +76,24 @@
                     <pep-attachment [key]="'attachment1'" [label]="'Pepperi Attachment'" [xAlignment]="'center'"
                         [rowSpan]="2" (valueChange)="onValueChanged($event)">
                     </pep-attachment>
-
-                    <!-- Icons Examples -->
-                    <!--
-                        <pep-icon name="system_spinner" [spin]="true"></pep-icon>
-                        <pep-icon name="system_bolt"></pep-icon>
-                        <pep-icon name="no_image"></pep-icon> 
-                    -->
                 </div>
 
                 <div class="child3 child-container">
-                    <!-- Images Examples Events [elementClicked, valueChanged]-->
-                    <!-- <pep-image [key]="'No Image'" [src]="" [label]="'image'" [xAlignment]="'center'"
-                        [rowSpan]="6">
-                    </pep-image> -->
-
                     <pep-image [key]="'Image'" [label]="'Pepperi Image'" [xAlignment]="'center'" [rowSpan]="4"
                         (fileChange)="imageChange($event)"
                         [src]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'"
                         (elementClicked)="elementClicked($event)">
                     </pep-image>
-
-                    <!-- Filmstrip Examples -->
-                    <!-- <pep-images-filmstrip [key]="'Images Filmstrip 1'" [xAlignment]="'center'"
-                        [label]="'Pepperi Images Filmstrip 1'" [showTitle]="true" [rowSpan]="3" [value]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;
-                        https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'">
-                    </pep-images-filmstrip> -->
-
                     <pep-images-filmstrip [key]="'Images Filmstrip 2'" [xAlignment]="'center'"
                         [label]="'Pepperi Images Filmstrip 1'" [showTitle]="true" [rowSpan]="7"
                         [value]="'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg'"
                         (elementClicked)="elementClicked($event)">
                     </pep-images-filmstrip>
-                    
-                    <pep-chips #chipsComp [chips]="chips" (selectionChange)="onSelectionChange($event)" (fieldClick)="onChipClick($event)"></pep-chips>
-                    <!-- <pep-button (click)="selectedChips()">Selected</pep-button> -->
-
                 </div>
 
                 <div class="child4 child-container">
                     <!-- Quantity Selector -->
-                    <pep-quantity-selector [key]="'qs'" [label]="'Pepperi Quantity Selector 1'" styleType="strong" [value]="'500.50'"
+                    <pep-quantity-selector [key]="'qs'" [label]="'Pepperi Quantity Selector 1'" styleType="weak" [value]="'1500.50'"
                         [allowDecimal]="true" [xAlignment]="'right'" (elementClicked)="elementClicked($event)">
                     </pep-quantity-selector>
 
@@ -147,8 +106,8 @@
                     </pep-quantity-selector>
 
                     <!-- Select Example -->
-                    <pep-select [key]="'select1'" [label]="'Pepperi Select'"  [xAlignment]="'right'"
-                        [options]='[{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }]'
+                    <pep-select [key]="'select1'" [label]="'Pepperi Select'"
+                        [options]='selectOptions'
                         (valueChange)="onValueChanged($event)">
                     </pep-select>
 

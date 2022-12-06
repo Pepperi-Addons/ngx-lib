@@ -84,28 +84,20 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         return this._value;
     }
 
-    private _formattedValue = null;
-    /**
-     * The formatted value.
-     *
-     * @memberof PepTextboxComponent
-     */
-    @Input()
-    set formattedValue(value: string) {
-        // Do nothing.
-        // if (!value) {
-        //     value = '';
-        // }
-
-        // if (this._calculateFormattedValue) {
-        //     this._calculateFormattedValue = false;
-        // }
-
-        // this.setFormattedValue(value);
-    }
-    get formattedValue(): string {
-        return this._formattedValue;
-    }
+    protected formattedValue = '';
+    // private _formattedValue = '';
+    // /**
+    //  * The formatted value.
+    //  *
+    //  * @memberof PepTextboxComponent
+    //  */
+    // @Input()
+    // set formattedValue(value: string) {
+        
+    // }
+    // get formattedValue(): string {
+    //     return this._formattedValue;
+    // }
 
     /**
      * The title of the textbox.
@@ -225,12 +217,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private setFormattedValue(value: string) {
-        if (this._calculateFormattedValue) {
-            this._formattedValue = value;
-        } else {
-            this._formattedValue = value;
-        }
-
+        this.formattedValue = value;
         this.updateFormFieldValue();
     }
 
@@ -337,7 +324,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
 
                 // If the user is setting the formatted value then set the value till the user format it and return it back.
                 if (!this._calculateFormattedValue) {
-                    this._formattedValue = value;
+                    this.formattedValue = value;
                 }
 
                 this.valueChange.emit(value);

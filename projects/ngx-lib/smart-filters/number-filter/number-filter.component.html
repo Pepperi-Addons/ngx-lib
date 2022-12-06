@@ -37,7 +37,7 @@
             <!-- Amount -->
             <pep-textbox [form]="form" [key]="firstControlKey" [label]="'SMART_FILTERS.AMOUNT' | translate"
                 [renderError]="false" [renderTitle]="renderTitle" [type]="field.type"
-                [value]="firstControl?.value || ''"
+                [value]="firstControl?.value || ''" 
                 (valueChange)="onValueChanged()">
             </pep-textbox>
         </div>

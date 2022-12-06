@@ -5,13 +5,14 @@
             [showTitle]="showTitle" [inputLength]="input.value?.length">
         </pep-field-title>
         <mat-form-field appearance="outline">
-            <input #input matInput pepTextboxValidation [formControlName]="key" [errorStateMatcher]="matcher" [id]="key"
+            <!-- (click)="$event.target.select()" -->
+            <input #input matInput pepTextboxValidation [formControlName]="key" [id]="key"
                 [name]="key" class=" body-sm " autocomplete="off"
                 maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
                 [placeholder]="hasParent && !disabled ? placeholder : ''"
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
-                title="{{ formattedValue }}" [type]="type" [value]="displayValue"
-                (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" (blur)="onBlur($event)"
+                title="{{ formattedValue }}" [type]="type" [value]="displayValue$ | async"
+                (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event);" (blur)="onBlur($event)"
                 (change)="onChange($event)"
                 [ngClass]="{'disable-hidden': disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')}" />
 
@@ -30,7 +31,7 @@
                     </span>
                 </ng-template>
                 <ng-template #otherErrorContainer>
-                    <ng-template *ngIf="form?.get(key)?.errors?.pattern then patternError else otherError"></ng-template>
+                    <ng-template *ngIf="regex && form?.get(key)?.errors?.pattern then patternError else otherError"></ng-template>
                     <ng-template #patternError>
                         <span class="body-xs">
                             {{ regexError }}
@@ -63,10 +64,11 @@
         <ng-template #groupedBlock>
             <ng-container [formGroupName]="parentFieldKey">
                 <mat-form-field appearance="outline">
-                    <!-- (keyup)="onKeyUp($event)"  -->
-                    <input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
+                    <!-- (click)="$event.target.select()" -->
+                    <input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off" 
                         [placeholder]="!disabled ? placeholder : ''" title="{{ formattedValue }}"
-                        [formControlName]="key" [value]="value" (blur)="onBlur($event)" (change)="onChange($event)"
+                        [formControlName]="key" [value]="value" 
+                        (blur)="onBlur($event)" (change)="onChange($event)"
                         (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" />
                 </mat-form-field>
                 <!-- <ng-container *ngTemplateOutlet="pepTemplate; context: { isFormView: true, hasParent: true }"></ng-container> -->

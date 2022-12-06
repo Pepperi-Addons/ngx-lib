@@ -601,12 +601,12 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 }
                 case FIELD_TYPE.Email: {
                     options.type = 'email';
-                    customField = new PepLinkField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.Phone: {
                     options.type = 'phone';
-                    customField = new PepLinkField(options);
+                    customField = new PepTextboxField(options);
                     break;
                 }
                 case FIELD_TYPE.Duration: {

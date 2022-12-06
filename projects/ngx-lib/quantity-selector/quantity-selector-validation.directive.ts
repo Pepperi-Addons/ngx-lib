@@ -6,7 +6,7 @@ import {
     Input,
     OnInit,
 } from '@angular/core';
-import { PepValidatorService } from '@pepperi-addons/ngx-lib';
+import { PepUtilitiesService, PepValidatorService } from '@pepperi-addons/ngx-lib';
 
 @Directive({
     selector: '[pepQsValidation]',
@@ -18,6 +18,7 @@ export class PepQuantitySelectorValidationDirective implements OnInit {
 
     constructor(
         private hostElement: ElementRef,
+        private utilitiesService: PepUtilitiesService,
         private validatorService: PepValidatorService
     ) {}
 
@@ -47,6 +48,7 @@ export class PepQuantitySelectorValidationDirective implements OnInit {
             value,
             this.allowDecimal
         );
-        this.hostElement.nativeElement['value'] = newValue ? newValue : 0;
+        // this.hostElement.nativeElement['value'] = newValue ? newValue : 0;
+        this.hostElement.nativeElement['value'] = newValue ? this.utilitiesService.changeDecimalSeparatorWhenItsComma(newValue) : 0;
     }
 }

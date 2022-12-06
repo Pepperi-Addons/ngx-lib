@@ -77,23 +77,23 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         return this._value;
     }
 
-    // @Input() formattedValue = '';
-    private _formattedValue = null;
-    @Input()
-    set formattedValue(value: string) {
-        // if (!value) {
-        //     value = '';
-        // }
+    protected formattedValue = '';
+    // private _formattedValue = '';
+    // @Input()
+    // set formattedValue(value: string) {
+    //     // if (!value) {
+    //     //     value = '';
+    //     // }
 
-        // if (this._calculateFormattedValue) {
-        //     this._calculateFormattedValue = false;
-        // }
+    //     // if (this._calculateFormattedValue) {
+    //     //     this._calculateFormattedValue = false;
+    //     // }
 
-        // this.setFormattedValue(value);
-    }
-    get formattedValue(): string {
-        return this._formattedValue;
-    }
+    //     // this.setFormattedValue(value);
+    // }
+    // get formattedValue(): string {
+    //     return this._formattedValue;
+    // }
 
     @Input() label = '';
 
@@ -245,10 +245,10 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         if (this.dateModel === null || !this.dateModel.isValid()) {
             this.formattedValue = '';
         } else {
-            const format = this.showTime
+            const formatString = this.showTime
                 ? MY_DATE_FORMATS.display.datetimeInput
                 : MY_DATE_FORMATS.display.dateInput;
-            this.formattedValue = this.adapter.format(this.dateModel, format);
+            this.formattedValue = this.adapter.format(this.dateModel, formatString);
         }
     }
 

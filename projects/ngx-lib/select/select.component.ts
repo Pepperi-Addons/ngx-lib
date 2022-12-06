@@ -107,6 +107,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() showTitle = true;  
 
     @Input() renderTitle = true;
+    @Input() typeaheadDebounceInterval = 1000;
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();

@@ -28,7 +28,8 @@ import {
 import { Observable, Subject } from 'rxjs';
 import {
     PepValidatorService,
-    IPepOption
+    IPepOption,
+    PepUtilitiesService
 } from '@pepperi-addons/ngx-lib';
 import {
     IPepSmartFilterOperator,
@@ -171,7 +172,8 @@ export abstract class BaseFilterComponent
         private builder: FormBuilder,
         protected translate: TranslateService,
         protected validator: PepValidatorService,
-        protected renderer: Renderer2
+        protected utilitiesService: PepUtilitiesService,
+        protected renderer: Renderer2,
     ) {
         this._destroyed = new Subject();
     }

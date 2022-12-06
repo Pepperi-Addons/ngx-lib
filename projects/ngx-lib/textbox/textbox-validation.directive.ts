@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import {
     PepTextboxFieldType,
+    PepUtilitiesService,
     PepValidatorService,
 } from '@pepperi-addons/ngx-lib';
 
@@ -20,6 +21,7 @@ export class PepTextboxValidationDirective implements OnInit {
 
     constructor(
         private hostElement: ElementRef,
+        private utilitiesService: PepUtilitiesService,
         private validatorService: PepValidatorService
     ) {}
 
@@ -82,12 +84,15 @@ export class PepTextboxValidationDirective implements OnInit {
     }
 
     validateValue(value: string): void {
+        console.log(`validateValue start value is - ${value}`)
         if (this.isNumber()) {
             const newValue = this.validatorService.validateNumber(
                 value,
                 this.isDecimal()
             );
-            this.hostElement.nativeElement['value'] = newValue ? newValue : 0;
+            console.log(`after validateNumber newValue is - ${newValue}`)
+            // Always set to the value input number with '.' decomal separator.
+            this.hostElement.nativeElement['value'] = newValue ? this.utilitiesService.changeDecimalSeparatorWhenItsComma(newValue) : 0;
         } else if (this.isPhone()) {
             // test phone with regular expression, when
             // phone is invalid, replace it with the previousValue

@@ -32,7 +32,7 @@ import {
     PepQuantitySelectorField,
     PepUtilitiesService,
 } from '@pepperi-addons/ngx-lib';
-import { BehaviorSubject, fromEvent, Subject } from 'rxjs';
+import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -78,35 +78,52 @@ export class PepQuantitySelectorComponent
             value = '';
         }
 
-        this._value = value;
-        this.setFormattedValue(value);
+        if (this.isDifferentValue(value)) {
+            this._value = value;
+        }
+
+        this.setFormattedValue(this.value);
+        this.changeDisplayValue();
     }
     get value(): string {
         return this._value;
     }
+    
+    get valueAsCurrentCulture(): string {
+        return this.utilitiesService.changeDecimalSeparatorWhenItsComma(this.value, true);
+        // let res = this.value;
 
-    private _formattedValue = null;
-    @Input()
-    set formattedValue(value: string) {
-        // if (!value) {
-        //     value = '';
+        // if (this.allowDecimal) {
+        //     res = this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits, false);
         // }
-
-        // if (this._calculateFormattedValue) {
-        //     this._calculateFormattedValue = false;
-        // }
-
-        // this.setFormattedValue(value);
+        
+        // return res;
     }
-    get formattedValue(): string {
-        return this._formattedValue;
-    }
+
+    protected formattedValue = '';
+    // private _formattedValue = '';
+    // @Input()
+    // set formattedValue(value: string) {
+    //     // if (!value) {
+    //     //     value = '';
+    //     // }
+
+    //     // if (this._calculateFormattedValue) {
+    //     //     this._calculateFormattedValue = false;
+    //     // }
+
+    //     // this.setFormattedValue(value);
+    // }
+    // get formattedValue(): string {
+    //     return this._formattedValue;
+    // }
     
     private _minFractionDigits = NaN;
     @Input()
     set minFractionDigits(value: number) {
         this._minFractionDigits = value;
         this.setFormattedValue(this.value);
+        this.changeDisplayValue();
     }
     get minFractionDigits(): number {
         return this._minFractionDigits;
@@ -117,6 +134,7 @@ export class PepQuantitySelectorComponent
     set maxFractionDigits(value: number) {
         this._maxFractionDigits = value;
         this.setFormattedValue(this.value);
+        this.changeDisplayValue();
     }
     get maxFractionDigits(): number {
         return this._maxFractionDigits;
@@ -148,6 +166,7 @@ export class PepQuantitySelectorComponent
 
         if (this.value) {
             this.setFormattedValue(this.value);
+            this.changeDisplayValue();
         }
     }
     get allowDecimal(): boolean {
@@ -249,7 +268,15 @@ export class PepQuantitySelectorComponent
     showQsBtn = true;
 
     standAlone = false;
-    isInFocus = false;
+    private _isInFocus = false;
+    @Input()
+    set isInFocus(isInFocus: boolean) {
+        this._isInFocus = isInFocus;
+        this.changeDisplayValue();
+    }
+    get isInFocus(): boolean {
+        return this._isInFocus;
+    }
     isMatrixFocus = false;
 
     isCaution = false;
@@ -258,6 +285,11 @@ export class PepQuantitySelectorComponent
     sameElementInTheWantedRow = null;
 
     isEmptyKey = false;
+
+    private _displayValueSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    get displayValue$(): Observable<string> {
+        return this._displayValueSubject.asObservable().pipe(distinctUntilChanged());
+    }
 
     constructor(
         private cd: ChangeDetectorRef,
@@ -274,7 +306,7 @@ export class PepQuantitySelectorComponent
     setForm() {
         const pepField = new PepQuantitySelectorField({
             key: this.key,
-            value: this.value,
+            value: this.valueAsCurrentCulture,
             mandatory: this.mandatory,
             readonly: this.readonly,
             disabled: this.disabled,
@@ -285,31 +317,50 @@ export class PepQuantitySelectorComponent
     private setFormattedValue(value: string) {
         if (this._calculateFormattedValue) {
             if (this.allowDecimal) {
-                this._formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
+                this.formattedValue = this.utilitiesService.formatDecimal(value, this.minFractionDigits, this.maxFractionDigits);
             } else {
-                this._formattedValue = this.utilitiesService.formatNumber(value);
+                this.formattedValue = this.utilitiesService.formatNumber(value);
             }
         } else {
-            this._formattedValue = value;
+            this.formattedValue = value;
         }
         
         this.updateFormFieldValue();
     }
 
-    private updateFormFieldValue() {
+    private notifyDisplayValueChange(value: string) {
+        this._displayValueSubject.next(value);
+    }
+
+    private changeDisplayValue(): void {
+        let res = '';
+
+        if (this.allowDecimal) {
+            res = this.isInFocus ? this.valueAsCurrentCulture : this.formattedValue;
+        } else {
+            res = this.isInFocus ? this.value : this.formattedValue;
+        }
+
+        this.notifyDisplayValueChange(res);
+        // console.log('changeDisplayValue' + res);
+    }
+
+    private updateFormFieldValue(firstLoad = false) {
+        // Set the formatted value only for the first load cause it's not formatted if we set the value (I don't know why)
+        // Else we set the value - this is important to set the value only cause setting the formatted value will cause bug when the number is with thousand separator
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            this.formattedValue
+            firstLoad ? this.formattedValue : this.value,
         );
     }
 
-    get displayValue(): string {
-        const res = this.isInFocus
-            ? this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits)
-            : this.formattedValue;
-        return res;
-    }
+    // get displayValue(): string {
+    //     const res = this.isInFocus
+    //         ? this.utilitiesService.formatDecimal(this.value, this.minFractionDigits, this.maxFractionDigits)
+    //         : this.formattedValue;
+    //     return res;
+    // }
 
     protected getDestroyer() {
         return takeUntil(this._destroyed);
@@ -344,7 +395,7 @@ export class PepQuantitySelectorComponent
                 this.setupQsButtons(qsWidth);
             });
 
-        this.updateFormFieldValue();
+        this.updateFormFieldValue(true);
     }
 
     ngAfterViewInit() {
@@ -513,18 +564,19 @@ export class PepQuantitySelectorComponent
 
     onFocus(event: any): void {
         this.isInFocus = true;
+
+        // setTimeout(() => {
+        //     if (this.isInFocus) {
+        //         const eventTarget = event.target || event.srcElement;
+        //         if (eventTarget) {
+        //             eventTarget.select();
+        //         }
+        //     }
+        // }, 0);
     }
 
     isDifferentValue(value: string): boolean {
-        let res = false;
-
-        const currentValue = this.utilitiesService.coerceNumberProperty(
-            this.value
-        );
-        const newValue = this.utilitiesService.coerceNumberProperty(value);
-
-        res = currentValue !== newValue;
-
+        const res = this.utilitiesService.isEqualNumber(this.valueAsCurrentCulture, value) === false;
         return res;
     }
 
@@ -533,18 +585,17 @@ export class PepQuantitySelectorComponent
         this.cleanError();
         const value = event.target ? event.target.value : event;
 
-        if (value !== this.value && this.isDifferentValue(value)) {
-            this.value = value;
-
-            // // If the user is setting the formatted value then set the value till the user format it and return it back.
-            // if (!this._calculateFormattedValue) {
-            //     this._formattedValue = value;
-            // }
-
-            this.valueChange.emit(this.value);
+        if (this.allowDecimal) {
+            this.value = this.utilitiesService.changeDecimalSeparatorWhenItsComma(value);
         } else {
-            this.focusToTheSameElementInTheWantedRow();
+            this.value = value;
         }
+
+        if (value !== this.valueAsCurrentCulture && this.isDifferentValue(value)) {
+            this.valueChange.emit(this.value);
+        }
+        
+        this.focusToTheSameElementInTheWantedRow();
     }
 
     onKeydown(event): any {

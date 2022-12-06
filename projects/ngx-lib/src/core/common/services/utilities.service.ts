@@ -17,14 +17,15 @@ export class PepUtilitiesService {
         // } catch {}
     }
 
-    private changeDecimalSeperator(value: string, reverse = false): string {
-        // If the decimal separator is ','
-        if (this.getDecimalSeparator() === ',') {
-            // If reverse change the number from '.' to ',' else do the opposite.
-            value = reverse ? value.replace('.', ',') : value.replace(',', '.');
+    private prepareNumberToFormat(value: string, fallbackValue = 0): number {
+        // If the decimal separator is ',' change it to '.'
+        if (value?.length > 0) {
+            // If the decimal separator is ',' change it to '.' for let the formatting works.
+            value = this.changeDecimalSeparatorWhenItsComma(value);
+            // console.log('coerceNumberProperty after change decimal separator value is', value);
         }
 
-        return value;
+        return coerceNumberProperty(value, fallbackValue);
     }
 
     // adapted from https://github.com/sindresorhus/parse-ms.
@@ -69,6 +70,24 @@ export class PepUtilitiesService {
             currencySymbol == "zł" ||
             currencySymbol == "kr.") {
             res = true;
+        }
+
+        return res;
+    }
+
+    private cutValueByFractionDigits(value: string, maxFractionDigits: number): string {
+        let res = value;
+        maxFractionDigits = maxFractionDigits || 2;
+        const decimalSeparator = this.getDecimalSeparator();
+
+        if (value.includes(decimalSeparator)) {
+            const valueArr = value.split(decimalSeparator);
+
+            // if (valueArr[1].length < maxFractionDigits) {
+            valueArr[1] = valueArr[1].padEnd(maxFractionDigits, '0');
+            // }
+
+            res = `${valueArr[0]}${decimalSeparator}${valueArr[1].slice(0, maxFractionDigits)}`;
         }
 
         return res;
@@ -158,10 +177,11 @@ export class PepUtilitiesService {
 
     // formatPercent(value: any, digitsInfo = '1.0-2') {
     formatPercent(value: any, minFractionDigits = 0, maxFractionDigits = 2) {
-        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
-        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
+        minFractionDigits = coerceNumberProperty(minFractionDigits, null);
+        maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
 
-        const number = this.coerceNumberProperty(value);
+        value = this.cutValueByFractionDigits(value, maxFractionDigits);
+        const number = this.prepareNumberToFormat(value);
 
         if (number === 0) {
             return '0%';
@@ -176,21 +196,23 @@ export class PepUtilitiesService {
     }
 
     // formatCurrency(value: any, currencySign = '', digitsInfo = '1.2-2') {
-    formatCurrency(value: any, currencySign = '', minFractionDigits = 0, maxFractionDigits = 2) {
-        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
-        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
+    formatCurrency(value: any, currencySign = '', minFractionDigits = 2, maxFractionDigits = 2, useGrouping = true) {
+        minFractionDigits = coerceNumberProperty(minFractionDigits, null);
+        maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
 
         let res = '';
 
-        // If the decimal seperator is the last digit
+        // If the decimal separator is the last digit
         // if (value.length > 0 && value.indexOf(this.getDecimalSeparator()) === value.length -1) {
         //     res = value;
         // } else {
-            const number = this.coerceNumberProperty(value);
+            value = this.cutValueByFractionDigits(value, maxFractionDigits);
+            const number = this.prepareNumberToFormat(value);
             const styleOptions = {
                 // style: 'currency',
                 // currencySign: currencySign,
-                minimumFractionDigits: minFractionDigits || 0,
+                useGrouping: useGrouping,
+                minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits || 2),
                 maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
             };
     
@@ -211,31 +233,43 @@ export class PepUtilitiesService {
     }
 
     // formatDecimal(value: any, digitsInfo = '1.2-2') {
-    formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2) {
-        minFractionDigits = this.coerceNumberProperty(minFractionDigits, null);
-        maxFractionDigits = this.coerceNumberProperty(maxFractionDigits, null);
-        const number = this.coerceNumberProperty(value);
+    formatDecimal(value: any, minFractionDigits = 2, maxFractionDigits = 2, useGrouping: boolean = true) {
+        minFractionDigits = coerceNumberProperty(minFractionDigits, null);
+        // console.log('formatDecimal minFractionDigits value is', minFractionDigits);
+        maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
+        // console.log('formatDecimal minFractionDigits value is', maxFractionDigits);
+
+        value = this.cutValueByFractionDigits(value, maxFractionDigits);
+        const number = this.prepareNumberToFormat(value);
+        
+        // console.log('number value is', number);
 
         if (number === 0) {
             return '0';
         } else {
             // return formatNumber(value, this.culture, digitsInfo);
-            return new Intl.NumberFormat(this.culture, {
-                minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits),
+            const res = new Intl.NumberFormat(this.culture, {
+                useGrouping: useGrouping,
+                minimumFractionDigits: minFractionDigits || Math.min(2, maxFractionDigits || 2),
                 maximumFractionDigits: maxFractionDigits || Math.max(2, minFractionDigits),
-            }).format(number)
+            }).format(number);
+            
+            // console.log('Intl.NumberFormat value is', res);
+
+            return res;
         }
     }
 
     // formatNumber(value: any, digitsInfo = '1.0-0'): string {
-    formatNumber(value: any): string {
-        const number = this.coerceNumberProperty(value);
+    formatNumber(value: any, useGrouping = true): string {
+        const number = this.prepareNumberToFormat(value);
 
         if (number === 0) {
             return '0';
         } else {
             // return formatNumber(value, this.culture, digitsInfo);
             return new Intl.NumberFormat(this.culture, {
+                useGrouping: useGrouping,
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
             }).format(number)
@@ -255,7 +289,7 @@ export class PepUtilitiesService {
         if (!isNumber) {
             return value;
         } else {
-            let number = this.coerceNumberProperty(value);
+            let number = this.prepareNumberToFormat(value);
 
             const leading = options?.leading || true;
             const duration = options?.duration || 'milliseconds';
@@ -281,45 +315,37 @@ export class PepUtilitiesService {
     }
 
     incrementNumber(value: any): string {
-        let numberValue = this.coerceNumberProperty(value);
-        const newNumber = this.changeDecimalSeperator(
-            (++numberValue).toString(),
-            true
-        );
-
-        return newNumber;
+        let numberValue = coerceNumberProperty(value, 0);
+        return (++numberValue).toString();
     }
 
     decrementNumber(value: any): string {
-        let numberValue = this.coerceNumberProperty(value);
-        const newNumber = this.changeDecimalSeperator(
-            (--numberValue).toString(),
-            true
-        );
-
-        return newNumber;
+        let numberValue = coerceNumberProperty(value, 0);
+        return (--numberValue).toString();
     }
 
-    coerceNumberProperty(value: any, fallbackValue = 0): number {
-        // If the decimal separator is ',' change it to '.'
-        if (value?.length > 0) {
-            value = this.changeDecimalSeperator(value);
-            //if the decimal seperator is '.' than the thoussnd seperator is ',' else  the thousand seperator is '.'
-            if (this.getDecimalSeparator() === '.') {
-                value = value.replace(/,/g, ''); // .replace(',', '');
-            } else {
-                value = value.replace(/./g, ''); // .replace('.', '');
-            }
-        }
-
-        return coerceNumberProperty(value, fallbackValue);
-    }
-
-    getDecimalSeparator() {
+    getDecimalSeparator(): string {
         const numberWithDecimalSeparator = 1.1;
 
         return numberWithDecimalSeparator
             .toLocaleString(this.culture)
             .substring(1, 2);
+    }
+
+    changeDecimalSeparatorWhenItsComma(value: string, reverse = false): string {
+        // If the decimal separator is ','
+        if (this.getDecimalSeparator() === ',') {
+            // If reverse change the number from '.' to ',' else do the opposite.
+            value = reverse ? value.replace('.', ',') : value.replace(',', '.');
+        }
+
+        return value;
+    }
+
+    isEqualNumber(numberAsString: string, numberAsString2: string): boolean {
+        const number = this.prepareNumberToFormat(numberAsString);
+        const number2 = this.prepareNumberToFormat(numberAsString2);
+
+        return number === number2;
     }
 }

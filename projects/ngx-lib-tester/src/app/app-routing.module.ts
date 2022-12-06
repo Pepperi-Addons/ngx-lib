@@ -7,6 +7,7 @@ import { QueryBuilderExampleComponent } from './query-builder-example/query-buil
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
 import { FormFieldsExampleComponent } from './form-fields-example/form-fields-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
+import { OtherFieldsExampleComponent } from './other-fields-example/other-fields-example.component';
 // import * as config from '../../../addon.config.json';
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
     {
         path: `form-fields-example`,
         component: FormFieldsExampleComponent,
+    },
+    {
+        path: `other-fields-example`,
+        component: OtherFieldsExampleComponent,
     },
     {
         path: `list-example`,

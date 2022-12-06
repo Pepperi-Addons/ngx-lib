@@ -1,0 +1,64 @@
+<pep-page-layout class="ui-test-container">
+    <ng-container pep-top-area>
+        <pep-top-bar [title]="'Components_Example_Title' | translate">
+            <div header-start-content>
+
+            </div>
+            <div header-end-content>
+                <pep-button [value]="'test 1'" [sizeType]="'sm'" [styleType]="'regular'"
+                    [classNames]="'pep-spacing-element '" (click)="raiseSnackBar($event)">
+                </pep-button>
+            </div>
+        </pep-top-bar>
+    </ng-container>
+
+    <ng-container pep-main-area>
+        <div class="main-content ">
+            <div class="content spacing-top">
+                <div class="child1 child-container">
+                    <pep-select-panel 
+                        [label]="'Multi select'" 
+                        [isMultiSelect]="true"
+                        [disabled]="false"
+                        [numOfCol]="numOfSelectionColumn"
+                        [value]="'val1;val2'"
+                        [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
+                        (valueChange)="onValueChanged($event)">
+                    </pep-select-panel>
+                    <pep-group-buttons [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">
+                    </pep-group-buttons>
+
+                    <!-- <pep-group-buttons-settings 
+                        [subHeader]="'Num of Columns'"
+                        [btnKey]="numOfSelectionColumn" 
+                        [groupType]="'custom'" [btnsArray]="numOfColumn"
+                        (btnkeyChange)="onColNumChanged($event)">
+                    </pep-group-buttons-settings> -->
+
+                    <!-- Separator Example -->
+                    <pep-separator [key]="'sep1'" [label]="'separator'"></pep-separator>
+                </div>
+                
+                <div class="child2 child-container">
+                    <div style="height: 100px;">
+                        <!-- Icons Examples -->
+                        <pep-icon name="system_spinner" [spin]="true"></pep-icon>
+                        <pep-icon name="system_bolt"></pep-icon>
+                        <pep-icon name="no_image"></pep-icon> 
+                    </div>
+                </div>
+
+                <div class="child3 child-container">
+                    <pep-chips #chipsComp [chips]="chips" (selectionChange)="onSelectionChange($event)" (fieldClick)="onChipClick($event)"></pep-chips>
+                    <!-- <pep-button (click)="selectedChips()">Selected</pep-button> -->
+                </div>
+
+                <div class="child4 child-container">
+                    <!-- <pep-rich-html-textarea [key]="'richText2'" [label]="'richText2'" [value]="richTextValue" [rowSpan]="3"
+                        [maxFieldCharacters]="300" [xAlignment]="'right'" [inlineMode]="true">
+                    </pep-rich-html-textarea> -->
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</pep-page-layout>
