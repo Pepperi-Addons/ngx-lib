@@ -200,7 +200,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
      *
      * @memberof PepTextboxComponent
      */
-    private _mandatory: boolean = false;
+    private _mandatory = false;
     @Input()
     set mandatory(value: boolean) {
         this._mandatory = value;
