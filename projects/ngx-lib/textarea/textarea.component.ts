@@ -93,7 +93,7 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
     valueChange: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    keydown: EventEmitter<any> = new EventEmitter<any>();
+    keyup: EventEmitter<any> = new EventEmitter<any>();
 
     // @ViewChild('input') input: ElementRef;
     @ViewChild('textAreaDialogTemplate', { read: TemplateRef })
@@ -162,10 +162,10 @@ export class PepTextareaComponent implements OnChanges, OnInit, OnDestroy {
         //
     }
 
-    onKeydown(event): any {
-        this.keydown.emit(event);
+    onKeyup(event): any {
+        this.keyup.emit(event);
     }
-    
+
     onBlur(event: any): void {
         const value = event.target ? event.target.value : event;
         this.changeValue(value);

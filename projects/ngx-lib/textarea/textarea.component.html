@@ -14,7 +14,7 @@
                     maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
                     [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
                     [formControlName]="key" [style.height]="fieldHeight"
-                    (keydown)="onKeydown($event)">
+                    (keyup)="onKeyup($event)">
                 </textarea>
                 <div *ngIf="readonly" class="body-sm disable-text-div" title="{{ value }}"
                     [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'right' ? 'right' : 'left' }"

@@ -276,7 +276,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Output()
-    keydown: EventEmitter<any> = new EventEmitter<any>();
+    keyup: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('input') input: ElementRef;
 
@@ -537,8 +537,8 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         this.valueChange.emit(value);
     }
 
-    onKeydown(event): any {
-        this.keydown.emit(event);
+    onKeyup(event): any {
+        this.keyup.emit(event);
     }
 
     onBlur(e: any): void {
