@@ -111,8 +111,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
-    @Output()
-    formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    // @Output()
+    // formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('select') select: MatSelect;
 
@@ -275,7 +275,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
                     serverError: 'Required',
                 });
             }
-            this.formValidationChange.emit(this.form.valid);
+            // this.formValidationChange.emit(this.form.valid);
         }
 
         this.valueChange.emit(value);
