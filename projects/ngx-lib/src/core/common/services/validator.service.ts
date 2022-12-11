@@ -162,7 +162,7 @@ export class PepValidatorService {
 
         // test number with regular expression, when
         // number is invalid, replace it with a zero
-        console.log(`regex is ${regex} and value is ${value}`);
+        // console.log(`regex is ${regex} and value is ${value}`);
         const valid: boolean = new RegExp(regex).test(value);
 
         return valid ? value : null;
