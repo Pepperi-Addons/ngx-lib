@@ -24,11 +24,12 @@
 <ng-container *ngIf="totalRows > 0">
     <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
 
+    <!-- (vsChildRectChange)="onChildRectChange($event)" -->
     <virtual-scroller #scroller [items]="pagerType === 'pages' ? currentPageItems : items"
         [scrollDebounceTime]="scrollDebounceTime" [scrollThrottlingTime]="scrollThrottlingTime"
         [bufferAmount]="printMode ? totalRows : bufferAmount" [parentScroll]="parentScroll" [disable]="loadingItemsFromApi"
         class="virtual-scroller" [ngClass]="{ 'table-body': isTable, 'cards-body': !isTable }"
-        (vsChange)="onVirtualScrollerChange($event)" (vsChildRectChange)="onChildRectChange($event)">
+        (vsChange)="onVirtualScrollerChange($event)" >
         <ng-container *ngFor="let item of scroller.viewPortItems; let index = index; let isFirst = first;">
             <ng-container *ngTemplateOutlet="listData; context: {item: item, index:index}"></ng-container>
         </ng-container>

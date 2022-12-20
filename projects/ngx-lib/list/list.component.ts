@@ -237,7 +237,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     sortBy = '';
     isUserSelected = false;
     checkForChanges: any = null;
-    calculatedObjectHeight: string;
+    calculatedObjectHeight: string = 'auto';
 
     constructor(
         private hostElement: ElementRef,
@@ -585,6 +585,18 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    private calcObjectHeight() {
+        setTimeout(() => {
+            if (this.virtualScroller) {
+                const content = this.virtualScroller.getContent();
+                if (content.children.length > 0) {
+                    const rect = this.virtualScroller.getElementSize(content.children[0]);
+                    this.calculatedObjectHeight = rect.height + 'px';
+                }
+            }
+        }, 0);
+    }
+
     private initResizeData(): void {
         this.startX = 0;
         this.startWidth = 0;
@@ -620,7 +632,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this._items =
             this.totalRows > 0 ? Array<ObjectsDataRow>(this.totalRows) : [];
         this.currentPageItems = [];
-        this.calculatedObjectHeight = '';
+        this.calculatedObjectHeight = 'auto';
     }
 
     private initVariablesFromSession(items: ObjectsDataRow[]): void {
@@ -1085,8 +1097,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     toIndex: numberOfStartItems,
                 };
                 this.updateItems(items, event);
-
-                this.refresh();
+                
+                if (this.virtualScroller) {
+                    this.refresh(() => {
+                        this.calcObjectHeight();
+                    });
+                } else {
+                    this.calcObjectHeight();
+                }
             }
         }
 
@@ -1236,8 +1254,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         return this.items.find((item) => item?.UID.toString() === uid);
     }
 
-    refresh() {
-        this.virtualScroller?.refresh();
+    refresh(refreshCompletedCallback: () => void = undefined) {
+        this.virtualScroller?.refresh(refreshCompletedCallback);
     }
 
     // ---------------------------------------------------------------
@@ -1449,11 +1467,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }, 0);
     }
 
-    onChildRectChange(event: any) {
-        setTimeout(() => {
-            this.calculatedObjectHeight = event?.height + 'px';
-        }, 0);
-    }
+    // onChildRectChange(event: any) {
+    //     // Set the calculatedObjectHeight only if he's not set (this case is only for the initialize when virtual scroll is undefined).
+    //     // the other cases is handled in calcObjectHeight function.
+    //     if (this.calculatedObjectHeight === 'auto') {
+    //         this.calculatedObjectHeight = event?.height + 'px';
+    //     }
+    // }
 
     onValueChanged(valueChange: IPepFormFieldValueChangeEvent): void {
         if (this.disabled) {
