@@ -131,6 +131,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() pageIndex = 0;
     // @Input() startIndex = 0;
 
+    @Input() bufferAmount = 0;
     @Input() scrollAnimationTime = 500;
     @Input() scrollDebounceTime = 0;
     @Input() scrollThrottlingTime = 0;
@@ -1448,7 +1449,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }, 0);
     }
 
-    onChildRectChange(event: ClientRect) {
+    onChildRectChange(event: any) {
         setTimeout(() => {
             this.calculatedObjectHeight = event?.height + 'px';
         }, 0);

@@ -260,7 +260,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		if (typeof (this._bufferAmount) === 'number' && this._bufferAmount > 0) {
 			return this._bufferAmount;
 		} else {
-			return this.enableUnequalChildrenSizes ? 5 : 1;
+			return this.enableUnequalChildrenSizes ? 5 : 0;
 		}
 	}
 	public set bufferAmount(value: number) {
@@ -387,10 +387,10 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		}
 	}
 
-	private _lastChildRect: ClientRect;
+	private _lastChildRect: DOMRect = null;
 
 	@Output()
-	public vsChildRectChange: EventEmitter<ClientRect> = new EventEmitter<ClientRect>();
+	public vsChildRectChange: EventEmitter<DOMRect> = new EventEmitter<DOMRect>();
 
 	@Output()
 	public vsUpdate: EventEmitter<any[]> = new EventEmitter<any[]>();
@@ -656,7 +656,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		};
 	}
 
-	protected previousScrollBoundingRect: ClientRect;
+	protected previousScrollBoundingRect: DOMRect;
 	protected checkScrollElementResized(): void {
 		const boundingRect = this.getElementSize(this.getScrollElement());
 
@@ -1090,8 +1090,9 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 				this.minMeasuredChildHeight = Math.min(this.minMeasuredChildHeight, clientRect.height);
 
 				// Added for getting the child height (for card view, return all the clientRect object).
-				if (this._lastChildRect?.height !== clientRect?.height ||
-					this._lastChildRect?.width !== clientRect?.width) {
+				if (this._lastChildRect === null ||
+					Math.round(this._lastChildRect?.height) !== Math.round(clientRect?.height) ||
+					Math.round(this._lastChildRect?.width) !== Math.round(clientRect?.width)) {
 					this._lastChildRect = clientRect;
 					this.vsChildRectChange.emit(clientRect);
 				}
