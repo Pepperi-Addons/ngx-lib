@@ -185,8 +185,8 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-    @Output()
-    formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    // @Output()
+    // formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();

@@ -260,7 +260,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		if (typeof (this._bufferAmount) === 'number' && this._bufferAmount > 0) {
 			return this._bufferAmount;
 		} else {
-			return this.enableUnequalChildrenSizes ? 5 : 1;
+			return this.enableUnequalChildrenSizes ? 5 : 0;
 		}
 	}
 	public set bufferAmount(value: number) {
@@ -387,10 +387,10 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		}
 	}
 
-	private _lastChildRect: ClientRect;
+	// private _lastChildRect: DOMRect = null;
 
 	@Output()
-	public vsChildRectChange: EventEmitter<ClientRect> = new EventEmitter<ClientRect>();
+	public vsChildRectChange: EventEmitter<DOMRect> = new EventEmitter<DOMRect>();
 
 	@Output()
 	public vsUpdate: EventEmitter<any[]> = new EventEmitter<any[]>();
@@ -454,8 +454,8 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		}
 	}
 
-	public refresh(): void {
-		this.refresh_internal(true);
+	public refresh(refreshCompletedCallback: () => void = undefined): void {
+		this.refresh_internal(true, refreshCompletedCallback);
 	}
 
 	public invalidateAllCachedMeasurements(): void {
@@ -638,7 +638,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		this.resetWrapGroupDimensions();
 	}
 
-	protected getElementSize(element: HTMLElement): any {
+	public getElementSize(element: HTMLElement): any {
 		const result = element.getBoundingClientRect();
 		const styles = getComputedStyle(element);
 		const marginTop = parseInt(styles['margin-top'], 10) || 0;
@@ -656,7 +656,12 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		};
 	}
 
-	protected previousScrollBoundingRect: ClientRect;
+	public getContent() {
+		const content = (this.containerElementRef && this.containerElementRef.nativeElement) || this.contentElementRef.nativeElement;
+		return content;
+	}
+
+	protected previousScrollBoundingRect: DOMRect;
 	protected checkScrollElementResized(): void {
 		const boundingRect = this.getElementSize(this.getScrollElement());
 
@@ -979,7 +984,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		}
 
 		const propertyName = this.horizontal ? 'offsetLeft' : 'offsetTop';
-		const children = ((this.containerElementRef && this.containerElementRef.nativeElement) || this.contentElementRef.nativeElement).children;
+		const children = this.getContent().children;
 
 		const childrenLength = children ? children.length : 0;
 		if (childrenLength === 0) {
@@ -1056,7 +1061,7 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 		let viewportWidth = scrollElement.offsetWidth - (this.scrollbarWidth || this.calculatedScrollbarWidth || (this.horizontal ? 0 : maxCalculatedScrollBarSize));
 		let viewportHeight = scrollElement.offsetHeight - (this.scrollbarHeight || this.calculatedScrollbarHeight || (this.horizontal ? maxCalculatedScrollBarSize : 0));
 
-		const content = (this.containerElementRef && this.containerElementRef.nativeElement) || this.contentElementRef.nativeElement;
+		const content = this.getContent();
 
 		const itemsPerWrapGroup = this.countItemsPerWrapGroup();
 		let wrapGroupsPerPage;
@@ -1090,11 +1095,14 @@ export class VirtualScrollerComponent implements OnInit, OnChanges, OnDestroy {
 				this.minMeasuredChildHeight = Math.min(this.minMeasuredChildHeight, clientRect.height);
 
 				// Added for getting the child height (for card view, return all the clientRect object).
-				if (this._lastChildRect?.height !== clientRect?.height ||
-					this._lastChildRect?.width !== clientRect?.width) {
-					this._lastChildRect = clientRect;
-					this.vsChildRectChange.emit(clientRect);
-				}
+				// if (this._lastChildRect === null ||
+				// 	(clientRect?.height !== 0 && (
+				// 		Math.round(this._lastChildRect?.height) !== Math.round(clientRect?.height) || 
+				// 		Math.round(this._lastChildRect?.width) !== Math.round(clientRect?.width))
+				// 	)) {
+				// 	this._lastChildRect = clientRect;
+				// 	this.vsChildRectChange.emit(clientRect);
+				// }
 			}
 
 			defaultChildWidth = this.childWidth || this.minMeasuredChildWidth || viewportWidth;

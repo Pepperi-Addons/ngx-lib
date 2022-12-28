@@ -585,13 +585,11 @@ export class PepQuantitySelectorComponent
         this.cleanError();
         const value = event.target ? event.target.value : event;
 
-        if (this.allowDecimal) {
-            this.value = this.utilitiesService.changeDecimalSeparatorWhenItsComma(value);
-        } else {
-            this.value = value;
-        }
-
-        if (value !== this.valueAsCurrentCulture && this.isDifferentValue(value)) {
+        // For decimal we need to replace the decimal separator back if it's comma (',').
+        const correctValue = this.allowDecimal ? this.utilitiesService.changeDecimalSeparatorWhenItsComma(value) : value;
+        
+        if (correctValue !== this.valueAsCurrentCulture && this.isDifferentValue(value)) {
+            this.value = correctValue;
             this.valueChange.emit(this.value);
         }
         

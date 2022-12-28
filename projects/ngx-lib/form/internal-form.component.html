@@ -8,8 +8,9 @@
                 [checkForChanges]="checkForChanges" [uid]="data?.UID" [field]="field" [showTitle]="showTitle"
                 (valueChange)="onValueChanged($event)" (elementClick)="onClick($event)"
                 (formValueChange)="onFormValueChanged($event)" (formFieldClick)="onFormFieldClick($event)"
-                (formValidationChange)="onFormValidationChanged($event)">
+                >
             </pep-internal-field-generator>
+            <!-- (formValidationChange)="onFormValidationChanged($event)" -->
         </mat-grid-tile>
     </mat-grid-list>
 

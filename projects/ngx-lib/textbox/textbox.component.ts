@@ -272,8 +272,11 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
 
+    // @Output()
+    // formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     @Output()
-    formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    keyup: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('input') input: ElementRef;
 
@@ -532,6 +535,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         const value = e.target ? e.target.value : e;
         // console.log(`onChange value is ${value}`);
         this.valueChange.emit(value);
+    }
+
+    onKeyup(event): any {
+        this.keyup.emit(event);
     }
 
     onBlur(e: any): void {

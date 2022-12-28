@@ -49,8 +49,9 @@
         [additionalValue]="field.additionalValue" [notificationInfo]="field.notificationInfo" [isActive]="isActive"
         [layoutType]="layoutType" [showTitle]="showTitle" [visible]="field.visible"
         [minFractionDigits]="field.digitsNumberAfterDecimalPoint" (valueChange)="onValueChanged($event, field)"
-        (formValidationChange)="onFormValidationChanged($event)" (elementClick)="onClick($event)">
+        (elementClick)="onClick($event)">
     </pep-quantity-selector>
+    <!-- (formValidationChange)="onFormValidationChanged($event)"  -->
 
     <pep-rich-html-textarea *ngSwitchCase="'richhtmltextarea'" [form]="form" [key]="field.key" [value]="field.value"
         [label]="field.label" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
@@ -64,9 +65,10 @@
         [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [options]="field.options" [showTitle]="showTitle"
         [layoutType]="layoutType" [visible]="field.visible" [emptyOption]="field.emptyOption"
-        (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
+        (valueChange)="onValueChanged($event, field)" 
         [isActive]="isActive">
     </pep-select>
+    <!-- (formValidationChange)="onFormValidationChanged($event)" -->
 
     <pep-separator *ngSwitchCase="'separator'" [form]="form" [key]="field.key" [label]="field.label"
         [xAlignment]="field.xAlignment" [layoutType]="layoutType" [visible]="field.visible">
@@ -91,9 +93,10 @@
         [readonly]="field.readonly" [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [regex]="field.regex" [regexError]="field.regexError"
         [showTitle]="showTitle" [layoutType]="layoutType" [minFractionDigits]="field.digitsNumberAfterDecimalPoint"
-        (valueChange)="onValueChanged($event, field)" (formValidationChange)="onFormValidationChanged($event)"
+        (valueChange)="onValueChanged($event, field)" 
         [isActive]="isActive" [visible]="field.visible">
     </pep-textbox>
+    <!-- (formValidationChange)="onFormValidationChanged($event)" -->
 
     <pep-link *ngSwitchCase="'link'" [form]="form" [key]="field.key" [value]="field.value"
         [label]="field.label" [placeholder]="field.placeholder"
@@ -101,8 +104,9 @@
         [maxFieldCharacters]="field.maxFieldCharacters" [textColor]="field.textColor" [xAlignment]="field.xAlignment"
         [rowSpan]="field.rowSpan" [showTitle]="showTitle" [layoutType]="layoutType"
         (valueChange)="onValueChanged($event, field)" [isActive]="isActive" [visible]="field.visible"
-        (formValidationChange)="onFormValidationChanged($event)" (elementClick)="onClick($event)">
+        (elementClick)="onClick($event)">
     </pep-link>
+    <!-- (formValidationChange)="onFormValidationChanged($event)"  -->
 
     <pep-indicators *ngSwitchCase="'indicators'" [key]="field.key" [value]="field.value" [layoutType]="layoutType">
     </pep-indicators>

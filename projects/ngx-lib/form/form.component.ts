@@ -745,7 +745,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
     }
 
     getFieldFormattedValue(field: PepFieldBase): string {
-        let fieldFormattedValue = field.formattedValue;
+        let fieldFormattedValue = field.formattedValue || field.value;
 
         // Fix for the custom check box component.
         if (field.controlType === 'checkbox') {
@@ -1465,7 +1465,7 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
         );
     }
 
-    onFormValidationChanged(formValidationChange: any): void {
+    private onFormValidationChanged(formValidationChange: any): void {
         this.formValidationChange.emit(formValidationChange);
     }
 

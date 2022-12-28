@@ -13,7 +13,8 @@
                     title="{{ value }}" [value]="value"
                     maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
                     [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
-                    [formControlName]="key" [style.height]="fieldHeight">
+                    [formControlName]="key" [style.height]="fieldHeight"
+                    (keyup)="onKeyup($event)">
                 </textarea>
                 <div *ngIf="readonly" class="body-sm disable-text-div" title="{{ value }}"
                     [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
@@ -95,7 +96,13 @@
 <ng-template #textAreaDialogTemplate>
     <pep-dialog class="dialog-textarea-container" [title]="label" (close)="closeDialog($event)">
         <ng-container pep-dialog-content>
-            <textarea #dialogTextarea [readonly]="disabled || readonly">{{ value }}</textarea>
+            <!-- <textarea #dialogTextarea [readonly]="disabled || readonly">{{ value }}</textarea> -->
+            <textarea #dialogTextarea [readonly]="disabled || readonly" class="body-sm" matInput
+                title="{{ value }}" [value]="value"
+                maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
+                [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'right' ? 'right' : 'left' }"
+                [formControlName]="key" >
+            </textarea>
         </ng-container>
         <div pep-dialog-actions class="pep-spacing-element-negative">
             <ng-container *ngIf="disabled || readonly; then notEditableBlock; else editableBlock">

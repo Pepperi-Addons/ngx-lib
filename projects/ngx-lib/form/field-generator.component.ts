@@ -44,8 +44,8 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
     @Input() checkForChanges: any = null;
     @Output()
     valueChange: EventEmitter<IPepFieldValueChangeEvent> = new EventEmitter<IPepFieldValueChangeEvent>();
-    @Output()
-    formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    // @Output()
+    // formValidationChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
@@ -116,9 +116,9 @@ export class PepFieldGeneratorComponent implements OnChanges, OnDestroy {
         this.internalFormFieldChange.emit(internalFormFieldChange);
     }
 
-    onFormValidationChanged(formValidationChange: any): void {
-        this.formValidationChange.emit(formValidationChange);
-    }
+    // onFormValidationChanged(formValidationChange: any): void {
+    //     this.formValidationChange.emit(formValidationChange);
+    // }
 
     onClick(fieldClicked: any): void {
         this.elementClick.emit(fieldClicked);
