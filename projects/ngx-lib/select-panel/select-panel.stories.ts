@@ -70,12 +70,7 @@ const Template: Story<PepSelectPanelComponent> = (args: PepSelectPanelComponent)
     props: {
         ...args,
         valueChange: action('valueChange'),
-    },
-    // template: `
-    //     <pep-select [value]="value" [label]="label" [type]="type" [mandatory]="mandatory" [disabled]="disabled"
-    //     [xAlignment]="xAlignment" [options]="options" [showTitle]="showTitle"
-    //     (valueChange)="valueChange($event)"></pep-select>
-    // `,
+    }
 });
 
 // Basic story
@@ -94,24 +89,3 @@ Basic.args = {
         { key: 'white', value: 'White' }
     ],
 };
-
-   // Other stories could be added here as well, all you have to do is export them along!
-    export const Mandatory: Story<PepSelectComponent> = () => ({
-        component: PepSelectComponent,
-   
-    });
-
-// export const Multi: Story<PepSelectComponent> = () => ({
-//     component: PepSelectComponent,
-//     props: {
-//         label: 'multi',
-//         value: text('value', 'test1'),
-//         options: [
-//             { key: 'test1', value: 'test1' },
-//             { key: 'test2', value: 'test2' },
-//         ],
-//     },
-//     template: `
-//         <pep-select [label]="label" type="multi" [value]="value" [options]="options"></pep-select>
-//     `,
-// });
