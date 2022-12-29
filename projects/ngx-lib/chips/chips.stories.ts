@@ -45,6 +45,18 @@ export default {
                 defaultValue: { summary: 'input' },
             },
         },
+        inline: {
+            description: 'Fill container height (catch 100% of available height)',
+        },
+        label:{
+            description: 'The text above the chips panel',
+        },
+        renderTitle: {
+            description: 'If false do not keep place for the lable (title)',
+        },
+        showTitle: {
+            description: 'show the label above the chips panel',
+        },
         orientation: {
             description: 'Chips layout orientation type',
             options: [
@@ -125,11 +137,20 @@ export default {
     parameters: {
         controls: {
             include: [
+                'label',
+                'classNames',
+                'value',
+                'xAlignment',
+                'mandatory',
+                'disabled',
+                'showTitle',
+                'renderTitle',
                 'chips',
                 'type',
                 "styleType",
                 'orientation',
-                'multiSelect',
+                'inline',
+                /*'multiSelect',*/
                 'placeholder',
                 "selected",                
                 'fieldClick',

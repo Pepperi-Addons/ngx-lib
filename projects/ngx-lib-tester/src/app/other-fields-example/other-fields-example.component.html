@@ -57,15 +57,16 @@
                     </div>
                 </div>
 
-                <div class="child3 child-container">
+                <!-- <div class="child3 child-container" style="margin-top:1rem;">
                     <pep-chips #chipsComp [chips]="chips" (selectionChange)="onSelectionChange($event)" (fieldClick)="onChipClick($event)"></pep-chips>
+                  
+                </div> -->
+                <div class="child3 child-container" style="margin-top:1rem;">
+                    <pep-chips #chipsComp [type]="'select'" [label]="'Add chip with button'" [chips]="chips" (selectionChange)="onSelectionChange($event)" (fieldClick)="onChipClick($event)"></pep-chips>
                     <!-- <pep-button (click)="selectedChips()">Selected</pep-button> -->
                 </div>
-
-                <div class="child4 child-container">
-                    <!-- <pep-rich-html-textarea [key]="'richText2'" [label]="'richText2'" [value]="richTextValue" [rowSpan]="3"
-                        [maxFieldCharacters]="300" [xAlignment]="'right'" [inlineMode]="true">
-                    </pep-rich-html-textarea> -->
+                <div class="child4 child-container" style="margin-top:1rem; height:200px;">
+                    <pep-chips [disabled]="false" #chipsComp [inline]="true" [label]="'Add chip with input'" [mandatory]="true" [chips]="chips" (selectionChange)="onSelectionChange($event)" (fieldClick)="onChipClick($event)"></pep-chips>
                 </div>
             </div>
         </div>

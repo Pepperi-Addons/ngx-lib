@@ -1,5 +1,6 @@
 @use '../src/core/style/abstracts/mixins';
 @use '../src/core/style/abstracts/functions';
+@use '../src/core/style/abstracts/variables';
 
 @mixin pep-chips-states ($style: regular){       
     @include mixins.pep-state-default($style, null, true);
@@ -7,12 +8,12 @@
     &:hover {
         @include mixins.pep-state-hover($style, null, true);
     }     
-    &.mat-chip-selected {                   
-        @include mixins.pep-state-active($style, null, true);
-        @if $style != strong {
-            color:functions.get-pep-color(color-text, color-main) !important;   
-        } 
-    }
+    // &.mat-chip-selected {                   
+    //     @include mixins.pep-state-active($style, null, true);
+    //     @if $style != strong {
+    //         color:functions.get-pep-color(color-text, color-main) !important;   
+    //     } 
+    // }
     &:focus {                
         @include mixins.pep-state-focus($style, null, true);
        
@@ -27,6 +28,14 @@
 }
 
 .pep-chips-container {   
+    @include mixins.state-weak-default();
+
+    &.input-type-state{
+        &:hover {
+            @include mixins.state-weak-hover();
+        }
+    }
+
     ::ng-deep.mat-chip-list {
 
         &:focus-visible {

@@ -237,7 +237,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     sortBy = '';
     isUserSelected = false;
     checkForChanges: any = null;
-    calculatedObjectHeight: string = 'auto';
+    calculatedObjectHeight = 'auto';
 
     constructor(
         private hostElement: ElementRef,

@@ -54,7 +54,7 @@ export class OtherFieldsExampleComponent implements OnInit {
     chips: any[] = [
         {
             value: 'Chair',
-            removable: false
+            removable: true
         },
         {
             value: 'Table',
@@ -62,7 +62,7 @@ export class OtherFieldsExampleComponent implements OnInit {
         },
         {
             value: 'Bench',
-            selected: true,
+            selected: false,
             key: 'aaa'
         }
     ]
