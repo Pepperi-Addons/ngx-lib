@@ -6,9 +6,10 @@ import {
     EventEmitter,
     OnDestroy
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatChipInputEvent, } from '@angular/material/chips';
 import { TranslateService } from '@ngx-translate/core';
-import { PepStyleType } from '@pepperi-addons/ngx-lib';
+import { DEFAULT_HORIZONTAL_ALIGNMENT, PepHorizontalAlignment, PepLayoutType, PepStyleType } from '@pepperi-addons/ngx-lib';
 import { IPepChip, PepChipsOrientationType, PepChipsInputType, IPepChipSelection } from './chips.model';
 import { PepChipsService } from './chips.service';
 
@@ -25,6 +26,19 @@ export class PepChipsComponent implements OnInit, OnDestroy {
     *    
     * @memberof PepChipsComponent
     */
+
+    @Input() form: FormGroup = null;
+    @Input() layoutType: PepLayoutType = 'form';
+    @Input() inline = false;
+    @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
+    @Input() renderTitle = true;
+    @Input() showTitle = true; 
+    @Input() label = '';
+
+    @Input() mandatory = false;
+    @Input() disabled = false;
+    @Input() classNames = '';
+    
     @Input()
     set chips(chips: IPepChip[]) {
         this.chipsService.initData(chips);

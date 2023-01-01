@@ -2,19 +2,35 @@
 @use '../src/core/style/abstracts/mixins';
 @use '../src/core/style/abstracts/functions';
 
-.pep-chips-container {   
+.pep-chips-container {  
+    
+    border-radius: variables.$border-radius-md;
+    padding: variables.$spacing-sm; 
+    background-color: functions.get-pep-color(color-weak, color-tran-10);
+    display: flex;
+    flex-direction: column;
+   
+    max-height: 100%;
+    
+    &.need-gap{
+        gap: variables.$spacing-sm;
+    }
+    
     ::ng-deep.mat-chip-list {
         width: 100%;
+        overflow-y: auto;
+        height: calc(100% - #{variables.$lh-sm});
 
         .mat-chip-list-wrapper {
             gap: variables.$spacing-sm;
-            margin: variables.$spacing-sm;       
+            margin: 0;//variables.$spacing-sm;       
         
             .pep-chips {    
                 @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-xs);        
                 margin: 0;
-                padding-top: 0;
-                padding-bottom: 0;
+                padding-block: 0;
+                padding-inline-start: variables.$spacing-sm ;
+                padding-inline-end: variables.$spacing-xs;
                 height: variables.$lh-md;
                 min-height: unset;
                 z-index: variables.$z-index-lowest;
@@ -24,7 +40,9 @@
                 .mat-chip-remove {
                     height: unset;
                     width: unset;
-                    margin: 0;     
+                    margin: 0; 
+                    opacity: 1 !important;  
+                    margin-top: variables.$spacing-2xs;
 
                     .pep-button {
                         flex-shrink: 0;
@@ -39,24 +57,22 @@
                             font-size: variables.$fs-md;
                             margin: unset;                            
                         }
-                    }            
+                    } 
                 }
-            
-            }
 
-            .mat-chip-input {
-                @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
-                margin: 0;                
-            }
-
-            .mat-chip-input::placeholder {                
-                color: functions.get-pep-color(color-text, color-dimmed);
-            }
-
-            .chips-select {
-                @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
-                z-index: variables.$z-index-lowest;    
-                cursor: pointer;      
+                .noSelect {
+                    -webkit-tap-highlight-color: transparent;
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    -khtml-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                }
+                .noSelect:focus {
+                    outline: none !important;
+                }
+                
             }
         }
 
@@ -75,4 +91,39 @@
     
         
     } 
+
+    .chip-input{ 
+        background: transparent;
+        border: none;
+        outline: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        vertical-align: bottom;
+        text-align: inherit;
+        box-sizing: content-box;
+        font-size: variables.$fs-sm !important;
+        line-height: variables.$lh-sm !important;
+        max-height: variables.$lh-sm;
+    }
+
+    .mat-chip-input {
+        @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
+        margin: 0;                
+    }
+
+    .mat-chip-input::placeholder {                
+        color: functions.get-pep-color(color-text, color-dimmed);
+    }
+
+    .chips-select {
+        @include mixins.font(variables.$fs-xs, variables.$font-weight-normal, variables.$lh-md);
+        z-index: variables.$z-index-lowest;    
+        cursor: pointer;      
+    }
+
+    pep-button{
+        display: block !important;
+    }
 }
