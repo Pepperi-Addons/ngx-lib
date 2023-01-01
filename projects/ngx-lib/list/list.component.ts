@@ -413,13 +413,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             : PepListComponent.TOP_ITEMS_THUMBNAILS;
     }
 
-    // private disableScroll(disable: boolean) {
-    //     if (disable) {
-    //         this.renderer.addClass(this.getParentContainer(), 'lock-events');
-    //     } else {
-    //         this.renderer.removeClass(this.getParentContainer(), 'lock-events');
-    //     }
-    // }
+    private disableScroll(disable: boolean) {
+        if (disable) {
+            this.renderer.addClass(this.hostElement.nativeElement.parentElement, 'lock-events');
+        } else {
+            this.renderer.removeClass(this.hostElement.nativeElement.parentElement, 'lock-events');
+        }
+    }
 
     private toggleLoadingItemsFropApi(loadingItemsFromApi: boolean): void {
         this._loadingItemsFromApi = loadingItemsFromApi;
@@ -592,8 +592,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 if (content.children.length > 0) {
                     const rect = this.virtualScroller.getElementSize(content.children[0]);
                     this.calculatedObjectHeight = rect.height + 'px';
+                    console.log(`this.calculatedObjectHeight: ${this.calculatedObjectHeight}`);
                 }
             }
+            this.disableScroll(false);
         }, 0);
     }
 
@@ -1076,6 +1078,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         this.scrollToTop(false);
         this.cleanItems();
+        this.disableScroll(true);
 
         if (items) {
             if (this.pagerType === 'pages') {
@@ -1090,6 +1093,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     pageIndex: this.pageIndex,
                     pageSize: this.pageSize,
                 });
+
+                this.disableScroll(false);
             } else {
                 const numberOfStartItems = this.getNumberOfStartItems();
                 const event = {
@@ -1109,7 +1114,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.setLayout();
-        this.onListLoad();
+
+        // setTimeout(() => {
+            
+            this.onListLoad();
+        // }, 0);
     }
 
     updateItems(

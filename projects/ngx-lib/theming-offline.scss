@@ -1,0 +1,79 @@
+@charset 'UTF-8';
+@use '@angular/material' as mat;
+
+// 1. Configuration and helpers
+@use './src/core/style/abstracts/breakpoints';
+@use './src/core/style/abstracts/functions';
+@use './src/core/style/abstracts/variables';
+@use './src/core/style/abstracts/mixins';
+
+// 2. Vendors
+@use './src/core/style/vendors/normalize';
+
+// 3. Base stuff
+@use './src/core/style/base/helpers';
+@use './src/core/style/base/grids';
+@use './src/core/style/base/base';
+@use './src/core/style/base/typography';
+
+/*************************************************************************************************************/
+/* Here we add the system + component's themes (all the colors definitions that change by the theme) - Start */
+/*************************************************************************************************************/
+@use './src/core/style/components/general';
+@use './src/core/style/components/button';
+@use './src/core/style/components/checkbox';
+@use './src/core/style/components/radio-button' as radio;
+@use './src/core/style/components/input';
+
+// Use this import in a real project instead
+// @use '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
+@use './src/core/style/themes/default-theme.scss';
+
+// Override material font.
+$pep-typography: mat.define-typography-config(
+    $font-family: variables.$font-family-body
+);
+@include mat.core($pep-typography);
+
+$material-theme-for-pep: default-theme.$material-default-theme;
+
+@mixin material-theme($material-theme) {
+
+    @if ($material-theme == null) {
+        $material-theme: $material-theme-for-pep;
+    }
+
+    // Add angular-material-theme.
+    @include mat.all-component-themes($material-theme);
+
+    // // Add mat-datetimepicker-theme.
+    // @include mat-datetimepicker-theme($material-theme);
+
+    // Remove background
+    &:focus,
+    &:hover,
+    &:active {
+        background: unset;
+    }
+}
+
+@mixin pepperi-theme($material-theme: null) {
+    .pepperi-theme {
+        // Add material theme.
+        @include material-theme($material-theme);
+
+        @include base.declare-system-base-theme();
+        @include typography.declare-system-typography-theme();
+
+        // Add global components themes (from ./src/core/style).
+        @include button.pep-button-theme();
+        @include checkbox.pep-checkbox-theme();
+        @include general.pep-general-theme();
+        @include input.pep-input-theme();
+        @include radio.pep-radio-button-theme();
+    }
+}
+
+/*************************************************************************************************************/
+/* Here we add the system + component's themes (all the colors definitions that change by the theme) - End   */
+/*************************************************************************************************************/

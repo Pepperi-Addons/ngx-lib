@@ -4,6 +4,7 @@
     "assets": [
         "**/*.theme.scss",
         "./theming.scss",
+        "./theming-offline.scss",
         "./src/assets/**/*.*",
         "./src/core/style/**/*.*"
     ],
