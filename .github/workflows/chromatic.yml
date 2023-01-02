@@ -9,9 +9,9 @@ on:
     branches:
       - main
       - master
-    branches-ignore:
-      - "example" # 👈 Excludes the example branch
-      - "OptimizePepList"
+#    branches-ignore:
+#      - "example" # 👈 Excludes the example branch
+#      - "OptimizePepList"
       
 # Event for the workflow
 # on: pull_request
