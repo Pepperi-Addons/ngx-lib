@@ -589,6 +589,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         setTimeout(() => {
             if (this.virtualScroller) {
                 const content = this.virtualScroller.getContent();
+                console.log(`content.children.length: ${content.children.length}`);
+
                 if (content.children.length > 0) {
                     const rect = this.virtualScroller.getElementSize(content.children[0]);
                     this.calculatedObjectHeight = rect.height + 'px';
@@ -596,7 +598,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
             this.disableScroll(false);
-        }, 0);
+        }, 1000);
     }
 
     private initResizeData(): void {
