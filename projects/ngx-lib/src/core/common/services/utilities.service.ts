@@ -336,7 +336,7 @@ export class PepUtilitiesService {
         // If the decimal separator is ','
         if (this.getDecimalSeparator() === ',') {
             // In case that the value isn't string.
-            value = value.toString() || '';
+            value = value?.toString() || '';
 
             // If reverse change the number from '.' to ',' else do the opposite.
             value = reverse ? value.replace('.', ',') : value.replace(',', '.');
