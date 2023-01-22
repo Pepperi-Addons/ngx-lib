@@ -1,6 +1,6 @@
 import { Injectable, Injector, Optional, Type } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PepSessionService } from './session.service';
 import { PepFileService } from './file.service';
 import { PepHttpService } from '../../http/services/http.service';
@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { ITranslationResource } from 'ngx-translate-multi-http-loader';
 import { PepTranslateService } from './translate.service';
+import { connectRouter } from '@angular-architects/module-federation-tools';
 
 /*
     This service is the webapp api for addon usege.
@@ -23,6 +24,8 @@ export class PepAddonService {
     private readonly ADDONS_DICTIONARY_ASSETS_PATH_KEY = 'AddonsDictionaryAssetsPath';
     private readonly ADDON_API_RELATIVE_PATH = '/addons/api';
     private readonly ADDON_API_ASYNC_RELATIVE_PATH = `${this.ADDON_API_RELATIVE_PATH}/async`;
+
+    private static _customElementsMap: Map<string, any> = new Map();
 
     private get devServer() {
         return this.route ? this.route.snapshot.queryParamMap.get('devServer') === 'true' : false;
@@ -161,9 +164,7 @@ export class PepAddonService {
                 }
             }))
         })
-        
     }
-
 
     // TODO: need to chek this if the loader is working.
     fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
@@ -215,6 +216,20 @@ export class PepAddonService {
     defineCustomElement(elementName: string, component: Type<any>, injector: Injector) {
         if (!customElements.get(elementName)) {  
             customElements.define(elementName, createCustomElement(component, {injector: injector}));
+            
+            // Set the elementName in the _customElementsMap (Fix internal routing bug).
+            PepAddonService._customElementsMap.set(elementName, {injector: injector});
+        }
+    }
+
+    // Fix internal routing bug.
+    connectInternalRouter(elementName: string) {
+        const customElementObject = PepAddonService._customElementsMap.get(elementName);
+        const router = customElementObject?.injector.get(Router);
+
+        if (router) {
+            const useHash = location.href.includes('#');
+            connectRouter(router, useHash);
         }
     }
 

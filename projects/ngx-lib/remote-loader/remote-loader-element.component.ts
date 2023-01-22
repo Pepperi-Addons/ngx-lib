@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, Input, OnChanges, Optional, Output, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Optional, Output, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 import { PepAddonService } from '@pepperi-addons/ngx-lib';
@@ -17,7 +17,7 @@ import { PepRemoteLoaderService } from './remote-loader.service';
         }
     `],
 })
-export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChanges {
+export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChanges, OnDestroy {
     @Input() options: PepRemoteLoaderOptions;
     @Input() props: { [prop: string]: unknown };
     @Input() events: { [event: string]: (event: Event) => void };
@@ -25,6 +25,8 @@ export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChan
     @Output() load: EventEmitter<any> =  new EventEmitter();
 
     element: HTMLElement = null;
+
+    private _elementName = '';
 
     constructor(
         private renderer: Renderer2,
@@ -34,12 +36,6 @@ export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChan
         @Optional() private route: ActivatedRoute
     ) { 
 
-    }
-
-    ngOnChanges(): void {
-        if (!this.element) return;
-
-        this.populateProps();
     }
 
     private populateProps() {
@@ -85,6 +81,16 @@ export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChan
         }
     }
 
+    ngOnChanges(): void {
+        if (!this.element) return;
+
+        this.populateProps();
+    }
+
+    ngOnDestroy() {
+        // 
+    }
+
     async ngAfterContentInit() {
         try {
             const t0 = performance.now();
@@ -107,8 +113,9 @@ export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChan
                 }
     
                 await loadRemoteModule(this.options);
-    
-                this.element = this.renderer.createElement(this.options.elementName);
+                
+                this._elementName = this.options.elementName;
+                this.element = this.renderer.createElement(this._elementName);
                 this.populateProps();
                 this.setupEvents();
     
@@ -117,6 +124,9 @@ export class PepRemoteLoaderElementComponent implements AfterContentInit, OnChan
                 const t1 = performance.now();
                 console.log('remote module wc load performance: ' + (t1-t0)/1000);
     
+                // Fix internal routing bug.
+                this.pepAddonService.connectInternalRouter(this._elementName);
+
                 this.load.emit();
             }
         }

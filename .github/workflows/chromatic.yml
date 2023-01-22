@@ -6,12 +6,15 @@ name: 'Chromatic'
 # 👇 Workflow event to trigger execution
 on:
   push:
-    branches-ignore:
-      - "example" # 👈 Excludes the example branch
-      - "OptimizePepList"
+    branches:
+      - main
+      - master
+#    branches-ignore:
+#      - "example" # 👈 Excludes the example branch
+#      - "OptimizePepList"
       
 # Event for the workflow
-on: pull_request
+# on: pull_request
 
 # List of jobs
 jobs:

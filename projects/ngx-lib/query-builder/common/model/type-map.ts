@@ -13,7 +13,7 @@ export class PepQueryBuilderTypeMap {
         this.map.set('Bool', 'boolean');
         this.map.set('JsonBool', 'boolean');
         this.map.set('Integer', 'int');
-        this.map.set('Double', 'int');
+        this.map.set('Double', 'real');
         this.map.set('String', 'text');
         this.map.set('Guid', 'text');
         this.map.set('Date', 'date');

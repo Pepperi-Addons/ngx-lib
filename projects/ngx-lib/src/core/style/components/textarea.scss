@@ -31,11 +31,13 @@
                     vertical-align: unset;
                     resize: none;
                     // @include calc(width, '100% + 3rem');
-                    width: calc(100% + 3rem);
+                    // width: calc(100% + 3rem);
+                    width: 100%;
                     max-width: unset;
                     overflow-y: scroll;
                     // @include mixins.box-sizing(border-box);
-                    box-sizing: border-box;
+                    //box-sizing: border-box;
+                    box-sizing: content-box;
                 }
             }
 
