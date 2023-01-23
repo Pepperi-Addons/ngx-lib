@@ -11,11 +11,11 @@
                 maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
                 [placeholder]="hasParent && !disabled ? placeholder : ''"
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
-                title="{{ formattedValue }}" [type]="type" [value]="displayValue$ | async"
+                title="{{ formattedValue }}" [type]="type"  [value]="displayValue$ | async"
                 (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event);" (blur)="onBlur($event)"
                 (change)="onChange($event)" (keyup)="onKeyup($event)"
                 [ngClass]="{'disable-hidden': disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')}" />
-
+<!-- [attr.inputmode]="inputMode" -->
             <span
                 *ngIf="disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')"
                 class="dis-grid">

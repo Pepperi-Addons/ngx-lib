@@ -12,6 +12,7 @@ import {
     OnDestroy,
     ChangeDetectorRef,
     HostBinding,
+    AfterViewInit,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -54,8 +55,7 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
     styleUrls: ['./textbox.component.scss', './textbox.component.theme.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
-
+export class PepTextboxComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     @HostBinding('attr.data-qa') dataQa = '';
 
     private _key = '';
@@ -189,11 +189,14 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         if (this.value) {
             this.setFormattedValue(this.value);
             this.changeDisplayValue();
+            this.setInputModeAttribute();
         }
     }
     get type(): PepTextboxFieldType {
         return this._type;
     }
+
+    private inputMode = 'text';
 
     /**
      * If the textbox is mandatory
@@ -320,6 +323,29 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         this.isInFocus = false;
     }
 
+    private setInputModeAttribute() {
+        
+        if (this.type === 'currency' || this.type === 'percentage' || this.type === 'real') {
+            this.inputMode = 'decimal';
+        } else if (this.type === 'int') {
+            this.inputMode = 'numeric';
+        } else if (this.type === 'phone') {
+            this.inputMode = 'tel';
+        } else if (this.type === 'email') {
+            this.inputMode = 'email';
+        } else {
+            this.inputMode = 'text';
+        }
+
+        if (this.input) {
+            this.renderer.setAttribute(
+                this.input.nativeElement,
+                'inputmode',
+                this.inputMode 
+            );
+        }
+    }
+
     private notifyDisplayValueChange(value: string) {
         this._displayValueSubject.next(value);
     }
@@ -438,6 +464,10 @@ export class PepTextboxComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.updateFormFieldValue(true);
+    }
+    
+    ngAfterViewInit(): void {
+        this.setInputModeAttribute();
     }
 
     ngOnChanges(changes: any): void {
