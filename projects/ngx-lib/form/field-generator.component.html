@@ -14,7 +14,7 @@
     </pep-attachment>
 
     <pep-checkbox *ngSwitchCase="'checkbox'" [form]="form" [key]="field.key"
-        [value]="(field.value | lowercase) == 'true' || field.value == '1' ? true : false" [label]="field.label"
+        [value]="(field.value?.toString() | lowercase) == 'true' || field.value == '1' ? true : false" [label]="field.label"
         [type]="field.type" [mandatory]="field.mandatory" [disabled]="field.disabled" [readonly]="field.readonly"
         [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [additionalValue]="field.additionalValue"
         [showTitle]="showTitle" [layoutType]="layoutType" [visible]="field.visible"
