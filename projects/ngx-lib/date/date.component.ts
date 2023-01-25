@@ -229,6 +229,7 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         // this.adapter.setLocale(culture);
 
         this.setDateModel();
+        this.updateFormFieldValue();
     }
 
     ngOnChanges(changes: any): void {
@@ -285,6 +286,15 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
         }, 0);
     }
 
+    private updateFormFieldValue() {
+        this.customizationService.updateFormFieldValue(
+            this.form,
+            this.key,
+            // this.formattedValue
+            this.value
+        );
+    }
+
     onDateChange(event: MatDatetimepickerInputEvent<Moment>): void {
         let value = '';
         if (event.value != null) {
@@ -296,13 +306,9 @@ export class PepDateComponent implements OnInit, OnChanges, OnDestroy {
             this.setFormattedValueFromModel();
         }
 
-        this.customizationService.updateFormFieldValue(
-            this.form,
-            this.key,
-            // this.formattedValue
-            value
-        );
-
+        this._value = value;
+        this.updateFormFieldValue();
+        
         this.valueChange.emit(value);
 
         setTimeout(() => {

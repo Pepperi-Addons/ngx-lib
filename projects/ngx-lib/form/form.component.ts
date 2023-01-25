@@ -758,6 +758,18 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
                 fieldFormattedValue === '0' ? '' : fieldFormattedValue;
         }
 
+        // Fix for the custom date component.
+        if (field.controlType === 'date' || field.controlType === 'datetime') {
+            if(fieldFormattedValue === '' ||
+                fieldFormattedValue.indexOf('1900-1-1') >= 0 ||
+                fieldFormattedValue.indexOf('1900-01-01') >= 0 ||
+                fieldFormattedValue.indexOf('1970-1-1') >= 0 ||
+                fieldFormattedValue.indexOf('1970-01-01') >= 0
+            ) {
+                fieldFormattedValue = '';
+            }
+        }
+
         return fieldFormattedValue;
     }
 
