@@ -54,7 +54,7 @@
             <fieldset class="table-row-fieldset" [ngStyle]="{ 'background-color': item?.BackgroundColor }">
                 <mat-checkbox *ngIf="selectionTypeForActions == 'multi'" type="checkbox"
                     class="pull-left flip row-selection" [ngClass]="{ 'md': tableViewType === 'compact' }"
-                    [disabled]="item | isItemDisabled: lockItemInnerEvents : printMode" [ngStyle]="{
+                    [disabled]="getisItemDisabled(item)" [ngStyle]="{
                             visibility: !deviceHasMouse ||
                             item?.UID + SEPARATOR + item?.Type === hoveredItemId || isAllSelected || selectedItems.size > 0 ? 'visible' : 'hidden'
                         }" [checked]="getIsItemSelected(item)"
@@ -62,7 +62,7 @@
                 </mat-checkbox>
                 <mat-radio-button *ngIf="selectionTypeForActions == 'single'" name="selection"
                     class="pull-left flip row-selection pep-radio-button" [ngClass]="{ 'md': tableViewType === 'compact' }"
-                    [disabled]="item | isItemDisabled: lockItemInnerEvents : printMode"
+                    [disabled]="getisItemDisabled(item)"
                     [checked]="getIsItemSelected(item)"
                     (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
                 </mat-radio-button>
@@ -89,7 +89,7 @@
                 }" class="pull-left flip"
             [ngStyle]="{ height: calculatedObjectHeight, visibility: !loadingItemsFromApi || item ? 'visible' : 'hidden' }">
             <mat-checkbox *ngIf="showCardSelection" class="pull-left flip card-selection"
-                [disabled]="item | isItemDisabled: lockItemInnerEvents : printMode" [checked]="getIsItemSelected(item)"
+                [disabled]="getisItemDisabled(item)" [checked]="getIsItemSelected(item)"
                 (change)="selectItemForActions($event, item?.UID, item?.IsSelectableForActions, item?.Type)">
             </mat-checkbox>
             <pep-form [layoutType]="'card'" [firstFieldAsLink]="firstFieldAsLink" [checkForChanges]="checkForChanges"

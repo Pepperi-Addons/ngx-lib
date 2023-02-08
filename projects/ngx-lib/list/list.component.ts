@@ -811,11 +811,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.hostElement.nativeElement.updateItem = this.updateItem.bind(this);
     }
 
-    // getIsDisabled(item: ObjectsDataRow): boolean {
-    //     return (
-    //         this.lockItemInnerEvents || (item && !item.IsSelectableForActions)
-    //     );
-    // }
+    // For refresh the UI when change the is selectable for action on item.
+    getisItemDisabled(item: ObjectsDataRow): boolean {
+        return this.printMode || this.lockItemInnerEvents || (item && !item.IsSelectableForActions)
+    }
 
     getIsAllSelectedForActions(): boolean {
         let res = false;
