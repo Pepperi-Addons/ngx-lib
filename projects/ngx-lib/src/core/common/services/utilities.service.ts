@@ -180,7 +180,7 @@ export class PepUtilitiesService {
         minFractionDigits = coerceNumberProperty(minFractionDigits, null);
         maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
 
-        value = this.cutValueByFractionDigits(value?.toString(), maxFractionDigits);
+        value = this.cutValueByFractionDigits(value?.toString(), Math.max(minFractionDigits, maxFractionDigits));
         const number = this.prepareNumberToFormat(value);
 
         if (number === 0) {
@@ -206,7 +206,7 @@ export class PepUtilitiesService {
         // if (value.length > 0 && value.indexOf(this.getDecimalSeparator()) === value.length -1) {
         //     res = value;
         // } else {
-            value = this.cutValueByFractionDigits(value?.toString(), maxFractionDigits);
+            value = this.cutValueByFractionDigits(value?.toString(), Math.max(minFractionDigits, maxFractionDigits));
             const number = this.prepareNumberToFormat(value);
             const styleOptions = {
                 // style: 'currency',
@@ -239,7 +239,7 @@ export class PepUtilitiesService {
         maxFractionDigits = coerceNumberProperty(maxFractionDigits, null);
         // console.log('formatDecimal minFractionDigits value is', maxFractionDigits);
 
-        value = this.cutValueByFractionDigits(value?.toString(), maxFractionDigits);
+        value = this.cutValueByFractionDigits(value?.toString(), Math.max(minFractionDigits, maxFractionDigits));
         const number = this.prepareNumberToFormat(value);
         
         // console.log('number value is', number);
