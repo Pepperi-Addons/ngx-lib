@@ -6,6 +6,7 @@
 :host {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
 }
 
 .select-panel {
@@ -16,7 +17,7 @@
     border-radius: variables.$border-radius-md;
     display: inline-block;
     white-space: nowrap;
-    
+
     .optCont {
         height: 2rem;
         width: 100%;
@@ -28,15 +29,24 @@
         }
 
         ::ng-deep{
+
             .mat-radio-button{
                 display: block !important;
+
+                .mat-radio-label-content{
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
 
                 .mat-radio-ripple{
                     position: unset !important;
                 }
             }
             .mat-checkbox-layout {
-                display: flex !important;
+               text-overflow: ellipsis;
+               overflow: hidden;
+               white-space: nowrap;
             }
         }
     }
