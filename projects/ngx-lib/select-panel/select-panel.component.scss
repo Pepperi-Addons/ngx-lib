@@ -6,6 +6,7 @@
 :host {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
 }
 
 .select-panel {
@@ -14,10 +15,12 @@
     font-size: variables.$fs-sm;
     line-height: variables.$lh-md;
     border-radius: variables.$border-radius-md;
-    
+    display: inline-block;
+    white-space: nowrap;
+
     .optCont {
-        display: flex;
         height: 2rem;
+        width: 100%;
         line-height: 2rem;
         align-items: center;
         
@@ -25,8 +28,26 @@
             height: variables.$lh-md;
         }
 
-        ::ng-deep.mat-checkbox-layout {
-            display: flex !important;
+        ::ng-deep{
+
+            .mat-radio-button{
+                display: block !important;
+
+                .mat-radio-label-content{
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+
+                .mat-radio-ripple{
+                    position: unset !important;
+                }
+            }
+            .mat-checkbox-layout {
+               text-overflow: ellipsis;
+               overflow: hidden;
+               white-space: nowrap;
+            }
         }
     }
 
