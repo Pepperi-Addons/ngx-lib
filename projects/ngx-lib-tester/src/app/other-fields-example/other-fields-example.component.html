@@ -16,6 +16,8 @@
         <div class="main-content ">
             <div class="content spacing-top">
                 <div class="child1 child-container">
+                    <div>
+                   
                     <pep-select-panel 
                         [label]="'Single select'" 
                         [isMultiSelect]="true"
@@ -30,11 +32,30 @@
                         [isMultiSelect]="false"
                         [disabled]="false"
                         [numOfCol]="numOfSelectionColumn"
-                        [value]="'val1;val2'"
-                        [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }, { "key": "val4", "value": "Option 4" }]'
+                        [value]="'val1'"
+                        [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1" }, { "key": "val2", "value": "Option 2" }, { "key": "val3", "value": "Option 3" }]'
                         (valueChange)="onValueChanged($event)">
                     </pep-select-panel>
-                    <pep-group-buttons [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">
+                    <pep-select-panel 
+                    [label]="'Single select'" 
+                    [isMultiSelect]="false"
+                    [disabled]="false"
+                    [numOfCol]="numOfSelectionColumn"
+                    [value]="'val1'"
+                    [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1 Option 1" }, { "key": "val2", "value": "Option 2 avner" }]'
+                    (valueChange)="onValueChanged($event)">
+                </pep-select-panel>
+                    <pep-select-panel 
+                        [label]="'Single select'" 
+                        [isMultiSelect]="false"
+                        [disabled]="false"
+                        [numOfCol]="numOfSelectionColumn"
+                        [value]="'val1'"
+                        [options]='[{ "key": "val0", "value": "Option 0" },{ "key": "val1", "value": "Option 1" }]'
+                        (valueChange)="onValueChanged($event)">
+                    </pep-select-panel>
+                </div>
+                    <pep-group-buttons [selectedButtonKey]="numOfSelectionColumn" [buttons]="numOfColumn" styleType="regular" [viewType]="'split'">
                     </pep-group-buttons>
 
                     <!-- <pep-group-buttons-settings 

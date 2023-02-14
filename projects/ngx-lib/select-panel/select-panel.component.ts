@@ -109,7 +109,7 @@ export class PepSelectPanelComponent implements OnDestroy {
     }
 
     setNumOfColumns(){
-        this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', ('auto '+this._numOfCol.toString()));
+        this.renderer.setStyle(this.selectPanel.nativeElement, 'columns', this._numOfCol.toString());
     }
 
     initOptionsMap(): void {
