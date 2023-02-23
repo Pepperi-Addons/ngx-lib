@@ -14,6 +14,7 @@ import { OtherFieldsExampleComponent } from './other-fields-example/other-fields
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
+import { KofExampleComponent } from './kof-example/kof-example.component';
 import { MaterialModule } from './modules/material.module';
 import {
     PepAddonService,
@@ -182,7 +183,8 @@ const pepperiComponentsModules = [
         OtherFieldsExampleComponent,
         InlineListExampleComponent,
         ListExampleComponent,
-        TopBarExampleComponent
+        TopBarExampleComponent,
+        KofExampleComponent
     ],
     imports: [
         CommonModule,

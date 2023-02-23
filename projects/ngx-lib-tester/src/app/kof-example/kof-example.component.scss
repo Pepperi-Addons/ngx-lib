@@ -1,0 +1,422 @@
+@use "../../../../ngx-lib/src/core/style/abstracts/functions";
+@use "../../../../ngx-lib/src/core/style/abstracts/variables";
+@use "../../../../ngx-lib/src/core/style/abstracts/mixins";
+
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code&display=swap");
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    padding: 0;
+}
+@mixin code-font {
+    font-family: "Fira Code", monospace;
+    letter-spacing: -0.0125em;
+    font-size: 90%;
+    padding: 0.25em 0.4em;
+    background: functions.get-pep-color(color-user-primary, color-tran-50);
+    border-radius: variables.$border-radius-md;
+    width: fit-content;
+}
+code {
+    @include code-font();
+    margin-bottom: 1rem;
+}
+@mixin scribble-font {
+    font-family: "Caveat", cursive;
+}
+em {
+    font-style: normal;
+    @include scribble-font();
+    font-size: 125%;
+}
+@mixin center-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.this-layout {
+    height: 100%;
+    overflow: auto !important;
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        border-radius: variables.$border-radius-md;
+        margin-block: 1rem;
+    }
+}
+.set-grid {
+    display: flex;
+    flex-direction: column;
+    --set-grid-bg: rgb(230, 230, 230);
+    --set-grid-lines: rgb(240, 197, 209);
+    background-color: var(--set-grid-bg);
+    opacity: 0.8;
+    background-image: linear-gradient(
+            var(--set-grid-lines) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to right,
+            var(--set-grid-lines) 1px,
+            var(--set-grid-bg) 1px
+        );
+    background-size: 1rem 1rem;
+    border-radius: variables.$border-radius-md;
+    padding: 1rem;
+    @media (max-width: variables.$screen-max-size-xs) {
+        border-radius: unset;
+    }
+    h1,
+    h2,
+    p {
+        margin-bottom: 0.25rem;
+    }
+}
+.side-by-side {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+    gap: 0.5rem;
+}
+.side-grid {
+    display: flex;
+    flex-direction: row;
+    gap: var(--pep-spacing-sm);
+}
+.flex-wrap {
+    flex-wrap: wrap;
+}
+.big-gap {
+    gap: var(--pep-spacing-lg);
+}
+.side-grid-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+@mixin this-grid() {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    gap: 1rem;
+}
+.that-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+}
+@mixin before-text() {
+    font-size: 0.6em;
+    padding-inline-start: 1em;
+    display: block;
+    padding: 0.4em 0.8em;
+    background-color: functions.get-pep-color(
+        color-system-primary-invert,
+        color-tran-80
+    );
+}
+@mixin color-single($color-name, $color-value) {
+    background: functions.get-pep-color($color-name, $color-value);
+    &:before {
+        content: "#{$color-value}";
+        @include before-text();
+    }
+}
+@mixin color-grid($color-name) {
+    @include this-grid();
+    div {
+        overflow: hidden;
+        height: 4rem;
+        border-radius: variables.$border-radius-md;
+    }
+    @for $i from 0 through 9 {
+        $tran: 0 + $i;
+        .t#{$i}0 {
+            background: functions.get-pep-color(
+                $color-name,
+                color-tran- + $tran + 0
+            );
+            &:before {
+                content: "color-tran-#{$tran}0";
+                @include before-text();
+            }
+        }
+    }
+    .flat-l-20 {
+        @include color-single($color-name, color-flat-l-20);
+    }
+    .flat-l-10 {
+        @include color-single($color-name, color-flat-l-10);
+    }
+    .base {
+        @include color-single($color-name, color-base);
+    }
+    @for $i from 1 through 4 {
+        $flat: 0 + $i;
+        .flat-r-#{$i}0 {
+            background: functions.get-pep-color(
+                $color-name,
+                color-flat-r- + $flat + 0
+            );
+            &:before {
+                content: "color-flat-r-#{$flat}0";
+                @include before-text();
+            }
+        }
+    }
+}
+.color-user-primary-grid {
+    @include color-grid(color-user-primary);
+}
+.color-system-primary-invert-grid {
+    @include color-grid(color-system-primary-invert);
+}
+.color-system-primary-grid {
+    @include color-grid(color-system-primary);
+}
+.color-system-success-grid {
+    @include color-grid(color-system-success);
+}
+.color-system-caution-grid {
+    @include color-grid(color-system-caution);
+}
+.color-user-secondary-grid {
+    @include color-grid(color-user-secondary);
+}
+.color-weak-grid {
+    @include color-grid(color-weak);
+}
+.color-regular-grid {
+    @include color-grid(color-regular);
+}
+.color-strong-grid {
+    @include color-grid(color-strong);
+}
+.color-top-header-grid {
+    @include color-grid(color-top-header);
+}
+.color-qs-grid {
+    @include color-grid(color-qs);
+}
+
+//* Text Colors
+
+.color-text-grid {
+    @include color-grid(color-text);
+}
+.color-text-color-main {
+    @include color-single(color-text, color-main);
+}
+.color-text-color-dimmed {
+    @include color-single(color-text, color-dimmed);
+}
+.color-text-color-disabled {
+    @include color-single(color-text, color-disabled);
+}
+.color-text-color-invert {
+    @include color-single(color-text, color-invert);
+}
+.color-text-color-link {
+    @include color-single(color-text, color-link);
+}
+.color-text-color-link-highlight {
+    @include color-single(color-text, color-link-highlight);
+}
+.color-text-color-link-focus {
+    @include color-single(color-text, color-link-focus);
+}
+.color-text-color-success {
+    @include color-single(color-text, color-success);
+}
+.color-text-color-caution {
+    @include color-single(color-text, color-caution);
+}
+
+hr {
+    width: 100%;
+    height: 1px;
+    border: none;
+    background-color: functions.get-pep-color(
+        color-system-primary,
+        color-tran-70
+    );
+    margin-block: 1rem;
+}
+
+.shadow-grid {
+    @include this-grid();
+    div {
+        height: 4rem;
+        border-radius: variables.$border-radius-md;
+        background-color: functions.get-pep-color(
+            color-system-primary,
+            color-flat-r-40
+        );
+        p {
+            padding: 0.5rem;
+        }
+    }
+}
+#shadows {
+    h2 {
+        margin-block: 0.5rem;
+        &:first-child {
+            margin-block-start: 0;
+        }
+    }
+}
+.rotate3d {
+    transform: rotate3d(50, 50, 50, 15deg);
+}
+.size-it {
+    height: 4rem;
+    width: 100%;
+}
+.state-is-weak {
+    @include mixins.pep-button-states;
+}
+.state-is-regular {
+    @include mixins.pep-button-states(regular);
+}
+.state-is-strong {
+    @include mixins.pep-button-states(strong);
+}
+.round-it {
+    background-color: functions.get-pep-color(color-system-primary, color-base);
+    @include center-center;
+}
+
+@mixin size-box($size-of-box) {
+    @include center-center;
+    height: $size-of-box;
+    width: $size-of-box;
+    min-width: $size-of-box;
+    border-radius: variables.$border-radius-sm;
+    background-color: functions.get-pep-color(color-system-primary, color-base);
+}
+
+.size-of-box-2xs {
+    @include size-box(variables.$spacing-2xs);
+}
+.size-of-box-xs {
+    @include size-box(variables.$spacing-xs);
+}
+.size-of-box-sm {
+    @include size-box(variables.$spacing-sm);
+}
+.size-of-box-md {
+    @include size-box(variables.$spacing-md);
+}
+.size-of-box-lg {
+    @include size-box(variables.$spacing-lg);
+}
+.size-of-box-xl {
+    @include size-box(variables.$spacing-xl);
+}
+.size-of-box-xl2 {
+    @include size-box(variables.$spacing-2xl);
+}
+.size-of-box-xl3 {
+    @include size-box(variables.$spacing-3xl);
+}
+.size-of-box-xl4 {
+    @include size-box(variables.$spacing-4xl);
+}
+.size-of-box-xl5 {
+    @include size-box(variables.$spacing-5xl);
+}
+.size-of-box-xl6 {
+    @include size-box(variables.$spacing-6xl);
+}
+.size-of-box-xl7 {
+    @include size-box(variables.$spacing-7xl);
+}
+.size-of-box-xl8 {
+    @include size-box(variables.$spacing-8xl);
+}
+.size-of-box-xl9 {
+    @include size-box(variables.$spacing-9xl);
+}
+#spacing {
+    p + div {
+        margin-top: variables.$spacing-xs;
+    }
+}
+
+$breakpointsss: (
+    2xs: variables.$screen-max-size-2xs,
+    xs: variables.$screen-max-size-xs,
+    sm: variables.$screen-max-size-sm,
+    md: variables.$screen-max-size-md,
+    lg: variables.$screen-max-size-lg,
+    xl: variables.$screen-max-size-xl,
+);
+
+@mixin this-screen-size($size, $color) {
+    @media (max-width: map-get($breakpointsss, $size)) {
+        background-color: $color;
+        &:before {
+            @include code-font();
+            content: "$screen-max-size-#{$size}";
+        }
+    }
+}
+.this-is-screen-size {
+    overflow: hidden;
+    border-radius: variables.$border-radius-md;
+    background-color: lightgreen;
+    @include center-center();
+    &:before {
+        @include scribble-font();
+        content: "Bigger then $screen-max-size-xl (5000px)";
+    }
+    @include this-screen-size(lg, plum);
+    @include this-screen-size(md, burlywood);
+    @include this-screen-size(sm, royalblue);
+    @include this-screen-size(xs, rosybrown);
+    @include this-screen-size(2xs, salmon);
+}
+
+.z-grid {
+    div {
+        width: 100%;
+        height: 100%;
+        background-color: cornsilk;
+        border-radius: variables.$border-radius-lg;
+        @include center-center();
+        font-size: variables.$fs-xl;
+        code {
+            margin-bottom: unset;
+        }
+    }
+    display: grid;
+    grid-template-columns: repeat(6, minmax(2rem, 1fr));
+    grid-template-rows: repeat(9, 2rem);
+    &__1 {
+        z-index: variables.$z-index-high;
+        grid-area: 1/1/4/4;
+        box-shadow: variables.$shadow-lg-hard;
+    }
+    &__2 {
+        z-index: variables.$z-index-medium;
+        grid-area: 3/2/6/5;
+        box-shadow: variables.$shadow-md-hard;
+    }
+    &__3 {
+        z-index: variables.$z-index-low;
+        grid-area: 5 / 3 / 8 / 6;
+        box-shadow: variables.$shadow-sm-hard;
+    }
+    &__4 {
+        z-index: variables.$z-index-lowest;
+        grid-area: 7 / 4 / 10 / 7;
+        box-shadow: variables.$shadow-xs-hard;
+    }
+}

@@ -203,6 +203,7 @@
 
 @mixin font-body($fs: variables.$fs-sm, $lh: variables.$lh-sm) {
     font-family: variables.$font-family-body !important;
+    font-weight: variables.$font-weight-normal;
 
     @include font-size($fs);
     @include line-height($lh);
@@ -282,7 +283,7 @@
     $color-high-opacity: null;
 
     @if ($hex-color == null) {
-        $color-low-opacity: functions.get-pep-color(color-system-caution, color-tran-0);
+        $color-low-opacity: functions.get-pep-color(color-system-caution, color-tran-00);
         $color-high-opacity: functions.get-pep-color(color-system-caution, color-tran-60);
     } @else {
         $color-low-opacity: rgba($hex-color, 0);
@@ -487,7 +488,7 @@
     }
 
     &:not(.keep-background-on-focus) {
-        // background: functions.get-pep-color($color-map-key, color-tran-0); // TODO: In Table view is gray so what sould we do ask Yonatan.
+        // background: functions.get-pep-color($color-map-key, color-tran-00); // TODO: In Table view is gray so what sould we do ask Yonatan.
         background: functions.get-pep-color(color-system-primary-invert, color-base);
     }
 
@@ -656,11 +657,11 @@
 //  None - default
 // -----------------------------------------------------------------------------
 @mixin state-none-default() {
-    background: functions.get-pep-color(color-system-primary, color-tran-0);
+    background: functions.get-pep-color(color-system-primary, color-tran-00);
 }
 @mixin state-none-disable() {
     @include state-disabled();
-    background: functions.get-pep-color(color-system-primary, color-tran-0) !important;
+    background: functions.get-pep-color(color-system-primary, color-tran-00) !important;
 }
 @mixin state-none-hover() {
     @include state-weak-hover();
