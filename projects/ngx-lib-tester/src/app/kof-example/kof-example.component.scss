@@ -2,7 +2,7 @@
 @use "../../../../ngx-lib/src/core/style/abstracts/variables";
 @use "../../../../ngx-lib/src/core/style/abstracts/mixins";
 
-@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code&display=swap");
 
 h1,
@@ -29,11 +29,12 @@ code {
     margin-bottom: 1rem;
 }
 @mixin scribble-font {
-    font-family: "Permanent Marker", cursive;
+    font-family: "Caveat", cursive;
 }
 em {
     font-style: normal;
     @include scribble-font();
+    font-size: 125%;
 }
 @mixin center-center {
     display: flex;
@@ -362,7 +363,7 @@ $breakpointsss: (
     @media (max-width: map-get($breakpointsss, $size)) {
         background-color: $color;
         &:before {
-            @include scribble-font();
+            @include code-font();
             content: "$screen-max-size-#{$size}";
         }
     }
