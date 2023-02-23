@@ -194,14 +194,16 @@
 }
 
 @mixin font-title($fs: variables.$fs-md, $lh: variables.$lh-md) {
-    font-family: variables.$font-family-title;
-    font-weight: variables.$font-weight-bold;
+    font-family: variables.$font-family-title !important;
+    font-weight: variables.$font-weight-bold !important;
 
     @include font-size($fs);
     @include line-height($lh);
 }
 
 @mixin font-body($fs: variables.$fs-sm, $lh: variables.$lh-sm) {
+    font-family: variables.$font-family-body !important;
+
     @include font-size($fs);
     @include line-height($lh);
 }

@@ -107,20 +107,30 @@
 html,
 body {
     $font-size: 16px;
-
+    
+    font:unset !important;
     font-family: variables.$font-family-body !important;
     font-weight: variables.$font-weight-normal !important;
     font-size: $font-size;
 
     // Override default user agent stylesheet
     button {
-        font: variables.$font-weight-normal $font-size variables.$font-family-body !important;
+        font: variables.$font-weight-normal $font-size variables.$font-family-body;
+        font-family: variables.$font-family-body !important;
     }
     // line-height: variables.$lh-md;
 
     /*.lang-he {
         font-family: 'Open Sans Hebrew' !important;
     }*/
+
+    //          Init Material fonts here 
+    // ***********************************************
+    // .mat-expansion-panel-content, 
+    .mat-expansion-panel-content {
+        font:unset !important;
+    }
+    // ***********************************************
 }
 
 //  Font weight
