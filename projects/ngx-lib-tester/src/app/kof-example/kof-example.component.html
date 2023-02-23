@@ -494,72 +494,168 @@
     <section id="typography">
         <h1 class="color-dimmed">Typography</h1>
         <!-- prettier-ignore -->
-        <div class="side-by-side">
-            <div class="set-grid" id="heading">
-                <h2 class="body-lg color-dimmed">Heading by Class</h2>
-                <p class="color-caution body-sm">This are just a span tag with class</p> 
-                <span class="title-2xl">This is a <em>.title-2xl</em> class</span>
-                <span class="title-xl">This is a <em>.title-xl</em> class</span>
-                <span class="title-lg">This is a <em>.title-lg</em> class</span>
-                <span class="title-md">This is a <em>.title-md</em> class</span>
-                <span class="title-sm">This is a <em>.title-sm</em> class</span>
+
+        <div class="set-grid" id="heading">
+                <code> font-size: variables.$fs-4xl;
+                </code>
+                <code> line-height: variables.$lh-4xl;
+                </code>
+                <h2 class="body-lg color-dimmed">Heading Classes</h2>
+                <p class="color-caution body-sm">These are <code>span</code> tags with <code>title</code> class, ranging from 2xs to 2xl</p> 
+                <span class="title-2xs">This is a <em>title-2xs</em> class</span>
+                <span class="title-xs">This is a <em>title-xs</em> class</span>
+                <span class="title-sm">This is a <em>title-sm</em> class</span>
+                <span class="title-md">This is a <em>title-md</em> class</span>
+                <span class="title-lg">This is a <em>title-lg</em> class</span>
+                <span class="title-xl">This is a <em>title-xl</em> class</span>
+                <span class="title-2xl">This is a <em>title-2xl</em> class</span>
+                <span class="title-3xl">This is a <em>title-3xl</em> class</span>
+                <span class="title-4xl">This is a <em>title-4xl</em> class</span>
+                <span class="title-5xl">This is a <em>title-5xl</em> class</span>
+                <span class="title-6xl">This is a <em>title-6xl</em> class</span>
+                <span class="title-7xl">This is a <em>title-7xl</em> class</span>
+                <span class="title-8xl">This is a <em>title-8xl</em> class</span>
                 <hr>
                 <h2 class="body-lg color-dimmed">Heading by Tag</h2>
                 <p class="color-caution body-sm">This are h1-through-6 tags </p>
-                <h1>This is a <em>&#60;h1&#62;</em> without a class</h1>
-                <h2>This is a <em>&#60;h2&#62;</em> without a class</h2>
-                <h3>This is a <em>&#60;h3&#62;</em> without a class</h3>
-                <h4>This is a <em>&#60;h4&#62;</em> without a class</h4>
-                <h5>This is a <em>&#60;h5&#62;</em> without a class</h5>
-                <h6>This is a <em>&#60;h6&#62;</em> without a class</h6>
+                <h1>This is an <em>&#60;h1&#62;</em> tag without a class</h1>
+                <h2>This is an <em>&#60;h2&#62;</em> tag without a class</h2>
+                <h3>This is an <em>&#60;h3&#62;</em> tag without a class</h3>
+                <h4>This is an <em>&#60;h4&#62;</em> tag without a class</h4>
+                <h5>This is an <em>&#60;h5&#62;</em> tag without a class</h5>
+                <h6>This is an <em>&#60;h6&#62;</em> tag without a class</h6>
             </div>
-            <div class="set-grid" id="body">
-                <h2 class="body-lg color-dimmed">Body by Class</h2>
-                <p class="color-caution body-sm">These are spans with a class</p>
-                <span class="body-2xl">This is a <em>.body-2xl</em> class</span>
-                <span class="body-xl">This is a <em>.body-xl</em> class</span>
-                <span class="body-lg">This is a <em>.body-lg</em> class</span>
-                <span class="body-md">This is a <em>.body-md</em> class</span>
-                <span class="body-sm">This is a <em>.body-sm</em> class</span>
-                <span class="body-xs">This is a <em>.body-sm</em> class</span>
-                <span class="body-2xs">This is a <em>.body-sm</em> class</span>
-                <hr>
-                <h2 class="body-lg color-dimmed">Body by Tag</h2>
-                <p class="color-caution body-sm">This is just a p tag</p>
-                <p class="">This is <em>&#60;p&#62;</em> without a class</p>
-            </div>
+        <div class="set-grid" id="body">
+            <h2 class="body-lg color-dimmed">Body Classes</h2>
+            <p class="color-caution body-sm">
+                These are <code>span</code> tags with <code>body</code> class,
+                ranging from 2xs to 2xl
+            </p>
+            <span class="body-2xs">This is a <em>.body-2xs</em> class</span>
+            <span class="body-xs">This is a <em>.body-xs</em> class</span>
+            <span class="body-sm">This is a <em>.body-sm</em> class</span>
+            <span class="body-md">This is a <em>.body-md</em> class</span>
+            <span class="body-lg">This is a <em>.body-lg</em> class</span>
+            <span class="body-xl">This is a <em>.body-xl</em> class</span>
+            <span class="body-2xl">This is a <em>.body-2xl</em> class</span>
+            <hr />
+            <h2 class="body-lg color-dimmed">Body by Tag</h2>
+            <p class="color-caution body-sm">This is just a p tag</p>
+            <p class="">This is a <em>&#60;p&#62;</em> tag without a class</p>
+            <p class="max-text-width">
+                Hi, reader. Today we'll talk about the Black Swan theory, a
+                thesis created by writer Nassim Nicholas Taleb which says that
+                mankind regularly bumps into events that have a major impact on
+                the course of history: and as everyone knows all swans are
+                white, and as a black swan is seen as being impossible and
+                unexpected, a black swan event is a major impact surprise,
+                unpredictable and unexpected.
+            </p>
+            <p class="max-text-width">
+                Am I saying that this new release by The Deadstock 33s is a
+                black swan event? Am I implying it's gonna be a huge success
+                because of its name? Am I implying that this La Belle release
+                will even slightly change world culture as we know it?YOU NEVER
+                KNOW!
+            </p>
+        </div>
+        <div class="side-by-side">
             <div class="set-grid" id="classes">
                 <h2 class="body-lg color-dimmed">Classes</h2>
-                <p class="color-caution body-sm">Showing the different classes in typography.scss</p>
-                <span class="body-md normal">This is using the <em>.normal</em> class</span>
-                <span class="body-md bold">This is using the <em>.bold</em> class</span>
-                <span class="body-md bolder">This is using the <em>.bolder</em> class</span>
-                <span class="body-md font-family-title">This is using the <em>.font-family-title</em> class</span>
-                <span class="body-md font-family-body">This is using the <em>.font-family-body</em> class</span>
-                <span class="body-md ellipsis">This is using the <em>.ellipsis</em> class</span>
-                <span class="body-md color-link">This is using the <em>.color-link</em> class</span>
-                <a class="body-md color-link">This is an <em>&#60;a&#62;</em> tag using the <em>.color-link</em> class</a>
-                <a class="body-md">This is an <em>&#60;a&#62;</em> tag not using any class</a>
+                <p class="color-caution body-sm">
+                    Showing the different classes in typography.scss
+                </p>
+                <span class="body-md normal"
+                    >This is using the <em>.normal</em> class</span
+                >
+                <span class="body-md bold"
+                    >This is using the <em>.bold</em> class</span
+                >
+                <span class="body-md bolder"
+                    >This is using the <em>.bolder</em> class</span
+                >
+                <span class="body-md font-family-title"
+                    >This is using the <em>.font-family-title</em> class</span
+                >
+                <span class="body-md font-family-body"
+                    >This is using the <em>.font-family-body</em> class</span
+                >
+                <span class="body-md ellipsis"
+                    >This is using the <em>.ellipsis</em> class</span
+                >
+                <span class="body-md color-link"
+                    >This is using the <em>.color-link</em> class</span
+                >
+                <a class="body-md color-link"
+                    >This is an <em>&#60;a&#62;</em> tag using the
+                    <em>.color-link</em> class</a
+                >
+                <a class="body-md"
+                    >This is an <em>&#60;a&#62;</em> tag not using any class</a
+                >
             </div>
             <div class="set-grid" id="classes">
                 <h2 class="body-lg color-dimmed">Color Classes</h2>
-                <p class="color-caution body-sm">Showing the different color classes in typography.scss</p>
-                <span class="body-md color-user-primary">This is using the <em>.color-user-primary</em> class</span>
-                <span class="body-md background-color-user-primary">This is using the <em>.background-color-user-primary</em> class</span>
-                <span class="body-md color-user-secondary">This is using the <em>.color-user-secondary</em> class</span>
-                <span class="body-md background-color-user-secondary">This is using the <em>.background-color-user-secondary</em> class</span>
-                <span class="body-md color-main">This is using the <em>.color-main</em> class</span>
-                <span class="body-md background-color-main">This is using the <em>.background-color-main</em> class</span>
-                <span class="body-md color-invert">This is using the <em>.color-invert</em> class</span>
-                <span class="body-md background-color-invert">This is using the <em>.background-color-invert</em> class</span>
-                <span class="body-md color-link">This is using the <em>.color-link</em> class</span>
-                <span class="body-md background-color-link">This is using the <em>.background-color-link</em> class</span>
-                <span class="body-md color-caution">This is using the <em>.color-caution</em> class</span>
-                <span class="body-md background-color-caution">This is using the <em>.background-color-caution</em> class</span>
-                <span class="body-md color-success">This is using the <em>.color-success</em> class</span>
-                <span class="body-md background-color-success">This is using the <em>.background-color-success</em> class</span>
-                <span class="body-md color-dimmed">This is using the <em>.color-dimmed</em> class</span>
-                <span class="body-md background-color-dimmed">This is using the <em>.background-color-dimmed</em> class</span>
+                <p class="color-caution body-sm">
+                    Showing the different color classes in typography.scss
+                </p>
+                <span class="body-md color-user-primary"
+                    >This is using the <em>.color-user-primary</em> class</span
+                >
+                <span class="body-md background-color-user-primary"
+                    >This is using the
+                    <em>.background-color-user-primary</em> class</span
+                >
+                <span class="body-md color-user-secondary"
+                    >This is using the
+                    <em>.color-user-secondary</em> class</span
+                >
+                <span class="body-md background-color-user-secondary"
+                    >This is using the
+                    <em>.background-color-user-secondary</em> class</span
+                >
+                <span class="body-md color-main"
+                    >This is using the <em>.color-main</em> class</span
+                >
+                <span class="body-md background-color-main"
+                    >This is using the
+                    <em>.background-color-main</em> class</span
+                >
+                <span class="body-md color-invert"
+                    >This is using the <em>.color-invert</em> class</span
+                >
+                <span class="body-md background-color-invert"
+                    >This is using the
+                    <em>.background-color-invert</em> class</span
+                >
+                <span class="body-md color-link"
+                    >This is using the <em>.color-link</em> class</span
+                >
+                <span class="body-md background-color-link"
+                    >This is using the
+                    <em>.background-color-link</em> class</span
+                >
+                <span class="body-md color-caution"
+                    >This is using the <em>.color-caution</em> class</span
+                >
+                <span class="body-md background-color-caution"
+                    >This is using the
+                    <em>.background-color-caution</em> class</span
+                >
+                <span class="body-md color-success"
+                    >This is using the <em>.color-success</em> class</span
+                >
+                <span class="body-md background-color-success"
+                    >This is using the
+                    <em>.background-color-success</em> class</span
+                >
+                <span class="body-md color-dimmed"
+                    >This is using the <em>.color-dimmed</em> class</span
+                >
+                <span class="body-md background-color-dimmed"
+                    >This is using the
+                    <em>.background-color-dimmed</em> class</span
+                >
             </div>
         </div>
     </section>
@@ -799,7 +895,8 @@
                 <em>Code Example: </em>
                 <code>&lt;div class="shadow-lg-hard"&gt;...&lt;/div&gt;</code>
                 <br />
-                <em>Or in the CSS:</em> <code>box-shadow: variables.$shadow-lg-hard;</code>
+                <em>Or in the CSS:</em>
+                <code>box-shadow: variables.$shadow-lg-hard;</code>
             </p>
             <h2 class="body-lg color-dimmed">XS Shadows</h2>
             <div class="shadow-grid">

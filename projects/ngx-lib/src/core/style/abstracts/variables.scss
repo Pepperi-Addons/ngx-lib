@@ -44,15 +44,35 @@ $fs-md: var(--pep-font-size-md, 1rem);
 $fs-lg: var(--pep-font-size-lg, 1.125rem);
 $fs-xl: var(--pep-font-size-xl, 1.25rem);
 $fs-2xl: var(--pep-font-size-2xl, 1.5rem);
+$fs-3xl: var(--pep-font-size-3xl, 1.75rem);
+$fs-4xl: var(--pep-font-size-4xl, 2rem);
+$fs-5xl: var(--pep-font-size-5xl, 2.5rem);
+$fs-6xl: var(--pep-font-size-6xl, 3rem);
+$fs-7xl: var(--pep-font-size-7xl, 3.5rem);
+$fs-8xl: var(--pep-font-size-8xl, 4rem);
+$fs-9xl: var(--pep-font-size-9xl, 5rem);
+$fs-10xl: var(--pep-font-size-10xl, 6rem);
+$fs-11xl: var(--pep-font-size-11xl, 7rem);
+$fs-12xl: var(--pep-font-size-12xl, 8rem);
 
 // Line Height
-$lh-2xs: var(--pep-line-height-2xs, 0.75rem);
-$lh-xs: var(--pep-line-height-xs, 1rem);
-$lh-sm: var(--pep-line-height-sm, 1.25rem);
-$lh-md: var(--pep-line-height-md, 1.5rem);
-$lh-lg: var(--pep-line-height-lg, 1.75rem);
-$lh-xl: var(--pep-line-height-xl, 2rem);
-$lh-2xl: var(--pep-line-height-2xl, 2.25rem);
+$lh-2xs: var(--pep-line-height-2xs, 0.78125rem);
+$lh-xs: var(--pep-line-height-xs, 0.9375rem);
+$lh-sm: var(--pep-line-height-sm, 1.09375rem);
+$lh-md: var(--pep-line-height-md, 1.25rem);
+$lh-lg: var(--pep-line-height-lg, 1.40625rem);
+$lh-xl: var(--pep-line-height-xl, 1.5625rem);
+$lh-2xl: var(--pep-line-height-2xl, 1.875rem);
+$lh-3xl: var(--pep-line-height-3xl, 2.1875rem);
+$lh-4xl: var(--pep-line-height-4xl, 2.5rem);
+$lh-5xl: var(--pep-line-height-5xl, 3.125rem);
+$lh-6xl: var(--pep-line-height-6xl, 3.75rem);
+$lh-7xl: var(--pep-line-height-7xl, 4.375rem);
+$lh-8xl: var(--pep-line-height-8xl, 5rem);
+$lh-9xl: var(--pep-line-height-9xl, 6.25rem);
+$lh-10xl: var(--pep-line-height-10xl, 7.5rem);
+$lh-11xl: var(--pep-line-height-11xl, 8.75rem);
+$lh-12xl: var(--pep-line-height-12xl, 10rem);
 
 //  Fonts weight - General
 $font-weight-normal: var(--pep-font-weight-normal, 400);
