@@ -6,6 +6,7 @@ setCompodocJson(docJson);
 
 // Added theme style
 import '!style-loader!css-loader!sass-loader!./theme.scss';
+import '!style-loader!css-loader!sass-loader!./storybook-styles.scss';
 
 export const parameters = {
     actions: { argTypesRegex: "^on[A-Z].*" },
