@@ -9,6 +9,7 @@ import '!style-loader!css-loader!sass-loader!./theme.scss';
 import '!style-loader!css-loader!sass-loader!./storybook-styles.scss';
 
 export const parameters = {
+    layout: 'centered',
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
         matchers: {
