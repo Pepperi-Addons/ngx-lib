@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/attachment',
+    title: 'Components/Attachment',
     component: PepAttachmentComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -20,6 +20,7 @@ export default {
     ],
     args: {
         rowSpan: 2,
+        label: 'Upload media',
     },
     argTypes: {
         label: commonArgTypes.label,
@@ -68,9 +69,37 @@ const Template: Story<PepAttachmentComponent> = (
     // `,
 });
 
-export const Base = Template.bind({});
-Base.storyName = 'Basic';
-Base.args = {
-    src:
-        'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg',
+export const Story1 = Template.bind({});
+Story1.args = {
+    src: 'https://yonatankof.com/misc/pepp/Addon%20Hackathon%20-%20Badge.png',
 };
+Story1.storyName = 'Basic';
+
+export const Story2 = Template.bind({});
+Story2.args = {
+    src: 'https://yonatankof.com/misc/pepp/Addon%20Hackathon%20-%20Badge.png',
+};
+Story2.storyName = 'With content';
+
+export const Story3 = Template.bind({});
+Story3.args = {};
+Story3.storyName = 'Without content';
+
+export const Story4 = Template.bind({});
+Story4.args = {
+    rowSpan: 1,
+};
+Story4.storyName = 'One span high';
+
+export const Story5 = Template.bind({});
+Story5.args = {
+    src: 'https://yonatankof.com/misc/pepp/Addon%20Hackathon%20-%20Badge.png',
+    disabled: true,
+};
+Story5.storyName = 'Read only / Disabled';
+
+export const Story6 = Template.bind({});
+Story6.args = {
+    mandatory: true,
+};
+Story6.storyName = 'Mandatory';
