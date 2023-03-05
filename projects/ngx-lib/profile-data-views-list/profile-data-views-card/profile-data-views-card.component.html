@@ -2,7 +2,7 @@
     <div class="card-top-bar pep-border-bottom">
         <div *ngIf="title?.length > 0" class="title ellipsis"
             [title]="title + ' ' + (isDefault ? ('PROFILE_DATA_VIEWS_LIST.DEFAULT_PROFILE' | translate) : '')">
-            <span class="title-md">{{title}}&nbsp;</span>
+            <span class="title-2xs">{{title}}&nbsp;</span>
             <span *ngIf="isDefault" class="color-dimmed">{{('PROFILE_DATA_VIEWS_LIST.DEFAULT_PROFILE' |
                 translate)}}&nbsp;
             </span>

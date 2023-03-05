@@ -79,9 +79,9 @@ const Template: Story<PepRichHtmlTextareaComponent> = (
 export const Base = Template.bind({});
 Base.args = {
     label: 'rich-html-textarea',
-    value: `<div class='body-sm rich-text-cont ng-star-inserted' style='height: 27.5rem; text-align: left;'><h1 class='title-4xl'>B07MZ3</h1><p class='body-md'>Brand: <span style='color: #ff0000;'>
+    value: `<div class='body-sm rich-text-cont ng-star-inserted' style='height: 27.5rem; text-align: left;'><h1 class='title-xl'>B07MZ3</h1><p class='body-md'>Brand: <span style='color: #ff0000;'>
     <strong>SojoS</strong></span></p><p class='body-md'>Product Code: <span style='color: #ff0000;'><strong>She Young</strong></span></p><p class='body-md'>List Price: <span style='color: #ff0000;'>
-    <strong>12.9</strong></span></p><h2 class='title-2xl'>Product Details</h2><p></p><ul style='list-style: none;'><li style='background: url(https://static.zennioptical.com/dev/image/site/frame-size-icons/frame-width.svg) no-repeat; line-height: 2.5rem;'>
+    <strong>12.9</strong></span></p><h2 class='title-md'>Product Details</h2><p></p><ul style='list-style: none;'><li style='background: url(https://static.zennioptical.com/dev/image/site/frame-size-icons/frame-width.svg) no-repeat; line-height: 2.5rem;'>
     <p style='padding-left: 50px;'>Frame Width: 132mm</p></li><li style='background: url(https://static.zennioptical.com/dev/image/site/frame-size-icons/lens-width.svg) no-repeat; line-height: 2.5rem;'><p style='padding-left: 50px;'>Lens Width: 52mm</p></li>
     <li style='background: url(https://static.zennioptical.com/dev/image/site/frame-size-icons/bridge.svg) no-repeat; line-height: 2.5rem;'><p style='padding-left: 50px;'>Bridge: 16mm</p></li></ul><p></p></div>`,
 };
