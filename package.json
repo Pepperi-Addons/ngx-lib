@@ -113,6 +113,7 @@
         "@storybook/angular": "^6.5.16",
         "@storybook/builder-webpack5": "^6.5.16",
         "@storybook/manager-webpack5": "^6.5.16",
+        "@storybook/mdx2-csf": "^0.0.4",
         "@storybook/preset-scss": "^1.0.3",
         "@tweenjs/tween.js": "17.4.0",
         "@types/jasmine": "~4.0.0",
