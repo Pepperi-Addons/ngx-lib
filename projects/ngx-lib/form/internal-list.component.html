@@ -1,11 +1,11 @@
 <ng-container *ngIf="totalRows == 0">
     <div class="pep-border-bottom">
-        <p class="title-ms no-data">
+        <p class="title-xl no-data">
             {{ (noDataFoundMsg ? noDataFoundMsg : 'LIST.NO_DATA_FOUND') | translate}}
         </p>
     </div>
     <div class="no-data-suggestions">
-        <p class="suggestions-title title-xs">
+        <p class="suggestions-title title-lg">
             {{ 'LIST.NO_DATA_FOUND_SUGGESTIONS_TITLE' | translate}}
         </p>
         <ul class="suggestions-list body-lg" [innerHtml]="'LIST.NO_DATA_FOUND_SUGGESTIONS_LIST' | translate"></ul>

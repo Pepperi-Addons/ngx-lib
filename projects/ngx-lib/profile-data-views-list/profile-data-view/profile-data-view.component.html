@@ -1,6 +1,6 @@
 <div *ngIf="title?.length > 0" class="data-view-title-container">
     <div class="title ellipsis" [title]="title">
-        <span class="title-2xs">{{title}}</span>
+        <span class="title-md">{{title}}</span>
     </div>
     <pep-button *ngIf="canDelete" class="delete-button" sizeType="xs" (buttonClick)="onDeleteClicked($event)"
         [value]="'ACTIONS.REMOVE' | translate">
