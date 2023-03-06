@@ -1,0 +1,47 @@
+import { Meta, Story } from "@storybook/addon-docs";
+
+import ZIndex from "./zIndex.component";
+
+<Meta title="Abstracts/Z Index" component={ZIndex} />
+
+export const Template = (args) => ({ props: args });
+
+# Z Index
+
+The see the z-index play out in the box below
+
+- `$z-index-high`
+- `$z-index-medium`
+- `$z-index-low`
+- `$z-index-lowest`
+
+
+Use them like so `↓`
+
+```css
+// Make sure you call the `variables.scss` at the top of the file
+@use "~/src/core/style/abstracts/variables";
+
+.high-class {
+    z-index: variables.$z-index-high;
+}
+```
+
+### Todos
+
+- [ ] Make them into a class
+
+<Story name="Example" args={{
+        storyIndex: 1,
+    }}>
+    {Template.bind({})}
+</Story>
+
+BTW, these are the vaules of the z-indices `↓`
+
+```css
+$z-index-high: 999;
+$z-index-medium: 100;
+$z-index-low: 50;
+$z-index-lowest: 1;
+```
