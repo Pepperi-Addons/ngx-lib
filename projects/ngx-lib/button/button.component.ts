@@ -38,7 +38,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() key: string;
 
     /**
-     * The text on the button.
+     * The button text
      *
      * @type {string}
      * @memberof PepButtonComponent
@@ -46,7 +46,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() value: string;
 
     /**
-     * The style of the button.
+     * The style of the button
      *
      * @type {PepStyleType}
      * @memberof PepButtonComponent
@@ -54,7 +54,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() styleType: PepStyleType = 'weak';
 
     /**
-     * The style state of the button.
+     * The color style used by the button
      *
      * @type {PepStyleStateType}
      * @memberof PepButtonComponent
@@ -62,7 +62,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() styleStateType: PepStyleStateType = 'system';
 
     /**
-     * The size of the button.
+     * The size of the button
      *
      * @type {PepSizeType}
      * @memberof PepButtonComponent
@@ -77,7 +77,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() classNames = '';
 
     /**
-     * If the button is disable or not.
+     * If the button is disable or not
      *
      * @type {boolean}
      * @memberof PepButtonComponent
@@ -85,7 +85,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() disabled = false;
 
     /**
-     * The icon name to show on the button. look in (@link icon -> All icons)
+     * If you want to show an icon in the button then select an icon form the provided icon list
      *
      * @type {PepIconType} See {@link PepIconType}
      * @memberof PepButtonComponent
@@ -93,7 +93,7 @@ export class PepButtonComponent implements OnDestroy {
     @Input() iconName: PepIconType;
 
     /**
-     * The icon position.
+     * The icon position, on the left `start` or right `end` of the text (flipped in RTL languages). Applicable only if `iconName` was selected
      *
      * @type {('start' | 'end')}
      * @memberof PepButtonComponent
@@ -102,7 +102,7 @@ export class PepButtonComponent implements OnDestroy {
 
     private _visible = true;
     /**
-     * If the button is visible or not.
+     * If the button is visible or not
      *
      * @memberof PepButtonComponent
      */
