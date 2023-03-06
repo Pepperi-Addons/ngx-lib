@@ -1,0 +1,61 @@
+import { Meta, Story } from "@storybook/addon-docs";
+
+import States from "./states.component";
+
+<Meta title="Abstracts/States" component={States} />
+
+export const Template = (args) => ({ props: args });
+
+# States
+
+We use states all-over-the-place, from buttons to inputs, basically everywhere there's a user interaction. 
+
+> Even though, it's rare to use states as-is
+
+States have 3 different styles
+
+- `weak`
+- `regualr`
+- `strong`
+
+Each of the styles have its common interactive states
+
+- deafult
+- hover
+- active 
+- foucs
+- read only / disabled 
+
+You can use it as a class
+
+```html
+<button class="pep-button weak success"></button>
+```
+
+Or throw a mixin in a class `↓`
+
+```css
+// Make sure you call the `mixins.scss` at the top of the file
+@use "~/src/core/style/abstracts/mixins";
+
+.state-is-weak {
+    @include mixins.pep-button-states(weak);
+    // You do not have to include the (weak), it's the default
+}
+.state-is-regular {
+    @include mixins.pep-button-states(regular);
+}
+.state-is-strong {
+    @include mixins.pep-button-states(strong);
+}
+```
+
+<Story name="Example" args={{
+        storyIndex: 1,
+    }}>
+    {Template.bind({})}
+</Story>
+
+#### Todo
+
+- [ ] think of abetter name then `pep-button-states`... should it be just `pep-states`?
