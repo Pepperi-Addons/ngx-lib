@@ -477,17 +477,17 @@
     }
 
     &.small {
-        max-width: 10rem !important;
+        max-width: 18rem !important;
         height: auto;
     }
 
     &.regular {
-        max-width: 34rem !important;
+        max-width: 36rem !important;
         height: auto;
     }
 
     &.large {
-        max-width: 40rem !important;
+        max-width: 54rem !important;
         width: 90vw;
         height: auto;
         max-height: 90vh;
@@ -502,10 +502,11 @@
 
     &.full-screen {
         $dialog-height: 95vh;
-
-        max-width: 95vw !important;
+        max-width: calc(100vw - (var(--pep-spacing-2xl) * 2)) !important;
+        //max-width: 95vw !important;
         width: 95vw !important;
-        max-height: $dialog-height !important;
+        //max-height: $dialog-height !important;
+        max-height: calc(100vh - (var(--pep-spacing-2xl) * 2)) !important;
         height: $dialog-height !important;
 
         .mat-dialog-container {
