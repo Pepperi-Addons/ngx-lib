@@ -1,0 +1,68 @@
+import { Meta, Story } from "@storybook/addon-docs";
+
+import Shadows from "./shadows.component";
+
+<Meta title="Abstracts/Shadows" component={Shadows} />
+
+export const Template = (args) => ({ props: args });
+
+# Shadows
+
+Here are the available shadow classes
+
+-   `.shadow-xs-xsoft`
+-   `.shadow-xs-soft`
+-   `.shadow-xs-regular`
+-   `.shadow-xs-hard`
+-   `.shadow-sm-xsoft`
+-   `.shadow-sm-soft`
+-   `.shadow-sm-regular`
+-   `.shadow-sm-hard`
+-   `.shadow-md-xsoft`
+-   `.shadow-md-soft`
+-   `.shadow-md-regular`
+-   `.shadow-md-hard`
+-   `.shadow-lg-xsoft`
+-   `.shadow-lg-soft`
+-   `.shadow-lg-regular`
+-   `.shadow-lg-hard`
+-   `.shadow-xl-xsoft`
+-   `.shadow-xl-soft`
+-   `.shadow-xl-regular`
+-   `.shadow-xl-hard`
+
+Use them like so `↓`
+
+```html
+<div class="shadow-xl-soft">
+    <!-- ... -->
+</div>
+```
+
+You can also use the as variable function
+
+- `functions.get-pep-shadow(shadow-xs, xsoft | soft | regular | hard);`
+- `functions.get-pep-shadow(shadow-sm, xsoft | soft | regular | hard);`
+- `functions.get-pep-shadow(shadow-md, xsoft | soft | regular | hard);`
+- `functions.get-pep-shadow(shadow-lg, xsoft | soft | regular | hard);`
+- `functions.get-pep-shadow(shadow-xl, xsoft | soft | regular | hard);`
+
+Like so `↓`
+
+```css
+// Make sure you call the `functions.scss` at the top of the file
+@use "~/src/core/style/abstracts/functions";
+
+.burn-my-shadow {
+    box-shadow: : functions.get-pep-shadow(shadow-xl, hard);
+```
+## Example
+
+<Story
+    name="Example"
+    args={{
+        storyIndex: 1,
+    }}
+>
+    {Template.bind({})}
+</Story>
