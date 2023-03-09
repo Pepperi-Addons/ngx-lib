@@ -33,6 +33,7 @@ pre {
 strong {
     font-weight: 600;
 }
+
 code {
     @include code-font();
     margin-bottom: 1rem;
@@ -107,6 +108,7 @@ em {
 }
 .flex-wrap {
     flex-wrap: wrap;
+    gap: 1rem;
 }
 .big-gap {
     gap: var(--pep-spacing-lg);
@@ -273,8 +275,8 @@ hr {
             color-system-primary,
             color-flat-r-40
         );
-        p {
-            padding: 0.5rem;
+        code {
+            margin: .5rem;
         }
     }
 }
@@ -293,15 +295,7 @@ hr {
     height: 4rem;
     width: 100%;
 }
-.state-is-weak {
-    @include mixins.pep-button-states;
-}
-.state-is-regular {
-    @include mixins.pep-button-states(regular);
-}
-.state-is-strong {
-    @include mixins.pep-button-states(strong);
-}
+
 .round-it {
     background-color: functions.get-pep-color(color-system-primary, color-base);
     @include center-center;
@@ -313,7 +307,7 @@ hr {
     width: $size-of-box;
     min-width: $size-of-box;
     border-radius: variables.$border-radius-sm;
-    background-color: functions.get-pep-color(color-system-primary, color-base);
+    background-color: functions.get-pep-color(color-system-primary, color-tran-70);
 }
 
 .size-of-box-2xs {
