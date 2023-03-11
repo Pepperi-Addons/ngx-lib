@@ -23,6 +23,12 @@ const inputEmpty = styled.input(({ theme }) => ({
 }));
 
 export const parameters = {
+    options: {
+        method: 'alphabetical',
+        storySort: {
+            order: ["Abstracts", "Components", "Services", "Example"],
+        },
+    },
     layout: 'centered',
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
