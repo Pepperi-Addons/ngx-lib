@@ -3,6 +3,7 @@
 import { setCompodocJson } from "@storybook/addon-docs/angular";
 import docJson from "../documentation.json";
 import { styled } from '@storybook/theming';
+import { componentWrapperDecorator } from '@storybook/angular';
 
 setCompodocJson(docJson);
 
@@ -22,6 +23,11 @@ const spanEmpty = styled.span(({ theme }) => ({
 const inputEmpty = styled.input(({ theme }) => ({
 }));
 
+// * Add a style to ALL stories 
+export const decorators = [
+    componentWrapperDecorator((story) => `<div class="all-this-max-width">${story}</div>`),
+];
+  
 export const parameters = {
     options: {
         method: 'alphabetical',

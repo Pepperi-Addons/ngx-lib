@@ -82,9 +82,10 @@ em {
             var(--set-grid-lines) 1px,
             var(--set-grid-bg) 1px
         );
-    background-size: 1rem 1rem;
+    background-size: 0.5rem 0.5rem;
     border-radius: variables.$border-radius-md;
     padding: 1rem;
+    padding-block-end: calc(1rem + 1px);
     margin-bottom: 3rem;
     @media (max-width: variables.$screen-max-size-xs) {
         border-radius: unset;
@@ -428,3 +429,15 @@ $breakpointsss: (
         box-shadow: variables.$shadow-xs-hard;
     }
 }
+.this-border {
+    border: 0.0625rem dashed hotpink;
+    padding: 2rem;
+}
+
+.this-max-width {
+    max-width: calc(24rem + 1px);
+}
+.all-this-max-width {
+    max-width: calc(62rem + 1px);
+}
+  
