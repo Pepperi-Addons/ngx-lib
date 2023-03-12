@@ -32,7 +32,7 @@ import { IsUrlPipe } from './link.pipes';
  * This is a text box input component that can be use to
  *
  * @export
- * @class PepTextboxComponent
+ * @class PepLinkComponent
  * @implements {OnChanges}
  * @implements {OnInit}
  * @implements {OnDestroy}
@@ -51,7 +51,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * The text box key
      *
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     @Input()
     set key(value) {
@@ -66,7 +66,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * The value of the text box.
      *
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     @Input()
     set value(value: string) {
@@ -75,71 +75,60 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this._value = value;
-
-        if (this._calculateFormattedValue) {
-            this.setFormattedValue(value);
-        }
+        this.updateFormFieldValue();
     }
     get value(): string {
         return this._value;
     }
 
-    protected formattedValue = '';
-    // private _formattedValue = '';
-    // /**
-    //  * The formatted value.
-    //  *
-    //  * @memberof PepTextboxComponent
-    //  */
-    // @Input()
-    // set formattedValue(value: string) {
-        
-    // }
-    // get formattedValue(): string {
-    //     return this._formattedValue;
-    // }
+    /**
+     * The display value of the link.
+     *
+     * @memberof PepLinkComponent
+     */
+    @Input() displayValue: string = '';
 
     /**
-     * The title of the textbox.
+     * The title of the link.
      *
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     @Input() label = '';
 
     /**
      * The placeholder (relevant only for children - if parent isn't null).
      *
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     @Input() placeholder = '';
 
     /**
-     * The type of the textbox.
+     * The type of the link.
      *
      * @type {PepTextboxFieldType}
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     type: PepTextboxFieldType = 'link';
 
     /**
-     * If the textbox is mandatory
+     * If the link is mandatory
      *
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     @Input() mandatory = false;
 
     // TODO: Check if should remove disabled and keep only readonly.
     /**
-     * If the textbox is disabled.
+     * If the link is disabled.
      *
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     @Input() disabled = false;
 
     /**
-     * If the textbox is readonly
+     * If the link is readonly
      *
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
@@ -180,7 +169,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
      * The value change event.
      *
      * @type {EventEmitter<string>}
-     * @memberof PepTextboxComponent
+     * @memberof PepLinkComponent
      */
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
@@ -192,11 +181,6 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     @ViewChild('input') input: ElementRef;
-
-    private _calculateFormattedValue = true;
-    get calculateFormattedValue(): boolean {
-        return this._calculateFormattedValue;
-    }
 
     controlType = 'link';
 
@@ -216,23 +200,12 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         this.isInFocus = false;
     }
 
-    private setFormattedValue(value: string) {
-        this.formattedValue = value;
-        this.updateFormFieldValue();
-    }
-
     private updateFormFieldValue() {
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            this.formattedValue
+            this.value
         );
-    }
-
-    get displayValue(): string {
-        const res = this.formattedValue;
-
-        return res;
     }
 
     private setDefaultForm(): void {
@@ -321,12 +294,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
                 );
             } else {
                 this.value = value;
-
-                // If the user is setting the formatted value then set the value till the user format it and return it back.
-                if (!this._calculateFormattedValue) {
-                    this.formattedValue = value;
-                }
-
+                
                 this.valueChange.emit(value);
             }
         }
