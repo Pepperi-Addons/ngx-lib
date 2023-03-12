@@ -9,6 +9,7 @@ import { FormFieldsExampleComponent } from './form-fields-example/form-fields-ex
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
 import { OtherFieldsExampleComponent } from './other-fields-example/other-fields-example.component';
 import { KofExampleComponent } from './kof-example/kof-example.component';
+import { DialogPlaygroundComponent } from './dialog-playground/dialog-playground.component';
 // import * as config from '../../../addon.config.json';
 
 const routes: Routes = [
@@ -47,6 +48,9 @@ const routes: Routes = [
     {
         path: `kof-example`,
         component: KofExampleComponent,
+    },
+    {   path:  `dialog-playground`,
+        component: DialogPlaygroundComponent,
     },
     {
         path: '**',
