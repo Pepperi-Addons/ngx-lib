@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
     selector: 'shadows-colors',
     template: `<div *ngIf="storyIndex === 1" class="set-grid">
-        <h2 class="body-lg color-dimmed">XS Shadows</h2>
+        <h2 class="body-md color-dimmed">XS Shadows</h2>
         <div class="shadow-grid">
             <div class="shadow-xs-xsoft">
                 <p class="body-sm"><code>.shadow-xs-xsoft</code></p>
@@ -18,7 +18,7 @@ import { Component, Input } from '@angular/core';
                 <p class="body-sm"><code>.shadow-xs-hard</code></p>
             </div>
         </div>
-        <h2 class="body-lg color-dimmed">SM Shadows</h2>
+        <h2 class="body-md color-dimmed">SM Shadows</h2>
         <div class="shadow-grid">
             <div class="shadow-sm-xsoft">
                 <p class="body-sm"><code>.shadow-sm-xsoft</code></p>
@@ -33,7 +33,7 @@ import { Component, Input } from '@angular/core';
                 <p class="body-sm"><code>.shadow-sm-hard</code></p>
             </div>
         </div>
-        <h2 class="body-lg color-dimmed">MD Shadows</h2>
+        <h2 class="body-md color-dimmed">MD Shadows</h2>
         <div class="shadow-grid">
             <div class="shadow-md-xsoft">
                 <p class="body-sm"><code>.shadow-md-xsoft</code></p>
@@ -48,7 +48,7 @@ import { Component, Input } from '@angular/core';
                 <p class="body-sm"><code>.shadow-md-hard</code></p>
             </div>
         </div>
-        <h2 class="body-lg color-dimmed">LG Shadows</h2>
+        <h2 class="body-md color-dimmed">LG Shadows</h2>
         <div class="shadow-grid">
             <div class="shadow-lg-xsoft">
                 <p class="body-sm">
@@ -65,7 +65,7 @@ import { Component, Input } from '@angular/core';
                 <p class="body-sm"><code>.shadow-lg-hard</code></p>
             </div>
         </div>
-        <h2 class="body-lg color-dimmed">XL Shadows</h2>
+        <h2 class="body-md color-dimmed">XL Shadows</h2>
         <div class="shadow-grid">
             <div class="shadow-xl-xsoft">
                 <p class="body-sm"><code>.shadow-xl-xsoft</code></p>
