@@ -10,22 +10,27 @@
     </ng-container>
 
     <ng-container pep-main-area>
+        <div style="width:500px">
+            <pep-skeleton-loader [rectNum]="4" [rectHeight]="'md'"></pep-skeleton-loader>
+        </div>
         <div id="buttonsBar">
             <div id="modalConfig">
                 <pep-select-panel 
-                    [label]="'Dialog size'" 
-                    [isMultiSelect]="false"
-                    [disabled]="false"
-                    [numOfCol]="2"
-                    [value]="modalSize"
-                    [options]="modalSizes"
-                    (valueChange)="onModalSizeChanges($event)">
+                    [label]="'Dialog size'" [isMultiSelect]="false" [numOfCol]="2"
+                    [(value)]="modalSize" [options]="modalSizes">
+                </pep-select-panel>
+                <pep-select-panel
+                    [label]="'Dialog options'" [isMultiSelect]="true" [numOfCol]="1"
+                    [(value)]="selectedOptions" [options]="dialogOptions" (valueChange)="onValueChanged($event)">
                 </pep-select-panel>
             </div>
             <div id="btnsCont">
                 <pep-button [value]="'Open modal'" [sizeType]="'sm'" [styleType]="'regular'"
                     [classNames]="'pep-spacing-element '" (click)="showDefaultModal($event)">
                 </pep-button>
+                <pep-button [value]="'Open Skeleeton modal'" [sizeType]="'sm'" [styleType]="'regular'"
+                [classNames]="'pep-spacing-element '" (click)="openSkeletomDialog($event)">
+            </pep-button>
             </div>
         </div>
     </ng-container>

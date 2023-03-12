@@ -57,7 +57,7 @@ import { PepQueryBuilderModule } from '@pepperi-addons/ngx-lib/query-builder';
 import { PepDraggableItemsModule } from '@pepperi-addons/ngx-lib/draggable-items';
 import { PepProfileDataViewsListModule } from '@pepperi-addons/ngx-lib/profile-data-views-list';
 import { PepChipsModule } from '@pepperi-addons/ngx-lib/chips';
-
+import { PepSkeletonLoaderModule } from '@pepperi-addons/ngx-lib/skeleton-loader';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import {
@@ -171,7 +171,8 @@ const pepperiComponentsModules = [
     PepDraggableItemsModule,
     PepProfileDataViewsListModule,
     PepChipsModule,
-    PepFormModule
+    PepFormModule,
+    PepSkeletonLoaderModule
 ];
 
 @NgModule({

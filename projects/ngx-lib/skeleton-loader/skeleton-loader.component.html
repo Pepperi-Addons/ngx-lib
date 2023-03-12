@@ -1,0 +1,4 @@
+<div class="skeleton-loader">
+    <div *ngFor='let in of counter(rectNum) ;let last = last' class="bone" [ngClass]="[
+      lastRectOffset === true && last == true ?'last-bone-offset' : '', 'height-' + rectHeight ]"></div>
+   </div>

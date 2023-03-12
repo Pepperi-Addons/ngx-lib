@@ -1,0 +1,48 @@
+@use '../src/core/style/abstracts/variables';
+@use '../src/core/style/abstracts/functions';
+
+
+	$color-weak: rgb(240, 240, 240);
+	$color-flash: rgb(250, 250, 250);
+
+.skeleton-loader {
+	display: flex;
+	flex-direction: column;
+	gap: variables.$spacing-lg;
+}
+.bone {
+	height: variables.$spacing-xl;
+	background-color: $color-weak;
+	border-radius: variables.$border-radius-md;
+	background: linear-gradient(0.25turn, $color-weak 0%, $color-flash 25%, $color-weak 50%);
+	background-size: 200% 200%;
+	transition: 0.5s;
+	animation: 2s infinite ease-in-out slidein;
+	
+    &.last-bone-offset {
+		width: 75%;
+	}
+
+    &.height-sm{
+        height: variables.$spacing-lg;
+    }
+    &.height-md{
+        height: variables.$spacing-2xl;
+    }
+    &.height-lg{
+        height: variables.$spacing-4xl;
+    }
+}
+
+@keyframes slidein {
+	0% {
+		background-position: 100%;
+	}
+
+	50% {
+		background-position: -100%;
+	}
+	100% {
+		background-position: -100%;
+	}
+}
