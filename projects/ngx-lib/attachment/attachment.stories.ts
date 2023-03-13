@@ -90,6 +90,13 @@ Story4.args = {
     rowSpan: 1,
 };
 Story4.storyName = 'One span high';
+Story4.parameters = {
+    docs: {
+        description: {
+            story: "By default `rowSpan` is _2_, when changing it to _1_ the design is shown in one line (the icon is on the left of the _micro-copy_)" ,
+        },
+    },  
+};
 
 export const Story5 = Template.bind({});
 Story5.args = {

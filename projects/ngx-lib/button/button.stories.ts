@@ -95,6 +95,13 @@ Story3.args = {
     iconPosition: 'start',
     value: 'Icon start',
 };
+Story3.parameters = {
+    docs: {
+        description: {
+            story: "For this to work you'll need to select an icon with `iconName`" ,
+        },
+    },  
+};
 
 export const Story4 = Template.bind({});
 Story4.storyName = 'Icon on end';
@@ -103,12 +110,26 @@ Story4.args = {
     iconPosition: 'end',
     value: 'Icon end',
 };
+Story4.parameters = {
+    docs: {
+        description: {
+            story: "For this to work you'll need to select an icon with `iconName`" ,
+        },
+    },  
+};
 
 export const Story5 = Template.bind({});
 Story5.storyName = 'Icon only';
 Story5.args = {
     iconName: 'system_bolt',
     iconPosition: 'end',
+};
+Story5.parameters = {
+    docs: {
+        description: {
+            story: "For this to work you'll need to select an icon with `iconName` and to omit the `value`" ,
+        },
+    },  
 };
 
 // This creates a Story for the component
@@ -445,3 +466,10 @@ const ButtonsTemplate: Story<PepButtonComponent> = (
 
 export const Story6 = ButtonsTemplate.bind({});
 Story6.storyName = 'Styles, options and sizes';
+Story6.parameters = {
+    docs: {
+        description: {
+            story: "Showcasing all buttons styles, options and sizes at one go" ,
+        },
+    },  
+};
