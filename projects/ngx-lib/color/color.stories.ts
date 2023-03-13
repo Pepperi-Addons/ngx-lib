@@ -11,7 +11,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/color',
+    title: 'Components/Color picker',
     component: PepColorComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -55,6 +55,11 @@ export default {
         valueChange: commonArgTypes.valueChange,
     },
     parameters: {
+        docs: {
+            description: {
+                component: "There's an issue with the default color `value` - it looks _white_ but when opening the dialog it's _grey_",
+              },
+        },
         controls: {
             include: [
                 'label',
@@ -82,9 +87,79 @@ const Template: Story<PepColorComponent> = (args: PepColorComponent) => ({
     // `,
 });
 
-export const Base = Template.bind({});
-Base.storyName = 'Basic';
-Base.args = {
-    label: 'choose color',
-    value: '#ccc',
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
+    label: 'Choose color',
+};
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'Type is main';
+Story2.args = {
+    label: 'Type is main',
+    type: 'main',
+};
+Story2.parameters = {
+    docs: {
+        description: {
+            story: "When `type: 'main'`, user can only select **dark** colors" ,
+        },
+    },  
+};
+
+export const Story3 = Template.bind({});
+Story3.storyName = 'Type is success';
+Story3.args = {
+    label: 'Type is success',
+    type: 'success',
+};
+Story3.parameters = {
+    docs: {
+        description: {
+            story: "When `type: 'success'`, user can only select **green** colors" ,
+        },
+    },  
+};
+
+export const Story4 = Template.bind({});
+Story4.storyName = 'Type is caution';
+Story4.args = {
+    label: 'Type is caution',
+    type: 'caution',
+};
+Story4.parameters = {
+    docs: {
+        description: {
+            story: "When `type: 'caution'`, user can only select **red** colors" ,
+        },
+    },  
+};
+
+export const Story5 = Template.bind({});
+Story5.storyName = "Isn't AA compliant";
+Story5.args = {
+    label: "Isn't AA compliant",
+    showAAComplient: false,
+};
+Story5.parameters = {
+    docs: {
+        description: {
+            story: "When `howAAComplient: false`, user can select colors that doesn't conform to [level AA of the web content accessibility guidelines (WCAG)](https://www.w3.org/WAI/WCAG2AA-Conformance) standards",
+        },
+    },  
+};
+
+export const Story6 = Template.bind({});
+Story6.storyName = "Set stating color";
+Story6.args = {
+    label: "Set stating color",
+    //! There's an issue when using CSS color names - try using `HotPink` as opposed to its corresponding HEX color `#FF69B4`
+    value: "#FF69B4",
+};
+Story6.parameters = {
+    docs: {
+        description: {
+            story: "There's an issue when using CSS color names - try using `HotPink` as opposed to its corresponding HEX color `#FF69B4`",
+        },
+    },  
 };
