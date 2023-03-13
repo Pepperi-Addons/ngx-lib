@@ -12,7 +12,7 @@ export default {
     // The title defines the name and where in the structure of
     // Storybook's menu this is going to be placed.
     // Here we add it to a "Components" section under "Date"
-    title: 'Components/date',
+    title: 'Components/Date & date-time',
     // The component related to the Stories
     component: PepDateComponent,
     // args: {
@@ -47,6 +47,11 @@ export default {
         valueChange: commonArgTypes.valueChange,
     },
     parameters: {
+        docs: {
+            description: {
+                component: 'This component can show both the _date_ and _datetime_ options. Clicking on the input will open the `mat-datetimepicker-dialog`',
+              },
+        },
         controls: {
             include: [
                 'label',
@@ -86,61 +91,43 @@ const Template: Story<PepDateComponent> = (args: PepDateComponent) => ({
     // `,
 });
 
-export const Base = Template.bind({});
-Base.args = {
+export const Story1 = Template.bind({});
+Story1.storyName = "Basic";
+Story1.args = {
     label: 'date',
     value: '2020-1-1',
 };
 
-export const DateTime = Template.bind({});
-DateTime.args = {
-    label: 'date time',
+export const Story2 = Template.bind({});
+Story2.storyName = "Empty date-time";
+Story2.args = {
+    label: 'Empty date-time',
     type: 'datetime',
-    value: '2020-1-1 12:00',
+    value: '',
+};
+Story2.parameters = {
+    docs: {
+        description: {
+            story: "This date-time is empty, click inside the input to get things going" ,
+        },
+    },  
 };
 
-// export const NumberInteger = Template.bind({});
-// NumberInteger.args = {
-//     label: 'int',
-//     type: 'int',
-//     value: '1000',
-//     formattedValue: '1,000',
-// };
-
-// export const NumberDecimal = Template.bind({});
-// NumberDecimal.args = {
-//     label: 'decimal',
-//     type: 'real',
-//     value: '1000.50',
-//     formattedValue: '1,000.50',
-// };
-
-// export const Currency = Template.bind({});
-// Currency.args = {
-//     label: 'currency',
-//     type: 'currency',
-//     value: '99.90',
-// };
-
-// export const Percentage = Template.bind({});
-// Percentage.args = {
-//     label: 'percentage',
-//     type: 'percentage',
-//     value: '90',
-// };
-
-// export const Link = Template.bind({});
-// Link.args = {
-//     label: 'link',
-//     type: 'link',
-//     value: 'http://www.google.com',
-//     formattedValue: 'google',
-//     // disabled: true
-// };
-
-// export const Phone = Template.bind({});
-// Phone.args = {
-//     label: 'phone',
-//     type: 'phone',
-//     value: '+972-52-5555-555',
-// };
+export const Story3 = Template.bind({});
+Story3.storyName = "Invalid value";
+Story3.args = {
+    label: 'Invalid value',
+    type: 'datetime',
+    //! value is wrong
+    //! yet the error isn't rendered immediately
+    //! but only after clicking outside
+    value: 'ddoun-1-1 12:00',
+    renderError: true,
+};
+Story3.parameters = {
+    docs: {
+        description: {
+            story: "This date-time has un invalid value, click inside the input and then click outside (without selecting a value) to see the error message" ,
+        },
+    },  
+};
