@@ -1,4 +1,4 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { moduleMetadata, Story, Meta, componentWrapperDecorator } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 import { commonArgTypes } from '@storybook-settings/common-args.model';
 
@@ -7,7 +7,7 @@ import { PepImageModule } from './image.module';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/image',
+    title: 'Components/Image',
     component: PepImageComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -70,10 +70,52 @@ const Template: Story<PepImageComponent> = (args: PepImageComponent) => ({
     // `,
 });
 
-export const Base = Template.bind({});
-Base.storyName = 'Basic';
-Base.args = {
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
     src:
-        'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg',
-    // srcLarge: "https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg"
+        'https://yonatankof.com/misc/pepp/Addon%20Hackathon%20-%20Badge.png',
+};
+Story1.decorators = [
+    componentWrapperDecorator((story) => `<div style="width: 16em">${story}</div>`),
+];
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'Without an image';
+
+export const Story3 = Template.bind({});
+Story3.storyName = 'With an image';
+//! Issue with width... might need to add min-width
+Story3.parameters = {
+    docs: {
+        description: {
+            story: "Issue with width... might need to add `min-width`" ,
+        },
+    },  
+};
+Story3.args = {
+    rowSpan: 2,
+    src:
+     'https://yonatankof.com/misc/pepp/Addon%20Hackathon%20-%20Badge.png',
+};
+
+export const Story4 = Template.bind({});
+Story4.storyName = 'Change row span';
+Story4.args = {
+    rowSpan: 1,
+};
+
+export const Story5 = Template.bind({});
+//! How can we show it with the placeholder image?
+Story5.storyName = 'Missing image / placeholder';
+Story5.args = {
+    src:
+        'jhgvdhgvhvg',
+};
+Story5.parameters = {
+    docs: {
+        description: {
+            story: "How can we show it with the placeholder image?" ,
+        },
+    },  
 };
