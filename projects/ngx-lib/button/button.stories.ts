@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/Button',
+    title: 'Components/button',
     component: PepButtonComponent,
     // argTypes: argTypesBasicStory,
     decorators: [

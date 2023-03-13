@@ -28,8 +28,7 @@
                 <div cdkDropList id="dropArea1" class="drop-area1" [cdkDropListData]="dropArea"
                     (cdkDropListDropped)="drop($event)">
 
-                    <pep-draggable-item *ngFor="let item of dropArea" cdkDrag (cdkDropListDropped)="drop($event)"
-                        [title]="item.title" [data]="item.data" [disabled]="false">
+                    <pep-draggable-item *ngFor="let item of dropArea" cdkDrag [title]="item.title" [data]="item.data" [disabled]="false">
                     </pep-draggable-item>
                 </div>
             </div>
