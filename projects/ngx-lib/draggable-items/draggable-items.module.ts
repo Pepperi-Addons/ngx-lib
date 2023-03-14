@@ -8,7 +8,7 @@ import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
-import { DraggableItemsComponent } from './draggable-items.component';
+import { PepDraggableItemsComponent } from './draggable-items.component';
 import { DraggableItemComponent } from './draggable-item/draggable-item.component';
 import {
     PepIconModule,
@@ -18,7 +18,7 @@ import {
 
 @NgModule({
     declarations: [
-        DraggableItemsComponent,
+        PepDraggableItemsComponent,
         DraggableItemComponent
     ],
     imports: [
@@ -31,7 +31,7 @@ import {
         DragDropModule
     ],
     exports: [
-        DraggableItemsComponent,
+        PepDraggableItemsComponent,
         DraggableItemComponent
     ],
 })

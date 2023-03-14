@@ -21,7 +21,7 @@ import { PepButton } from 'ngx-lib/button';
 
 @Component({
     templateUrl: './form-fields-example.component.html',
-    styleUrls: ['./form-fields-example.component.scss'],
+    styleUrls: ['./form-fields-example.component.scss', './form-fields-example.component.css'],
 })
 export class FormFieldsExampleComponent implements OnInit {
     @ViewChild('chipsComp') chipsComp: PepChipsComponent;

@@ -1,35 +1,12 @@
-.ui-test-container {
-    .main-content{
-        overflow: hidden;
-        padding-inline: 1rem;
-        
-        .content {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 1px 60px;
-            grid-template-areas: "child1 child2 child3 child4";
-            .child1 { grid-area: child1; }
-
-            .child2 { grid-area: child2; }
-
-            .child3 { grid-area: child3; }
-
-            .child4 { grid-area: child4; }
-        }
-
-    }
+/* A container context based on inline size
+:root {
+	--border-r: 0.25rem;
+	--btn-size: 2rem;
 }
-
-@media screen and (max-width: 767px) {
-    .ui-test-container{
-        .main-content {
-            .content {
-                display: block;
-            }
-        }
-    }
+body {
+	margin: 0;
+	padding: 0;
 }
-
 main {
 	display: grid;
 	grid-template-columns: 1fr 2fr 3fr;
@@ -64,14 +41,14 @@ h3 {
 	background-color: bisque;
 	border-radius: var(--border-r);
 }
-@container qs (width < 12rem) {
+@container (width > 10px) {
 	.btn {
 		display: none;
 	}
 }
-@container qs (width < 12rem) {
+@container (width < 12rem) {
 	.quantity-selector-grid {
 		justify-content: center;
 	}
 }
-  
+   */
