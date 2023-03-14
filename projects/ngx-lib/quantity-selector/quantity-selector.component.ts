@@ -399,16 +399,19 @@ export class PepQuantitySelectorComponent
     }
 
     ngAfterViewInit() {
-        if (this.QSCont &&
-            this.QSCont.nativeElement &&
-            this.QSCont.nativeElement.clientWidth > 0
-        ) {
-            this.showQsBtn = this.QSCont.nativeElement.clientWidth > 120;
-        }
+        setTimeout(() => {
+            debugger;
+            if (this.QSCont &&
+                this.QSCont.nativeElement &&
+                this.QSCont.nativeElement.clientWidth > 0
+            ) {
+                this.showQsBtn = this.QSCont.nativeElement.clientWidth > 120;
+            }
 
-        if (!this.cd['destroyed']) {
-            this.cd.detectChanges();
-        }
+            if (!this.cd['destroyed']) {
+                this.cd.detectChanges();
+            }
+        }, 0);
     }
 
     ngAfterViewChecked(): void {
