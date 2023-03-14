@@ -10,9 +10,6 @@
     </ng-container>
 
     <ng-container pep-main-area>
-        <div style="width:500px">
-            <pep-skeleton-loader [rectNum]="4" [rectHeight]="'md'"></pep-skeleton-loader>
-        </div>
         <div id="buttonsBar">
             <div id="modalConfig">
                 <pep-select-panel 
@@ -35,3 +32,23 @@
         </div>
     </ng-container>
 </pep-page-layout>
+
+<ng-template #skeletonLoaderTempRef>
+    <pep-dialog [title]="'Skeleton dialog'" (close)="closeDialog()">
+        <ng-container pep-dialog-content>
+            <pep-skeleton-loader [rectHeight]="'sm'" [rectNum]="8" [lastRectOffset]="true"></pep-skeleton-loader>
+        </ng-container>
+        <ng-container pep-dialog-actions>
+            <div class="pep-spacing-element-negative">
+                <button mat-button class="pep-spacing-element pep-button md weak" (click)="closeDialog()">
+                    {{ 'Close' | translate}}
+                </button>
+                <button mat-button class="pep-spacing-element pep-button md strong" (click)="openSkeletomDialog($event)">
+                    {{ 'Open dialog' | translate}}
+                </button>
+            </div>
+        </ng-container>
+    </pep-dialog>
+</ng-template>
+
+

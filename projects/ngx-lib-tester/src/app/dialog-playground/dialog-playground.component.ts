@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { PepDialogService, PepDialogData, PepDialogSizeType, PepDialogComponent, PepDialogActionButton } from '@pepperi-addons/ngx-lib/dialog';
 import { PepDefaultDialogComponent } from 'ngx-lib/dialog/default-dialog.component';
 import { PepSkeletonLoaderComponent } from '@pepperi-addons/ngx-lib/skeleton-loader';
+import { DialogRef } from '@angular/cdk/dialog';
 
-let dialogRef: MatDialogRef<PepDefaultDialogComponent> = null;
+
 
 @Component({
     templateUrl: './dialog-playground.component.html',
@@ -13,7 +14,13 @@ let dialogRef: MatDialogRef<PepDefaultDialogComponent> = null;
 })
 export class DialogPlaygroundComponent implements OnInit {
     
+    private dialogRef: MatDialogRef<any> | null;
+    private dialogArr: Array<MatDialogRef<PepDefaultDialogComponent>> = [];
 
+    @ViewChild('skeletonLoaderTempRef', { read: TemplateRef })
+    skeletonLoaderTempRef: TemplateRef<any>;
+
+    dlgIndex = 1;
     modalSize: PepDialogSizeType = 'small';
     selectedOptions = 'showHeader;showClose';
 
@@ -58,7 +65,9 @@ export class DialogPlaygroundComponent implements OnInit {
             key: 'showClose'
         }
     ]
-    constructor(public layoutService: PepLayoutService, private dialogService: PepDialogService) {
+    constructor(public layoutService: PepLayoutService, 
+                private dialogService: PepDialogService,
+                private dialog: MatDialog) {
         
     }
 
@@ -75,19 +84,36 @@ export class DialogPlaygroundComponent implements OnInit {
             this.modalSize,
             
         );
+        
+        const actionButtons = [
+            new PepDialogActionButton(
+                'Close',
+                null,
+                () => this.closeDialog()
+            ),
+            new PepDialogActionButton(
+                'Open dialog',
+                'strong',
+                () => this.showDefaultModal(this))
+        ];
 
         config.hasBackdrop = this.hasBackdrop === 'true';
 
       
         const data = new PepDialogData({
             title: 'default modal',
-            content: '<button>Avner</button>',
+            actionsType: 'custom',
+            content: '<button>Open Dialog</button>',
+            actionButtons,
             showClose: true,
             showHeader: true,
             showFooter: true
         });
         
-        dialogRef = this.dialogService.openDefaultDialog(data,config);
+        this.dialogRef = this.dialogService.openDefaultDialog(data,config);
+        this.dialogArr.push(this.dialogRef);
+        // config.data = data;
+        //this.dialogService.openDialog(this.skeletonLoaderTempRef,config);
     }
 
     openSkeletomDialog(event){
@@ -100,16 +126,21 @@ export class DialogPlaygroundComponent implements OnInit {
    
         );
         
+        this.dialogRef = this.dialogService.openDialog(this.skeletonLoaderTempRef,{},config);
+        this.dialogArr.push(this.dialogRef);
+        
+        this.dialogRef.afterClosed().subscribe(result => {
+            debugger;
+         });
+    }
 
-        const dialogRef = this.dialogService.openDialog(
-            PepSkeletonLoaderComponent,
-            {
-                rectNum: 6,
-                rectHeight: 'sm'
-            },
-            config
-         
-        );
+    closeDialog(): void {
+        if(this.dialogArr.length){
+            this.dialogRef = this.dialogArr[this.dialogArr.length - 1];
+            this.dialogRef?.close();
+            this.dialogArr.pop();
+
+        }
     }
 
     onValueChanged(event){
