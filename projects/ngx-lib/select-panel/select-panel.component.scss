@@ -38,6 +38,8 @@
                     text-overflow: ellipsis;
                     overflow: hidden;
                     white-space: nowrap;
+                    padding-inline-start: variables.$spacing-sm;
+                    padding-inline-end: 0;
                 }
 
                 .mat-radio-ripple{
@@ -48,6 +50,10 @@
                text-overflow: ellipsis;
                overflow: hidden;
                white-space: nowrap;
+
+               .mat-checkbox-inner-container{
+                    margin-inline: 0 variables.$spacing-sm;
+               }
             }
         }
     }
