@@ -300,7 +300,7 @@ export class PepQuantitySelectorComponent
         private utilitiesService: PepUtilitiesService
     ) {
         this._destroyed = new Subject();
-        this.qsWidthSubject = new BehaviorSubject(0);
+        // this.qsWidthSubject = new BehaviorSubject(0);
     }
 
     setForm() {
@@ -388,22 +388,31 @@ export class PepQuantitySelectorComponent
             }
         }
 
-        this.qsWidthSubject
-            .asObservable()
-            .pipe(this.getDestroyer(), distinctUntilChanged())
-            .subscribe((qsWidth: number) => {
-                this.setupQsButtons(qsWidth);
-            });
+        // this.qsWidthSubject
+        //     .asObservable()
+        //     .pipe(this.getDestroyer(), distinctUntilChanged())
+        //     .subscribe((qsWidth: number) => {
+        //         this.setupQsButtons(qsWidth);
+        //     });
 
         this.updateFormFieldValue(true);
     }
 
     ngAfterViewInit() {
-        //
+        if (this.QSCont &&
+            this.QSCont.nativeElement &&
+            this.QSCont.nativeElement.clientWidth > 0
+        ) {
+            this.showQsBtn = this.QSCont.nativeElement.clientWidth > 120;
+        }
+
+        if (!this.cd['destroyed']) {
+            this.cd.detectChanges();
+        }
     }
 
     ngAfterViewChecked(): void {
-        this.setQsView();
+        // this.setQsView();
     }
 
     ngOnChanges(changes: any): void {
@@ -655,23 +664,23 @@ export class PepQuantitySelectorComponent
         });
     }
 
-    setupQsButtons(qsWidth: number) {
-        this.showQsBtn = qsWidth > 120;
+    // setupQsButtons(qsWidth: number) {
+    //     this.showQsBtn = qsWidth > 120;
 
-        if (!this.cd['destroyed']) {
-            this.cd.detectChanges();
-        }
-    }
+    //     if (!this.cd['destroyed']) {
+    //         this.cd.detectChanges();
+    //     }
+    // }
 
-    setQsView(): void {
-        if (
-            this.QSCont &&
-            this.QSCont.nativeElement &&
-            this.QSCont.nativeElement.clientWidth > 0
-        ) {
-            setTimeout(() => {
-                this.qsWidthSubject.next(this.QSCont.nativeElement.clientWidth);
-            }, 0);
-        }
-    }
+    // setQsView(): void {
+    //     if (
+    //         this.QSCont &&
+    //         this.QSCont.nativeElement &&
+    //         this.QSCont.nativeElement.clientWidth > 0
+    //     ) {
+    //         setTimeout(() => {
+    //             this.qsWidthSubject.next(this.QSCont.nativeElement.clientWidth);
+    //         }, 0);
+    //     }
+    // }
 }

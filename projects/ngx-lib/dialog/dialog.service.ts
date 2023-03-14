@@ -91,6 +91,13 @@ export class PepDialogService {
 
         config.data = data;
         const dialogRef = this.dialog.open(PepDefaultDialogComponent, config);
+
+        this.fixMultiDialogsPos();
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.fixMultiDialogsPos();
+        });
+        
         return dialogRef;
     }
 
@@ -108,6 +115,27 @@ export class PepDialogService {
 
         config.data = data;
         const dialogRef = this.dialog.open(componentOrTemplateRef, config);
+
+        this.fixMultiDialogsPos();
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.fixMultiDialogsPos();
+        });
+
         return dialogRef;
+    }
+
+    fixMultiDialogsPos(){
+        // checking if have more than one open dialog on page
+        // if true set the position of each dialog. 
+        var elements:any = document.getElementsByClassName('pep-dialog');
+        if(elements?.length){
+            var index = 0;
+            for (let i = elements.length-1; i >= 0 ; i--) {
+                let element = elements[i];
+                element.style.transform = "translate(-" + (index) + "rem,-" + (index) + "rem)";
+                index += 1;
+            }
+        }
     }
 }
