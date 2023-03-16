@@ -66,7 +66,7 @@ export class PepImagesFilmstripComponent
     @Input() label = '';
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
 
-    private _rowSpan = 1;
+    private _rowSpan = 10;
     @Input()
     set rowSpan(value) {
         this._rowSpan = value;
