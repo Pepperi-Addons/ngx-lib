@@ -10,7 +10,7 @@ import { PepButton } from '../button/button.model';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/group-buttons',
+    title: 'Components/Group buttons',
     component: PepGroupButtonsComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -103,6 +103,16 @@ export default {
     },
 } as Meta;
 
+const buttonsContent = [ 
+    {key: "x01", value: "Tramontana"},
+    {key: "x02", value: "Greco"},
+    {key: "x03", value: "Levante"},
+    {key: "x04", value: "Scirocco"},
+    {key: "x05", value: "Ostro"},
+    {key: "x06", value: "Libeccio", selected: true},
+    {key: "x07", value: "Ponente", disabled: true},
+    {key: "x08", value: "Maestro"},
+];
 
 let buttons: Array<PepButton> = [
     { key: '1', value: '1', callback: (event: any) => onColNumChanged(event.source.key)},
@@ -115,17 +125,66 @@ function onColNumChanged(event){
 }
 
 // This creates a Story for the component
-const Template: Story<PepGroupButtonsComponent> = (args: PepGroupButtonsComponent) => ({
+const StoryTemplate: Story<PepGroupButtonsComponent> = (args: PepGroupButtonsComponent) => ({
     props: {
         ...args,
         buttons: buttons,
         buttonClick: action('buttonClick'),
     },
-    // template: `
-    //     <pep-button [value]="value" [disabled]="disabled" [styleType]="styleType" [styleStateType]="styleStateType" [sizeType]="sizeType" [iconName]="iconName"
-    //     [iconPosition]="iconPosition" [visible]="visible" (buttonClick)="buttonClick($event)"></pep-button>
-    // `,
 });
 
-export const Base = Template.bind({});
-Base.args = {}
+const ThisStoryTemplate: Story<PepGroupButtonsComponent> = (args: PepGroupButtonsComponent) => ({
+    props: {
+        ...args,
+        buttons: buttonsContent,
+        buttonClick: action('buttonClick'),
+    },
+});
+
+export const Story1 = StoryTemplate.bind({});
+Story1.storyName = "Basic"
+
+export const Story2 = ThisStoryTemplate.bind({});
+Story2.storyName = "Regular view type"
+Story2.args = {
+    viewType: "regular"
+}
+
+export const Story3 = ThisStoryTemplate.bind({});
+Story3.storyName = "Dropdown view type"
+Story3.args = {
+    //! the disabled item is clickable in dropdown view
+    viewType: "dropdown",
+}
+
+export const Story4 = ThisStoryTemplate.bind({});
+Story4.storyName = "Split view type"
+Story4.args = {
+    viewType: "split",
+}
+
+export const Story5 = ThisStoryTemplate.bind({});
+Story5.storyName = "Toggle view type w/ initial selection"
+Story5.parameters = {
+    docs: {
+        description: {
+            story: "This view allows you to toggle the buttons in the group. You can select an initial button by `key` with the `selectedButtonKey` arg",
+        },
+    },  
+}
+Story5.args = {
+    viewType: "toggle",
+    selectedButtonKey: "x02"
+}
+export const Story6 = ThisStoryTemplate.bind({});
+Story6.storyName = "Toggle view type wo/ initial selection"
+Story6.parameters = {
+    docs: {
+        description: {
+            story: "Here no initial button was selected but you can still toggle the buttons",
+        },
+    },  
+}
+Story6.args = {
+    viewType: "toggle",
+}
