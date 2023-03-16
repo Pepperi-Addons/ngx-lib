@@ -9,7 +9,7 @@
                 maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
                 [placeholder]="hasParent && !disabled ? placeholder : ''"
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
-                title="{{ displayValue }}" [formControlName]="key" [type]="type" [value]="displayValue"
+                title="{{ displayValue }}" [formControlName]="key" [value]="displayValue"
                 (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" (blur)="onBlur($event)"
                 (change)="onChange($event)" [ngClass]="{'disable-hidden': disabled && displayValue?.length > 0}" />
 
@@ -38,10 +38,10 @@
             </mat-error>
 
             <pep-textbox-icon *ngIf="renderSymbol && isFormView && xAlignment == 'right'" matPrefix [value]="value"
-                [label]="label" [type]="type" [disabled]="disabled">
+                [label]="label" type="link" [disabled]="disabled">
             </pep-textbox-icon>
             <pep-textbox-icon *ngIf="renderSymbol && isFormView && (xAlignment == 'left')" matSuffix [value]="value"
-                [label]="label" [type]="type" [disabled]="disabled">
+                [label]="label" type="link" [disabled]="disabled">
             </pep-textbox-icon>
         </mat-form-field>
     </ng-template>
