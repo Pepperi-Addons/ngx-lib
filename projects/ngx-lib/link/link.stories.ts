@@ -83,14 +83,14 @@ const Template: Story<PepLinkComponent> = (args: PepLinkComponent) => ({
 export const Base = Template.bind({});
 Base.args = {
     label: 'link',
-    displayValue: 'go to google',
     value: 'http://www.google.com',
+    displayValue: 'go to google',
 };
 
 export const Link = Template.bind({});
 Link.args = {
     label: 'link',
-    displayValue: 'go to google 2',
     value: 'http://www.google.com',
+    displayValue: 'go to google 2',
     // disabled: true
 };

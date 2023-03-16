@@ -14,9 +14,12 @@
                 (change)="onChange($event)" [ngClass]="{'disable-hidden': disabled && displayValue?.length > 0}" />
 
             <span *ngIf="disabled && displayValue?.length > 0" class="dis-grid">
+                &nbsp;
                 <a href="javascript:void(0)" (click)="anchorClicked()" [id]="key" [name]="key"
                     class="color-link body-sm ">
-                    {{displayValue}}</a>
+                    {{displayValue}}
+                </a>
+                &nbsp;
             </span>
             <mat-error *ngIf="renderError">
                 <ng-container *ngIf="mandatory && input.value.length == 0 then requiredError else otherError">
