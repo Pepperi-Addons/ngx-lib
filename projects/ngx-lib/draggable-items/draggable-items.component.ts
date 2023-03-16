@@ -15,12 +15,8 @@ export class PepDraggableItemsComponent implements OnInit, OnDestroy {
     @Input() showSearch = false;
     @Input() title = '';
     @Input() titleType: PepDraggableItemsTitleType = 'regular';
-    //! 'md' should be the default
-    @Input() titleSizeType: PepSizeType = 'xl';
-    
-    //! This shouldn't be an option 
-    //! And it should be 'weak'
-    @Input() itemPlaceholderType: PepDraggableItemPlaceholderType = 'none';
+    @Input() titleSizeType: PepSizeType = 'md';
+    @Input() itemPlaceholderType: PepDraggableItemPlaceholderType = 'weak';
 
     @Input() dropAreaIds = [];
 

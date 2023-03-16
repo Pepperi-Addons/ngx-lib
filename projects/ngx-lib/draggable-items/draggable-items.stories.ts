@@ -62,27 +62,10 @@ export default {
                 defaultValue: { summary: 'xl' },
             }
         },
-        itemPlaceholderType: {
-            //! Unnecessary - is always 'weak'
-            description: 'Placeholder type',
-            options: [
-                'weak', 
-                'none',
-                'regular'
-            ],        
-            control: { type: 'radio' },    
-            table: {
-                type: {
-                    summary: 'weak | none | regular',                    
-                },
-                defaultValue: { summary: 'none' },
-            }
-        },
         dropAreaIds: {
             description: 'Whether draggable-items should drag into'
         },
         items: {
-            //! not working?
             description: 'The draggable items within the list',            
             defaultValue: [],
             control: 'array',
@@ -124,7 +107,6 @@ export default {
                 'title',
                 'titleType',
                 'titleSizeType',
-                'itemPlaceholderType',
                 'dropAreaIds',
                 'items',
                 "itemDragStarted",
@@ -153,7 +135,6 @@ const TemplateBase: Story<PepDraggableItemsModule> = (args: PepDraggableItemsMod
     props: {
         ...args,
         items: items,
-        itemPlaceholderType: 'weak',
         titleSizeType: 'sm',
         itemDragStarted: action('itemDragStarted'),
         itemDragEnded: action('itemDragEnded')
@@ -207,7 +188,7 @@ const Template: Story<PepDraggableItemsModule> = (args: PepDraggableItemsModule)
         <div style="display:flex; gap:2rem;">
             <div cdkDropList [cdkDropListData]="items" >
                 <pep-draggable-items [items]="items" title="Available items" titleType="with-bottom-border" 
-                    itemPlaceholderType="weak" titleSizeType="md" [showSearch]="false" [dropAreaIds]="['dropArea1']">
+                    titleSizeType="md" [showSearch]="false" [dropAreaIds]="['dropArea1']">
                 </pep-draggable-items>
             </div>
             <div cdkDropList id="dropArea1" (cdkDropListDropped)="drop($event)" 
@@ -223,6 +204,7 @@ const Template: Story<PepDraggableItemsModule> = (args: PepDraggableItemsModule)
     `
 });
 
+// TODO Better docs that explain how it works 
 export const Story2 = Template.bind({});
 Story2.storyName = 'Drag into area';
 Story2.parameters = {
@@ -245,37 +227,17 @@ Story3.parameters = {
             story: "Here you can filter out items by using the search box" ,
         },
     },  
-}
-;
-export const Story4 = TemplateBase.bind({});
-//! Can we manually sort the list?
-Story4.storyName = 'Change list order';
-Story4.args = {
-    //! Do we have something like that?
-    //! isDraggable: true
-};
-Story4.parameters = {
-    docs: {
-        description: {
-            story: "Drag items inside the list to change their order" ,
-        },
-    },  
 };
 
-// const Story5T: Story<PepDraggableItemsModule> = (args: PepDraggableItemsModule) => ({
-//     props: {
-//         ...args,
-//         // items: items,
-//         itemDragStarted: action('itemDragStarted'),
-//         itemDragEnded: action('itemDragEnded')
-//     }
-// });
-// export const Story5 = Story5T.bind({});
-// Story5.storyName = 'Temp list';
-// Story5.parameters = {
+// TODO Show manual sorting of the list - material stuff
+// export const Story4 = TemplateBase.bind({});
+// Story4.storyName = 'Change list order';
+// Story4.args = {
+// };
+// Story4.parameters = {
 //     docs: {
 //         description: {
-//             story: "For this to work you'll need to select an icon with `iconName`" ,
+//             story: "Drag items inside the list to change their order" ,
 //         },
 //     },  
 // };
