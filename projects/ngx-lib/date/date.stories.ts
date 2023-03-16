@@ -118,9 +118,7 @@ Story3.storyName = "Invalid value";
 Story3.args = {
     label: 'Invalid value',
     type: 'datetime',
-    //! value is wrong
-    //! yet the error isn't rendered immediately
-    //! but only after clicking outside
+    //! The `value` is wrong yet the error isn't rendered immediately but only after clicking outside
     value: 'ddoun-1-1 12:00',
     renderError: true,
 };

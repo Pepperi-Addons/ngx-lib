@@ -97,6 +97,7 @@ export const Story2 = Template.bind({});
 Story2.storyName = 'Type is main';
 Story2.args = {
     label: 'Type is main',
+    // TODO `value` should be `color-main` when type: 'main'
     type: 'main',
 };
 Story2.parameters = {
@@ -111,6 +112,7 @@ export const Story3 = Template.bind({});
 Story3.storyName = 'Type is success';
 Story3.args = {
     label: 'Type is success',
+    // TODO `value` should be `color-success` when type: 'success'
     type: 'success',
 };
 Story3.parameters = {
@@ -125,6 +127,7 @@ export const Story4 = Template.bind({});
 Story4.storyName = 'Type is caution';
 Story4.args = {
     label: 'Type is caution',
+    // TODO `value` should be `color-caution` when type: 'caution'
     type: 'caution',
 };
 Story4.parameters = {
@@ -159,7 +162,7 @@ Story6.args = {
 Story6.parameters = {
     docs: {
         description: {
-            story: "There's an issue when using CSS color names - try using `HotPink` as opposed to its corresponding HEX color `#FF69B4`",
+            story: "Set your own default color with the `value` arg",
         },
     },  
 };
