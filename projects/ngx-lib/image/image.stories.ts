@@ -63,11 +63,6 @@ const Template: Story<PepImageComponent> = (args: PepImageComponent) => ({
     props: {
         ...args,
     },
-    // [srcLarge]="srcLarge"
-    // template: `
-    //     <pep-image [label]="label" [src]="src" [mandatory]="mandatory" [disabled]="disabled" [xAlignment]="xAlignment" [rowSpan]="rowSpan"
-    //     [showTitle]="showTitle" (elementClick)="elementClick($event)" (fileChange)="fileChange($event)"></pep-image>
-    // `,
 });
 
 export const Story1 = Template.bind({});
@@ -106,16 +101,18 @@ Story4.args = {
 };
 
 export const Story5 = Template.bind({});
-//! How can we show it with the placeholder image?
-Story5.storyName = 'Missing image / placeholder';
+Story5.storyName = 'Broken image link';
 Story5.args = {
     src:
-        'jhgvdhgvhvg',
+        'https://jhgvdhgvhvg.idb',
 };
 Story5.parameters = {
     docs: {
         description: {
-            story: "How can we show it with the placeholder image?" ,
+            story: "This story is showing the placeholder image for a broken image link" ,
         },
     },  
 };
+Story5.decorators = [
+    componentWrapperDecorator((story) => `<div style="width: 16em">${story}</div>`),
+];
