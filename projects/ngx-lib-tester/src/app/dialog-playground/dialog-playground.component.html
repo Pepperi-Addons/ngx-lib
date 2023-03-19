@@ -36,7 +36,7 @@
 <ng-template #skeletonLoaderTempRef>
     <pep-dialog [title]="'Skeleton dialog'" (close)="closeDialog()">
         <ng-container pep-dialog-content>
-            <pep-skeleton-loader [rectHeight]="'sm'" [rectNum]="8" [lastRectOffset]="true"></pep-skeleton-loader>
+            <pep-skeleton-loader [rowHeightType]="'sm'" [rowsNumber]="8" [lastRowOffset]="true"></pep-skeleton-loader>
         </ng-container>
         <ng-container pep-dialog-actions>
             <div class="pep-spacing-element-negative">

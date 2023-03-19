@@ -165,7 +165,7 @@ export const commonArgTypes = {
         }
     },
     rowSpan: {
-        description: 'The numbers of rows that the component should bo on (height)',
+        description: 'The numbers of rows that the component should be on (height)',
         defaultValue: 1,
         control: {
             type: 'number',
