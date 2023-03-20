@@ -1,7 +1,7 @@
 // .storybook/manager.js
 
 import { addons } from '@storybook/addons';
-import pepperiTheme from './pepperi-theme';
+import pepperiTheme from './pepperiTheme';
 
 addons.setConfig({
     isFullscreen: false,
