@@ -11,7 +11,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/menu',
+    title: 'Components/Menu',
     component: PepMenuComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -106,6 +106,18 @@ export default {
     },
 } as Meta;
 
+const itemList = [
+    { key: "N", text: 'Tramontana' },
+    { key: "NE", text: 'Gregale', disabled: true },
+    { key: "E", text: 'Levante' },
+    { key: "SE", text: 'Scirocco' },
+    { key: 'sep', type: 'splitter' },
+    { key: "S", text: 'Ostro', iconName: 'system_link' },
+    { key: "SW", text: 'Libeccio', iconName: 'system_lock' },
+    { key: "W", text: 'Ponente', iconName: 'system_logic' },
+    { key: "NW", text: 'Mistral', iconName: 'system_map' },
+];
+
 // This creates a Story for the component
 const Template: Story<PepMenuComponent> = (args: PepMenuComponent) => ({
     props: {
@@ -113,32 +125,55 @@ const Template: Story<PepMenuComponent> = (args: PepMenuComponent) => ({
         menuClick: action('menuClick'),
         menuItemClick: action('menuItemClick'),
     },
-    // template: `
-    //     <pep-menu [text]="text" [iconName]="iconName" [type]="type" [styleType]="styleType" [sizeType]="sizeType" [classNames]="classNames" 
-    //     [disabled]="disabled" [items]="items" [selectedItem]="selectedItem" (menuClick)="menuClick($event)" (menuItemClick)="menuItemClick($event)"></pep-menu>
-    // `,
 });
 
 export const Base = Template.bind({});
 Base.storyName = 'Basic';
 Base.args = {
-    // iconName: 'system_menu',
-    items: [
-        { key: 'test1', text: 'test 1' },
-        { key: 'test2', text: 'test 2', disabled: true },
-        { key: 'sep', type: 'splitter' },
-        { key: 'test3', text: 'test 3', iconName: pepIconSystemMenu.name },
-    ],
+    items: itemList,
 };
 
-export const Select = Template.bind({});
-Select.args = {
-    text: '',
+export const Story2 = Template.bind({});
+Story2.storyName = 'Action (default)';
+Story2.parameters = {
+    docs: {
+        description: {
+            story: "If you want the menu to have a title (like in this story have _This list_ near the icon), use the `text` args",
+        }
+    }
+}
+Story2.args = {
+    text: 'This list',
+    items: itemList,
+};
+
+export const Story3 = Template.bind({});
+Story3.storyName = 'Action select';
+Story3.parameters = {
+    docs: {
+        description: {
+            story: "The `action-select` option will show the `text` args but will change to the selected item, once selected. Here we changed the default `system_menu` icon using the `iconName` args",
+        }
+    }
+}
+Story3.args = {
+    iconName: 'system_bolt',
+    text: 'Please select',
+    type: 'action-select',
+    items: itemList,
+};
+
+export const Story4 = Template.bind({});
+Story4.storyName = 'Select';
+Story4.parameters = {
+    docs: {
+        description: {
+            story: "The `select` option won't show the `text` args but the selected item. Here we changed the default `system_menu` icon using the `iconName` args",
+        }
+    }
+}
+Story4.args = {
+    iconName: 'system_move',
     type: 'select',
-    // iconName: 'system_menu',
-    items: [
-        { key: 'test1', text: 'test 1' },
-        { key: 'test2', text: 'test 2' },
-        { key: 'test3', text: 'test 3', iconName: pepIconSystemMenu.name },
-    ],
+    items: itemList,
 };
