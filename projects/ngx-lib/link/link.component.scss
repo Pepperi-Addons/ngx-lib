@@ -1,3 +1,5 @@
+@use '../src/core/style/abstracts/variables';
+
 :host {
     height: inherit;
     display: grid;
@@ -14,6 +16,8 @@
 
 .dis-grid {
     display:grid;
+    grid-auto-flow: column;
+    align-items: center;
 }
 
 .multi-rows-text {

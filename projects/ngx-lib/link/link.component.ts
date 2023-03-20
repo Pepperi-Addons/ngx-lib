@@ -103,14 +103,6 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     @Input() placeholder = '';
 
     /**
-     * The type of the link.
-     *
-     * @type {PepTextboxFieldType}
-     * @memberof PepLinkComponent
-     */
-    type: PepTextboxFieldType = 'link';
-
-    /**
      * If the link is mandatory
      *
      * @memberof PepLinkComponent
@@ -216,7 +208,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
             readonly: this.readonly,
             disabled: this.disabled,
             maxFieldCharacters: this.maxFieldCharacters,
-            type: this.type,
+            type: 'link',
         });
         this.form = this.customizationService.getDefaultFromGroup(
             pepField,

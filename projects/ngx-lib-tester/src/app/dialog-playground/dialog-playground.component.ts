@@ -88,7 +88,7 @@ export class DialogPlaygroundComponent implements OnInit {
         const actionButtons = [
             new PepDialogActionButton(
                 'Close',
-                null,
+                'regular',
                 () => this.closeDialog()
             ),
             new PepDialogActionButton(
@@ -105,9 +105,9 @@ export class DialogPlaygroundComponent implements OnInit {
             actionsType: 'custom',
             content: '<button>Open Dialog</button>',
             actionButtons,
-            showClose: true,
-            showHeader: true,
-            showFooter: true
+            showClose: this.selectedOptions.includes('showClose'),
+            showHeader: this.selectedOptions.includes('showHeader'),
+            showFooter: this.selectedOptions.includes('showFooter'),
         });
         
         this.dialogRef = this.dialogService.openDefaultDialog(data,config);
@@ -130,7 +130,7 @@ export class DialogPlaygroundComponent implements OnInit {
         this.dialogArr.push(this.dialogRef);
         
         this.dialogRef.afterClosed().subscribe(result => {
-            debugger;
+
          });
     }
 

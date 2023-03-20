@@ -30,12 +30,12 @@
 </ng-template>
 <ng-template #notInlineBlock>
     <div [formGroup]="form">
-        <mat-radio-group class="radio-group" [formControlName]="firstControlKey">
+        <mat-radio-group class="radio-group " [formControlName]="firstControlKey">
             <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="true">
-                {{ 'CHECKBOX.TRUE' | translate }}
+                <span class="body-sm ellipsis">{{ 'CHECKBOX.TRUE' | translate }}</span>
             </mat-radio-button>
             <mat-radio-button class="pep-radio-button md pep-input no-default-background" value="false">
-                {{ 'CHECKBOX.FALSE' | translate }}
+                <span class="body-sm ellipsis">{{ 'CHECKBOX.FALSE' | translate }}</span>
             </mat-radio-button>
         </mat-radio-group>
     </div>
