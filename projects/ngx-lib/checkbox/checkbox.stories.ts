@@ -92,8 +92,9 @@ const Template: Story<PepCheckboxComponent> = (args: PepCheckboxComponent) => ({
 
 export const Story1 = Template.bind({});
 Story1.storyName = 'Basic';
+//! Why is `value` a sting and not a boolean? Why no title? Then why show `renderTitle` & `showTitle?`
 Story1.args = {
-    label: 'Check this out → Why is "value" a sting and not a boolean? Why no title? Then why show "renderTitle" & "showTitle?"',
+    label: 'Check this out',
     value: 'true',  
     additionalValue: { CheckedText: '❤', UncheckedText: '💛' },
 };
