@@ -15,9 +15,6 @@ export default {
         moduleMetadata({
             imports: [PepImagesFilmstripModule, SBNgxHelperModule],
         }),
-        componentWrapperDecorator(
-            (story) => `<div style="width: clamp(12rem, 40rem, 100vw);">${story}</div>`
-        ),
     ],
     args: {
         rowSpan: 8,
@@ -33,10 +30,17 @@ export default {
             },
         },
         rowSpan: commonArgTypes.rowSpan,
+        showThumbnails: {
+            description: "Show thumbnails? Positioning is automated, if narrow is below, if wide is on the side, which side? that's depended on the text direction",
+            defaultValue: false,
+            control: {
+                type: 'boolean',
+            },
+        }
     },
     parameters: {
         controls: {
-            include: ['label', 'value', 'xAlignment', 'rowSpan', 'showTitle', 'renderTitle'],
+            include: ['label', 'value', 'xAlignment', 'rowSpan', 'showTitle', 'renderTitle', 'showThumbnails'],
         },
     },
 } as Meta;
@@ -55,27 +59,40 @@ const imageSrc = 'https://yonatankof.com/misc/pepp/Addon%20Hackathon%20-%20Badge
 export const Story1 = Template.bind({});
 Story1.storyName = 'Basic';
 Story1.args = {
-    label: "Hey there!",
+    label: "Hey there, I'm an images filmstrip component",
     value: imageSrc,
 };
+Story1.decorators = [
+    componentWrapperDecorator((story) => `<div style="width: clamp(12rem, 40rem, 100vw);">${story}</div>`),
+];
+
 export const Story2 = Template.bind({});
 Story2.storyName = 'No title & missing image';
 Story2.args = {
+    rowSpan: 6,
     renderTitle: false,
     value:
         'https://yonatanape.com/misc/pepp/Addon%20Hackathon%20-%20Badge.png;https://yonatanape.com/misc/pepp/404-Hero.gif;https://yonatanape.com/misc/pepp/TechStack.png',
 };
+Story2.decorators = [
+    componentWrapperDecorator((story) => `<div style="width: clamp(12rem, 24rem, 100vw);">${story}</div>`),
+];
+
 export const Story3 = Template.bind({});
 Story3.storyName = 'With thumbnails';
+Story3.decorators = [
+    componentWrapperDecorator((story) => `<div style="width: clamp(12rem, 60rem, 100vw);">${story}</div>`),
+];
 Story3.parameters = {
     docs: {
-        //! Is there a way to add the thumbnails to the mix?
         description: {
-            story: "Is there a way to add the thumbnails to the mix?" ,
+            story: 'The `showThumbnails` args works only with a reload, see the screenshot below ![A screenshot that shows how to reload the story](https://yonatankof.com/misc/pepp/ss01.png "Reload the story")',
         },
     },  
 };
 Story3.args = {
     renderTitle: false,
     value: imageSrc,
+    showThumbnails: true,
+    rowSpan: 12,
 };
