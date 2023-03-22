@@ -20,7 +20,16 @@ export default {
     ],
     argTypes: {
         label: commonArgTypes.label,
-        value: commonArgTypes.value,
+        value: {
+            description: 'Is the checkbox true or false',
+            defaultValue: false,
+            control: {
+                type: 'boolean',
+            },
+            table: {
+                defaultValue: { summary: 'false' },
+            }
+        },
         visible: commonArgTypes.visible,
         xAlignment: commonArgTypes.xAlignment,
         disabled: commonArgTypes.disabled,
@@ -92,24 +101,22 @@ const Template: Story<PepCheckboxComponent> = (args: PepCheckboxComponent) => ({
 
 export const Story1 = Template.bind({});
 Story1.storyName = 'Basic';
-//! Why is `value` a sting and not a boolean? Why no title? Then why show `renderTitle` & `showTitle?`
 Story1.args = {
     label: 'Check this out',
-    value: 'true',  
-    additionalValue: { CheckedText: '❤', UncheckedText: '💛' },
+    value: true,  
 };
 
 export const Story2 = Template.bind({});
 Story2.storyName = 'No label';
 Story2.args = {
-    value: 'true',  
+    value: true,  
 };
 
 export const Story3 = Template.bind({});
 Story3.storyName = 'Disabled & checked';
 Story3.args = {
     label: 'Disabled & checked',
-    value: 'true', 
+    value: true, 
     disabled: true, 
 };
 
@@ -117,7 +124,7 @@ export const Story4 = Template.bind({});
 Story4.storyName = 'Disabled & unchecked';
 Story4.args = {
     label: 'Disabled & unchecked',
-    value: 'false', 
+    value: false, 
     disabled: true, 
 };
 
@@ -125,7 +132,15 @@ export const Story5 = Template.bind({});
 Story5.storyName = 'Flipped & mandatory';
 Story5.args = {
     label: 'Flipped & mandatory',
-    value: 'true',  
+    value: true,  
     mandatory: true,
     xAlignment: "right",
+};
+
+export const Story6 = Template.bind({});
+Story6.storyName = 'Type is booleanText';
+Story6.args = {
+    // label: 'N',
+    type: 'booleanText',
+    additionalValue: { CheckedText: '❤', UncheckedText: '💛' },
 };
