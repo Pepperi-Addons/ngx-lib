@@ -127,9 +127,9 @@ const Template: Story<PepMenuComponent> = (args: PepMenuComponent) => ({
     },
 });
 
-export const Base = Template.bind({});
-Base.storyName = 'Basic';
-Base.args = {
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
     items: itemList,
 };
 

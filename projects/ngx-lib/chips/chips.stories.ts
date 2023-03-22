@@ -233,7 +233,7 @@ Story4.args = {
     inline: true,
 }
 Story4.decorators = [
-    componentWrapperDecorator((story) => `<div style="height: 16em">${story}</div>`),
+    componentWrapperDecorator((story) => `<div style="height: 16em;">${story}</div>`),
   ];
 Story4.parameters = {
     docs: {

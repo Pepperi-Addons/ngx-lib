@@ -72,7 +72,7 @@ Story1.args = {
         'https://yonatankof.com/misc/pepp/Addon%20Hackathon%20-%20Badge.png',
 };
 Story1.decorators = [
-    componentWrapperDecorator((story) => `<div style="width: 16em">${story}</div>`),
+    componentWrapperDecorator((story) => `<div style="width: 16em;">${story}</div>`),
 ];
 
 export const Story2 = Template.bind({});
@@ -114,5 +114,5 @@ Story5.parameters = {
     },  
 };
 Story5.decorators = [
-    componentWrapperDecorator((story) => `<div style="width: 16em">${story}</div>`),
+    componentWrapperDecorator((story) => `<div style="width: 16em;">${story}</div>`),
 ];
