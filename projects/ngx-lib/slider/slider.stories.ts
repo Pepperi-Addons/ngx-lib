@@ -25,6 +25,7 @@ export default {
         label: commonArgTypes.label,
         disabled: commonArgTypes.disabled,
         hint: commonArgTypes.hint,
+        xAlignment: commonArgTypes.xAlignment,
         minValue: {
             description: 'This is min value of the component',
         },
@@ -33,6 +34,11 @@ export default {
         },
     },
     parameters: {
+        docs: {
+			description: {
+				component: 'This is a slider component that is in use ',
+			},
+		},
         controls: {
             include: [
                 'value',
@@ -41,6 +47,7 @@ export default {
                 'hint',
                 'minValue',
                 'maxValue',
+                'xAlignment',
             ],
         },
     },
@@ -64,8 +71,10 @@ const Template: Story<PepSliderComponent> = (args: PepSliderComponent) => ({
     // `,
 });
 
-export const Base = Template.bind({});
-Base.args = {
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
+    label: 'This slider',
     value: 50,
     hint: 'percentage',
     minValue: 0,
