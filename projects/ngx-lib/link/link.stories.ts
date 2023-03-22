@@ -11,7 +11,7 @@ export default {
     // The title defines the name and where in the structure of
     // Storybook's menu this is going to be placed.
     // Here we add it to a "Components" section under "Link"
-    title: 'Components/link',
+    title: 'Components/Link',
     // The component related to the Stories
     component: PepLinkComponent,
     argTypes: {
@@ -80,17 +80,48 @@ const Template: Story<PepLinkComponent> = (args: PepLinkComponent) => ({
     elementClick: action('elementClick'),
 });
 
-export const Base = Template.bind({});
-Base.args = {
-    label: 'link',
-    value: 'http://www.google.com',
-    displayValue: 'go to google',
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
+    label: 'Link input',
+    value: 'https://www.pepperi.com',
+    displayValue: "Visit Pepperi's website",
 };
 
-export const Link = Template.bind({});
-Link.args = {
-    label: 'link',
-    value: 'http://www.google.com',
-    displayValue: 'go to google 2',
+export const Story2 = Template.bind({});
+Story2.storyName = 'Empty';
+Story2.args = {
+    label: 'Empty link input',
+    // value: 'https://www.pepperi.com',
+    displayValue: "Type link here",
     // disabled: true
 };
+
+export const Story3 = Template.bind({});
+Story3.storyName = 'Read only';
+Story3.args = {
+    label: 'Read only link input',
+    value: 'https://www.pepperi.com',
+    displayValue: "Visit Pepperi's website",
+    disabled: true
+};
+
+export const Story4 = Template.bind({});
+Story4.storyName = 'Read only, no button';
+Story4.args = {
+    label: 'Read only link input',
+    value: 'https://www.pepperi.com',
+    displayValue: "Visit Pepperi's website",
+    disabled: true,
+    renderSymbol: false
+};
+
+export const Story5 = Template.bind({});
+Story5.storyName = 'Max characters';
+Story5.args = {
+    label: 'Max characters link input',
+    displayValue: "Type link here",
+    maxFieldCharacters: 15
+};
+
+// TODO show error type
