@@ -109,7 +109,6 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
      */
     @Input() mandatory = false;
 
-    // TODO: Check if should remove disabled and keep only readonly.
     /**
      * If the link is disabled.
      *

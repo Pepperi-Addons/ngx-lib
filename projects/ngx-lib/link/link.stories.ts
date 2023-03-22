@@ -80,6 +80,8 @@ const Template: Story<PepLinkComponent> = (args: PepLinkComponent) => ({
     elementClick: action('elementClick'),
 });
 
+// TODO should this be only read only?
+
 export const Story1 = Template.bind({});
 Story1.storyName = 'Basic';
 Story1.args = {
@@ -92,9 +94,7 @@ export const Story2 = Template.bind({});
 Story2.storyName = 'Empty';
 Story2.args = {
     label: 'Empty link input',
-    // value: 'https://www.pepperi.com',
     displayValue: "Type link here",
-    // disabled: true
 };
 
 export const Story3 = Template.bind({});

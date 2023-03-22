@@ -156,7 +156,7 @@ export const Story6 = Template.bind({});
 Story6.storyName = "Set stating color";
 Story6.args = {
     label: "Set stating color",
-    //! There's an issue when using CSS color names - try using `HotPink` as opposed to its corresponding HEX color `#FF69B4`
+    // TODO Support CSS color names like `HotPink`
     value: "#FF69B4",
 };
 Story6.parameters = {

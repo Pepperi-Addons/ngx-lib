@@ -153,7 +153,7 @@ Story2.args = {
 export const Story3 = ThisStoryTemplate.bind({});
 Story3.storyName = "Dropdown view type"
 Story3.args = {
-    //! the disabled item is clickable in dropdown view
+    // TODO Show the disabled item in dropdown view
     viewType: "dropdown",
 }
 

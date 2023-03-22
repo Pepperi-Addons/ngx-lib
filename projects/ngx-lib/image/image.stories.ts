@@ -80,14 +80,7 @@ Story2.storyName = 'Without an image';
 
 export const Story3 = Template.bind({});
 Story3.storyName = 'With an image';
-//! Issue with width... might need to add min-width
-Story3.parameters = {
-    docs: {
-        description: {
-            story: "Issue with width... might need to add `min-width`" ,
-        },
-    },  
-};
+// TODO Set min-width
 Story3.args = {
     rowSpan: 2,
     src:
