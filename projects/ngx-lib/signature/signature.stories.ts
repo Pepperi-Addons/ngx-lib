@@ -1,4 +1,4 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { moduleMetadata, Story, Meta, componentWrapperDecorator } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 import { commonArgTypes } from '@storybook-settings/common-args.model';
 
@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/signature',
+    title: 'Components/Signature',
     component: PepSignatureComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -17,11 +17,13 @@ export default {
         moduleMetadata({
             imports: [PepSignatureModule, SBNgxHelperModule],
         }),
+        componentWrapperDecorator((story) => `<div style="width: clamp(12rem, 40rem, 100vw);">${story}</div>`),
     ],
     args: {
         rowSpan: 4,
     },
     argTypes: {
+        readonly: commonArgTypes.readonly,
         label: commonArgTypes.label,
         mandatory: commonArgTypes.mandatory,
         xAlignment: commonArgTypes.xAlignment,
@@ -48,6 +50,7 @@ export default {
                 'showTitle',
                 'elementClick',
                 'fileChange',
+                'readonly',
             ],
         },
     },
@@ -66,8 +69,24 @@ const Template: Story<PepSignatureComponent> = (args: PepSignatureComponent) => 
     // `,
 });
 
-export const Base = Template.bind({});
-Base.storyName = 'Basic';
-Base.args = {
-    src: 'https://i.ibb.co/VMHwLkm/58957776-8700-4c6a-b9bc-a171b84d8080.png'
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
+    //! Popup ain't closing
+    src: 'https://yonatankof.com/misc/pepp/signature.png',
+    label: 'This signature is wow'
+};
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'Empty';
+Story2.args = {
+    label: 'Set your signature here'
+};
+
+export const Story3 = Template.bind({});
+Story3.storyName = 'Read only (not working properly)';
+Story3.args = {
+    //! Read only is only in the dialog - it should in a higher level 
+    src: 'https://yonatankof.com/misc/pepp/signature.png',
+    label: 'Set your signature here'
 };
