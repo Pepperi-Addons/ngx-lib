@@ -78,15 +78,16 @@ Story1.args = {
 };
 
 export const Story2 = Template.bind({});
+//! Opening signature in new tab
 Story2.storyName = 'Empty';
 Story2.args = {
     label: 'Set your signature here'
 };
 
 export const Story3 = Template.bind({});
-Story3.storyName = 'Read only (not working properly)';
+Story3.storyName = 'Read only';
 Story3.args = {
-    //! Read only is only in the dialog - it should in a higher level 
+    disabled: true,
     src: 'https://yonatankof.com/misc/pepp/signature.png',
     label: 'Set your signature here'
 };

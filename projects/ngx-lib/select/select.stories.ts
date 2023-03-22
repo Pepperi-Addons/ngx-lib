@@ -29,15 +29,6 @@ export default {
         xAlignment: commonArgTypes.xAlignment,
         mandatory: commonArgTypes.mandatory,
         showTitle: commonArgTypes.showTitle,
-        layoutType: {
-            description: 'This is the layout type of the component',
-            defaultValue: 'form',
-            control: {
-                type: 'radio',
-                options: ['form', 'card', 'table'],
-            },
-        },
-        rowSpan: commonArgTypes.rowSpan,
         readonly: commonArgTypes.readonly,
         type: {
             description: 'This is the type of the component',
@@ -60,9 +51,7 @@ export default {
                 'mandatory',
                 'disabled',
                 'showTitle',
-                'rowSpan',
                 'valueChange',
-                'layoutType',
                 'options',
                 'readonly',
             ],
@@ -141,29 +130,9 @@ Story4.parameters = {
 };
 
 export const Story5 = Template.bind({});
-Story5.storyName = "Card layout type"
+Story5.storyName = "Disabled"
 Story5.args = {
     label: 'Select an option',
-    value: 'N;W;E',
-    type: 'multi',
     options: theseOptions,
-    layoutType: 'card',
-};
-Story5.parameters = {
-    docs: {
-        description: {
-            story: "You can have multi selection on init with the `value` args using the item's `key` separated by `;`" ,
-        },
-    },  
-};
-
-export const Story6 = Template.bind({});
-Story6.storyName = "Read only"
-Story6.args = {
-    label: 'Select an option',
-    options: theseOptions,
-    //! rowSpan not working
-    rowSpan: 10,
-    //! readonly not working
-    readonly: true,
+    disabled: true,
 };

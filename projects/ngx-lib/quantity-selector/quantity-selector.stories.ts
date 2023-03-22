@@ -15,9 +15,6 @@ export default {
     title: 'Components/Quantity selector',
     // The component related to the Stories
     component: PepQuantitySelectorComponent,
-    args: {
-        rowSpan: 2,
-    },
     argTypes: {
         label: commonArgTypes.label,
         value: commonArgTypes.value,
@@ -42,7 +39,6 @@ export default {
                 defaultValue: { summary: 'regular' },
             },
         },
-        rowSpan: commonArgTypes.rowSpan,
         visible: commonArgTypes.visible,
         showTitle: commonArgTypes.showTitle,
         valueChange: commonArgTypes.valueChange,
@@ -60,7 +56,6 @@ export default {
                 'xAlignment',
                 'allowDecimal',
                 'styleType',
-                'rowSpan',
                 'visible',
                 'showTitle',
                 'valueChange',
@@ -85,11 +80,6 @@ const Template: Story<PepQuantitySelectorComponent> = (
         valueChange: action('valueChange'),
         elementClick: action('elementClick'),
     },
-    // template: `
-    //     <pep-quantity-selector [label]="label" [value]="value" [disabled]="disabled" [readonly]="readonly" [mandatory]="mandatory" [textColor]="textColor"
-    //     [xAlignment]="xAlignment" [allowDecimal]="allowDecimal" [styleType]="styleType" [visible]="visible" [showTitle]="showTitle" [rowSpan]="rowSpan"
-    //     (valueChange)="valueChange($event)" (elementClick)="elementClick($event)"></pep-quantity-selector>
-    // `,
 });
 
 export const Story1 = Template.bind({});
@@ -107,13 +97,10 @@ Story2.args = {
     disabled: false,
     readonly: false,
     mandatory: true,
-    //! What is the use of textColor?
     textColor: '#F26B6B',
     xAlignment: 'center',
     allowDecimal: false,
     styleType: 'strong',
-    //! What is the use of rowSpan?
-    rowSpan: '4',
     visible: true,
     showTitle: true,
 };
@@ -129,6 +116,5 @@ Story3.args = {
     xAlignment: 'center',
     allowDecimal: true,
     styleType: 'weak',
-    //! showTitle is true without label is giving the same results
     showTitle: true,
 };

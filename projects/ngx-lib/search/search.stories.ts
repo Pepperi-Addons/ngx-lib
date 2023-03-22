@@ -80,11 +80,16 @@ Story2.args = {
     shrink: 'always',
 };
 export const Story3 = Template.bind({});
-Story3.storyName = 'Shrink on small screens (not working)';
+Story3.storyName = 'Shrink on small screens';
+// TODO add `size-detector` for it to work
 Story3.args = {
     value: 'Type your search here...',
     shrink: 'small-screen',
-};
+};  
 
-// TODO fix `small-screen` not working
-//! What is PepSearchType, PepSearchTriggerType & PepSearchStateType?
+export const Story4 = Template.bind({});
+Story4.storyName = 'Keydown';
+// TODO add `size-detector` for it to work
+Story4.args = {
+    triggerOn: 'keydown'
+};  
