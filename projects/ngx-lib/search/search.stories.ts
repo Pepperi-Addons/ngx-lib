@@ -12,7 +12,7 @@ export default {
     // The title defines the name and where in the structure of
     // Storybook's menu this is going to be placed.
     // Here we add it to a "Components" section under "Search"
-    title: 'Components/search',
+    title: 'Components/Search',
     // The component related to the Stories
     component: PepSearchComponent,
     argTypes: {
@@ -27,10 +27,25 @@ export default {
             action: 'search',
             control: false,
         },
+        // shrink: [],
+        shrink: {
+            description: 'This is set the appearance of the component',
+            defaultValue: 'small-screen',
+            control: {
+                type: 'radio',
+                options: ['small-screen', 'always', 'never'],
+            },
+            table: {
+                type: {
+                    summary: 'small-screen | always | never',
+                },
+                defaultValue: { summary: 'small-screen' },
+            },
+        },
     },
     parameters: {
         controls: {
-            include: ['triggerOn', 'value', 'sizeType', 'search'],
+            include: ['triggerOn', 'value', 'sizeType', 'search', 'shrink', 'fadeState'],
         },
     },
     decorators: [
@@ -52,7 +67,24 @@ const Template: Story<PepSearchComponent> = (args: PepSearchComponent) => ({
     // `,
 });
 
-export const Base = Template.bind({});
-Base.args = {
-    value: 'search...',
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
+    value: 'Type your search here...',
 };
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'Shrink';
+Story2.args = {
+    value: 'Type your search here...',
+    shrink: 'always',
+};
+export const Story3 = Template.bind({});
+Story3.storyName = 'Shrink on small screens (not working)';
+Story3.args = {
+    value: 'Type your search here...',
+    shrink: 'small-screen',
+};
+
+// TODO fix `small-screen` not working
+//! What is PepSearchType, PepSearchTriggerType & PepSearchStateType?
