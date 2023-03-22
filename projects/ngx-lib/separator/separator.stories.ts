@@ -1,4 +1,4 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import { moduleMetadata, Story, Meta, componentWrapperDecorator } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 import { commonArgTypes } from '@storybook-settings/common-args.model';
 
@@ -7,7 +7,7 @@ import { PepSeparatorComponent } from './separator.component';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/separator',
+    title: 'Components/Separator',
     component: PepSeparatorComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -20,7 +20,14 @@ export default {
         label: commonArgTypes.label,
         xAlignment: commonArgTypes.xAlignment,
         visible: commonArgTypes.visible,
-        
+        layoutType: {
+            description: 'This is the layout type of the component',
+            defaultValue: 'form',
+            control: {
+                type: 'radio',
+                options: ['form', 'card', 'table'],
+            },
+        },
     },
     parameters: {
         controls: {
@@ -28,6 +35,7 @@ export default {
                 'label',
                 'xAlignment',
                 'visible',
+                'layoutType',
             ],
         },
     },
@@ -45,3 +53,16 @@ Story1.storyName = 'Basic';
 Story1.args = {
     label: 'Separator',
 };
+Story1.decorators = [
+    componentWrapperDecorator((story) => `<div style="width: 16rem;">${story}</div>`),
+];
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'RTL';
+Story2.args = {
+    label: 'מפריד',
+    xAlignment: 'right'
+};
+Story2.decorators = [
+    componentWrapperDecorator((story) => `<div style="width: 16rem;">${story}</div>`),
+];
