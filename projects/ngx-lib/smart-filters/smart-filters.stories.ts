@@ -12,7 +12,7 @@ import { createSmartFilterField } from './common/model/creator';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/smart-filters',
+    title: 'Services/Smart filters',
     component: PepSmartFiltersComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -101,14 +101,13 @@ function getSmartFiltersFields(): Array<IPepSmartFilterField> {
     }
 
     let fields = [
-        createSmartFilterField({ id: 'filter1', name: 'Transaction Action Time' }, 'date-time'),
-        createSmartFilterField({ id: 'filter2', name: 'stock' }, 'int'),
-        createSmartFilterField({ id: 'filter3', name: 'Delivery Date' }, 'date'),
-        createSmartFilterField({ id: 'filter4', name: 'Brand', options: brandOptions }, 'multi-select'),
-        createSmartFilterField({ id: 'filter5', name: 'Discout' }, 'boolean'),
-        createSmartFilterField({ id: 'filter6', name: 'Price' }, 'currency'),
-        createSmartFilterField({ id: 'filter7', name: 'Brand2', options: brandOptions }, 'multi-select'),
-        createSmartFilterField({ id: 'filter8', name: 'text' }, 'text'),
+        createSmartFilterField({ id: 'filter3', name: 'Date' }, 'date'),
+        createSmartFilterField({ id: 'filter1', name: 'Datetime' }, 'date-time'),
+        createSmartFilterField({ id: 'filter2', name: 'Numbers' }, 'int'),
+        createSmartFilterField({ id: 'filter4', name: 'Multi select', options: brandOptions }, 'multi-select'),
+        createSmartFilterField({ id: 'filter5', name: 'Boolean' }, 'boolean'),
+        createSmartFilterField({ id: 'filter6', name: 'Currency' }, 'currency'),
+        createSmartFilterField({ id: 'filter8', name: 'Text' }, 'text'),
     ];
 
     return fields;
@@ -132,4 +131,4 @@ const Template: Story<PepSmartFiltersComponent> = (args: PepSmartFiltersComponen
 });
 
 export const Base = Template.bind({});
-Base.args = {}
+Base.storyName = "Smart filters"
