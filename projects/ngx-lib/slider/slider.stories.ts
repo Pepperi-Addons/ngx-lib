@@ -1,4 +1,9 @@
-import { moduleMetadata, Story, Meta } from '@storybook/angular';
+import {
+    moduleMetadata,
+    Story,
+    Meta,
+    componentWrapperDecorator,
+} from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 import { commonArgTypes } from '@storybook-settings/common-args.model';
 
@@ -12,7 +17,7 @@ export default {
     // The title defines the name and where in the structure of
     // Storybook's menu this is going to be placed.
     // Here we add it to a "Components" section under "Slider"
-    title: 'Components/slider',
+    title: 'Components/Slider',
     // The component related to the Stories
     component: PepSliderComponent,
     argTypes: {
@@ -26,6 +31,9 @@ export default {
         disabled: commonArgTypes.disabled,
         hint: commonArgTypes.hint,
         xAlignment: commonArgTypes.xAlignment,
+        step: {
+            description: 'Set the steps in which the slider is moving',
+        },
         minValue: {
             description: 'This is min value of the component',
         },
@@ -35,10 +43,10 @@ export default {
     },
     parameters: {
         docs: {
-			description: {
-				component: 'This is a slider component that is in use ',
-			},
-		},
+            description: {
+                component: 'This is a slider component that is in use ',
+            },
+        },
         controls: {
             include: [
                 'value',
@@ -48,6 +56,7 @@ export default {
                 'minValue',
                 'maxValue',
                 'xAlignment',
+                'step',
             ],
         },
     },
@@ -56,6 +65,10 @@ export default {
         moduleMetadata({
             imports: [PepSliderModule, SBNgxHelperModule],
         }),
+
+        componentWrapperDecorator(
+            (story) => `<div style="width: 16rem">${story}</div>`
+        ),
     ],
 } as Meta;
 
@@ -79,4 +92,16 @@ Story1.args = {
     hint: 'percentage',
     minValue: 0,
     maxValue: 100,
+};
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'Show value, with step';
+Story2.args = {
+    label: 'This slider',
+    value: 50,
+    //! How do I show the value in the hint?
+    // hint: "valueChange($event)?.toString()",
+    minValue: 0,
+    maxValue: 100,
+    step: 10,
 };
