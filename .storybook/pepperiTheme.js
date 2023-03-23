@@ -4,8 +4,9 @@ import { create } from "@storybook/theming";
 
 const mainBrand = "rgb(131, 179, 12)";
 const darkBrand = "rgb(110, 150, 10)";
-const secondaryBrand = "rgb(110, 150, 10)";
+// const secondaryBrand = "rgb(110, 150, 10)";
 // const secondaryBrand = "rgb(254, 80, 0)";
+const secondaryBrand = "rgb(209, 65, 0)";
 const bWLightest = "rgb(255, 255, 255)";
 const bWLighter = "rgb(247, 247, 247)";
 const bWLight = "rgb(240, 240, 240)";
