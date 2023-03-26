@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { PepQueryBuilderModule } from './query-builder.module';
 //import { PepQueryBuilderService } from './query-builder.service';
 import { PepQueryBuilderComponent } from './query-builder.component';
-
+import { IPepQueryBuilderField } from './index';
 
 export default {
     title: 'Components/query-builder',
@@ -69,20 +69,62 @@ export default {
 
 } as Meta;
 
-// This creates a Story for the component
+let json = '';
+let fields: Array<IPepQueryBuilderField> = [
+    { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
+    { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool' },
+    { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
+    { FieldID: 'CaseQuantity', Title: 'Case Quantity', FieldType: 'Integer' },
+    { FieldID: 'CampaignName', Title: 'Campaign Name', FieldType: 'String' },
+    { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime' },
+    { FieldID: 'Type', Title: 'Type', FieldType: 'String' },
+    { FieldID: 'TSAboolll', Title: 'TSA boolll', FieldType: 'Bool' },
+    {
+        FieldID: 'BillToState', Title: 'Bill To State', FieldType: 'MultipleStringValues', OptionalValues: [
+            { Key: 'value0', Value: 'value 0' },
+            { Key: 'value1', Value: 'value 1' },
+        ]
+    }
+];
 
+let variableFields: Array<IPepQueryBuilderField> = [
+    { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
+    { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
+    { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime' },
+    { FieldID: 'ActionDateTime2', Title: 'Action Date Time 2', FieldType: 'DateTime' },
+    { FieldID: 'TSAboolll', Title: 'ATSA boolll', FieldType: 'Bool' },
+    { FieldID: 'TSAboolll2', Title: 'TSA boolll 2', FieldType: 'Bool' },
+    { FieldID: 'BillToState', Title: 'Bill To State', FieldType: 'MultipleStringValues' },
+    { FieldID: 'TSAAttachmentTest2', Title: 'TSA Attachment Test 2', FieldType: 'String' },
+];
+
+function getFilters(json: any) {
+    console.log('getFilters', json);
+}
+
+function onFormValidationChanged(status: boolean) {
+    console.log('this.isformValid', status);
+}
+
+// This creates a Story for the component
 const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponent) => ({
     props: {
+        json: json,
+        fields: fields,
+        variableFields: variableFields,
+        getFilters: (event) => getFilters(event),
+        onFormValidationChanged: (event) => onFormValidationChanged(event),
         queryChange: action('queryChange'),
         formValidationChange: action('formValidationChange'),
     },
-    // template: `
-    // <pep-query-builder [query]="query" [fields]="fields" [maxDepth]="maxDepth" (queryChange)="queryChange($event)"
-    // (formValidationChange)="formValidationChange($event)"></pep-query-builder>
-    // `,
+    template: `
+        <div class="example-container" style="width:600px;">
+            <pep-query-builder [query]="json" [fields]="fields" [variableFields]="variableFields" (queryChange)="getFilters($event)"
+                (formValidationChange)="onFormValidationChanged($event)">
+            </pep-query-builder>
+        </div>
+    `,
 });
 
 export const Base = Template.bind({});
 Base.storyName = "Basic";
-
-// TODO build stories w/ Tomer
