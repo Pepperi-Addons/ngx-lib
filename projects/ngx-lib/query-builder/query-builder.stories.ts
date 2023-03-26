@@ -1,4 +1,4 @@
-import { Meta, Story, moduleMetadata } from '@storybook/angular';
+import { Meta, Story, moduleMetadata, componentWrapperDecorator } from '@storybook/angular';
 import { SBNgxHelperModule } from '@storybook-settings/ngx-helper.module';
 import { action } from '@storybook/addon-actions';
 import { PepQueryBuilderModule } from './query-builder.module';
@@ -7,7 +7,7 @@ import { PepQueryBuilderComponent } from './query-builder.component';
 import { IPepQueryBuilderField } from './index';
 
 export default {
-    title: 'Components/query-builder',
+    title: 'Components/Query builder',
     component: PepQueryBuilderComponent,
 
     decorators: [
@@ -118,7 +118,7 @@ const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponen
         formValidationChange: action('formValidationChange'),
     },
     template: `
-        <div class="example-container" style="width:600px;">
+        <div class="example-container" style="width: clamp(12rem, 40rem, 100vw);">
             <pep-query-builder [query]="json" [fields]="fields" [variableFields]="variableFields" (queryChange)="getFilters($event)"
                 (formValidationChange)="onFormValidationChanged($event)">
             </pep-query-builder>
@@ -127,4 +127,11 @@ const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponen
 });
 
 export const Base = Template.bind({});
-Base.storyName = "Basic";
+Base.storyName = "Query builder";
+Base.args = {
+    // TODO Fix `maxDepth`
+    maxDepth: 5,
+};
+Base.decorators = [
+    componentWrapperDecorator((story) => `<div style="height: 32rem;">${story}</div>`),
+];
