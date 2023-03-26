@@ -80,7 +80,7 @@ const Template: Story<PepSliderComponent> = (args: PepSliderComponent) => ({
         inputChange: action('inputChange'),
     },
     // template: `
-    //     <pep-slider [value]="value"></pep-slider>
+    //     <pep-slider [label]="label" [minValue]="minValue" [maxValue]="maxValue" [value]="value" [hint]="value"></pep-slider>
     // `,
 });
 
@@ -89,19 +89,36 @@ Story1.storyName = 'Basic';
 Story1.args = {
     label: 'This slider',
     value: 50,
-    hint: 'percentage',
+    hint: 'Tomer',
     minValue: 0,
     maxValue: 100,
 };
 
-export const Story2 = Template.bind({});
-Story2.storyName = 'Show value, with step';
-Story2.args = {
-    label: 'This slider',
-    value: 50,
-    //! How do I show the value in the hint?
-    // hint: "valueChange($event)?.toString()",
-    minValue: 0,
-    maxValue: 100,
-    step: 10,
+
+let valueObject = {
+    value: 50
 };
+function onValueChange(event: any) {
+    const value = event?.source.key ? event.source.key : event?.source.value ? event.source.value :  event;
+        
+    // debugger;
+    // alert(value);
+    valueObject.value = value;
+}
+
+
+const hintTemplate: Story<PepSliderComponent> = (args: PepSliderComponent) => ({
+    props: {
+        ...args,
+        valueObject: valueObject,
+        onValueChange: (event) => onValueChange(event),
+        valueChange: action('valueChange'),
+        inputChange: action('inputChange'),
+    },
+    template: `
+        <pep-slider label="test" minValue="0" maxValue="100" [value]="valueObject.value" step="10" [hint]="valueObject.value.toString()" (valueChange)="onValueChange($event)"></pep-slider>
+    `,
+});
+
+export const Story2 = hintTemplate.bind({});
+Story2.storyName = 'Show value, with step';
