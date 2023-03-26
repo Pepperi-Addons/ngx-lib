@@ -133,7 +133,7 @@ export class PepDialogService {
         if (elements?.length) {
             let index = 0;
             for (let i = elements.length-1; i >= 0 ; i--) {
-                let element = elements[i];
+                const element = elements[i];
                 element.style.transform = "translate(-" + (index) + "rem,-" + (index) + "rem)";
                 index += 1;
             }
