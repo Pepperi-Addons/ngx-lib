@@ -17,6 +17,15 @@
         
         &.strong ::ng-deep {
             @include mixins.state-strong-default(color-top-header);
+
+            .icon-button.regular,
+            .icon-button.weak {
+                $color: functions.get-pep-color(color-text, color-main);
+
+                .svg-icon {
+                    @include mixins.svg-icon-color($color);
+                }
+            }
         }
         
         border-right: none !important;

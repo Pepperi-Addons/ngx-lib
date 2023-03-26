@@ -12,7 +12,7 @@ export default {
     // The title defines the name and where in the structure of
     // Storybook's menu this is going to be placed.
     // Here we add it to a "Components" section under "textarea"
-    title: 'Components/textarea',
+    title: 'Components/Textarea',
     // The component related to the Stories
     component: PepTextareaComponent,
     args: {
@@ -70,11 +70,30 @@ const Template: Story<PepTextareaComponent> = (args: PepTextareaComponent) => ({
     // `,
 });
 
-export const Base = Template.bind({});
-Base.args = {
-    label: 'textarea',
-    value: `some paragraph
-on two / three rows
-for example
-    `,
+const thisValue = `A: Would you tell me, please, which way I ought to go from here?
+CC: That depends a good deal on where you want to get to
+A: I don’t much care where
+CC: Then it doesn’t matter which way you go`;
+
+export const Story1 = Template.bind({});
+Story1.storyName = "Basic",
+Story1.args = {
+    label: 'Textarea',
+    value: thisValue,
+};
+
+export const Story2 = Template.bind({});
+Story2.storyName = "Max field characters",
+Story2.args = {
+    label: 'Textarea',
+    maxFieldCharacters: 7,
+};
+
+export const Story3 = Template.bind({});
+Story3.storyName = "Disabled",
+Story3.args = {
+    label: 'Textarea',
+    value: thisValue,
+    rowSpan: 4,
+    disabled: true,
 };

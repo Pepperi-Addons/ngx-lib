@@ -1,0 +1,36 @@
+import { Meta, Story } from "@storybook/addon-docs";
+
+import Breakpoints from "./breakpoints.component";
+
+<Meta title="Abstracts/Breakpoints" component={Breakpoints} />
+
+export const Template = (args) => ({ props: args });
+
+# Breakpoints
+
+The see the breakpoints in action decrease and increase your viewport 
+
+These are the breakpoints `↓`
+
+```css
+$screen-max-size-2xs: 460px;
+$screen-max-size-xs: 599px;
+$screen-max-size-sm: 959px;
+$screen-max-size-md: 1279px; 
+$screen-max-size-lg: 1919px; 
+$screen-max-size-xl: 5000px;
+```
+Use them like so `↓`
+
+```css
+@media (max-width: variables.$screen-max-size-xs) {
+    ...
+}
+```
+## Example
+
+<Story name="Breakpoints" args={{
+        storyIndex: 1,
+    }}>
+    {Template.bind({})}
+</Story>

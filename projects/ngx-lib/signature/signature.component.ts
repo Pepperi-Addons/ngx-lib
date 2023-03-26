@@ -192,6 +192,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
 
     openSignModal(): void {
         // If the signature is not empty open it in image viewer.
+        //! Remove this `if` to always open signature in modal 
         if (this.standAlone && this.dataURI) {
             const fileStrArr = this.dataURI.fileStr.split(';');
 

@@ -1,9 +1,4 @@
-import {
-    moduleMetadata,
-    Story,
-    Meta,
-    componentWrapperDecorator,
-} from '@storybook/angular';
+import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import {
     registerAllIcons,
     SBNgxHelperModule,
@@ -29,7 +24,7 @@ function allIconsToNames(): Array<string> {
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/icon',
+    title: 'Components/Icon',
     component: PepIconComponent,
     decorators: [
         // The necessary modules for the component to work on Storybook
@@ -44,13 +39,6 @@ export default {
             ],
             imports: [PepIconModule, SBNgxHelperModule],
         }),
-        // componentWrapperDecorator((story) => `
-        //     <div style="width: 100%; height: 100%; display: flex; flex-flow: wrap;">
-        //         <div style="width:50px; display: inline-flex; flex-flow: wrap; flex: 100%">
-        //             ${story}
-        //         </div>
-        //     </div>`
-        // )
     ],
     argTypes: {
         name: {
@@ -95,14 +83,11 @@ const Template: Story<PepIconComponent> = (args: PepIconComponent) => ({
     styles: [
         `
             pep-icon {
-                width:50px;
-                height:50px;
+                width:48px;
+                height:48px;
             }
         `,
     ],
-    // template: `
-    //     <pep-icon style="width:50px; height:50px; " [name]="name" [spin]="spin" [fill]="fill"></pep-icon>
-    // `,
 });
 
 export const Base = Template.bind({});
@@ -121,8 +106,7 @@ const AllIconsTemplate: Story<PepIconComponent> = (args: PepIconComponent) => ({
     template: `
         <div style="display: flex; flex-flow: wrap;">
             <div *ngFor="let iconName of allIconsNames" style="width:auto; margin:0.5rem; display: flex; align-items: center;">
-                <pep-icon style="width:30px;" [title]="iconName" [name]="iconName"></pep-icon>
-                <!--<span >{{ iconName }}</span>-->
+                <pep-icon style="width:24px;" [title]="iconName" [name]="iconName"></pep-icon>
             </div>
         </div>
     `,

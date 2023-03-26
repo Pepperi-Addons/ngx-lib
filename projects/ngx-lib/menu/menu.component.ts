@@ -60,12 +60,12 @@ import {
 export class PepMenuComponent implements OnChanges, OnDestroy {
     @Input() text = '';
     /**
-     * The icon name to show on the menu. look in (@link icon -> All icons)
+     * The icon name to show on the menu, look in (@link icon -> All icons), default icon `system_menu`
      *
      * @type {PepIconType} See {@link PepIconType}
      * @memberof PepMenuComponent
      */
-    @Input() iconName: PepIconType = pepIconSystemMenu.name;
+    @Input() iconName: PepIconType = pepIconSystemMenu.name || 'system_menu';
     @Input() type: PepMenuType = 'action';
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';

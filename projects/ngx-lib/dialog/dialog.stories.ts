@@ -23,9 +23,8 @@ function initDialogService(ds: PepDialogService) {
 
 // This exports the Stories group for this component
 export default {
-    title: 'Services/dialog',
+    title: 'Services/Dialog',
     // component: PepDialogComponent,
-    // argTypes: argTypesBasicStory,
     decorators: [
         // The necessary modules for the component to work on Storybook
         moduleMetadata({
@@ -176,11 +175,28 @@ const Template: Story<PepDialogComponent> = (args: PepDialogComponent) => ({
     `,
 });
 
-// <pep-dialog [title]="title" [showClose]="showClose" [showHeader]="showHeader" [showFooter]="showFooter"></pep-dialog>
-
-export const Base = Template.bind({});
-Base.storyName = 'Basic';
-Base.args = {
+export const Story1 = Template.bind({});
+Story1.storyName = 'Dialog';
+//! Content showing after clicking tab
+Story1.args = {
     title: 'Dialog title',
     content: 'Dialog content',
 };
+
+// export const Story2 = Template.bind({});
+// Story2.storyName = 'Another Basic';
+// Story2.args = {
+//     title: 'Dialog title',
+//     content: 'Fugiat id irure proident eu ut occaecat fugiat incididunt quis ipsum enim occaecat. Ipsum nulla ea elit consectetur in. Enim laborum labore minim ea enim aliqua ex commodo labore ea ad do esse. Laborum excepteur id reprehenderit reprehenderit et excepteur ad duis enim nostrud laborum laborum in cupidatat. Aliquip fugiat exercitation labore laborum magna nulla sit laborum reprehenderit tempor ea voluptate. Sint tempor veniam Lorem sit aliquip cillum cillum consectetur ad et fugiat. Eiusmod non elit irure dolor irure fugiat veniam. Sit aliquip proident cillum labore enim ullamco dolor culpa tempor officia laboris. Commodo voluptate duis labore cupidatat enim ex irure et culpa tempor. Irure esse do non officia. Qui in velit occaecat qui do nisi elit nostrud. Culpa qui nisi aliquip dolor in. Ullamco elit adipisicing deserunt labore adipisicing proident aute mollit elit esse officia. Ullamco dolor ut nulla aliqua reprehenderit elit ullamco magna. Id enim consequat magna eiusmod aute nostrud sit anim officia. Duis est ullamco anim voluptate cupidatat reprehenderit. Consequat occaecat reprehenderit eu sint ea cupidatat est nulla reprehenderit labore incididunt ut eu. Id est nisi et ullamco tempor laboris eu ex anim. Duis magna anim aliquip excepteur laborum ut in in officia nisi dolor. Voluptate esse commodo aliqua commodo et deserunt pariatur. Quis eu consectetur qui do magna cillum ut minim ipsum anim magna elit exercitation laboris.',
+// };
+
+// export const Story3 = AnotherTemplate.bind({});
+// Story3.storyName = 'Another Basic XX';
+// Story3.args = {
+//     title: 'Dialog title',
+//     content: 'Fugiat id irure proident eu ut occaecat fugiat incididunt quis ipsum enim occaecat. Ipsum nulla ea elit consectetur in. Enim laborum labore minim ea enim aliqua ex commodo labore ea ad do esse. Laborum excepteur id reprehenderit reprehenderit et excepteur ad duis enim nostrud laborum laborum in cupidatat. Aliquip fugiat exercitation labore laborum magna nulla sit laborum reprehenderit tempor ea voluptate. Sint tempor veniam Lorem sit aliquip cillum cillum consectetur ad et fugiat. Eiusmod non elit irure dolor irure fugiat veniam. Sit aliquip proident cillum labore enim ullamco dolor culpa tempor officia laboris. Commodo voluptate duis labore cupidatat enim ex irure et culpa tempor. Irure esse do non officia. Qui in velit occaecat qui do nisi elit nostrud. Culpa qui nisi aliquip dolor in. Ullamco elit adipisicing deserunt labore adipisicing proident aute mollit elit esse officia. Ullamco dolor ut nulla aliqua reprehenderit elit ullamco magna. Id enim consequat magna eiusmod aute nostrud sit anim officia. Duis est ullamco anim voluptate cupidatat reprehenderit. Consequat occaecat reprehenderit eu sint ea cupidatat est nulla reprehenderit labore incididunt ut eu. Id est nisi et ullamco tempor laboris eu ex anim. Duis magna anim aliquip excepteur laborum ut in in officia nisi dolor. Voluptate esse commodo aliqua commodo et deserunt pariatur. Quis eu consectetur qui do magna cillum ut minim ipsum anim magna elit exercitation laboris.',
+// };
+
+// TODO  Add prop to change dialog size
+// TODO  Show how to use
+// TODO  Show a dialog with a skeleton loader inside

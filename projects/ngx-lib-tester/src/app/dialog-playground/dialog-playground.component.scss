@@ -1,0 +1,19 @@
+@use "../../../../ngx-lib/src/core/style/abstracts/functions";
+@use "../../../../ngx-lib/src/core/style/abstracts/variables";
+@use "../../../../ngx-lib/src/core/style/abstracts/mixins";
+
+#buttonsBar{
+    padding: 1rem .5rem;
+    display: flex;
+
+    #btnsCont{
+        margin: 1.5rem 0 0 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+
+        pep-button{
+            width: fit-content;
+        }
+    }
+}

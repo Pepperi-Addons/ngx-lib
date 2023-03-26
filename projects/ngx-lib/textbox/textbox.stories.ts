@@ -10,7 +10,7 @@ export default {
     // The title defines the name and where in the structure of
     // Storybook's menu this is going to be placed.
     // Here we add it to a "Components" section under "Textbox"
-    title: 'Components/textbox',
+    title: 'Components/Textbox',
     // The component related to the Stories
     component: PepTextboxComponent,
     argTypes: {
@@ -38,7 +38,6 @@ export default {
                 type: 'inline-radio',
                 options: [
                     'text',
-                    'link',
                     'email',
                     'phone',
                     'int',
@@ -121,20 +120,27 @@ const Template: Story<PepTextboxComponent> = (args: PepTextboxComponent) => ({
 
 export const Base = Template.bind({});
 Base.args = {
-    label: 'text',
-    value: 'some text...',
+    label: 'Text',
+    value: 'Not all who wander are lost',
+};
+
+export const maxFieldCharacters = Template.bind({});
+maxFieldCharacters.storyName = "Max field characters"
+maxFieldCharacters.args = {
+    label: 'Text',
+    maxFieldCharacters: 7,
 };
 
 export const Email = Template.bind({});
 Email.args = {
-    label: 'email',
+    label: 'Email',
     type: 'email',
     value: 'email@pepperi.com',
 };
 
 export const NumberInteger = Template.bind({});
 NumberInteger.args = {
-    label: 'int',
+    label: 'Integer',
     type: 'int',
     value: '1000',
     // formattedValue: '1,000',
@@ -162,18 +168,9 @@ Percentage.args = {
     value: '90',
 };
 
-export const Link = Template.bind({});
-Link.args = {
-    label: 'link',
-    type: 'link',
-    value: 'http://www.google.com',
-    // formattedValue: 'google',
-    // disabled: true
-};
-
 export const Phone = Template.bind({});
 Phone.args = {
-    label: 'phone',
+    label: 'Phone',
     type: 'phone',
     value: '+972-52-5555-555',
 };

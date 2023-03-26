@@ -21,6 +21,7 @@ enum PepContrastRatioType {
 interface IPepColorPickerDialogData {
     value: string;
     type: PepColorType;
+    // TODO fix typo Complient -> Compliant
     showAAComplient: boolean;
     checkAAComplient: boolean;
     textColor: string;

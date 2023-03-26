@@ -50,3 +50,4 @@ projects/ngx-lib/node_modules/
 node_modules
 node_modules*
 .angular/cache/
+documentation.json

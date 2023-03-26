@@ -12,12 +12,9 @@ export default {
     // The title defines the name and where in the structure of
     // Storybook's menu this is going to be placed.
     // Here we add it to a "Components" section under "QuantitySelector"
-    title: 'Components/quantity-selector',
+    title: 'Components/Quantity selector',
     // The component related to the Stories
     component: PepQuantitySelectorComponent,
-    args: {
-        rowSpan: 2,
-    },
     argTypes: {
         label: commonArgTypes.label,
         value: commonArgTypes.value,
@@ -42,7 +39,6 @@ export default {
                 defaultValue: { summary: 'regular' },
             },
         },
-        rowSpan: commonArgTypes.rowSpan,
         visible: commonArgTypes.visible,
         showTitle: commonArgTypes.showTitle,
         valueChange: commonArgTypes.valueChange,
@@ -60,7 +56,6 @@ export default {
                 'xAlignment',
                 'allowDecimal',
                 'styleType',
-                'rowSpan',
                 'visible',
                 'showTitle',
                 'valueChange',
@@ -85,16 +80,41 @@ const Template: Story<PepQuantitySelectorComponent> = (
         valueChange: action('valueChange'),
         elementClick: action('elementClick'),
     },
-    // template: `
-    //     <pep-quantity-selector [label]="label" [value]="value" [disabled]="disabled" [readonly]="readonly" [mandatory]="mandatory" [textColor]="textColor"
-    //     [xAlignment]="xAlignment" [allowDecimal]="allowDecimal" [styleType]="styleType" [visible]="visible" [showTitle]="showTitle" [rowSpan]="rowSpan"
-    //     (valueChange)="valueChange($event)" (elementClick)="elementClick($event)"></pep-quantity-selector>
-    // `,
 });
 
-export const Base = Template.bind({});
-Base.storyName = 'Basic';
-Base.args = {
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
     label: 'text',
     value: '18',
+};
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'Twist and shake';
+Story2.args = {
+    label: 'Kof tov',
+    value: '555',
+    disabled: false,
+    readonly: false,
+    mandatory: true,
+    textColor: '#F26B6B',
+    xAlignment: 'center',
+    allowDecimal: false,
+    styleType: 'strong',
+    visible: true,
+    showTitle: true,
+};
+
+export const Story3 = Template.bind({});
+Story3.storyName = 'Shake and twist';
+Story3.args = {
+    label: '',
+    value: '555',
+    disabled: false,
+    readonly: true,
+    mandatory: true,
+    xAlignment: 'center',
+    allowDecimal: true,
+    styleType: 'weak',
+    showTitle: true,
 };

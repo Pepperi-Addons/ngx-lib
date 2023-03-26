@@ -1,0 +1,54 @@
+<pep-page-layout class="ui-test-container">
+    <ng-container pep-top-area>
+        <pep-top-bar [title]="'Dialog examples'">
+            <div header-start-content>
+
+            </div>
+            <div header-end-content>   
+            </div>
+        </pep-top-bar>
+    </ng-container>
+
+    <ng-container pep-main-area>
+        <div id="buttonsBar">
+            <div id="modalConfig">
+                <pep-select-panel 
+                    [label]="'Dialog size'" [isMultiSelect]="false" [numOfCol]="2"
+                    [(value)]="modalSize" [options]="modalSizes">
+                </pep-select-panel>
+                <pep-select-panel
+                    [label]="'Dialog options'" [isMultiSelect]="true" [numOfCol]="1"
+                    [(value)]="selectedOptions" [options]="dialogOptions" (valueChange)="onValueChanged($event)">
+                </pep-select-panel>
+            </div>
+            <div id="btnsCont">
+                <pep-button [value]="'Open modal'" [sizeType]="'sm'" [styleType]="'regular'"
+                    [classNames]="'pep-spacing-element '" (click)="showDefaultModal($event)">
+                </pep-button>
+                <pep-button [value]="'Open Skeleeton modal'" [sizeType]="'sm'" [styleType]="'regular'"
+                [classNames]="'pep-spacing-element '" (click)="openSkeletomDialog($event)">
+            </pep-button>
+            </div>
+        </div>
+    </ng-container>
+</pep-page-layout>
+
+<ng-template #skeletonLoaderTempRef>
+    <pep-dialog [title]="'Skeleton dialog'" (close)="closeDialog()">
+        <ng-container pep-dialog-content>
+            <pep-skeleton-loader [rowHeightType]="'sm'" [rowsNumber]="8" [lastRowOffset]="true"></pep-skeleton-loader>
+        </ng-container>
+        <ng-container pep-dialog-actions>
+            <div class="pep-spacing-element-negative">
+                <button mat-button class="pep-spacing-element pep-button md weak" (click)="closeDialog()">
+                    {{ 'Close' | translate}}
+                </button>
+                <button mat-button class="pep-spacing-element pep-button md strong" (click)="openSkeletomDialog($event)">
+                    {{ 'Open dialog' | translate}}
+                </button>
+            </div>
+        </ng-container>
+    </pep-dialog>
+</ng-template>
+
+

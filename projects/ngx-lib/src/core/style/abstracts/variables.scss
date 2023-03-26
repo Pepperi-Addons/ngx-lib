@@ -44,15 +44,35 @@ $fs-md: var(--pep-font-size-md, 1rem);
 $fs-lg: var(--pep-font-size-lg, 1.125rem);
 $fs-xl: var(--pep-font-size-xl, 1.25rem);
 $fs-2xl: var(--pep-font-size-2xl, 1.5rem);
+$fs-3xl: var(--pep-font-size-3xl, 1.75rem);
+$fs-4xl: var(--pep-font-size-4xl, 2rem);
+$fs-5xl: var(--pep-font-size-5xl, 2.5rem);
+$fs-6xl: var(--pep-font-size-6xl, 3rem);
+$fs-7xl: var(--pep-font-size-7xl, 3.5rem);
+$fs-8xl: var(--pep-font-size-8xl, 4rem);
+$fs-9xl: var(--pep-font-size-9xl, 5rem);
+$fs-10xl: var(--pep-font-size-10xl, 6rem);
+$fs-11xl: var(--pep-font-size-11xl, 7rem);
+$fs-12xl: var(--pep-font-size-12xl, 8rem);
 
 // Line Height
-$lh-2xs: var(--pep-line-height-2xs, 0.75rem);
-$lh-xs: var(--pep-line-height-xs, 1rem);
-$lh-sm: var(--pep-line-height-sm, 1.25rem);
-$lh-md: var(--pep-line-height-md, 1.5rem);
-$lh-lg: var(--pep-line-height-lg, 1.75rem);
-$lh-xl: var(--pep-line-height-xl, 2rem);
-$lh-2xl: var(--pep-line-height-2xl, 2.25rem);
+$lh-2xs: var(--pep-line-height-2xs, 0.78125rem);
+$lh-xs: var(--pep-line-height-xs, 0.9375rem);
+$lh-sm: var(--pep-line-height-sm, 1.09375rem);
+$lh-md: var(--pep-line-height-md, 1.25rem);
+$lh-lg: var(--pep-line-height-lg, 1.40625rem);
+$lh-xl: var(--pep-line-height-xl, 1.5625rem);
+$lh-2xl: var(--pep-line-height-2xl, 1.875rem);
+$lh-3xl: var(--pep-line-height-3xl, 2.1875rem);
+$lh-4xl: var(--pep-line-height-4xl, 2.5rem);
+$lh-5xl: var(--pep-line-height-5xl, 3.125rem);
+$lh-6xl: var(--pep-line-height-6xl, 3.75rem);
+$lh-7xl: var(--pep-line-height-7xl, 4.375rem);
+$lh-8xl: var(--pep-line-height-8xl, 5rem);
+$lh-9xl: var(--pep-line-height-9xl, 6.25rem);
+$lh-10xl: var(--pep-line-height-10xl, 7.5rem);
+$lh-11xl: var(--pep-line-height-11xl, 8.75rem);
+$lh-12xl: var(--pep-line-height-12xl, 10rem);
 
 //  Fonts weight - General
 $font-weight-normal: var(--pep-font-weight-normal, 400);
@@ -195,7 +215,7 @@ $color-system-primary-invert-tran-40: hsla(#{$color-system-primary-invert-h}, #{
 $color-system-primary-invert-tran-30: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.12);
 $color-system-primary-invert-tran-20: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.08);
 $color-system-primary-invert-tran-10: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0.04);
-$color-system-primary-invert-tran-0: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0);
+$color-system-primary-invert-tran-00: hsla(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, #{$color-system-primary-invert-l}, 0);
 // Flat colors.
 $color-system-primary-invert-flat-l-20: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, calc(#{$color-system-primary-invert-l} - #{$flat-l-20-lp}));
 $color-system-primary-invert-flat-l-10: hsl(#{$color-system-primary-invert-h}, #{$color-system-primary-invert-s}, calc(#{$color-system-primary-invert-l} - #{$flat-l-10-lp}));
@@ -223,7 +243,7 @@ $color-system-primary-tran-40: hsla(#{$color-system-primary-h}, #{$color-system-
 $color-system-primary-tran-30: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.12);
 $color-system-primary-tran-20: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.08);
 $color-system-primary-tran-10: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0.04);
-$color-system-primary-tran-0: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0);
+$color-system-primary-tran-00: hsla(#{$color-system-primary-h}, #{$color-system-primary-s}, #{$color-system-primary-l}, 0);
 // Flat colors.
 $color-system-primary-flat-l-20: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, calc(#{$color-system-primary-l} - #{$flat-l-20-lp}));
 $color-system-primary-flat-l-10: hsl(#{$color-system-primary-h}, #{$color-system-primary-s}, calc(#{$color-system-primary-l} - #{$flat-l-10-lp}));
@@ -251,7 +271,7 @@ $color-system-success-tran-40: hsla(#{$color-system-success-h}, #{$color-system-
 $color-system-success-tran-30: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.12);
 $color-system-success-tran-20: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.08);
 $color-system-success-tran-10: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0.04);
-$color-system-success-tran-0: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0);
+$color-system-success-tran-00: hsla(#{$color-system-success-h}, #{$color-system-success-s}, #{$color-system-success-l}, 0);
 // Flat colors.
 $color-system-success-flat-l-20: hsl(#{$color-system-success-h}, #{$color-system-success-s}, calc(#{$color-system-success-l} - #{$flat-l-20-lp}));
 $color-system-success-flat-l-10: hsl(#{$color-system-success-h}, #{$color-system-success-s}, calc(#{$color-system-success-l} - #{$flat-l-10-lp}));
@@ -279,7 +299,7 @@ $color-system-caution-tran-40: hsla(#{$color-system-caution-h}, #{$color-system-
 $color-system-caution-tran-30: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.12);
 $color-system-caution-tran-20: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.08);
 $color-system-caution-tran-10: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0.04);
-$color-system-caution-tran-0: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0);
+$color-system-caution-tran-00: hsla(#{$color-system-caution-h}, #{$color-system-caution-s}, #{$color-system-caution-l}, 0);
 // Flat colors.
 $color-system-caution-flat-l-20: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, calc(#{$color-system-caution-l} - #{$flat-l-20-lp}));
 $color-system-caution-flat-l-10: hsl(#{$color-system-caution-h}, #{$color-system-caution-s}, calc(#{$color-system-caution-l} - #{$flat-l-10-lp}));
@@ -307,7 +327,7 @@ $color-user-primary-tran-40: hsla(#{$color-user-primary-h}, #{$color-user-primar
 $color-user-primary-tran-30: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.12);
 $color-user-primary-tran-20: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.08);
 $color-user-primary-tran-10: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0.04);
-$color-user-primary-tran-0: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0);
+$color-user-primary-tran-00: hsla(#{$color-user-primary-h}, #{$color-user-primary-s}, #{$color-user-primary-l}, 0);
 // Flat colors.
 $color-user-primary-flat-l-20: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, calc(#{$color-user-primary-l} - #{$flat-l-20-lp}));
 $color-user-primary-flat-l-10: hsl(#{$color-user-primary-h}, #{$color-user-primary-s}, calc(#{$color-user-primary-l} - #{$flat-l-10-lp}));
@@ -335,7 +355,7 @@ $color-user-secondary-tran-40: hsla(#{$color-user-secondary-h}, #{$color-user-se
 $color-user-secondary-tran-30: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.12);
 $color-user-secondary-tran-20: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.08);
 $color-user-secondary-tran-10: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0.04);
-$color-user-secondary-tran-0: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0);
+$color-user-secondary-tran-00: hsla(#{$color-user-secondary-h}, #{$color-user-secondary-s}, #{$color-user-secondary-l}, 0);
 // Flat colors.
 $color-user-secondary-flat-l-20: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, calc(#{$color-user-secondary-l} - #{$flat-l-20-lp}));
 $color-user-secondary-flat-l-10: hsl(#{$color-user-secondary-h}, #{$color-user-secondary-s}, calc(#{$color-user-secondary-l} - #{$flat-l-10-lp}));
@@ -363,7 +383,7 @@ $color-weak-tran-40: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 
 $color-weak-tran-30: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.12);
 $color-weak-tran-20: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.08);
 $color-weak-tran-10: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0.04);
-$color-weak-tran-0: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0);
+$color-weak-tran-00: hsla(#{$color-weak-h}, #{$color-weak-s}, #{$color-weak-l}, 0);
 // Flat colors.
 $color-weak-flat-l-20: hsl(#{$color-weak-h}, #{$color-weak-s}, calc(#{$color-weak-l} - #{$flat-l-20-lp}));
 $color-weak-flat-l-10: hsl(#{$color-weak-h}, #{$color-weak-s}, calc(#{$color-weak-l} - #{$flat-l-10-lp}));
@@ -391,7 +411,7 @@ $color-regular-tran-40: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-
 $color-regular-tran-30: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.12);
 $color-regular-tran-20: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.08);
 $color-regular-tran-10: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0.04);
-$color-regular-tran-0: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0);
+$color-regular-tran-00: hsla(#{$color-regular-h}, #{$color-regular-s}, #{$color-regular-l}, 0);
 // Flat colors.
 $color-regular-flat-l-20: hsl(#{$color-regular-h}, #{$color-regular-s}, calc(#{$color-regular-l} - #{$flat-l-20-lp}));
 $color-regular-flat-l-10: hsl(#{$color-regular-h}, #{$color-regular-s}, calc(#{$color-regular-l} - #{$flat-l-10-lp}));
@@ -419,7 +439,7 @@ $color-strong-tran-40: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-str
 $color-strong-tran-30: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.12);
 $color-strong-tran-20: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.08);
 $color-strong-tran-10: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0.04);
-$color-strong-tran-0: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0);
+$color-strong-tran-00: hsla(#{$color-strong-h}, #{$color-strong-s}, #{$color-strong-l}, 0);
 // Flat colors.
 $color-strong-flat-l-20: hsl(#{$color-strong-h}, #{$color-strong-s}, calc(#{$color-strong-l} - #{$flat-l-20-lp}));
 $color-strong-flat-l-10: hsl(#{$color-strong-h}, #{$color-strong-s}, calc(#{$color-strong-l} - #{$flat-l-10-lp}));
@@ -467,7 +487,7 @@ $color-top-header-tran-40: hsla(#{$color-top-header-h}, #{$color-top-header-s}, 
 $color-top-header-tran-30: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.12);
 $color-top-header-tran-20: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.08);
 $color-top-header-tran-10: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0.04);
-$color-top-header-tran-0: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0);
+$color-top-header-tran-00: hsla(#{$color-top-header-h}, #{$color-top-header-s}, #{$color-top-header-l}, 0);
 // Flat colors.
 $color-top-header-flat-l-20: hsl(#{$color-top-header-h}, #{$color-top-header-s}, calc(#{$color-top-header-l} - #{$flat-l-20-lp}));
 $color-top-header-flat-l-10: hsl(#{$color-top-header-h}, #{$color-top-header-s}, calc(#{$color-top-header-l} - #{$flat-l-10-lp}));
@@ -495,7 +515,7 @@ $color-qs-tran-40: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.16);
 $color-qs-tran-30: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.12);
 $color-qs-tran-20: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.08);
 $color-qs-tran-10: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0.04);
-$color-qs-tran-0: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0);
+$color-qs-tran-00: hsla(#{$color-qs-h}, #{$color-qs-s}, #{$color-qs-l}, 0);
 // Flat colors.
 $color-qs-flat-l-20: hsl(#{$color-qs-h}, #{$color-qs-s}, calc(#{$color-qs-l} - #{$flat-l-20-lp}));
 $color-qs-flat-l-10: hsl(#{$color-qs-h}, #{$color-qs-s}, calc(#{$color-qs-l} - #{$flat-l-10-lp}));

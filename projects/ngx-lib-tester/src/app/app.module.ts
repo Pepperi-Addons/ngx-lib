@@ -14,6 +14,8 @@ import { OtherFieldsExampleComponent } from './other-fields-example/other-fields
 import { InlineListExampleComponent } from './inline-list-example/inline-list-example.component';
 import { ListExampleComponent } from './list-example/list-example.component';
 import { TopBarExampleComponent } from './top-bar-example/top-bar-example.component';
+import { KofExampleComponent } from './kof-example/kof-example.component';
+import { DialogPlaygroundComponent } from './dialog-playground/dialog-playground.component';
 import { MaterialModule } from './modules/material.module';
 import {
     PepAddonService,
@@ -55,7 +57,7 @@ import { PepQueryBuilderModule } from '@pepperi-addons/ngx-lib/query-builder';
 import { PepDraggableItemsModule } from '@pepperi-addons/ngx-lib/draggable-items';
 import { PepProfileDataViewsListModule } from '@pepperi-addons/ngx-lib/profile-data-views-list';
 import { PepChipsModule } from '@pepperi-addons/ngx-lib/chips';
-
+import { PepSkeletonLoaderModule } from '@pepperi-addons/ngx-lib/skeleton-loader';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import {
@@ -169,7 +171,8 @@ const pepperiComponentsModules = [
     PepDraggableItemsModule,
     PepProfileDataViewsListModule,
     PepChipsModule,
-    PepFormModule
+    PepFormModule,
+    PepSkeletonLoaderModule
 ];
 
 @NgModule({
@@ -182,7 +185,9 @@ const pepperiComponentsModules = [
         OtherFieldsExampleComponent,
         InlineListExampleComponent,
         ListExampleComponent,
-        TopBarExampleComponent
+        TopBarExampleComponent,
+        KofExampleComponent,
+        DialogPlaygroundComponent
     ],
     imports: [
         CommonModule,

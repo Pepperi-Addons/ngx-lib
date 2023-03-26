@@ -21,6 +21,11 @@ import {
     PepAttachmentField,
 } from '@pepperi-addons/ngx-lib';
 
+/**
+ * This is the attachment component that is used to upload 
+ * files and media
+ *
+ */
 @Component({
     selector: 'pep-attachment',
     templateUrl: './attachment.component.html',
@@ -79,7 +84,7 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     @Input() disabled = false;
 
     /**
-     * If the attachment is readonly
+     * If the attachment is readonly. It could be with or without `src`
      *
      * @memberof PepAttachmentComponent
      */

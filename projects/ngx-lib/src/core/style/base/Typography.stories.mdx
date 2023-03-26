@@ -1,0 +1,89 @@
+import { Meta, Story } from "@storybook/addon-docs";
+
+import Typography from "./typography.component";
+
+<Meta title="Abstracts/Typography" component={Typography} />
+
+export const Template = (args) => ({ props: args });
+
+# Typography
+
+Here you can find typography styles and colors by **classes** or **tags**
+
+## Examples
+
+### Headings by class
+
+Use like this ` ↓ `
+
+```html
+    <span class="title-md">This is a MD title</span>
+```
+
+<Story name="Headings by class" args={{
+        storyIndex: 1,
+    }}>
+    {Template.bind({})}
+</Story>
+
+
+### Headings by tag
+
+Use like this ` ↓ `
+
+```html
+    <h1>This is an h1 tag</h1>
+```
+
+<Story name="Headings by tag" args={{
+        storyIndex: 2,
+    }}>
+    {Template.bind({})}
+</Story>
+
+### Body text styles & tag
+
+Use like this ` ↓ `
+
+```html
+    <p class="body-md">This is a MD title</p>
+```
+
+<Story name="Body text styles & tag" args={{
+    storyIndex: 3,
+}}>
+    {Template.bind({})}
+</Story>
+
+### Text color styles
+
+Use like this ` ↓ `
+
+```html
+    <p class="color-main">...</p>
+```
+
+<Story name="Text color styles" args={{
+    storyIndex: 4,
+}}>
+    {Template.bind({})}
+</Story>
+
+### Stating the obvious
+
+You can always mix tags/classes for better semantics or look and feel  
+
+Like so ` ↓ `
+
+```html
+<p class="color-user-primary body-md">...</p>
+<h4 class="color-dimmed body-xl">...</h4>
+<span class="color-caution title-md">...</span>
+```
+
+<Story name="Stating the obvious" args={{
+    storyIndex: 5,
+}}>
+    {Template.bind({})}
+</Story>
+

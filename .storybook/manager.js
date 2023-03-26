@@ -1,7 +1,7 @@
 // .storybook/manager.js
 
 import { addons } from '@storybook/addons';
-import pepperiTheme from './pepperi-theme';
+import pepperiTheme from './pepperiTheme';
 
 addons.setConfig({
     isFullscreen: false,
@@ -14,7 +14,7 @@ addons.setConfig({
     selectedPanel: undefined,
     initialActive: 'sidebar',
     sidebar: {
-        showRoots: false,
+        showRoots: true,
         collapsedRoots: ['other'],
     },
 });

@@ -2,21 +2,24 @@
     <ng-template #pepTemplate let-isFormView="isFormView" let-hasParent="hasParent">
         <pep-field-title *ngIf="renderTitle && isFormView && !hasParent" [label]="label" [mandatory]="mandatory"
             [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [xAlignment]="xAlignment"
-            [showTitle]="showTitle" [inputLength]="value.length">
+            [showTitle]="showTitle" [inputLength]="input.value?.length">
         </pep-field-title>
         <mat-form-field appearance="outline">
             <input #input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
                 maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"
                 [placeholder]="hasParent && !disabled ? placeholder : ''"
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
-                title="{{ formattedValue }}" [formControlName]="key" [type]="type" [value]="displayValue"
+                title="{{ displayValue }}" [formControlName]="key" [value]="displayValue"
                 (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" (blur)="onBlur($event)"
-                (change)="onChange($event)" [ngClass]="{'disable-hidden': disabled && formattedValue?.length > 0}" />
+                (change)="onChange($event)" [ngClass]="{'disable-hidden': disabled && displayValue?.length > 0}" />
 
-            <span *ngIf="disabled && formattedValue?.length > 0" class="dis-grid">
+            <span *ngIf="disabled && displayValue?.length > 0" class="dis-grid">
+                &nbsp;
                 <a href="javascript:void(0)" (click)="anchorClicked()" [id]="key" [name]="key"
                     class="color-link body-sm ">
-                    {{formattedValue}}</a>
+                    {{displayValue}}
+                </a>
+                &nbsp;
             </span>
             <mat-error *ngIf="renderError">
                 <ng-container *ngIf="mandatory && input.value.length == 0 then requiredError else otherError">
@@ -38,10 +41,10 @@
             </mat-error>
 
             <pep-textbox-icon *ngIf="renderSymbol && isFormView && xAlignment == 'right'" matPrefix [value]="value"
-                [label]="label" [type]="type" [disabled]="disabled">
+                [label]="label" type="link" [disabled]="disabled">
             </pep-textbox-icon>
             <pep-textbox-icon *ngIf="renderSymbol && isFormView && (xAlignment == 'left')" matSuffix [value]="value"
-                [label]="label" [type]="type" [disabled]="disabled">
+                [label]="label" type="link" [disabled]="disabled">
             </pep-textbox-icon>
         </mat-form-field>
     </ng-template>
@@ -67,9 +70,9 @@
                 (click)="!disabled ? cardTemplateClicked($event) : ''">
                 <span *ngIf="showTitle && label != ''" class="body-xs title" title="{{ label }}">{{ label
                     }}&nbsp;</span>
-                <span [id]="key" title="{{ formattedValue }}" class="body-sm value"
+                <span [id]="key" title="{{ displayValue }}" class="body-sm value"
                     [ngClass]="{'multi-rows-text': rowSpan > 1}" [ngStyle]="{ '-webkit-line-clamp': rowSpan }">{{
-                    formattedValue }}</span>
+                    displayValue }}</span>
                 <button *ngIf="isActive && !disabled" class="pep-button weak card-edit-button" mat-button>
                     <mat-icon>
                         <pep-icon name="system_edit">
@@ -88,18 +91,18 @@
             </ng-container>
         </ng-template>
         <ng-template #notSelectedBlock>
-            <ng-container *ngIf="formattedValue?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
+            <ng-container *ngIf="displayValue?.length > 0; then notEmptyBlock; else emptyBlock"></ng-container>
             <ng-template #notEmptyBlock>
-                <a *ngIf="formattedValue != null && (value ? value : formattedValue) | isUrl" [id]="key"
+                <a *ngIf="displayValue != null && (value ? value : displayValue) | isUrl" [id]="key"
                     class="color-link body-sm pep-report-input"
-                    [ngClass]="{'disable': (disabled && value === '')}" title="{{ formattedValue }}"
-                    target="_blank" href="{{ value ? value : formattedValue }}" (click)="onClick()">{{
-                    formattedValue }}</a>
-                <a *ngIf="formattedValue != null && !((value ? value : formattedValue) | isUrl)" [id]="key"
+                    [ngClass]="{'disable': (disabled && value === '')}" title="{{ displayValue }}"
+                    target="_blank" href="{{ value ? value : displayValue }}" (click)="onClick()">{{
+                    displayValue }}</a>
+                <a *ngIf="displayValue != null && !((value ? value : displayValue) | isUrl)" [id]="key"
                     class="color-link body-sm pep-report-input"
-                    [ngClass]="{'disable': (disabled && value === '')}" title="{{ formattedValue }}"
+                    [ngClass]="{'disable': (disabled && value === '')}" title="{{ displayValue }}"
                     href="javascript:void(0)" (click)="onClick()">{{
-                    formattedValue }}</a>
+                    displayValue }}</a>
             </ng-template>
             <ng-template #emptyBlock>
                 <span [id]="key">&nbsp;</span>

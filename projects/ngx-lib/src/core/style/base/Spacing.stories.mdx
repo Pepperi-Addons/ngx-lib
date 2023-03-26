@@ -1,0 +1,75 @@
+import { Meta, Story } from "@storybook/addon-docs";
+
+import Spacing from "./spacing.component";
+
+<Meta title="Abstracts/Spacing" component={Spacing} />
+
+export const Template = (args) => ({ props: args });
+
+# Spacing
+
+Here are the available spacing vars, see them play out in the box below
+
+- `$spacing-2xs`
+- `$spacing-xs`
+- `$spacing-sm`
+- `$spacing-md`
+- `$spacing-lg`
+- `$spacing-xl`
+- `$spacing-xl2`
+- `$spacing-xl3`
+- `$spacing-xl4`
+- `$spacing-xl5`
+- `$spacing-xl6`
+- `$spacing-xl7`
+- `$spacing-xl8`
+- `$spacing-xl9`
+
+
+Use them like so `↓`
+
+```css
+// Make sure you call the `variables.scss` at the top of the file
+@use "@pepperi-addons/ngx-lib/src/core/style/abstracts/variables";
+
+.size-class {
+    width: variables.$spacing-lg;
+    height: variables.$spacing-xl;
+    padding: variables.$spacing-xs;
+}
+```
+
+> You can use `calc` to reach a bigger size - here we reach a 512px wide class
+
+```css
+.widddde {
+    width: calc(variables.$spacing-lg * 4);
+
+}
+```
+## Example
+
+<Story name="Spacing" args={{
+        storyIndex: 1,
+    }}>
+    {Template.bind({})}
+</Story>
+
+BTW, these are the vaules of the spacing `↓`
+
+| Name | In rems | In PX on base size (1rem=16px) |
+|:---|:---|:---|
+|`$spacing-2xs` |  0.125rem | 2px |
+|`$spacing-xs`  |  0.25rem  | 4px |
+|`$spacing-sm`  |  0.5rem   | 8px |
+|`$spacing-md`  |  0.75rem  | 12px |
+|`$spacing-lg`  |  1rem     | 16px |
+|`$spacing-xl`  |  1.5rem   | 24px |
+|`$spacing-xl2` |  2rem     | 32px |
+|`$spacing-xl3` |  2.5rem   | 40px  |
+|`$spacing-xl4` |  3rem     |   48px  |
+|`$spacing-xl5` |  3.5rem   | 56px  |
+|`$spacing-xl6` |  5rem     |   80px  |
+|`$spacing-xl7` |  6rem     |   96px  |
+|`$spacing-xl8` |  8rem     |   128px  |
+|`$spacing-xl9` |  16rem    |  256px  |

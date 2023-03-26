@@ -10,14 +10,13 @@ import { PepSizeType } from '@pepperi-addons/ngx-lib';
     templateUrl: './draggable-items.component.html',
     styleUrls: ['./draggable-items.component.scss', './draggable-items.component.theme.scss']
 })
-export class DraggableItemsComponent implements OnInit, OnDestroy {
+export class PepDraggableItemsComponent implements OnInit, OnDestroy {
     @Input() containerId = 'draggable-container';
     @Input() showSearch = false;
     @Input() title = '';
     @Input() titleType: PepDraggableItemsTitleType = 'regular';
-    @Input() titleSizeType: PepSizeType = 'xl';
-
-    @Input() itemPlaceholderType: PepDraggableItemPlaceholderType = 'none';
+    @Input() titleSizeType: PepSizeType = 'md';
+    @Input() itemPlaceholderType: PepDraggableItemPlaceholderType = 'weak';
 
     @Input() dropAreaIds = [];
 

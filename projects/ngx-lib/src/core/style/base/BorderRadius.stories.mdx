@@ -1,0 +1,59 @@
+import { Meta, Story } from "@storybook/addon-docs";
+
+import { componentWrapperDecorator } from "@storybook/angular";
+
+import BorderRadius from "./borderRadius.component";
+
+<Meta title="Abstracts/Border Radius" component={BorderRadius}
+    decorators={[
+        componentWrapperDecorator(
+            (story) => `<div class="this-max-width">${story}</div>`
+        ),
+    ]}
+/>
+
+export const Template = (args) => ({ props: args });
+
+# Border Radius
+
+You can use the border radius as a class
+
+- `.border-radius-sm`
+- `.border-radius-md`
+- `.border-radius-lg`
+- `.border-radius-xl`
+
+Like so `↓`
+
+```html
+<div class="border-radius-md">
+    <!-- ... -->
+</div>
+```
+
+Or or as a variable
+
+- `variables.$border-radius-sm`
+- `variables.$border-radius-md`
+- `variables.$border-radius-lg`
+- `variables.$border-radius-xl`
+
+Like so `↓`
+
+```css
+// Make sure you call the `variables.scss` at the top of the file
+@use "@pepperi-addons/ngx-lib/src/core/style/abstracts/variables";
+
+.losing-my-edge {
+    border-radius: variables.$border-radius-sm;
+```
+
+##### For the most part you should use the `border-radius-md` size
+
+## Example
+
+<Story name="Border Radius" args={{
+        storyIndex: 1,
+    }}>
+    {Template.bind({})}
+</Story>

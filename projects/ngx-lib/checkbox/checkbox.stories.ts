@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Components/checkbox',
+    title: 'Components/Checkbox',
     component: PepCheckboxComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -20,7 +20,16 @@ export default {
     ],
     argTypes: {
         label: commonArgTypes.label,
-        value: commonArgTypes.value,
+        value: {
+            description: 'Is the checkbox true or false',
+            defaultValue: false,
+            control: {
+                type: 'boolean',
+            },
+            table: {
+                defaultValue: { summary: 'false' },
+            }
+        },
         visible: commonArgTypes.visible,
         xAlignment: commonArgTypes.xAlignment,
         disabled: commonArgTypes.disabled,
@@ -29,7 +38,7 @@ export default {
         renderTitle: commonArgTypes.renderTitle,
         type: {
             description: 'This is the type of the component',
-            defaultValue: 'checkbox',
+            defaultValue: 'Check this out',
             control: {
                 type: 'radio',
                 options: ['checkbox', 'booleanText'],
@@ -90,10 +99,48 @@ const Template: Story<PepCheckboxComponent> = (args: PepCheckboxComponent) => ({
     // `,
 });
 
-export const Base = Template.bind({});
-Base.storyName = 'Basic';
-Base.args = {
-    label: 'check box',
-    value: 'true',
+export const Story1 = Template.bind({});
+Story1.storyName = 'Basic';
+Story1.args = {
+    label: 'Check this out',
+    value: true,  
+};
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'No label';
+Story2.args = {
+    value: true,  
+};
+
+export const Story3 = Template.bind({});
+Story3.storyName = 'Disabled & checked';
+Story3.args = {
+    label: 'Disabled & checked',
+    value: true, 
+    disabled: true, 
+};
+
+export const Story4 = Template.bind({});
+Story4.storyName = 'Disabled & unchecked';
+Story4.args = {
+    label: 'Disabled & unchecked',
+    value: false, 
+    disabled: true, 
+};
+
+export const Story5 = Template.bind({});
+Story5.storyName = 'Flipped & mandatory';
+Story5.args = {
+    label: 'Flipped & mandatory',
+    value: true,  
+    mandatory: true,
+    xAlignment: "right",
+};
+
+export const Story6 = Template.bind({});
+Story6.storyName = 'Type is booleanText';
+Story6.args = {
+    // label: 'N',
+    type: 'booleanText',
     additionalValue: { CheckedText: '❤', UncheckedText: '💛' },
 };
