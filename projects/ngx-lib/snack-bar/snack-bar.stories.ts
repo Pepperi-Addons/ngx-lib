@@ -23,7 +23,7 @@ function initSnackBarService(sbs: PepSnackBarService) {
 
 // This exports the Stories group for this component
 export default {
-    title: 'Services/snackBar',
+    title: 'Services/Snackbar',
     // component: PepSnackBarComponent,
     // argTypes: argTypesBasicStory,
     decorators: [
@@ -110,8 +110,17 @@ const Template: Story<PepSnackBarComponent> = (args: PepSnackBarComponent) => ({
 // <pep-snack-bar [title]="title"></pep-snack-bar>
 
 export const Base = Template.bind({});
-Base.storyName = 'Basic';
+Base.storyName = 'Snackbar';
 Base.args = {
     title: 'SnackBar title',
     content: 'SnackBar content',
 };
+
+export const Story2 = Template.bind({});
+Story2.storyName = 'No content';
+Story2.args = {
+    // TODO if no content then remove the HR
+    title: 'SnackBar title',
+};
+
+// TODO Show how to use
