@@ -2,7 +2,7 @@
     <ng-template #pepTemplate let-isFormView="isFormView" let-hasParent="hasParent">
         <pep-field-title *ngIf="renderTitle && isFormView && !hasParent" [label]="label" [mandatory]="mandatory"
             [disabled]="disabled" [maxFieldCharacters]="maxFieldCharacters" [xAlignment]="xAlignment"
-            [showTitle]="showTitle" [inputLength]="value.length">
+            [showTitle]="showTitle" [inputLength]="input.value?.length">
         </pep-field-title>
         <mat-form-field appearance="outline">
             <input #input pepTextboxValidation [id]="key" [name]="key" class=" body-sm " matInput autocomplete="off"
