@@ -244,9 +244,9 @@ Story4.parameters = {
 };
 
 export const Story5 = Template.bind({});
-Story5.storyName = "Type is `select`"
+Story5.storyName = "Type is select"
 Story5.args = {
-    label: 'Type is `select`',
+    label: 'Type is select',
     chips: mockChips,
     type: 'select',
 }

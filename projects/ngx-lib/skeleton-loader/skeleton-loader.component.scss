@@ -1,8 +1,8 @@
 @use '../src/core/style/abstracts/variables';
 @use '../src/core/style/abstracts/functions';
 
-$color-weak: rgb(240, 240, 240);
-$color-flash: rgb(250, 250, 250);
+$color-weak: rgb(240, 240, 240); //functions.get-pep-color(color-system-primary, color-flat-r-40);
+$color-flash: rgb(250, 250, 250); //functions.get-pep-color(color-system-primary, color-flat-r-30);
 
 .skeleton-loader {
 	display: flex;

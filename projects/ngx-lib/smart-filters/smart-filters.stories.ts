@@ -12,7 +12,7 @@ import { createSmartFilterField } from './common/model/creator';
 
 // This exports the Stories group for this component
 export default {
-    title: 'Services/Smart filters',
+    title: 'Components/Smart filters',
     component: PepSmartFiltersComponent,
     // argTypes: argTypesBasicStory,
     decorators: [

@@ -204,7 +204,7 @@ const Template: Story<PepDraggableItemsModule> = (args: PepDraggableItemsModule)
     `
 });
 
-// TODO Better docs that explain how it works 
+// TODO Show how to use
 export const Story2 = Template.bind({});
 Story2.storyName = 'Drag into area';
 Story2.parameters = {
