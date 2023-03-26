@@ -124,9 +124,9 @@ Base.args = {
     value: 'Not all who wander are lost',
 };
 
-export const maxFieldCharacters = Template.bind({});
-maxFieldCharacters.storyName = "Max field characters"
-maxFieldCharacters.args = {
+export const MaxFieldCharacters = Template.bind({});
+MaxFieldCharacters.storyName = "Max field characters"
+MaxFieldCharacters.args = {
     label: 'Text',
     maxFieldCharacters: 7,
 };

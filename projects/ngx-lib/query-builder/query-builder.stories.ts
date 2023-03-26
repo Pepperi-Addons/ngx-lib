@@ -69,8 +69,8 @@ export default {
 
 } as Meta;
 
-let json = '';
-let fields: Array<IPepQueryBuilderField> = [
+const json = '';
+const fields: Array<IPepQueryBuilderField> = [
     { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
     { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool' },
     { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
@@ -87,7 +87,7 @@ let fields: Array<IPepQueryBuilderField> = [
     }
 ];
 
-let variableFields: Array<IPepQueryBuilderField> = [
+const variableFields: Array<IPepQueryBuilderField> = [
     { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
     { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
     { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime' },

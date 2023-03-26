@@ -95,7 +95,7 @@ Story1.args = {
 };
 
 
-let valueObject = {
+const valueObject = {
     value: 50
 };
 function onValueChange(event: any) {

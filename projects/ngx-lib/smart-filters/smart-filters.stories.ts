@@ -91,8 +91,8 @@ export default {
     },
 } as Meta;
 
-let fields: Array<IPepSmartFilterField> = getSmartFiltersFields();
-let filters: Array<IPepSmartFilterData> = [];
+const fields: Array<IPepSmartFilterField> = getSmartFiltersFields();
+const filters: Array<IPepSmartFilterData> = [];
 
 function getSmartFiltersFields(): Array<IPepSmartFilterField> {
     const brandOptions: IPepSmartFilterFieldOption[] = [];
@@ -100,7 +100,7 @@ function getSmartFiltersFields(): Array<IPepSmartFilterField> {
         brandOptions.push({ value: `value ${index}`, count: index });
     }
 
-    let fields = [
+    return [
         createSmartFilterField({ id: 'filter3', name: 'Date' }, 'date'),
         createSmartFilterField({ id: 'filter1', name: 'Datetime' }, 'date-time'),
         createSmartFilterField({ id: 'filter2', name: 'Numbers' }, 'int'),
@@ -109,8 +109,6 @@ function getSmartFiltersFields(): Array<IPepSmartFilterField> {
         createSmartFilterField({ id: 'filter6', name: 'Currency' }, 'currency'),
         createSmartFilterField({ id: 'filter8', name: 'Text' }, 'text'),
     ];
-
-    return fields;
 }
 
 

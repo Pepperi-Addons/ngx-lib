@@ -114,7 +114,7 @@ const buttonsContent = [
     {key: "x08", value: "Maestro"},
 ];
 
-let buttons: Array<PepButton> = [
+const buttons: Array<PepButton> = [
     { key: '1', value: '1', callback: (event: any) => onColNumChanged(event.source.key)},
     { key: '2', value: '2', callback: (event: any) => onColNumChanged(event.source.key)},
     { key: '3', value: '3', callback: (event: any) => onColNumChanged(event.source.key)}
