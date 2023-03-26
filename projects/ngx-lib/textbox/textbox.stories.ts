@@ -38,7 +38,6 @@ export default {
                 type: 'inline-radio',
                 options: [
                     'text',
-                    'link',
                     'email',
                     'phone',
                     'int',
@@ -167,21 +166,6 @@ Percentage.args = {
     label: 'percentage',
     type: 'percentage',
     value: '90',
-};
-
-export const Link = Template.bind({});
-Link.parameters = {
-    docs: {
-        description: {
-            //! set link to story once published 
-            story: "See more of lint behavior at the **[Link story](?path=/docs/components-link--story-1)**"
-        }
-    }
-}
-Link.args = {
-    label: 'Link',
-    type: 'link',
-    value: 'http://www.google.com',
 };
 
 export const Phone = Template.bind({});
