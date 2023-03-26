@@ -120,7 +120,7 @@
     </ng-template>
 
     <ng-template #signaturePopupPad>
-        <pep-dialog [title]="'SIGNATURE.DIALOG_TITLE' | translate" [showFooter]="showActionBtn" (close)="closeDialog($event)">
+        <pep-dialog [title]="'SIGNATURE.DIALOG_TITLE' | translate" [showFooter]="showActionBtn" [showClose]="true" (close)="closeDialog($event)">
             <ng-container pep-dialog-content>
                 <signature-pad #signaturePad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
                     (onEndEvent)="drawComplete()">
