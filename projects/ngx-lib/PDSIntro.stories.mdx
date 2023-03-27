@@ -1,0 +1,43 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Pepperi Design System" />
+
+# Pepperi design system (PDS)
+
+![Pepperi under the jungle cover](https://yonatankof.com/misc/pepp/Pepperi_under_the_jungle_cover.svg)
+#### Design systems?
+
+A design system is a collection of elements and patterns that are used to create a consistent and cohesive user interface for a digital product or service. It includes things like colors, fonts, grids, buttons, forms, and other design elements, as well as guidelines for their use. The purpose of a design system is to ensure that the user experience is consistent across all parts of a product or service, regardless of who is designing or developing it. A well-designed and well-implemented design system can help streamline the design and development process, improve collaboration between teams, and create a more efficient and effective user experience.
+
+- [Component Driven User Interfaces](https://www.componentdriven.org/)
+- [Component-Driven Development -> Chromatic](https://www.chromatic.com/blog/component-driven-development/)
+- [Atomic Design -> Brad Frost](https://bradfrost.com/blog/post/atomic-web-design/)
+- [Adele -> Design Systems and Pattern Libraries Repository](https://adele.uxpin.com)
+
+#### About PDS
+
+As explained before, PDS is represented by the following:
+
+- Atoms (styles, buttons, icons, inputs, etc')
+- Molecules (dialogs, filters, image filmstrip, etc')
+- Organisms (header, footer, etc')
+- Templates (login, dialog with a form, list in a page, etc')
+- Pages (Order center for a _buyer_ or as a _rep_)
+
+> In ngx-lib you'll only find _Atoms_ and _Molecules_ – for _Organisms_, _Templates_, _Pages_ you'll need to see `ngx-composite-lib` storybook (TBD)
+
+Where can you find Pepperi design system?
+
+- Design tokens for the webapp & the native apps
+- Pepperi UI on the webapp & native webviews
+
+#### Use PDS
+
+- Use PDS's design tokens (classes, variables, functions & mixins) with _ngx-lib style abstracts_
+    ``` scss
+    @use '@pepperi-addons/ngx-lib/src/core/style/abstracts/variables' as ngx-variables;
+    @use '@pepperi-addons/ngx-lib/src/core/style/abstracts/functions' as ngx-functions;
+    @use '@pepperi-addons/ngx-lib/src/core/style/abstracts/mixins' as ngx-mixins;
+    ```
+- Use the components with `ngx-lib`
+- Use the composite `ngx-composite-lib`
