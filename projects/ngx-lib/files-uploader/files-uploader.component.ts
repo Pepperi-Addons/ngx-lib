@@ -63,19 +63,23 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() sizeLimitMB = 5;
 
     @Input() form: FormGroup;
-    @Input() standAlone = false;
     @Input() acceptedExtensions = 'bmp,jpg,jpeg,png,gif,ico,svg,html,css';
     @Input() layoutType: PepLayoutType = 'form';
+
+    @Input() fieldHeight = '';
+    // To know if handle actions or just raise them as output
+    @Input() handleActions = true;
 
     @Output()
     fileChange: EventEmitter<IPepFileChangeEvent> = new EventEmitter<IPepFileChangeEvent>();
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
+    @Output()
+    chooseFile: EventEmitter<void> = new EventEmitter<void>();
+
     @ViewChild('fileInput') fileInput: any;
     @ViewChild('imagePreview') imagePreview: any;
-
-    @Input() fieldHeight = '';
 
     // multiple = false;
     uploader: FileUploader;
@@ -260,19 +264,27 @@ export class PepFilesUploaderComponent implements OnInit {
     }
 
     onClick_ChooseFile(event): void {
-        if (this.fileInput?.nativeElement) {
-            this.fileInput.nativeElement.click();
+        if (this.handleActions) {
+            if (this.fileInput?.nativeElement) {
+                this.fileInput.nativeElement.click();
+            }
+        } else {
+            this.chooseFile.emit();
         }
     }
 
     onKeyPress_ChooseFile(event): void {
-        const e = event as KeyboardEvent;
+        if (this.handleActions) {
+            const e = event as KeyboardEvent;
 
-        if ([13, 32].indexOf(e.which) !== -1) {
-            if (this.fileInput?.nativeElement) {
-                this.fileInput.nativeElement.click();
+            if ([13, 32].indexOf(e.which) !== -1) {
+                if (this.fileInput?.nativeElement) {
+                    this.fileInput.nativeElement.click();
+                }
             }
+            e.preventDefault();
+        } else {
+            this.chooseFile.emit();
         }
-        e.preventDefault();
     }
 }
