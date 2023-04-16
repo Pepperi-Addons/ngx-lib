@@ -174,3 +174,5 @@ Phone.args = {
     type: 'phone',
     value: '+972-52-5555-555',
 };
+
+// TODO Add placeholder text
