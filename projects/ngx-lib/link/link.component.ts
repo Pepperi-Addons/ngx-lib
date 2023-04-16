@@ -86,7 +86,7 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
      *
      * @memberof PepLinkComponent
      */
-    @Input() displayValue: string = '';
+    @Input() displayValue = '';
 
     /**
      * The title of the link.

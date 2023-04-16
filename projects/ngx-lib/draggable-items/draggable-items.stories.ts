@@ -116,7 +116,7 @@ export default {
     }
 } as Meta;
 
-let items = getDraggableItems();
+const items = getDraggableItems();
 function getDraggableItems(): any[] {
     return [
         { title: 'Tramontana', data: "S", disabled: true },
@@ -146,8 +146,8 @@ export const Story1 = TemplateBase.bind({});
 Story1.args = {}
 Story1.storyName = "Basic"
 
-let dropArea = [];
-let draggableItems = getDraggableItems();
+const dropArea = [];
+const draggableItems = getDraggableItems();
 
 function drop(event: CdkDragDrop<IPepDraggableItem[]>) {
     // debugger;

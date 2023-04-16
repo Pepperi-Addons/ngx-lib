@@ -22,6 +22,7 @@ import {
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
     PepSignatureField,
+    IPepFieldClickEvent,
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -92,8 +93,14 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() isActive = false;
 
+    // To know if handle actions or just raise them as output
+    @Input() handleActions = true;
+    
     @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
     @ViewChild('signaturePad') signaturePad: SignaturePad;
     @ViewChild('signaturePopupPad', { read: TemplateRef })
@@ -191,27 +198,34 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     openSignModal(): void {
-        // If the signature is not empty open it in image viewer.
-        //! Remove this `if` to always open signature in modal 
-        if (this.standAlone && this.dataURI) {
-            const fileStrArr = this.dataURI.fileStr.split(';');
+        if (this.handleActions) {
+            // If the signature is not empty open it in image viewer.
+            //! Remove this `if` to always open signature in modal 
+            if (this.standAlone && this.dataURI) {
+                const fileStrArr = this.dataURI.fileStr.split(';');
 
-            if (fileStrArr.length === 2) {
-                const win = window.open('', '_blank');
-                const contentType = fileStrArr[0].split(':')[1];
-                const base64 = fileStrArr[1].split(',')[1];
-                const blob = this.fileService.convertFromb64toBlob(
-                    base64,
-                    contentType
-                );
-                const url = URL.createObjectURL(blob);
-                win.location.href = url;
+                if (fileStrArr.length === 2) {
+                    const win = window.open('', '_blank');
+                    const contentType = fileStrArr[0].split(':')[1];
+                    const base64 = fileStrArr[1].split(',')[1];
+                    const blob = this.fileService.convertFromb64toBlob(
+                        base64,
+                        contentType
+                    );
+                    const url = URL.createObjectURL(blob);
+                    win.location.href = url;
+                }
+                // signature allready exits
+            } else {
+                this.signatureURL = this.src;
+                this.openSignatoreDlg(this.signatureURL);
             }
-            // signature allready exits
-        } else {
-            this.signatureURL = this.src;
-            this.openSignatoreDlg(this.signatureURL);
         }
+
+        this.elementClick.emit({
+            key: this.key,
+            value: this.signatureURL
+        });
     }
 
     openSignatoreDlg(src = ''): void {
@@ -276,13 +290,8 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
             this.key,
             this.dataURI ? this.dataURI.fileExt : ''
         );
-        // this.valueChange.emit({
-        //     key: this.key,
-        //     value,
-        // });
-
+        
         this.fileChange.emit(fileData);
-        // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 
     onKeyPress_OpenSignModal(event: any): void {

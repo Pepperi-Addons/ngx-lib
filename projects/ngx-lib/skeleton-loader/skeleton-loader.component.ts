@@ -15,8 +15,8 @@ interface IPepSkeletonLoaderDialogData {
 })
 export class PepSkeletonLoaderComponent{
     @Input() rowHeightType: PepSizeType = 'md'; // Each row heigth
-    @Input() rowsNumber: number = 3; // number of rows
-    @Input() lastRowOffset: boolean = true; // If the last row is with offset or not
+    @Input() rowsNumber = 3; // number of rows
+    @Input() lastRowOffset = true; // If the last row is with offset or not
     
     constructor(@Optional()
         private dialogRef: MatDialogRef<PepSkeletonLoaderComponent>,

@@ -72,7 +72,7 @@ export class DialogPlaygroundComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        
+        // On init
     }
 
     showDefaultModal(event){
@@ -130,7 +130,7 @@ export class DialogPlaygroundComponent implements OnInit {
         this.dialogArr.push(this.dialogRef);
         
         this.dialogRef.afterClosed().subscribe(result => {
-
+            // Do nothing.
          });
     }
 
