@@ -5,6 +5,7 @@ import docJson from "../documentation.json";
 import pepperiTheme from './pepperiTheme';
 import { componentWrapperDecorator } from '@storybook/angular';
 
+document.body.classList.add("pepperi-theme");
 
 setCompodocJson(docJson);
 
