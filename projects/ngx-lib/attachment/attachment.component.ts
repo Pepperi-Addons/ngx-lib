@@ -150,13 +150,13 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     @Input() handleActions = true;
 
     @Output()
+    chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false
+
+    @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
-
-    @Output()
-    chooseFile: EventEmitter<void> = new EventEmitter<void>();
 
     fieldHeight = '';
     standAlone = false;
