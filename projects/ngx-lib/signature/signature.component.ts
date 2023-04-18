@@ -95,13 +95,16 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
 
     // To know if handle actions or just raise them as output
     @Input() handleActions = true;
+
+    @Output()
+    chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false
     
     @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
-
+    
     @ViewChild('signaturePad') signaturePad: SignaturePad;
     @ViewChild('signaturePopupPad', { read: TemplateRef })
     signaturePopupPad: TemplateRef<any>;
@@ -149,6 +152,23 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
             disabled: this.disabled,
         });
         this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
+    private openSignatoreDlg(src = ''): void {
+        this.showActionBtn =
+            this.signatureURL && this.signatureURL !== '' ? false : true;
+
+        this.dialogRef = this.dialogService.openDialog(this.signaturePopupPad);
+        this.dialogRef.afterOpened().subscribe(() => {
+            this.afterDialogOpened();
+        });
+    }
+
+    private afterDialogOpened(): void {
+        if (this.signatureURL && this.signatureURL !== '') {
+            this.signaturePad.fromDataURL(this.signatureURL);
+            this.signaturePad.off();
+        }
     }
 
     ngOnInit(): void {
@@ -220,28 +240,15 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
                 this.signatureURL = this.src;
                 this.openSignatoreDlg(this.signatureURL);
             }
-        }
-
-        this.elementClick.emit({
-            key: this.key,
-            value: this.signatureURL
-        });
-    }
-
-    openSignatoreDlg(src = ''): void {
-        this.showActionBtn =
-            this.signatureURL && this.signatureURL !== '' ? false : true;
-
-        this.dialogRef = this.dialogService.openDialog(this.signaturePopupPad);
-        this.dialogRef.afterOpened().subscribe(() => {
-            this.afterDialogOpened();
-        });
-    }
-
-    afterDialogOpened(): void {
-        if (this.signatureURL && this.signatureURL !== '') {
-            this.signaturePad.fromDataURL(this.signatureURL);
-            this.signaturePad.off();
+        } else {
+            if (this.src.length > 0) {
+                this.elementClick.emit({
+                    key: this.key,
+                    value: this.signatureURL
+                });
+            } else {
+                this.chooseFile.emit();
+            }
         }
     }
 
@@ -283,14 +290,15 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     changeValue(fileData: any): void {
-        this.dataURI = fileData;
-        this.src = this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
-        this.customizationService.updateFormFieldValue(
-            this.form,
-            this.key,
-            this.dataURI ? this.dataURI.fileExt : ''
-        );
-        
+        if (this.handleActions) {
+            this.dataURI = fileData;
+            this.src = this.standAlone && this.dataURI ? this.dataURI.fileStr : '';
+            this.customizationService.updateFormFieldValue(
+                this.form,
+                this.key,
+                this.dataURI ? this.dataURI.fileExt : ''
+            );
+        }
         this.fileChange.emit(fileData);
     }
 

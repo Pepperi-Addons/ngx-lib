@@ -67,16 +67,17 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() layoutType: PepLayoutType = 'form';
 
     @Input() fieldHeight = '';
+    
     // To know if handle actions or just raise them as output
     @Input() handleActions = true;
-
+    
+    @Output()
+    chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false
+    
     @Output()
     fileChange: EventEmitter<IPepFileChangeEvent> = new EventEmitter<IPepFileChangeEvent>();
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
-
-    @Output()
-    chooseFile: EventEmitter<void> = new EventEmitter<void>();
 
     @ViewChild('fileInput') fileInput: any;
     @ViewChild('imagePreview') imagePreview: any;
