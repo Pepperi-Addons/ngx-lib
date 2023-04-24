@@ -400,7 +400,7 @@ export class PepQuantitySelectorComponent
 
     ngAfterViewInit() {
         setTimeout(() => {
-            debugger;
+            // debugger;
             if (this.QSCont &&
                 this.QSCont.nativeElement &&
                 this.QSCont.nativeElement.clientWidth > 0

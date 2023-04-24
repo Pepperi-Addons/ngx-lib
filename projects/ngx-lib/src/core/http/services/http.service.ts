@@ -193,4 +193,18 @@ export class PepHttpService {
         const papiBaseUrl = this.sessionService.getPapiBaseUrl();
         return this.postHttpCall(`${papiBaseUrl}${url}`, body, httpOptions);
     }
+
+    // getApiCall(url: string, httpOptions: any = {}): Observable<any> {
+    //     const apiBaseUrl = this.sessionService.getApiBaseUrl();
+    //     return this.getHttpCall(`${apiBaseUrl}${url}`, httpOptions);
+    // }
+
+    // postApiCall(
+    //     url: string,
+    //     body: any | null,
+    //     httpOptions: any = {}
+    // ): Observable<any> {
+    //     const apiBaseUrl = this.sessionService.getApiBaseUrl();
+    //     return this.postHttpCall(`${apiBaseUrl}${url}`, body, httpOptions);
+    // }
 }

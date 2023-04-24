@@ -252,11 +252,8 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
                 const fileStrArr = this.dataURI.fileStr.split(';');
                 if (fileStrArr.length === 2) {
                     const win = window.open('', '_blank');
-                    const contentType = fileStrArr[0].split(':')[1];
-                    const base64 = fileStrArr[1].split(',')[1];
                     const blob = this.fileService.convertFromb64toBlob(
-                        base64,
-                        contentType
+                        this.dataURI.fileStr
                     );
                     const url = URL.createObjectURL(blob);
                     win.location.href = url;

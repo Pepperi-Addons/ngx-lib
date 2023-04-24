@@ -50,11 +50,8 @@ export class PepImageService {
             const fileStrArr = event.fileStr.split(';');
             if (fileStrArr.length === 2) {
                 const win = window.open('', '_blank');
-                const contentType = fileStrArr[0].split(':')[1];
-                const base64 = fileStrArr[1].split(',')[1];
                 const blob = this.fileService.convertFromb64toBlob(
-                    base64,
-                    contentType
+                    event.fileStr
                 );
                 const url = URL.createObjectURL(blob);
                 win.location.href = url;
