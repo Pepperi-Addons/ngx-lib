@@ -274,12 +274,13 @@ export class PepLinkField extends PepFieldBase {
 
     public update(options: IPepTextboxFieldOptions): void {
         super.update(options);
-
-        // DI-11292 - add changes for link field for the "Read Only display value" prop
-        this.formattedValue =
-            this.disabled && this.formattedValue && this.value
-                ? this.formattedValue
-                : this.value;
+        
+        // DI-23167 - Comment this.
+        // // DI-11292 - add changes for link field for the "Read Only display value" prop
+        // this.formattedValue =
+        //     this.disabled && this.formattedValue && this.value
+        //         ? this.formattedValue
+        //         : this.value;
 
     }
 }
