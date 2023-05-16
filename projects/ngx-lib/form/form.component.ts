@@ -1488,8 +1488,9 @@ export class PepFormComponent implements OnInit, DoCheck, OnChanges, OnDestroy {
 
         const isValid = formControl ? formControl.valid : true;
         // const isValid = true;
-
-        if (isValid) {
+ 
+        // If isValid || event.value === '' for init the field if the user want.
+        if (isValid || event.value === '') {
             // Set it to false to disable all fields.
             if (this.isInternal && this.layoutType === 'form') {
                 this.isLocked = true;
