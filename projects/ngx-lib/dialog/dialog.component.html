@@ -1,17 +1,21 @@
-<div mat-dialog-title *ngIf="showHeader" class="dialog-header-container">
-    <span class="dialog-title" *ngIf="title?.length">
-        {{ title }}
-    </span>
-    <button mat-button *ngIf="showClose" (click)="closeDialog()" class="pep-button icon-button md weak dialog-close">
-        <mat-icon>
-            <pep-icon name="system_close">
-            </pep-icon>
-        </mat-icon>
-    </button>
+<div> <!-- This div is for the css grid rows -->
+    <div mat-dialog-title *ngIf="showHeader" class="dialog-header-container">
+        <span class="dialog-title" *ngIf="title?.length">
+            {{ title }}
+        </span>
+        <button mat-button *ngIf="showClose" (click)="closeDialog()" class="pep-button icon-button md weak dialog-close">
+            <mat-icon>
+                <pep-icon name="system_close">
+                </pep-icon>
+            </mat-icon>
+        </button>
+    </div>
 </div>
 <div mat-dialog-content>
     <ng-content select="[pep-dialog-content]"></ng-content>
 </div>
-<div mat-dialog-actions *ngIf="showFooter" class="pep-border-top">
-    <ng-content select="[pep-dialog-actions]"></ng-content>
+<div> <!-- This div is for the css grid rows -->
+    <div mat-dialog-actions *ngIf="showFooter" class="pep-border-top">
+        <ng-content select="[pep-dialog-actions]"></ng-content>
+    </div>
 </div>
