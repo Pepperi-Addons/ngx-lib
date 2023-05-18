@@ -39,7 +39,8 @@
         left: 0;
         right: 0;
         height: variables.$footer-bar-height;
-
+        z-index: variables.$z-index-medium + 1;
+        
         .content {
             display: flex;
             justify-content: space-between;
