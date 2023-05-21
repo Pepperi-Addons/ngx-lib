@@ -231,6 +231,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     startX = 0;
     startWidth = 0;
     tableStartWidth = 0;
+    
+    private lastColumnsWidth: Array<{ columnAPIName: string, calcTitleColumnWidthString: string, calcColumnWidthString: string }> = [];
 
     // For sorting
     isAsc = true;
@@ -364,13 +366,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    private getSelectionCheckBoxWidth(): number {
+        return this.selectionTypeForActions === 'multi' ? 44 : 0;
+    }
+
     private setContainerWidth(): void {
         if (!this.hostElement.nativeElement.parentElement) {
             return;
         }
-
-        const selectionCheckBoxWidth =
-            this.selectionTypeForActions === 'multi' ? 44 : 0;
 
         const rowHeight = 40; // the table row height (2.5rem * 16font-size).
         const style = getComputedStyle(
@@ -392,7 +395,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         // The selectionCheckBoxWidth width + containerFluidSpacing + this.tableScrollWidth.
         const rowHeaderWidthToSub =
-            containerFluidSpacing + selectionCheckBoxWidth + this.tableScrollWidth;
+            containerFluidSpacing + this.getSelectionCheckBoxWidth() + this.tableScrollWidth;
         this.containerWidth = parentContainer.offsetWidth - rowHeaderWidthToSub;
     }
 
@@ -505,12 +508,58 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.checkForChanges = new Date().getTime();
     }
 
+    private setLastColumnsWidth(): boolean {
+        let res = false;
+
+        if (this.lastColumnsWidth.length > 0) {
+            // Check if this is the same UI control for table.
+            if (this.lastColumnsWidth.length === this._layout.ControlFields.length) {
+                let uiControlsAreTheSame = true;
+
+                for (let index = 0; index < this._layout.ControlFields.length; index++) {
+                    const uiControlField: UIControlField = this._layout.ControlFields[index];
+                    
+                    if (uiControlField.ApiName !== this.lastColumnsWidth[index].columnAPIName) {
+                        uiControlsAreTheSame = false;
+                        break;
+                    }
+                }
+    
+                if (uiControlsAreTheSame) {
+                    for (let index = 0; index < this._layout.ControlFields.length; index++) {
+                        const uiControlField: UIControlField = this._layout.ControlFields[index];
+                        uiControlField.calcTitleColumnWidthString = this.lastColumnsWidth[index].calcTitleColumnWidthString;
+                        uiControlField.calcColumnWidthString = this.lastColumnsWidth[index].calcColumnWidthString;
+                    }
+                    
+                    res = true;
+                }
+            }
+        }
+
+        return res;
+    }
+
+    private setColumnsWidth(widthToSet: string) {
+        this.renderer.setStyle(
+            this.hostElement.nativeElement,
+            'width',
+            widthToSet
+        );
+
+        if (this.virtualScroller && this.isTable) {
+            this.renderer.setStyle(
+                this.virtualScroller.contentElementRef.nativeElement,
+                'width',
+                widthToSet
+            );
+        }
+    }
+
     private calcColumnsWidth(): void {
         const fixedMultiple = 3.78; // for converting em to pixel.
         const length = this._layout.ControlFields.length;
-        const selectionCheckBoxWidth =
-            this.selectionTypeForActions === 'multi' ? 44 : 0;
-
+        
         // Is table AND there is at least one column of width type of percentage.
         if (this.isTable) {
             if (this._layout && this._layout.ControlFields) {
@@ -534,6 +583,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         let totalCalcColsWidth = 0;
 
+        let widthToSet = 'inherit';
+
         // Calc by percentage
         if (this.hasColumnWidthOfTypePercentage) {
             const totalColsWidth: number = this._layout.ControlFields.map(
@@ -553,12 +604,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     totalCalcColsWidth += uiControlField.calcColumnWidth;
                 }
             }
-
-            this.renderer.setStyle(
-                this.hostElement.nativeElement,
-                'width',
-                'inherit'
-            );
         } else {
             for (let index = 0; index < length; index++) {
                 const uiControlField: UIControlField = this._layout
@@ -568,8 +613,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 );
 
                 if (index === length - 1) {
-                    uiControlField.calcTitleColumnWidthString = currentFixedWidth + 'px';
-                    uiControlField.calcColumnWidthString = currentFixedWidth + 'px';
+                    uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString = currentFixedWidth + 'px';
                 } else {
                     uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString = currentFixedWidth + 'px';
                 }
@@ -577,14 +621,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 totalCalcColsWidth += currentFixedWidth;
             }
 
-            const widthToSet = (totalCalcColsWidth + selectionCheckBoxWidth) + 'px'
-
-            this.renderer.setStyle(
-                this.hostElement.nativeElement,
-                'width',
-                widthToSet
-            );
+            widthToSet = (totalCalcColsWidth + this.getSelectionCheckBoxWidth()) + 'px'
         }
+
+        this.setColumnsWidth(widthToSet);
     }
 
     private calcObjectHeight() {
@@ -1116,10 +1156,19 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        this.setLayout();
+        if (this.isTable) {
+            const isLastColumnsWidthSet = this.setLastColumnsWidth();
+            
+            // Set the layout only if the last columns width couldn't set.
+            if (!isLastColumnsWidthSet) {
+                this.setLayout();
+            }
+        } else {
+            this.lastColumnsWidth = [];
+            this.setLayout();
+        }
 
         // setTimeout(() => {
-            
             this.onListLoad();
         // }, 0);
     }
@@ -1278,6 +1327,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.refresh();
 
         this.containerWidth = 0;
+        this.lastColumnsWidth = [];
         this.setLayout();
     }
 
@@ -1323,22 +1373,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
 
                 const widthToSet = (this.tableStartWidth + widthToAdd) + 'px';
-
-                this.renderer.setStyle(
-                    this.hostElement.nativeElement,
-                    'width',
-                    widthToSet
-                );
-
-                if (this.virtualScroller) {
-                    this.renderer.setStyle(
-                        this.virtualScroller?.contentElementRef.nativeElement,
-                        'width',
-                        widthToSet
-                    );
-                }
-
-                console.log('width: ' + widthToSet);
+                this.setColumnsWidth(widthToSet);
             }
 
             this.checkForChanges = new Date().getTime();
@@ -1359,6 +1394,19 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }, 0);
             }
 
+            this.lastColumnsWidth = [];
+            
+            // Set the last columns width
+            for (let index = 0; index < this._layout.ControlFields.length; index++) {
+                const uiControlField: UIControlField = this._layout.ControlFields[index];
+                
+                this.lastColumnsWidth.push({ 
+                    columnAPIName: uiControlField.ApiName, 
+                    calcTitleColumnWidthString: uiControlField.calcTitleColumnWidthString,
+                    calcColumnWidthString: uiControlField.calcColumnWidthString
+                })
+            }
+            
             event.stopPropagation();
         }
     }
