@@ -547,13 +547,16 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             widthToSet
         );
 
-        if (this.virtualScroller && this.isTable) {
-            this.renderer.setStyle(
-                this.virtualScroller.contentElementRef.nativeElement,
-                'width',
-                widthToSet
-            );
-        }
+        setTimeout(() => {
+            // Do this only after UI is change cause the property isTable is Input and can refresh after this thread.
+            if (this.virtualScroller) {
+                this.renderer.setStyle(
+                    this.virtualScroller.contentElementRef.nativeElement,
+                    'width',
+                    widthToSet === 'inherit' ? '100%' : widthToSet
+                );
+            }
+        }, 0);
     }
 
     private calcColumnsWidth(): void {
@@ -1374,9 +1377,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
                 const widthToSet = (this.tableStartWidth + widthToAdd) + 'px';
                 this.setColumnsWidth(widthToSet);
+                this.checkForChanges = new Date().getTime();
             }
 
-            this.checkForChanges = new Date().getTime();
         }
     }
 
