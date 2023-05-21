@@ -71,7 +71,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     static SORT_BY_STATE_KEY = 'SortBy';
     static ASCENDING_STATE_KEY = 'IsAscending';
 
-    static MINIMUM_COLUMN_WIDTH = 48;
+    static MINIMUM_COLUMN_WIDTH = 72;
 
     @Input() noDataFoundMsg: string = null;
     @Input() selectionTypeForActions: PepListSelectionType = 'multi';
@@ -577,10 +577,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 totalCalcColsWidth += currentFixedWidth;
             }
 
+            const widthToSet = (totalCalcColsWidth + selectionCheckBoxWidth) + 'px'
+
             this.renderer.setStyle(
                 this.hostElement.nativeElement,
                 'width',
-                totalCalcColsWidth + selectionCheckBoxWidth + 'px'
+                widthToSet
             );
         }
     }
@@ -1283,7 +1285,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.pressedColumn = columnKey;
         this.startX = event.x;
         this.startWidth = event.target.closest('.header-column').offsetWidth;
-        this.tableStartWidth = this.virtualScroller?.contentElementRef.nativeElement.offsetWidth;
+        this.tableStartWidth = this.hostElement.nativeElement.offsetWidth; // this.virtualScroller?.contentElementRef.nativeElement.offsetWidth;
     }
 
     onListResize(event): void {
@@ -1320,11 +1322,23 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     totalCalcColsWidth += uiControlField.calcColumnWidth;
                 }
 
+                const widthToSet = (this.tableStartWidth + widthToAdd) + 'px';
+
                 this.renderer.setStyle(
                     this.hostElement.nativeElement,
                     'width',
-                    this.tableStartWidth + widthToAdd + 'px'
+                    widthToSet
                 );
+
+                if (this.virtualScroller) {
+                    this.renderer.setStyle(
+                        this.virtualScroller?.contentElementRef.nativeElement,
+                        'width',
+                        widthToSet
+                    );
+                }
+
+                console.log('width: ' + widthToSet);
             }
 
             this.checkForChanges = new Date().getTime();
