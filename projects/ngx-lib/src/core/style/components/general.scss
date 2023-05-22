@@ -125,6 +125,11 @@
                 width: 100%;
                 display: flex;
 
+                // Bug fix (DI-23724)
+                .mat-select {
+                    z-index: variables.$z-index-lowest;
+                }
+
                 .mat-input-element {
                     // vertical-align: unset;
                     z-index: variables.$z-index-lowest;
