@@ -272,7 +272,7 @@ export class PepFileService {
         } else {
             fileSize = file.size;
         }
-        // check the size and the extension
+        // check the size
         const sizeOK: boolean = fileSize !== -1 && file != null && fileSize < sizeLimitMB * 1048576;
         return sizeOK;
     }
