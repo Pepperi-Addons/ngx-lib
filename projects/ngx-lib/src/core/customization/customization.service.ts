@@ -141,6 +141,10 @@ export class PepCustomizationService {
     static TABLE_SPACEING_KEY = '--pep-table-spacing';
     static TABLE_BORDER_RADIUS_KEY = '--pep-table-border-radius';
 
+    // Branding keys
+    static BRANDING_LOGO_SRC = '--pep-branding-logo_src';
+    static FAV_ICON_SRC = '--pep-favicon_src';
+
     static DEFAULT_HEADER_HEIGHT = 64; // Default
 
     static DEFAULT_SPINNER_COLOR = '#78aa00';
