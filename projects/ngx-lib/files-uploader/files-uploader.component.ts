@@ -72,7 +72,9 @@ export class PepFilesUploaderComponent implements OnInit {
     
     // To know if handle actions or just raise them as output
     @Input() handleActions = true;
-    
+
+    @Input() hint = '';
+
     @Output()
     chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false
     
