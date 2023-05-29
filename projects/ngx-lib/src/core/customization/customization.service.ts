@@ -698,6 +698,11 @@ export class PepCustomizationService {
         themeVars[PepCustomizationService.COLOR_TOP_HEADER_KEY + '-l'] = '';
     }
 
+    getDefaultThemeBrandingCustomizationVariables(themeVars: any): void {
+        themeVars[PepCustomizationService.BRANDING_LOGO_SRC] = '/assets/images/Pepperi-Logo-HiRes.png';
+        themeVars[PepCustomizationService.FAV_ICON_SRC] = '/assets/favicon.ico';
+    }
+
     getDefaultThemeVariables(): any {
         const themeVars = {};
 
@@ -736,6 +741,9 @@ export class PepCustomizationService {
 
         // Declare default top header customization.
         this.getDefaultThemeTopHeaderCustomizationVariables(themeVars);
+
+        // Declare default branding logo's customization
+        this.getDefaultThemeBrandingCustomizationVariables(themeVars);
 
         return themeVars;
     }
