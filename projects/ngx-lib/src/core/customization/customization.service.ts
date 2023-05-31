@@ -142,8 +142,8 @@ export class PepCustomizationService {
     static TABLE_BORDER_RADIUS_KEY = '--pep-table-border-radius';
 
     // Branding keys
-    static BRANDING_LOGO_SRC = '--pep-branding-logo_src';
-    static FAV_ICON_SRC = '--pep-favicon_src';
+    static BRANDING_LOGO_SRC = '--pep-branding-logo-src';
+    static FAV_ICON_SRC = '--pep-favicon-src';
 
     static DEFAULT_HEADER_HEIGHT = 64; // Default
 
