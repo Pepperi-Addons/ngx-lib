@@ -501,15 +501,14 @@
     }
 
     &.full-screen {
-        max-width: calc(100vw - (var(--pep-spacing-2xl) * 2)) !important;
-        //max-width: 95vw !important;
         width: 95vw !important;
         height: 95vh !important;
-        max-height: calc(100% - (var(--pep-spacing-2xl) * 2)) !important;
+        max-width: calc(100vw - (var(--pep-spacing-2xl) * 2)) !important;
+        max-height: calc(100vh - (var(--pep-spacing-2xl) * 2)) !important;
 
         .mat-dialog-container {
             .mat-dialog-content {
-                $height: 100%; // calc(100% - ((#{$dialog-content-padding} * 2)));
+                $height: calc(100% - ((#{$dialog-content-padding} * 2)));
                 height: $height;
                 max-height: $height;
             }
