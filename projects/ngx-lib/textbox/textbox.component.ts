@@ -83,7 +83,13 @@ export class PepTextboxComponent implements OnChanges, OnInit, AfterViewInit, On
     set value(value: string) {
         if (!value) {
             value = '';
-        }
+        } 
+        // else {
+        //     // If this is a number validate it.
+        //     if (this.isNumberType()) {
+        //         value = coerceNumberProperty(value, 0).toString();
+        //     }
+        // }
 
         if (this.isDifferentValue(value)) {
             // console.log(`set value, value is - ${value}`)
@@ -385,7 +391,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, AfterViewInit, On
         this.customizationService.updateFormFieldValue(
             this.form,
             this.key,
-            firstLoad ? this.formattedValue : this.value,
+            this.value || this.formattedValue,
             this.parentFieldKey
         );
     }
@@ -463,7 +469,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, AfterViewInit, On
             this.translate.get('MESSAGES.ERROR_INVALID_PATTERN').subscribe(text => this.regexError = text);
         }
 
-        this.updateFormFieldValue(true);
+        this.updateFormFieldValue();
     }
     
     ngAfterViewInit(): void {
