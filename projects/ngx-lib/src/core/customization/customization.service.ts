@@ -141,9 +141,9 @@ export class PepCustomizationService {
     static TABLE_SPACEING_KEY = '--pep-table-spacing';
     static TABLE_BORDER_RADIUS_KEY = '--pep-table-border-radius';
 
-    // Branding keys
-    static BRANDING_LOGO_SRC = '--pep-branding-logo-src';
-    static FAV_ICON_SRC = '--pep-favicon-src';
+    // // Branding keys
+    // static BRANDING_LOGO_SRC = '--pep-branding-logo-src';
+    // static FAV_ICON_SRC = '--pep-favicon-src';
 
     static DEFAULT_HEADER_HEIGHT = 64; // Default
 
@@ -698,10 +698,10 @@ export class PepCustomizationService {
         themeVars[PepCustomizationService.COLOR_TOP_HEADER_KEY + '-l'] = '';
     }
 
-    getDefaultThemeBrandingCustomizationVariables(themeVars: any): void {
-        themeVars[PepCustomizationService.BRANDING_LOGO_SRC] = '/assets/images/Pepperi-Logo-HiRes.png';
-        themeVars[PepCustomizationService.FAV_ICON_SRC] = '/assets/favicon.ico';
-    }
+    // getDefaultThemeBrandingCustomizationVariables(themeVars: any): void {
+    //     themeVars[PepCustomizationService.BRANDING_LOGO_SRC] = '/assets/images/Pepperi-Logo-HiRes.png';
+    //     themeVars[PepCustomizationService.FAV_ICON_SRC] = '/assets/favicon.ico';
+    // }
 
     getDefaultThemeVariables(): any {
         const themeVars = {};
@@ -742,8 +742,8 @@ export class PepCustomizationService {
         // Declare default top header customization.
         this.getDefaultThemeTopHeaderCustomizationVariables(themeVars);
 
-        // Declare default branding logo's customization
-        this.getDefaultThemeBrandingCustomizationVariables(themeVars);
+        // // Declare default branding logo's customization
+        // this.getDefaultThemeBrandingCustomizationVariables(themeVars);
 
         return themeVars;
     }
