@@ -140,6 +140,10 @@
                 .mat-form-field-label-wrapper {
                     display: none;
                 }
+
+                .mat-select-placeholder {
+                    @include mixins.ellipsis();
+                }
             }
         }
 

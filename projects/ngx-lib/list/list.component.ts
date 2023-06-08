@@ -73,6 +73,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     static MINIMUM_COLUMN_WIDTH = 72;
 
+    @Input() cachedItemsNumber = -1;
+
     @Input() noDataFoundMsg: string = null;
     @Input() selectionTypeForActions: PepListSelectionType = 'multi';
     @Input() showCardSelection = false;
@@ -300,6 +302,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         // }
 
         this.saveSortingToSession();
+    }
+
+    getCachedItemsNumber() {
+        return this.cachedItemsNumber >= 0 ? this.cachedItemsNumber : PepListComponent.TOP_ITEMS_ARRAY;
     }
 
     private getScrollingElement() {
@@ -1192,7 +1198,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // Clean array
-        if (this.itemsCounter + items.length > PepListComponent.TOP_ITEMS_ARRAY) {
+        if (this.itemsCounter + items.length > this.getCachedItemsNumber()) {
             this.cleanItems();
         }
 
@@ -1214,7 +1220,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // Clean array
-        if (this.itemsCounter + items.length > PepListComponent.TOP_ITEMS_ARRAY) {
+        if (this.itemsCounter + items.length > this.getCachedItemsNumber()) {
             this.cleanItems();
         }
 
