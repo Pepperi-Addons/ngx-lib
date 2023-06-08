@@ -54,7 +54,17 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
     
-    @Input() placeholder = '';
+    private _placeholder = ''
+    private _placeholderSet = false;
+    @Input() 
+    set placeholder(value: string) {
+        this._placeholder = value;
+        this._placeholderSet = true;
+    }
+    get placeholder(): string {
+        return this._placeholder;
+    }
+    
     @Input() placeholderWhenDisabled = '';
 
     private _options: Array<IPepOption> = [];
@@ -220,9 +230,12 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
             }
         }
 
-        this.translate.get('SELECT.HINT').subscribe((res) => {
-            this.placeholder = res;
-        });
+        // Set default placeholder if not set.
+        if (!this._placeholderSet) {
+            this.translate.get('SELECT.HINT').subscribe((res) => {
+                this.placeholder = res;
+            });
+        }
     }
 
     ngOnChanges(changes: any): void {
