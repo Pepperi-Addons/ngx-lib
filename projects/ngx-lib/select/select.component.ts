@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
+import { TranslateService } from '@ngx-translate/core';
 import {
     PepLayoutType,
     PepCustomizationService,
@@ -52,6 +53,9 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
+    
+    @Input() placeholder = '';
+    @Input() placeholderWhenDisabled = '';
 
     private _options: Array<IPepOption> = [];
     @Input() 
@@ -124,6 +128,7 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     fieldFormattedValue = '';
 
     constructor(
+        private translate: TranslateService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
@@ -214,6 +219,10 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
                 );
             }
         }
+
+        this.translate.get('SELECT.HINT').subscribe((res) => {
+            this.placeholder = res;
+        });
     }
 
     ngOnChanges(changes: any): void {

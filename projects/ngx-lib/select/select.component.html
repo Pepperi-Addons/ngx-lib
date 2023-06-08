@@ -6,7 +6,7 @@
                 <mat-select #select [required]="mandatory ? mandatory : undefined" disableOptionCentering
                     class="body-sm text-align-{{ xAlignment }}" [id]="key" [typeaheadDebounceInterval]="typeaheadDebounceInterval"
                     [ngClass]="{'right-alignment': xAlignment === 'right'}"
-                    [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
+                    [placeholder]="disabled || readonly ? placeholderWhenDisabled : placeholder"
                     [(ngModel)]="selectedValueModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
                     (selectionChange)="selectionChange($event)" (openedChange)="openedChange($event)"
                     title="{{ fieldFormattedValue }}">
@@ -26,7 +26,7 @@
                 <mat-select #select multiple [required]="mandatory ? mandatory : undefined"
                     disableOptionCentering class="body-sm text-align-{{ xAlignment }}" [id]="key" [typeaheadDebounceInterval]="typeaheadDebounceInterval"
                     [ngClass]="{'right-alignment': xAlignment === 'right'}"
-                    [placeholder]="disabled || readonly ? '' : ('SELECT.HINT' | translate)"
+                    [placeholder]="disabled || readonly ? placeholderWhenDisabled : placeholder"
                     [(ngModel)]="selectedValuesModel" [ngModelOptions]="{standalone: true}" [disabled]="disabled"
                     (openedChange)="openedChange($event)" title="{{ fieldFormattedValue }}">
                     <mat-option *ngFor="let option of options" [value]="option.key" [title]="option.value">{{
