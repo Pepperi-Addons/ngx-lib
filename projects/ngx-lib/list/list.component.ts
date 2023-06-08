@@ -73,7 +73,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     static MINIMUM_COLUMN_WIDTH = 72;
 
-    @Input() cachedItemsNumber = -1;
+    @Input() cacheSize = -1;
 
     @Input() noDataFoundMsg: string = null;
     @Input() selectionTypeForActions: PepListSelectionType = 'multi';
@@ -305,7 +305,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getCachedItemsNumber() {
-        return this.cachedItemsNumber >= 0 ? this.cachedItemsNumber : PepListComponent.TOP_ITEMS_ARRAY;
+        return this.cacheSize >= 0 ? this.cacheSize : PepListComponent.TOP_ITEMS_ARRAY;
     }
 
     private getScrollingElement() {
