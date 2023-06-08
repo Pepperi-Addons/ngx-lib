@@ -160,10 +160,6 @@
     .mat-form-field-flex {
         border-radius: variables.$border-radius-md;
     }
-
-    ::ng-deep.mat-select-placeholder {
-        @include mixins.ellipsis();
-    }
 }
 
 @mixin pep-field-size($size: 'md') {
