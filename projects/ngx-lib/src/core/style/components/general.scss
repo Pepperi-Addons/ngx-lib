@@ -140,10 +140,6 @@
                 .mat-form-field-label-wrapper {
                     display: none;
                 }
-
-                .mat-select-placeholder {
-                    @include mixins.ellipsis();
-                }
             }
         }
 
@@ -165,6 +161,9 @@
         border-radius: variables.$border-radius-md;
     }
 
+    ::ng-deep.mat-select-placeholder {
+        @include mixins.ellipsis();
+    }
 }
 
 @mixin pep-field-size($size: 'md') {
