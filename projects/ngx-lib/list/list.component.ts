@@ -42,6 +42,7 @@ import {
     IPepListStartIndexChangeEvent,
     PepListCardSizeType,
     PepListTableViewType,
+    IPepListSortingData,
 } from './list.model';
 import {
     IPepListPagerChangeEvent,
@@ -73,8 +74,19 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     static MINIMUM_COLUMN_WIDTH = 72;
 
+    @Input() 
+    set sorting(value: IPepListSortingData) {
+        this.sortBy = value?.sortBy || '';
+        this.isAsc = value?.sortBy.length > 0 ? value.isAsc : true;
+    }
+    get sorting(): IPepListSortingData {
+        return {
+            sortBy: this.sortBy,
+            isAsc: this.isAsc
+        };
+    }
+    
     @Input() cacheSize = -1;
-
     @Input() noDataFoundMsg: string = null;
     @Input() selectionTypeForActions: PepListSelectionType = 'multi';
     @Input() showCardSelection = false;
