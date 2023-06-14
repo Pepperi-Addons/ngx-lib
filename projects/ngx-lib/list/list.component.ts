@@ -242,6 +242,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     // For resize
     pressedColumn = '';
+    pressedColumnIndex = -1;
     startX = 0;
     startWidth = 0;
     tableStartWidth = 0;
@@ -517,7 +518,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.cd.detectChanges();
         }
 
-        // Set the columns width.
+        // Set the container width.
         if (this.containerWidth <= 0) {
             this.setContainerWidth();
         }
@@ -562,6 +563,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     }
                     
                     widthToSet = (totalCalcColsWidth + this.getSelectionCheckBoxWidth()) + 'px'
+                    console.log(`setLastColumnsWidth -> widthToSet: ${widthToSet} *** totalCalcColsWidth: ${totalCalcColsWidth}`);
                     this.setColumnsWidth(widthToSet);
 
                     res = true;
@@ -571,6 +573,16 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         return res;
     }
 
+    private setVirtualScrollWidth(widthToSet: string) {
+        if (this.virtualScroller) {
+            this.renderer.setStyle(
+                this.virtualScroller.contentElementRef.nativeElement,
+                'width',
+                widthToSet === 'inherit' ? '100%' : widthToSet
+            );
+        }
+    }
+
     private setColumnsWidth(widthToSet: string) {
         this.renderer.setStyle(
             this.hostElement.nativeElement,
@@ -578,16 +590,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             widthToSet
         );
 
-        setTimeout(() => {
+        if (this.isTable) {
+            this.setVirtualScrollWidth(widthToSet);
+        } else {
             // Do this only after UI is change cause the property isTable is Input and can refresh after this thread.
-            if (this.virtualScroller) {
-                this.renderer.setStyle(
-                    this.virtualScroller.contentElementRef.nativeElement,
-                    'width',
-                    widthToSet === 'inherit' ? '100%' : widthToSet
-                );
-            }
-        }, 0);
+            setTimeout(() => {
+                this.setVirtualScrollWidth(widthToSet);
+            }, 0);
+        }
     }
 
     private calcColumnsWidth(): void {
@@ -658,6 +668,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             widthToSet = (totalCalcColsWidth + this.getSelectionCheckBoxWidth()) + 'px'
         }
 
+        console.log(`calcColumnsWidth -> widthToSet: ${widthToSet} *** totalCalcColsWidth: ${totalCalcColsWidth}`);
         this.setColumnsWidth(widthToSet);
     }
 
@@ -682,6 +693,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.startWidth = 0;
         this.tableStartWidth = 0;
         this.pressedColumn = '';
+        this.pressedColumnIndex = -1;
     }
 
     private getParent(el, parentSelector): any {
@@ -1359,15 +1371,18 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.setLayout();
     }
 
-    onListResizeStart(event, columnKey): void {
+    onListResizeStart(event, columnKey: string, columnIndex: number): void {
         this.pressedColumn = columnKey;
+        this.pressedColumnIndex = columnIndex;
         this.startX = event.x;
         this.startWidth = event.target.closest('.header-column').offsetWidth;
         this.tableStartWidth = this.hostElement.nativeElement.offsetWidth; // this.virtualScroller?.contentElementRef.nativeElement.offsetWidth;
+        console.log(`tableStartWidth - ${this.tableStartWidth}`);
     }
 
     onListResize(event): void {
-        if (this.pressedColumn.length > 0) {
+        // if (this.pressedColumn.length > 0) {
+        if (this.pressedColumnIndex >= 0) {
             let widthToAdd = this.layoutService.isRtl() ? this.startX - event.x : event.x - this.startX;
 
             // Set the width of the column and the container of the whole columns.
@@ -1386,13 +1401,15 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                             widthToAdd += scrollWidth;
                             uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString = 'calc(100% - ' + (totalCalcColsWidth + scrollWidth) + 'px)'; // For 100%
                         } else {
-                            if (uiControlField.ApiName === this.pressedColumn) {
+                            // if (uiControlField.ApiName === this.pressedColumn) {
+                            if (index === this.pressedColumnIndex) {
                                 uiControlField.calcColumnWidth = this.startWidth + widthToAdd;
                                 uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidth + 'px';
                                 uiControlField.calcColumnWidthString = uiControlField.calcColumnWidth + 'px';
                             }
                         }
-                    } else if (uiControlField.ApiName === this.pressedColumn) {
+                    // } else if (uiControlField.ApiName === this.pressedColumn) {
+                    } else if (index === this.pressedColumnIndex) {
                         uiControlField.calcColumnWidth = this.startWidth + widthToAdd;
                         uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString = uiControlField.calcColumnWidth + 'px';
                     }
@@ -1401,6 +1418,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }
 
                 const widthToSet = (this.tableStartWidth + widthToAdd) + 'px';
+                console.log(`onListResize -> widthToSet: ${widthToSet} *** widthToAdd: ${widthToAdd}`);
                 this.setColumnsWidth(widthToSet);
                 this.checkForChanges = new Date().getTime();
             }
@@ -1409,7 +1427,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onListResizeEnd(event): void {
-        if (this.pressedColumn.length > 0) {
+        // if (this.pressedColumn.length > 0) {
+        if (this.pressedColumnIndex >= 0) {
             if (
                 event &&
                 this.getParent(event.srcElement, 'resize-box').length > 0
@@ -1442,7 +1461,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     onListSortingChange(sortBy: string, isAsc: boolean, event = null): void {
         if (
-            this.pressedColumn.length > 0 ||
+            // this.pressedColumn.length > 0 ||
+            this.pressedColumnIndex >= 0 ||
             (event && this.getParent(event.srcElement, 'resize-box').length > 0)
         ) {
             return;

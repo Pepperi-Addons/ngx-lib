@@ -122,6 +122,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
 
     @Input() renderTitle = true;
     @Input() typeaheadDebounceInterval = 1000;
+    
+    @Input() addValueToOptionsIfNotExist = true;
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
@@ -145,35 +147,37 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     ) { }
 
     private addOptionsIfNeeded(): void {
-        if (this.isMulti) {
-            // Go gor all selected and add to options if not exist
-            // for (let i = 0; i < this.selectedValuesModel.length; i++) {
-            for (const selectedValue of this.selectedValuesModel) {
-                let valueNotExist = false;
-
+        if (this.addValueToOptionsIfNotExist) {
+            if (this.isMulti) {
+                // Go gor all selected and add to options if not exist
+                // for (let i = 0; i < this.selectedValuesModel.length; i++) {
+                for (const selectedValue of this.selectedValuesModel) {
+                    let valueNotExist = false;
+    
+                    if (
+                        this.options &&
+                        !this.options.find((opt) => opt.key === selectedValue)
+                    ) {
+                        valueNotExist = true;
+                    }
+    
+                    // Add it to options.
+                    if (valueNotExist) {
+                        this.options.push({
+                            key: selectedValue,
+                            value: selectedValue,
+                        });
+                    }
+                }
+            } else {
                 if (
+                    this.value &&
+                    this.value !== '' &&
                     this.options &&
-                    !this.options.find((opt) => opt.key === selectedValue)
+                    !this.options.find((opt) => opt.key === this.value)
                 ) {
-                    valueNotExist = true;
+                    this.options.push({ key: this.value, value: this.value });
                 }
-
-                // Add it to options.
-                if (valueNotExist) {
-                    this.options.push({
-                        key: selectedValue,
-                        value: selectedValue,
-                    });
-                }
-            }
-        } else {
-            if (
-                this.value &&
-                this.value !== '' &&
-                this.options &&
-                !this.options.find((opt) => opt.key === this.value)
-            ) {
-                this.options.push({ key: this.value, value: this.value });
             }
         }
     }
