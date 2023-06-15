@@ -427,6 +427,13 @@ $zoom-compact-view: 85%;
 
             &.mat-radio-button {
                 display: inline-flex;
+            
+                .mat-radio-label {
+                    
+                    .mat-radio-label-content {
+                        padding: 0;    
+                    }
+                }
             }
         }
 

@@ -386,7 +386,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private getSelectionCheckBoxWidth(): number {
-        return this.selectionTypeForActions === 'multi' ? 44 : 0;
+        return this.selectionTypeForActions === 'multi' ? 44 : (this.selectionTypeForActions === 'single' ? 44 : 0);
     }
 
     private setContainerWidth(): void {
