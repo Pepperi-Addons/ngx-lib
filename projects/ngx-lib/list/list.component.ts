@@ -772,7 +772,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             PepListComponent.ALL_SELECTED_STATE_KEY
         );
         if (isAllSelected != null) {
-            this.isAllSelected = isAllSelected && this.getIsAllSelected(items);
+            // Comment this in version 0.4.2-beta.103, I don't know why we need this (&& this.getIsAllSelected(items))
+            // this.isAllSelected = isAllSelected && this.getIsAllSelected(items);
+            this.isAllSelected = isAllSelected;
             this.sessionService.removeObject(
                 PepListComponent.ALL_SELECTED_STATE_KEY
             );
@@ -1153,17 +1155,25 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         items: ObjectsDataRow[]
     ): void {
         this.initVariablesFromSession(items);
-        const currentList = this.isAllSelected
+        const selectedItemsList = this.isAllSelected
             ? this.unSelectedItems
             : this.selectedItems;
         const currentListCount = this.isAllSelected
-            ? this.totalRows - currentList.size
-            : currentList.size;
+            ? this.totalRows - selectedItemsList.size
+            : selectedItemsList.size;
         this.selectedItemsChange.emit(currentListCount);
 
         this._layout = layout;
-        this.selectedItemId = '';
+        this.selectedItemId = ''; 
         this.totalRows = totalRows;
+
+        // If is all selected is false && the size of the selected items is 1 && selectionTypeForActions is 'single' then set it as the selected item id.
+        // We need this in setTimeout cause the selectionTypeForActions is input that can set after this function.
+        setTimeout(() => {
+            if (!this.isAllSelected && this.selectedItems.size === 1 && this.selectionTypeForActions === 'single') {
+                this.selectedItemId = this.selectedItems.values()[0];
+            }
+        }, 0);
 
         this.scrollToTop(false);
         this.cleanItems();
