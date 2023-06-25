@@ -183,12 +183,11 @@ export class PepInternalPageComponent implements OnInit, OnDestroy {
                         ) * 16;
 
                     // maxRow * 24 + 60 - 24 for each row in card + 60 for the padding of each card.
-                    // const rowSpanToAdd = Math.floor(childrenCount * ((cardRowsHeight + 56) / formRowHeight) + rowsToAdd);
-                    // + 16 is the 1rem margin outside card.
-                    const rowSpanToAdd =
-                        (childrenCount * (cardRowsHeight + 16)) /
+                    // const rowSpanToAdd = Math.floor(childrenCount * ((cardRowsHeight + 24) / formRowHeight) + rowsToAdd);
+                    const rowSpanToAdd = Math.floor(
+                        (childrenCount * (cardRowsHeight + 24)) /
                         formRowHeight +
-                        rowsToAdd;
+                        rowsToAdd);
                     this.field.rowSpan = rowSpanToAdd;
                 } else {
                     // const tableRowsHeight = this.customizationService.calculateTableRowsHeight(childrenCount) * 16;
