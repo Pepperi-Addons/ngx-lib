@@ -82,6 +82,11 @@ export class PepQuantitySelectorComponent
             this._value = value;
         }
 
+        // Cut the .000 if exist for non allowDecimal.
+        if (!this.allowDecimal) {
+            this._value = this._value.split('.')[0];
+        }
+
         this.setFormattedValue(this.value);
         this.changeDisplayValue();
     }
