@@ -42,7 +42,11 @@ export interface IPepListStartIndexChangeEvent {
 
 export const DEFAULT_PAGE_SIZE = 50;
 
-export interface IPepListSortingChangeEvent {
+export interface IPepListSortingData {
     sortBy: string;
     isAsc: boolean;
+}
+
+export interface IPepListSortingChangeEvent extends IPepListSortingData {
+   
 }

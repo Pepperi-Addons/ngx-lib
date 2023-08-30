@@ -26,6 +26,7 @@ import {
 } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
+import { PepSignatureDialogComponent } from './signature-dialog.component';
 
 @Component({
     selector: 'pep-signature',
@@ -105,9 +106,10 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
     
-    @ViewChild('signaturePad') signaturePad: SignaturePad;
-    @ViewChild('signaturePopupPad', { read: TemplateRef })
-    signaturePopupPad: TemplateRef<any>;
+    // @ViewChild('signaturePad') signaturePad: SignaturePad;
+    // @ViewChild('signaturePad', {static: true}) private signaturePad!: SignaturePad;  
+
+    // @ViewChild('signaturePopupPad', { read: TemplateRef }) signaturePopupPad: TemplateRef<any>;
     dialogRef: MatDialogRef<any>;
 
     fieldHeight = '';
@@ -115,16 +117,16 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     dataURI = null;
     showActionBtn = true;
 
-    public isVisibleModal = false;
-    acceptSignatureType = 'png';
+    // public isVisibleModal = false;
+    // acceptSignatureType = 'png';
 
-    public signaturePadOptions: any = {
-        // passed through to szimek/signature_pad constructor
-        minWidth: 2,
-        canvasWidth: 500,
-        canvasHeight: 300,
-        penColor: 'rgb(151, 151, 151)',
-    };
+    // public signaturePadOptions: any = {
+    //     // passed through to szimek/signature_pad constructor
+    //     minWidth: 2,
+    //     canvasWidth: 500,
+    //     canvasHeight: 300,
+    //     penColor: 'rgb(151, 151, 151)',
+    // };
 
     constructor(
         private dialogService: PepDialogService,
@@ -155,21 +157,41 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private openSignatoreDlg(src = ''): void {
-        this.showActionBtn =
-            this.signatureURL && this.signatureURL !== '' ? false : true;
+        this.showActionBtn = this.signatureURL && this.signatureURL !== '' ? false : true;
 
-        this.dialogRef = this.dialogService.openDialog(this.signaturePopupPad);
-        this.dialogRef.afterOpened().subscribe(() => {
-            this.afterDialogOpened();
+        // this.dialogRef = this.dialogService.openDialog(this.signaturePopupPad);
+        // this.dialogRef.afterOpened().subscribe(() => {
+        //     this.afterDialogOpened();
+        // });
+        
+        this.dialogRef = this.dialogService.openDialog(
+            PepSignatureDialogComponent,
+            {
+                value: this.signatureURL,
+                showActionBtn: this.showActionBtn,
+                disabled: this.disabled || this.readonly
+            }
+        );
+
+        this.dialogRef.afterClosed().subscribe((value) => {
+            if (value !== undefined && value !== null) {
+                if (value !== '') {
+                    this.signatureURL = value.fileStr;
+                    this.changeValue(value);
+                } else {
+                    this.signatureURL = '';
+                    this.changeValue(this.signatureURL);
+                }
+            }
         });
     }
 
-    private afterDialogOpened(): void {
-        if (this.signatureURL && this.signatureURL !== '') {
-            this.signaturePad.fromDataURL(this.signatureURL);
-            this.signaturePad.off();
-        }
-    }
+    // private afterDialogOpened(): void {
+    //     if (this.signatureURL && this.signatureURL !== '') {
+    //         this.signaturePad.fromDataURL(this.signatureURL);
+    //         this.signaturePad.off();
+    //     }
+    // }
 
     ngOnInit(): void {
         if (this.form === null) {
@@ -196,7 +218,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
             this.setDefaultForm();
         }
 
-        if (changes.src && changes.src.currentValue.length > 0) {
+        if (changes.src && changes.src.currentValue?.length > 0) {
             // Empty dataURI if there is change in the src.
             this.dataURI = null;
 
@@ -209,13 +231,13 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         //
     }
 
-    drawComplete(): void {
-        // will be notified of szimek/signature_pad's onEnd event
-    }
+    // drawComplete(): void {
+    //     // will be notified of szimek/signature_pad's onEnd event
+    // }
 
-    drawStart(): void {
-        // will be notified of szimek/signature_pad's onBegin event
-    }
+    // drawStart(): void {
+    //     // will be notified of szimek/signature_pad's onBegin event
+    // }
 
     openSignModal(): void {
         if (this.handleActions) {
@@ -226,11 +248,8 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
 
                 if (fileStrArr.length === 2) {
                     const win = window.open('', '_blank');
-                    const contentType = fileStrArr[0].split(':')[1];
-                    const base64 = fileStrArr[1].split(',')[1];
                     const blob = this.fileService.convertFromb64toBlob(
-                        base64,
-                        contentType
+                        this.dataURI.fileStr
                     );
                     const url = URL.createObjectURL(blob);
                     win.location.href = url;
@@ -252,38 +271,38 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    clearSignModal(): void {
-        this.signatureURL = '';
-        this.signaturePad.clear();
-        this.signaturePad.on();
-    }
-
     deleteSignature(event: any): void {
         this.signatureURL = '';
         this.changeValue(this.signatureURL);
         this.cd.detectChanges();
     }
 
-    saveSignModal(event: any): void {
-        if (!this.signaturePad.isEmpty()) {
-            this.signatureURL = this.signaturePad.toDataURL('image/png');
-            const fileValue = {
-                acceptedExtensions: this.acceptSignatureType,
-                fileStr: this.signatureURL,
-                fileExt: this.acceptSignatureType,
-            };
-            this.changeValue(fileValue);
-        } else {
-            this.signatureURL = '';
-            this.changeValue(this.signatureURL);
-        }
+    // clearSignModal(): void {
+    //     this.signatureURL = '';
+    //     this.signaturePad.clear();
+    //     this.signaturePad.on();
+    // }
 
-        this.dialogRef.close(this.signatureURL);
-    }
+    // saveSignModal(event: any): void {
+    //     if (!this.signaturePad.isEmpty()) {
+    //         this.signatureURL = this.signaturePad.toDataURL('image/png');
+    //         const fileValue = {
+    //             acceptedExtensions: this.acceptSignatureType,
+    //             fileStr: this.signatureURL,
+    //             fileExt: this.acceptSignatureType,
+    //         };
+    //         this.changeValue(fileValue);
+    //     } else {
+    //         this.signatureURL = '';
+    //         this.changeValue(this.signatureURL);
+    //     }
+
+    //     this.dialogRef.close(this.signatureURL);
+    // }
     
-    closeDialog(event) {
-        this.dialogRef.close(event);
-    }
+    // closeDialog(event) {
+    //     this.dialogRef.close(event);
+    // }
 
     errorHandler(event: any): void {
         this.signatureURL = this.src = ''; // this.blankImage;

@@ -39,8 +39,25 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     public static MENU_CLICKED = '[MenuClicked]';
 
     @Input() key = '';
-    @Input() srcLarge = '';
-    @Input() src = '';
+    
+    private _srcLarge = '';
+    @Input()
+    set srcLarge(value) {
+        this._srcLarge = value || '';
+    }
+    get srcLarge(): string {
+        return this._srcLarge;
+    }
+    
+    private _src = '';
+    @Input()
+    set src(value) {
+        this._src = value || '';
+    }
+    get src(): string {
+        return this._src;
+    }
+
     @Input() options: IPepOption[] = [];
     @Input() label = '';
     // @Input() type = 'image';
@@ -106,6 +123,7 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
 
     // To know if handle actions or just raise them as output
     @Input() handleActions = true;
+    @Input() hint = '';
 
     @Output()
     chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false

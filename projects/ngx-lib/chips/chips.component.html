@@ -1,4 +1,4 @@
-<ng-container [formGroup]="form">
+<!-- <ng-container [formGroup]="form"> -->
   <pep-field-title *ngIf="renderTitle" 
       [label]="label" 
       [mandatory]="mandatory"
@@ -9,7 +9,7 @@
   <div class="pep-chips-container" [ngClass]="[type === 'input' ? 'input-type-state' : '', chips?.length > 0 ? 'need-gap' : '' ]" [ngStyle]="{ 'height': inline === true ? '100%' : 'auto' }">
   <!-- <mat-form-field  class="pep-chips-container keep-background-on-focus" [ngClass]="type === 'select' ? 'not-mat-form-state' : ''" appearance="outline"> -->
     <mat-chip-list #chipList [ngClass]="{'mat-chip-list-stacked': orientation === 'vertical'}" [multiple]="multiSelect">
-      <mat-chip *ngFor="let chip of chips" class="pep-chips {{ styleType }}" [disabled]="chip.disabled || disabled"
+      <mat-chip *ngFor="let chip of chips" class="pep-chips {{ styleType }} {{ classNames }}" [disabled]="chip.disabled || disabled"
         [selected]="chip.selected" [removable]="chip.removable" [selectable]="chip.selectable"
         (removed)="onChipRemoved(chip)" (selectionChange)="onSelectionChanged($event.selected, chip)">
         <span class="ellipsis pull-left flip noSelect" title="{{chip.value}}">{{chip.value}}</span>
@@ -23,4 +23,4 @@
     iconPosition="end" (buttonClick)="onChipsSelectClicked()"></pep-button>
   <!-- </mat-form-field> -->
   </div>
-</ng-container>
+<!-- </ng-container> -->

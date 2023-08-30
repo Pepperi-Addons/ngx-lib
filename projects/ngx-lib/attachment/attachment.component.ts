@@ -148,7 +148,8 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
 
     // To know if handle actions or just raise them as output
     @Input() handleActions = true;
-
+    @Input() hint = '';
+    
     @Output()
     chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false
 
@@ -252,11 +253,8 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
                 const fileStrArr = this.dataURI.fileStr.split(';');
                 if (fileStrArr.length === 2) {
                     const win = window.open('', '_blank');
-                    const contentType = fileStrArr[0].split(':')[1];
-                    const base64 = fileStrArr[1].split(',')[1];
                     const blob = this.fileService.convertFromb64toBlob(
-                        base64,
-                        contentType
+                        this.dataURI.fileStr
                     );
                     const url = URL.createObjectURL(blob);
                     win.location.href = url;

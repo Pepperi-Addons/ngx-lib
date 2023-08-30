@@ -333,7 +333,7 @@ export class PepInternalListComponent implements OnInit, OnChanges, OnDestroy {
         this.startX = event.x;
         this.startWidth = event.target.closest('.header-column').offsetWidth;
         // Set the tableStartWidth to the container offsetWidth
-        this.tableStartWidth = this.noVirtualScrollCont.nativeElement.offsetWidth;
+        this.tableStartWidth = this.element.nativeElement.offsetWidth; // this.noVirtualScrollCont.nativeElement.offsetWidth;
     }
 
     onListResize(event): void {

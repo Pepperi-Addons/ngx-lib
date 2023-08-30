@@ -24,6 +24,7 @@ import { PepFilesUploaderModule } from '@pepperi-addons/ngx-lib/files-uploader';
 import { PepDialogModule } from '@pepperi-addons/ngx-lib/dialog';
 
 import { PepSignatureComponent } from './signature.component';
+import { PepSignatureDialogComponent } from './signature-dialog.component';
 
 @NgModule({
     imports: [
@@ -45,8 +46,8 @@ import { PepSignatureComponent } from './signature.component';
         PepFilesUploaderModule,
         PepDialogModule,
     ],
-    exports: [PepSignatureComponent],
-    declarations: [PepSignatureComponent],
+    exports: [PepSignatureComponent, PepSignatureDialogComponent],
+    declarations: [PepSignatureComponent, PepSignatureDialogComponent],
 })
 export class PepSignatureModule {
     constructor(private pepIconRegistry: PepIconRegistry) {

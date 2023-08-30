@@ -42,6 +42,7 @@ import {
     IPepListStartIndexChangeEvent,
     PepListCardSizeType,
     PepListTableViewType,
+    IPepListSortingData,
 } from './list.model';
 import {
     IPepListPagerChangeEvent,
@@ -71,8 +72,21 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     static SORT_BY_STATE_KEY = 'SortBy';
     static ASCENDING_STATE_KEY = 'IsAscending';
 
-    static MINIMUM_COLUMN_WIDTH = 48;
+    static MINIMUM_COLUMN_WIDTH = 72;
 
+    @Input() 
+    set sorting(value: IPepListSortingData) {
+        this.sortBy = value?.sortBy || '';
+        this.isAsc = value?.sortBy.length > 0 ? value.isAsc : true;
+    }
+    get sorting(): IPepListSortingData {
+        return {
+            sortBy: this.sortBy,
+            isAsc: this.isAsc
+        };
+    }
+    
+    @Input() cacheSize = -1;
     @Input() noDataFoundMsg: string = null;
     @Input() selectionTypeForActions: PepListSelectionType = 'multi';
     @Input() showCardSelection = false;
@@ -228,9 +242,12 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     // For resize
     pressedColumn = '';
+    pressedColumnIndex = -1;
     startX = 0;
     startWidth = 0;
     tableStartWidth = 0;
+    
+    private lastColumnsWidth: Array<{ columnAPIName: string, calcColumnWidth: number, calcTitleColumnWidthString: string, calcColumnWidthString: string }> = [];
 
     // For sorting
     isAsc = true;
@@ -300,6 +317,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.saveSortingToSession();
     }
 
+    getCachedItemsNumber() {
+        return this.cacheSize >= 0 ? this.cacheSize : PepListComponent.TOP_ITEMS_ARRAY;
+    }
+
     private getScrollingElement() {
         return this.parentScroll ? this.parentScroll : this.virtualScroller?.contentElementRef.nativeElement.parentElement;
     }
@@ -364,13 +385,14 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    private getSelectionCheckBoxWidth(): number {
+        return this.selectionTypeForActions === 'multi' ? 44 : (this.selectionTypeForActions === 'single' ? 44 : 0);
+    }
+
     private setContainerWidth(): void {
         if (!this.hostElement.nativeElement.parentElement) {
             return;
         }
-
-        const selectionCheckBoxWidth =
-            this.selectionTypeForActions === 'multi' ? 44 : 0;
 
         const rowHeight = 40; // the table row height (2.5rem * 16font-size).
         const style = getComputedStyle(
@@ -392,7 +414,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         // The selectionCheckBoxWidth width + containerFluidSpacing + this.tableScrollWidth.
         const rowHeaderWidthToSub =
-            containerFluidSpacing + selectionCheckBoxWidth + this.tableScrollWidth;
+            containerFluidSpacing + this.getSelectionCheckBoxWidth() + this.tableScrollWidth;
         this.containerWidth = parentContainer.offsetWidth - rowHeaderWidthToSub;
     }
 
@@ -496,21 +518,92 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             this.cd.detectChanges();
         }
 
-        // Set the columns width.
+        // Set the container width.
         if (this.containerWidth <= 0) {
             this.setContainerWidth();
         }
 
-        this.calcColumnsWidth();
+        const isLastColumnsWidthSet = this.setLastColumnsWidth();
+            
+        // Set the layout only if the last columns width couldn't set.
+        if (!isLastColumnsWidthSet) {
+            this.calcColumnsWidth();
+        }
+        
         this.checkForChanges = new Date().getTime();
+    }
+
+    private setLastColumnsWidth(): boolean {
+        let res = false;
+
+        let totalCalcColsWidth = 0;
+        let widthToSet = 'inherit';
+
+        if (this.lastColumnsWidth.length > 0) {
+            // Check if this is the same UI control for table.
+            if (this.lastColumnsWidth.length === this._layout.ControlFields.length) {
+                let uiControlsAreTheSame = true;
+
+                for (let index = 0; index < this._layout.ControlFields.length; index++) {
+                    const uiControlField: UIControlField = this._layout.ControlFields[index];
+                    
+                    if (uiControlField.ApiName !== this.lastColumnsWidth[index].columnAPIName) {
+                        uiControlsAreTheSame = false;
+                        break;
+                    }
+                }
+    
+                if (uiControlsAreTheSame) {
+                    for (let index = 0; index < this._layout.ControlFields.length; index++) {
+                        const uiControlField: UIControlField = this._layout.ControlFields[index];
+                        uiControlField.calcColumnWidth = this.lastColumnsWidth[index].calcColumnWidth;
+                        uiControlField.calcTitleColumnWidthString = this.lastColumnsWidth[index].calcTitleColumnWidthString;
+                        uiControlField.calcColumnWidthString = this.lastColumnsWidth[index].calcColumnWidthString;
+                        totalCalcColsWidth += this.lastColumnsWidth[index].calcColumnWidth;
+                    }
+                    
+                    widthToSet = (totalCalcColsWidth + this.getSelectionCheckBoxWidth()) + 'px'
+                    console.log(`setLastColumnsWidth -> widthToSet: ${widthToSet} *** totalCalcColsWidth: ${totalCalcColsWidth}`);
+                    this.setColumnsWidth(widthToSet);
+
+                    res = true;
+                }
+            }
+        }
+        return res;
+    }
+
+    private setVirtualScrollWidth(widthToSet: string) {
+        if (this.virtualScroller) {
+            this.renderer.setStyle(
+                this.virtualScroller.contentElementRef.nativeElement,
+                'width',
+                widthToSet === 'inherit' ? '100%' : widthToSet
+            );
+        }
+    }
+
+    private setColumnsWidth(widthToSet: string) {
+        this.renderer.setStyle(
+            this.hostElement.nativeElement,
+            'width',
+            widthToSet
+        );
+
+        if (this.isTable) {
+            this.setVirtualScrollWidth(widthToSet);
+        } else {
+            // Do this only after UI is change cause the property isTable is Input and can refresh after this thread.
+            setTimeout(() => {
+                this.setVirtualScrollWidth(widthToSet);
+            }, 0);
+        }
     }
 
     private calcColumnsWidth(): void {
         const fixedMultiple = 3.78; // for converting em to pixel.
         const length = this._layout.ControlFields.length;
-        const selectionCheckBoxWidth =
-            this.selectionTypeForActions === 'multi' ? 44 : 0;
-
+        
         // Is table AND there is at least one column of width type of percentage.
         if (this.isTable) {
             if (this._layout && this._layout.ControlFields) {
@@ -534,6 +627,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         let totalCalcColsWidth = 0;
 
+        let widthToSet = 'inherit';
+
         // Calc by percentage
         if (this.hasColumnWidthOfTypePercentage) {
             const totalColsWidth: number = this._layout.ControlFields.map(
@@ -553,12 +648,6 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     totalCalcColsWidth += uiControlField.calcColumnWidth;
                 }
             }
-
-            this.renderer.setStyle(
-                this.hostElement.nativeElement,
-                'width',
-                'inherit'
-            );
         } else {
             for (let index = 0; index < length; index++) {
                 const uiControlField: UIControlField = this._layout
@@ -568,8 +657,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 );
 
                 if (index === length - 1) {
-                    uiControlField.calcTitleColumnWidthString = currentFixedWidth + 'px';
-                    uiControlField.calcColumnWidthString = currentFixedWidth + 'px';
+                    uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString = currentFixedWidth + 'px';
                 } else {
                     uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString = currentFixedWidth + 'px';
                 }
@@ -577,12 +665,11 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 totalCalcColsWidth += currentFixedWidth;
             }
 
-            this.renderer.setStyle(
-                this.hostElement.nativeElement,
-                'width',
-                totalCalcColsWidth + selectionCheckBoxWidth + 'px'
-            );
+            widthToSet = (totalCalcColsWidth + this.getSelectionCheckBoxWidth()) + 'px'
         }
+
+        console.log(`calcColumnsWidth -> widthToSet: ${widthToSet} *** totalCalcColsWidth: ${totalCalcColsWidth}`);
+        this.setColumnsWidth(widthToSet);
     }
 
     private calcObjectHeight() {
@@ -606,6 +693,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.startWidth = 0;
         this.tableStartWidth = 0;
         this.pressedColumn = '';
+        this.pressedColumnIndex = -1;
     }
 
     private getParent(el, parentSelector): any {
@@ -684,7 +772,9 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             PepListComponent.ALL_SELECTED_STATE_KEY
         );
         if (isAllSelected != null) {
-            this.isAllSelected = isAllSelected && this.getIsAllSelected(items);
+            // Comment this in version 0.4.2-beta.103, I don't know why we need this (&& this.getIsAllSelected(items))
+            // this.isAllSelected = isAllSelected && this.getIsAllSelected(items);
+            this.isAllSelected = isAllSelected;
             this.sessionService.removeObject(
                 PepListComponent.ALL_SELECTED_STATE_KEY
             );
@@ -1065,17 +1155,25 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         items: ObjectsDataRow[]
     ): void {
         this.initVariablesFromSession(items);
-        const currentList = this.isAllSelected
+        const selectedItemsList = this.isAllSelected
             ? this.unSelectedItems
             : this.selectedItems;
         const currentListCount = this.isAllSelected
-            ? this.totalRows - currentList.size
-            : currentList.size;
+            ? this.totalRows - selectedItemsList.size
+            : selectedItemsList.size;
         this.selectedItemsChange.emit(currentListCount);
 
         this._layout = layout;
-        this.selectedItemId = '';
+        this.selectedItemId = ''; 
         this.totalRows = totalRows;
+
+        // If is all selected is false && the size of the selected items is 1 && selectionTypeForActions is 'single' then set it as the selected item id.
+        // We need this in setTimeout cause the selectionTypeForActions is input that can set after this function.
+        setTimeout(() => {
+            if (!this.isAllSelected && this.selectedItems.size === 1 && this.selectionTypeForActions === 'single') {
+                this.selectedItemId = this.selectedItems.values()[0];
+            }
+        }, 0);
 
         this.scrollToTop(false);
         this.cleanItems();
@@ -1114,10 +1212,13 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
+        if (!this.isTable) {
+            this.lastColumnsWidth = [];
+        }
+
         this.setLayout();
 
         // setTimeout(() => {
-            
             this.onListLoad();
         // }, 0);
     }
@@ -1131,7 +1232,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // Clean array
-        if (this.itemsCounter + items.length > PepListComponent.TOP_ITEMS_ARRAY) {
+        if (this.itemsCounter + items.length > this.getCachedItemsNumber()) {
             this.cleanItems();
         }
 
@@ -1153,7 +1254,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         // Clean array
-        if (this.itemsCounter + items.length > PepListComponent.TOP_ITEMS_ARRAY) {
+        if (this.itemsCounter + items.length > this.getCachedItemsNumber()) {
             this.cleanItems();
         }
 
@@ -1276,18 +1377,22 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.refresh();
 
         this.containerWidth = 0;
+        this.lastColumnsWidth = [];
         this.setLayout();
     }
 
-    onListResizeStart(event, columnKey): void {
+    onListResizeStart(event, columnKey: string, columnIndex: number): void {
         this.pressedColumn = columnKey;
+        this.pressedColumnIndex = columnIndex;
         this.startX = event.x;
         this.startWidth = event.target.closest('.header-column').offsetWidth;
-        this.tableStartWidth = this.virtualScroller?.contentElementRef.nativeElement.offsetWidth;
+        this.tableStartWidth = this.hostElement.nativeElement.offsetWidth; // this.virtualScroller?.contentElementRef.nativeElement.offsetWidth;
+        console.log(`tableStartWidth - ${this.tableStartWidth}`);
     }
 
     onListResize(event): void {
-        if (this.pressedColumn.length > 0) {
+        // if (this.pressedColumn.length > 0) {
+        if (this.pressedColumnIndex >= 0) {
             let widthToAdd = this.layoutService.isRtl() ? this.startX - event.x : event.x - this.startX;
 
             // Set the width of the column and the container of the whole columns.
@@ -1306,13 +1411,15 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                             widthToAdd += scrollWidth;
                             uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString = 'calc(100% - ' + (totalCalcColsWidth + scrollWidth) + 'px)'; // For 100%
                         } else {
-                            if (uiControlField.ApiName === this.pressedColumn) {
+                            // if (uiControlField.ApiName === this.pressedColumn) {
+                            if (index === this.pressedColumnIndex) {
                                 uiControlField.calcColumnWidth = this.startWidth + widthToAdd;
                                 uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidth + 'px';
                                 uiControlField.calcColumnWidthString = uiControlField.calcColumnWidth + 'px';
                             }
                         }
-                    } else if (uiControlField.ApiName === this.pressedColumn) {
+                    // } else if (uiControlField.ApiName === this.pressedColumn) {
+                    } else if (index === this.pressedColumnIndex) {
                         uiControlField.calcColumnWidth = this.startWidth + widthToAdd;
                         uiControlField.calcTitleColumnWidthString = uiControlField.calcColumnWidthString = uiControlField.calcColumnWidth + 'px';
                     }
@@ -1320,19 +1427,18 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                     totalCalcColsWidth += uiControlField.calcColumnWidth;
                 }
 
-                this.renderer.setStyle(
-                    this.hostElement.nativeElement,
-                    'width',
-                    this.tableStartWidth + widthToAdd + 'px'
-                );
+                const widthToSet = (this.tableStartWidth + widthToAdd) + 'px';
+                console.log(`onListResize -> widthToSet: ${widthToSet} *** widthToAdd: ${widthToAdd}`);
+                this.setColumnsWidth(widthToSet);
+                this.checkForChanges = new Date().getTime();
             }
 
-            this.checkForChanges = new Date().getTime();
         }
     }
 
     onListResizeEnd(event): void {
-        if (this.pressedColumn.length > 0) {
+        // if (this.pressedColumn.length > 0) {
+        if (this.pressedColumnIndex >= 0) {
             if (
                 event &&
                 this.getParent(event.srcElement, 'resize-box').length > 0
@@ -1345,13 +1451,28 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
                 }, 0);
             }
 
+            this.lastColumnsWidth = [];
+            
+            // Set the last columns width
+            for (let index = 0; index < this._layout.ControlFields.length; index++) {
+                const uiControlField: UIControlField = this._layout.ControlFields[index];
+                
+                this.lastColumnsWidth.push({ 
+                    columnAPIName: uiControlField.ApiName, 
+                    calcColumnWidth: uiControlField.calcColumnWidth,
+                    calcTitleColumnWidthString: uiControlField.calcTitleColumnWidthString,
+                    calcColumnWidthString: uiControlField.calcColumnWidthString
+                })
+            }
+            
             event.stopPropagation();
         }
     }
 
     onListSortingChange(sortBy: string, isAsc: boolean, event = null): void {
         if (
-            this.pressedColumn.length > 0 ||
+            // this.pressedColumn.length > 0 ||
+            this.pressedColumnIndex >= 0 ||
             (event && this.getParent(event.srcElement, 'resize-box').length > 0)
         ) {
             return;

@@ -188,13 +188,9 @@ export class PepFileService {
         return filePath.substr(filePath.lastIndexOf('/') + 1, lastIndex);
     }
 
-    getFileExtension(filePath: string): string {
-        const fileSplit = filePath.split('.');
-        let fileExt = '';
-        if (fileSplit.length > 1) {
-            fileExt = fileSplit[fileSplit.length - 2];
-        }
-        return fileExt;
+    getFileExtension(filename: string): string {
+        const extension = filename.substring(filename.lastIndexOf('.') + 1, filename.length);
+        return extension;
     }
 
     /* Returns true if url is valid */
@@ -207,33 +203,78 @@ export class PepFileService {
             return false;
         }
     }
+    
+    convertFromb64toArrayBuffer(base64String: string): ArrayBuffer {
+        const base64 = base64String.slice(base64String.indexOf(',') + 1);
+        const binary_string = window.atob(base64);
+        const len = binary_string.length;
+        const bytes = new Uint8Array(len);
+        
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
 
-    convertFromb64toBlob(
-        b64Data: any,
-        contentType = '',
-        sliceSize = 512
-    ): Blob {
-        const byteCharacters = atob(b64Data);
-        const byteArrays = [];
+    convertFromb64toBlob(base64String: any): Blob {
+        // const byteCharacters = window.atob(b64Data);
+        const byteArrays = this.convertFromb64toArrayBuffer(base64String);
 
-        for (
-            let offset = 0;
-            offset < byteCharacters.length;
-            offset += sliceSize
-        ) {
-            const slice = byteCharacters.slice(offset, offset + sliceSize);
+        const fileStrArr = base64String.split(';');
+        const contentType = fileStrArr[0].split(':')[1];
 
-            const byteNumbers = new Array(slice.length);
-            for (let i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
-            }
+        const blob = new Blob([byteArrays], { type: contentType });
+        return blob;
+    }
 
-            const byteArray = new Uint8Array(byteNumbers);
-            byteArrays.push(byteArray);
+    getBase64FileSize(base64String: string): number {
+        let fileSize: number;
+
+        try {
+            base64String = base64String.slice(base64String.indexOf(',') + 1);
+            fileSize = window.atob(base64String).length;
+        } catch (e) {
+            fileSize = -1;
         }
 
-        const blob = new Blob(byteArrays, { type: contentType });
-        return blob;
+        return fileSize; // return size in bytes;
+    }
+
+    fileToBase64(file: File) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    }
+
+    isValidFileExtension(
+        fileExtension,
+        acceptedExtensions
+    ): boolean {
+        const extensionOK =
+            acceptedExtensions === '' ||
+            acceptedExtensions.indexOf(fileExtension.toLowerCase()) !== -1;
+        
+        return extensionOK;
+    }
+
+    isValidFileSize(
+        fileStr,
+        sizeLimitMB = 5
+    ): boolean {
+        const file: any = fileStr;
+        let fileSize = 0;
+        // check if got file as Base64
+        if (typeof fileStr === 'string' && fileStr.indexOf('data:') > -1) {
+            fileSize = this.getBase64FileSize(fileStr);
+        } else {
+            fileSize = file.size;
+        }
+        // check the size
+        const sizeOK: boolean = fileSize !== -1 && file != null && fileSize < sizeLimitMB * 1048576;
+        return sizeOK;
     }
 
     getAssetsPath(assetsDomain = '', libName = 'ngx-lib'): string {

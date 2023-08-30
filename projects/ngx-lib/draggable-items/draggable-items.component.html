@@ -8,7 +8,7 @@
             [searchControl]="searchControl" triggerOn="keydown"></pep-search>
     </div>
 
-    <div class="draggable-items-overflow">
+    <div class="draggable-items-overflow" [ngClass]="{ 'add-padding': titleType === 'with-bottom-border'}">
         <div class="draggable-items-wrapper">
             <pep-draggable-item *ngFor="let item of filteredItems$ | async; let i=index;" class="draggble-item"
                 [title]="item.title" [data]="item.data" [disabled]="item.disabled" cdkDrag [cdkDragData]="item.data"

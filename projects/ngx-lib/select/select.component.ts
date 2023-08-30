@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
+import { TranslateService } from '@ngx-translate/core';
 import {
     PepLayoutType,
     PepCustomizationService,
@@ -52,6 +53,19 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     @Input() readonly = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     @Input() rowSpan = 1;
+    
+    private _placeholder = ''
+    private _placeholderSet = false;
+    @Input() 
+    set placeholder(value: string) {
+        this._placeholder = value;
+        this._placeholderSet = true;
+    }
+    get placeholder(): string {
+        return this._placeholder;
+    }
+    
+    @Input() placeholderWhenDisabled = '';
 
     private _options: Array<IPepOption> = [];
     @Input() 
@@ -108,6 +122,8 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
 
     @Input() renderTitle = true;
     @Input() typeaheadDebounceInterval = 1000;
+    
+    @Input() addValueToOptionsIfNotExist = true;
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
@@ -124,41 +140,44 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
     fieldFormattedValue = '';
 
     constructor(
+        private translate: TranslateService,
         private customizationService: PepCustomizationService,
         private renderer: Renderer2,
         private element: ElementRef
     ) { }
 
     private addOptionsIfNeeded(): void {
-        if (this.isMulti) {
-            // Go gor all selected and add to options if not exist
-            // for (let i = 0; i < this.selectedValuesModel.length; i++) {
-            for (const selectedValue of this.selectedValuesModel) {
-                let valueNotExist = false;
-
+        if (this.addValueToOptionsIfNotExist) {
+            if (this.isMulti) {
+                // Go gor all selected and add to options if not exist
+                // for (let i = 0; i < this.selectedValuesModel.length; i++) {
+                for (const selectedValue of this.selectedValuesModel) {
+                    let valueNotExist = false;
+    
+                    if (
+                        this.options &&
+                        !this.options.find((opt) => opt.key === selectedValue)
+                    ) {
+                        valueNotExist = true;
+                    }
+    
+                    // Add it to options.
+                    if (valueNotExist) {
+                        this.options.push({
+                            key: selectedValue,
+                            value: selectedValue,
+                        });
+                    }
+                }
+            } else {
                 if (
+                    this.value &&
+                    this.value !== '' &&
                     this.options &&
-                    !this.options.find((opt) => opt.key === selectedValue)
+                    !this.options.find((opt) => opt.key === this.value)
                 ) {
-                    valueNotExist = true;
+                    this.options.push({ key: this.value, value: this.value });
                 }
-
-                // Add it to options.
-                if (valueNotExist) {
-                    this.options.push({
-                        key: selectedValue,
-                        value: selectedValue,
-                    });
-                }
-            }
-        } else {
-            if (
-                this.value &&
-                this.value !== '' &&
-                this.options &&
-                !this.options.find((opt) => opt.key === this.value)
-            ) {
-                this.options.push({ key: this.value, value: this.value });
             }
         }
     }
@@ -213,6 +232,13 @@ export class PepSelectComponent implements OnChanges, OnInit, OnDestroy {
                     PepCustomizationService.STAND_ALONE_FIELD_NO_SPACING_CLASS_NAME
                 );
             }
+        }
+
+        // Set default placeholder if not set.
+        if (!this._placeholderSet) {
+            this.translate.get('SELECT.HINT').subscribe((res) => {
+                this.placeholder = res;
+            });
         }
     }
 
