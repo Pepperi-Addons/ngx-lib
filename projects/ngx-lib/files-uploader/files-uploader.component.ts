@@ -21,6 +21,7 @@ import {
     PepHorizontalAlignment,
     DEFAULT_HORIZONTAL_ALIGNMENT,
     IPepFieldClickEvent,
+    PepFieldBase,
 } from '@pepperi-addons/ngx-lib';
 import {
     PepDialogService,
@@ -33,6 +34,7 @@ export interface IPepFileChangeEvent {
     fileStr?: string;
     fileName?: string;
     fileExt?: string;
+    fileSize?: number;
 }
 
 @Component({
@@ -63,10 +65,19 @@ export class PepFilesUploaderComponent implements OnInit {
     @Input() sizeLimitMB = 5;
 
     @Input() form: FormGroup;
-    @Input() standAlone = false;
     @Input() acceptedExtensions = 'bmp,jpg,jpeg,png,gif,ico,svg,html,css';
     @Input() layoutType: PepLayoutType = 'form';
 
+    @Input() fieldHeight = '';
+    
+    // To know if handle actions or just raise them as output
+    @Input() handleActions = true;
+
+    @Input() hint = '';
+
+    @Output()
+    chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false
+    
     @Output()
     fileChange: EventEmitter<IPepFileChangeEvent> = new EventEmitter<IPepFileChangeEvent>();
     @Output()
@@ -74,8 +85,6 @@ export class PepFilesUploaderComponent implements OnInit {
 
     @ViewChild('fileInput') fileInput: any;
     @ViewChild('imagePreview') imagePreview: any;
-
-    @Input() fieldHeight = '';
 
     // multiple = false;
     uploader: FileUploader;
@@ -102,8 +111,10 @@ export class PepFilesUploaderComponent implements OnInit {
                 //const fileNameArray = item._file.name.split('.');
                 const fileName = this.getFileName(item._file.name); //fileNameArray[0];
                 const fileExt = this.getFileExtension(item._file.name); //fileNameArray[1]; // item._file.name.split('.').pop();
+                const fileSize = item._file.size;
                 const target = event.target || event.srcElement;
                 const fileStr = target.result;
+
                 const errorMsg = this.isValidFile(
                     fileStr,
                     fileExt,
@@ -119,6 +130,7 @@ export class PepFilesUploaderComponent implements OnInit {
                         fileStr,
                         fileName,
                         fileExt,
+                        fileSize,
                     });
                 } else {
                     const title = this.translate.instant(
@@ -148,7 +160,21 @@ export class PepFilesUploaderComponent implements OnInit {
         const extension = filename.substring(filename.lastIndexOf('.') + 1, filename.length);
         return extension;
     }
+    
+    private setDefaultForm(): void {
+        const pepField = new PepFieldBase({
+            key: this.key,
+            value: this.src,
+            mandatory: this.mandatory,
+            disabled: this.disabled,
+        });
+        this.form = this.customizationService.getDefaultFromGroup(pepField);
+    }
+
     ngOnInit(): void {
+        if (this.form === null) {
+            this.setDefaultForm();
+        }
         /*this.uploader.onCompleteAll = () => {
             this.fileInput.nativeElement.value = '';
         }*/
@@ -160,21 +186,12 @@ export class PepFilesUploaderComponent implements OnInit {
         acceptedExtensions,
         sizeLimitMB = 5
     ): string {
-        const file: any = fileStr;
-        let fileSize = 0;
         let content = '';
-        // check if got file as Base64
-        if (typeof fileStr === 'string' && fileStr.indexOf('data:') > -1) {
-            fileSize = this.getBase64FileSize(fileStr);
-        } else {
-            fileSize = file.size;
-        }
+        
         // check the size and the extension
-        const sizeOK: boolean =
-            fileSize !== -1 && file != null && fileSize < sizeLimitMB * 1048576;
-        const extensionOK =
-            acceptedExtensions === '' ||
-            acceptedExtensions.indexOf(fileExtension.toLowerCase()) !== -1;
+        const sizeOK: boolean = this.fileService.isValidFileSize(fileStr, sizeLimitMB);
+        const extensionOK = this.fileService.isValidFileExtension(fileExtension, acceptedExtensions);
+            
         if (!extensionOK) {
             content = this.translate.instant(
                 'MESSAGES.ERROR_FAILD_TO_LOAD_EXTENSION',
@@ -197,19 +214,6 @@ export class PepFilesUploaderComponent implements OnInit {
             );
         }
         return content;
-    }
-
-    getBase64FileSize(base64String: string): number {
-        let fileSize: number;
-
-        try {
-            base64String = base64String.substr(base64String.indexOf(',') + 1);
-            fileSize = atob(base64String).length;
-        } catch (e) {
-            fileSize = -1;
-        }
-
-        return fileSize; // return size in bytes;
     }
 
     // setIntervalX(delay, repetitions): void {
@@ -243,12 +247,6 @@ export class PepFilesUploaderComponent implements OnInit {
         this.src = empltValue;
 
         this.fileChange.emit(null);
-
-        // this.fileChange.emit({
-        //     acceptedExtensions: this.acceptedExtensions,
-        //     fileStr: null,
-        //     fileExt: null,
-        // });
     }
 
     onElementClicked(event): void {
@@ -260,19 +258,27 @@ export class PepFilesUploaderComponent implements OnInit {
     }
 
     onClick_ChooseFile(event): void {
-        if (this.fileInput?.nativeElement) {
-            this.fileInput.nativeElement.click();
+        if (this.handleActions) {
+            if (this.fileInput?.nativeElement) {
+                this.fileInput.nativeElement.click();
+            }
+        } else {
+            this.chooseFile.emit();
         }
     }
 
     onKeyPress_ChooseFile(event): void {
-        const e = event as KeyboardEvent;
+        if (this.handleActions) {
+            const e = event as KeyboardEvent;
 
-        if ([13, 32].indexOf(e.which) !== -1) {
-            if (this.fileInput?.nativeElement) {
-                this.fileInput.nativeElement.click();
+            if ([13, 32].indexOf(e.which) !== -1) {
+                if (this.fileInput?.nativeElement) {
+                    this.fileInput.nativeElement.click();
+                }
             }
+            e.preventDefault();
+        } else {
+            this.chooseFile.emit();
         }
-        e.preventDefault();
     }
 }

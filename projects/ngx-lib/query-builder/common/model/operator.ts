@@ -15,7 +15,7 @@ export interface IPepQueryBuilderOperator {
 const Equals: IPepQueryBuilderOperator = {
     legacy: 'IsEqual',
     smartFilter: PepSmartFilterOperators.Equals,
-    type: ['boolean', 'int', 'text']
+    type: ['boolean', 'int', 'text', 'real']
 };
 
 const EqualsVariable: IPepQueryBuilderOperator = {

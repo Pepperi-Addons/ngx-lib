@@ -56,7 +56,7 @@
             (click)="!disabled ? cardTemplateClicked($event) : ''" [style.height]="fieldHeight">
             <span *ngIf="showTitle && label != ''" class="body-xs title no-shrink" title="{{ label }}">{{ label
                 }}:&nbsp;</span>
-            <span [id]="key" class="body-sm value wrap" [innerHtml]="value | pepSafeHtml"></span>
+            <span [id]="key" class="body-sm value wrap" style="width: 100%;" [innerHtml]="value | pepSafeHtml"></span>
             <button *ngIf="isActive && !disabled" class="pep-button weak card-edit-button self-start"
                 [ngClass]="{'self-end' : value && value !== ''}" mat-button>
                 <mat-icon>

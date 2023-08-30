@@ -39,8 +39,25 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     public static MENU_CLICKED = '[MenuClicked]';
 
     @Input() key = '';
-    @Input() srcLarge = '';
-    @Input() src = '';
+    
+    private _srcLarge = '';
+    @Input()
+    set srcLarge(value) {
+        this._srcLarge = value || '';
+    }
+    get srcLarge(): string {
+        return this._srcLarge;
+    }
+    
+    private _src = '';
+    @Input()
+    set src(value) {
+        this._src = value || '';
+    }
+    get src(): string {
+        return this._src;
+    }
+
     @Input() options: IPepOption[] = [];
     @Input() label = '';
     // @Input() type = 'image';
@@ -103,6 +120,13 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
     @Input() isActive = false;
     @Input() sizeLimitMB = 5;
     @Input() acceptImagesType = 'bmp,jpg,jpeg,png,gif'; // "image/bmp, image/jpg, image/jpeg, image/png, image/tif, image/tiff";
+
+    // To know if handle actions or just raise them as output
+    @Input() handleActions = true;
+    @Input() hint = '';
+
+    @Output()
+    chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false
 
     @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();
@@ -219,13 +243,8 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             this.key,
             this.dataURI ? this.dataURI.fileExt : ''
         );
-        // this.valueChange.emit({
-        //     key: this.key,
-        //     value,
-        // });
-
+        
         this.fileChange.emit(fileData);
-        // this.fileChange.emit(value.length > 0 ? JSON.parse(value) : value);
     }
 
     objectIdIsNotEmpty(): boolean {
@@ -263,12 +282,6 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
             hasParentImage = false;
         }
 
-        // this.openImageModal(hasParentImage);
-        // if (this.dataURI) {
-        //     this.imageService.openFromURI(this.dataURI);
-        // } else {
-        //     this.imageService.openImageDialog(this.srcLarge || this.src, this.options, this.label);
-        // }
         const eventToRaise: IPepFieldClickEvent = {
             key: this.key,
             controlType: this.controlType,
@@ -277,44 +290,10 @@ export class PepImageComponent implements OnChanges, OnInit, OnDestroy {
         eventToRaise.otherData = this.getOtherData();
         this.elementClick.emit(eventToRaise);
     }
-
-    // openImageModal(hasParentImage: boolean): void {
-    //     if (this.dataURI) {
-    //         const fileStrArr = this.dataURI.fileStr.split(';');
-    //         if (fileStrArr.length === 2) {
-    //             const win = window.open('', '_blank');
-    //             const contentType = fileStrArr[0].split(':')[1];
-    //             const base64 = fileStrArr[1].split(',')[1];
-    //             const blob = this.fileService.convertFromb64toBlob(
-    //                 base64,
-    //                 contentType
-    //             );
-    //             const url = URL.createObjectURL(blob);
-    //             win.location.href = url;
-    //         }
-    //     } else {
-    //         const arr = [this.srcLarge || this.src].concat(
-    //             (this.options || []).map((opt) => opt.value)
-    //         );
-    //         const imagesValue = arr.join(';');
-
-    //         // Show image in modal.
-    //         const config = this.dialogService.getDialogConfig({}, 'inline');
-    //         config.maxWidth = '75vw';
-    //         config.height = '95vh';
-
-    //         this.dialogService.openDialog(
-    //             PepImagesFilmstripComponent,
-    //             {
-    //                 currIndex: 0,
-    //                 key: this.key,
-    //                 value: imagesValue,
-    //                 label: this.label,
-    //                 uid: this.uid,
-    //                 showThumbnails: arr.length > 1,
-    //             },
-    //             config
-    //         );
-    //     }
-    // }
+    
+    onChooseFile(event) {
+        if (!this.handleActions) {
+            this.chooseFile.emit();
+        }
+    }
 }

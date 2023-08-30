@@ -16,8 +16,7 @@
             -->
             <ng-container *ngIf="type == 'booleanText'; then booleanTextTemplate; else regularTemplate"></ng-container>
             <ng-template #booleanTextTemplate>
-                <div class="mat-checkbox-layout body-sm" (click)="toggleChecked($event)"
-                    [title]="(label.length > 0 ? label + ': ' : '') + (value ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))">
+                <div class="mat-checkbox-layout body-sm" (click)="toggleChecked($event)">
                     <button [id]="key" class="emoji-icon ellipsis pull-left flip">
                         {{ value ? additionalValueObject?.CheckedText : additionalValueObject?.UncheckedText }}
                     </button>
@@ -27,7 +26,6 @@
             </ng-template>
             <ng-template #regularTemplate>
                 <mat-checkbox [name]="key" class="body-sm" type="checkbox" (change)="onMaterialChange($event)"
-                    [title]="(label.length > 0 ? label + ': ' : '') + (value ? ('CHECKBOX.TRUE' | translate) : ('CHECKBOX.FALSE' | translate))"
                     [checked]="value" [disabled]="disabled">
                     <span *ngIf="label.length > 0 && layoutType !== 'table'">{{ label }}</span>
                 </mat-checkbox>
@@ -53,7 +51,7 @@
             <ng-container *ngIf="value; then trueTemplate; else falseTemplate">
             </ng-container>
             <ng-template #trueTemplate>
-                <mat-icon class="has-active-campaign" title="{{ 'CHECKBOX.TRUE' | translate }}">
+                <mat-icon class="has-active-campaign" >
                     <pep-icon name="system_bolt">
                     </pep-icon>
                 </mat-icon>

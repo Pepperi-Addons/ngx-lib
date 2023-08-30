@@ -1,0 +1,17 @@
+<pep-dialog [title]="data.title || ('SIGNATURE.DIALOG_TITLE' | translate)" [showFooter]="data.showActionBtn" [showClose]="true" (close)="closeDialog($event)">
+    <ng-container pep-dialog-content>
+        <signature-pad #signaturePad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
+            (onEndEvent)="drawComplete()">
+        </signature-pad>
+    </ng-container>
+    <div pep-dialog-actions class="pep-spacing-element-negative">
+        <button mat-button class="pep-spacing-element pep-button md weak" [disabled]="data.disabled"
+            (click)="clearSignModal()">
+            {{ 'ACTIONS.CLEAR' | translate }}
+        </button>
+        <button mat-button class="pep-spacing-element pep-button md strong" [disabled]="data.disabled"
+            (click)="saveSignModal($event)">
+            {{ 'ACTIONS.DONE' | translate }}
+        </button>
+    </div>
+</pep-dialog>

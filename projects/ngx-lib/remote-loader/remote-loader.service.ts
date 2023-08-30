@@ -17,6 +17,23 @@ export class PepRemoteLoaderService {
         //
     }
 
+    private getBlockLoaderDataUrl(options: IPepRemoteLoaderParamsOptions): string {
+        const fileName = 'addon_blocks';
+        const pagesAddonUuid = this.addonService.getPagesAddonUUID();
+        let pagesBaseUrl;
+
+        // For devServer run server on localhost.
+        if(options.pagesDevServer?.length > 0) {
+            pagesBaseUrl = `${options.pagesDevServer}/${fileName}`;
+        } else {
+            const baseUrl = this.sessionService.getPapiBaseUrl();
+            pagesBaseUrl = `${baseUrl}/addons/api/${pagesAddonUuid}/${fileName}`;
+        }
+
+        const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${options.name}&slugName=${options.slugName}&blockType=${options.blockType}&addonUUID=${options.addonUUID}`;
+        return url;
+    }
+
     getRemoteLoaderOptions(blockLoaderData: IBlockLoaderData, blockRemoteEntry = '', type: 'script' | 'module' | 'manifest' = 'module'): PepRemoteLoaderOptions {
         const exposedModule = blockLoaderData.relation.ElementsModule?.length > 0 ? blockLoaderData.relation.ElementsModule : blockLoaderData.relation.ModuleName;
         const res = {
@@ -35,23 +52,6 @@ export class PepRemoteLoaderService {
         }
 
         return res;
-    }
-
-    private getBlockLoaderDataUrl(options: IPepRemoteLoaderParamsOptions): string {
-        const fileName = 'addon_blocks';
-        const pagesAddonUuid = this.addonService.getPagesAddonUUID();
-        let pagesBaseUrl;
-
-        // For devServer run server on localhost.
-        if(options.pagesDevServer?.length > 0) {
-            pagesBaseUrl = `${options.pagesDevServer}/${fileName}`;
-        } else {
-            const baseUrl = this.sessionService.getPapiBaseUrl();
-            pagesBaseUrl = `${baseUrl}/addons/api/${pagesAddonUuid}/${fileName}`;
-        }
-
-        const url = `${pagesBaseUrl}/get_addon_block_loader_data?name=${options.name}&slugName=${options.slugName}&blockType=${options.blockType}&addonUUID=${options.addonUUID}`;
-        return url;
     }
 
     async getBlockRemoteLoaderOptions(options: IPepRemoteLoaderParamsOptions): Promise<PepRemoteLoaderOptions> {

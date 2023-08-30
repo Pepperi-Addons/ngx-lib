@@ -115,6 +115,7 @@ export class QueryBuilderExampleComponent implements OnInit {
         this.fields = [
             { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
             { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool' },
+            { FieldID: 'Double Check', Title: 'Double', FieldType: 'Double' },
             { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
             { FieldID: 'CaseQuantity', Title: 'Case Quantity', FieldType: 'Integer' },
             { FieldID: 'CampaignName', Title: 'Campaign Name', FieldType: 'String' },

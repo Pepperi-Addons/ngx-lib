@@ -125,6 +125,11 @@
                 width: 100%;
                 display: flex;
 
+                // Bug fix (DI-23724)
+                .mat-select {
+                    z-index: variables.$z-index-lowest;
+                }
+
                 .mat-input-element {
                     // vertical-align: unset;
                     z-index: variables.$z-index-lowest;
@@ -155,7 +160,6 @@
     .mat-form-field-flex {
         border-radius: variables.$border-radius-md;
     }
-
 }
 
 @mixin pep-field-size($size: 'md') {
@@ -423,6 +427,10 @@ $zoom-compact-view: 85%;
 
             &.mat-radio-button {
                 display: inline-flex;
+            
+                .mat-radio-label-content {
+                    padding: 0;    
+                }
             }
         }
 

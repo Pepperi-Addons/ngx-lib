@@ -20,6 +20,10 @@
         display: flex;
         align-content: center;
         height: inherit;
+
+        .mat-select-placeholder {
+            @include mixins.ellipsis();
+        }
     }
 
     .mat-select-value {

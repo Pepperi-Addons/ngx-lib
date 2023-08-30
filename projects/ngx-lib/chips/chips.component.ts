@@ -6,7 +6,7 @@ import {
     EventEmitter,
     OnDestroy
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+// import { FormGroup } from '@angular/forms';
 import { MatChipInputEvent, } from '@angular/material/chips';
 import { TranslateService } from '@ngx-translate/core';
 import { DEFAULT_HORIZONTAL_ALIGNMENT, PepHorizontalAlignment, PepLayoutType, PepStyleType } from '@pepperi-addons/ngx-lib';
@@ -27,7 +27,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
     * @memberof PepChipsComponent
     */
 
-    @Input() form: FormGroup = null;
+    // @Input() form: FormGroup = null; // Why we need this?
     @Input() layoutType: PepLayoutType = 'form';
     @Input() inline = false;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;

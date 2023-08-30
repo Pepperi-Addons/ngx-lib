@@ -146,6 +146,13 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() isActive = false;
 
+    // To know if handle actions or just raise them as output
+    @Input() handleActions = true;
+    @Input() hint = '';
+    
+    @Output()
+    chooseFile: EventEmitter<void> = new EventEmitter<void>(); // This event will fired only when handleActions Input is false
+
     @Output()
     fileChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -241,26 +248,32 @@ export class PepAttachmentComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFileClicked(event: IPepFieldClickEvent): void {
-        if (this.dataURI != null) {
-            const fileStrArr = this.dataURI.fileStr.split(';');
-            if (fileStrArr.length === 2) {
-                const win = window.open('', '_blank');
-                const contentType = fileStrArr[0].split(':')[1];
-                const base64 = fileStrArr[1].split(',')[1];
-                const blob = this.fileService.convertFromb64toBlob(
-                    base64,
-                    contentType
-                );
-                const url = URL.createObjectURL(blob);
-                win.location.href = url;
-            }
-        } else {
-            if (this.fileService.isValidUrl(this.src)) {
-                const win = window.open('', '_blank');
-                win.location.href = this.src;
+        if (this.handleActions) {
+            if (this.dataURI != null) {
+                const fileStrArr = this.dataURI.fileStr.split(';');
+                if (fileStrArr.length === 2) {
+                    const win = window.open('', '_blank');
+                    const blob = this.fileService.convertFromb64toBlob(
+                        this.dataURI.fileStr
+                    );
+                    const url = URL.createObjectURL(blob);
+                    win.location.href = url;
+                }
+            } else {
+                if (this.fileService.isValidUrl(this.src)) {
+                    const win = window.open('', '_blank');
+                    win.location.href = this.src;
+                }
             }
         }
 
         this.elementClick.emit(event);
     }
+
+    onChooseFile(event) {
+        if (!this.handleActions) {
+            this.chooseFile.emit();
+        }
+    }
 }
+

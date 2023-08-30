@@ -71,15 +71,20 @@ export class PepQuantitySelectorComponent
 
     @Input() key = '';
 
-    private _value = null;
+    private _value = '';
     @Input()
     set value(value: string) {
         if (!value) {
             value = '';
         }
 
-        if (this.isDifferentValue(value)) {
+        if (this._value === '' || this.isDifferentValue(value)) {
             this._value = value;
+        }
+
+        // Cut the .000 if exist for non allowDecimal.
+        if (!this.allowDecimal) {
+            this._value = this._value?.split('.')[0];
         }
 
         this.setFormattedValue(this.value);
@@ -400,7 +405,7 @@ export class PepQuantitySelectorComponent
 
     ngAfterViewInit() {
         setTimeout(() => {
-            debugger;
+            // debugger;
             if (this.QSCont &&
                 this.QSCont.nativeElement &&
                 this.QSCont.nativeElement.clientWidth > 0

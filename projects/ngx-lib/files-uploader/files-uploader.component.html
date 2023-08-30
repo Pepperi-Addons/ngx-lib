@@ -37,8 +37,8 @@
                             <pep-icon name="system_file_upload_cloud"></pep-icon>
                         </mat-icon>
                         <span class="body-sm ellipsis" *ngIf="progress == 0">
-                            {{ (disabled ? (controlType === 'image' ? 'MESSAGES.INFO_MISSING_IMAGE' :
-                            'MESSAGES.INFO_MISSING_FILE') : 'FILE.HINT') | translate }}
+                            {{ hint.length > 0 ? hint : ((disabled ? (controlType === 'image' ? 'MESSAGES.INFO_MISSING_IMAGE' :
+                            'MESSAGES.INFO_MISSING_FILE') : 'FILE.HINT') | translate) }}
                         </span>
                         <!-- <p *ngIf="progress != 0" class="pull-left flip"
                             [ngClass]="{ 'pull-left flip': rowSpan == 1, image: controlType == 'image', attachment: controlType == 'attachment' }">
@@ -46,8 +46,9 @@
                         </p> -->
                     </div>
                     <ng-container *ngIf="!disabled">
-                        <input #fileInput id="pep-file-{{ key }}" tabindex="-1" type="file" accept="acceptedExtensions"
+                        <input *ngIf="handleActions" #fileInput id="pep-file-{{ key }}" tabindex="-1" type="file" accept="acceptedExtensions"
                             ng2FileSelect [uploader]="uploader" autocomplete="off" />
+                        
                         <button *ngIf="progress != 0" mat-button class="pep-button icon-button weak md delete"
                             [ngClass]="{ 'right-alignment': xAlignment == 'right' }">
                             <mat-icon>

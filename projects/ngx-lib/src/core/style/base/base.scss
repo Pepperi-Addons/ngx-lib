@@ -490,24 +490,21 @@
         max-width: 54rem !important;
         width: 90vw;
         height: auto;
-        max-height: 90vh;
+        max-height: calc(100% - (var(--pep-spacing-2xl) * 2)) !important; // 90vh;
 
         .mat-dialog-container {
             .mat-dialog-content {
                 $border-size: 1px;
-                max-height: calc(90vh - (#{variables.$dialog-header-height} + (#{variables.$content-padding} * 2) + (#{$border-size} * 2))); 
+                max-height: 100% // calc(90vh - (#{variables.$dialog-header-height} + (#{variables.$content-padding} * 2) + (#{$border-size} * 2))); 
             }
         }
     }
 
     &.full-screen {
-        $dialog-height: 95vh;
-        max-width: calc(100vw - (var(--pep-spacing-2xl) * 2)) !important;
-        //max-width: 95vw !important;
         width: 95vw !important;
-        //max-height: $dialog-height !important;
+        height: 95vh !important;
+        max-width: calc(100vw - (var(--pep-spacing-2xl) * 2)) !important;
         max-height: calc(100vh - (var(--pep-spacing-2xl) * 2)) !important;
-        height: $dialog-height !important;
 
         .mat-dialog-container {
             .mat-dialog-content {
