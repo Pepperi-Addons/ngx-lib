@@ -1,4 +1,4 @@
-import { Injectable, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Injectable, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { } from 'lodash';
@@ -33,6 +33,8 @@ export class PepQueryStructureService {
     private _variableFields: any = {};
     private _form: FormGroup;
     private _maxStructureDepth = MAX_STRUCTURE_DEPTH;
+
+    private _cmpRefMap: Map<string, ComponentRef<any>> = new Map();
 
     public outputQuery$ = this._outputQuery$.asObservable();
 
@@ -91,6 +93,20 @@ export class PepQueryStructureService {
         query: IPepQuerySection | IPepQueryItem,
         containerRef: ViewContainerRef
     ) {
+        // Remove all the components from the query builder.
+        this._cmpRefMap.forEach((value: ComponentRef<any>, key: string) => {
+            // console.log(key, value);
+            // value.instance.remove();
+            if (value.instance.parentForm) {
+                value.instance.parentForm.removeControl(key);
+            }
+            value.destroy();
+            this._cmpRefMap.delete(key);
+        });
+        
+        // Clear containerRef
+        containerRef.clear();
+
         //update root operator        
         if (this.hasProperty(query, 'ComplexId') &&
             query?.Operation &&
@@ -172,10 +188,16 @@ export class PepQueryStructureService {
             parentForm.removeControl(formKey);
             componentRef.destroy();
             this.createOutputQuery();
+            if (this._cmpRefMap.has(formKey)) {
+                this._cmpRefMap.delete(formKey);
+            }
         });
         componentRef.instance.operatorChange.subscribe(() => {
             this.createOutputQuery();
         });
+
+        // Add this to remove all the components when fields changes.
+        this._cmpRefMap.set(formKey, componentRef);
 
         return {
             containerRef: componentRef.instance.sectionContainer,
@@ -192,7 +214,7 @@ export class PepQueryStructureService {
     createItem(current: IPepQueryItem, containerRef: ViewContainerRef, parentForm: FormGroup) {
         const factory = this._resolver.resolveComponentFactory(PepQueryBuilderItemComponent);
         const componentRef = containerRef.createComponent(factory);
-
+        
         let counter = 1;
         Object.keys(parentForm.controls).forEach(item => { if (item.includes('item')) { counter++; } });
         const formKey = `item${counter}`;
@@ -215,7 +237,13 @@ export class PepQueryStructureService {
             parentForm.removeControl(formKey);
             componentRef.destroy();
             this.createOutputQuery();
+            if (this._cmpRefMap.has(formKey)) {
+                this._cmpRefMap.delete(formKey);
+            }
         });
+
+        // Add this to remove all the components when fields changes.
+        this._cmpRefMap.set(formKey, componentRef);
     }
 
     /**
