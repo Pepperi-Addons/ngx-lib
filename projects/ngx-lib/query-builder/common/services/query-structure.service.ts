@@ -3,24 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { } from 'lodash';
 import { IPepQueryBuilderField, IPepQuerySection, IPepQueryItem } from '../../common/model/legacy';
-import {
-    IPepSmartFilterData,
-    PepSmartFilterOperators,
-    IPepSmartFilterOperator,
-    PepSmartFilterType,
-    createSmartFilter,
-    createSmartFilterField,
-    PepSmartFilterBaseField
-} from '@pepperi-addons/ngx-lib/smart-filters';
 import { PepQueryBuilderService } from '../../query-builder.service';
 import { PepOutputQueryService } from '../../common/services/output-query.service';
-import { getSmartFilterOperator } from '../../common/model/operator';
 import { PepQueryBuilderSectionComponent } from '../../query-builder-section/query-builder-section.component';
 import { PepQueryBuilderItemComponent } from '../../query-builder-item/query-builder-item.component';
 import { IPepQueryBuilderFieldContainer } from '../../common/model/field';
 import { PepQueryBuilderTypeMap } from '../../common/model/type-map';
-import { getSmartFilterOperationUnit } from '../../common/model/operator-unit';
-import { IPepQueryBuilderValues } from '../../common/model/filter';
 import { PepOperatorTypes } from '../../common/model/type';
 
 const MAX_STRUCTURE_DEPTH = 3;

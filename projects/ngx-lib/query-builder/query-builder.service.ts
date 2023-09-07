@@ -36,7 +36,7 @@ export class PepQueryBuilderService {
      * @returns smart filter object
      */
     getFilter(current: IPepQueryItem, field: PepSmartFilterBaseField): IPepSmartFilterData | null {        
-        const operator: IPepSmartFilterOperator = getSmartFilterOperator(current.Operation, field.type);
+        const operator: IPepSmartFilterOperator = getSmartFilterOperator(current.Operation, field.type, current.ValueType || 'Static');
         if (operator) {
             const filterValues: IPepQueryBuilderValues = this.getFilterValues(current, operator, field);
             return createSmartFilter(

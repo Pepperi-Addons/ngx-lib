@@ -1,6 +1,7 @@
 import { KeyValuePair } from '@pepperi-addons/ngx-lib';
 import { PepOperatorTypes } from './type';
 import { PepSmartFilterBaseField } from '@pepperi-addons/ngx-lib/smart-filters';
+import { IpepQueryBuilderValueType } from './operator';
 
 export interface IPepQueryBuilderFieldContainer {
     smart: PepSmartFilterBaseField;
@@ -30,6 +31,7 @@ export interface IPepQueryItem {
     ApiName: string;
     FieldType: string;
     Operation: string;
+    ValueType: IpepQueryBuilderValueType,
     Values: any[];
 }
 
