@@ -6,56 +6,66 @@ import {
 } from '@pepperi-addons/ngx-lib/smart-filters';
 import { PepSmartFilterType } from '@pepperi-addons/ngx-lib/smart-filters';
 
+export type IpepQueryBuilderValueType = 'Static' | 'Dynamic';
 export interface IPepQueryBuilderOperator {
     legacy: string, //legacy Operator    
+    valueType: IpepQueryBuilderValueType,
     smartFilter: IPepSmartFilterOperator, //smart filter operator    
     type: PepSmartFilterType[] | null //smart filter type
 }
 
 const Equals: IPepQueryBuilderOperator = {
     legacy: 'IsEqual',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.Equals,
     type: ['boolean', 'int', 'text', 'real']
 };
 
 const EqualsVariable: IPepQueryBuilderOperator = {
-    legacy: 'IsEqualVariable',
+    legacy: 'IsEqual',
+    valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.EqualsToVariable,
     type: ['boolean', 'int', 'text', 'multi-select']
 };
 
 const NotEqual: IPepQueryBuilderOperator = {
     legacy: 'IsNotEqual',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.NotEqual,
     type: null
 };
 
 const NotEqualsVariable: IPepQueryBuilderOperator = {
-    legacy: 'IsNotEqualVariable',
+    legacy: 'IsNotEqual',
+    valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.NotEqualsToVariable,
     type: ['boolean', 'multi-select']
 };
 
 const LessThan: IPepQueryBuilderOperator = {
     legacy: '<',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.LessThan,
     type: null
 };
 
-const LessThanVarible: IPepQueryBuilderOperator = {
-    legacy: 'LessThanVarible',
+const LessThanVariable: IPepQueryBuilderOperator = {
+    legacy: '<',
+    valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.LessThanVariable,
     type: null
 };
 
 const GreaterThan: IPepQueryBuilderOperator = {
     legacy: '>',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.GreaterThan,
     type: null
 };
 
-const GreaterThanVarible: IPepQueryBuilderOperator = {
-    legacy: 'GreaterThanVarible',
+const GreaterThanVariable: IPepQueryBuilderOperator = {
+    legacy: '>',
+    valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.GreaterThanVariable,
     type: null
 };
@@ -86,166 +96,141 @@ const LessThanOrEquals: IPepQueryBuilderOperator = {
 
 const NumberRange: IPepQueryBuilderOperator = {
     legacy: 'Between',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.NumberRange,
     type: ['int']
 };
 
 const Contains: IPepQueryBuilderOperator = {
     legacy: 'Contains',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.Contains,
     type: null
 };
 
 const BeginsWith: IPepQueryBuilderOperator = {
-    legacy: 'BeginsWith',
+    legacy: 'StartWith',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.BeginsWith,
     type: null
 };
 
 const EndsWith: IPepQueryBuilderOperator = {
-    legacy: 'EndsWith',
+    legacy: 'EndWith',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.EndsWith,
     type: null
 };
 
-/*
-const BeginsWith: IPepQueryBuilderOperator = {
-    legacy: {
-        operator: 'BeginsWith',
-        type: 'String'
-    },
-    smartFilter: {
-        item: PepSmartFilterOperators.BeginsWith,
-        type: 'text'
-    }
-};
-
-const EndsWith: IPepQueryBuilderOperator = {
-    legacy: {
-        operator: 'EndsWith',
-        type: 'String'
-    },
-    smartFilter: {
-        item: PepSmartFilterOperators.EndsWith,
-        type: 'text'
-    }
-};
-
-const Before: IPepQueryBuilderOperator = {
-    legacy: {
-        operator: 'Before',
-        type: 'Date'
-    },
-    smartFilter: {
-        item: PepSmartFilterOperators.Before,
-        type: 'date'
-    }
-};
-
-const After: IPepQueryBuilderOperator = {
-    legacy: {
-        operator: 'After',
-        type: 'Date'
-    },
-    smartFilter: {
-        item: PepSmartFilterOperators.After,
-        type: 'date'
-    }
-}; */
-
 const InTheLast: IPepQueryBuilderOperator = {
     legacy: 'InTheLast',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.InTheLast,
     type: null
 };
 
 const InTheLastCalendar: IPepQueryBuilderOperator = {
     legacy: 'InTheLastCalendar',
+    valueType: 'Static',
     smartFilter: PepSmartFilterAdditionalOperators.InTheLastCalendar,
     type: null
 }
 
 /*
 const InTheLastVariable: IPepQueryBuilderOperator = {
-    legacy: 'InTheLastVariable',
+    legacy: 'InTheLast',
+    valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.InTheLastVariable,
     type: null
 } */
 
 const NotInTheLast: IPepQueryBuilderOperator = {
     legacy: 'NotInTheLast',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.NotInTheLast,
     type: null
 };
 
 const NotInTheLastCalendar: IPepQueryBuilderOperator = {
     legacy: 'NotInTheLastCalendar',
+    valueType: 'Static',
     smartFilter: PepSmartFilterAdditionalOperators.NotInTheLastCalendar,
     type: null
 }
 
 const Today: IPepQueryBuilderOperator = {
     legacy: 'Today',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.Today,
     type: null
 };
 
 const ThisWeek: IPepQueryBuilderOperator = {
     legacy: 'ThisWeek',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.ThisWeek,
     type: null
 };
 
 const ThisMonth: IPepQueryBuilderOperator = {
     legacy: 'ThisMonth',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.ThisMonth,
     type: null
 };
 
 const DateRange: IPepQueryBuilderOperator = {
     legacy: 'Between',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.DateRange,
     type: ['date-time']
 };
 
 const dateRangeVariable: IPepQueryBuilderOperator = {
-    legacy: 'BetweenVariable',
+    legacy: 'Between',
+    valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.DateRangeVariable,
     type: ['date-time']
 };
 
 const DueIn: IPepQueryBuilderOperator = {
     legacy: 'DueIn',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.DueIn,
     type: null
 };
 
 const NotDueIn: IPepQueryBuilderOperator = {
     legacy: 'NotDueIn',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.NotDueIn,
     type: null
 };
 
 const On: IPepQueryBuilderOperator = {
     legacy: 'On',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.On,
     type: null
 };
 
 const IsEmpty: IPepQueryBuilderOperator = {
     legacy: 'IsEmpty',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.IsEmpty,
     type: null
 };
 
 const IsNotEmpty: IPepQueryBuilderOperator = {
     legacy: 'IsNotEmpty',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.IsNotEmpty,
     type: null
 };
 
 const In: IPepQueryBuilderOperator = {
     legacy: 'IsEqual',
+    valueType: 'Static',
     smartFilter: PepSmartFilterOperators.In,
     type: ['multi-select']
 };
@@ -257,10 +242,10 @@ const PepQueryBuilderOperators = [
     NotEqual,
     NotEqualsVariable,
     LessThan,
-    LessThanVarible,
+    LessThanVariable,
     //   LessThanOrEquals,
     GreaterThan,
-    GreaterThanVarible,
+    GreaterThanVariable,
     //   GreaterThanOrEquals,
     NumberRange,
     Contains,
@@ -292,9 +277,10 @@ const PepQueryBuilderOperators = [
  * @param type smart filter's type
  * @returns smart filter operator item
  */
-export function getSmartFilterOperator(operator: string, type: PepSmartFilterType): IPepSmartFilterOperator | null {
+export function getSmartFilterOperator(operator: string, type: PepSmartFilterType, valueType: IpepQueryBuilderValueType): IPepSmartFilterOperator | null {
     const smartFilterOperator = PepQueryBuilderOperators.find(item =>
         item.legacy === operator &&
+        item.valueType === valueType &&
         (item.type === null || item.type.includes(type))
     );
     return smartFilterOperator ? smartFilterOperator.smartFilter : null;
@@ -312,4 +298,18 @@ export function getLegacyOperator(operator: IPepSmartFilterOperator, type: PepSm
         (item.type === null || item.type.includes(type))
     );
     return legacyOperator ? legacyOperator.legacy : null;
+}
+
+/**
+ * gets a value type of the operator value
+ * @param operator smart filter operator item
+ * @param type smart filter's type
+ * @returns value type operator value
+ */
+ export function getValueTypeOperator(operator: IPepSmartFilterOperator, type: PepSmartFilterType): IpepQueryBuilderValueType {
+    const valueType = PepQueryBuilderOperators.find(item =>
+        item.smartFilter === operator &&
+        (item.type === null || item.type.includes(type))
+    );
+    return valueType ? valueType.valueType : 'Static';
 }

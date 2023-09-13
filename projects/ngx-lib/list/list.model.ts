@@ -47,6 +47,4 @@ export interface IPepListSortingData {
     isAsc: boolean;
 }
 
-export interface IPepListSortingChangeEvent extends IPepListSortingData {
-   
-}
+export type IPepListSortingChangeEvent = IPepListSortingData

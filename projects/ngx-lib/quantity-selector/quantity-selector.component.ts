@@ -71,14 +71,14 @@ export class PepQuantitySelectorComponent
 
     @Input() key = '';
 
-    private _value = null;
+    private _value = '';
     @Input()
     set value(value: string) {
         if (!value) {
             value = '';
         }
 
-        if (this.isDifferentValue(value)) {
+        if (this._value === '' || this.isDifferentValue(value)) {
             this._value = value;
         }
 

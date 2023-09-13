@@ -8,52 +8,55 @@
     height: 100%;
     overflow: hidden;
     padding-inline-end: variables.$spacing-xs;
-}
 
-.draggable-items-overflow {
-    overflow: auto;
-    padding: variables.$content-padding 0;
-}
+    .title-container {
+        height: variables.$top-bar-field-height;
+        display: flex;
+        gap: variables.$spacing-sm;
+        flex-flow: row;
+        justify-content: space-between;
 
-.draggable-items-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: variables.$spacing-sm;
-    // overflow: auto;
+        .title {
+            align-self:center;
+        }
 
-    .draggble-item {
-        cursor: grab; 
-    
-        &.cdk-drag-disabled { 
-            cursor: not-allowed; 
+        .search-button {
+            display: flex;
+            align-self: center;
+        }
+
+        // &.pep-border-bottom {
+        //     margin-bottom: variables.$content-margin;
+        // }
+    }
+
+    .draggable-items-overflow {
+        overflow: auto;
+
+        &.add-padding {
+            padding: variables.$content-padding 0;
+        }
+
+        .draggable-items-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: variables.$spacing-sm;
+            // overflow: auto;
+
+            .draggble-item {
+                cursor: grab; 
+            
+                &.cdk-drag-disabled { 
+                    cursor: not-allowed; 
+                }
+            }
+
+            .placeholder-item {
+                height: variables.$draggable-item-height;
+                border-radius: variables.$border-radius-md;
+                width: 100%;
+            
+            }
         }
     }
-}
-
-.title-container {
-    height: variables.$top-bar-field-height;
-    display: flex;
-    gap: variables.$spacing-sm;
-    flex-flow: row;
-    justify-content: space-between;
-
-    .title {
-        align-self:center;
-    }
-
-    .search-button {
-        display: flex;
-        align-self: center;
-    }
-
-    // &.pep-border-bottom {
-    //     margin-bottom: variables.$content-margin;
-    // }
-}
-
-.placeholder-item {
-    height: variables.$draggable-item-height;
-    border-radius: variables.$border-radius-md;
-    width: 100%;
-   
 }

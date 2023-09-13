@@ -40,7 +40,7 @@ export class PepSignatureDialogComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        
+        // Do nothing.
     }
 
     ngAfterViewInit(): void {

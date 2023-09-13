@@ -1,9 +1,5 @@
 @use '../src/core/style/abstracts/variables';
 
-.mat-menu-item-submenu-trigger::after {
-    display: none;
-}
-
 .mat-menu-item {
     
     .title {
@@ -48,9 +44,16 @@
             }
         }
     }
+
+    ::ng-deep {
+        .mat-menu-submenu-icon {
+            display: none;            
+        }
+    }
 }
 
 .mat-menu-item-submenu-trigger::after {
+    display: none;  
     width: unset;
     height: unset;
     transform: unset;

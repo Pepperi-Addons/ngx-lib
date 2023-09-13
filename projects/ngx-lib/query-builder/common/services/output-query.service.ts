@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPepQuerySection, IPepQueryItem } from '../model/legacy';
-import { getLegacyOperator } from '../model/operator';
+import { getLegacyOperator, getValueTypeOperator } from '../model/operator';
 import { PepOperatorTypes } from '../model/type';
 import { getLegacyOperationUnit } from '../model/operator-unit';
 import { 
@@ -52,6 +52,7 @@ export class PepOutputQueryService {
                     ApiName: current[key].smart.fieldId,
                     FieldType: current[key].query.fieldType,
                     Operation: getLegacyOperator(current[key].smart.operator, current[key].smart.fieldType),
+                    ValueType: getValueTypeOperator(current[key].smart.operator, current[key].smart.fieldType),
                     Values: this.getItemValues(current[key].smart)
                 } as IPepQueryItem, current.operator);
             } else if (key.includes('section')) {
