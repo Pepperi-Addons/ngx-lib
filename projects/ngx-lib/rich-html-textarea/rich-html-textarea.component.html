@@ -114,7 +114,7 @@
         [class]="inDialog ? 'dialog-quill' : 'inline-quill'"
         [ngClass]="{ 'rich-text-cont': !inDialog, 'hide-enlarge-button': !renderEnlargeButton }"
         placeholder="{{'RICH_TEXTAREA.HINT' | translate}}" [ngModel]="inDialog ? quillContentDialog : quillContent"
-        [sanitize]="true" [readOnly]="disabled" [maxLength]="maxFieldCharacters" [required]="mandatory"
+        [sanitize]="sanitize" [readOnly]="disabled" [maxLength]="maxFieldCharacters" [required]="mandatory"
         (onEditorCreated)="onEditorCreated($event, inDialog)" (onContentChanged)="onContentChanged($event, inDialog)"
         (onBlur)="onBlur($event, inDialog)" (onFocus)="onFocus($event, inDialog)" theme="">
         <div *ngIf="!disabled" quill-editor-toolbar>

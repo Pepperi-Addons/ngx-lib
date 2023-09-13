@@ -60,6 +60,7 @@ export class PepRichHtmlTextareaComponent
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
+    @Input() sanitize: true;
 
     private _rowSpan = 1;
     @Input()
