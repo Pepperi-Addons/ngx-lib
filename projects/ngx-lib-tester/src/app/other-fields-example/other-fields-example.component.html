@@ -86,6 +86,20 @@
                 <div class="child4 child-container" style="margin-top:1rem; height:200px;">
                     <pep-chips [disabled]="false" #chipsComp [inline]="true" [label]="'Add chip with input'" [mandatory]="true" [chips]="chips" (selectionChange)="onSelectionChange($event)" (fieldClick)="onChipClick($event)"></pep-chips>
                 </div>
+                <div class="child5 child-container">
+                    <pep-rich-html-textarea 
+                    [key]="'richText1'" 
+                    [label]="'Rich text'"
+                    [renderTitle]="true" 
+                    [renderEnlargeButton]="true"
+                    [value]="richHtml" 
+                    [rowSpan]="3" 
+                    [maxFieldCharacters]="300" 
+                    [xAlignment]="'left'" 
+                    [inlineMode]="false"
+                    >
+</pep-rich-html-textarea>
+                </div>
             </div>
         </div>
     </ng-container>
