@@ -16,6 +16,12 @@
             <pep-select [label]="'PROFILE_DATA_VIEWS_LIST.SELECT_PROFILE' | translate" [options]="data.options"
                 [emptyOption]="false" (valueChange)="setSelectedNewProfileId($event)">
             </pep-select>
+
+            <div *ngIf="data.copyFromOptions?.length">
+                <pep-select [label]="'PROFILE_DATA_VIEWS_LIST.COPY_FROM_PROFILE' | translate" [options]="data.copyFromOptions"
+                    [emptyOption]="true" (valueChange)="setCopyFromProfileId($event)">
+                </pep-select>
+            </div>
         </ng-container>
         <ng-container pep-dialog-actions>
             <div class="pep-spacing-element-negative">

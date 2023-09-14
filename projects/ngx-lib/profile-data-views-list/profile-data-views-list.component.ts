@@ -19,7 +19,7 @@ export class ProfileDataViewsListComponent implements OnInit {
     @Input()
     set availableProfiles(value: Array<IPepProfile>) {
         this._availableProfiles = value;
-        this.setNonExistingProfiles();
+        this.setProfilesOptions();
     }
     get availableProfiles(): Array<IPepProfile> {
         return this._availableProfiles;
@@ -29,7 +29,7 @@ export class ProfileDataViewsListComponent implements OnInit {
     @Input()
     set profileDataViewsList(value: Array<IPepProfileDataViewsCard>) {
         this._profileDataViewsList = value;
-        this.setNonExistingProfiles();
+        this.setProfilesOptions();
     }
     get profileDataViewsList(): Array<IPepProfileDataViewsCard> {
         return this._profileDataViewsList;
@@ -37,7 +37,7 @@ export class ProfileDataViewsListComponent implements OnInit {
 
     @Input() configurationPerScreenSize = false;
 
-    @Output() saveNewProfileClick: EventEmitter<string> = new EventEmitter<string>();
+    @Output() saveNewProfileClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() dataViewEditClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
     @Output() dataViewDeleteClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
 
@@ -46,10 +46,16 @@ export class ProfileDataViewsListComponent implements OnInit {
     dialogRef: MatDialogRef<any>;
     selectedNewProfileId = '';
     nonExistingProfiles: Array<IPepProfile> = [];
+    
+    selectedCopyFromProfileId = '';
+    existingProfiles: Array<IPepProfile> = [];
 
-    // Set the profiles that not exist already in profileDataViewsList.
-    private setNonExistingProfiles() {
+    private setProfilesOptions() {
+        // Set the profiles that not exist already in profileDataViewsList.
         this.nonExistingProfiles = this.availableProfiles.filter(ap => this.profileDataViewsList.findIndex(pdv => pdv.profileId === ap.id) === -1);
+
+        // Set the existing profiles.
+        this.existingProfiles = this.availableProfiles.filter(ap => this.profileDataViewsList.findIndex(pdv => pdv.profileId === ap.id) > -1);
     }
 
     constructor(
@@ -63,6 +69,10 @@ export class ProfileDataViewsListComponent implements OnInit {
     setSelectedNewProfileId(value: string) {
         this.selectedNewProfileId = value;
     }
+    
+    setCopyFromProfileId(value: string) {
+        this.selectedCopyFromProfileId = value;
+    }
 
     closeDialog(): void {
         this.dialogRef?.close();
@@ -70,20 +80,30 @@ export class ProfileDataViewsListComponent implements OnInit {
 
     saveNewProfile() {
         // Add the new profile
-        this.saveNewProfileClick.emit(this.selectedNewProfileId);
+        this.saveNewProfileClick.emit({
+            profileId: this.selectedNewProfileId,
+            copyFromProfileId: this.selectedCopyFromProfileId
+        });
         this.closeDialog();
     }
 
     onAddProfileClicked(event: IPepButtonClickEvent) {
         // Raise select profile dialog
         this.selectedNewProfileId = '';
-        const options: Array<IPepOption> = [];
-        options.push(...(this.nonExistingProfiles.map((opt) => {
-            return {
-                key: opt.id, value: opt.name
-            };
-        })));
-        this.dialogRef = this.dialogService.openDialog(this.selectProfileTemplate, { options });
+        this.selectedCopyFromProfileId = '';
+
+        const options: Array<IPepOption> = this.nonExistingProfiles.map((opt) => {
+            return { key: opt.id, value: opt.name };
+        });
+
+        const copyFromOptions: Array<IPepOption> = this.existingProfiles.map((opt) => {
+            return { key: opt.id, value: opt.name };
+        });
+
+        this.dialogRef = this.dialogService.openDialog(this.selectProfileTemplate, { 
+            options,
+            copyFromOptions
+        });
     }
 
     onDataViewEditClicked(event: IPepProfileDataViewClickEvent): void {
