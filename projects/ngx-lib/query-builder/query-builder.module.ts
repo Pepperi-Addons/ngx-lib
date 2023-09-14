@@ -11,6 +11,11 @@ import { PepQueryBuilderComponent } from './query-builder.component';
 import { PepQueryBuilderSectionComponent } from './query-builder-section/query-builder-section.component';
 import { PepQueryBuilderItemComponent } from './query-builder-item/query-builder-item.component';
 
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemBin,
+} from '@pepperi-addons/ngx-lib/icon';
 
 @NgModule({
     imports: [
@@ -19,6 +24,7 @@ import { PepQueryBuilderItemComponent } from './query-builder-item/query-builder
         FlexLayoutModule,
         PepSelectModule,
         PepButtonModule,
+        PepIconModule,
         PepGroupButtonsModule,
         PepSmartFiltersModule
     ],
@@ -34,4 +40,10 @@ import { PepQueryBuilderItemComponent } from './query-builder-item/query-builder
         FormBuilder
     ]
 })
-export class PepQueryBuilderModule { }
+export class PepQueryBuilderModule { 
+    constructor(private pepIconRegistry: PepIconRegistry) {
+        this.pepIconRegistry.registerIcons([
+            pepIconSystemBin,
+        ]);
+    }
+}
