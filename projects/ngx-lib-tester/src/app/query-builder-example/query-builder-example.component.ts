@@ -83,7 +83,7 @@ export class QueryBuilderExampleComponent implements OnInit {
                         "ComplexId": "2",
                         "LeftNode": { "ExpressionId": '3', "ApiName": "CampaignName", "Operation": 'Contains', "Values": ["abc"] },
                         "Operation": "AND",
-                        "RightNode": { "ExpressionId": '4', "ApiName": "CostPrice", "Operation": 'LessThanVarible', "Values": ['CostPrice'] }
+                        "RightNode": { "ExpressionId": '4', "ApiName": "CostPrice", "Operation": 'LessThanVariable', "Values": ['CostPrice'] }
                     }
                 },
                 "Operation": "OR",
