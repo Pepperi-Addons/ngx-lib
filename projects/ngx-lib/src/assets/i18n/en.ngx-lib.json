@@ -33,8 +33,10 @@
         "ADD_PROFILE": "Add profile",
         "SELECT_PROFILE_DIALOG_TITLE": "Select profile",
         "SELECT_PROFILE": "Select a profile",
-        "COPY_FROM_PROFILE": "Copy from",
-        "COPY_FROM_PROFILE_DESC": "You can select a profile to copy its configuration to the added profile. Leave this option empty for a default profile hierarchy configuration",
+        "IMPORT_PROFILE_DIALOG_TITLE": "Import to {{ profileTitle }}",
+        "IMPORT_FROM_PROFILE": "Import from",
+        "IMPORT_FROM_PROFILE_DESC": "You can select a profile to copy its configuration to the added profile. Leave this option empty for a default profile hierarchy configuration",
+
         "DEFAULT_PROFILE": "(Default profile)",
         "NO_FIELDS_ASSIGNED": "No fields were assigned"
     },
@@ -120,7 +122,8 @@
         "DONE": "Done",
         "OK": "Ok",
         "REMOVE": "Remove",
-        "SAVE": "Save"
+        "SAVE": "Save",
+        "IMPORT": "Import"
     },
     "LIST": {
         "ALL": "All",

@@ -5,7 +5,7 @@ import { BaseDataView, DataViewType } from '@pepperi-addons/papi-sdk';
 import { IPepButtonClickEvent } from '@pepperi-addons/ngx-lib/button';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
-import { IPepProfile, IPepProfileDataViewClickEvent, IPepProfileDataViewsCard } from './profile-data-views-list.model';
+import { IPepProfile, IPepProfileDataViewClickEvent, IPepProfileDataViewSaveClickEvent, IPepProfileDataViewsCard } from './profile-data-views-list.model';
 
 @Component({
     selector: 'pep-profile-data-views-list',
@@ -37,25 +37,26 @@ export class ProfileDataViewsListComponent implements OnInit {
 
     @Input() configurationPerScreenSize = false;
 
-    @Output() saveNewProfileClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() saveProfileClick: EventEmitter<IPepProfileDataViewSaveClickEvent> = new EventEmitter<IPepProfileDataViewSaveClickEvent>();
     @Output() dataViewEditClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
     @Output() dataViewDeleteClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
 
-    @ViewChild('selectProfileTemplate', { read: TemplateRef }) selectProfileTemplate: TemplateRef<any>;
+    @ViewChild('addNewProfileTemplate', { read: TemplateRef }) addNewProfileTemplate: TemplateRef<any>;
+    @ViewChild('importProfileTemplate', { read: TemplateRef }) importProfileTemplate: TemplateRef<any>;
 
     dialogRef: MatDialogRef<any>;
-    selectedNewProfileId = '';
+    selectedProfileId = '';
     nonExistingProfiles: Array<IPepProfile> = [];
     
     selectedCopyFromProfileId = '';
-    existingProfiles: Array<IPepProfile> = [];
+    // existingProfiles: Array<IPepProfile> = [];
 
     private setProfilesOptions() {
         // Set the profiles that not exist already in profileDataViewsList.
         this.nonExistingProfiles = this.availableProfiles.filter(ap => this.profileDataViewsList.findIndex(pdv => pdv.profileId === ap.id) === -1);
 
-        // Set the existing profiles.
-        this.existingProfiles = this.availableProfiles.filter(ap => this.profileDataViewsList.findIndex(pdv => pdv.profileId === ap.id) > -1);
+        // // Set the existing profiles.
+        // this.existingProfiles = this.availableProfiles.filter(ap => this.profileDataViewsList.findIndex(pdv => pdv.profileId === ap.id) > -1);
     }
 
     constructor(
@@ -66,8 +67,8 @@ export class ProfileDataViewsListComponent implements OnInit {
         //
     }
 
-    setSelectedNewProfileId(value: string) {
-        this.selectedNewProfileId = value;
+    setSelectedProfileId(value: string) {
+        this.selectedProfileId = value;
     }
     
     setCopyFromProfileId(value: string) {
@@ -78,29 +79,29 @@ export class ProfileDataViewsListComponent implements OnInit {
         this.dialogRef?.close();
     }
 
-    saveNewProfile() {
-        // Add the new profile
-        this.saveNewProfileClick.emit({
-            profileId: this.selectedNewProfileId,
+    saveProfile() {
+        // Save the profile (can be new or import to existing).
+        this.saveProfileClick.emit({
+            profileId: this.selectedProfileId,
             copyFromProfileId: this.selectedCopyFromProfileId
         });
         this.closeDialog();
     }
 
-    onAddProfileClicked(event: IPepButtonClickEvent) {
+    onAddProfileClicked() {
         // Raise select profile dialog
-        this.selectedNewProfileId = '';
+        this.selectedProfileId = '';
         this.selectedCopyFromProfileId = '';
 
         const options: Array<IPepOption> = this.nonExistingProfiles.map((opt) => {
             return { key: opt.id, value: opt.name };
         });
 
-        const copyFromOptions: Array<IPepOption> = this.existingProfiles.map((opt) => {
-            return { key: opt.id, value: opt.name };
+        const copyFromOptions: Array<IPepOption> = this.profileDataViewsList.map((opt) => {
+            return { key: opt.profileId, value: opt.title };
         });
 
-        this.dialogRef = this.dialogService.openDialog(this.selectProfileTemplate, { 
+        this.dialogRef = this.dialogService.openDialog(this.addNewProfileTemplate, { 
             options,
             copyFromOptions
         });
@@ -112,5 +113,24 @@ export class ProfileDataViewsListComponent implements OnInit {
 
     onDataViewDeleteClicked(event: IPepProfileDataViewClickEvent): void {
         this.dataViewDeleteClick.emit(event);
+    }
+
+    onDataViewImportClicked(event: IPepProfileDataViewClickEvent): void {
+        // Raise import profile dialog
+        const profile = this.profileDataViewsList.find(p => p.profileId === event.profileId);
+        const profileTitle = profile.title;
+
+        this.selectedProfileId = event.profileId;
+        this.selectedCopyFromProfileId = '';
+
+        // Add to the copyFromOptions all the existing except the clicked profile. 
+        const copyFromOptions: Array<IPepOption> = this.profileDataViewsList.filter(p => p.profileId !== event.profileId).map((opt) => {
+            return { key: opt.profileId, value: opt.title };
+        });
+
+        this.dialogRef = this.dialogService.openDialog(this.importProfileTemplate, { 
+            profileTitle,
+            copyFromOptions,
+        });
     }
 }

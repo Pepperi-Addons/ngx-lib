@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IPepButtonClickEvent } from '@pepperi-addons/ngx-lib/button';
-import { IPepProfileDataViewClickEvent } from '../profile-data-views-list.model';
+import { IPepDataViewClickEvent } from '../profile-data-views-list.model';
 
 @Component({
     selector: 'pep-profile-data-view',
@@ -13,8 +13,8 @@ export class ProfileDataViewComponent implements OnInit {
     @Input() fields: string[];
     @Input() canDelete = true;
 
-    @Output() editClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
-    @Output() deleteClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
+    @Output() editClick: EventEmitter<IPepDataViewClickEvent> = new EventEmitter<IPepDataViewClickEvent>();
+    @Output() deleteClick: EventEmitter<IPepDataViewClickEvent> = new EventEmitter<IPepDataViewClickEvent>();
 
     constructor() {
         //

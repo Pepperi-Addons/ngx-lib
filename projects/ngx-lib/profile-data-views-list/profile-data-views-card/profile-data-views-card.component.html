@@ -7,7 +7,7 @@
                 translate)}}&nbsp;
             </span>
         </div>
-        <pep-menu *ngIf="!configurationPerScreenSize && !isDefault" sizeType="sm" [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
+        <pep-menu *ngIf="!configurationPerScreenSize" sizeType="sm" [items]="menuItems" (menuItemClick)="onMenuItemClicked($event)">
         </pep-menu>
     </div>
 

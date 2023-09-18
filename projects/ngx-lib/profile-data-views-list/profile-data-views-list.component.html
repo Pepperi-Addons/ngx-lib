@@ -3,22 +3,23 @@
         [configurationPerScreenSize]="configurationPerScreenSize" [title]="profileDataViews.title"
         [profileId]="profileDataViews.profileId" [dataViews]="profileDataViews.dataViews"
         [isDefault]="profileDataViews.profileId === defaultProfileId"
-        (dataViewEditClick)="onDataViewEditClicked($event)" (dataViewDeleteClick)="onDataViewDeleteClicked($event)">
+        (dataViewEditClick)="onDataViewEditClicked($event)" (dataViewDeleteClick)="onDataViewDeleteClicked($event)"
+        (dataViewImportClick)="onDataViewImportClicked($event)">
     </pep-profile-data-views-card>
 
     <pep-button *ngIf="nonExistingProfiles?.length > 0" [value]="'PROFILE_DATA_VIEWS_LIST.ADD_PROFILE' | translate"
-        iconName="number_plus" sizeType="lg" (buttonClick)="onAddProfileClicked($event)"></pep-button>
+        iconName="number_plus" sizeType="lg" (buttonClick)="onAddProfileClicked()"></pep-button>
 </div>
 
-<ng-template #selectProfileTemplate let-data>
+<ng-template #addNewProfileTemplate let-data>
     <pep-dialog [title]="'PROFILE_DATA_VIEWS_LIST.SELECT_PROFILE_DIALOG_TITLE' | translate" (close)="closeDialog()">
         <ng-container pep-dialog-content>
             <pep-select [label]="'PROFILE_DATA_VIEWS_LIST.SELECT_PROFILE' | translate" [options]="data.options"
-                [emptyOption]="false" (valueChange)="setSelectedNewProfileId($event)">
+                [emptyOption]="false" (valueChange)="setSelectedProfileId($event)">
             </pep-select>
 
             <div *ngIf="data.copyFromOptions?.length">
-                <pep-select [label]="'PROFILE_DATA_VIEWS_LIST.COPY_FROM_PROFILE' | translate" [options]="data.copyFromOptions"
+                <pep-select [label]="'PROFILE_DATA_VIEWS_LIST.IMPORT_FROM_PROFILE' | translate" [options]="data.copyFromOptions"
                     [emptyOption]="true" (valueChange)="setCopyFromProfileId($event)">
                 </pep-select>
             </div>
@@ -28,8 +29,29 @@
                 <button mat-button class="pep-spacing-element pep-button md weak" (click)="closeDialog()">
                     {{ 'Cancel' | translate}}
                 </button>
-                <button mat-button class="pep-spacing-element pep-button md strong" (click)="saveNewProfile()"
-                    [disabled]="selectedNewProfileId === ''">
+                <button mat-button class="pep-spacing-element pep-button md strong" (click)="saveProfile()"
+                    [disabled]="selectedProfileId === ''">
+                    {{ 'Save' | translate}}
+                </button>
+            </div>
+        </ng-container>
+    </pep-dialog>
+</ng-template>
+
+<ng-template #importProfileTemplate let-data>
+    <pep-dialog [title]="'PROFILE_DATA_VIEWS_LIST.IMPORT_PROFILE_DIALOG_TITLE' | translate: { profileTitle: data.profileTitle }" (close)="closeDialog()">
+        <ng-container pep-dialog-content>
+            <pep-select [label]="'PROFILE_DATA_VIEWS_LIST.IMPORT_FROM_PROFILE' | translate" [options]="data.copyFromOptions"
+                [emptyOption]="false" (valueChange)="setCopyFromProfileId($event)">
+            </pep-select>
+        </ng-container>
+        <ng-container pep-dialog-actions>
+            <div class="pep-spacing-element-negative">
+                <button mat-button class="pep-spacing-element pep-button md weak" (click)="closeDialog()">
+                    {{ 'Cancel' | translate}}
+                </button>
+                <button mat-button class="pep-spacing-element pep-button md strong" (click)="saveProfile()"
+                    [disabled]="selectedProfileId === ''">
                     {{ 'Save' | translate}}
                 </button>
             </div>

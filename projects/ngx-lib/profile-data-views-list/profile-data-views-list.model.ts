@@ -6,8 +6,18 @@ export interface IPepProfile {
     name: string;
 }
 
-export interface IPepProfileDataViewClickEvent {
+export interface IPepDataViewClickEvent {
     dataViewId: string;
+}
+
+export interface IPepProfileDataViewClickEvent {
+    profileId: string;
+    dataViewId: string;
+}
+
+export interface IPepProfileDataViewSaveClickEvent {
+    profileId: string;
+    copyFromProfileId: string;
 }
 
 export interface IPepProfileDataView {

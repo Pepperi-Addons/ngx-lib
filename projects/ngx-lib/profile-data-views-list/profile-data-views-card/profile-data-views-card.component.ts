@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BaseDataView, DataViewType } from '@pepperi-addons/papi-sdk';
-import { IPepProfileDataView, IPepProfileDataViewClickEvent } from '../profile-data-views-list.model';
+import { IPepDataViewClickEvent, IPepProfileDataView, IPepProfileDataViewClickEvent } from '../profile-data-views-list.model';
 import { IPepMenuItemClickEvent, PepMenuItem } from '@pepperi-addons/ngx-lib/menu';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -18,6 +18,7 @@ export class ProfileDataViewsCardComponent implements OnInit {
 
     @Output() dataViewEditClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
     @Output() dataViewDeleteClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
+    @Output() dataViewImportClick: EventEmitter<IPepProfileDataViewClickEvent> = new EventEmitter<IPepProfileDataViewClickEvent>();
 
     menuItems: Array<PepMenuItem> = [];
 
@@ -25,11 +26,16 @@ export class ProfileDataViewsCardComponent implements OnInit {
 
     private loadMenuItems(): void {
         const removeKey = 'ACTIONS.REMOVE';
+        const importKey = 'ACTIONS.IMPORT';
+
         // Load translation before get the options in the children.
-        this.translate.get([removeKey]).subscribe((res) => {
-            this.menuItems = [
-                { key: 'delete', text: this.translate.instant(res[removeKey]) }
-            ];
+        this.translate.get([removeKey, importKey]).subscribe((res) => {
+
+            if (!this.isDefault) {
+                this.menuItems.push({ key: 'delete', text: this.translate.instant(res[removeKey]) });
+            }
+
+            this.menuItems.push({ key: 'import', text: this.translate.instant(res[importKey]) });
         });
     }
 
@@ -41,16 +47,26 @@ export class ProfileDataViewsCardComponent implements OnInit {
         if (this.dataViews.length === 1) {
             if (action.source.key === 'delete') {
                 this.onDataViewDeleteClicked({ dataViewId: this.dataViews[0].dataViewId });
+            } else if (action.source.key === 'import') {
+                this.dataViewImportClick.emit({ profileId: this.profileId, dataViewId: this.dataViews[0].dataViewId });
             }
         }
-
     }
 
-    onDataViewEditClicked(event: IPepProfileDataViewClickEvent): void {
-        this.dataViewEditClick.emit(event);
+    onDataViewEditClicked(event: IPepDataViewClickEvent): void {
+        const newEvent = {
+            profileId: this.profileId,
+            dataViewId: event.dataViewId
+        }
+        this.dataViewEditClick.emit(newEvent);
     }
 
-    onDataViewDeleteClicked(event: IPepProfileDataViewClickEvent): void {
-        this.dataViewDeleteClick.emit(event);
+    onDataViewDeleteClicked(event: IPepDataViewClickEvent): void {
+        const newEvent = {
+            profileId: this.profileId,
+            dataViewId: event.dataViewId
+        }
+        this.dataViewDeleteClick.emit(newEvent);
     }
+
 }
