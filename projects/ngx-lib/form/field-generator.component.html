@@ -42,10 +42,10 @@
         (fileChange)="onFileChanged($event, field)">
     </pep-image>
 
-    <pep-quantity-selector *ngSwitchCase="'qs'" [form]="form" [key]="field.key" [value]="field.value"
+    <pep-quantity-selector *ngSwitchCase="'qs'" [form]="form" [key]="field.key" [allowDecimal]="field.allowDecimal" [value]="field.value"
         [label]="field.label" [type]="field.type" [mandatory]="field.mandatory"
         [disabled]="field.disabled" [readonly]="field.readonly" [textColor]="field.textColor"
-        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan" [allowDecimal]="field.allowDecimal"
+        [xAlignment]="field.xAlignment" [rowSpan]="field.rowSpan"
         [additionalValue]="field.additionalValue" [notificationInfo]="field.notificationInfo" [isActive]="isActive"
         [layoutType]="layoutType" [showTitle]="showTitle" [visible]="field.visible"
         [minFractionDigits]="field.digitsNumberAfterDecimalPoint" (valueChange)="onValueChanged($event, field)"
