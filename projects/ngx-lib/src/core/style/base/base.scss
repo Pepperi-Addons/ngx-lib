@@ -478,24 +478,26 @@
 
     &.small {
         max-width: 18rem !important;
+        width: calc(100vw - (var(--pep-spacing-2xl) * 2)) !important;
         height: auto;
     }
 
     &.regular {
         max-width: 36rem !important;
+        width: calc(100vw - (var(--pep-spacing-2xl) * 2)) !important;
         height: auto;
     }
 
     &.large {
         max-width: 54rem !important;
-        width: 90vw;
+        width: calc(100vw - (var(--pep-spacing-2xl) * 2)) !important;
         height: auto;
-        max-height: calc(100% - (var(--pep-spacing-2xl) * 2)) !important; // 90vh;
+        max-height: calc(100vh - (var(--pep-spacing-2xl) * 2)) !important; // 90vh;
 
         .mat-dialog-container {
             .mat-dialog-content {
                 $border-size: 1px;
-                max-height: 100% // calc(90vh - (#{variables.$dialog-header-height} + (#{variables.$content-padding} * 2) + (#{$border-size} * 2))); 
+                max-height: calc(100% - (var(--pep-spacing-2xl) * 2)); // calc(90vh - (#{variables.$dialog-header-height} + (#{variables.$content-padding} * 2) + (#{$border-size} * 2))); 
             }
         }
     }
