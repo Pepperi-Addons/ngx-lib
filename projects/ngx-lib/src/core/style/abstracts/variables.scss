@@ -77,7 +77,7 @@ $lh-12xl: var(--pep-line-height-12xl, 10rem);
 //  Fonts weight - General
 $font-weight-normal: var(--pep-font-weight-normal, 400);
 $font-weight-bold: var(--pep-font-weight-bold, 600);
-$font-weight-bolder: var(--pep-font-weight-bolder, 800);
+$font-weight-bolder: var(--pep-font-weight-bold, 600); // var(--pep-font-weight-bolder, 800);
 
 // Round corners
 // -----------------------------------------------------------------------------

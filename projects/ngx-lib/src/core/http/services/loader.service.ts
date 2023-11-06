@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { filter, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -13,6 +13,7 @@ export class PepLoaderService {
         return this.showLoaderSubject
             .asObservable()
             .pipe(
+                debounceTime(500),
                 filter(v => v !== undefined),
                 distinctUntilChanged());
     }

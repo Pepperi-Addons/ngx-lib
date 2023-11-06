@@ -223,9 +223,10 @@ export class PepCustomizationService {
             // If disabled has changed.
             if (formControl.disabled !== field.disabled) {
                 field.disabled ? formControl.disable() : formControl.enable();
-
+                
                 const validators = field.getValidators();
                 formControl.setValidators(validators);
+                formControl.updateValueAndValidity();
             }
         }
     }
