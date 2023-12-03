@@ -260,7 +260,7 @@ export class PepSignatureComponent implements OnInit, OnChanges, OnDestroy {
                 this.openSignatoreDlg(this.signatureURL);
             }
         } else {
-            if (this.src.length > 0) {
+            if (this.src?.length > 0) {
                 this.elementClick.emit({
                     key: this.key,
                     value: this.signatureURL
