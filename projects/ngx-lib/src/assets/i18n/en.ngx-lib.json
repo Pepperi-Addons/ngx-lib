@@ -94,6 +94,7 @@
             "LESS_THAN_VARIABLE": "Less than (variable)",
             "EQUAL": "Equal",
             "EQUAL_TO_VARIABLE": "Equal to (variable)",
+            "IN_VARIABLE": "In (variable)",
             "GREATER_THEN": "Greater than",
             "GREATER_THEN_OR_EQUAL": "Greater than or equal to",
             "GREATER_THAN_VARIABLE": "Greater than (variable)",

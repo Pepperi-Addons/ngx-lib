@@ -235,6 +235,13 @@ const In: IPepQueryBuilderOperator = {
     type: ['multi-select']
 };
 
+const InVariable: IPepQueryBuilderOperator = {
+    legacy: 'IsEqual',
+    valueType: 'Dynamic',
+    smartFilter: PepSmartFilterVariableOperators.InVariable,
+    type: ['multi-select', 'text']
+};
+
 
 const PepQueryBuilderOperators = [
     Equals,
@@ -268,7 +275,8 @@ const PepQueryBuilderOperators = [
     On,
     IsEmpty,
     IsNotEmpty,
-    In
+    In,
+    InVariable
 ]
 
 /**

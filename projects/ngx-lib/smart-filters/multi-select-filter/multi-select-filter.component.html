@@ -6,14 +6,16 @@
                 [options]="chooseTypeOptions" (valueChange)="onOperatorChanged($event)">
             </pep-select>
             <ng-container *ngIf="operator === PepSmartFilterVariableOperators.EqualsToVariable || 
-                operator === PepSmartFilterVariableOperators.NotEqualsToVariable">
+                operator === PepSmartFilterVariableOperators.NotEqualsToVariable || 
+                operator === PepSmartFilterVariableOperators.InVariable">
                 <pep-select [fxFlex]="valueWidth" [key]="firstControlKey" [value]="firstControl?.value || ''"
                     [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
                     [options]="variableFieldOptions" (valueChange)="onValueChanged($event)">
                 </pep-select>
             </ng-container>
             <ng-container *ngIf="operator !== PepSmartFilterVariableOperators.EqualsToVariable && 
-                operator !== PepSmartFilterVariableOperators.NotEqualsToVariable">
+                operator !== PepSmartFilterVariableOperators.NotEqualsToVariable &&
+                operator !== PepSmartFilterVariableOperators.InVariable">
                 <pep-select [fxFlex]="valueWidth" [label]="'Pepperi Multi Select'" [type]="'multi'"
                     [value]="selected" [xAlignment]="'left'" [renderTitle]="renderTitle" [options]='inlineOptions'
                     (valueChange)="onMultiSelectChanged($event)">

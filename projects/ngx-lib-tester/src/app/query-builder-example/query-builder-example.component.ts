@@ -74,7 +74,7 @@ export class QueryBuilderExampleComponent implements OnInit {
                     "LeftNode":
                     {
                         "ComplexId": "1",
-                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAAttachmentTest1', "Operation": 'IsEqual', "Values": ["TSAAttachmentTest1"] },
+                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAAttachmentTest1', "Operation": 'Contains', "Values": ["TSAAttachmentTest1"], "FieldType": "MultipleStringValues" },
                         "Operation": "OR",
                         "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'BillToState', 'BillToState'] }
                     },
@@ -113,7 +113,12 @@ export class QueryBuilderExampleComponent implements OnInit {
     loadFilterFields() {
 
         this.fields = [
-            { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
+            { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test11', FieldType: 'String'},
+            { FieldID: 'AvnerTest', Title: 'Avner Test', FieldType: 'MultipleStringValues' , OptionalValues: [
+                { Key: 'value0', Value: 'value d' },
+                { Key: 'value1', Value: 'value e' },
+                { Key: 'value2', Value: 'value 2' }
+            ]},
             { FieldID: 'AllowDecimal', Title: 'Allow Decimal', FieldType: 'Bool' },
             { FieldID: 'Double Check', Title: 'Double', FieldType: 'Double' },
             { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
@@ -144,6 +149,7 @@ export class QueryBuilderExampleComponent implements OnInit {
     loadVariableFields() {
         this.variableFields = [
             { FieldID: 'TSAAttachmentTest1', Title: 'TSA Attachment Test', FieldType: 'String' },
+            { FieldID: 'AvnerTest', Title: 'Avner Test', FieldType: 'String' },
             { FieldID: 'CostPrice', Title: 'Cost Price', FieldType: 'Integer' },
             { FieldID: 'ActionDateTime', Title: 'Action Date Time', FieldType: 'DateTime' },
             { FieldID: 'ActionDateTime2', Title: 'Action Date Time 2', FieldType: 'DateTime' },

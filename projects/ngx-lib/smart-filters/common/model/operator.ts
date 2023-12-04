@@ -193,6 +193,13 @@ const In: IPepSmartFilterOperator = {
     componentType: ['multi-select'],
 };
 
+const InVariable: IPepSmartFilterOperator = {
+    id: 'inv',
+    name: 'IN_VARIABLE',
+    short: 'In',
+    componentType: ['multi-select', 'text'],
+};
+
 export const PepSmartFilterOperators = {
     Equals: Equals,
     NotEqual: NotEqual,
@@ -245,14 +252,14 @@ const EqualsToVariable: IPepSmartFilterOperator = {
     id: 'eqv',
     name: 'EQUAL_TO_VARIABLE',
     short: '=',
-    componentType: ['text', 'number', 'boolean', 'multi-select']
+    componentType: ['text', 'number', 'boolean']
 }
 
 const NotEqualsToVariable: IPepSmartFilterOperator = {
     id: 'neqv',
     name: 'NOT_EQUAL_TO_VARIABLE',
     short: '<>',
-    componentType: ['boolean', 'multi-select']
+    componentType: ['boolean']
 }
 
 const LessThanVariable: IPepSmartFilterOperator = {
@@ -281,7 +288,8 @@ export const PepSmartFilterVariableOperators = {
     NotEqualsToVariable: NotEqualsToVariable,
     LessThanVariable: LessThanVariable,
     GreaterThanVariable: GreaterThanVariable,
-    DateRangeVariable: DateRangeVariable
+    DateRangeVariable: DateRangeVariable,
+    InVariable: InVariable
 }
 
 export class IPepSmartFilterOperatorUnit {

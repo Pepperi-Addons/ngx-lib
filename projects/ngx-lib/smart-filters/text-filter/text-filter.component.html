@@ -3,14 +3,16 @@
         [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle" [emptyOption]="false"
         [options]="chooseTypeOptions" (valueChange)="onOperatorChanged($event)">
     </pep-select>
-    <ng-container *ngIf="operator !== PepSmartFilterVariableOperators.EqualsToVariable">
+    <ng-container *ngIf="operator !== PepSmartFilterVariableOperators.EqualsToVariable && 
+                         operator !== PepSmartFilterVariableOperators.InVariable">
         <pep-textbox [fxFlex]="inline ? firstControlWidth : null" [form]="form" [key]="firstControlKey"
             [label]="'SMART_FILTERS.VALUE' | translate" [renderError]="false" [renderTitle]="renderTitle"
             [type]="field.type" [value]="firstControl?.value || ''"
             (valueChange)="onValueChanged()">
         </pep-textbox>
     </ng-container>
-    <ng-container *ngIf="operator === PepSmartFilterVariableOperators.EqualsToVariable">
+    <ng-container *ngIf="operator === PepSmartFilterVariableOperators.EqualsToVariable ||
+                         operator === PepSmartFilterVariableOperators.InVariable">
         <pep-select [fxFlex]="inline ? firstControlWidth : null" [key]="firstControlKey"
             [value]="firstControl?.value || ''" [label]="'SMART_FILTERS.TYPE' | translate" [renderTitle]="renderTitle"
             [emptyOption]="false" [options]="variableFieldOptions" (valueChange)="onVariableChanged($event)">

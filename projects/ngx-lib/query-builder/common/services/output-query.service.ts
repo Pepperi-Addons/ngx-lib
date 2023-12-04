@@ -50,7 +50,8 @@ export class PepOutputQueryService {
                 section = this.addToSection(section, {
                     ExpressionId: (this._expressionIdCounter++).toString(),
                     ApiName: current[key].smart.fieldId,
-                    FieldType: current[key].query.fieldType,
+                    FieldType: (current[key].smart.operator.id === 'inv' && 
+                                current[key].smart.fieldType === 'text') ? 'MultipleStringValues' : current[key].query.fieldType,
                     Operation: getLegacyOperator(current[key].smart.operator, current[key].smart.fieldType),
                     ValueType: getValueTypeOperator(current[key].smart.operator, current[key].smart.fieldType),
                     Values: this.getItemValues(current[key].smart)

@@ -47,7 +47,8 @@ export type PepSmartFilterOperatorType =
     | 'notDueIn'
     | 'isEmpty'
     | 'isNotEmpty'
-    | 'in';
+    | 'in'
+    | 'inv';
 
 export type PepSmartFilterOperatorUnitType =
     | 'days'
