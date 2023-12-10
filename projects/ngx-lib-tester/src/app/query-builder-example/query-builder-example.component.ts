@@ -74,22 +74,22 @@ export class QueryBuilderExampleComponent implements OnInit {
                     "LeftNode":
                     {
                         "ComplexId": "1",
-                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAAttachmentTest1', "Operation": 'Contains', "Values": ["TSAAttachmentTest1"], "FieldType": "MultipleStringValues" },
+                        "LeftNode": { "ExpressionId": '1', "ApiName": 'TSAAttachmentTest1', "Operation": 'IsEqual', "Values": ["TSAAttachmentTest1"], "FieldType": "MultipleStringValues", "ValueType": "Dynamic" },
                         "Operation": "OR",
-                        "RightNode": { "ExpressionId": '2', "ApiName": 'BillToState', "Operation": 'IsEqual', "Values": ['value2', 'BillToState', 'BillToState'] }
+                        "RightNode": { "ExpressionId": '2', "ApiName": 'TSAAttachmentTest1', "Operation": 'IsEqual', "Values": ['TSAAttachmentTest1'], "ValueType": "Dynamic"}
                     },
                     "Operation": "OR",
                     "RightNode": {
                         "ComplexId": "2",
-                        "LeftNode": { "ExpressionId": '3', "ApiName": "CampaignName", "Operation": 'Contains', "Values": ["abc"] },
+                        "LeftNode": { "ExpressionId": '3', "ApiName": "AvnerTest", "Operation": 'IsEqual', "Values": ["TSAAttachmentTest1"], "FieldType": "MultipleStringValues", "ValueType": "Dynamic" },
                         "Operation": "AND",
-                        "RightNode": { "ExpressionId": '4', "ApiName": "CostPrice", "Operation": 'LessThanVariable', "Values": ['CostPrice'] }
+                        "RightNode": { "ExpressionId": '4', "ApiName": "AvnerTest", "Operation": 'IsEqual', "Values": ['TSAAttachmentTest1'], "ValueType": "Dynamic" }
                     }
                 },
-                "Operation": "OR",
-                "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "BetweenVariable", "Values": ["ActionDateTime2", "ActionDateTime"] },
-            },
-            "RightNode": { "ExpressionId": '6', "ApiName": "TSAboolll", "Operation": "IsEqual", "Values": ["TSAboolll2"] },
+                 "Operation": "OR",
+                 "RightNode": { "ExpressionId": '5', "ApiName": "ActionDateTime", "Operation": "BetweenVariable", "Values": ["ActionDateTime2", "ActionDateTime"] },
+             },
+            "RightNode": { "ExpressionId": '6', "ApiName": "TSAboolll", "Operation": "IsEqual", "Values": ["TSAboolll2"] , "ValueType": "Dynamic"},
         } 
         /*this.json = {
             "ComplexId": "1",

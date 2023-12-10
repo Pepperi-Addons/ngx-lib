@@ -11,7 +11,8 @@ export interface IPepQueryBuilderOperator {
     legacy: string, //legacy Operator    
     valueType: IpepQueryBuilderValueType,
     smartFilter: IPepSmartFilterOperator, //smart filter operator    
-    type: PepSmartFilterType[] | null //smart filter type
+    type: PepSmartFilterType[] | null, //smart filter type
+    fieldType?: Array<string> | null
 }
 
 const Equals: IPepQueryBuilderOperator = {
@@ -25,7 +26,8 @@ const EqualsVariable: IPepQueryBuilderOperator = {
     legacy: 'IsEqual',
     valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.EqualsToVariable,
-    type: ['boolean', 'int', 'text', 'multi-select']
+    type: ['boolean', 'int', 'text'],
+    fieldType: ['String','Bool','Integer']
 };
 
 const NotEqual: IPepQueryBuilderOperator = {
@@ -39,7 +41,7 @@ const NotEqualsVariable: IPepQueryBuilderOperator = {
     legacy: 'IsNotEqual',
     valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.NotEqualsToVariable,
-    type: ['boolean', 'multi-select']
+    type: ['boolean']
 };
 
 const LessThan: IPepQueryBuilderOperator = {
@@ -239,7 +241,8 @@ const InVariable: IPepQueryBuilderOperator = {
     legacy: 'IsEqual',
     valueType: 'Dynamic',
     smartFilter: PepSmartFilterVariableOperators.InVariable,
-    type: ['multi-select', 'text']
+    type: ['multi-select', 'text'],
+    fieldType: ['MultipleStringValues']
 };
 
 
@@ -285,12 +288,17 @@ const PepQueryBuilderOperators = [
  * @param type smart filter's type
  * @returns smart filter operator item
  */
-export function getSmartFilterOperator(operator: string, type: PepSmartFilterType, valueType: IpepQueryBuilderValueType): IPepSmartFilterOperator | null {
+export function getSmartFilterOperator(operator: string, type: PepSmartFilterType, valueType: IpepQueryBuilderValueType, fieldType = null): IPepSmartFilterOperator | null {
     const smartFilterOperator = PepQueryBuilderOperators.find(item =>
         item.legacy === operator &&
         item.valueType === valueType &&
-        (item.type === null || item.type.includes(type))
+        (item.type === null || item.type.includes(type)) &&
+        (fieldType == null || item.fieldType === undefined || item.fieldType?.includes(fieldType))
     );
+    /*
+     FieldType: (current[key].smart.operator.id === 'inv' && 
+                                current[key].smart.fieldType === 'text') ? 'MultipleStringValues' : current[key].query.fieldType,
+     */
     return smartFilterOperator ? smartFilterOperator.smartFilter : null;
 }
 

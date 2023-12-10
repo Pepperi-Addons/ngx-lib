@@ -77,7 +77,6 @@ export class PepMultiSelectFilterComponent
     private inlineControlInit() {
         //load options from field        
         this.inlineOptions = this.field?.options?.length > 0 ? this.field.options as IPepOption[] : [];
-
         // init the selected values from first value.  
         if (this.firstControl?.value && Array.isArray(this.firstControl.value)) {
             this.selected = this.firstControl.value.join(';');
