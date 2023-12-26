@@ -112,7 +112,7 @@
                         *ngIf="field.controlType === 'attachment' || field.type === 'link'; then linkBlock; else notLinkBlock">
                     </ng-container>
                     <ng-template #linkBlock>
-                        <a [id]="field.key" class="color-link body-sm pep-report-input readonly"
+                        <a [id]="field.key" class="color-link body-sm pep-report-input readonly" [ngClass]="{ disabled: field.value.length > 0 }"
                             *ngIf="field.formattedValue != null" title="{{ field.formattedValue }}" target="_blank"
                             href="{{ field.value }}">{{ field.formattedValue }}</a>
                     </ng-template>
