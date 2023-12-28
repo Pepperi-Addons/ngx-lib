@@ -11,7 +11,7 @@
                 [ngStyle]="{ color: textColor, 'text-align': xAlignment == 'center' ? 'center' : xAlignment == 'right' ? 'right' : 'left' }"
                 title="{{ displayValue }}" [formControlName]="key" [value]="displayValue"
                 (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event)" (blur)="onBlur($event)"
-                (change)="onChange($event)" [ngClass]="{'disable-hidden': disabled && displayValue?.length > 0}" />
+                (change)="onChange($event)" (keyup)="onKeyup($event)" [ngClass]="{'disable-hidden': disabled && displayValue?.length > 0}" />
 
             <span *ngIf="disabled && displayValue?.length > 0" class="dis-grid">
                 &nbsp;
@@ -30,13 +30,6 @@
                     </span>
                 </ng-template>
                 <ng-template #otherError>
-                    <!-- TODO: Show error if it's not a valid link -->
-                    <!-- <span class="body-xs" [title]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
-                            ('MESSAGES.ERROR_RANGE_IS_NOT_VALID' | translate: { min: minValue, max: maxValue }) :
-                            ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })" [innerText]="(input.value | pepToNumber) > this.maxValue || (input.value | pepToNumber) < this.minValue ?
-                            ('MESSAGES.ERROR_RANGE_IS_NOT_VALID' | translate: { min: minValue, max: maxValue }) :
-                            ('MESSAGES.ERROR_IS_NOT_VALID' | translate: { field: label })">
-                    </span> -->
                 </ng-template>
             </mat-error>
 

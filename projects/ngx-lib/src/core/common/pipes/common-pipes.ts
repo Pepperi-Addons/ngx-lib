@@ -1,3 +1,4 @@
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { Pipe, PipeTransform } from '@angular/core';
 import {
     DomSanitizer,
@@ -7,6 +8,7 @@ import {
     SafeUrl,
     SafeResourceUrl,
 } from '@angular/platform-browser';
+import { PepUtilitiesService } from '../services/utilities.service';
 
 @Pipe({ name: 'pepCapitalize' })
 export class PepCapitalizePipe implements PipeTransform {
@@ -134,7 +136,14 @@ export class PepSplitUppercasePipe implements PipeTransform {
 
 @Pipe({ name: 'pepToNumber' })
 export class PepToNumberPipe implements PipeTransform {
+    constructor(private utilitiesService: PepUtilitiesService) {}
+
     transform(value: string): number {
-        return parseInt(value);
+        const decimalSeparator = this.utilitiesService.getDecimalSeparator();
+        // We need to remove the thousands separator so - If the decimal separator is '.' we need to remove the ',' from the value else we remove the '.'.
+        value = decimalSeparator === '.' ? value.replace(/,/g, '') : value.replace(/./g, '');
+        const numberValue = coerceNumberProperty(value);
+        return numberValue;
+        // return parseInt(value);
     }
 }

@@ -178,6 +178,9 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     elementClick: EventEmitter<IPepFieldClickEvent> = new EventEmitter<IPepFieldClickEvent>();
 
+    @Output()
+    keyup: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('input') input: ElementRef;
 
     controlType = 'link';
@@ -277,6 +280,10 @@ export class PepLinkComponent implements OnChanges, OnInit, OnDestroy {
         const value = e.target ? e.target.value : e;
 
         this.valueChange.emit(value);
+    }
+
+    onKeyup(event): any {
+        this.keyup.emit(event);
     }
 
     onBlur(e: any): void {

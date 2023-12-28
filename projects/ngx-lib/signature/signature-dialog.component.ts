@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SignaturePad } from 'ngx-signaturepad';
+import { SignaturePad } from 'ngx-signaturepad/signature-pad';
 
 
 interface IPepSignatureDialogData {

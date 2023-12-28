@@ -25,6 +25,7 @@ import {
     PepTextboxField,
     PepFieldBase,
     PepUtilitiesService,
+    PepToNumberPipe,
 } from '@pepperi-addons/ngx-lib';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -469,7 +470,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, AfterViewInit, On
             this.translate.get('MESSAGES.ERROR_INVALID_PATTERN').subscribe(text => this.regexError = text);
         }
 
-        this.updateFormFieldValue();
+        this.updateFormFieldValue(true);
     }
     
     ngAfterViewInit(): void {
@@ -500,6 +501,28 @@ export class PepTextboxComponent implements OnChanges, OnInit, AfterViewInit, On
                 }
             }
         }, 0);
+    }
+
+    getGeneralError() {
+        return this.translate.instant('MESSAGES.ERROR_IS_NOT_VALID', { field: this.label });
+    }
+
+    getOtherErrorMessage(inputValue: string) {
+        if (this.isNumberType()) {
+            if (this.type === 'percentage') {
+                inputValue = inputValue.replace('%', '');
+            } else if (this.accessory?.length > 0) {
+                inputValue = inputValue.replace(this.accessory, '');
+            }
+
+            const numberValue = new PepToNumberPipe(this.utilitiesService).transform(inputValue);
+
+            return (this.maxValue && numberValue > this.maxValue) || (this.minValue && numberValue < this.minValue) ? 
+                this.translate.instant('MESSAGES.ERROR_RANGE_IS_NOT_VALID', { min: this.minValue, max: this.maxValue }) : 
+                this.getGeneralError();
+        } else {
+            this.getGeneralError();
+        }
     }
 
     isDecimal(): boolean {
@@ -580,7 +603,7 @@ export class PepTextboxComponent implements OnChanges, OnInit, AfterViewInit, On
     onBlur(e: any): void {
         const value = e.target ? e.target.value : e;
 
-        // If renderError is false and the new value is not valid.
+        // If renderError is false and the new value is not valid return value back.
         if (!this.renderError && !this.isValueValid(value)) {
             this.renderer.setProperty(
                 this.input.nativeElement,

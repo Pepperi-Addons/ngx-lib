@@ -131,6 +131,14 @@ export class PepFieldBase {
             validators.push(Validators.maxLength(this.maxFieldCharacters));
         }        
 
+        if (this.minValue) {
+            validators.push(Validators.min(this.minValue));
+        }
+
+        if (this.maxValue) {
+            validators.push(Validators.max(this.maxValue));
+        }
+
         return validators;
     }
 
