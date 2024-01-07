@@ -47,7 +47,10 @@
         "CREATE_NEW": "Neu erstellen",
         "DONE": "Fertig",
         "OK": "OK",
-        "SAVE": "Speichern"
+        "SAVE": "Speichern",
+        "APPLY": "Anwenden",
+        "REMOVE": "Remove",
+        "IMPORT": "Import"
     },
     "LIST": {
         "ALL": "Alles",
