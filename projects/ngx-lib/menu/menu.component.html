@@ -40,11 +40,14 @@
 </div>
 
 <ng-template #triggerTemplate>
+    <mat-icon *ngIf="iconName && iconPosition === 'before'">
+        <pep-icon name="{{ iconName }}"></pep-icon>
+    </mat-icon>
     <span *ngIf="displayText && screenSize <= PepScreenSizeType.SM" class="ellipsis"
-        [ngClass]="{ 'button-title-with-icon': iconName }" [title]="displayText">
+        [ngClass]="{ 'button-title-with-icon': iconName, 'icon-before': iconPosition === 'before' }" [title]="displayText">
         {{ displayText }}
     </span>
-    <mat-icon *ngIf="iconName">
+    <mat-icon *ngIf="iconName  && iconPosition === 'after'">
         <pep-icon name="{{ iconName }}"></pep-icon>
     </mat-icon>
 </ng-template>

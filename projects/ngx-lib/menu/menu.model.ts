@@ -19,6 +19,7 @@ export class PepMenuItem {
     disabled?: boolean = false;
     hidden?: boolean = false;
     iconName?: string = null;
+    iconPosition?: 'before' | 'after' = 'before';
     type?: PepMenuItemType = 'regular';
     children?: Array<PepMenuItem> = null;
     parent?: PepMenuItemParent = null;

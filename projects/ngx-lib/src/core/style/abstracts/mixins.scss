@@ -507,33 +507,48 @@
 //  Weak - invert
 // -----------------------------------------------------------------------------
 @mixin state-weak-invert-default() {
-    background: functions.get-pep-color(color-system-primary-invert, color-tran-70);
+    background: functions.get-pep-color(color-system-primary-invert, color-tran-30);
 
-    // $color: functions.get-pep-color(color-text, color-main);
-    // color: $color;
-
-    // .svg-icon {
-    //     fill: $color !important;
-    // }
+    $color: functions.get-pep-color(color-text, color-invert);
+    color: $color;
+    
+    .svg-icon {
+        fill: $color !important;
+    }
 }
 @mixin state-weak-invert-disable() {
     @include state-disabled();
     
-    color:functions.get-pep-color(color-text, color-disabled) !important;
-    background: functions.get-pep-color(color-system-primary-invert, color-tran-20) !important;
+    color:functions.get-pep-color(color-system-primary-invert, color-tran-40) !important;
+    background: functions.get-pep-color(color-system-primary-invert, color-tran-10) !important;
+    .svg-icon {
+        fill: functions.get-pep-color(color-system-primary-invert, color-tran-40) !important;
+    }
 }
 @mixin state-weak-invert-hover() {
-    background: functions.get-pep-color(color-system-primary-invert, color-tran-70);
+    background: functions.get-pep-color(color-system-primary-invert, color-tran-50);
     box-shadow: functions.get-pep-shadow(shadow-xs, soft);
     cursor: pointer;
 }
 @mixin state-weak-invert-active() {
     background: functions.get-pep-color(color-system-primary-invert, color-base);
     box-shadow: functions.get-pep-shadow(shadow-xs, regular);
+    $color: functions.get-pep-color(color-text, color-main);
+    color: $color;
+    
+    .svg-icon {
+        fill: $color !important;
+    }
 }
 @mixin state-weak-invert-focus() {
     background: functions.get-pep-color(color-system-primary-invert, color-base);
     @include focus();
+    $color: functions.get-pep-color(color-text, color-main);
+    color: $color;
+    
+    .svg-icon {
+        fill: $color !important;
+    }
 }
 
 // ******************************************************************************

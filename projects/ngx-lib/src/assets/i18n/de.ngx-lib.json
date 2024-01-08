@@ -49,8 +49,8 @@
         "OK": "OK",
         "SAVE": "Speichern",
         "APPLY": "Anwenden",
-        "REMOVE": "Remove",
-        "IMPORT": "Import"
+        "REMOVE": "Entfernen",
+        "IMPORT": "Importieren"
     },
     "LIST": {
         "ALL": "Alles",

@@ -16,6 +16,7 @@
                         [ngClass]="{ selected: type === 'action-select' && menuItem.selected, disabled: menuItem.disabled }">
                         <ng-container *ngTemplateOutlet="itemTemplate; context: {
                             itemIconName: menuItem.iconName,
+                            itemIconPosition: menuItem.iconPosition,
                             itemText: menuItem.text,
                             itemType: menuItem.type,
                             hasChildren: true
@@ -31,6 +32,7 @@
                         [ngClass]="{ selected: (type === 'select' || type === 'action-select') && menuItem.selected, disabled: menuItem.disabled }">
                         <ng-container *ngTemplateOutlet="itemTemplate; context: {
                             itemIconName: menuItem.iconName,
+                            itemIconPosition: menuItem.iconPosition,
                             itemText: menuItem.text,
                             itemType: menuItem.type,
                             hasChildren: false
@@ -42,10 +44,10 @@
     </ng-container>
 </mat-menu>
 
-<ng-template #itemTemplate let-itemIconName="itemIconName" let-itemText="itemText" let-itemType="itemType"
+<ng-template #itemTemplate let-itemIconName="itemIconName" let-itemIconPosition="itemIconPosition" let-itemText="itemText" let-itemType="itemType"
     let-hasChildren="hasChildren">
     <ng-container>
-        <mat-icon *ngIf="itemIconName" class="pull-left flip">
+        <mat-icon *ngIf="itemIconName && itemIconPosition === 'before'" class="pull-left flip">
             <pep-icon name="{{itemIconName}}"></pep-icon>
         </mat-icon>
         <span *ngIf="itemText" class="pull-left flip title ellipsis"
@@ -53,6 +55,9 @@
             [title]="itemText">
             {{ itemText }}
         </span>
+        <mat-icon *ngIf="itemIconName && itemIconPosition === 'after'" class="pull-left flip">
+            <pep-icon name="{{itemIconName}}"></pep-icon>
+        </mat-icon>
         <mat-icon *ngIf="hasChildren" class="pull-left flip submenu-trigger"
             [ngClass]="{ 'rotate': xPosition === 'before' }">
             <pep-icon name="{{ subMenuIconName }}"></pep-icon>

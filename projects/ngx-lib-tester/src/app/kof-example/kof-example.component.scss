@@ -420,3 +420,7 @@ $breakpointsss: (
         box-shadow: variables.$shadow-xs-hard;
     }
 }
+.turn-dark {
+    background: rgba(0, 0, 0, 0.85);
+    padding: 0.5em;
+}

@@ -66,6 +66,7 @@ export class PepMenuComponent implements OnChanges, OnDestroy {
      * @memberof PepMenuComponent
      */
     @Input() iconName: PepIconType = pepIconSystemMenu.name || 'system_menu';
+    @Input() iconPosition: 'before' | 'after' = 'after';
     @Input() type: PepMenuType = 'action';
     @Input() styleType: PepStyleType = 'weak';
     @Input() sizeType: PepSizeType = 'md';
