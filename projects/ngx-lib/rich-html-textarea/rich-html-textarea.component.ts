@@ -60,7 +60,7 @@ export class PepRichHtmlTextareaComponent
     @Input() readonly = false;
     @Input() maxFieldCharacters: number;
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
-    @Input() sanitize: true;
+    @Input() sanitize = true;
 
     private _rowSpan = 1;
     @Input()
@@ -125,6 +125,9 @@ export class PepRichHtmlTextareaComponent
 
     @Output()
     valueChange: EventEmitter<string> = new EventEmitter<string>();
+
+    @Output()
+    editorCreated: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('richTextEditorDialogTemplate', { read: TemplateRef })
     richTextEditorDialogTemplate: TemplateRef<any>;
@@ -272,6 +275,8 @@ export class PepRichHtmlTextareaComponent
         if (!inDialog) {
             this.quillContent = quill.getText();
         }
+
+        this.editorCreated.emit(quill);
     }
 
     onContentChanged(obj: any, inDialog: boolean): void {
