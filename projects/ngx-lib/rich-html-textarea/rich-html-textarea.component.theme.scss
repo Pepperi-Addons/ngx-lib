@@ -78,10 +78,10 @@ quill-editor {
                 }
                 
                 .ql-stroke {
-                    stroke: functions.get-pep-color(color-weak, color-tran-80);
+                    stroke: functions.get-pep-color(color-system-primary-base, color-tran-80);
                 }
                 .ql-fill {
-                    fill: functions.get-pep-color(color-weak, color-tran-80);
+                    fill: functions.get-pep-color(color-system-primary-base, color-tran-80);
                 }
     
                 .ql-picker:not(.ql-color-picker) {
