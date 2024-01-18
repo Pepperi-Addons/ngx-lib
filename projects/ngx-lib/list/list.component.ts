@@ -77,7 +77,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() 
     set sorting(value: IPepListSortingData) {
         this.sortBy = value?.sortBy || '';
-        this.isAsc = value?.sortBy.length > 0 ? value.isAsc : true;
+        this.isAsc = value?.sortBy.length > 0 ? value.isAsc : this.isAsc;
     }
     get sorting(): IPepListSortingData {
         return {
@@ -250,7 +250,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     private lastColumnsWidth: Array<{ columnAPIName: string, calcColumnWidth: number, calcTitleColumnWidthString: string, calcColumnWidthString: string }> = [];
 
     // For sorting
-    isAsc = true;
+    isAsc = false;
     sortBy = '';
     isUserSelected = false;
     checkForChanges: any = null;
