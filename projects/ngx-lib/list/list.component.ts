@@ -1171,7 +1171,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         // We need this in setTimeout cause the selectionTypeForActions is input that can set after this function.
         setTimeout(() => {
             if (!this.isAllSelected && this.selectedItems.size === 1 && this.selectionTypeForActions === 'single') {
-                this.selectedItemId = this.selectedItems.values()[0];
+                const [firstValue] = this.selectedItems.values();
+                this.selectedItemId = firstValue;
             }
         }, 0);
 
