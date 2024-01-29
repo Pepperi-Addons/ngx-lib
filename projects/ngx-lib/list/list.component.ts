@@ -1152,7 +1152,8 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     initListData(
         layout: UIControl,
         totalRows: number,
-        items: ObjectsDataRow[]
+        items: ObjectsDataRow[],
+        selectionTypeForActions: PepListSelectionType | undefined
     ): void {
         this.initVariablesFromSession(items);
         const selectedItemsList = this.isAllSelected
@@ -1167,15 +1168,18 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         this.selectedItemId = ''; 
         this.totalRows = totalRows;
 
+        // Added to handle if the selectionTypeForActions is set in the html then the input this.selectedItemId will no set cause this function happens before.
+        if (selectionTypeForActions) {
+            this.selectionTypeForActions = selectionTypeForActions;
+        }
+
         // If is all selected is false && the size of the selected items is 1 && selectionTypeForActions is 'single' then set it as the selected item id.
         // We need this in setTimeout cause the selectionTypeForActions is input that can set after this function.
-        setTimeout(() => {
-            if (!this.isAllSelected && this.selectedItems.size === 1 && this.selectionTypeForActions === 'single') {
-                const [firstValue] = this.selectedItems.values();
-                this.selectedItemId = firstValue;
-            }
-        }, 0);
-
+        if (!this.isAllSelected && this.selectedItems.size === 1 && this.selectionTypeForActions === 'single') {
+            const [firstValue] = this.selectedItems.values();
+            this.selectedItemId = firstValue;
+        }
+        
         this.scrollToTop(false);
         this.cleanItems();
         this.disableScroll(true);
