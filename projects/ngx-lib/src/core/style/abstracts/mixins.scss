@@ -388,13 +388,15 @@
 }
 
 // ******************************************************************************
-//                       State weak declerations
+//                       State declerations
 // ******************************************************************************
 @mixin pep-state-default($style: weak, $color-map-key: null, $regularBorder: false) {
     @if ($style == 'none') {
         @include state-none-default();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-default();
+    } @else if ($style == 'weak-special') {
+        @include state-weak-special-default();
     } @else if ($style == 'weak') {
         @include state-weak-default($color-map-key);
     } @else if ($style == 'strong') {
@@ -408,6 +410,8 @@
         @include state-none-disable();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-disable();
+    } @else if ($style == 'weak-special') {
+        @include state-weak-special-disable();
     } @else if ($style == 'weak') {
         @include state-weak-disable($color-map-key);
     } @else if ($style == 'strong') {
@@ -421,6 +425,8 @@
         @include state-none-hover();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-hover();
+    } @else if ($style == 'weak-special') {
+        @include state-weak-special-hover();
     } @else if ($style == 'weak') {
         @include state-weak-hover($color-map-key);
     } @else if ($style == 'strong') {
@@ -434,6 +440,8 @@
         @include state-none-active();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-active();
+    } @else if ($style == 'weak-special') {
+        @include state-weak-special-active();
     } @else if ($style == 'weak') {
         @include state-weak-active($color-map-key);
     } @else if ($style == 'strong') {
@@ -447,6 +455,8 @@
         @include state-none-focus();
     } @else if ($style == 'weak-invert') {
         @include state-weak-invert-focus();
+    } @else if ($style == 'weak-special') {
+        @include state-weak-special-focus();
     } @else if ($style == 'weak') {
         @include state-weak-focus($color-map-key);
     } @else if ($style == 'strong') {
@@ -549,6 +559,43 @@
     .svg-icon {
         fill: $color !important;
     }
+}
+
+//  Weak - special
+// -----------------------------------------------------------------------------
+@mixin state-weak-special-default() {
+    background: functions.get-pep-color(color-system-primary-invert, color-tran-50);
+}
+@mixin state-weak-special-disable() {
+    @include state-disabled();
+    
+    color:functions.get-pep-color(color-text, color-disabled) !important;
+    background: functions.get-pep-color(color-system-primary-invert, color-tran-20) !important;  
+}
+@mixin state-weak-special-hover() {
+    background: functions.get-pep-color(color-system-primary-invert, color-tran-70);
+    box-shadow: functions.get-pep-shadow(shadow-xs, soft);
+    cursor: pointer;
+}
+@mixin state-weak-special-active() {
+    // background: functions.get-pep-color(color-system-primary-invert, color-base);
+    // box-shadow: functions.get-pep-shadow(shadow-xs, regular);
+    // $color: functions.get-pep-color(color-text, color-main);
+    // color: $color;
+    
+    // .svg-icon {
+    //     fill: $color !important;
+    // }
+}
+@mixin state-weak-special-focus() {
+    // background: functions.get-pep-color(color-system-primary-invert, color-base);
+    // @include focus();
+    // $color: functions.get-pep-color(color-text, color-main);
+    // color: $color;
+    
+    // .svg-icon {
+    //     fill: $color !important;
+    // }
 }
 
 // ******************************************************************************

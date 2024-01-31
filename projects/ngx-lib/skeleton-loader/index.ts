@@ -1,4 +1,4 @@
 /*
- * export from ngx-lib/group-buttons
+ * export from ngx-lib/skeleton-loader
  */
 export * from './public-api';

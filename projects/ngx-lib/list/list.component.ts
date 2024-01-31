@@ -1153,7 +1153,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
         layout: UIControl,
         totalRows: number,
         items: ObjectsDataRow[],
-        selectionTypeForActions: PepListSelectionType | undefined
+        selectionTypeForActions: PepListSelectionType | undefined = undefined
     ): void {
         this.initVariablesFromSession(items);
         const selectedItemsList = this.isAllSelected

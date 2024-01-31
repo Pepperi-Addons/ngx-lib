@@ -44,7 +44,7 @@
 
     <!-- Menu -->
     <ng-container *ngIf="menuField">
-        <button [id]="key" (click)="onMenuClick($event)" class="floating-field pep-button icon-button weak invert"
+        <button [id]="key" (click)="onMenuClick($event)" class="floating-field pep-button icon-button weak special"
             [ngClass]="{
                 bottom: menuField?.Layout?.YAlignment == '2',
                 top: menuField?.Layout?.YAlignment == '1',

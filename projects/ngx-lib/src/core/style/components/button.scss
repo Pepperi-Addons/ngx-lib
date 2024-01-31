@@ -94,6 +94,10 @@
     @include mixins.pep-button-states(weak-invert);
 }
 
+@mixin pep-button-state-weak-special() {
+    @include mixins.pep-button-states(weak-special);
+}
+
 @mixin pep-button-state-weak($color: null) {
     @include mixins.pep-button-states(weak, $color);
 }
@@ -278,10 +282,17 @@
             &.invert {
                 @include pep-button-state-weak-invert();
             }
+            &.special {
+                @include pep-button-state-weak-special();
+            }
         }
 
         &.weak-invert {
             @include pep-button-state-weak-invert();
+        }
+
+        &.weak-special {
+            @include pep-button-state-weak-special();
         }
 
         &.regular {

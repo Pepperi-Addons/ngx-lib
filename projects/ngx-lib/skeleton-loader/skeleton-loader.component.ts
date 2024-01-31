@@ -1,9 +1,11 @@
 import { Component,Inject,Input, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PepSizeType } from '@pepperi-addons/ngx-lib';
+
+export type PepSkeletonSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'max';
+
 
 interface IPepSkeletonLoaderDialogData {
-    rowHeightType: PepSizeType;
+    rowHeightType: PepSkeletonSizeType;
     rowsNumber: number;
     lastRowOffset: boolean;
 }
@@ -14,7 +16,7 @@ interface IPepSkeletonLoaderDialogData {
     styleUrls: ['./skeleton-loader.component.scss', './skeleton-loader.component.theme.scss'],
 })
 export class PepSkeletonLoaderComponent{
-    @Input() rowHeightType: PepSizeType = 'md'; // Each row heigth
+    @Input() rowHeightType: PepSkeletonSizeType = 'md'; // Each row heigth
     @Input() rowsNumber = 3; // number of rows
     @Input() lastRowOffset = true; // If the last row is with offset or not
     
