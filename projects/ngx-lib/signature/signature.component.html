@@ -43,16 +43,26 @@
         </ng-template>
 
         <ng-container *ngIf="layoutType === 'form'">
-            <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone}">
-                <pep-field-title *ngIf="renderTitle" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
-                    [xAlignment]="xAlignment" [showTitle]="showTitle">
-                </pep-field-title>
-                <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
-            </div>
+            <ng-container *ngIf="!readonly; then formBlock; else readonlyBlock">
+            </ng-container>
+            <ng-template #formBlock>
+                <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1, 'stand-alone': standAlone}">
+                    <pep-field-title *ngIf="renderTitle" [label]="label" [mandatory]="mandatory" [disabled]="disabled"
+                        [xAlignment]="xAlignment" [showTitle]="showTitle">
+                    </pep-field-title>
+                    <ng-container *ngTemplateOutlet="pepTemplate"></ng-container>
+                </div>
+            </ng-template>
+            <ng-template #readonlyBlock>
+                <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1 }">
+                    <ng-container *ngTemplateOutlet="pepReadonlyTemplate; context: { isTableView: false}">
+                    </ng-container>
+                </div>
+            </ng-template>
         </ng-container>
 
         <ng-container *ngIf="layoutType === 'card'">
-            <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock">
+            <ng-container *ngIf="false && isActive && !disabled && !readonly; then selectedBlock; else notSelectedBlock">
             </ng-container>
             <ng-template #selectedBlock>
                 <div class="pep-file-container" [ngClass]="{ 'one-row': rowSpan == 1}">
@@ -68,7 +78,7 @@
         </ng-container>
 
         <ng-container *ngIf="layoutType === 'table'">
-            <ng-container *ngIf="false && isActive && !disabled; then selectedBlock; else notSelectedBlock">
+            <ng-container *ngIf="false && isActive && !disabled && !readonly; then selectedBlock; else notSelectedBlock">
             </ng-container>
             <ng-template #selectedBlock>
                 <div class="pep-file-container one-row">

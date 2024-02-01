@@ -28,7 +28,7 @@ export class PepInternalMenuComponent implements OnDestroy {
     @Input() xAlignment: PepHorizontalAlignment = DEFAULT_HORIZONTAL_ALIGNMENT;
     // @Input() hasSubMenu = false;
     @Input() options: IPepOption[] = [];
-    @Input() invertClass = true;
+    // @Input() invertClass = true;
 
     controlType = 'menu';
 

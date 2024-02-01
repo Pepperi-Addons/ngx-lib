@@ -134,17 +134,21 @@ function getDraggableItems(): any[] {
 const TemplateBase: Story<PepDraggableItemsModule> = (args: PepDraggableItemsModule) => ({
     props: {
         ...args,
-        items: items,
-        titleSizeType: 'sm',
+        // items: items,
+        // titleSizeType: 'sm',
         itemDragStarted: action('itemDragStarted'),
         itemDragEnded: action('itemDragEnded')
         
     },
 });
 
+// Basic story
 export const Story1 = TemplateBase.bind({});
-Story1.args = {}
 Story1.storyName = "Basic"
+Story1.args = {
+    items: items,
+}
+
 
 const dropArea = [];
 const draggableItems = getDraggableItems();

@@ -109,8 +109,9 @@ function onFormValidationChanged(status: boolean) {
 // This creates a Story for the component
 const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponent) => ({
     props: {
+        ...args,
         json: json,
-        fields: fields,
+        // fields: fields,
         variableFields: variableFields,
         getFilters: (event) => getFilters(event),
         onFormValidationChanged: (event) => onFormValidationChanged(event),
@@ -129,6 +130,7 @@ const Template: Story<PepQueryBuilderComponent> = (args: PepQueryBuilderComponen
 export const Base = Template.bind({});
 Base.storyName = "Query builder";
 Base.args = {
+    fields: fields,
     // TODO Fix `maxDepth`
     maxDepth: 5,
 };

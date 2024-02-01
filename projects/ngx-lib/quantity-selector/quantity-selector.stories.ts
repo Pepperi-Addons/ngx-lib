@@ -19,7 +19,6 @@ export default {
         label: commonArgTypes.label,
         value: commonArgTypes.value,
         disabled: commonArgTypes.disabled,
-        readonly: commonArgTypes.readonly,
         mandatory: commonArgTypes.mandatory,
         textColor: commonArgTypes.textColor,
         xAlignment: commonArgTypes.xAlignment,

@@ -5,7 +5,7 @@
     <div pepRtlDirection (click)="!disabled ? chooseColor() : ''" class="pep-color pep-input"
         [ngClass]="{disable: disabled, 'one-row': rowSpan === 1}"
         style="background: {{ value ? value + '!important' : 'transparent' }}; opacity: {{ disabled && value ? 0.12 : 1}};">
-        <button *ngIf="!disabled" class="pep-button icon-button xs weak invert mat-button btn-edit" tabindex="-1"
+        <button *ngIf="!disabled" class="pep-button icon-button xs weak special mat-button btn-edit" tabindex="-1"
             pepButtonBlur mat-button>
             <mat-icon>
                 <pep-icon name="system_edit"></pep-icon>

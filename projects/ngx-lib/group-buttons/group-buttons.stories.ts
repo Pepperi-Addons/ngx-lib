@@ -128,10 +128,14 @@ function onColNumChanged(event){
 const StoryTemplate: Story<PepGroupButtonsComponent> = (args: PepGroupButtonsComponent) => ({
     props: {
         ...args,
-        buttons: buttons,
         buttonClick: action('buttonClick'),
     },
 });
+export const Story1 = StoryTemplate.bind({});
+Story1.storyName = "Basic"
+Story1.args = {
+    buttons: buttons,
+}
 
 const ThisStoryTemplate: Story<PepGroupButtonsComponent> = (args: PepGroupButtonsComponent) => ({
     props: {
@@ -140,9 +144,6 @@ const ThisStoryTemplate: Story<PepGroupButtonsComponent> = (args: PepGroupButton
         buttonClick: action('buttonClick'),
     },
 });
-
-export const Story1 = StoryTemplate.bind({});
-Story1.storyName = "Basic"
 
 export const Story2 = ThisStoryTemplate.bind({});
 Story2.storyName = "Regular view type"

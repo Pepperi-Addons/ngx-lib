@@ -29,7 +29,6 @@ export default {
         xAlignment: commonArgTypes.xAlignment,
         mandatory: commonArgTypes.mandatory,
         showTitle: commonArgTypes.showTitle,
-        readonly: commonArgTypes.readonly,
         type: {
             description: 'This is the type of the component',
             defaultValue: 'select',
@@ -53,7 +52,6 @@ export default {
                 'showTitle',
                 'valueChange',
                 'options',
-                'readonly',
             ],
         },
     },

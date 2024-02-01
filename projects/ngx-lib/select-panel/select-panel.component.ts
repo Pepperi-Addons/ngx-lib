@@ -28,7 +28,7 @@ export class PepSelectPanelComponent implements OnDestroy {
 
     @Input() mandatory = false;
     @Input() disabled = false;
-    @Input() classNames = '';
+    // @Input() classNames = '';
 
     @Input() isMultiSelect = false;
     

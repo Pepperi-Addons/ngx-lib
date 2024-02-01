@@ -16,11 +16,10 @@
 
 <ng-template #subMenuBlock>
     <button mat-button [matMenuTriggerFor]="menu" menu-blur
-        class="pep-button icon-button weak {{ layoutType === 'table' ? 'sm' : 'md' }}" [ngClass]="{
+        class="pep-button icon-button weak special {{ layoutType === 'table' ? 'sm' : 'md' }}" [ngClass]="{
             'left-alignment': xAlignment == 'left',
             'right-alignment': xAlignment == 'right',
-            'center-alignment': xAlignment == 'center',
-            'invert': invertClass
+            'center-alignment': xAlignment == 'center'
         }" title="{{ label }}">
         <mat-icon>
             <pep-icon name="system_menu">

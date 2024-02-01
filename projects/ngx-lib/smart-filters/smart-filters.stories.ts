@@ -116,8 +116,8 @@ function getSmartFiltersFields(): Array<IPepSmartFilterField> {
 const Template: Story<PepSmartFiltersComponent> = (args: PepSmartFiltersComponent) => ({
     props: {
         ...args,
-        fields: fields,
-        filters: filters,
+        // fields: fields,
+        // filters: filters,
         filtersChange: action('filtersChange'),
         fieldToggleChange: action('fieldToggleChange')
     },
@@ -130,3 +130,7 @@ const Template: Story<PepSmartFiltersComponent> = (args: PepSmartFiltersComponen
 
 export const Base = Template.bind({});
 Base.storyName = "Smart filters"
+Base.args = {
+    fields: fields,
+    filters: filters,
+}

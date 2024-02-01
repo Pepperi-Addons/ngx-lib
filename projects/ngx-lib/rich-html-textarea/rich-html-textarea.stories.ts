@@ -31,9 +31,9 @@ export default {
                 defaultValue: { summary: 'false' },
             },
         },
-        maxFieldCharacters: {
-            description: 'Maximum characters to allow',
-        },
+        // maxFieldCharacters: {
+        //     description: 'Maximum characters to allow',
+        // },
         rowSpan: commonArgTypes.rowSpan,
         valueChange: commonArgTypes.valueChange,
     },
@@ -44,7 +44,7 @@ export default {
                 'value',
                 'mandatory',
                 'disabled',
-                'maxFieldCharacters',
+                // 'maxFieldCharacters',
                 'xAlignment',
                 'rowSpan',
                 'visible',

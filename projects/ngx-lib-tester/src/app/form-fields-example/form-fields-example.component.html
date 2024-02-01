@@ -63,7 +63,7 @@
                         (valueChange)="onValueChanged($event)">
                     </pep-date>
                     <pep-date [key]="'dateTime1'" [label]="'Pepperi Date Time'" [type]="'datetime'" [value]="dateString"
-                        [xAlignment]="'left'" (valueChanged)="onValueChanged($event)">
+                        [xAlignment]="'left'" (valueChanged)="onValueChanged($event)" >
                     </pep-date>
                 </div>
                 
@@ -71,7 +71,7 @@
                     <!-- Signature Example -->
                     <pep-signature [key]="'sig1'"
                         [src]="'https://i.ibb.co/VMHwLkm/58957776-8700-4c6a-b9bc-a171b84d8080.png'"
-                        [label]="'Pepperi Signature'" [xAlignment]="'center'" [rowSpan]="4"
+                        [label]="'Pepperi Signature'" [xAlignment]="'center'" [rowSpan]="4" [readonly]="true"
                         (valueChange)="onValueChanged($event)">
                     </pep-signature>
 
@@ -126,8 +126,8 @@
                     </pep-textarea>
 
                     <!-- Rich Html Textarea Example -->
-                    <pep-rich-html-textarea [key]="'richText1'" [renderTitle]="false" [label]="'Pepperi Rich Html Textarea'" [renderEnlargeButton]="true"
-                        [value]="richHtml" [rowSpan]="3" [maxFieldCharacters]="300" [xAlignment]="'left'" [inlineMode]="false"
+                    <pep-rich-html-textarea [key]="'richText1'" [renderTitle]="true" [label]="'Pepperi Rich Html Textarea'" [renderEnlargeButton]="true"
+                        [value]="richHtml" [rowSpan]="3" [maxFieldCharacters]="30" [xAlignment]="'left'" [inlineMode]="true"
                         >
                     </pep-rich-html-textarea>
 
