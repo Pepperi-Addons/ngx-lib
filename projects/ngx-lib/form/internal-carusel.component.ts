@@ -72,7 +72,7 @@ export class PepInternalCaruselComponent implements OnInit, AfterViewInit {
     }
 
     layout: any = null;
-    duration = 1000;
+    duration = 250;
 
     private itemsToMove = 3;
 
@@ -156,5 +156,10 @@ export class PepInternalCaruselComponent implements OnInit, AfterViewInit {
 
     onReachesRightBound(event: boolean) {
         this.nextDisabled = event;
+    }
+
+    onIndexChanged(event: number) {
+        this.prevDisabled = event === 0;
+        this.nextDisabled = event === this.items.length - 1;
     }
 }
