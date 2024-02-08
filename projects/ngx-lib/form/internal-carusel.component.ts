@@ -76,7 +76,7 @@ export class PepInternalCaruselComponent implements OnInit, AfterViewInit {
 
     private itemsToMove = 3;
 
-    prevDisabled = false;
+    prevDisabled = true;
     nextDisabled = false;
     screenSize: PepScreenSizeType;
     PepScreenSizeType = PepScreenSizeType;
@@ -151,7 +151,7 @@ export class PepInternalCaruselComponent implements OnInit, AfterViewInit {
     }
 
     onReachesLeftBound(event: boolean) {
-        this.prevDisabled = event;
+        // this.prevDisabled = event;
     }
 
     onReachesRightBound(event: boolean) {
@@ -160,6 +160,6 @@ export class PepInternalCaruselComponent implements OnInit, AfterViewInit {
 
     onIndexChanged(event: number) {
         this.prevDisabled = event === 0;
-        this.nextDisabled = event === this.items.length - 1;
+        // this.nextDisabled = event === this.items.length - 1;
     }
 }
