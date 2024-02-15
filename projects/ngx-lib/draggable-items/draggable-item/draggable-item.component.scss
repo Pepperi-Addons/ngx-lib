@@ -25,11 +25,11 @@
         pointer-events: none;
     }
     
-    .title-container {
+    .item-title-container {
         overflow-x: hidden;
         margin-inline: variables.$spacing-sm;
 
-        .title {
+        .item-title {
             display: block;
         }
     }

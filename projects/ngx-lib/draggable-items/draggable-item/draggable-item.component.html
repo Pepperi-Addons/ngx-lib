@@ -2,8 +2,8 @@
     <div class="">
         <pep-button classNames="lock-events" sizeType="xs" iconName="system_move"></pep-button>
     </div>
-    <div *ngIf="title !== ''" class="title-container">
-        <span class="body-sm bold ellipsis title" title="{{title}}">{{title}}</span>
+    <div *ngIf="title !== ''" class="item-title-container">
+        <span class="body-sm bold ellipsis item-title" title="{{title}}">{{title}}</span>
     </div>
     <div class="actions">
         <ng-content select="[pep-actions]"></ng-content>
