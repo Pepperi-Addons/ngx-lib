@@ -30,6 +30,7 @@
     height: $checkbox-height;
 }
 
+// Deprecated !!! remove it when pages 2.5 will be phased.
 .checkbox-as-title {
     margin-bottom: 0.5rem !important;
     min-height: unset !important;
@@ -53,19 +54,6 @@
             }
         }
     }
-
-    // &.sub-title {
-    //     .pep-checkbox-container {
-    //         .mat-checkbox-layout {
-    //             @include mixins.font-body(variables.$fs-xl, variables.$lh-xl);
-    //             font-weight: variables.$font-weight-bold !important;
-    
-    //             .mat-checkbox-label span {
-    //                 margin: 0 0.5rem;
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 .checkbox-no-background {

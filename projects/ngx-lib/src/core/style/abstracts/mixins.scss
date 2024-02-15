@@ -193,17 +193,17 @@
     }
 }
 
-@mixin font-title($fs: variables.$fs-md, $lh: variables.$lh-md) {
-    font-family: variables.$font-family-title !important;
-    font-weight: variables.$font-weight-bold !important;
+@mixin font-title($fs: variables.$fs-md, $lh: variables.$lh-md, $font-family: variables.$font-family-title, $font-weight: variables.$font-weight-bold) {
+    font-family: $font-family !important;
+    font-weight: $font-weight !important;
 
     @include font-size($fs);
     @include line-height($lh);
 }
 
-@mixin font-body($fs: variables.$fs-sm, $lh: variables.$lh-sm) {
-    font-family: variables.$font-family-body !important;
-    font-weight: variables.$font-weight-normal;
+@mixin font-body($fs: variables.$fs-sm, $lh: variables.$lh-sm, $font-family: variables.$font-family-body, $font-weight: variables.$font-weight-normal) {
+    font-family: $font-family !important;
+    font-weight: $font-weight;
 
     @include font-size($fs);
     @include line-height($lh);
