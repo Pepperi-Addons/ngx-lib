@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
+import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -27,6 +28,7 @@ import {
         PepNgxLibModule,
         PepButtonModule,
         PepIconModule,
+        PepMenuModule,
         PepSearchModule,
         DragDropModule
     ],

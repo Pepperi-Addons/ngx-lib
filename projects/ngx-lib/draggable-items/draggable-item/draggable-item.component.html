@@ -1,11 +1,18 @@
-<div class="pep-draggable-item-container" [ngClass]="{ 'disable': disabled }">
+<div class="pep-draggable-item-container" class="{{ styleType }}" 
+    [ngClass]="{ 'shadow': shadow, 'disable': disabled, 'toggle-content': toggleContent, 'toggle-content-open': isToggleContentOpen }"
+    >
     <div class="">
         <pep-button classNames="lock-events" sizeType="xs" iconName="system_move"></pep-button>
     </div>
-    <div *ngIf="title !== ''" class="item-title-container">
-        <span class="body-sm bold ellipsis item-title" title="{{title}}">{{title}}</span>
+    <div class="item-title-container" [ngClass]="{ 'shadow': shadow }" (click)="onToggleContent();">
+        <span *ngIf="titlePrefix !== ''" class="body-sm ellipsis item-title">{{titlePrefix}}</span>
+        <span *ngIf="title !== ''" class="body-sm bold ellipsis item-title {{titleClassNames}}" title="{{title}}">{{title}}</span>
     </div>
     <div class="actions">
-        <ng-content select="[pep-actions]"></ng-content>
+        <pep-menu *ngIf="actionsMenu" sizeType="xs" [styleType]="menuStyleType" [items]="actionsMenu" (menuItemClick)="onActionsMenuItemClick($event)"></pep-menu>
+        <ng-content *ngIf="!actionsMenu" select="[pep-actions]"></ng-content>
+    </div>
+    <div *ngIf="toggleContent && isToggleContentOpen" class="toggle-container">
+        <ng-content select="[pep-toggle-content]"></ng-content>
     </div>
 </div>

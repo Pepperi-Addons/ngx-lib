@@ -8,6 +8,7 @@
 
 .pep-draggable-item-container {
     // opacity: 0.75;
+    min-height: variables.$draggable-item-height;
     height: variables.$draggable-item-height;
     width: 100%;
     display: grid;
@@ -16,8 +17,17 @@
     border-radius: variables.$border-radius-md;
     padding-inline: variables.$spacing-sm;
     
-    @include mixins.state-regular-default(true);
-    box-shadow: functions.get-pep-shadow(shadow-xs, regular);
+    &.shadow {
+        box-shadow: functions.get-pep-shadow(shadow-xs, regular);
+    }
+    
+    &.regular {
+        @include mixins.state-regular-default(true);
+    }
+    
+    &.weak {
+        @include mixins.state-weak-default();
+    }
     
     &.disable {
         // @include mixins.state-regular-disable(true);
@@ -25,7 +35,25 @@
         pointer-events: none;
     }
     
+    &.toggle-content {
+        .item-title-container:hover {
+            cursor: s-resize;
+        }
+
+        &.toggle-content-open {
+            height: unset;
+            padding-top: variables.$spacing-sm;
+
+            .item-title-container:hover {
+                cursor: n-resize; 
+            }
+        }
+    }
+
     .item-title-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
         overflow-x: hidden;
         margin-inline: variables.$spacing-sm;
 
@@ -37,5 +65,12 @@
     .actions {
         display: inline-flex;
         gap: variables.$spacing-xs;
+    }
+
+    .toggle-container {
+        padding: variables.$spacing-md 0;
+        grid-column: 1 / -1;
+        display: grid;
+        gap: variables.$spacing-lg;
     }
 }
