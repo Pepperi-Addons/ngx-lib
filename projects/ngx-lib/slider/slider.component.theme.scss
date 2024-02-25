@@ -5,6 +5,10 @@
     ::ng-deep.mat-slider {
         background: functions.get-pep-color(color-system-primary, color-tran-30);
 
+        &.mat-slider-disabled {
+            opacity: 0.5;
+        }
+
         &.mat-slider-horizontal {
             height: 1rem;
             width: 100%;
