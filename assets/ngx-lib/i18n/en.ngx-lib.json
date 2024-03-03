@@ -33,6 +33,10 @@
         "ADD_PROFILE": "Add profile",
         "SELECT_PROFILE_DIALOG_TITLE": "Select profile",
         "SELECT_PROFILE": "Select a profile",
+        "IMPORT_PROFILE_DIALOG_TITLE": "Import to {{ profileTitle }}",
+        "IMPORT_FROM_PROFILE": "Import from",
+        "IMPORT_FROM_PROFILE_DESC": "You can select a profile to copy its configuration to the added profile. Leave this option empty for a default profile hierarchy configuration",
+
         "DEFAULT_PROFILE": "(Default profile)",
         "NO_FIELDS_ASSIGNED": "No fields were assigned"
     },
@@ -90,6 +94,7 @@
             "LESS_THAN_VARIABLE": "Less than (variable)",
             "EQUAL": "Equal",
             "EQUAL_TO_VARIABLE": "Equal to (variable)",
+            "IN_VARIABLE": "In (variable)",
             "GREATER_THEN": "Greater than",
             "GREATER_THEN_OR_EQUAL": "Greater than or equal to",
             "GREATER_THAN_VARIABLE": "Greater than (variable)",
@@ -118,7 +123,8 @@
         "DONE": "Done",
         "OK": "Ok",
         "REMOVE": "Remove",
-        "SAVE": "Save"
+        "SAVE": "Save",
+        "IMPORT": "Import"
     },
     "LIST": {
         "ALL": "All",
