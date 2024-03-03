@@ -68,7 +68,12 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
             }
             this.firstControl.setValidators(firstValidators);
             this.firstControl.updateValueAndValidity();
+        } else if (this.operator === PepSmartFilterOperators.IsEmpty ||
+                   this.operator === PepSmartFilterOperators.IsNotEmpty) {
+                    this.firstControl.disable();
+                    super.setFieldsStateAndValidators();
         } else {
+            this.firstControl.enable();
             super.setFieldsStateAndValidators();
         }
     }
@@ -83,6 +88,13 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
         }
         if (this.emitOnChange) {
             this.applyFilter();
+        }
+        if(this.operator === PepSmartFilterOperators.IsEmpty ||
+           this.operator === PepSmartFilterOperators.IsNotEmpty){
+            this.operatorWidth = 'auto';
+        }
+        else{
+            this.operatorWidth = '38%';
         }
     }
 

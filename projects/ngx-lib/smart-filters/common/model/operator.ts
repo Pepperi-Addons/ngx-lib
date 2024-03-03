@@ -176,14 +176,14 @@ const IsEmpty: IPepSmartFilterOperator = {
     id: 'isEmpty',
     name: 'IS_EMPTY',
     short: 'Is empty',
-    componentType: ['date'],
+    componentType: ['date','text'],
 };
 
 const IsNotEmpty: IPepSmartFilterOperator = {
     id: 'isNotEmpty',
     name: 'IS_NOT_EMPTY',
     short: 'Is not empty',
-    componentType: ['date'],
+    componentType: ['date','text'],
 };
 
 const In: IPepSmartFilterOperator = {
@@ -289,7 +289,10 @@ export const PepSmartFilterVariableOperators = {
     LessThanVariable: LessThanVariable,
     GreaterThanVariable: GreaterThanVariable,
     DateRangeVariable: DateRangeVariable,
-    InVariable: InVariable
+    InVariable: InVariable,
+    IsEmpty: IsEmpty,
+    IsNotEmpty: IsNotEmpty
+
 }
 
 export class IPepSmartFilterOperatorUnit {

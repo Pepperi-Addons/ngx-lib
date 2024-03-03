@@ -16,7 +16,7 @@ export class DraggableItemComponent implements OnInit {
     @Input() shadow = true;
     @Input() styleType: PepStyleType = 'regular';
     @Input() toggleContent = false;
-    @Input() isToggleContentOpen: boolean = false;
+    @Input() isToggleContentOpen = false;
 
     @Input() actionsMenu: Array<PepMenuItem> = null;
     @Input() menuStyleType: PepStyleType = 'regular';

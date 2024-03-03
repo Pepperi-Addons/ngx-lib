@@ -220,14 +220,14 @@ const IsEmpty: IPepQueryBuilderOperator = {
     legacy: 'IsEmpty',
     valueType: 'Static',
     smartFilter: PepSmartFilterOperators.IsEmpty,
-    type: null
+    type: ['text']
 };
 
 const IsNotEmpty: IPepQueryBuilderOperator = {
     legacy: 'IsNotEmpty',
     valueType: 'Static',
     smartFilter: PepSmartFilterOperators.IsNotEmpty,
-    type: null
+    type: ['text']
 };
 
 const In: IPepQueryBuilderOperator = {
