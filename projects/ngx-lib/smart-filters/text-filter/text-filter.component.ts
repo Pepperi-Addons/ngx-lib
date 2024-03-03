@@ -61,6 +61,8 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
 
     // Override
     setFieldsStateAndValidators(): void {
+        this.firstControl.enable();
+
         if (this.operator === PepSmartFilterOperators.NumberRange) {
             const firstValidators = [Validators.required];
             if (this.secondControl.value) {
@@ -68,14 +70,12 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
             }
             this.firstControl.setValidators(firstValidators);
             this.firstControl.updateValueAndValidity();
-        } else if (this.operator === PepSmartFilterOperators.IsEmpty ||
+        } else if(this.operator === PepSmartFilterOperators.IsEmpty ||
                    this.operator === PepSmartFilterOperators.IsNotEmpty) {
-                    this.firstControl.disable();
-                    super.setFieldsStateAndValidators();
-        } else {
-            this.firstControl.enable();
-            super.setFieldsStateAndValidators();
-        }
+                    this.firstControl.disable();           
+        } 
+
+        super.setFieldsStateAndValidators();
     }
 
     onOperatorChanged(value: string) {
@@ -83,19 +83,22 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
             (operator) => operator.id === value
         );
         this.operator = operator;
+
+        if(this.operator === PepSmartFilterOperators.IsEmpty ||
+           this.operator === PepSmartFilterOperators.IsNotEmpty){
+             this.operatorWidth = 'auto';
+         }
+         else{
+             this.operatorWidth = '38%';
+         }
+
         if (this._parentForm) {
             this.updateParentForm();
         }
         if (this.emitOnChange) {
             this.applyFilter();
         }
-        if(this.operator === PepSmartFilterOperators.IsEmpty ||
-           this.operator === PepSmartFilterOperators.IsNotEmpty){
-            this.operatorWidth = 'auto';
-        }
-        else{
-            this.operatorWidth = '38%';
-        }
+        
     }
 
     onVariableChanged(value: any) {
