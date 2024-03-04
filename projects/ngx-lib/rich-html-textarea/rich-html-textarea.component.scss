@@ -11,6 +11,27 @@
         margin-left: calc(#{variables.$spacing-md} * -1);
     }
 
+    ::ng-deep.icon-left {
+        .mat-form-field-suffix {
+            position: absolute;
+            right: 1rem !important;
+            bottom:0.5rem;
+        }
+    }
+
+    ::ng-deep.icon-right {
+        .mat-form-field-suffix {
+        position: absolute;
+        right: calc(100% - 2.5rem) !important;
+        bottom:0.5rem;
+    }
+
+    .ql-toolbar {
+     padding-left:0.4rem !important;
+    }
+
+    }
+
     &.right-alignment {
         ::ng-deep.mat-form-field-infix {
             margin-left: unset;
