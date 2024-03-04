@@ -28,6 +28,7 @@ $half-button-width: 0.75rem;
             }
             
             .toggle-button-border {
+                z-index: -1;
                 transition: opacity calc(#{$animation-time-third} * 2) ease-out, margin-inline ease-out $animation-time;
                 opacity: 0;
                 margin-inline: -3rem 0.25rem;

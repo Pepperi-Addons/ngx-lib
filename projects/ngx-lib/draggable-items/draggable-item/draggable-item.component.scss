@@ -63,6 +63,7 @@
     }
 
     .actions {
+        z-index: 1;
         display: inline-flex;
         gap: variables.$spacing-xs;
     }
