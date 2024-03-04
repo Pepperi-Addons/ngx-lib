@@ -27,6 +27,10 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
             .subscribe(() => {
                 this.setFieldsStateAndValidators();
             });
+
+        if (this.inline) {
+            this.setControlsWidth();
+        }
     }
 
     // Override
@@ -78,26 +82,35 @@ export class PepTextFilterComponent extends BaseFilterComponent implements OnIni
         super.setFieldsStateAndValidators();
     }
 
+    setControlsWidth() {
+        if (
+            this.operator === PepSmartFilterOperators.IsEmpty ||
+            this.operator === PepSmartFilterOperators.IsNotEmpty) {
+                this.operatorWidth = 'auto';
+            } else {
+                this.operatorWidth = '38%';
+            } 
+    }
+
     onOperatorChanged(value: string) {
         const operator = Object.values(this.operators).find(
             (operator) => operator.id === value
         );
         this.operator = operator;
 
-        if(this.operator === PepSmartFilterOperators.IsEmpty ||
-           this.operator === PepSmartFilterOperators.IsNotEmpty){
-             this.operatorWidth = 'auto';
-         }
-         else{
-             this.operatorWidth = '38%';
-         }
+        if (this.inline) {
+            this.setControlsWidth();
+        }
 
         if (this._parentForm) {
             this.updateParentForm();
         }
-        if (this.emitOnChange) {
-            this.applyFilter();
-        }
+       
+        setTimeout(() => {
+            if (this.emitOnChange) {
+                this.applyFilter();
+            }    
+        }, 0)
         
     }
 
