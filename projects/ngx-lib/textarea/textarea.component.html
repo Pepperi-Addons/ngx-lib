@@ -8,7 +8,7 @@
                 [xAlignment]="xAlignment" [showTitle]="showTitle" [inputLength]="input.value?.length">
             </pep-field-title>
             <mat-form-field appearance="outline" dir="{{ xAlignment == 'right' ? 'rtl' : 'ltr' }}"
-                [ngClass]="{ 'pep-table-textarea': layoutType === 'table' }">
+                [ngClass]="{ 'pep-table-textarea': layoutType === 'table', 'icon-left': xAlignment === 'left' || xAlignment === 'center', 'icon-right': xAlignment === 'right' }">
                 <textarea #input [hidden]="readonly" [id]="key" class="body-sm" matInput (blur)="onBlur($event)"
                     title="{{ value }}" [value]="value"
                     maxlength="{{ maxFieldCharacters > 0 ? maxFieldCharacters : 99999 }}"

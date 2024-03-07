@@ -36,3 +36,21 @@
         }
     }
 }
+
+.pep-textarea-container {
+    ::ng-deep.icon-left {
+        .mat-form-field-suffix {
+            position: absolute;
+            right: 1rem !important;
+            bottom:0.5rem;
+        }
+    }
+
+    ::ng-deep.icon-right {
+        .mat-form-field-suffix {
+        position: absolute;
+        right: calc(100% - 2.5rem) !important;
+        bottom:0.5rem;
+       }
+    }
+}
