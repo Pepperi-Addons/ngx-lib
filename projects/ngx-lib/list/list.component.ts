@@ -107,7 +107,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() firstFieldAsLink = false;
     @Input() supportSorting = true;
-    @Input() supportSortingArray: string[] = undefined;
+    @Input() supportSortingFields: string[] = undefined;
     @Input() supportResizing = true;
 
     private _parentScroll: Element | Window = null;
@@ -1633,10 +1633,10 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     isSortableColumn(apiName: string) {
         //case 1 - supportSorting = true and array exists
           if(this.supportSorting) {
-            if(this.supportSortingArray?.length) {
-              return this.supportSortingArray.includes(apiName);
+            if(this.supportSortingFields?.length) {
+              return this.supportSortingFields.includes(apiName);
         //case 2 - supportSorting = true and array does not exist
-            } else if (this.supportSortingArray === undefined) {
+            } else if (this.supportSortingFields === undefined) {
               return true
             } // case 3 supportSorting = false
           } else return false;
