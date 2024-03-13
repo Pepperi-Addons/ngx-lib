@@ -124,13 +124,13 @@
                 <div *ngFor="let field of layout?.ControlFields; let j = index" class="header-column pull-left flip"
                     [ngStyle]="{ width: field.calcTitleColumnWidthString }" [ngClass]="{
                             'compact-view': tableViewType === 'compact',
-                            'support-sorting': supportSorting,
+                            'support-sorting': isSortableColumn(field.ApiName),
                             'has-sorting': field.ApiName === sortBy,
                             'is-resizing': field.ApiName === pressedColumn,
                             'is-first': j === 0 && selectionTypeForActions !== 'multi',
                             'is-last': j === layout?.ControlFields?.length - 1
                         }"
-                    (click)="supportSorting ? (onListSortingChange(field.ApiName, sortBy !== null && sortBy != field.ApiName ? true : !isAsc, $event)) : false">
+                    (click)="isSortableColumn(field.ApiName) ? (onListSortingChange(field.ApiName, sortBy !== null && sortBy != field.ApiName ? true : !isAsc, $event)) : false">
 
                     <label id="{{ field.ApiName }}"
                         class="header-label body-sm pull-left flip text-align-{{ field.Layout.XAlignment }}"
@@ -146,7 +146,7 @@
                         <div class="splitter"></div>
                     </div>
 
-                    <div *ngIf="supportSorting" class="sorting-box pull-left flip"
+                    <div *ngIf="isSortableColumn(field.ApiName)" class="sorting-box pull-left flip"
                         [ngClass]="{ 'has-sorting': field.ApiName === sortBy }">
                         <mat-icon *ngIf="field.ApiName !== sortBy">
                             <pep-icon name="arrow_either" class="asc"></pep-icon>
