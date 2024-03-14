@@ -37,6 +37,7 @@ export class PepAddonService {
         private loaderService: PepLoaderService,
         public translateService: PepTranslateService,
         public fileService: PepFileService,
+        @Optional() private router: Router,
         @Optional() private route: ActivatedRoute,
     ) {
         //
@@ -225,7 +226,11 @@ export class PepAddonService {
     // Fix internal routing bug.
     connectInternalRouter(elementName: string) {
         const customElementObject = PepAddonService._customElementsMap.get(elementName);
-        const router = customElementObject?.injector.get(Router);
+        let router = customElementObject?.injector.get(Router);
+
+        if (!router) {
+            router = this.router;
+        }
 
         if (router) {
             const useHash = location.href.includes('#');
