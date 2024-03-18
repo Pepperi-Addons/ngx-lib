@@ -51,7 +51,7 @@
 </ng-template>
 
 <ng-template #titleTemplate>
-    <div *ngIf="title?.length > 0" class="pep-spacing-element title {{ inline ? 'title-md' : 'title-lg' }}">
+    <div *ngIf="title?.length > 0" class="pep-spacing-element title ellipsis {{ inline ? 'title-md' : 'title-lg' }}">
         <span [title]="title">{{ title }}</span>
     </div>
 </ng-template>
