@@ -10,3 +10,4 @@ export * from './menu-blur.directive';
 export * from './prevent-multi-click.directive';
 export * from './print.directive';
 export * from './div-loader.directive';
+export * from './base-destroyer.directive';
