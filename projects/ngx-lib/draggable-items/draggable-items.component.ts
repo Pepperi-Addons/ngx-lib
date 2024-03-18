@@ -2,15 +2,16 @@ import { CdkDragEnd, CdkDragStart } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { IPepDraggableItem, PepDraggableItemPlaceholderType, PepDraggableItemsTitleType } from './draggable-items.model';
-import { PepSizeType } from '@pepperi-addons/ngx-lib';
+import { PepSizeType, BaseDestroyerDirective } from '@pepperi-addons/ngx-lib';
+
 @Component({
     selector: 'pep-draggable-items',
     templateUrl: './draggable-items.component.html',
     styleUrls: ['./draggable-items.component.scss', './draggable-items.component.theme.scss']
 })
-export class PepDraggableItemsComponent implements OnInit, OnDestroy {
+export class PepDraggableItemsComponent extends BaseDestroyerDirective implements OnInit {
     @Input() containerId = 'draggable-container';
     @Input() showSearch = false;
     @Input() title = '';
@@ -41,11 +42,9 @@ export class PepDraggableItemsComponent implements OnInit, OnDestroy {
     filteredItems$: Observable<any>;
     searchControl = new FormControl();
     numberItemsToShowSearch = 5;
-    private readonly _destroyed: Subject<void>;
-
+    
     constructor() {
-        //
-        this._destroyed = new Subject();
+        super();
     }
 
     private filterItems(value: string): any[] {
@@ -67,10 +66,6 @@ export class PepDraggableItemsComponent implements OnInit, OnDestroy {
         document.body.style.cursor = 'unset';
     }
 
-    protected getDestroyer() {
-        return takeUntil(this._destroyed);
-    }
-
     ngOnInit(): void {
         // If there is no item disable the search.
         if (this.items.length === 0) {
@@ -86,11 +81,6 @@ export class PepDraggableItemsComponent implements OnInit, OnDestroy {
             ),
             map((value) => (value ? this.filterItems(value) : this.items))
         );
-    }
-
-    ngOnDestroy(): void {
-        this._destroyed.next();
-        this._destroyed.complete();
     }
 
     onDragStart(event: CdkDragStart) {

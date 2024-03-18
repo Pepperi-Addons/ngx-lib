@@ -9,7 +9,7 @@ import {
 // import { FormGroup } from '@angular/forms';
 import { MatChipInputEvent, } from '@angular/material/chips';
 import { TranslateService } from '@ngx-translate/core';
-import { DEFAULT_HORIZONTAL_ALIGNMENT, PepHorizontalAlignment, PepLayoutType, PepStyleType } from '@pepperi-addons/ngx-lib';
+import { DEFAULT_HORIZONTAL_ALIGNMENT, PepHorizontalAlignment, PepLayoutType, PepStyleType, BaseDestroyerDirective } from '@pepperi-addons/ngx-lib';
 import { IPepChip, PepChipsOrientationType, PepChipsInputType, IPepChipSelection } from './chips.model';
 import { PepChipsService } from './chips.service';
 
@@ -20,7 +20,7 @@ import { PepChipsService } from './chips.service';
     styleUrls: ['./chips.component.scss', './chips.component.theme.scss'],
     providers: [PepChipsService]
 })
-export class PepChipsComponent implements OnInit, OnDestroy {
+export class PepChipsComponent extends BaseDestroyerDirective implements OnInit {
     /**
     * The chips within the chip list.
     *    
@@ -107,6 +107,7 @@ export class PepChipsComponent implements OnInit, OnDestroy {
     }
 
     constructor(public chipsService: PepChipsService, private _translate: TranslateService) {
+        super();
         //
     }
 
@@ -171,7 +172,4 @@ export class PepChipsComponent implements OnInit, OnDestroy {
         this.fieldClick.emit();
     }
 
-    ngOnDestroy(): void {
-        this.chipsService.destroy();
-    }
 }

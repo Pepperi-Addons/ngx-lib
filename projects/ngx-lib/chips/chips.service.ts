@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { IPepChip } from './chips.model';
 
 @Injectable()
 export class PepChipsService {
-    private readonly _destroyer: Subject<void>;
     private _chips: IPepChip[] = [];    
 
     constructor() {
-        this._destroyer = new Subject();
     }
 
     get chips() {
@@ -37,14 +34,4 @@ export class PepChipsService {
             selectable: chip.selectable !== undefined ? chip.selectable : true
         })
     }
-
-    destroy() {
-        this._destroyer.next();
-        this._destroyer.complete();
-    }
-
-    get destroyer() {
-        return takeUntil(this._destroyer);
-    } 
-
 }

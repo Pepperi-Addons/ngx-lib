@@ -31,9 +31,10 @@ import {
     PepQuantitySelectorFieldType,
     PepQuantitySelectorField,
     PepUtilitiesService,
+    BaseDestroyerDirective
 } from '@pepperi-addons/ngx-lib';
 import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -62,8 +63,8 @@ import { TranslateService } from '@ngx-translate/core';
         ]),
     ],
 })
-export class PepQuantitySelectorComponent
-    implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class PepQuantitySelectorComponent extends BaseDestroyerDirective
+    implements OnChanges, OnInit, AfterViewInit {
     public static ENTER_CHILDREN = '[EnterChildren]';
     public static ENTER_PACKAGE = '[EnterPackage]';
     public static PLUS = '[+]';
@@ -267,7 +268,6 @@ export class PepQuantitySelectorComponent
         return this._calculateFormattedValue;
     }
 
-    private readonly _destroyed: Subject<void>;
     private qsWidthSubject: BehaviorSubject<number>;
     lastQsContClientWidth = 0;
     showQsBtn = true;
@@ -304,7 +304,7 @@ export class PepQuantitySelectorComponent
         private translate: TranslateService,
         private utilitiesService: PepUtilitiesService
     ) {
-        this._destroyed = new Subject();
+        super();
         // this.qsWidthSubject = new BehaviorSubject(0);
     }
 
@@ -367,10 +367,6 @@ export class PepQuantitySelectorComponent
     //     return res;
     // }
 
-    protected getDestroyer() {
-        return takeUntil(this._destroyed);
-    }
-
     ngOnInit(): void {
         if (this.form === null) {
             if (this.key === '') {
@@ -432,11 +428,6 @@ export class PepQuantitySelectorComponent
         setTimeout(() => {
             this.focusToTheSameElementInTheWantedRow();
         }, 150);
-    }
-
-    ngOnDestroy(): void {
-        this._destroyed.next();
-        this._destroyed.complete();
     }
 
     get getAdditionalValue(): string {

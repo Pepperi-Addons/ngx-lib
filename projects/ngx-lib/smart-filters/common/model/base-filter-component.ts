@@ -29,7 +29,8 @@ import { Observable, Subject } from 'rxjs';
 import {
     PepValidatorService,
     IPepOption,
-    PepUtilitiesService
+    PepUtilitiesService,
+    BaseDestroyerDirective
 } from '@pepperi-addons/ngx-lib';
 import {
     IPepSmartFilterOperator,
@@ -42,15 +43,13 @@ import {
 import { forwardRef } from '@angular/core';
 import { IPepSmartFilterData, IPepSmartFilterDataValue } from './filter';
 import { PepSmartFilterBaseField } from './field';
-import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { PepFilterActionsComponent } from '../filter-actions.component';
 
 
 @Directive({})
-export abstract class BaseFilterComponent
+export abstract class BaseFilterComponent extends BaseDestroyerDirective
     implements OnInit, OnChanges, OnDestroy {
-    private readonly _destroyed: Subject<void>;
     private actionsContainerRef: ComponentRef<PepFilterActionsComponent>;
 
     private _fieldIdWithNoDots = '';
@@ -175,7 +174,7 @@ export abstract class BaseFilterComponent
         protected utilitiesService: PepUtilitiesService,
         protected renderer: Renderer2,
     ) {
-        this._destroyed = new Subject();
+        super();
     }
 
     private createActionsComponent() {
@@ -304,10 +303,6 @@ export abstract class BaseFilterComponent
         }));
     }
 
-    protected getDestroyer() {
-        return takeUntil(this._destroyed);
-    }
-
     private updateValidity() {
         this.setFieldsStateAndValidators();
 
@@ -379,9 +374,6 @@ export abstract class BaseFilterComponent
     }
 
     ngOnDestroy(): void {
-        this._destroyed.next();
-        this._destroyed.complete();
-
         if (this.showActionButtons) {
             this.actionsContainerRef.destroy();
         }
