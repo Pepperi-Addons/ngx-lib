@@ -11,6 +11,9 @@
         "TRUE": "True",
         "FALSE": "False"
     },
+    "CHIPS": {
+        "ADD_CHIP": "הוסף צ׳יפ"
+    },
     "IMAGE": {
         "NO_IMAGE": "אין תמונה",
         "CLICK_TO_ENLARGE": "לחץ להגדלה"
@@ -26,8 +29,22 @@
     "INTERNAL_PAGE": {
         "CLICK_TO_ORDER": "הקליקו להזמנה"
     },
+    "PROFILE_DATA_VIEWS_LIST": {
+        "ADD_PROFILE": "הוסף פרופיל",
+        "SELECT_PROFILE_DIALOG_TITLE": "בחר פרופיל",
+        "SELECT_PROFILE": "בחר פרופיל",
+        "IMPORT_PROFILE_DIALOG_TITLE": "ייבוא ל {{ profileTitle }}",
+        "IMPORT_FROM_PROFILE": "ייבוא מ",
+        "IMPORT_FROM_PROFILE_DESC": "אתה יכול לבחור פרופיל כדי להעתיק את התצורה שלו לפרופיל שנוסף. השאר אפשרות זו ריקה עבור תצורת ברירת מחדל",
+        "DEFAULT_PROFILE": "(פרופיל ברירת המחדל)",
+        "NO_FIELDS_ASSIGNED": "לא שויכו שדות"
+    },
     "RICH_TEXTAREA": {
         "HINT": "הזן טקסט"
+    },
+    "SEARCH": {
+        "HINT": "חיפוש",
+        "MORE_RESULTS": "עוד תוצאות"
     },
     "SELECT": {
         "HINT": "בחר אפשרות"
@@ -37,26 +54,97 @@
         "TAP_TO_SIGN": "הקש כדי לחתום",
         "DIALOG_TITLE": "הוסף חתימה"
     },
+    "SMART_FILTERS": {
+        "TITLE": "פילטרים חכמים",
+        "IS_ON": "מופעל",
+        "CHOOSE_TIME": "בחר שעה",
+        "AMOUNT": "סכום",
+        "VALUE": "ערך",
+        "TIME_UNIT": "יחידת זמן",
+        "START_DATE": "תאריך התחלה",
+        "END_DATE": "תאריך סיום",
+        "CHOOSE_DATE": "בחר תאריך",
+        "TYPE": "סוג",
+        "MIN": "מינימום",
+        "MAX": "מקסימום",
+        "SEARCH": "חיפוש",
+        "NO_SEARCH_RESULTS": "לא נמצאו תוצאות",
+        "NO_OPTIONS": "אין אפשרויות בחירה",
+        "OPERATORS": {
+            "IN_THE_LAST": "האחרון (אחרונים)",
+            "IN_THE_LAST_CALENDAR": "האחרון (אחרונים) בלוח שנה",
+            "IN_THE_LAST_VARIABLE": "האחרון (אחרונים) משתנה",
+            "TODAY": "היום",
+            "THIS_WEEK": "השבוע",
+            "THIS_MONTH": "החודש",
+            "DATE_RANGE": "בין",
+            "DATE_RANGE_VARIABLE": "בין (משתנה)",
+            "DUE_IN": "לסיום בעוד",
+            "ON": "ב-",
+            "NOT_IN_THE_LAST": "לא לאחרונה",
+            "NOT_IN_THE_LAST_CALENDAR": "לא לאחרונה (לוח שנה)",
+            "NOT_DUE_IN": "לא לסיום בעוד",
+            "IS_EMPTY": "ריק",
+            "IS_NOT_EMPTY": "לא ריק",
+            "NOT_EQUAL": "אינו שווה",
+            "NOT_EQUAL_TO_VARIABLE": "אינו שווה ל (משתנה)",
+            "LESS_THEN_OR_EQUAL": "קטן מ- או שווה ל-",
+            "LESS_THEN": "קטן מ",
+            "LESS_THAN_VARIABLE": "קטן מ (משתנה)",
+            "EQUAL": "שווה",
+            "EQUAL_TO_VARIABLE": "שווה (משתנה)",
+            "IN_VARIABLE": "בעוד (משתנה)",
+            "GREATER_THEN": "גדול מ-",
+            "GREATER_THEN_OR_EQUAL": "גדול מ- או שווה ל-",
+            "GREATER_THAN_VARIABLE": "גדול מ- (משתנה)",
+            "NUMBER_RANGE": "בין",
+            "CONTAINS": "מכיל",
+            "IN": "בעוד",
+            "BEGINS_WITH": "מתחיל ב-",
+            "ENDS_WITH": "מסתיים ב-"
+        },
+        "OPERATOR_UNITS": {
+            "DAYS": "ימים",
+            "WEEKS": "שבועות",
+            "MONTHS": "חודשים",
+            "YEARS": "שנים"
+        }
+    },
     "ACTIONS": {
-        "CONTINUE": "המשך",
-        "DELETE": "מחק",
         "APPLY": "החל",
         "CANCEL": "בטל",
         "CLEAR": "נקה",
         "CLEAR_ALL": "נקה הכל",
         "CLOSE": "סגירה",
+        "CONTINUE": "המשך",
         "CREATE_NEW": "צור חדש",
+        "DELETE": "מחק",
         "DONE": "אישור",
         "OK": "אישור",
-        "SAVE": "שמירה"
+        "REMOVE": "הסרה",
+        "SAVE": "שמירה",
+        "IMPORT": "ייבוא"
     },
     "LIST": {
         "ALL": "הכל",
         "NONE": "ללא",
+        "PAGER_PREVIOUS": "קודם",
+        "PAGER_NEXT": "הבא",
+        "PAGER_OUT_OF": "מתוך",
+        "PAGER_PAGE": "עמוד",
         "SELECT": "בחר",
         "SELECTED": "נבחרו",
+        "SORT_BY": "מיין לפי",
         "SORT_ASC": "סדר עולה",
-        "SORT_DESC": "סדר יורד"
+        "SORT_DESC": "סדר יורד",
+        "TOTAL_RESULTS": "<span class='bold number'>{{ totalRows }}</span> תוצאות",
+        "TOTAL_RESULT": "<span class='bold number'>{{ totalRows }}</span> תוצאה",
+        "TOTAL_RESULTS_OUT_OF": "<span class='bold number'>{{ xRows }}</span> מתוך <span class='bold number'>{{ totalRows }}</span> תוצאות",
+        "TOTAL_RESULT_OUT_OF_RESULT": "<span class='bold number'>{{ xRows }}</span> מתוך <span class='bold number'>{{ totalRows }}</span> תוצאה",
+        "TOTAL_OF": "סהכ: ",
+        "NO_DATA_FOUND": "לא נמצאו תוצאות.",
+        "NO_DATA_FOUND_SUGGESTIONS_TITLE": "יש לנו כמה הצעות:",
+        "NO_DATA_FOUND_SUGGESTIONS_LIST": "<li>וודא שכל המילים מאויתים נכון</li><li>נסה מילות חיפוש שונות.</li><li>נסה מילות חיפוש יותר כלליות.</li>"
     },
     "MESSAGES": {
         "TITLE_NOTICE": "הודעה",
@@ -71,9 +159,22 @@
         "ERROR_MAX_QUANTITY_LIMIT": "כמות מרבית",
         "ERROR_MIN_QUANTITY_LIMIT": "כמות מינימלית",
         "ERROR_RANGE_IS_NOT_VALID": "הערך צריך להיות בין {{min}} ל-{{max}}",
+        "ERROR_INVALID_PATTERN": "תו לא חוקי",
         "INFO_LOADING_FILE": "טוען נתונים",
         "INFO_MISSING_FILE": "קובץ חסר",
         "INFO_MISSING_IMAGE": "תמונה חסרה",
         "INFO_MISSING_SIGNATURE": "חתימה חסרה"
+    },
+    "DATE_AGO": {
+        "JUST_NOW": "זה עתה",
+        "SECOND": "שניה",
+        "MINUTE": "דקה",
+        "HOUR": "שעה",
+        "DAY": "יום",
+        "WEEK": "שבוע",
+        "MONTH": "חודש",
+        "YEAR": "שנה",
+        "SINGULAR": " לפני",
+        "PLURAL": "לפני"
     }
 }

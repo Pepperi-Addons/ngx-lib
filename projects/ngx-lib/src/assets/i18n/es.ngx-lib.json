@@ -8,8 +8,11 @@
         "DIALOG_TITLE": "Color picker"
     },
     "CHECKBOX": {
-        "TRUE": "True",
-        "FALSE": "False"
+        "TRUE": "Verdadero",
+        "FALSE": "Falso"
+    },
+    "CHIPS": {
+        "ADD_CHIP": "Add Chip"
     },
     "IMAGE": {
         "NO_IMAGE": "No hay imagen",
@@ -26,8 +29,22 @@
     "INTERNAL_PAGE": {
         "CLICK_TO_ORDER": "Haga clic para pedir"
     },
+    "PROFILE_DATA_VIEWS_LIST": {
+        "ADD_PROFILE": "Add profile",
+        "SELECT_PROFILE_DIALOG_TITLE": "Select profile",
+        "SELECT_PROFILE": "Select a profile",
+        "IMPORT_PROFILE_DIALOG_TITLE": "Import to {{ profileTitle }}",
+        "IMPORT_FROM_PROFILE": "Import from",
+        "IMPORT_FROM_PROFILE_DESC": "You can select a profile to copy its configuration to the added profile. Leave this option empty for a default profile hierarchy configuration",
+        "DEFAULT_PROFILE": "(Default profile)",
+        "NO_FIELDS_ASSIGNED": "No fields were assigned"
+    },
     "RICH_TEXTAREA": {
         "HINT": "Ingresar texto"
+    },
+    "SEARCH": {
+        "HINT": "Buscar",
+        "MORE_RESULTS": "Más resultados"
     },
     "SELECT": {
         "HINT": "Seleccione una opción"
@@ -37,25 +54,97 @@
         "TAP_TO_SIGN": "Pulse para firmar",
         "DIALOG_TITLE": "Agregar la firma aquí"
     },
+    "SMART_FILTERS": {
+        "TITLE": "Smart filters",
+        "IS_ON": "Is on",
+        "CHOOSE_TIME": "Choose time",
+        "AMOUNT": "Cantidad",
+        "VALUE": "Valor",
+        "TIME_UNIT": "Time unit",
+        "START_DATE": "Start date",
+        "END_DATE": "End date",
+        "CHOOSE_DATE": "Choose a date",
+        "TYPE": "Tipo",
+        "MIN": "Mínimo",
+        "MAX": "Máximo",
+        "SEARCH": "Buscar",
+        "NO_SEARCH_RESULTS": "No se han encontrado resultados",
+        "NO_OPTIONS": "No options",
+        "OPERATORS": {
+            "IN_THE_LAST": "In the last",
+            "IN_THE_LAST_CALENDAR": "In the last (calendar)",
+            "IN_THE_LAST_VARIABLE": "In the last (variable)",
+            "TODAY": "Hoy",
+            "THIS_WEEK": "This week",
+            "THIS_MONTH": "This month",
+            "DATE_RANGE": "Entre",
+            "DATE_RANGE_VARIABLE": "Between (variable)",
+            "DUE_IN": "Due in",
+            "ON": "En",
+            "NOT_IN_THE_LAST": "Not in the last",
+            "NOT_IN_THE_LAST_CALENDAR": "Not in the last (calendar)",
+            "NOT_DUE_IN": "Not due in",
+            "IS_EMPTY": "Está vacío",
+            "IS_NOT_EMPTY": "Is not empty",
+            "NOT_EQUAL": "Not equal",
+            "NOT_EQUAL_TO_VARIABLE": "Not equal to (variable)",
+            "LESS_THEN_OR_EQUAL": "Less than or equal to",
+            "LESS_THEN": "Menor que",
+            "LESS_THAN_VARIABLE": "Less than (variable)",
+            "EQUAL": "Igual",
+            "EQUAL_TO_VARIABLE": "Equal to (variable)",
+            "IN_VARIABLE": "In (variable)",
+            "GREATER_THEN": "Mayor que",
+            "GREATER_THEN_OR_EQUAL": "Greater than or equal to",
+            "GREATER_THAN_VARIABLE": "Greater than (variable)",
+            "NUMBER_RANGE": "Entre",
+            "CONTAINS": "Contiene",
+            "IN": "In",
+            "BEGINS_WITH": "Begins with",
+            "ENDS_WITH": "Termina por"
+        },
+        "OPERATOR_UNITS": {
+            "DAYS": "Dias",
+            "WEEKS": "Semanas",
+            "MONTHS": "Meses",
+            "YEARS": "Años"
+        }
+    },
     "ACTIONS": {
-        "CONTINUE": "Continue",
-        "DELETE": "Borrar",
+        "APPLY": "Aplicar",
         "CANCEL": "Cancelar",
         "CLEAR": "Borrar",
         "CLEAR_ALL": "Borrar todo",
         "CLOSE": "Cerrar",
+        "CONTINUE": "Continuar",
         "CREATE_NEW": "Crear nuevo",
+        "DELETE": "Borrar",
         "DONE": "Hecho",
         "OK": "Aceptar",
-        "SAVE": "Guardar"
+        "REMOVE": "Eliminar",
+        "SAVE": "Guardar",
+        "IMPORT": "Importar"
     },
     "LIST": {
         "ALL": "Todo",
         "NONE": "Ninguno",
+        "PAGER_PREVIOUS": "Previous",
+        "PAGER_NEXT": "Siguiente",
+        "PAGER_OUT_OF": "Fuera de",
+        "PAGER_PAGE": "Página",
         "SELECT": "Seleccionar",
         "SELECTED": "seleccionado",
+        "SORT_BY": "Ordenado por",
         "SORT_ASC": "Ascendente",
-        "SORT_DESC": "Descendente"
+        "SORT_DESC": "Descendente",
+        "TOTAL_RESULTS": "<span class='bold number'>{{ totalRows }}</span> resultados",
+        "TOTAL_RESULT": "<span class='bold number'>{{ totalRows }}</span> resultado",
+        "TOTAL_RESULTS_OUT_OF": "<span class='bold number'>{{ xRows }}</span> de <span class='bold number'>{{ totalRows }}</span> resultados",
+        "TOTAL_RESULT_OUT_OF_RESULT": "<span class='bold number'>{{ xRows }}</span> de <span class='bold number'>{{ totalRows }}</span> resultados",
+        "TOTAL_OF": "En un total de: ",
+        "NO_DATA_FOUND": "No results were found.",
+        "NO_DATA_FOUND_SUGGESTIONS_TITLE": "We have some suggestions:",
+        "NO_DATA_FOUND_SUGGESTIONS_LIST": "<li>Make sure that all words are spelled correctly.</li><li>Try different keywords.</li><li>Try more general keywords.</li>"
     },
     "MESSAGES": {
         "TITLE_NOTICE": "Aviso",
@@ -70,9 +159,22 @@
         "ERROR_MAX_QUANTITY_LIMIT": "Cantidad máxima",
         "ERROR_MIN_QUANTITY_LIMIT": "Cantidad mínima",
         "ERROR_RANGE_IS_NOT_VALID": "El valor debe estar entre {{min}} y {{max}}",
+        "ERROR_INVALID_PATTERN": "Invalid Character",
         "INFO_LOADING_FILE": "Cargando",
         "INFO_MISSING_FILE": "Falta el archivo",
         "INFO_MISSING_IMAGE": "Falta la imagen",
         "INFO_MISSING_SIGNATURE": "Falta la firma"
+    },
+    "DATE_AGO": {
+        "JUST_NOW": "Just now",
+        "SECOND": "second",
+        "MINUTE": "minutos",
+        "HOUR": "hora",
+        "DAY": "día",
+        "WEEK": "semana",
+        "MONTH": "mes",
+        "YEAR": "año",
+        "SINGULAR": " ago",
+        "PLURAL": "'s ago"
     }
 }

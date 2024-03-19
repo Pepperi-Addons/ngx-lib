@@ -11,6 +11,9 @@
         "TRUE": "True",
         "FALSE": "False"
     },
+    "CHIPS": {
+        "ADD_CHIP": "Add Chip"
+    },
     "IMAGE": {
         "NO_IMAGE": "画像なし",
         "CLICK_TO_ENLARGE": "クリックして拡大"
@@ -26,8 +29,22 @@
     "INTERNAL_PAGE": {
         "CLICK_TO_ORDER": "クリックして注文"
     },
+    "PROFILE_DATA_VIEWS_LIST": {
+        "ADD_PROFILE": "Add profile",
+        "SELECT_PROFILE_DIALOG_TITLE": "Select profile",
+        "SELECT_PROFILE": "Select a profile",
+        "IMPORT_PROFILE_DIALOG_TITLE": "Import to {{ profileTitle }}",
+        "IMPORT_FROM_PROFILE": "Import from",
+        "IMPORT_FROM_PROFILE_DESC": "You can select a profile to copy its configuration to the added profile. Leave this option empty for a default profile hierarchy configuration",
+        "DEFAULT_PROFILE": "(Default profile)",
+        "NO_FIELDS_ASSIGNED": "No fields were assigned"
+    },
     "RICH_TEXTAREA": {
         "HINT": "テキストを入力"
+    },
+    "SEARCH": {
+        "HINT": "Search",
+        "MORE_RESULTS": "More Results"
     },
     "SELECT": {
         "HINT": "オプションを選択してください"
@@ -37,26 +54,97 @@
         "TAP_TO_SIGN": "タップして署名",
         "DIALOG_TITLE": "ここに署名を追加"
     },
+    "SMART_FILTERS": {
+        "TITLE": "Smart filters",
+        "IS_ON": "Is on",
+        "CHOOSE_TIME": "Choose time",
+        "AMOUNT": "Amount",
+        "VALUE": "Value",
+        "TIME_UNIT": "Time unit",
+        "START_DATE": "Start date",
+        "END_DATE": "End date",
+        "CHOOSE_DATE": "Choose a date",
+        "TYPE": "Type",
+        "MIN": "Min",
+        "MAX": "Max",
+        "SEARCH": "Search",
+        "NO_SEARCH_RESULTS": "No results found",
+        "NO_OPTIONS": "No options",
+        "OPERATORS": {
+            "IN_THE_LAST": "In the last",
+            "IN_THE_LAST_CALENDAR": "In the last (calendar)",
+            "IN_THE_LAST_VARIABLE": "In the last (variable)",
+            "TODAY": "Today",
+            "THIS_WEEK": "This week",
+            "THIS_MONTH": "This month",
+            "DATE_RANGE": "Between",
+            "DATE_RANGE_VARIABLE": "Between (variable)",
+            "DUE_IN": "Due in",
+            "ON": "On",
+            "NOT_IN_THE_LAST": "Not in the last",
+            "NOT_IN_THE_LAST_CALENDAR": "Not in the last (calendar)",
+            "NOT_DUE_IN": "Not due in",
+            "IS_EMPTY": "Is empty",
+            "IS_NOT_EMPTY": "Is not empty",
+            "NOT_EQUAL": "Not equal",
+            "NOT_EQUAL_TO_VARIABLE": "Not equal to (variable)",
+            "LESS_THEN_OR_EQUAL": "Less than or equal to",
+            "LESS_THEN": "Less than",
+            "LESS_THAN_VARIABLE": "Less than (variable)",
+            "EQUAL": "Equal",
+            "EQUAL_TO_VARIABLE": "Equal to (variable)",
+            "IN_VARIABLE": "In (variable)",
+            "GREATER_THEN": "Greater than",
+            "GREATER_THEN_OR_EQUAL": "Greater than or equal to",
+            "GREATER_THAN_VARIABLE": "Greater than (variable)",
+            "NUMBER_RANGE": "Between",
+            "CONTAINS": "Contains",
+            "IN": "In",
+            "BEGINS_WITH": "Begins with",
+            "ENDS_WITH": "Ends with"
+        },
+        "OPERATOR_UNITS": {
+            "DAYS": "Days",
+            "WEEKS": "Weeks",
+            "MONTHS": "Months",
+            "YEARS": "Years"
+        }
+    },
     "ACTIONS": {
-        "CONTINUE": "Continue",
-        "DELETE": "Delete",
         "APPLY": "適用",
         "CANCEL": "キャンセル",
         "CLEAR": "クリア",
         "CLEAR_ALL": "すべてクリア",
         "CLOSE": "閉じる",
+        "CONTINUE": "Continue",
         "CREATE_NEW": "新規作成",
+        "DELETE": "Delete",
         "DONE": "終了",
         "OK": "Ok",
-        "SAVE": "保存"
+        "REMOVE": "Remove",
+        "SAVE": "保存",
+        "IMPORT": "Import"
     },
     "LIST": {
         "ALL": "すべて",
         "NONE": "なし",
+        "PAGER_PREVIOUS": "Previous",
+        "PAGER_NEXT": "Next",
+        "PAGER_OUT_OF": "Out of",
+        "PAGER_PAGE": "Page",
         "SELECT": "選択",
         "SELECTED": "選択済み",
+        "SORT_BY": "Sort by",
         "SORT_ASC": "昇順",
-        "SORT_DESC": "降順"
+        "SORT_DESC": "降順",
+        "TOTAL_RESULTS": "<span class='bold number'>{{ totalRows }}</span> results",
+        "TOTAL_RESULT": "<span class='bold number'>{{ totalRows }}</span> result",
+        "TOTAL_RESULTS_OUT_OF": "<span class='bold number'>{{ xRows }}</span> of <span class='bold number'>{{ totalRows }}</span> results",
+        "TOTAL_RESULT_OUT_OF_RESULT": "<span class='bold number'>{{ xRows }}</span> of <span class='bold number'>{{ totalRows }}</span> result",
+        "TOTAL_OF": "At total of: ",
+        "NO_DATA_FOUND": "No results were found.",
+        "NO_DATA_FOUND_SUGGESTIONS_TITLE": "We have some suggestions:",
+        "NO_DATA_FOUND_SUGGESTIONS_LIST": "<li>Make sure that all words are spelled correctly.</li><li>Try different keywords.</li><li>Try more general keywords.</li>"
     },
     "MESSAGES": {
         "TITLE_NOTICE": "通知",
@@ -71,9 +159,22 @@
         "ERROR_MAX_QUANTITY_LIMIT": "最大数量",
         "ERROR_MIN_QUANTITY_LIMIT": "最小数量",
         "ERROR_RANGE_IS_NOT_VALID": "値は {{min}} ～ {{max}} でなければなりません",
+        "ERROR_INVALID_PATTERN": "Invalid Character",
         "INFO_LOADING_FILE": "読み込み中",
         "INFO_MISSING_FILE": "ファイルがありません",
         "INFO_MISSING_IMAGE": "画像がありません",
         "INFO_MISSING_SIGNATURE": "署名がありません"
+    },
+    "DATE_AGO": {
+        "JUST_NOW": "Just now",
+        "SECOND": "second",
+        "MINUTE": "minute",
+        "HOUR": "hour",
+        "DAY": "day",
+        "WEEK": "week",
+        "MONTH": "month",
+        "YEAR": "year",
+        "SINGULAR": " ago",
+        "PLURAL": "'s ago"
     }
 }
