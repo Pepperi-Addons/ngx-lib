@@ -150,7 +150,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() scrollAnimationTime = 500;
     @Input() scrollDebounceTime = 0;
     @Input() scrollThrottlingTime = 0;
-
+    @Input() SEPARATOR = ',';
     private _useAsWebComponent = false;
     @Input()
     set useAsWebComponent(value: boolean) {
@@ -220,7 +220,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
     currentPageItems: Array<ObjectsDataRow>;
 
-    SEPARATOR = ',';
+
     isAllSelected = false;
     selectedItems = new Map<string, string>();
     unSelectedItems = new Map<string, string>();

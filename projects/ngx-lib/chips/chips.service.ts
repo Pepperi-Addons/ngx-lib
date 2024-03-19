@@ -7,6 +7,7 @@ export class PepChipsService {
     private _chips: IPepChip[] = [];    
 
     constructor() {
+        //
     }
 
     get chips() {
