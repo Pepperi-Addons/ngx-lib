@@ -1629,7 +1629,7 @@ export class PepListComponent implements OnInit, OnChanges, OnDestroy {
 
         this.fieldClick.emit(customizeFieldClickedData);
     }
-    //added to handle sorting by specific columns
+    //added to handle sorting by specific columns----
     isSortableColumn(apiName: string) {
         //case 1 - supportSorting = true and array exists
           if(this.supportSorting) {
