@@ -15,12 +15,11 @@
                 (keyup.enter)="$event?.currentTarget?.blur()" (focus)="onFocus($event);" (blur)="onBlur($event)"
                 (change)="onChange($event)" (keyup)="onKeyup($event)"
                 [ngClass]="{'disable-hidden': disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')}" />
-<!-- [attr.inputmode]="inputMode" -->
-            <span
-                *ngIf="disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')"
+<!-- [attr.inputmode]="inputMode" -->   
+            <span *ngIf="disabled && formattedValue?.length > 0 && (type === 'phone' || type === 'email' || type === 'link')"
                 class="dis-grid">
                 <a href="javascript:void(0)" (click)="anchorClicked()" [id]="key" [name]="key"
-                    class="color-link body-sm "> {{formattedValue}}</a>
+                    class="color-link body-sm"> {{formattedValue}}</a>
             </span>
             <mat-error *ngIf="renderError">               
                 <ng-container *ngIf="mandatory && input.value.length == 0 then requiredError else otherErrorContainer">

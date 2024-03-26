@@ -59,6 +59,7 @@ import { PepProfileDataViewsListModule } from '@pepperi-addons/ngx-lib/profile-d
 import { PepChipsModule } from '@pepperi-addons/ngx-lib/chips';
 import { PepSkeletonLoaderModule } from '@pepperi-addons/ngx-lib/skeleton-loader';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { PepLinkModule } from '@pepperi-addons/ngx-lib/link';
 
 import {
     PepIconModule,
@@ -98,6 +99,8 @@ import {
     pepIconViewMatrix,
     pepIconViewLine,
 } from '@pepperi-addons/ngx-lib/icon';
+
+
 
 const pepIcons = [
     pepIconSystemBolt,
@@ -150,6 +153,7 @@ const pepperiComponentsModules = [
     PepImageModule,
     PepImagesFilmstripModule,
     PepListModule,
+    PepLinkModule,
     PepCheckboxModule,
     PepQuantitySelectorModule,
     PepRichHtmlTextareaModule,

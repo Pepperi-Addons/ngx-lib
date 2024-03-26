@@ -16,7 +16,8 @@
             <span *ngIf="disabled && displayValue?.length > 0" class="dis-grid">
                 &nbsp;
                 <a href="javascript:void(0)" (click)="anchorClicked()" [id]="key" [name]="key"
-                    class="color-link body-sm ">
+                    class="color-link body-sm "
+                    [ngClass]="{'disable-link': disabled && (!value || value?.length == 0)}">
                     {{displayValue}}
                 </a>
                 &nbsp;

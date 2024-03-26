@@ -361,7 +361,6 @@ export class PepTextboxComponent implements OnChanges, OnInit, AfterViewInit, On
         if (this.isInFocus) {
             return;
         }
-
         if (this._calculateFormattedValue) {
             // console.log(`setFormattedValue before - value is ${value}`);
             if (this.type === 'currency') {

@@ -27,8 +27,36 @@
                     <pep-textbox [key]="'currency'" [label]="'Pepperi currency'" [type]="'currency'" [accessory]="'$'" minValue="10" maxValue="200"
                         [xAlignment]="'left'" [value]="'1092.50'" [mandatory]="true">
                     </pep-textbox>
+                    
+                    <pep-link [key]="'link'" [value]="'http://google.com'" [displayValue]="''"
+                    [label]="'link without display value'" 
+                    [mandatory]="false" [disabled]="true" [readonly]="false"
+                    [showTitle]="true">
+                </pep-link>
+                
+                    <pep-link [key]="'link'" [value]="'http://google.com'" [displayValue]="'Google'"
+                        [label]="'link with value'" 
+                        [mandatory]="false" [disabled]="false" [readonly]="false"
+                        [showTitle]="true">
+                    </pep-link>
+
+                    <pep-link [key]="'link'" [value]="'http://google.com'" [displayValue]="'Google'"
+                        [label]="'disabled link with value'" 
+                        [mandatory]="false" [disabled]="true" [readonly]="false"
+                        [showTitle]="true">
+                    </pep-link>
+
+                <pep-link [key]="'link'" [value]="''" [displayValue]="'Google'"
+                    [label]="'disabled link without value'" 
+                    [mandatory]="false" [disabled]="true" [readonly]="false"
+                    [showTitle]="true">
+                </pep-link>
+
+                    <pep-textbox [key]="'link'" [label]="'Pepperi link'" [type]="'link'" [value]="'Avner'"  [disabled]="true"
+                        [xAlignment]="'left'"  [mandatory]="true">
+                    </pep-textbox>
                     <pep-textbox [key]="'percentage'" [label]="'Pepperi percentage disabled'" [type]="'percentage'"
-                        [xAlignment]="'left'" [value]="'10'" [mandatory]="true" [disabled]="true" >
+                        [xAlignment]="'left'" [value]="'10'" [mandatory]="true" [disabled]="false" >
                     </pep-textbox>
                     <pep-textbox [key]="'percentage'" [label]="'Pepperi percentage'" [type]="'percentage'" minValue="0" maxValue="100"
                         [xAlignment]="'left'" [value]="'10'" [mandatory]="true" >
